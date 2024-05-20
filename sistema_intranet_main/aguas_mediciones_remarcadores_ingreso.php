@@ -486,7 +486,7 @@ $Form_Inputs = new Inputs();
 <div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['modBase'])){ 
+}elseif(!empty($_GET['modBase'])){ 
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idFacturable=3";
 
 ?>
@@ -663,7 +663,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new'])){
+}elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro 
@@ -712,7 +712,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 /**********************************************************/
 //paginador de resultados
 if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}

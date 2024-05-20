@@ -167,7 +167,7 @@ alert_post_data(2,1,2,0, $Alert_Text);
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Indico el sistema
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_clientes_listado.idEstado=1';
 

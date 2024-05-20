@@ -207,7 +207,7 @@ array_push( $arrUsuarios,$row );
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new'])){
+}elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
@@ -255,7 +255,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 /**********************************************************/
 //Variable de busqueda
 $z = "WHERE comunicaciones_chat_listado.idEstado!=0";

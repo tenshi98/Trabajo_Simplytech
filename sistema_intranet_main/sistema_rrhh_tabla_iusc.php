@@ -110,7 +110,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 
  
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 /**********************************************************/
 $arrAmonestacion = array();
 $query = "SELECT idTablaImpuesto,Tramo, UTM_Desde, UTM_Hasta, Tasa, Rebaja

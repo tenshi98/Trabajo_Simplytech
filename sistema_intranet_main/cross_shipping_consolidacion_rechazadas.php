@@ -50,7 +50,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['compra_rechazo'])){ ?>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 /**********************************************************/
 //Se inicializa el paginador de resultados
 //tomo el numero de la pagina si es que este existe

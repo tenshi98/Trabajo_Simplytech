@@ -475,7 +475,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //filtros
 $w  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 $w .= " AND telemetria_listado.id_Geo=2";                                                //Geolocalizacion inactiva

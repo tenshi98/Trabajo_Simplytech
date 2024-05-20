@@ -245,7 +245,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['editanalisis_row'])){
+}elseif(!empty($_GET['editanalisis_row'])){
 //Se traen los datos de la ot
 $query = "SELECT idAnalisis
 FROM `orden_trabajo_listado_trabajos`
@@ -298,7 +298,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['editproducto'])){
+}elseif(!empty($_GET['editproducto'])){
 //filtro
 $zx1 = "idProducto=0";
 //Se revisan los permisos a los productos

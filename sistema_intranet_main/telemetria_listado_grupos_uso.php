@@ -108,7 +108,7 @@ $rowdata = db_select_data (false, 'Nombre,Valor, idSupervisado', 'telemetria_lis
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new'])){
+}elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
@@ -146,7 +146,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 /**********************************************************/
 //paginador de resultados
 if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}

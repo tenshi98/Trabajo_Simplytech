@@ -120,7 +120,7 @@ select {
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new'])){ ?>
+}elseif(!empty($_GET['new'])){ ?>
 <style>
 select {
   font-family: 'FontAwesome', 'sans-serif';
@@ -163,7 +163,7 @@ select {
 
  
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Se inicializa el paginador de resultados
 //tomo el numero de la pagina si es que este existe
 if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}

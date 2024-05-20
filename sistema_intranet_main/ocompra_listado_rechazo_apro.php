@@ -103,7 +103,7 @@ if(!empty($_GET['compra_rechazo'])){ ?>
 </div> 
 	
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['compra_nula'])){ ?>
+}elseif(!empty($_GET['compra_nula'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -139,7 +139,7 @@ if(!empty($_GET['compra_rechazo'])){ ?>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['view'])){	 
+}elseif(!empty($_GET['view'])){	 
 // Se trae el listado de quienes aprueban la OC
 $arrAprobado = array();
 $query = "SELECT 
@@ -224,7 +224,7 @@ array_push( $arrAprobado,$row );
 	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 /**********************************************************/
 //paginador de resultados
 if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}

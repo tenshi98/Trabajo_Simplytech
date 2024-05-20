@@ -32,7 +32,7 @@ require_once 'core/Web.Header.Views.php';
 if(!empty($_GET['viewMuestra'])){ ?>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 /************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe

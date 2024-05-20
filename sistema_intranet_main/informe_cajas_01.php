@@ -195,7 +195,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'caja_chica_facturacion', $SIS_jo
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 $z = "caja_chica_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Verifico el tipo de usuario que esta ingresando

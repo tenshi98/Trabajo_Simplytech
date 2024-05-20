@@ -298,7 +298,7 @@ foreach ($arrGrupos as $sen) {
 	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$filter = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND id_Geo=2";

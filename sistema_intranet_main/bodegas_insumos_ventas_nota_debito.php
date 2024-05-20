@@ -452,7 +452,7 @@ $Form_Inputs = new Inputs();
 </script>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addImpuesto'])){ ?>
+}elseif(!empty($_GET['addImpuesto'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -520,7 +520,7 @@ $Form_Inputs = new Inputs();
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addOtros'])){  ?>
+}elseif(!empty($_GET['addOtros'])){  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -601,7 +601,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['modBase'])){
+}elseif(!empty($_GET['modBase'])){
 $z = "bodegas_insumos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; 
 //Verifico el tipo de usuario que esta ingresando
@@ -694,7 +694,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['view'])){
+}elseif(!empty($_GET['view'])){
 $Form_Inputs = new Inputs();
 
 ?>
@@ -957,7 +957,7 @@ $Form_Inputs = new Inputs();
 <div class="clearfix"></div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new'])){
+}elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro 
@@ -1050,7 +1050,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Se inicializa el paginador de resultados
 //tomo el numero de la pagina si es que este existe
 if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}

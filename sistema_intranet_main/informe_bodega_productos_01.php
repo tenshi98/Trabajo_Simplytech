@@ -118,7 +118,7 @@ array_push( $arrProductos,$row );
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 $z = "bodegas_productos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){

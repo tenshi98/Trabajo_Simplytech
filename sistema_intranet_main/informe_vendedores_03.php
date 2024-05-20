@@ -215,7 +215,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'prospectos_listado', $SIS_join,
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 $w      = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 //Verifico el tipo de usuario que esta ingresando
 $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';

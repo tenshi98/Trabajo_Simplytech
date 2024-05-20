@@ -248,7 +248,7 @@ $arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_u
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
 if (validarNumero($_GET['view'])){

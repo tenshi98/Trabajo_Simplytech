@@ -213,7 +213,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion_est
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Verifico el tipo de usuario que esta ingresando
 $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 

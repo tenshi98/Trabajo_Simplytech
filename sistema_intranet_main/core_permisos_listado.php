@@ -139,7 +139,7 @@ mysqli_free_result($resultado);
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new'])){ ?>
+}elseif(!empty($_GET['new'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -191,7 +191,7 @@ mysqli_free_result($resultado);
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Creo la variable con la ubicacion
 $z="";
 // Se trae un listado con todos los elementos

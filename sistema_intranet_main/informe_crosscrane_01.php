@@ -156,7 +156,7 @@ if(!empty($_GET['submit_filter'])){
 	</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 	//Filtro de busqueda
 	$z  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 	//Verifico el tipo de usuario que esta ingresando

@@ -233,7 +233,7 @@ $rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado_tareas'
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addtarea'])){
+}elseif(!empty($_GET['addtarea'])){
 //se dibujan los inputs
 $Form_Inputs = new Inputs();
 //Verifico el tipo de usuario que esta ingresando
@@ -356,7 +356,7 @@ $usrfil .= $responsables;
 </script>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addResponsable'])){
+}elseif(!empty($_GET['addResponsable'])){
 //se dibujan los inputs
 $Form_Inputs = new Inputs();
 //Verifico el tipo de usuario que esta ingresando
@@ -454,7 +454,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 </script>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['modBase'])){
+}elseif(!empty($_GET['modBase'])){
 /**************************************************************/
 // Se trae un listado con todos los elementos
 $SIS_query = 'idPrioridad, idTipo, Nombre,Observaciones';
@@ -502,7 +502,7 @@ $rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado', $SIS_
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['view'])){
+}elseif(!empty($_GET['view'])){
 //Version antigua de view
 $X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 /**************************************************************/

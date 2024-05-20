@@ -545,7 +545,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['edit_prod'])){
+}elseif(!empty($_GET['edit_prod'])){
 //Se traen los datos de la ot
 $SIS_query = '
 productos_listado.Nombre AS Producto, 
@@ -607,7 +607,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_prod
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addIns'])){
+}elseif(!empty($_GET['addIns'])){
 //Se traen los datos de la ot
 $SIS_query = 'idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, idTipo, f_programacion';
 $SIS_join  = '';
@@ -715,7 +715,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['edit_ins'])){
+}elseif(!empty($_GET['edit_ins'])){
 //Se traen los datos de la ot
 $SIS_query = '
 insumos_listado.Nombre AS Producto, 
@@ -777,7 +777,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_insu
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addTrab'])){
+}elseif(!empty($_GET['addTrab'])){
 //Se traen los datos de la ot
 $SIS_query = 'idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, idTipo, f_programacion';
 $SIS_join  = '';
@@ -834,7 +834,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['edit_trab'])){
+}elseif(!empty($_GET['edit_trab'])){
 //Se traen los datos de la ot
 $SIS_query = 'idTrabajador';
 $SIS_join  = '';
@@ -878,7 +878,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['edit_obs'])){
+}elseif(!empty($_GET['edit_obs'])){
 //Se traen los datos de la ot
 $SIS_query = 'Observaciones';
 $SIS_join  = '';
@@ -919,7 +919,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['view'])){
+}elseif(!empty($_GET['view'])){
 // Se trae un listado con todos los elementos
 $SIS_query = '
 orden_trabajo_tareas_listado.idOT,
@@ -1430,7 +1430,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){

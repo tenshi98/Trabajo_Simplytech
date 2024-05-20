@@ -153,7 +153,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 $y = "idEstado=1";
 $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 //Filtro de busqueda

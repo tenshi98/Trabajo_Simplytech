@@ -226,7 +226,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'analisis_listado', $SIS_join, $S
 	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 

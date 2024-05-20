@@ -117,7 +117,7 @@ array_push( $arrUsers,$row );
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Filtro dentro de la seleccion	
 $z  = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $z .= ' AND idEstado=1';

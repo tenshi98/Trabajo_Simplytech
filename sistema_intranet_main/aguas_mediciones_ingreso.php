@@ -312,7 +312,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new'])){
+}elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //cuadro para descargar
@@ -361,7 +361,7 @@ alert_post_data(2,1,2,0, $Alert_Text);
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 /**********************************************************/
 //paginador de resultados
 if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}

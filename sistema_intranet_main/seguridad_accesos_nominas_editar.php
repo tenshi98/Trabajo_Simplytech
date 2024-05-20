@@ -154,7 +154,7 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas_listad
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addPersona'])){  ?>
+}elseif(!empty($_GET['addPersona'])){  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -194,7 +194,7 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas_listad
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['modBase'])){
+}elseif(!empty($_GET['modBase'])){
 // consulto los datos
 $SIS_query = 'FechaProgramada, HoraInicioProgramada, HoraTerminoProgramada, idUbicacion,idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4,idUbicacion_lvl_5, PersonaReunion';
 $SIS_join  = '';
@@ -253,7 +253,7 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['id'])){
+}elseif(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos

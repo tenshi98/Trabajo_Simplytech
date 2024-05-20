@@ -269,7 +269,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturacion', 
 	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 

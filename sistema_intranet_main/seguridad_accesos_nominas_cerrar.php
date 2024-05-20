@@ -109,7 +109,7 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas_listad
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['modBase'])){
+}elseif(!empty($_GET['modBase'])){
 // consulto los datos
 $SIS_query = 'idEstado';
 $SIS_join  = '';
@@ -149,7 +149,7 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['id'])){
+}elseif(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
@@ -340,7 +340,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 <div class="clearfix"></div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 /**********************************************************/
 //paginador de resultados
 if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}

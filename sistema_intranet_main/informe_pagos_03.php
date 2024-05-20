@@ -288,7 +288,7 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 

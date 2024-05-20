@@ -228,7 +228,7 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_jo
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['idMatriz'])){
+}elseif(!empty($_GET['idMatriz'])){
 // consulto los datos
 $SIS_query = '
 Nombre,cantPuntos,
@@ -431,7 +431,7 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_jo
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new'])){
+}elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
@@ -476,7 +476,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 // consulto los datos
 $SIS_query = 'Nombre,idConfig_1, idConfig_2';
 $SIS_join  = '';

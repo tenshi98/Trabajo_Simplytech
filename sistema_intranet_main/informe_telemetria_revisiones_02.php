@@ -156,7 +156,7 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Filtro de busqueda
 $w  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 //Verifico el tipo de usuario que esta ingresando

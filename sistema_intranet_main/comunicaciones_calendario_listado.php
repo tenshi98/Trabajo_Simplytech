@@ -119,7 +119,7 @@ $rowdata = db_select_data (false, $SIS_query, 'principal_calendario_listado', $S
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['view'])){
+}elseif(!empty($_GET['view'])){
 //consulto
 $SIS_query = '
 principal_calendario_listado.Fecha,
@@ -186,7 +186,7 @@ $row_data = db_select_data (false, $SIS_query, 'principal_calendario_listado', $
 </div> 
 	  
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new'])){
+}elseif(!empty($_GET['new'])){
 //valido los permisos
 if(isset($rowlevel['level'])&&$rowlevel['level']!=''){
 	validaPermisoUser($rowlevel['level'], 3, $dbConn);
@@ -236,7 +236,7 @@ if(isset($rowlevel['level'])&&$rowlevel['level']!=''){
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Se definen las variables
 if(isset($_GET['Mes'])){   $Mes = $_GET['Mes'];   } else { $Mes  = mes_actual();}
 if(isset($_GET['Ano'])){   $Ano = $_GET['Ano'];   } else { $Ano  = ano_actual();}

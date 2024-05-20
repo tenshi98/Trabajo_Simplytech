@@ -291,7 +291,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new'])){ ?>
+}elseif(!empty($_GET['new'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -348,7 +348,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Se inicializa el paginador de resultados
 //tomo el numero de la pagina si es que este existe
 if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}

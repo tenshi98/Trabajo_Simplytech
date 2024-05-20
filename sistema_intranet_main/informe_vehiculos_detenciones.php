@@ -133,7 +133,7 @@ $arrErrores = db_select_array (false, $SIS_query, 'vehiculos_listado_error_deten
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Verifico el tipo de usuario que esta ingresando
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
  ?>		

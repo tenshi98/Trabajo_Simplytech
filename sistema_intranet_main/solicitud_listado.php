@@ -207,7 +207,7 @@ if(!empty($_GET['editOtros'])){  ?>
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addOtros'])){  ?>
+}elseif(!empty($_GET['addOtros'])){  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -284,7 +284,7 @@ if(!empty($_GET['editOtros'])){  ?>
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addServicios'])){  ?>
+}elseif(!empty($_GET['addServicios'])){  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -359,7 +359,7 @@ if(!empty($_GET['editOtros'])){  ?>
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addArriendo'])){  ?>
+}elseif(!empty($_GET['addArriendo'])){  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -459,7 +459,7 @@ foreach ($arrPermisos as $prod) {
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addIns'])){  
+}elseif(!empty($_GET['addIns'])){  
 //filtro
 $zx2 = "idProducto=0";
 //Se revisan los permisos a los productos
@@ -520,7 +520,7 @@ foreach ($arrPermisos as $prod) {
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['editProd'])){  
+}elseif(!empty($_GET['editProd'])){  
 //filtro
 $zx1 = "idProducto=0";
 //Se revisan los permisos a los productos
@@ -644,7 +644,7 @@ foreach ($arrPermisos as $prod) {
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['modBase'])){ ?>
+}elseif(!empty($_GET['modBase'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -681,7 +681,7 @@ foreach ($arrPermisos as $prod) {
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['view'])){
+}elseif(!empty($_GET['view'])){
 //Variable para sacar el total
 $total = 0;		
 ?>
@@ -899,7 +899,7 @@ $total = 0;
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new'])){
+}elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
@@ -938,7 +938,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 /**********************************************************/
 //paginador de resultados
 if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}

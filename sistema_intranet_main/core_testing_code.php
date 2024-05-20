@@ -731,7 +731,7 @@ array_push( $arrUsuarios,$row );
 	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else { ?>
+}else{ ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">

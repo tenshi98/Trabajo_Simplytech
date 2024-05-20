@@ -46,7 +46,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['addInsumo'])){ ?>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['submit_filter'])){
+}elseif(!empty($_GET['submit_filter'])){
 
 //Verifico el tipo de usuario que esta ingresando
 $z="WHERE orden_trabajo_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
@@ -140,7 +140,7 @@ array_push( $arrOTS,$row );
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Verifico el tipo de usuario que esta ingresando
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig_1=1 AND idEstado=1";
 $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; ?>

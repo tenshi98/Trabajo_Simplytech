@@ -470,7 +470,7 @@ $Total_4 = 0;
 
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['details_diario'])){
+}elseif(!empty($_GET['details_diario'])){
 //Solo compras pagadas totalmente
 $z1 = "WHERE bodegas_arriendos_facturacion.idTipo=1"; //solo ventas
 $z2 = "WHERE bodegas_insumos_facturacion.idTipo=1";   //solo ventas
@@ -1350,7 +1350,7 @@ $Total_4 = 0;
 
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 
 //Se definen las variables
 if(isset($_GET['Ano'])){   $Ano = $_GET['Ano'];   } else { $Ano  = ano_actual();}

@@ -119,7 +119,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['submit_filter'])){
+}elseif(!empty($_GET['submit_filter'])){
 //Verifico el tipo de usuario que esta ingresando
 $z  = "WHERE orden_trabajo_tareas_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Verifico si la variable de busqueda existe
@@ -244,7 +244,7 @@ array_push( $arrOTS,$row );
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else { ?>
+}else{ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">

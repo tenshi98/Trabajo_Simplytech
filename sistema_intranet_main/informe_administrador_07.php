@@ -325,7 +325,7 @@ foreach ($arrGrupos as $sen) {
 	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Filtro de busqueda
 $z  = "telemetria_listado.idTelemetria!=0";   //Siempre pasa
 

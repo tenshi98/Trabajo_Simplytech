@@ -158,7 +158,7 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['cloneEstiba'])){
+}elseif(!empty($_GET['cloneEstiba'])){
 /*****************************************************/
 // Se trae la información del producto
 $query = "SELECT idEstiba, idEstibaUbicacion, idPosicion, idEnvase, NPallet, 
@@ -229,7 +229,7 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['editEstiba'])){
+}elseif(!empty($_GET['editEstiba'])){
 /*****************************************************/
 // Se trae la información del producto
 $query = "SELECT idEstiba, idEstibaUbicacion, idPosicion, idEnvase, NPallet, 
@@ -301,7 +301,7 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addEstiba'])){ ?>
+}elseif(!empty($_GET['addEstiba'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -350,7 +350,7 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['modBase'])){
+}elseif(!empty($_GET['modBase'])){
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
@@ -482,7 +482,7 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['edit'])){
+}elseif(!empty($_GET['edit'])){
 /************************************************************/
 // Se trae la información del producto
 $query = "SELECT 

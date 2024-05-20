@@ -347,7 +347,7 @@ array_push( $arrArchivos,$row );
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['modBase'])){ ?>
+}elseif(!empty($_GET['modBase'])){ ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<a target="_blank" rel="noopener noreferrer" href="https://www.previred.com/web/previred/indicadores-previsionales" class="btn btn-default pull-right margin_width" ><i class="fa fa-search" aria-hidden="true"></i> Indicadores Previsionales</a>
@@ -413,7 +413,7 @@ array_push( $arrArchivos,$row );
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['view'])){ ?>
+}elseif(!empty($_GET['view'])){ ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
@@ -558,7 +558,7 @@ array_push( $arrArchivos,$row );
 <div class="clearfix"></div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new'])){
+}elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
@@ -631,7 +631,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Se inicializa el paginador de resultados
 //tomo el numero de la pagina si es que este existe
 if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}

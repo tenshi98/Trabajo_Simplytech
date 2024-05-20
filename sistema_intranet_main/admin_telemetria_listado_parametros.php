@@ -229,7 +229,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else  {
+}else{
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
 $subquery = '';

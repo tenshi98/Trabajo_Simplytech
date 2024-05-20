@@ -183,7 +183,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Verifico el tipo de usuario que esta ingresando
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
  ?>

@@ -345,7 +345,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 		</div>
 	</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['add_prod'])){
+}elseif(!empty($_GET['add_prod'])){
 	// consulto los datos
 	$SIS_query = '
 	productos_listado.idProducto, 
@@ -428,7 +428,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 		</div>
 	</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['edit_trac'])){
+}elseif(!empty($_GET['edit_trac'])){
 	// consulto los datos
 	$SIS_query = 'idVehiculo, idTelemetria, idTrabajador';
 	$SIS_join  = '';
@@ -493,7 +493,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 		</div>
 	</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['add_trac'])){
+}elseif(!empty($_GET['add_trac'])){
 	$w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.idEstado=1";
 	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 	$x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; 
@@ -622,7 +622,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 		</div>
 	</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addCuartel'])){
+}elseif(!empty($_GET['addCuartel'])){
 	// consulto los datos
 	$SIS_query = 'idPredio, idCategoria, idProducto, Mojamiento, VelTractor, VelViento, TempMin, TempMax, HumTempMax';
 	$SIS_join  = '';
@@ -760,7 +760,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 		</div>
 	</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addMaterial'])){ ?>
+}elseif(!empty($_GET['addMaterial'])){ ?>
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 		<div class="box">
 			<header>
@@ -793,7 +793,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 		</div>
 	</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['modBase'])){
+}elseif(!empty($_GET['modBase'])){
 	// consulto los datos
 	$SIS_query = 'idPredio, idTemporada, idEstadoFen, idCategoria, idProducto, f_programacion, horaProg, idSistema, idEstado, f_ejecucion, f_termino, horaEjecucion, horaTermino, Mojamiento, VelTractor, VelViento, TempMin, TempMax, idPrioridad, f_programacion_fin, horaProg_fin, f_ejecucion_fin, horaEjecucion_fin, f_termino_fin, horaTermino_fin, idDosificador, HumTempMax, NSolicitud';
 	$SIS_join  = '';
@@ -912,7 +912,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 		</div>
 	</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 	/**********************************************/
 	// consulto los datos
 	$SIS_query = '

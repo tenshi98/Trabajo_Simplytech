@@ -1385,7 +1385,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //sistema
 $y = "licitacion_listado.idEstado=1 AND licitacion_listado.idAprobado=2 ";
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";

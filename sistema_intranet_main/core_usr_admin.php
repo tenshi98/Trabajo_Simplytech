@@ -126,7 +126,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new'])){ ?>
+}elseif(!empty($_GET['new'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -182,7 +182,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['view'])){
+}elseif(!empty($_GET['view'])){
  // consulto los datos
 $query = "SELECT 
 usuarios_listado.usuario,
@@ -329,7 +329,7 @@ array_push( $arrAccess,$row );
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Se inicializa el paginador de resultados
 //tomo el numero de la pagina si es que este existe
 if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}

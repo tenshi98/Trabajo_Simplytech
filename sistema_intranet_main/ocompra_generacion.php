@@ -120,7 +120,7 @@ if(!empty($_GET['new_oc'])){  ?>
 
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['edit_Otros'])){
+}elseif(!empty($_GET['edit_Otros'])){
 //Verifico el tipo de usuario que esta ingresando
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 // Se traen todos los datos
@@ -232,7 +232,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['edit_Insumos'])){
+}elseif(!empty($_GET['edit_Insumos'])){
 //Verifico el tipo de usuario que esta ingresando
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; 
 // Se traen todos los datos
@@ -288,7 +288,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['edit_Arriendos'])){
+}elseif(!empty($_GET['edit_Arriendos'])){
 //Verifico el tipo de usuario que esta ingresando
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 // Se traen todos los datos
@@ -344,7 +344,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['edit_Servicios'])){
+}elseif(!empty($_GET['edit_Servicios'])){
 //Verifico el tipo de usuario que esta ingresando
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 // Se traen todos los datos
@@ -400,7 +400,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['submit'])){
+}elseif(!empty($_GET['submit'])){
 //Se verifica si se creo sistema
 $aa1 = '';
 $aa2 = '';
@@ -881,7 +881,7 @@ array_push( $arrProveedores,$row );
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else { ?>
+}else{ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">

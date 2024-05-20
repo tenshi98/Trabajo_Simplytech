@@ -560,7 +560,7 @@ $arrTrabajador = db_select_array (false, 'idFactTrab,TrabajadorNombre,Trabajador
 	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Verifico el tipo de usuario que esta ingresando
 $arrSelect = array();
 $arrSelect = db_select_array (false, 'idFacturacion,Creacion_ano,Creacion_mes', 'rrhh_sueldos_facturacion', '', 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'], 'Creacion_fecha DESC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrSelect');

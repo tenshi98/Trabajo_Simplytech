@@ -70,7 +70,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['compra_rechazo'])){ ?>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 /**********************************************************/
 //paginador de resultados
 if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}

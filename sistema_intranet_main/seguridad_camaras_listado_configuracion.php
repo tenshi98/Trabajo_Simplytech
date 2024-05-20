@@ -162,7 +162,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new'])){
+}elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
@@ -238,7 +238,7 @@ $rowConfig = mysqli_fetch_assoc ($resultado);
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {	 
+}else{	 
 // consulto los datos
 $query = "SELECT Nombre,N_Camaras, idSubconfiguracion
 FROM `seguridad_camaras_listado`

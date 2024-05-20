@@ -414,7 +414,7 @@ if(!empty($_GET['submit_filter'])){
 	</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 	//filtros
 	$w  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 	$w .= " AND telemetria_listado.id_Geo=2";                                                //Geolocalizacion inactiva

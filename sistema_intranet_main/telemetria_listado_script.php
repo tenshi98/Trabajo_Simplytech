@@ -321,7 +321,7 @@ $arrScripts = db_select_array (false, $SIS_query, 'telemetria_listado_script', $
 						<?php } ?>
 						<?php if($rowdata['id_Geo']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
-						<?php } elseif($rowdata['id_Geo']==2){ ?>
+						<?php }elseif($rowdata['id_Geo']==2){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
 						<?php if($rowdata['id_Sensores']==1){ ?>

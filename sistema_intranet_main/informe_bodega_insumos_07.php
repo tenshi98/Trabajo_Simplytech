@@ -640,7 +640,7 @@ foreach ($arrBodega as $bod) {
 	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 $z1 = "bodegas_insumos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){

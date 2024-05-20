@@ -263,7 +263,7 @@ if(!empty($_GET['mod'])){
 	<div class="clearfix"></div>
 	</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['edit_puntos'])){
+}elseif(!empty($_GET['edit_puntos'])){
 	/*****************************************/
 	// Se traen los datos
 	$SIS_query = 'Nombre';
@@ -518,7 +518,7 @@ if(!empty($_GET['mod'])){
 		<div class="clearfix"></div>
 	</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['edit_zona'])){
+}elseif(!empty($_GET['edit_zona'])){
 	/*****************************************/
 	// Se traen los datos
 	$SIS_query = 'Nombre,idEstado';
@@ -561,7 +561,7 @@ if(!empty($_GET['mod'])){
 		</div>
 	</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new'])){
+}elseif(!empty($_GET['new'])){
 	//valido los permisos
 	validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
@@ -598,7 +598,7 @@ if(!empty($_GET['mod'])){
 		</div>
 	</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 	/**********************************************************/
 	//paginador de resultados
 	if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}

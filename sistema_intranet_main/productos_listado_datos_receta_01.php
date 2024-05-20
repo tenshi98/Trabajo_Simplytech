@@ -313,7 +313,7 @@ foreach ($arrPermisos as $prod) {
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['editProd'])){
+}elseif(!empty($_GET['editProd'])){
 //Se traen los datos
 $SIS_query = 'sistema_productos_uml.Nombre AS Unimed';
 $SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
@@ -701,7 +701,7 @@ $arrRecetas = db_select_array (false, $SIS_query, 'productos_recetas', $SIS_join
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 			<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Receta</a><?php } ?>
 		</div>
-	<?php } elseif($total<1){ ?>
+	<?php }elseif($total<1){ ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 			<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&newProd=true'; ?>" class="btn btn-default pull-right margin_width" >Agregar Materia Prima</a><?php } ?>
 		</div>

@@ -147,7 +147,7 @@ array_push( $arrNotificaciones,$row );
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['filtro'])){
+}elseif(!empty($_GET['filtro'])){
 //realizo el filtrado de acuerdo al filtro anterior
 $w = 'WHERE usuarios_listado.idEstado = 1';
 if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario']!=''){  $w .= " AND usuarios_listado.idTipoUsuario = '".$_GET['idTipoUsuario']."'";}
@@ -268,7 +268,7 @@ foreach ($arrNotificaciones as $noti) {
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new'])){
+}elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
@@ -319,7 +319,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 </div> 
  
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 /**********************************************************/
 //paginador de resultados
 if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}

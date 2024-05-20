@@ -233,7 +233,7 @@ array_push( $arrAlumnos,$row );
 
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Verifico el tipo de usuario que esta ingresando
 $yz = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 

@@ -115,7 +115,7 @@ if(!empty($_GET['submit_filter'])){
 	</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 	//Verifico el tipo de usuario que esta ingresando
 	$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig_1=1 AND idEstado=1";
 

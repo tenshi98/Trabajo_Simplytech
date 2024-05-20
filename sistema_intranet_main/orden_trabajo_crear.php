@@ -649,7 +649,7 @@ foreach ($arrPermisos as $prod) {
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addIns'])){
+}elseif(!empty($_GET['addIns'])){
 //filtro
 $zx2 = "idProducto=0";
 //Se revisan los permisos a los productos
@@ -768,7 +768,7 @@ foreach ($arrPermisos as $prod) {
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addTrab'])){
+}elseif(!empty($_GET['addTrab'])){
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 
@@ -804,7 +804,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['modBase'])){
+}elseif(!empty($_GET['modBase'])){
 //Verifico el tipo de usuario que esta ingresando
 $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig_1=1 AND idEstado=1";
@@ -865,7 +865,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['view'])){ ?>
+}elseif(!empty($_GET['view'])){ ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
@@ -1095,7 +1095,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new'])){
+}elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
@@ -1163,7 +1163,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
   
  
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 /**********************************************************/
 //paginador de resultados
 if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}

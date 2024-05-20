@@ -379,7 +379,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 		</div>
 	</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['add_prod'])){
+}elseif(!empty($_GET['add_prod'])){
 	//consulto
 	$SIS_query = '
 	productos_listado.idProducto,
@@ -517,7 +517,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 		</div>
 	</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['add_trac'])){
+}elseif(!empty($_GET['add_trac'])){
 	$w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.idEstado=1";
 	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 	$x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
@@ -573,7 +573,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 	</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addMaterial'])){ ?>
+}elseif(!empty($_GET['addMaterial'])){ ?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 		<div class="box">
@@ -606,7 +606,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 	</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addCuartel'])){
+}elseif(!empty($_GET['addCuartel'])){
 	//filtros para los cuarteles
 	$z ="idPredio=".$_SESSION['sol_apli_basicos']['idPredio'];
 	$z.=" AND idEstado=1 ";
@@ -1064,7 +1064,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 	</script>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['modTrac'])){  ?>
+}elseif(!empty($_GET['modTrac'])){  ?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 		<div class="box">
@@ -1113,7 +1113,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 		</div>
 	</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['modBase'])){
+}elseif(!empty($_GET['modBase'])){
 	//Verifico el tipo de usuario que esta ingresando
 	$y = "idEstado=1";
 	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
@@ -1208,7 +1208,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 		</div>
 	</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['view'])){ ?>
+}elseif(!empty($_GET['view'])){ ?>
 
 	<?php
 	if(isset($_SESSION['sol_apli_basicos']['Carencias'])&&$_SESSION['sol_apli_basicos']['Carencias']!=''){
@@ -1478,7 +1478,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 	</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new_3'])){
+}elseif(!empty($_GET['new_3'])){
 	//filtros para los cuarteles
 	$z ="idPredio=".$_SESSION['sol_apli_basicos']['idPredio'];
 	$z.=" AND idEstado=1 ";
@@ -1936,7 +1936,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 	</script>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new_2'])){  ?>
+}elseif(!empty($_GET['new_2'])){  ?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 		<div class="box">
@@ -1985,7 +1985,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 		</div>
 	</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new'])){
+}elseif(!empty($_GET['new'])){
 	//valido los permisos
 	validaPermisoUser($rowlevel['level'], 3, $dbConn);
 	//se crea filtro
@@ -2083,7 +2083,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 	</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 	/**********************************************************/
 	//paginador de resultados
 	if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}

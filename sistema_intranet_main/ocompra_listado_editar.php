@@ -390,7 +390,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_documentos', $SIS
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addDoc'])){  ?>
+}elseif(!empty($_GET['addDoc'])){  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -485,7 +485,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_bolet
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addBoletaEmp'])){ ?>
+}elseif(!empty($_GET['addBoletaEmp'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -576,7 +576,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addBoleta'])){  
+}elseif(!empty($_GET['addBoleta'])){  
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; ?>
 
@@ -704,7 +704,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_otros
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addOtros'])){  ?>
+}elseif(!empty($_GET['addOtros'])){  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -855,7 +855,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_servi
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addServicios'])){  ?>
+}elseif(!empty($_GET['addServicios'])){  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -1005,7 +1005,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_arrie
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addArriendo'])){  ?>
+}elseif(!empty($_GET['addArriendo'])){  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -1169,7 +1169,7 @@ foreach ($arrPermisos as $prod) {
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addIns'])){  
+}elseif(!empty($_GET['addIns'])){  
 //Se revisan los permisos a los productos
 $SIS_query = 'idProducto';
 $SIS_join  = '';
@@ -1240,7 +1240,7 @@ foreach ($arrPermisos as $prod) {
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['editProd'])){  
+}elseif(!empty($_GET['editProd'])){  
 //Traigo los datos del producto previamente seleccionado
 $SIS_query = '
 ocompra_listado_existencias_productos.idProducto, 
@@ -1420,7 +1420,7 @@ foreach ($arrPermisos as $prod) {
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['modBase'])){
+}elseif(!empty($_GET['modBase'])){
 //se traen los datos
 $SIS_query = 'idProveedor, Creacion_fecha, Observaciones, idSistema';
 $SIS_join  = '';
@@ -1472,7 +1472,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['view'])){
+}elseif(!empty($_GET['view'])){
 //Se consulta
 $SIS_query = '
 usuarios_listado.Nombre AS Usuario,

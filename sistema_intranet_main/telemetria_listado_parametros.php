@@ -324,7 +324,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else  {
+}else{
 
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
@@ -407,7 +407,7 @@ $arrFinalGruposRev[0] = 'S/C';
 						<?php } ?>
 						<?php if($rowdata['id_Geo']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
-						<?php } elseif($rowdata['id_Geo']==2){ ?>
+						<?php }elseif($rowdata['id_Geo']==2){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
 						<?php if($rowdata['id_Sensores']==1){ ?>

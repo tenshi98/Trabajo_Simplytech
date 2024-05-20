@@ -421,7 +421,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso'
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 // tomo los datos del equipo
 $rowdata = db_select_data (false, 'Nombre,id_Geo, id_Sensores, cantSensores', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 

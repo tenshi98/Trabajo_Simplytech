@@ -186,7 +186,7 @@ $row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecci
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['cloneMuestra'])){
+}elseif(!empty($_GET['cloneMuestra'])){
 //Armo cadena
 $SIS_query  = 'Nombre,idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3, Validar_1, Validar_2, Validar_3';
 for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
@@ -363,7 +363,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['editMuestra'])){
+}elseif(!empty($_GET['editMuestra'])){
 //Armo cadena
 $SIS_query  = 'Nombre,idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3, Validar_1, Validar_2, Validar_3';
 for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
@@ -549,7 +549,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addMuestra'])){
+}elseif(!empty($_GET['addMuestra'])){
 //Armo cadena
 $SIS_query  = 'Nombre,idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3, Validar_1, Validar_2, Validar_3';
 for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
@@ -719,7 +719,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addMaquina'])){
+}elseif(!empty($_GET['addMaquina'])){
 // Se traen todos los datos del analisis
 $SIS_query = 'idAnalisis,Creacion_fecha,idTipo,Temporada,idCategoria,idProducto,idUbicacion,idUbicacion_lvl_1,idUbicacion_lvl_2,idUbicacion_lvl_3,idUbicacion_lvl_4,idUbicacion_lvl_5,idSistema';
 $SIS_join  = '';
@@ -777,7 +777,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addTrab'])){
+}elseif(!empty($_GET['addTrab'])){
 // Se traen todos los datos del analisis
 $SIS_query = 'idAnalisis,Creacion_fecha,idTipo,Temporada,idCategoria,idProducto,idUbicacion,idUbicacion_lvl_1,idUbicacion_lvl_2,idUbicacion_lvl_3,idUbicacion_lvl_4,idUbicacion_lvl_5,idSistema';
 $SIS_join  = '';
@@ -835,7 +835,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['modBase'])){
+}elseif(!empty($_GET['modBase'])){
 // Se traen todos los datos del analisis
 $SIS_query = 'Creacion_fecha,idTipo,Temporada,idCategoria,idProducto,idUbicacion,idUbicacion_lvl_1,idUbicacion_lvl_2,idUbicacion_lvl_3,idUbicacion_lvl_4,idUbicacion_lvl_5,Observaciones,idSistema';
 $SIS_join  = '';
@@ -936,7 +936,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['edit'])){
+}elseif(!empty($_GET['edit'])){
 // Se traen todos los datos del analisis
 $SIS_query = '
 cross_quality_registrar_inspecciones.fecha_auto,

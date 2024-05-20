@@ -139,7 +139,7 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Filtro de busqueda
 $w  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 $w .= " AND telemetria_listado.id_Geo=2";                                                //Geolocalizacion inactiva

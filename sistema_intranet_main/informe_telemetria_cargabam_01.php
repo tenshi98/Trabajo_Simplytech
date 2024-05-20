@@ -193,7 +193,7 @@ $arrCarga = db_select_array (false, $SIS_query, 'telemetria_carga_bam', $SIS_joi
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 $w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){

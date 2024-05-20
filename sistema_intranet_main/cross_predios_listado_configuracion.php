@@ -352,7 +352,7 @@ if(!empty($_GET['mod'])){
 	<div class="clearfix"></div>
 	</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['edit_puntos'])){
+}elseif(!empty($_GET['edit_puntos'])){
 // consulto los datos
 $query = "SELECT
 cross_predios_listado_zonas.Nombre,
@@ -704,7 +704,7 @@ array_push( $arrZonas,$row );
 <div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['edit_zona'])){
+}elseif(!empty($_GET['edit_zona'])){
 // consulto los datos
 $query = "SELECT Nombre,Codigo,idCategoria,idProducto,AnoPlantacion,Hectareas,Hileras,Plantas,
 idEstadoProd,DistanciaPlant,DistanciaHileras,idEstado
@@ -783,7 +783,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new'])){
+}elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
@@ -841,7 +841,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {	 
+}else{	 
 // consulto los datos
 $query = "SELECT Nombre
 FROM `cross_predios_listado`

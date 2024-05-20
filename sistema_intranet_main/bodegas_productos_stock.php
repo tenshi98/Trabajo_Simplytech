@@ -136,7 +136,7 @@ array_push( $arrProductos,$row );
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['idBodega'])){ 
+}elseif(!empty($_GET['idBodega'])){ 
 
              
   
@@ -236,7 +236,7 @@ array_push( $arrProductos,$row );
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Se inicializa el paginador de resultados
 //tomo el numero de la pagina si es que este existe
 if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}

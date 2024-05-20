@@ -197,7 +197,7 @@ if(!empty($_GET['cancel'])){  ?>
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addtarea'])){
+}elseif(!empty($_GET['addtarea'])){
 //se dibujan los inputs
 $Form_Inputs = new Inputs();
 //Verifico el tipo de usuario que esta ingresando
@@ -306,7 +306,7 @@ $usrfil .= $responsables;
 </script>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addResponsable'])){
+}elseif(!empty($_GET['addResponsable'])){
 //se dibujan los inputs
 $Form_Inputs = new Inputs();
 //Verifico el tipo de usuario que esta ingresando
@@ -402,7 +402,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 </script>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['modBase'])){ ?>
+}elseif(!empty($_GET['modBase'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -446,7 +446,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['view'])){ ?>
+}elseif(!empty($_GET['view'])){ ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
@@ -605,7 +605,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new'])){
+}elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 
@@ -653,7 +653,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 /**********************************************************/
 //paginador de resultados
 if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}

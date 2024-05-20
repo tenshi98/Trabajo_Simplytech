@@ -185,7 +185,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['submit'])){
+}elseif(!empty($_GET['submit'])){
 //obtengo los datos del cliente
 $query = "SELECT Nombre,ApellidoPat, ApellidoMat
 FROM `apoderados_listado`
@@ -355,7 +355,7 @@ array_push( $arrFacturaciones,$row );
 <?php } ?>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else  {
+}else{
 //filtro sistema
 $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 

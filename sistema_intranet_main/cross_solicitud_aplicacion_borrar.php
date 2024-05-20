@@ -64,7 +64,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['edit_Cuarteles'])){ ?>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 /**********************************************************/
 //paginador de resultados
 if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}

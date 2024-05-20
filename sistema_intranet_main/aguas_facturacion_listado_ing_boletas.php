@@ -145,7 +145,7 @@ $Form_Inputs = new Inputs();
 <div class="clearfix"></div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //filtro por sistema
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 

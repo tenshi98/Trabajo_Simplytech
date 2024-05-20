@@ -108,7 +108,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 
  
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 /**********************************************************/
 $arrAmonestacion = array();
 $query = "SELECT idTablaCarga,Tramo, Valor_Desde, Valor_Hasta, Valor_Pago

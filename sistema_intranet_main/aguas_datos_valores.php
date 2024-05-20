@@ -136,7 +136,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new'])){
+}elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
@@ -194,7 +194,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Variable de busqueda
 $z = "WHERE aguas_datos_valores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 // Se trae un listado con todos los elementos

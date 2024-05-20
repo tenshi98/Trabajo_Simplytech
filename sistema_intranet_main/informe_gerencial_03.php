@@ -670,7 +670,7 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //sistema
 $y = "licitacion_listado.idEstado=1 AND licitacion_listado.idAprobado=2 ";		
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";

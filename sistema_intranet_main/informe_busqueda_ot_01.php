@@ -223,7 +223,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_listado', $SIS_join
 	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 

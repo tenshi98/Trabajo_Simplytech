@@ -201,7 +201,7 @@ if(isset($_GET['type'])&&$_GET['type']!=''&&$_GET['type']==1){
 <div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {
+}else{
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
