@@ -81,12 +81,8 @@ if($_SESSION['usuario']['basic_data']['password']=='81dc9bdb52d04dc20036dbd8313e
 	</div>
 <?php } ?>
 
-
-
-			<!-- InstanceBeginEditable name="Bodytext" -->
-
-			<?php include '1include_principal.php'; ?>
-			<?php widget_validator(); ?>
+<?php include '1include_principal.php'; ?>
+<?php widget_validator(); ?>
 
 <?php
 /**********************************************************************************************************************************/
