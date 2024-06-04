@@ -103,6 +103,8 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['CrossCrane_grupo_voltaje']))          $CrossCrane_grupo_voltaje           = $_POST['CrossCrane_grupo_voltaje'];
 	if (!empty($_POST['CrossCrane_grupo_motor_subida']))     $CrossCrane_grupo_motor_subida      = $_POST['CrossCrane_grupo_motor_subida'];
 	if (!empty($_POST['CrossCrane_grupo_motor_bajada']))     $CrossCrane_grupo_motor_bajada      = $_POST['CrossCrane_grupo_motor_bajada'];
+	if (!empty($_POST['MedicionTiempo']))                    $MedicionTiempo                     = $_POST['MedicionTiempo'];
+	if (!empty($_POST['CrossCMinHorno']))                    $CrossCMinHorno                     = $_POST['CrossCMinHorno'];
 
 	//Otros datos
 	if (!empty($_POST['SensoresFechaUso_Fake']))             $SensoresFechaUso_Fake              = $_POST['SensoresFechaUso_Fake'];
@@ -222,6 +224,8 @@ require_once '0_validate_user_1.php';
 			case 'CrossCrane_grupo_voltaje':          if(empty($CrossCrane_grupo_voltaje)){          $error['CrossCrane_grupo_voltaje']      = 'error/No ha seleccionado el grupo de voltaje';}break;
 			case 'CrossCrane_grupo_motor_subida':     if(empty($CrossCrane_grupo_motor_subida)){     $error['CrossCrane_grupo_motor_subida'] = 'error/No ha seleccionado el grupo de motor de subida';}break;
 			case 'CrossCrane_grupo_motor_bajada':     if(empty($CrossCrane_grupo_motor_bajada)){     $error['CrossCrane_grupo_motor_bajada'] = 'error/No ha seleccionado el grupo de motor de bajada';}break;
+			case 'MedicionTiempo':                    if(empty($MedicionTiempo)){                    $error['MedicionTiempo']                = 'error/No ha ingresado la medicion de tiempo';}break;
+			case 'CrossCMinHorno':                    if(empty($CrossCMinHorno)){                    $error['CrossCMinHorno']                = 'error/No ha ingresado la temperatura minima del horno';}break;
 
 		}
 	}
@@ -386,22 +390,21 @@ require_once '0_validate_user_1.php';
 				if(isset($CrossCrane_grupo_voltaje) && $CrossCrane_grupo_voltaje!=''){            $SIS_data .= ",'".$CrossCrane_grupo_voltaje."'";          }else{$SIS_data .= ",''";}
 				if(isset($CrossCrane_grupo_motor_subida) && $CrossCrane_grupo_motor_subida!=''){  $SIS_data .= ",'".$CrossCrane_grupo_motor_subida."'";     }else{$SIS_data .= ",''";}
 				if(isset($CrossCrane_grupo_motor_bajada) && $CrossCrane_grupo_motor_bajada!=''){  $SIS_data .= ",'".$CrossCrane_grupo_motor_bajada."'";     }else{$SIS_data .= ",''";}
+				if(isset($MedicionTiempo) && $MedicionTiempo!=''){                                $SIS_data .= ",'".$MedicionTiempo."'";                    }else{$SIS_data .= ",''";}
+				if(isset($CrossCMinHorno) && $CrossCMinHorno!=''){                                $SIS_data .= ",'".$CrossCMinHorno."'";                    }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idSistema,idEstado,Identificador,Nombre,NumSerie,idCiudad,idComuna,
-				Direccion,GeoLatitud,GeoLongitud,GeoErrores,GeoVelocidad,GeoDireccion,GeoMovimiento,
-				GeoTiempoDetencion,LastUpdateFecha,LastUpdateHora,id_Geo,id_Sensores,cantSensores,
-				idDispositivo,idShield,idFormaEnvio,idGenerador,idTelGenerador,FechaInsGen,Sim_Num_Tel,
-				Sim_Num_Serie,Sim_marca,Sim_modelo,Sim_Compania,idEstadoEncendido,LimiteVelocidad,
-				IdentificadorEmpresa,NDetenciones,NErrores,NAlertas,idAlertaTemprana,AlertaTemprCritica,
-				AlertaTemprNormal,idUsoFTP,FTP_Carpeta,idBackup,NregBackup,idUbicacion,Estado,TiempoFueraLinea,
-				TiempoDetencion,Direccion_img,idZona,IP_Client,SensorActivacionID,SensorActivacionValor,
-				Jornada_inicio,Jornada_termino,Colacion_inicio,Colacion_termino,Microparada,Capacidad,idUsoPredio,idTipo,Marca,Modelo,Patente,Num_serie,
-				AnoFab,CapacidadPersonas,CapacidadKilos,MCubicos,idTab,idGrupoDespliegue,idGrupoVmonofasico,idGrupoVTrifasico,
-				idGrupoPotencia,idGrupoConsumoMesHabil,idGrupoConsumoMesCurso,idGrupoEstanque,CrossCrane_tiempo_revision,
-				CrossCrane_grupo_amperaje,CrossCrane_grupo_elevacion,CrossCrane_grupo_giro,
-				CrossCrane_grupo_carro,CrossCrane_grupo_voltaje,CrossCrane_grupo_motor_subida,
-				CrossCrane_grupo_motor_bajada';
+				$SIS_columns = 'idSistema,idEstado,Identificador,Nombre,NumSerie,idCiudad,idComuna,Direccion,GeoLatitud,GeoLongitud,GeoErrores,
+				GeoVelocidad,GeoDireccion,GeoMovimiento,GeoTiempoDetencion,LastUpdateFecha,LastUpdateHora,id_Geo,id_Sensores,cantSensores,
+				idDispositivo,idShield,idFormaEnvio,idGenerador,idTelGenerador,FechaInsGen,Sim_Num_Tel,Sim_Num_Serie,Sim_marca,Sim_modelo,
+				Sim_Compania,idEstadoEncendido,LimiteVelocidad,IdentificadorEmpresa,NDetenciones,NErrores,NAlertas,idAlertaTemprana,
+				AlertaTemprCritica,AlertaTemprNormal,idUsoFTP,FTP_Carpeta,idBackup,NregBackup,idUbicacion,Estado,TiempoFueraLinea,
+				TiempoDetencion,Direccion_img,idZona,IP_Client,SensorActivacionID,SensorActivacionValor,Jornada_inicio,Jornada_termino,
+				Colacion_inicio,Colacion_termino,Microparada,Capacidad,idUsoPredio,idTipo,Marca,Modelo,Patente,Num_serie,AnoFab,
+				CapacidadPersonas,CapacidadKilos,MCubicos,idTab,idGrupoDespliegue,idGrupoVmonofasico,idGrupoVTrifasico,idGrupoPotencia,
+				idGrupoConsumoMesHabil,idGrupoConsumoMesCurso,idGrupoEstanque,CrossCrane_tiempo_revision,CrossCrane_grupo_amperaje,
+				CrossCrane_grupo_elevacion,CrossCrane_grupo_giro,CrossCrane_grupo_carro,CrossCrane_grupo_voltaje,CrossCrane_grupo_motor_subida,
+				CrossCrane_grupo_motor_bajada,MedicionTiempo,CrossCMinHorno';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Si ejecuto correctamente la consulta
@@ -603,6 +606,8 @@ require_once '0_validate_user_1.php';
 				if(isset($CrossCrane_grupo_voltaje)&& $CrossCrane_grupo_voltaje != '' ){                $SIS_data .= ",CrossCrane_grupo_voltaje='".$CrossCrane_grupo_voltaje."'";}
 				if(isset($CrossCrane_grupo_motor_subida)&& $CrossCrane_grupo_motor_subida != '' ){      $SIS_data .= ",CrossCrane_grupo_motor_subida='".$CrossCrane_grupo_motor_subida."'";}
 				if(isset($CrossCrane_grupo_motor_bajada)&& $CrossCrane_grupo_motor_bajada != '' ){      $SIS_data .= ",CrossCrane_grupo_motor_bajada='".$CrossCrane_grupo_motor_bajada."'";}
+				if(isset($MedicionTiempo)&& $MedicionTiempo != '' ){                                    $SIS_data .= ",MedicionTiempo='".$MedicionTiempo."'";}
+				if(isset($CrossCMinHorno)&& $CrossCMinHorno != '' ){                                    $SIS_data .= ",CrossCMinHorno='".$CrossCMinHorno."'";}
 
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'telemetria_listado', 'idTelemetria = "'.$idTelemetria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);

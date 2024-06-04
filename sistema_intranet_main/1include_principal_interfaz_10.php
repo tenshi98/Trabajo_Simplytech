@@ -49,7 +49,6 @@ $_SESSION['menu'] = 2;
 										$_SESSION['usuario']['basic_data']['idTipoUsuario'],
 										$_SESSION['usuario']['basic_data']['idUsuario'],
 										50,
-										50,
 										$dbConn);
 
 			?>

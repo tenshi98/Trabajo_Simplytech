@@ -52,7 +52,7 @@ $SIS_query = 'Nombre,id_Geo, id_Sensores,Capacidad, CrossCrane_tiempo_revision, 
 CrossCrane_grupo_elevacion, CrossCrane_grupo_giro, CrossCrane_grupo_carro,CrossCrane_grupo_voltaje,
 CrossCrane_grupo_motor_subida, CrossCrane_grupo_motor_bajada, idGrupoDespliegue,idGrupoVmonofasico,
 idGrupoVTrifasico, idGrupoPotencia, idGrupoConsumoMesHabil, idGrupoConsumoMesCurso,idGrupoEstanque,
-idGenerador, idTelGenerador, FechaInsGen, idUbicacion';
+idGenerador, idTelGenerador, FechaInsGen, idUbicacion,CrossCMinHorno';
 $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //Verifico el tipo de usuario que esta ingresando
@@ -124,13 +124,14 @@ $w.= " AND telemetria_listado.idTab=9";//CrossEnergy
 					if(isset($idTelGenerador)){                 $x17 = $idTelGenerador;                   }else{$x17 = $rowdata['idTelGenerador'];}
 					if(isset($FechaInsGen)){                    $x18 = $FechaInsGen;                      }else{$x18 = $rowdata['FechaInsGen'];}
 					if(isset($idUbicacion)){                    $x19 = $idUbicacion;                      }else{$x19 = $rowdata['idUbicacion'];}
+					if(isset($CrossCMinHorno)){                 $x20 = $CrossCMinHorno;                   }else{$x20 = $rowdata['CrossCMinHorno'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
-					$Form_Inputs->form_tittle(3, 'Crosschecking');
+					$Form_Inputs->form_tittle(3, 'SimpliChecking');
 					$Form_Inputs->form_input_number('Capacidad Nebulizador','Capacidad', $x1, 1);
 
-					$Form_Inputs->form_tittle(3, 'CrossCrane Gruas');
+					$Form_Inputs->form_tittle(3, 'SimpliCrane Gruas');
 					$Form_Inputs->form_time('Hora Revision','CrossCrane_tiempo_revision', $x2, 1, 1);
 					$Form_Inputs->form_select('Grupo Alimentacion','CrossCrane_grupo_amperaje', $x3, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);
 					$Form_Inputs->form_select('Grupo Elevacion','CrossCrane_grupo_elevacion', $x4, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);
@@ -138,11 +139,11 @@ $w.= " AND telemetria_listado.idTab=9";//CrossEnergy
 					$Form_Inputs->form_select('Grupo Carro','CrossCrane_grupo_carro', $x6, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);
 					$Form_Inputs->form_select('Grupo Voltaje','CrossCrane_grupo_voltaje', $x7, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);
 
-					$Form_Inputs->form_tittle(3, 'CrossCrane Ascensores');
+					$Form_Inputs->form_tittle(3, 'SimpliCrane Ascensores');
 					$Form_Inputs->form_select('Grupo Amperaje Motor Subida','CrossCrane_grupo_motor_subida', $x8, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);
 					$Form_Inputs->form_select('Grupo Amperaje Motor Bajada','CrossCrane_grupo_motor_bajada', $x9, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);
 
-					$Form_Inputs->form_tittle(3, 'CrossEnergy');
+					$Form_Inputs->form_tittle(3, 'SimpliEnergy');
 					$Form_Inputs->form_post_data(2,1,1, '<strong>Grupos a Desplegar: </strong>Permite seleccionar los grupo de sensores a desplegar en el grafico de CrossEnergy.' );
 					$Form_Inputs->form_select_filter('Grupo Despliegue','idGrupoDespliegue', $x10, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);
 					$Form_Inputs->form_select_filter('Grupo V monofasico','idGrupoVmonofasico', $x11, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);
@@ -153,7 +154,7 @@ $w.= " AND telemetria_listado.idTab=9";//CrossEnergy
 					$Form_Inputs->form_select_filter('Grupo Estanque Combustible','idGrupoEstanque', $x16, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);
 
 					//Si esta activo el uso del generador
-					$Form_Inputs->form_tittle(3, 'CrossCrane Gruas');
+					$Form_Inputs->form_tittle(3, 'SimpliCrane Gruas');
 					if(isset($rowdata['idGenerador'])&&$rowdata['idGenerador']==1){
 						$Form_Inputs->form_post_data(2,1,1, '<strong>Uso Generador: </strong>Indica si la alimentacion electrica es directa o por generador, despliega una lista de equipos de telemetria configurados con el tab de <strong>CrossE</strong>, esto genera un boton en el widget principal.' );
 						$Form_Inputs->form_select_filter('Generador','idTelGenerador', $x17, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);
@@ -161,6 +162,11 @@ $w.= " AND telemetria_listado.idTab=9";//CrossEnergy
 					}
 					$Form_Inputs->form_post_data(2,1,1, '<strong>Ubicación: </strong>Determina si el equipo esta en la planta de mantencion o en una obra.' );
 					$Form_Inputs->form_select('Ubicación Equipo','idUbicacion', $x19, 1, 'idUbicacion', 'Nombre', 'core_telemetria_ubicaciones', 0, '', $dbConn);
+
+					$Form_Inputs->form_tittle(3, 'SimpliC');
+					$Form_Inputs->form_post_data(2,1,1, '<strong>Temperatura Minima del Horno: </strong>Se establece la temperatura minima sobre la cual se considera el horno encendido.' );
+					$Form_Inputs->form_input_number('Temperatura Minima del Horno','CrossCMinHorno', $x20, 1);
+
 
 					$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 					?>

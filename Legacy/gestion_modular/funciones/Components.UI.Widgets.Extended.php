@@ -10111,7 +10111,7 @@ function widget_CrossC_Walmart($timeBack, $seguimiento, $idSistema, $idTipoUsuar
 }
 /*******************************************************************************************************************/
 //Muestra los promedios de los equipos
-function widget_CrossC_WalmartHornos($timeBack, $seguimiento, $idSistema, $idTipoUsuario, $idUsuario, $NMaxSens, $MIN_Prom, $dbConn){
+function widget_CrossC_WalmartHornos($timeBack, $seguimiento, $idSistema, $idTipoUsuario, $idUsuario, $NMaxSens, $dbConn){
 
 	//Guardar
 	$_SESSION['usuario']['widget_CrossC_WalmartHornos']['timeBack']      = $timeBack;
@@ -10120,13 +10120,15 @@ function widget_CrossC_WalmartHornos($timeBack, $seguimiento, $idSistema, $idTip
 	$_SESSION['usuario']['widget_CrossC_WalmartHornos']['idTipoUsuario'] = $idTipoUsuario;
 	$_SESSION['usuario']['widget_CrossC_WalmartHornos']['idUsuario']     = $idUsuario;
 	$_SESSION['usuario']['widget_CrossC_WalmartHornos']['NMaxSens']      = $NMaxSens;
-	$_SESSION['usuario']['widget_CrossC_WalmartHornos']['MIN_Prom']      = $MIN_Prom;
 
 	//variables
-	$arrDato        = array();
+	$arrDatoGrafico = array();
+	$arrDatoEquipo  = array();
 	$arrDatoX       = array();
 	$arrSubgrupo    = array();
+	$arrGraficos    = array();
 	$CountGrupo     = 0;
+	$Temp_1         = '';
 	$HoraInicio     = restahoras($timeBack,hora_actual());
 	$FechaInicio    = fecha_actual();
 	$HoraTermino    = hora_actual();
@@ -10166,7 +10168,8 @@ function widget_CrossC_WalmartHornos($timeBack, $seguimiento, $idSistema, $idTip
 	telemetria_listado.TiempoFueraLinea,
 	telemetria_listado.NErrores,
 	telemetria_listado.NAlertas,
-	telemetria_listado.MedicionTiempo';
+	telemetria_listado.MedicionTiempo,
+	telemetria_listado.CrossCMinHorno';
 	for ($i = 1; $i <= $NMaxSens; $i++) {
 		$SIS_query .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
 		$SIS_query .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
@@ -10198,13 +10201,13 @@ function widget_CrossC_WalmartHornos($timeBack, $seguimiento, $idSistema, $idTip
 				if(isset($equip['SensoresActivo_'.$i],$equip['SensoresMedActual_'.$i],$equip['SensoresUniMed_'.$i])&&$equip['SensoresActivo_'.$i]==1&&$equip['SensoresMedActual_'.$i]<999&&$equip['SensoresUniMed_'.$i]==3){
 					/*****************************/
 					//verifico si existe
-					if(isset($arrDato[$equip['idTelemetria']][$equip['SensoresGrupo_'.$i]]['Valor'])&&$arrDato[$equip['idTelemetria']][$equip['SensoresGrupo_'.$i]]['Valor']!=''){
-						$arrDato[$equip['idTelemetria']][$equip['SensoresGrupo_'.$i]]['Valor'] = $arrDato[$equip['idTelemetria']][$equip['SensoresGrupo_'.$i]]['Valor'] + $equip['SensoresMedActual_'.$i];
-						$arrDato[$equip['idTelemetria']][$equip['SensoresGrupo_'.$i]]['Cuenta']++;
+					if(isset($arrDatoEquipo[$equip['idTelemetria']][$equip['SensoresGrupo_'.$i]]['Valor'])&&$arrDatoEquipo[$equip['idTelemetria']][$equip['SensoresGrupo_'.$i]]['Valor']!=''){
+						$arrDatoEquipo[$equip['idTelemetria']][$equip['SensoresGrupo_'.$i]]['Valor'] = $arrDatoEquipo[$equip['idTelemetria']][$equip['SensoresGrupo_'.$i]]['Valor'] + $equip['SensoresMedActual_'.$i];
+						$arrDatoEquipo[$equip['idTelemetria']][$equip['SensoresGrupo_'.$i]]['Cuenta']++;
 					//si no lo crea
 					}else{
-						$arrDato[$equip['idTelemetria']][$equip['SensoresGrupo_'.$i]]['Valor']  = $equip['SensoresMedActual_'.$i];
-						$arrDato[$equip['idTelemetria']][$equip['SensoresGrupo_'.$i]]['Cuenta'] = 1;
+						$arrDatoEquipo[$equip['idTelemetria']][$equip['SensoresGrupo_'.$i]]['Valor']  = $equip['SensoresMedActual_'.$i];
+						$arrDatoEquipo[$equip['idTelemetria']][$equip['SensoresGrupo_'.$i]]['Cuenta'] = 1;
 					}
 					/*****************************/
 					//verifico si existe
@@ -10240,6 +10243,121 @@ function widget_CrossC_WalmartHornos($timeBack, $seguimiento, $idSistema, $idTip
 			}
 		}
 
+		/*************************************************************/
+		//identificacion
+		$idTelemetria = $arrEquipo[0]['idTelemetria'];
+		$cantSensores = $arrEquipo[0]['cantSensores'];
+
+		/*****************************/
+		//Se consulta
+		$SIS_query = 'FechaSistema,HoraSistema';
+		for ($i = 1; $i <= $cantSensores; $i++) {
+			$SIS_query .= ',Sensor_'.$i.' AS SensorValue_'.$i;
+		}
+		$SIS_join  = '';
+		$SIS_where = '(TimeStamp BETWEEN "'.$FechaInicio.' '.$HoraInicio.'" AND "'.$FechaTermino.' '.$HoraTermino.'")';
+		$SIS_order = 'FechaSistema ASC,HoraSistema ASC LIMIT 10000';
+		$arrMediciones = array();
+		$arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$idTelemetria, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMediciones');
+
+		/*****************************/
+		//si hay mediciones
+		if($arrMediciones!=false){
+			//variables
+			$arrDato = array();
+			/******************************/
+			//Se recorren las mediciones
+			foreach($arrMediciones as $cli) {
+				//Busco los grupos que utiliza
+				for ($i = 1; $i <= $cantSensores; $i++) {
+					/******************************/
+					//Verifico si el sensor esta activo para guardar el dato, esta dentro de los parametros y es un sensor de temperatura
+					if(isset($arrEquipo[0]['SensoresActivo_'.$i],$cli['SensorValue_'.$i],$arrEquipo[0]['SensoresUniMed_'.$i])&&$arrEquipo[0]['SensoresActivo_'.$i]==1&&$cli['SensorValue_'.$i]<999&&$arrEquipo[0]['SensoresUniMed_'.$i]==3){
+						/*****************************/
+						//verifico si existe
+						if(isset($arrGraficos[$arrEquipo[0]['SensoresGrupo_'.$i]]['Valor'])&&$arrGraficos[$arrEquipo[0]['SensoresGrupo_'.$i]]['Valor']!=''){
+							$arrGraficos[$arrEquipo[0]['SensoresGrupo_'.$i]]['Valor'] = $arrGraficos[$arrEquipo[0]['SensoresGrupo_'.$i]]['Valor'] + $cli['SensorValue_'.$i];
+							$arrGraficos[$arrEquipo[0]['SensoresGrupo_'.$i]]['Cuenta']++;
+						//si no lo crea
+						}else{
+							$arrGraficos[$arrEquipo[0]['SensoresGrupo_'.$i]]['Valor']  = $cli['SensorValue_'.$i];
+							$arrGraficos[$arrEquipo[0]['SensoresGrupo_'.$i]]['Cuenta'] = 1;
+						}
+					}
+				}
+				/******************************/
+				//se crean las nuevas columnas
+				if($arrGrupos!=false){
+					foreach ($arrGrupos as $gru) {
+						//verifico si existe el dato
+						if(isset($arrDatoGrafico[$gru['idGrupo']]['Value'])&&$arrDatoGrafico[$gru['idGrupo']]['Value']!=''){
+							//si hay datos
+							if(isset($arrGraficos[$gru['idGrupo']]['Cuenta'])&&$arrGraficos[$gru['idGrupo']]['Cuenta']!=0){
+								$arrDatoGrafico[$gru['idGrupo']]['Value'] .= ", ".cantidades_google(Cantidades($arrGraficos[$gru['idGrupo']]['Valor']/$arrGraficos[$gru['idGrupo']]['Cuenta'], 2));
+							}else{
+								$arrDatoGrafico[$gru['idGrupo']]['Value'] .= ", 0";
+							}
+						//si no lo crea
+						}else{
+							//si hay datos
+							if(isset($arrGraficos[$gru['idGrupo']]['Cuenta'])&&$arrGraficos[$gru['idGrupo']]['Cuenta']!=0){
+								$arrDatoGrafico[$gru['idGrupo']]['Value'] = cantidades_google(Cantidades($arrGraficos[$gru['idGrupo']]['Valor']/$arrGraficos[$gru['idGrupo']]['Cuenta'], 2));
+							}else{
+								$arrDatoGrafico[$gru['idGrupo']]['Value'] = 0;
+							}
+						}
+					}
+				}
+				/******************************/
+				//Guardo la fecha
+				$Temp_1 .= "'".Fecha_estandar($cli['FechaSistema'])." - ".$cli['HoraSistema']."',";
+			}
+		}
+
+		/*************************************************************/
+		//variables
+		$x_graph_count        = 0;
+		$Graphics_xData       = 'var xData = [';
+		$Graphics_yData       = 'var yData = [';
+		$Graphics_names       = 'var names = [';
+		$Graphics_types       = 'var types = [';
+		$Graphics_texts       = 'var texts = [';
+		$Graphics_lineColors  = 'var lineColors = [';
+		$Graphics_lineDash    = 'var lineDash = [';
+		$Graphics_lineWidth   = 'var lineWidth = [';
+		//Se crean los datos
+		if($arrGrupos!=false){
+			foreach ($arrGrupos as $gru) {
+				if(isset($arrDatoGrafico[$gru['idGrupo']]['Value'])&&$arrDatoGrafico[$gru['idGrupo']]['Value']!=''){
+					//las fechas
+					$Graphics_xData      .='['.$Temp_1.'],';
+					//los valores
+					$Graphics_yData      .='['.$arrDatoGrafico[$gru['idGrupo']]['Value'].'],';
+					//los nombres
+					$Graphics_names      .= '"'.DeSanitizar(TituloMenu($gru['Nombre'])).'",';
+					//los tipos
+					$Graphics_types      .= "'',";
+					//si lleva texto en las burbujas
+					$Graphics_texts      .= "[],";
+					//los colores de linea
+					$Graphics_lineColors .= "'',";
+					//los tipos de linea
+					$Graphics_lineDash   .= "'',";
+					//los anchos de la linea
+					$Graphics_lineWidth  .= "'',";
+					//contador
+					$x_graph_count++;
+				}
+			}
+		}
+		$Graphics_xData      .= '];';
+		$Graphics_yData      .= '];';
+		$Graphics_names      .= '];';
+		$Graphics_types      .= '];';
+		$Graphics_texts      .= '];';
+		$Graphics_lineColors .= '];';
+		$Graphics_lineDash   .= '];';
+		$Graphics_lineWidth  .= '];';
 
 		/*************************************************************/
 		/*************************************************************/
@@ -10256,10 +10374,10 @@ function widget_CrossC_WalmartHornos($timeBack, $seguimiento, $idSistema, $idTip
 
 					<div id="loadingWalmart"></div>
 
-					<div class="table-responsive" id="update_content">
+					<div class="" id="update_content__horno">
 						<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 							<div class="row">
-								<div class="table-wrapper-scroll-y my-custom-scrollbar">
+								<div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
 									<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 										<thead>
 											<tr role="row">
@@ -10315,11 +10433,11 @@ function widget_CrossC_WalmartHornos($timeBack, $seguimiento, $idSistema, $idTip
 												//verificar temperaturas
 												if(isset($arrDatoX[$equip['idTelemetria']]['Cuenta'])&&$arrDatoX[$equip['idTelemetria']]['Cuenta']!=0){
 													$PROM_X = $arrDatoX[$equip['idTelemetria']]['Valor'] / $arrDatoX[$equip['idTelemetria']]['Cuenta'];
-													//verifico el promedio
-													if($PROM_X<$MIN_Prom){
-														$danger_icon = '<a href="#" title="Equipo Encendido" class="btn btn-default btn-sm tooltip"><span style="color:#5cb85c;"><i class="fa fa-toggle-on" aria-hidden="true"></i></span></a>';
+													//verifico si esta encendido
+													if(isset($equip['CrossCMinHorno'])&&$equip['CrossCMinHorno']!=0&&$PROM_X>=$equip['CrossCMinHorno']){
+														$danger_icon = '<a href="#" title="Equipo Encendido" class="btn btn-default btn-sm tooltip" style="position: inherit;display: inherit;"><span style="color:#5cb85c;"><i class="fa fa-toggle-on" aria-hidden="true"></i></span></a>';
 													}else{
-														$danger_icon = '<a href="#" title="Equipo Apagado"  class="btn btn-default btn-sm tooltip"><span style="color:#d9534f;"><i class="fa fa-toggle-off" aria-hidden="true"></i></span></a>';
+														$danger_icon = '<a href="#" title="Equipo Apagado"   class="btn btn-default btn-sm tooltip" style="position: inherit;display: inherit;"><span style="color:#d9534f;"><i class="fa fa-toggle-off" aria-hidden="true"></i></span></a>';
 													}
 												}
 
@@ -10327,13 +10445,13 @@ function widget_CrossC_WalmartHornos($timeBack, $seguimiento, $idSistema, $idTip
 												<tr class="odd '.$danger_color.'">
 													<td>'.TituloMenu($equip['Nombre']).'<br/>'.fecha_estandar($equip['LastUpdateFecha']).' a las '.$equip['LastUpdateHora'].' hrs.</td>
 													<td>'.$danger_icon.'</td>
-													<td>'.Cantidades($equip['MedicionTiempo']/3600, 2).'</td>';
+													<td>'.Cantidades($equip['MedicionTiempo']/3600, 1).'</td>';
 													//se crean las nuevas columnas
 													if($arrGrupos!=false){
 														foreach ($arrGrupos as $gru) {
 															//verifico si existe
-															if(isset($arrDato[$equip['idTelemetria']][$gru['idGrupo']]['Cuenta'])&&$arrDato[$equip['idTelemetria']][$gru['idGrupo']]['Cuenta']!=0){
-																$PromGroup = $arrDato[$equip['idTelemetria']][$gru['idGrupo']]['Valor'] / $arrDato[$equip['idTelemetria']][$gru['idGrupo']]['Cuenta'];
+															if(isset($arrDatoEquipo[$equip['idTelemetria']][$gru['idGrupo']]['Cuenta'])&&$arrDatoEquipo[$equip['idTelemetria']][$gru['idGrupo']]['Cuenta']!=0){
+																$PromGroup = $arrDatoEquipo[$equip['idTelemetria']][$gru['idGrupo']]['Valor'] / $arrDatoEquipo[$equip['idTelemetria']][$gru['idGrupo']]['Cuenta'];
 															}else{
 																$PromGroup = 0;
 															}
@@ -10359,12 +10477,12 @@ function widget_CrossC_WalmartHornos($timeBack, $seguimiento, $idSistema, $idTip
 							</div>
 						</div>
 						<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-							<div class="row" id="update_graphics">';
+							<div class="row" id="update_graphics__horno">';
 								//si hay datos
 								if(isset($x_graph_count)&&$x_graph_count!=0){
-									//$gr_tittle = 'Grafico '.$arrGruposUsoTemp[$arrGruposUso[0]['idGrupo']];
-									//$gr_unimed = '°C';
-									//$widget .= GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 1);
+									$gr_tittle = 'Grafico '.DeSanitizar($arrEquipo[0]['Nombre']).' últimas '.horas2decimales($timeBack).' horas.';
+									$gr_unimed = '°C';
+									$widget .= GraphLinear_1('graphLinear_1_horno', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 1);
 								//si no hay datos
 								}else{
 									$widget .= '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><br/>';
@@ -10389,12 +10507,12 @@ function widget_CrossC_WalmartHornos($timeBack, $seguimiento, $idSistema, $idTip
 		document.getElementById("loadingWalmart").style.display = "none";
 
 		/* ************************************************************************** */
-		function chngGroupGraphWalmart(idTelemetria,cantSensores,idGrupoUso,idGrupo) {
+		function chngGroupGraphWalmart(idTelemetria,cantSensores) {
 			//muestro el loader
 			document.getElementById("loadingWalmart").style.display = "block";
 
 			//Pido actualizacion
-			$("#update_graphics").load("principal_update_widget_CrossC_Walmart_Sensor.php?idTelemetria=" + idTelemetria + "&cantSensores="+cantSensores + "&idGrupoUso="+idGrupoUso + "&idGrupo="+idGrupo);
+			$("#update_graphics__horno").load("principal_update_widget_CrossC_Walmart_Sensor_Horno.php?idTelemetria=" + idTelemetria + "&cantSensores="+cantSensores);
 
 			//se esperan 3 segundos
 			setTimeout(

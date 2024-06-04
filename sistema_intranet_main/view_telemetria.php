@@ -64,6 +64,7 @@ telemetria_listado.AnoFab,
 telemetria_listado.CapacidadPersonas,
 telemetria_listado.CapacidadKilos,
 telemetria_listado.MCubicos,
+telemetria_listado.CrossCMinHorno,
 opc2.Nombre AS Geo,
 opc3.Nombre AS Sensores,
 opc5.Nombre AS Predio,
@@ -423,13 +424,14 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 							<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=0){ ?>                             <strong>Gruas - Ubicación: </strong><?php echo $rowdata['Ubicacion']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['Grupo_motor_subida'])&&$rowdata['Grupo_motor_subida']!=0){ ?>           <strong>Ascensores - Grupo Amperaje Motor Subida: </strong><?php echo $rowdata['Grupo_motor_subida']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['Grupo_motor_bajada'])&&$rowdata['Grupo_motor_bajada']!=0){ ?>           <strong>Ascensores - Grupo Amperaje Motor Bajada: </strong><?php echo $rowdata['Grupo_motor_bajada']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Grupo_Despliegue'])&&$rowdata['Grupo_Despliegue']!=0){ ?>               <strong>CrossEnergy - Grupo Despliegue: </strong><?php echo $rowdata['Grupo_Despliegue']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Grupo_Vmonofasico'])&&$rowdata['Grupo_Vmonofasico']!=0){ ?>             <strong>CrossEnergy - Grupo V monofasico: </strong><?php echo $rowdata['Grupo_Vmonofasico']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Grupo_VTrifasico'])&&$rowdata['Grupo_VTrifasico']!=0){ ?>               <strong>CrossEnergy - Grupo V Trifasico: </strong><?php echo $rowdata['Grupo_VTrifasico']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Grupo_Potencia'])&&$rowdata['Grupo_Potencia']!=0){ ?>                   <strong>CrossEnergy - Grupo Potencia: </strong><?php echo $rowdata['Grupo_Potencia']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Grupo_ConsumoMesHabil'])&&$rowdata['Grupo_ConsumoMesHabil']!=0){ ?>     <strong>CrossEnergy - Grupo Consumo Mes Habil: </strong><?php echo $rowdata['Grupo_ConsumoMesHabil']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Grupo_ConsumoMesCurso'])&&$rowdata['Grupo_ConsumoMesCurso']!=0){ ?>     <strong>CrossEnergy - Grupo Consumo Mes Curso: </strong><?php echo $rowdata['Grupo_ConsumoMesCurso']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Grupo_Estanque'])&&$rowdata['Grupo_Estanque']!=0){ ?>                   <strong>CrossEnergy - Grupo Estanque Combustible: </strong><?php echo $rowdata['Grupo_Estanque']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_Despliegue'])&&$rowdata['Grupo_Despliegue']!=0){ ?>               <strong>SimpliEnergy - Grupo Despliegue: </strong><?php echo $rowdata['Grupo_Despliegue']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_Vmonofasico'])&&$rowdata['Grupo_Vmonofasico']!=0){ ?>             <strong>SimpliEnergy - Grupo V monofasico: </strong><?php echo $rowdata['Grupo_Vmonofasico']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_VTrifasico'])&&$rowdata['Grupo_VTrifasico']!=0){ ?>               <strong>SimpliEnergy - Grupo V Trifasico: </strong><?php echo $rowdata['Grupo_VTrifasico']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_Potencia'])&&$rowdata['Grupo_Potencia']!=0){ ?>                   <strong>SimpliEnergy - Grupo Potencia: </strong><?php echo $rowdata['Grupo_Potencia']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_ConsumoMesHabil'])&&$rowdata['Grupo_ConsumoMesHabil']!=0){ ?>     <strong>SimpliEnergy - Grupo Consumo Mes Habil: </strong><?php echo $rowdata['Grupo_ConsumoMesHabil']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_ConsumoMesCurso'])&&$rowdata['Grupo_ConsumoMesCurso']!=0){ ?>     <strong>SimpliEnergy - Grupo Consumo Mes Curso: </strong><?php echo $rowdata['Grupo_ConsumoMesCurso']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_Estanque'])&&$rowdata['Grupo_Estanque']!=0){ ?>                   <strong>SimpliEnergy - Grupo Estanque Combustible: </strong><?php echo $rowdata['Grupo_Estanque']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['CrossCMinHorno'])&&$rowdata['CrossCMinHorno']!=0){ ?>                   <strong>SimpliC - Temperatura Minima del Horno: </strong><?php echo $rowdata['CrossCMinHorno']; ?><br/><?php } ?>
 
 							<?php if($rowdata['id_Geo']==2){ ?>
 								<br/>
