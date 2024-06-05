@@ -10418,10 +10418,6 @@ function widget_CrossC_WalmartHornos($timeBack, $seguimiento, $idSistema, $idTip
 												$Time_Tiempo_Max = horas2segundos('48:00:00');
 												$Time_Fake_Ini   = horas2segundos('23:59:50');
 												$Time_Fake_Fin   = horas2segundos('24:00:00');
-												//comparacion
-												if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
-													$danger_color = 'warning';
-												}
 												//verificar errores
 												if(isset($equip['NErrores'],$equip['NAlertas'])&&($equip['NErrores']!=0 OR $equip['NAlertas']!=0)){
 													$danger_color = 'warning';
@@ -10429,6 +10425,10 @@ function widget_CrossC_WalmartHornos($timeBack, $seguimiento, $idSistema, $idTip
 												}else{
 													$danger_color = '';
 													$danger_btn   = '';
+												}
+												//comparacion
+												if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
+													$danger_color = 'danger';
 												}
 												//verificar temperaturas
 												if(isset($arrDatoX[$equip['idTelemetria']]['Cuenta'])&&$arrDatoX[$equip['idTelemetria']]['Cuenta']!=0){
