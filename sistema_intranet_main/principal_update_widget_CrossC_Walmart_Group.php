@@ -142,9 +142,11 @@ $arrDatax      = array();
 //Se recorren las mediciones
 foreach($arrMediciones as $cli) {
 
-	//variables
-	$arrDato = array();
+	/******************************/
+	//reseteo
+	$arrTemporal = array();
 
+	/******************************/
 	//recorro los sensores
 	for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 		//Verifico si el sensor esta activo para guardar el dato
@@ -156,13 +158,13 @@ foreach($arrMediciones as $cli) {
 				//Si es temperatura
 				if($rowEquipo['SensoresUniMed_'.$i]==3){
 					//verifico si existe
-					if(isset($arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'])&&$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor']!=''){
-						$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'] = $arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'] + $cli['SensorValue_'.$i];
-						$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Cuenta']++;
+					if(isset($arrTemporal[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'])&&$arrTemporal[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor']!=''){
+						$arrTemporal[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'] = $arrTemporal[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'] + $cli['SensorValue_'.$i];
+						$arrTemporal[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Cuenta']++;
 					//si no lo crea
 					}else{
-						$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor']  = $cli['SensorValue_'.$i];
-						$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Cuenta'] = 1;
+						$arrTemporal[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor']  = $cli['SensorValue_'.$i];
+						$arrTemporal[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Cuenta'] = 1;
 					}
 				}
 			}
@@ -181,9 +183,9 @@ foreach($arrMediciones as $cli) {
 
 			/***********************************************/
 			//verifico si hay datos
-			if(isset($arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta'])&&$arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta']!=0){
+			if(isset($arrTemporal[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta'])&&$arrTemporal[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta']!=0){
 				//realizo los calculos
-				$New_Dato = $arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Valor']/$arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta'];
+				$New_Dato = $arrTemporal[$gruUso['idGrupo']][$gru['idGrupo']]['Valor']/$arrTemporal[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta'];
 				$arrDatax[$gruUso['idGrupo']][$gru['idGrupo']]['New_Dato'] = $New_Dato;
 			//si no hay datos utilizo el anterior
 			}else{

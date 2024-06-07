@@ -46,7 +46,7 @@ $idUsuario     = $_SESSION['usuario']['widget_CrossC_WalmartHornos']['idUsuario'
 $NMaxSens      = $_SESSION['usuario']['widget_CrossC_WalmartHornos']['NMaxSens'];
 
 //variables
-$arrGraficos    = array();
+$arrDatoGrafico = array();
 $arrSubgrupo    = array();
 $Temp_1         = '';
 $HoraInicio     = restahoras($timeBack,hora_actual());
@@ -105,11 +105,14 @@ $arrGrupos = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grup
 /*************************************************************/
 //si hay mediciones
 if($arrMediciones!=false){
-	//variables
-	$arrDato = array();
 	/******************************/
 	//Se recorren las mediciones
 	foreach($arrMediciones as $cli) {
+		/******************************/
+		//reseteo
+		$arrTemporal = array();
+
+		/******************************/
 		//Busco los grupos que utiliza
 		for ($i = 1; $i <= $cantSensores; $i++) {
 			/******************************/
@@ -117,13 +120,13 @@ if($arrMediciones!=false){
 			if(isset($rowEquipo['SensoresActivo_'.$i],$cli['SensorValue_'.$i],$rowEquipo['SensoresUniMed_'.$i])&&$rowEquipo['SensoresActivo_'.$i]==1&&$cli['SensorValue_'.$i]<999&&$rowEquipo['SensoresUniMed_'.$i]==3){
 				/*****************************/
 				//verifico si existe
-				if(isset($arrGraficos[$rowEquipo['SensoresGrupo_'.$i]]['Valor'])&&$arrGraficos[$rowEquipo['SensoresGrupo_'.$i]]['Valor']!=''){
-					$arrGraficos[$rowEquipo['SensoresGrupo_'.$i]]['Valor'] = $arrGraficos[$rowEquipo['SensoresGrupo_'.$i]]['Valor'] + $cli['SensorValue_'.$i];
-					$arrGraficos[$rowEquipo['SensoresGrupo_'.$i]]['Cuenta']++;
+				if(isset($arrTemporal[$rowEquipo['SensoresGrupo_'.$i]]['Valor'])&&$arrTemporal[$rowEquipo['SensoresGrupo_'.$i]]['Valor']!=''){
+					$arrTemporal[$rowEquipo['SensoresGrupo_'.$i]]['Valor'] = $arrTemporal[$rowEquipo['SensoresGrupo_'.$i]]['Valor'] + $cli['SensorValue_'.$i];
+					$arrTemporal[$rowEquipo['SensoresGrupo_'.$i]]['Cuenta']++;
 				//si no lo crea
 				}else{
-					$arrGraficos[$rowEquipo['SensoresGrupo_'.$i]]['Valor']  = $cli['SensorValue_'.$i];
-					$arrGraficos[$rowEquipo['SensoresGrupo_'.$i]]['Cuenta'] = 1;
+					$arrTemporal[$rowEquipo['SensoresGrupo_'.$i]]['Valor']  = $cli['SensorValue_'.$i];
+					$arrTemporal[$rowEquipo['SensoresGrupo_'.$i]]['Cuenta'] = 1;
 				}
 			}
 		}
@@ -133,20 +136,20 @@ if($arrMediciones!=false){
 		if($arrGrupos!=false){
 			foreach ($arrGrupos as $gru) {
 				//verifico si existe el dato
-				if(isset($arrDato[$gru['idGrupo']]['Value'])&&$arrDato[$gru['idGrupo']]['Value']!=''){
+				if(isset($arrDatoGrafico[$gru['idGrupo']]['Value'])&&$arrDatoGrafico[$gru['idGrupo']]['Value']!=''){
 					//si hay datos
-					if(isset($arrGraficos[$gru['idGrupo']]['Cuenta'])&&$arrGraficos[$gru['idGrupo']]['Cuenta']!=0){
-						$arrDato[$gru['idGrupo']]['Value'] .= ", ".cantidades_google(Cantidades($arrGraficos[$gru['idGrupo']]['Valor']/$arrGraficos[$gru['idGrupo']]['Cuenta'], 2));
+					if(isset($arrTemporal[$gru['idGrupo']]['Cuenta'])&&$arrTemporal[$gru['idGrupo']]['Cuenta']!=0){
+						$arrDatoGrafico[$gru['idGrupo']]['Value'] .= ", ".cantidades_google(Cantidades($arrTemporal[$gru['idGrupo']]['Valor']/$arrTemporal[$gru['idGrupo']]['Cuenta'], 2));
 					}else{
-						$arrDato[$gru['idGrupo']]['Value'] .= ", 0";
+						$arrDatoGrafico[$gru['idGrupo']]['Value'] .= ", 0";
 					}
 				//si no lo crea
 				}else{
 					//si hay datos
-					if(isset($arrGraficos[$gru['idGrupo']]['Cuenta'])&&$arrGraficos[$gru['idGrupo']]['Cuenta']!=0){
-						$arrDato[$gru['idGrupo']]['Value'] = cantidades_google(Cantidades($arrGraficos[$gru['idGrupo']]['Valor']/$arrGraficos[$gru['idGrupo']]['Cuenta'], 2));
+					if(isset($arrTemporal[$gru['idGrupo']]['Cuenta'])&&$arrTemporal[$gru['idGrupo']]['Cuenta']!=0){
+						$arrDatoGrafico[$gru['idGrupo']]['Value'] = cantidades_google(Cantidades($arrTemporal[$gru['idGrupo']]['Valor']/$arrTemporal[$gru['idGrupo']]['Cuenta'], 2));
 					}else{
-						$arrDato[$gru['idGrupo']]['Value'] = 0;
+						$arrDatoGrafico[$gru['idGrupo']]['Value'] = 0;
 					}
 				}
 			}
@@ -173,11 +176,11 @@ if($arrMediciones!=false){
 		//Se crean los datos
 		if($arrGrupos!=false){
 			foreach ($arrGrupos as $gru) {
-				if(isset($arrDato[$gru['idGrupo']]['Value'])&&$arrDato[$gru['idGrupo']]['Value']!=''){
+				if(isset($arrDatoGrafico[$gru['idGrupo']]['Value'])&&$arrDatoGrafico[$gru['idGrupo']]['Value']!=''){
 					//las fechas
 					$Graphics_xData      .='['.$Temp_1.'],';
 					//los valores
-					$Graphics_yData      .='['.$arrDato[$gru['idGrupo']]['Value'].'],';
+					$Graphics_yData      .='['.$arrDatoGrafico[$gru['idGrupo']]['Value'].'],';
 					//los nombres
 					$Graphics_names      .= '"'.DeSanitizar(TituloMenu($gru['Nombre'])).'",';
 					//los tipos

@@ -8985,9 +8985,11 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 		//Se recorren las mediciones
 		foreach($arrMediciones as $cli) {
 
-			//variables
-			$arrDato = array();
+			/******************************/
+			//reseteo
+			$arrTemporal = array();
 
+			/******************************/
 			//recorro los sensores
 			for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 				//Verifico si el sensor esta activo para guardar el dato
@@ -9033,13 +9035,13 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 						//if($rowEquipo['SensoresUniMed_'.$i]==3&&$rowEquipo['SensoresRevisionGrupo_'.$i]==$arrGruposUso[0]['idGrupo']){
 						if($rowEquipo['SensoresUniMed_'.$i]==3){
 							//verifico si existe
-							if(isset($arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'])&&$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor']!=''){
-								$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'] = $arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'] + $cli['SensorValue_'.$i];
-								$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Cuenta']++;
+							if(isset($arrTemporal[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'])&&$arrTemporal[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor']!=''){
+								$arrTemporal[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'] = $arrTemporal[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'] + $cli['SensorValue_'.$i];
+								$arrTemporal[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Cuenta']++;
 							//si no lo crea
 							}else{
-								$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor']  = $cli['SensorValue_'.$i];
-								$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Cuenta'] = 1;
+								$arrTemporal[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor']  = $cli['SensorValue_'.$i];
+								$arrTemporal[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Cuenta'] = 1;
 							}
 						}
 					}
@@ -9060,9 +9062,9 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 
 						/***********************************************/
 						//verifico si hay datos
-						if(isset($arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta'])&&$arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta']!=0){
+						if(isset($arrTemporal[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta'])&&$arrTemporal[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta']!=0){
 							//realizo los calculos
-							$New_Dato = $arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Valor']/$arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta'];
+							$New_Dato = $arrTemporal[$gruUso['idGrupo']][$gru['idGrupo']]['Valor']/$arrTemporal[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta'];
 							$arrDatax[$gruUso['idGrupo']][$gru['idGrupo']]['New_Dato'] = $New_Dato;
 						//si no hay datos utilizo el anterior
 						}else{
@@ -9625,9 +9627,11 @@ function widget_CrossC_Walmart($timeBack, $seguimiento, $idSistema, $idTipoUsuar
 		//Se recorren las mediciones
 		foreach($arrMediciones as $cli) {
 
-			//variables
-			$arrDato = array();
+			/******************************/
+			//reseteo
+			$arrTemporal = array();
 
+			/******************************/
 			//recorro los sensores
 			for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 				//Verifico si el sensor esta activo para guardar el dato
@@ -9673,13 +9677,13 @@ function widget_CrossC_Walmart($timeBack, $seguimiento, $idSistema, $idTipoUsuar
 						//if($rowEquipo['SensoresUniMed_'.$i]==3&&$rowEquipo['SensoresRevisionGrupo_'.$i]==$arrGruposUso[0]['idGrupo']){
 						if($rowEquipo['SensoresUniMed_'.$i]==3){
 							//verifico si existe
-							if(isset($arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'])&&$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor']!=''){
-								$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'] = $arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'] + $cli['SensorValue_'.$i];
-								$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Cuenta']++;
+							if(isset($arrTemporal[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'])&&$arrTemporal[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor']!=''){
+								$arrTemporal[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'] = $arrTemporal[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor'] + $cli['SensorValue_'.$i];
+								$arrTemporal[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Cuenta']++;
 							//si no lo crea
 							}else{
-								$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor']  = $cli['SensorValue_'.$i];
-								$arrDato[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Cuenta'] = 1;
+								$arrTemporal[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Valor']  = $cli['SensorValue_'.$i];
+								$arrTemporal[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Cuenta'] = 1;
 							}
 						}
 					}
@@ -9700,9 +9704,9 @@ function widget_CrossC_Walmart($timeBack, $seguimiento, $idSistema, $idTipoUsuar
 
 						/***********************************************/
 						//verifico si hay datos
-						if(isset($arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta'])&&$arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta']!=0){
+						if(isset($arrTemporal[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta'])&&$arrTemporal[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta']!=0){
 							//realizo los calculos
-							$New_Dato = $arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Valor']/$arrDato[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta'];
+							$New_Dato = $arrTemporal[$gruUso['idGrupo']][$gru['idGrupo']]['Valor']/$arrTemporal[$gruUso['idGrupo']][$gru['idGrupo']]['Cuenta'];
 							$arrDatax[$gruUso['idGrupo']][$gru['idGrupo']]['New_Dato'] = $New_Dato;
 						//si no hay datos utilizo el anterior
 						}else{
@@ -10263,11 +10267,14 @@ function widget_CrossC_WalmartHornos($timeBack, $seguimiento, $idSistema, $idTip
 		/*****************************/
 		//si hay mediciones
 		if($arrMediciones!=false){
-			//variables
-			$arrDato = array();
 			/******************************/
 			//Se recorren las mediciones
 			foreach($arrMediciones as $cli) {
+				/******************************/
+				//reseteo
+				$arrTemporal = array();
+
+				/******************************/
 				//Busco los grupos que utiliza
 				for ($i = 1; $i <= $cantSensores; $i++) {
 					/******************************/
@@ -10275,13 +10282,13 @@ function widget_CrossC_WalmartHornos($timeBack, $seguimiento, $idSistema, $idTip
 					if(isset($arrEquipo[0]['SensoresActivo_'.$i],$cli['SensorValue_'.$i],$arrEquipo[0]['SensoresUniMed_'.$i])&&$arrEquipo[0]['SensoresActivo_'.$i]==1&&$cli['SensorValue_'.$i]<999&&$arrEquipo[0]['SensoresUniMed_'.$i]==3){
 						/*****************************/
 						//verifico si existe
-						if(isset($arrGraficos[$arrEquipo[0]['SensoresGrupo_'.$i]]['Valor'])&&$arrGraficos[$arrEquipo[0]['SensoresGrupo_'.$i]]['Valor']!=''){
-							$arrGraficos[$arrEquipo[0]['SensoresGrupo_'.$i]]['Valor'] = $arrGraficos[$arrEquipo[0]['SensoresGrupo_'.$i]]['Valor'] + $cli['SensorValue_'.$i];
-							$arrGraficos[$arrEquipo[0]['SensoresGrupo_'.$i]]['Cuenta']++;
+						if(isset($arrTemporal[$arrEquipo[0]['SensoresGrupo_'.$i]]['Valor'])&&$arrTemporal[$arrEquipo[0]['SensoresGrupo_'.$i]]['Valor']!=''){
+							$arrTemporal[$arrEquipo[0]['SensoresGrupo_'.$i]]['Valor'] = $arrTemporal[$arrEquipo[0]['SensoresGrupo_'.$i]]['Valor'] + $cli['SensorValue_'.$i];
+							$arrTemporal[$arrEquipo[0]['SensoresGrupo_'.$i]]['Cuenta']++;
 						//si no lo crea
 						}else{
-							$arrGraficos[$arrEquipo[0]['SensoresGrupo_'.$i]]['Valor']  = $cli['SensorValue_'.$i];
-							$arrGraficos[$arrEquipo[0]['SensoresGrupo_'.$i]]['Cuenta'] = 1;
+							$arrTemporal[$arrEquipo[0]['SensoresGrupo_'.$i]]['Valor']  = $cli['SensorValue_'.$i];
+							$arrTemporal[$arrEquipo[0]['SensoresGrupo_'.$i]]['Cuenta'] = 1;
 						}
 					}
 				}
@@ -10292,16 +10299,16 @@ function widget_CrossC_WalmartHornos($timeBack, $seguimiento, $idSistema, $idTip
 						//verifico si existe el dato
 						if(isset($arrDatoGrafico[$gru['idGrupo']]['Value'])&&$arrDatoGrafico[$gru['idGrupo']]['Value']!=''){
 							//si hay datos
-							if(isset($arrGraficos[$gru['idGrupo']]['Cuenta'])&&$arrGraficos[$gru['idGrupo']]['Cuenta']!=0){
-								$arrDatoGrafico[$gru['idGrupo']]['Value'] .= ", ".cantidades_google(Cantidades($arrGraficos[$gru['idGrupo']]['Valor']/$arrGraficos[$gru['idGrupo']]['Cuenta'], 2));
+							if(isset($arrTemporal[$gru['idGrupo']]['Cuenta'])&&$arrTemporal[$gru['idGrupo']]['Cuenta']!=0){
+								$arrDatoGrafico[$gru['idGrupo']]['Value'] .= ", ".cantidades_google(Cantidades($arrTemporal[$gru['idGrupo']]['Valor']/$arrTemporal[$gru['idGrupo']]['Cuenta'], 2));
 							}else{
 								$arrDatoGrafico[$gru['idGrupo']]['Value'] .= ", 0";
 							}
 						//si no lo crea
 						}else{
 							//si hay datos
-							if(isset($arrGraficos[$gru['idGrupo']]['Cuenta'])&&$arrGraficos[$gru['idGrupo']]['Cuenta']!=0){
-								$arrDatoGrafico[$gru['idGrupo']]['Value'] = cantidades_google(Cantidades($arrGraficos[$gru['idGrupo']]['Valor']/$arrGraficos[$gru['idGrupo']]['Cuenta'], 2));
+							if(isset($arrTemporal[$gru['idGrupo']]['Cuenta'])&&$arrTemporal[$gru['idGrupo']]['Cuenta']!=0){
+								$arrDatoGrafico[$gru['idGrupo']]['Value'] = cantidades_google(Cantidades($arrTemporal[$gru['idGrupo']]['Valor']/$arrTemporal[$gru['idGrupo']]['Cuenta'], 2));
 							}else{
 								$arrDatoGrafico[$gru['idGrupo']]['Value'] = 0;
 							}
