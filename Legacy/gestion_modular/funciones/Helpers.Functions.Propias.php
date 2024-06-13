@@ -585,7 +585,7 @@ function SuperficieDisponibleCasas($idUniMed, $SupDisp, $UniMed){
 	}
 }
 /*******************************************************************************************************************/
-//Muestra la gestion de equipos decrosscrane
+//el contrato entre la administracion y el cliente
 function polz_contrato_01($idUnidadNegocio, $color, $dbConn){
 
 	/**************************************************************/
@@ -621,16 +621,32 @@ function polz_contrato_01($idUnidadNegocio, $color, $dbConn){
 	$rowdata = db_select_data (false, $SIS_query, 'unidad_negocio_listado', $SIS_join, $SIS_where, $dbConn, 'rowdata', basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 	/**************************************************************/
+	//variables
+	if(isset($rowdata['ObraDireccion'])&&$rowdata['ObraDireccion']){        $ObraDireccion     = $rowdata['ObraDireccion'];     }else{$ObraDireccion     = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['ClienteNombre'])&&$rowdata['ClienteNombre']){        $ClienteNombre     = $rowdata['ClienteNombre'];     }else{$ClienteNombre     = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['ClienteRut'])&&$rowdata['ClienteRut']){              $ClienteRut        = $rowdata['ClienteRut'];        }else{$ClienteRut        = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['ClienteNombreRL'])&&$rowdata['ClienteNombreRL']){    $ClienteNombreRL   = $rowdata['ClienteNombreRL'];   }else{$ClienteNombreRL   = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['ClienteRutRL'])&&$rowdata['ClienteRutRL']){          $ClienteRutRL      = $rowdata['ClienteRutRL'];      }else{$ClienteRutRL      = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['ClienteDireccion'])&&$rowdata['ClienteDireccion']){  $ClienteDireccion  = $rowdata['ClienteDireccion'];  }else{$ClienteDireccion  = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['ClienteCiudad'])&&$rowdata['ClienteCiudad']){        $ClienteCiudad     = $rowdata['ClienteCiudad'];     }else{$ClienteCiudad     = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['ClienteComuna'])&&$rowdata['ClienteComuna']){        $ClienteComuna     = $rowdata['ClienteComuna'];     }else{$ClienteComuna     = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['ObraNombre'])&&$rowdata['ObraNombre']){              $ObraNombre        = $rowdata['ObraNombre'];        }else{$ObraNombre        = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['ObraValor'])&&$rowdata['ObraValor']){                $ObraValor         = $rowdata['ObraValor'];         }else{$ObraValor         = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['FechaReservada'])&&$rowdata['FechaReservada']){      $FechaReservada    = $rowdata['FechaReservada'];    }else{$FechaReservada    = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['ObraCiudad'])&&$rowdata['ObraCiudad']){              $ObraCiudad        = $rowdata['ObraCiudad'];        }else{$ObraCiudad        = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['ObraComuna'])&&$rowdata['ObraComuna']){              $ObraComuna        = $rowdata['ObraComuna'];        }else{$ObraComuna        = '<strong style="color:red;">SIN DATOS</strong>';}
+
+	/**************************************************************/
 	$Contrato = '
 	<div class="bs-example" data-example-id="simple-pre" >
 		<div style="border-top:solid '.$color.' 1.0pt;border-left:none;border-bottom:solid '.$color.' 1.0pt; border-right:none;padding:1.0pt 0in 1.0pt 0in;margin-bottom:55px;margin-top: 55px;">
 			<p style="margin: 0;text-align: center;font-size: 16.0pt;color: '.$color.';font-weight: bold;">Contrato para la Compra de Funciones de Teatro (Comprador)</p>
 		</div>
 
-		<p>
-			En Santiago de Chile, a '.Fecha_completa_alt(fecha_actual()).', entre don '.$rowdata['ClienteNombreRL'].', cédula nacional de
-			identidad Nº'.$rowdata['ClienteRutRL'].', con domicilio en calle '.$rowdata['ClienteDireccion'].', Comuna '.$rowdata['ClienteComuna'].',
-			Ciudad '.$rowdata['ClienteCiudad'].', actuando en representaciòn de '.$rowdata['ClienteNombre'].' Rut '.$rowdata['ClienteRut'].' ,
+		<p style="font-size: 14px;">
+			En Santiago de Chile, a '.Fecha_completa_alt(fecha_actual()).', entre don '.$ClienteNombreRL.', cédula nacional de
+			identidad Nº'.$ClienteRutRL.', con domicilio en calle '.$ClienteDireccion.', Comuna '.$ClienteComuna.',
+			Ciudad '.$ClienteCiudad.', actuando en representaciòn de '.$ClienteNombre.' Rut '.$ClienteRut.' ,
 			en adelante e indistintamente “EL Comprador” y la empresa Somos Teatro SpA, RUT : XXXXXXX, en adelante e indistintamente
 			”Somos Teatro” o “Gestora Cultural”, representada por Doña SANDRA MERCEDES SOLIMANO LATORRE, cedula nacional de identidad
 			número seis millones doscientos siete mil doscientos trece guion k, chilena, casada, actriz, correo electrónico
@@ -639,7 +655,7 @@ function polz_contrato_01($idUnidadNegocio, $color, $dbConn){
 		</p>
 
 		<h4><strong>PRIMERO:</strong> De los comparecientes.</h4>
-		<p>
+		<p style="font-size: 14px;">
 			<strong>1.1</strong> Las partes reconocen disponer de las competencias y las capacidades necesarias para suscribir de mutua
 			voluntad, el presente Contrato (en adelante indistintamente “el Contrato”), constituyendo un marco de actuación en la venta
 			de funciones de teatro.
@@ -649,21 +665,21 @@ function polz_contrato_01($idUnidadNegocio, $color, $dbConn){
 		</p>
 
 		<h4>SEGUNDO:</strong> De la Gestora Cultural.</h4>
-		<p>
+		<p style="font-size: 14px;">
 			<strong>2.1</strong> La Gestora Cultural cuenta con la representación necesaria para cerrar contratos de venta de funciones,
-			sobre la obra de teatro denominada “'.$rowdata['ObraNombre'].'”.
+			sobre la obra de teatro denominada “'.$ObraNombre.'”.
 		</p>
 
 		<h4><strong>TERCERO:</strong> Del cliente.</h4>
-		<p>
-			<strong>3.1</strong> Que el cliente viene en contratar *una función(es), de la obra teatral denominada “'.$rowdata['ObraNombre'].'”,
-			fijada(s) a las (Indicar hora), para el (o los días) '.Fecha_completa_alt($rowdata['FechaReservada']).', la(s) que ser realizará(n)
-			en las dependencias del espacio escénico XXXXXXX ubicado en calle '.$rowdata['ObraDireccion'].', ciudad de '.$rowdata['ObraCiudad'].'.
+		<p style="font-size: 14px;">
+			<strong>3.1</strong> Que el cliente viene en contratar *una función(es), de la obra teatral denominada “'.$ObraNombre.'”,
+			fijada(s) a las (Indicar hora), para el (o los días) '.Fecha_completa_alt($FechaReservada).', la(s) que ser realizará(n)
+			en las dependencias del espacio escénico XXXXXXX ubicado en calle '.$ObraDireccion.', ciudad de '.$ObraCiudad.'.
 		</p>
 
 		<h4><strong>CUARTO:</strong> Del precio.</h4>
-		<p>
-			<strong>4.1</strong> El precio por la(s) función(es) de teatro, será de '.Valores($rowdata['ObraValor'], 0).' valor neto más impuestos.
+		<p style="font-size: 14px;">
+			<strong>4.1</strong> El precio por la(s) función(es) de teatro, será de '.Valores($ObraValor, 0).' valor neto más impuestos.
 			<br/><br/>
 			<strong>4.2</strong> Cuando la función se dé fuera de la Región Metropolitana, las partes acuerdan que todos los costos relacionados a
 			la alimentación, alojamiento y el transporte tanto del elenco, como del personal técnico junto a la escenografía de la obra de teatro,
@@ -671,7 +687,7 @@ function polz_contrato_01($idUnidadNegocio, $color, $dbConn){
 		</p>
 
 		<h4><strong>QUINTO:</strong> Del plazo.</h4>
-		<p>
+		<p style="font-size: 14px;">
 			<strong>5.1</strong> El presente contrato tendrá una duración de un año corrido, a contar del día de su firma.
 			<br/><br/>
 			<strong>5.2</strong> Sin perjuicio de lo anterior, las partes podrán poner término anticipado al presente contrato, en cualquier
@@ -681,7 +697,7 @@ function polz_contrato_01($idUnidadNegocio, $color, $dbConn){
 		</p>
 
 		<h4><strong>SEXTO:</strong> De la forma de pago y facturación.</h4>
-		<p>
+		<p style="font-size: 14px;">
 			<strong>6.1</strong>El pago de cada función se realizará de la siguiente manera:
 			<br/><br/>
 			a) Un 10% al momento de confirmar la reserva y suscribir el presente contrato. Tiempo en el cual la Gestor Cultural emitirá
@@ -692,7 +708,7 @@ function polz_contrato_01($idUnidadNegocio, $color, $dbConn){
 		</p>
 
 		<h4><strong>SÉPTIMO:</strong> Cancelaciones</h4>
-		<p>
+		<p style="font-size: 14px;">
 			La cancelación de la función por caso fortuito o razones de fuerza mayor, dentro de los cinco primeros días, posteriores a la
 			firma, dará derecho al Comprador, al rembolso integral del 10% anticipado, sin embargo, no se reembolsará dicho monto pasados
 			los cinco días o en caso de que la cancelación se deba a un hecho imputable al cliente como:
@@ -708,14 +724,14 @@ function polz_contrato_01($idUnidadNegocio, $color, $dbConn){
 		</p>
 
 		<h4><strong>OCTAVO:</strong> Contratos Vinculantes</h4>
-		<p>
+		<p style="font-size: 14px;">
 			<strong>8.1</strong> Los contratos firmados entre La Compañía de Teatro y Somos Teatro SpA, como entre El Comprador y Somos
 			Teatro, son vinculantes, por lo que, en el caso de darse lo expresado en el punto anterior, dará derecho tanto a la Gestora
 			Cultural como a la Compañía de Teatro, a exigir el pago total de la factura, a modo indemnizatorio.
 		</p>
 
 		<h4><strong>NOVENO:</strong> Responsabilidades de la Gestora Cultural.</h4>
-		<p>
+		<p style="font-size: 14px;">
 			<strong>9.1</strong> Será responsabilidad de la Gestora Cultural, administrar la venta de funciones teatrales, a través de
 			los medios que considere más convenientes y oportunos.<br/>
 			<strong>9.2</strong> Tendrá la facultad de proponer acuerdos, mediar en conflictos y asesorar en la coordinación entre la
@@ -726,21 +742,21 @@ function polz_contrato_01($idUnidadNegocio, $color, $dbConn){
 
 
 		<h4><strong>DÉCIMO:</strong> De la confidencialidad.</h4>
-		<p>
+		<p style="font-size: 14px;">
 			Las partes reconocen y aceptan el carácter confidencial y reservado del presente acuerdo y, especialmente, de aquella
 			información que sea entregada recíprocamente entre las partes, durante la vigencia del mismo. Ninguna de las partes podrá
 			divulgar su contenido sin autorización expresa de la otra parte.
 		</p>
 
 		<h4><strong>DÉCIMO PRIMERO:</strong> Relación laboral.</h4>
-		<p>
+		<p style="font-size: 14px;">
 			<strong>8.1</strong> Se deja expresa constancia que todo el personal que alguna de las partes deba disponer, para dar
 			cumplimiento al presente contrato, serán de su única y exclusiva responsabilidad, por lo que no tienen ni tendrán vinculación
 			laboral y de dependencia con la otra parte.
 		</p>
 
 		<h4><strong>DÉCIMO SEGUNDO:</strong> Disposiciones generales</h4>
-		<p>
+		<p style="font-size: 14px;">
 			En el evento de que alguna Cláusula o parte de ella sea declarada nula o no válida, dicha nulidad o falta de validez no
 			afectará la validez del contrato ni de ninguna otra disposición en él contenida.<br/>
 			La falta de ejercicio, ejercicio tardío o parcial de un derecho, la falta de insistencia en el cumplimiento de alguna
@@ -752,40 +768,294 @@ function polz_contrato_01($idUnidadNegocio, $color, $dbConn){
 		</p>
 
 		<h4><strong>DÉCIMO TERCERO:</strong> Cesión de Contrato.</h4>
-		<p>
+		<p style="font-size: 14px;">
 			Las partes no podrán ceder, transferir o gravar de cualquier forma el presente contrato o los derechos que de él emanen,
 			sin consentimiento previo y escrito de la parte contraria.
 		</p>
 
 		<h4><strong>DÉCIMO CUARTO:</strong> Declaración.</h4>
-		<p>
+		<p style="font-size: 14px;">
 			El presente contrato no constituye asociación, jointventure, agencia, representación, ni sociedad entre los comparecientes.
 			En consecuencia, las partes declaran ser personas jurídicas independientes una de las otras.
 		</p>
 
 		<h4><strong>DÉCIMO QUINTO:</strong> De la jurisdicción.</h4>
-		<p>
+		<p style="font-size: 14px;">
 			<strong>10.1</strong> Para todos los efectos legales del presente contrato, las partes fijan domicilio en la ciudad de
 			Santiago y se someten a sus tribunales de justicia.
 		</p>
 
 		<h4><strong>DÉCIMO SEXTO:</strong> Controversias.</h4>
-		<p>
+		<p style="font-size: 14px;">
 			Toda controversia que surja entre las partes, sobre la interpretación del presente contrato, montos, pagos y otra circunstancia
 			cualquiera, deberá ser resuelta por los Tribunales Ordinarios de Justicia de Santiago.
 		</p>
 
 		<h4><strong>DÉCIMO SÉPTIMO:</strong> Ejemplares.</h4>
-		<p>
+		<p style="font-size: 14px;">
 			El presente instrumento será firmado al final de este, mediante la utilización de firma electrónica, a la cual las partes
 			reconocen la misma validez y autenticidad que cualquier firma física. Asimismo, este documento electrónico firmado por
 			ambas partes tendrá validez y producirá los mismos efectos, que los celebrados en soporte de papel.
 		</p>
 
 		<h4><strong>DÉCIMO OCTAVO:</strong> Personerías.</h4>
-		<p>
+		<p style="font-size: 14px;">
 			La personería de Sandra Solimano Latorre para representar a la empresa Somos Teatro SpA, consta de escritura pública de
 			fecha XXXXX, otorgada en la notaría de Santiago de don XXXXX.
+		</p>
+
+	</div>';
+
+	/**************************************************************/
+	return $Contrato;
+}
+/*******************************************************************************************************************/
+//el contrato entre la administracion y la compañia de teatro
+function polz_contrato_02($idUnidadNegocio, $color, $dbConn){
+
+	/**************************************************************/
+	// consulto los datos
+	$SIS_query = '
+	unidad_negocio_listado.Direccion AS ObraDireccion,
+
+	compania_teatro_listado.Nombre AS CompaniaNombre,
+	compania_teatro_listado.Rut AS CompaniaRut,
+	compania_teatro_listado.RepLegalNombre AS CompaniaNombreRL,
+	compania_teatro_listado.RepLegalRut AS CompaniaRutRL,
+	compania_teatro_listado.Direccion AS CompaniaDireccion,
+
+	comp_ciudad.Nombre AS CompaniaCiudad,
+	comp_comunas.Nombre AS CompaniaComuna,
+	obras_listado.Nombre AS ObraNombre,
+	obras_listado.FichaValor AS ObraValor,
+	obras_listado_calendario.Fecha AS FechaReservada,
+	obra_ciudad.Nombre AS ObraCiudad,
+	obra_comunas.Nombre AS ObraComuna
+	';
+	$SIS_join  = '
+	LEFT JOIN `obras_listado`                            ON obras_listado.idObra                   = unidad_negocio_listado.idObra
+	LEFT JOIN `compania_teatro_listado`                  ON compania_teatro_listado.idCompania     = obras_listado.idCompania
+	LEFT JOIN `core_ubicacion_ciudad`   comp_ciudad      ON comp_ciudad.idCiudad                   = compania_teatro_listado.idCiudad
+	LEFT JOIN `core_ubicacion_comunas`  comp_comunas     ON comp_comunas.idComuna                  = compania_teatro_listado.idComuna
+	LEFT JOIN `obras_listado_calendario`                 ON obras_listado_calendario.idCalendario  = unidad_negocio_listado.idCalendario
+	LEFT JOIN `core_ubicacion_ciudad`   obra_ciudad      ON obra_ciudad.idCiudad                   = unidad_negocio_listado.idCiudad
+	LEFT JOIN `core_ubicacion_comunas`  obra_comunas     ON obra_comunas.idComuna                  = unidad_negocio_listado.idComuna
+	';
+	$SIS_where = 'unidad_negocio_listado.idUnidadNegocio = '.$idUnidadNegocio;
+	$rowdata = db_select_data (false, $SIS_query, 'unidad_negocio_listado', $SIS_join, $SIS_where, $dbConn, 'rowdata', basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+
+	/**************************************************************/
+	//variables
+	if(isset($rowdata['CompaniaNombre'])&&$rowdata['CompaniaNombre']){        $CompaniaNombre     = $rowdata['CompaniaNombre'];    }else{$CompaniaNombre    = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['CompaniaRut'])&&$rowdata['CompaniaRut']){              $CompaniaRut        = $rowdata['CompaniaRut'];       }else{$CompaniaRut       = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['CompaniaNombreRL'])&&$rowdata['CompaniaNombreRL']){    $CompaniaNombreRL   = $rowdata['CompaniaNombreRL'];  }else{$CompaniaNombreRL  = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['CompaniaRutRL'])&&$rowdata['CompaniaRutRL']){          $CompaniaRutRL      = $rowdata['CompaniaRutRL'];     }else{$CompaniaRutRL     = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['CompaniaCiudad'])&&$rowdata['CompaniaCiudad']){        $CompaniaCiudad     = $rowdata['CompaniaCiudad'];    }else{$CompaniaCiudad    = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['CompaniaComuna'])&&$rowdata['CompaniaComuna']){        $CompaniaComuna     = $rowdata['CompaniaComuna'];    }else{$CompaniaComuna    = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['CompaniaDireccion'])&&$rowdata['CompaniaDireccion']){  $CompaniaDireccion  = $rowdata['CompaniaDireccion']; }else{$CompaniaDireccion = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['ObraNombre'])&&$rowdata['ObraNombre']){                $ObraNombre         = $rowdata['ObraNombre'];        }else{$ObraNombre        = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['ObraValor'])&&$rowdata['ObraValor']){                  $ObraValor          = $rowdata['ObraValor'];         }else{$ObraValor         = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['FechaReservada'])&&$rowdata['FechaReservada']){        $FechaReservada     = $rowdata['FechaReservada'];    }else{$FechaReservada    = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['ObraCiudad'])&&$rowdata['ObraCiudad']){                $ObraCiudad         = $rowdata['ObraCiudad'];        }else{$ObraCiudad        = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['ObraComuna'])&&$rowdata['ObraComuna']){                $ObraComuna         = $rowdata['ObraComuna'];        }else{$ObraComuna        = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowdata['ObraDireccion'])&&$rowdata['ObraDireccion']){          $ObraDireccion      = $rowdata['ObraDireccion'];     }else{$ObraDireccion     = '<strong style="color:red;">SIN DATOS</strong>';}
+
+	/**************************************************************/
+	$Contrato = '
+	<div class="bs-example" data-example-id="simple-pre" >
+		<div style="border-top:solid '.$color.' 1.0pt;border-left:none;border-bottom:solid '.$color.' 1.0pt; border-right:none;padding:1.0pt 0in 1.0pt 0in;margin-bottom:55px;margin-top: 55px;">
+			<p style="margin: 0;text-align: center;font-size: 16.0pt;color: '.$color.';font-weight: bold;">Contrato para Venta de Funciones de Teatro (Compañía)</p>
+		</div>
+
+		<p style="font-size: 14px;">
+			En Santiago de Chile, a '.Fecha_completa_alt(fecha_actual()).', entre don '.$CompaniaNombreRL.', cédula nacional de identidad
+			Nº'.$CompaniaRutRL.', con domicilio en calle '.$CompaniaDireccion.', Comuna '.$CompaniaComuna.', Región de '.$CompaniaCiudad.',
+			actuando en representaciòn de la Compañía de Teatro  '.$CompaniaNombre.' Rut '.$CompaniaRut.' , en adelante e indistintamente
+			“La Compañía” y la Sociedad XXXXXXX RUT : XXXXXXXXX, actuando en representaciòn de la empresa Somos Teatro SpA, en adelante e
+			indistintamente ”Somos Teatro” o “Gestora Cultural”, representada por Doña SANDRA MERCEDES SOLIMANO LATORRE, cedula nacional
+			de identidad número seis millones doscientos siete mil doscientos trece guion k, chilena, casada, actriz, correo electrónico
+			ssolimano@somosteatro.cl, con domicilio comercial en calle Badajoz número cien, oficina ciento siete, comuna de Las Condes,
+			ciudad de Santiago, Región Metropolitana, se ha acordado celebrar el siguiente Contrato de Servicios:</p>
+
+		<h4><strong>PRIMERO:</strong> De los comparecientes.</h4>
+		<p style="font-size: 14px;">
+			<strong>1.1</strong> Las partes reconocen disponer de las competencias y las capacidades necesarias para suscribir de mutua
+			voluntad, el presente Contrato (en adelante indistintamente “el Contrato”), constituyendo un marco de actuación en la venta de
+			funciones de la obra teatral denominada “'.$ObraNombre.'”.<br/><br/>
+			<strong>1.2</strong> Las partes, al disponer de la representatividad necesarias, podrán actuar en representación propia o de terceros.
+		</p>
+
+		<h4><strong>SEGUNDO:</strong> De la Contratación.</h4>
+		<p style="font-size: 14px;">
+			<strong>2.1</strong> Que La Compañía contrata los servicios de comercialización de Somos Teatro SpA, para que gestione la venta de
+			funciones de la obra ya descrita en la cláusula anterior, dentro del círculo de clientes que dispone, mientras esta se encuentre
+			en exibición.
+		</p>
+
+		<h4><strong>TERCERO:</strong> De La Compañía</h4>
+		<p style="font-size: 14px;">
+			<strong>3.1</strong> Que La Compañía se encuentra plenamente capacitada para dar cumplimiento al presente contrato y realizar
+			la(s) función(es) fijada(s) para el (o los días) '.Fecha_completa_alt($FechaReservada).', la(s) que se realizará(n) en las
+			dependencias del espacio escénico XXXXXXX ubicada en calle '.$ObraDireccion.', ciudad de '.$ObraCiudad.'.
+		</p>
+
+		<h4><strong>CUARTO:</strong> De la Exclusividad</h4>
+		<p style="font-size: 14px;">
+			Con el propósito de resguardar el trabajo de la Gestora Cultural, sobre los cliente aportado por la misma y que lleguen a
+			concretar la compra de funciones, la Compañía cederá a la Gestora sus derechos de comercialización de la obra, para con
+			este cliente, por un periodo de 18 meses.
+		</p>
+
+		<h4><strong>QUINTO:</strong> Del Precio.</h4>
+		<p style="font-size: 14px;">
+			<strong>5.1</strong> El precio por la(s) función(es) de teatro, será de '.Valores($ObraValor, 0).' valor neto más impuestos.<br/><br/>
+			<strong>5.2</strong> Cuando la función se dé fuera de la Región Metropolitana, todos los costos relacionados a la alimentación,
+			alojamiento y el transporte tanto del elenco, como del personal técnico junto a la escenografía de la obra de teatro, deberán
+			ser cubierto por el Comprador de la función.
+		</p>
+
+		<h4><strong>SEXTO:</strong> Del pago a Somos Teatro</h4>
+		<p style="font-size: 14px;">
+			<strong>6.1</strong> Se establece entre las partes que a la empresa Somos Teatro SpA, le corresponderá un 10% más impuesto, por la
+			venta de cada función que llegue a concretar. Este monto lo pagará el comprador de la función, luego de haber firmado el respectivo
+			contrato con la empresa Somos Teatro SpA, la que a su vez, le deberá emitir una factura por ese 10%.<br/><br/>
+			<strong>6.2</strong> La factura del 90% restante, se la deberá emitir la Gestora Cultural al comprador, dentro de un plazo de 30
+			días, antes de efectuarce la función. De igual forma, la Compañía de Teatro deberá hacer entrega a la empresa Somos Teatro SpA,
+			de una factura por el 90% restante, luego de efectuada la función
+		</p>
+
+		<h4><strong>SEPTIMO:</strong> Del pago a la Compañía de Teatro.</h4>
+		<p style="font-size: 14px;">
+			<strong>7.1</strong> El saldo pendiente, se deberá pagar en un plazo máximo de 30 días corridos posteriores a la fecha de la función.<br/><br/>
+			<strong>7.2</strong> Para el efecto, la Gestora Cultural tendrá la responsabilidad de cobrarle al Comprador, el saldo adeudado.<br/><br/>
+			<strong>7.3</strong> El no cumplimiento de esta cláusula, por parte del Comprador, en su contrato vinculante con Somos Teatro SpA,
+			dará derecho tanto a la Compañía de Teatro como a Somos Teatro, para dar inicio a un proceso legal indemnizatorio.<br/><br/>
+			<strong>7.4</strong> Pagado este saldo por parte del Comprador, la Gestora Cultural tendrá un plazo máximo de 5 días hábiles para
+			depositarle a su vez, a la Compañía de Teatro.
+		</p>
+
+		<h4><strong>OCTAVO:</strong> Del plazo.</h4>
+		<p style="font-size: 14px;">
+			<strong>8.1</strong> El presente contrato tendrá una duración de [____] meses, contados desde el día [___] de [_____] de 2024 hasta
+			el día [____] de [_____] de 2024.<br/><br/>
+			<strong>8.2</strong> Sin perjuicio de lo anterior, las partes podrán poner término anticipado al presente contrato en cualquier
+			tiempo y sin causa alguna que lo justifique, mediante aviso enviado a la contraria por el email registrado en la comparecencia,
+			con una anticipación no inferior a treinta días corridos respecto del día en el cual desee poner término al presente instrumento,
+			sin dejar de mantener como válido, lo establecido en el punto Cuarto del presente contrato.
+		</p>
+
+		<h4><strong>NOVENO:</strong> La cancelación de la función</h4>
+		<p style="font-size: 14px;">
+			<strong>9.1</strong> Las partes podrán desistir voluntariamente del presente acuerdo, dentro de un plazo de 5 días hábiles, a
+			contar de la firma del mismo, lo que obligará a la Gestora Cultural al reenbolso del 10% adelantado. Pasado ese tiempo, el 10%
+			le corresponderá a Somos Teatro Spa.<br/><br/>
+			<strong>9.2</strong> En el evento que el comprador deba cancelar la función por razones de fuerza mayor o un caso fortuito,
+			evidente y justificado, este hecho obligará a la Gestora Cultural a reembolsar el pago realizado del 10%.<br/><br/>
+			<strong>9.3</strong> En el caso que la Compañía de Teatro no pueda llevar a cabo la función acordada, por un caso fortuito
+			o razones de fuerza mayor, esta podrá reagendar la fecha acordada, coordinando con la Gestora Cultural y dando aviso al
+			Comprador, con un mínimo de 10 días de antelación. Si no fuera posible reagendar la función dentro de un plazo prudente,
+			la Gestora Cultural deberá reembolsar el 10% pagado inicialmente.<br/><br/>
+			<strong>9.4</strong> En caso que la cancelación de la obra tenga por motivo un hecho injustificado, imputable a La Compañía,
+			la Gestora Cultural y el Comprador podrán exigir judicialmente reparación por la totalidad de los perjuicios generados.
+		</p>
+
+		<h4><strong>DÉCIMO:</strong> Responsabilidades de la Gestora Cultural.</h4>
+		<p style="font-size: 14px;">
+			<strong>9.1</strong> Será responsabilidad de la Gestora Cultural, gestionar y administrar la venta de funciones teatrales, a
+			través de los medios que considere más convenientes y oportunos.<br/><br/>
+			<strong>9.2</strong> Tendrá la facultad de proponer acuerdos, mediar en conflictos y eventualmente, colaborar en la coordinación
+			entre la Compañía de Teatros y el Cliente Final.<br/><br/>
+			<strong>9.3</strong> Somos Teatro tendrá la exclusiva responsabilidad de realizar los cobros, sobre cada función realizada,
+			debiendo emitir al Comprador, una primera factura por el 10% inicial y una segunda factura, correspondiente al 90 restante,
+			dentro de un plazo máximo de 30 días antes de la fecha establecida para la exhibición de la función.
+		</p>
+
+		<h4><strong>DÉCIMO PRIMERO:</strong> Obligaciones de La Compañía.</h4>
+		<p style="font-size: 14px;">
+			<strong>10.1</strong> Estar en posesión de todas las autorizaciones, licencias y derechos de exhibición pública de la obra,
+			debiendo poner a disposición de la Gestora, antes del estreno, la documentación que acredite esta circunstancia.<br/><br/>
+			<strong>10.2</strong> Disponer de un productor para coordinar y hacer entrega de la ficha técnica a la Gestora Cultural, asi
+			como al Comprador, de la ficha artística del espectáculo, junto con una relación de necesidades técnicas y del personal. Esta
+			gestión debe estar presente con al menos 2 semanas de antelación sobre la fecha prevista para la presentación.<br/><br/>
+			<strong>10.3</strong> La Compañía deberá adaptarse en lo posible a las condiciones técnicas dispuestas por el cliente.<br/><br/>
+			<strong>10.4</strong> Cualquier cambio que se produzca en el reparto, deberá ser debidamente informado al Comprador y a la
+			Gestora Cultural, vía email, con a lo menos 1 semana de antelación.<br/><br/>
+			<strong>10.5</strong> Entregar la obra totalmente montada y en condiciones para realizar la función, con todos los elementos
+			necesarios para su exhibición, respetando el cumplimiento estricto de los horarios de actuación, la carga y descarga, montaje
+			y desmontaje, conforme a lo previamente acordado entre la Compañía y el cliente Comprador.
+		</p>
+
+		<h4><strong>DÉCIMO SEGUNDO:</strong> Autorización de la Compañía</h4>
+		<p style="font-size: 14px;">
+			<strong>11.1</strong> Realizar grabaciones audiovisuales de la obra contratada, con finalidades promocionales, educativas,
+			publicitarios o informativas, presentes o futuras y para sus archivos, sin que ello de derecho a percepciones económicas
+			suplementarias ni al Comprador ni a la Gestora Cultural.<br/><br/>
+			<strong>11.2</strong> De ser requerido, La Compañía se compromete a obtener de los miembros del elenco o personal de la
+			obra, autorización para dicha grabación.<br/><br/>
+			<strong>11.3</strong> La grabación audiovisual después de editada, podrá tener una duración máxima de tres minutos, a partir
+			de tomas fragmentadas de la obra teatral.
+		</p>
+
+		<h4><strong>DÉCIMO TERCERO:</strong> De la confidencialidad.</h4>
+		<p style="font-size: 14px;">
+			Las partes reconocen y aceptan el carácter confidencial y reservado del presente acuerdo, especialmente, de aquella información
+			que sea entregada recíprocamente entre las partes, durante la vigencia del mismo. Ninguna de las partes podrá divulgar su
+			contenido sin autorización expresa de la otra parte.
+		</p>
+
+		<h4><strong>DÉCIMO CUARTO:</strong> Relación laboral.</h4>
+		<p style="font-size: 14px;">
+			<strong>13.1</strong> Se deja expresa constancia que todo el personal que alguna de las partes deba disponer, para dar
+			cumplimiento al presente contrato, serán de su única y exclusiva responsabilidad, por lo que no tienen ni tendrán
+			vinculación laboral ni dependencia con la Gestora Cultural.
+		</p>
+
+		<h4><strong>DÉCIMO QUINTO:</strong> Disposiciones generales.</h4>
+		<p style="font-size: 14px;">
+			En el evento de que alguna Cláusula o parte de ella sea declarada nula o no válida, dicha nulidad o falta de validez no
+			afectará la validez del contrato ni de ninguna otra disposición en él contenida.<br/><br/>
+			La falta de ejercicio, ejercicio tardío o parcial de un derecho, la falta de insistencia en el cumplimiento de alguna
+			obligación de alguna de las partes, la condonación de algún incumplimiento y otras situaciones análogas, no serán
+			interpretadas como una renuncia tácita por parte de la otra respecto del ejercicio total y completo de sus derechos
+			bajo el contrato.<br/><br/>
+			El presente contrato contiene el acuerdo íntegro entre las partes y sustituye cualquier otro acuerdo, negociación anterior
+			entre las partes.
+		</p>
+
+		<h4><strong>DÉCIMO SEXTO:</strong> Cesión del Contrato.</h4>
+		<p style="font-size: 14px;">
+			Las partes no podrán ceder, transferir o gravar de cualquier forma el presente contrato o los derechos que de él emanen, sin
+			consentimiento previo y escrito de la parte contraria.
+		</p>
+
+		<h4><strong>DÉCIMO SÉPTIMO:</strong> Declaración.</h4>
+		<p style="font-size: 14px;">
+			El presente contrato no constituye asociación, jointventure, agencia, representación, ni sociedad entre los comparecientes.
+			En consecuencia, las partes declaran ser personas jurídicas independientes una de las otras.
+		</p>
+
+		<h4><strong>DÉCIMO OCTAVO:</strong> De la jurisdicción.</h4>
+		<p style="font-size: 14px;">
+			Para todos los efectos legales del presente contrato, las partes fijan domicilio en la ciudad de Santiago y se someten a sus
+			tribunales de justicia.
+		</p>
+
+		<h4><strong>DÉCIMO NOVENO:</strong> Controversias</h4>
+		<p style="font-size: 14px;">
+			Toda controversia que surja entre las partes, sobre la interpretación del presente contrato, montos, pagos y otra circunstancia
+			cualquiera, deberá ser resuelta por los Tribunales Ordinarios de Justicia.
+		</p>
+
+		<h4><strong>VIGÉSIMO:</strong> Ejemplares.</h4>
+		<p style="font-size: 14px;">
+			El presente instrumento será firmado al final de este, mediante la utilización de firma electrónica, a la cual las partes reconocen
+			la misma validez y autenticidad que cualquier firma física. Asimismo, este documento electrónico firmado por ambas partes tendrá validez y producirá los mismos efectos, que los celebrados en soporte de papel.
+		</p>
+
+		<h4><strong>VIGÉCIMO PRIMERO:</strong> Personerías.</h4>
+		<p style="font-size: 14px;">
+			La personería de Sandra Solimano Latorre para representar a la empresa Somos Teatro SpA, consta de escritura pública de
+			fecha ____________________, otorgada en la notaría de Santiago de don _________________.
 		</p>
 
 	</div>';

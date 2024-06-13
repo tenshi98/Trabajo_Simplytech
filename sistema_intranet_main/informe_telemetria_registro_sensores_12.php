@@ -35,7 +35,10 @@ if(!empty($_GET['submit_filter'])){
 //se verifica si se ingreso la hora, es un dato optativo
 $SIS_where = '';
 $search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-$search .= '&idGrupo='.$_GET['idGrupo'].'&idTelemetria='.$_GET['idTelemetria'].'&f_inicio='.$_GET['f_inicio'].'&f_termino='.$_GET['f_termino'];
+$search .= '&idGrupo='.$_GET['idGrupo'];
+$search .= '&idTelemetria='.$_GET['idTelemetria'];
+$search .= '&f_inicio='.$_GET['f_inicio'];
+$search .= '&f_termino='.$_GET['f_termino'];
 if(isset($_GET['f_inicio'], $_GET['f_termino'], $_GET['h_inicio'], $_GET['h_termino'])&&$_GET['f_inicio']!=''&&$_GET['f_termino']!=''&&$_GET['h_inicio']!=''&&$_GET['h_termino']!=''){
 	$SIS_where .=" (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
 	$search    .="&h_inicio=".$_GET['h_inicio']."&h_termino=".$_GET['h_termino'];
