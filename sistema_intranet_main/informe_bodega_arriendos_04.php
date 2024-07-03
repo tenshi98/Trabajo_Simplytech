@@ -30,48 +30,23 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-             
-  
-
-//Se limitan los permisos a las bodegas asignadas
-$x1 ="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-$x2 ="idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
+/*******************************************************/
 //Variables
-$join_3  = "INNER JOIN usuarios_bodegas_arriendos ON usuarios_bodegas_arriendos.idBodega = bodegas_arriendos_facturacion_existencias.idBodega";
-$where_3 = " AND bodegas_arriendos_facturacion_existencias.".$x1." AND usuarios_bodegas_arriendos.".$x2;
-/**********************************************************/
-// Se trae un listado con los valores de las existencias actuales
 $año_pasado = ano_actual()-1;
-$z = "WHERE idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."'";
-$z.= " AND Creacion_ano >= ".$año_pasado;
-//se consulta
+/*******************************************************/
+// consulto los datos
+$SIS_query = 'Creacion_ano,Creacion_mes,Cantidad_ing,Cantidad_eg,idTipo,SUM(ValorTotal) AS Valor';
+$SIS_join  = 'INNER JOIN usuarios_bodegas_arriendos ON usuarios_bodegas_arriendos.idBodega = bodegas_arriendos_facturacion_existencias.idBodega';
+$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where.= ' AND Creacion_ano >= '.$año_pasado;
+$SIS_where.= ' AND bodegas_arriendos_facturacion_existencias.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where.= ' AND usuarios_bodegas_arriendos.idUsuario ='.$_SESSION['usuario']['basic_data']['idUsuario'];
+$SIS_where.= ' GROUP BY Creacion_ano,Creacion_mes,idTipo';
+$SIS_order = 'Creacion_ano ASC, Creacion_mes ASC';
 $arrExistencias = array();
-$query = "SELECT Creacion_ano,Creacion_mes,Cantidad_ing,Cantidad_eg,idTipo,SUM(ValorTotal) AS Valor
-FROM `bodegas_arriendos_facturacion_existencias`
-".$join_3."
-".$z."
-".$where_3."
-GROUP BY Creacion_ano,Creacion_mes,idTipo
-ORDER BY Creacion_ano ASC, Creacion_mes ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrExistencias,$row );
-}
+$arrExistencias = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrExistencias');
 
-
+/*******************************************************/
 $mes = array();
 foreach ($arrExistencias as $existencias) {
 	if(!isset($mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo1'])){ $mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo1'] = 0;}
@@ -87,18 +62,17 @@ foreach ($arrExistencias as $existencias) {
 			break;
 	}
 }
-								
+
 $xmes = mes_actual();
 $xaño = ano_actual();
 $grafico = array();
 for ($xcontador = 12; $xcontador > 0; $xcontador--) {
-									
 	if($xmes>0){
 		$grafico[$xcontador]['mes'] = $xmes;
 		$grafico[$xcontador]['año'] = $xaño;
 		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1'];}else{$grafico[$xcontador]['tipo1'] = 0;};
 		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2'];}else{$grafico[$xcontador]['tipo2'] = 0;};
-									
+
 	}else{
 		$xmes = 12;
 		$xaño = $xaño-1;
@@ -107,9 +81,9 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 
 		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1'];}else{$grafico[$xcontador]['tipo1'] = 0;};
 		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2'];}else{$grafico[$xcontador]['tipo2'] = 0;};
-			
+
 	}
-	$xmes = $xmes-1;								
+	$xmes = $xmes-1;
 }
 
 //Configuro lo que quiero ver
@@ -147,7 +121,7 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:5px;">
 							<?php
 							//Se dibujan los graficos, los widget y las tablas
-							$trans_1='';				     
+							$trans_1='';
 							echo widget_bodega('Bodega de Arriendos',
 												'bodegas_arriendos_listado', 'bodegas_arriendos_facturacion_existencias', 'bodegas_arriendos_facturacion_tipo', 
 												'equipos_arriendo_listado', 0, $s_data,3,
@@ -163,12 +137,11 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 					<div class="table-responsive">
 
 						<script>
-							
 							google.charts.setOnLoadCallback(drawChart_arr_1);
 
 							function drawChart_arr_1() {
 								var data_arr_1 = new google.visualization.DataTable();
-								data_arr_1.addColumn('string', 'Fecha'); 
+								data_arr_1.addColumn('string', 'Fecha');
 								data_arr_1.addColumn('number', 'Valor');
 								data_arr_1.addColumn({type: 'string', role: 'annotation'});
 
@@ -185,7 +158,7 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 									["<?php echo numero_a_mes_corto($grafico[10]['mes']); ?>", <?php echo valores_enteros($grafico[10]['tipo1']) ?>, '<?php echo valores_enteros($grafico[10]['tipo1']) ?>'],
 									["<?php echo numero_a_mes_corto($grafico[11]['mes']); ?>", <?php echo valores_enteros($grafico[11]['tipo1']) ?>, '<?php echo valores_enteros($grafico[11]['tipo1']) ?>'],
 									["<?php echo numero_a_mes_corto($grafico[12]['mes']); ?>", <?php echo valores_enteros($grafico[12]['tipo1']) ?>, '<?php echo valores_enteros($grafico[12]['tipo1']) ?>']
-			
+
 								]);
 
 								var options = {
@@ -212,15 +185,14 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 				<div class="tab-pane fade" id="tab_arr_3">
 					<div class="wmd-panel">
 						<div class="table-responsive">
-							
-										
+
 							<script>
 
 								google.charts.setOnLoadCallback(drawChart_arr_2);
 
 								function drawChart_arr_2() {
 									var data_arr_2 = new google.visualization.DataTable();
-									data_arr_2.addColumn('string', 'Fecha'); 
+									data_arr_2.addColumn('string', 'Fecha');
 									data_arr_2.addColumn('number', 'Valor');
 									data_arr_2.addColumn({type: 'string', role: 'annotation'});
 
@@ -237,7 +209,7 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 										["<?php echo numero_a_mes_corto($grafico[10]['mes']); ?>", <?php echo valores_enteros($grafico[10]['tipo2']) ?>, '<?php echo valores_enteros($grafico[10]['tipo2']) ?>'],
 										["<?php echo numero_a_mes_corto($grafico[11]['mes']); ?>", <?php echo valores_enteros($grafico[11]['tipo2']) ?>, '<?php echo valores_enteros($grafico[11]['tipo2']) ?>'],
 										["<?php echo numero_a_mes_corto($grafico[12]['mes']); ?>", <?php echo valores_enteros($grafico[12]['tipo2']) ?>, '<?php echo valores_enteros($grafico[12]['tipo2']) ?>']
-				
+
 									]);
 
 									var options = {
@@ -256,8 +228,7 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 								}
 							</script>
 							<div id="chart_arr_2" style="height: 500px; width: 100%;"></div>
-							
-							
+
 						</div>
 					</div>
 				</div>
@@ -265,10 +236,7 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 
         </div>
 	</div>
-</div>         
-
-
-
+</div>
 
 <?php
 /**********************************************************************************************************************************/

@@ -47,20 +47,20 @@ vehiculos_listado.Direccion_img,
 
 vehiculos_listado.Nombre,
 vehiculos_listado.Marca,
-vehiculos_listado.Modelo, 
-vehiculos_listado.Num_serie, 
-vehiculos_listado.AnoFab, 
-vehiculos_listado.Patente, 
-vehiculos_listado.idOpciones_1, 
-vehiculos_listado.idOpciones_2, 
-vehiculos_listado.idOpciones_3, 
-vehiculos_listado.idOpciones_4, 
+vehiculos_listado.Modelo,
+vehiculos_listado.Num_serie,
+vehiculos_listado.AnoFab,
+vehiculos_listado.Patente,
+vehiculos_listado.idOpciones_1,
+vehiculos_listado.idOpciones_2,
+vehiculos_listado.idOpciones_3,
+vehiculos_listado.idOpciones_4,
 vehiculos_listado.idOpciones_5,
 vehiculos_listado.idOpciones_7,
 vehiculos_listado.idOpciones_8,
-vehiculos_listado.Capacidad, 
+vehiculos_listado.Capacidad,
 vehiculos_listado.MCubicos,
-vehiculos_listado.CapacidadPersonas, 
+vehiculos_listado.CapacidadPersonas,
 vehiculos_listado.LimiteVelocidad,
 vehiculos_listado.AlertLimiteVelocidad,
 
@@ -116,7 +116,7 @@ if(isset($rowdata['idOpciones_5'])&&$rowdata['idOpciones_5']==1){
 	// Se trae un listado con todos los pasajeros
 	$SIS_query = '
 	apoderados_listado_hijos.Nombre,
-	apoderados_listado_hijos.ApellidoPat, 
+	apoderados_listado_hijos.ApellidoPat,
 	apoderados_listado_hijos.ApellidoMat,
 	apoderados_listado_hijos.Direccion_img,
 	core_sexo.Nombre AS Sexo,
@@ -140,8 +140,8 @@ if(isset($rowdata['idOpciones_7'])&&$rowdata['idOpciones_7']==1){
 	$SIS_join  = '';
 	$SIS_where = 'idVehiculo ='.$X_Puntero;
 	$SIS_order = 'ApellidoPat ASC, ApellidoMat ASC, Nombre ASC';
-	$arrBorrame = array();
-	$arrBorrame = db_select_array (false, $SIS_query, 'vehiculos_listado_peonetas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'cron');
+	$arrPeonetas = array();
+	$arrPeonetas = db_select_array (false, $SIS_query, 'vehiculos_listado_peonetas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPeonetas');
 
 }
 
@@ -211,9 +211,7 @@ if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
 								echo '<br/><strong>Proceso Aprobacion: </strong>'.$rowdata['AprobacionEstado'];
 								if(isset($rowdata['idProceso'])&&$rowdata['idProceso']==3){echo ' ('.$rowdata['AprobacionMotivo'].')';}
 							} ?>
-							
-							
-					
+
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Caracteristicos</h2>
@@ -267,7 +265,7 @@ if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
 											</div>
 										</div>
 
-									<?php 
+									<?php
 									}
 								//si no existen cargas se muestra mensaje
 								}else{
@@ -364,7 +362,7 @@ if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
 										</tr>
 									';
 								}
-								//Resolucion Sanitaria 
+								//Resolucion Sanitaria
 								if(isset($rowdata['doc_resolucion_sanitaria'])&&$rowdata['doc_resolucion_sanitaria']!=''){
 									echo '
 										<tr class="item-row">
@@ -406,7 +404,7 @@ if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
 										</tr>
 									';
 								}
-								//Seguro SOAP 
+								//Seguro SOAP
 								if(isset($rowdata['doc_soap'])&&$rowdata['doc_soap']!=''){
 									echo '
 										<tr class="item-row">
@@ -420,7 +418,7 @@ if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
 										</tr>
 									';
 								}
-								//Certificado Transporte Personas 
+								//Certificado Transporte Personas
 								if(isset($rowdata['doc_cert_trans_personas'])&&$rowdata['doc_cert_trans_personas']!=''){
 									echo '
 										<tr class="item-row">
@@ -451,18 +449,13 @@ if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
 								?>
 							</tbody>
 						</table>
-							
-							
-										
+
 					</div>
 					<div class="clearfix"></div>
 
 				</div>
 			</div>
-			
-			
-			
-			
+
         </div>
 	</div>
 </div>

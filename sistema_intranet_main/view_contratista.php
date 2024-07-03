@@ -179,10 +179,7 @@ $arrObservaciones = db_select_array (false, $SIS_query, 'contratista_observacion
 					</div>
 				</div>
 			</div>
-			
-			
-			
-			
+
         </div>
 	</div>
 </div>

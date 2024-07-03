@@ -218,8 +218,7 @@ input[type="date"].form-control{
 					$Form_Inputs->input_hidden('idFactFiscal', $_GET['newPago'], 2);
 					$Form_Inputs->input_hidden('Creacion_fecha', fecha_actual(), 2);
 					$Form_Inputs->input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-					
-					
+	
 					
 					?>
 

@@ -233,10 +233,8 @@ if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
 						<td colspan="3"><?php if(isset($rowConso['InspectorNombre'])&&$rowConso['InspectorNombre']!=''){echo $rowConso['InspectorNombre'].' '.$rowConso['InspectorApellido'];}else{echo 'Sin Datos';} ?></td>
 					</tr>
 					
-				
-					
-					
-					
+
+	
 				</tbody>
 			</table>
 
@@ -302,8 +300,7 @@ if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
 						
 		<table id="items">
 			<tbody>
-				
-					
+
 				<td colspan="8" class="blank word_break">
 					<?php echo $rowConso['Observaciones']; ?>
 				</td>
@@ -335,7 +332,7 @@ if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
 					<img src="upload/<?php echo $arch['Nombre']; ?>" class="img-responsive">
 				</div>
 
-			<?php 
+			<?php
 				}
 				echo '</div>';
 				echo '</td></tr>';

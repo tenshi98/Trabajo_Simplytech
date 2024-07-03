@@ -277,8 +277,7 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td></td><?php } ?>
 						<td></td>
 					</tr>
-					
-					
+	
 					                 
 				</tbody>
 			</table>

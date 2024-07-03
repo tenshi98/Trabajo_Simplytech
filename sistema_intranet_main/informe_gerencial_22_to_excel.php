@@ -1196,7 +1196,7 @@ if($arrTemp[1]!=false && !empty($arrTemp[1]) && $arrTemp[1]!=''){
 							
 		$nn++;
 	}
-} 
+}
 /**********************************************************/	
 if($arrTemp[2]!=false && !empty($arrTemp[2]) && $arrTemp[2]!=''){
 	foreach ($arrTemp[2] as $trab) {

@@ -311,10 +311,7 @@ array_push( $arrAccess,$row );
 
 				</div>
 			</div>
-			
-			
-			
-			
+
         </div>
 	</div>
 </div>

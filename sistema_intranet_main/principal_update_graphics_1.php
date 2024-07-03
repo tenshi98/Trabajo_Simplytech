@@ -31,7 +31,7 @@ if(isset($_SESSION['usuario']['zona']['id_Geo'])&&$_SESSION['usuario']['zona']['
 	$id_Geo = $_SESSION['usuario']['zona']['id_Geo'];
 }else{
 	$id_Geo = 1;//seguimiento activo
-}		
+}
 
 /***************************************/
 //Variables
@@ -47,55 +47,25 @@ $f_termino   = fecha_actual();
 if(hora_actual()<$timeback){
 	$f_inicio = restarDias(fecha_actual(),1);
 }
-
-//se verifica si se ingreso la hora, es un dato optativo
-$z = " WHERE (TimeStamp BETWEEN '".$f_inicio." ".$h_inicio ."' AND '".$f_termino." ".$h_termino."')";
-
-/*****************************************/
-//datos extras
-$aa = '';
-$aa .= ',FechaSistema';
-$aa .= ',HoraSistema';
-//$aa .= ',GeoLatitud';
-//$aa .= ',GeoLongitud';
-$aa .= ',GeoVelocidad';
-//se recorre deacuerdo a la cantidad de sensores
+/*******************************************************/
+// consulto los datos
+$SIS_query = 'idTabla,FechaSistema,HoraSistema,GeoVelocidad';
 for ($i = 1; $i <= $_GET['idSensoresActual']; $i++) {
-	$aa .= ',Sensor_'.$i;
-}		
-/*****************************************/
-//Insumos
+	$SIS_query .= ',Sensor_'.$i;
+}
+$SIS_join  = '';
+$SIS_where = '(TimeStamp BETWEEN "'.$f_inicio.' '.$h_inicio .'" AND "'.$f_termino.' '.$h_termino.'")';
+$SIS_order = 'FechaSistema ASC, HoraSistema ASC';
+$SIS_order = ' LIMIT 10000';
 $arrMediciones = array();
-$query = "SELECT idTabla
-".$aa."
-					
-FROM `telemetria_listado_tablarelacionada_".$_GET['idEquipoActual']."`
-".$z."
-ORDER BY FechaSistema ASC, HoraSistema ASC 
-LIMIT 10000";					
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrMediciones,$row );
-}
+$arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idEquipoActual'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMediciones');
 
 ?>
 
 <script>
-	
+
 	var DatosRefresco = "<?php echo 'Datos desde <strong>'.fecha_estandar($f_inicio).'-'.$h_inicio .'</strong> a <strong>'.fecha_estandar($f_termino).'-'.$h_termino.'</strong>'; ?>";
-	
+
 	<?php
 	/******************************************************/
 	//Velocidades
@@ -109,7 +79,7 @@ array_push( $arrMediciones,$row );
 		}
 	}
 	$data_vel .= '];';
-						
+
 	/******************************************************/
 	//Vaciado del estanque
 	$data_tanque = 'var data_tanque_x = [';
@@ -122,7 +92,7 @@ array_push( $arrMediciones,$row );
 		}
 	}
 	$data_tanque .= '];';
-						
+
 	/******************************************************/
 	//Flujo de caudales
 	$data_caud_flu = 'var data_caud_flu_x = [';
@@ -136,7 +106,7 @@ array_push( $arrMediciones,$row );
 
 	/******************************************************/
 	//Caudales
-	
+
 	//variables
 	$total_derecho    = 0;
 	$total_izquierdo  = 0;
@@ -158,7 +128,7 @@ array_push( $arrMediciones,$row );
 	//Calculo
 	if($cuenta_derecho!=0){    $Prom_derecho   = $total_derecho/$cuenta_derecho;      }else{$Prom_derecho   = 0;}
 	if($cuenta_izquierdo!=0){  $Prom_izquierdo = $total_izquierdo/$cuenta_izquierdo;  }else{$Prom_izquierdo = 0;}
-	
+
 	$data_caud  = 'var data_caud_x = [';
 	$data_caud .= '["Grupo 1",';
 	$data_caud .= Cantidades_decimales_justos($Prom_derecho).',';
@@ -167,8 +137,7 @@ array_push( $arrMediciones,$row );
 	$data_caud .= '"'.Cantidades($Prom_izquierdo, 2).'",';
 	$data_caud .= '],';
 	$data_caud .= '];';
-						
-	
+
 	/******************************************************/
 	//Correccion
 	if($Prom_derecho>$Prom_izquierdo){
@@ -176,12 +145,11 @@ array_push( $arrMediciones,$row );
 	}else{
 		if($Prom_derecho!=0){   $correccion = (($Prom_izquierdo - $Prom_derecho)/$Prom_derecho)*100;}else{$correccion = 0;}
 	}
-	
+
 	$data_gauge = 'var data_correccion_x = '.str_replace(",", ".",Cantidades($correccion, 2)).';';
-	
-						
+
 	/******************************************************/
-	//se imprimen los datos	
+	//se imprimen los datos
 	echo $data_vel;
 	echo $data_tanque;
 	echo $data_caud_flu;

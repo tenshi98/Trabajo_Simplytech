@@ -24,35 +24,24 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
-// Se trae un listado con todos los productos
-$arrProductos = array();
-$query = "SELECT 
+/*******************************************************/
+// consulto los datos
+$SIS_query = '
 productos_listado.StockLimite,
 productos_listado.Nombre AS NombreProd,
 core_tipo_producto.Nombre AS tipo_producto,
 sistema_productos_uml.Nombre AS UnidadMedida,
-(SELECT SUM(Cantidad_ing) FROM bodegas_productos_facturacion_existencias WHERE idProducto = productos_listado.idProducto AND idBodega=".$_GET['idBodega']."  LIMIT 1) AS stock_entrada,
-(SELECT SUM(Cantidad_eg) FROM bodegas_productos_facturacion_existencias WHERE idProducto = productos_listado.idProducto AND idBodega=".$_GET['idBodega']." LIMIT 1) AS stock_salida,
-(SELECT Nombre FROM bodegas_productos_listado WHERE idBodega=".$_GET['idBodega']." LIMIT 1) AS NombreBodega
-FROM `productos_listado`
+(SELECT SUM(Cantidad_ing) FROM bodegas_productos_facturacion_existencias WHERE idProducto = productos_listado.idProducto AND idBodega='.$_GET['idBodega'].'  LIMIT 1) AS stock_entrada,
+(SELECT SUM(Cantidad_eg) FROM bodegas_productos_facturacion_existencias WHERE idProducto = productos_listado.idProducto AND idBodega='.$_GET['idBodega'].' LIMIT 1) AS stock_salida,
+(SELECT Nombre FROM bodegas_productos_listado WHERE idBodega='.$_GET['idBodega'].' LIMIT 1) AS NombreBodega';
+$SIS_join  = '
 LEFT JOIN `sistema_productos_uml`    ON sistema_productos_uml.idUml            = productos_listado.idUml
-LEFT JOIN `core_tipo_producto`       ON core_tipo_producto.idTipoProducto      = productos_listado.idTipoProducto
-ORDER BY productos_listado.Nombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+LEFT JOIN `core_tipo_producto`       ON core_tipo_producto.idTipoProducto      = productos_listado.idTipoProducto';
+$SIS_where = '';
+$SIS_order = 'productos_listado.Nombre ASC';
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrProductos');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrProductos,$row );
-}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -62,7 +51,7 @@ require_once 'core/Web.Header.PrintFact.php';
 /**********************************************************************************************************************************/
 $my_html ='
 	<div class="panel panel-cascade panel-invoice">
-          
+
         <div class="panel-body">
 			Stock Bodega: <strong>'.$arrProductos[0]['NombreBodega'].'</strong><br/>
 			Stock al '.fecha_actual().'<br/>
@@ -93,7 +82,6 @@ $my_html ='
 											<td width="160">'.Cantidades_decimales_justos($stock_actual).' '.$productos['UnidadMedida'].'</td>
 										</tr>';
 							}
-							
 
 						$my_html .='</tbody>
 					</table>

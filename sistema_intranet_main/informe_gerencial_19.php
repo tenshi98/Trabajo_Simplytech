@@ -1695,10 +1695,8 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 							</div>
 						</div>
 					</div>
-					
-					
-					
-					
+	
+	
 					
 				</div>
 			<?php

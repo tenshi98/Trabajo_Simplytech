@@ -25,12 +25,12 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /********************************************************************/
 //Variables para filtro y paginacion
 $search ='&submit_filter=Filtrar';
-if(isset($_GET['idCajaChica']) && $_GET['idCajaChica']!=''){                     $location .= "&idCajaChica=".$_GET['idCajaChica'];                            $search .= "&idCajaChica=".$_GET['idCajaChica'];}
-if(isset($_GET['idTrabajador']) && $_GET['idTrabajador']!=''){                   $location .= "&idTrabajador=".$_GET['idTrabajador'];                          $search .= "&idTrabajador=".$_GET['idTrabajador'];}
-if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha']!=''){               $location .= "&Creacion_fecha=".$_GET['Creacion_fecha'];                      $search .= "&Creacion_fecha=".$_GET['Creacion_fecha'];}
+if(isset($_GET['idCajaChica']) && $_GET['idCajaChica']!=''){                            $location .= "&idCajaChica=".$_GET['idCajaChica'];                            $search .= "&idCajaChica=".$_GET['idCajaChica'];}
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador']!=''){                          $location .= "&idTrabajador=".$_GET['idTrabajador'];                          $search .= "&idTrabajador=".$_GET['idTrabajador'];}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha']!=''){                      $location .= "&Creacion_fecha=".$_GET['Creacion_fecha'];                      $search .= "&Creacion_fecha=".$_GET['Creacion_fecha'];}
 if(isset($_GET['idFacturacionRelacionada']) && $_GET['idFacturacionRelacionada']!=''){  $location .= "&idFacturacionRelacionada=".$_GET['idFacturacionRelacionada'];  $search .= "&idFacturacionRelacionada=".$_GET['idFacturacionRelacionada'];}
-if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){                               $location .= "&idTipo=".$_GET['idTipo'];                                      $search .= "&idTipo=".$_GET['idTipo'];}
-if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){                           $location .= "&idEstado=".$_GET['idEstado'];                                  $search .= "&idEstado=".$_GET['idEstado'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){                                      $location .= "&idTipo=".$_GET['idTipo'];                                      $search .= "&idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){                                  $location .= "&idEstado=".$_GET['idEstado'];                                  $search .= "&idEstado=".$_GET['idEstado'];}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -48,53 +48,37 @@ $diaActual = dia_actual();
 $diaSemana      = date("w",mktime(0,0,0,$Mes,1,$Ano))+7;
 $ultimoDiaMes   = date("d",(mktime(0,0,0,$Mes+1,1,$Ano)-1));
 
-//todas las empresas
-$z = " AND pagos_facturas_proveedores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-//verifico el tipo de usuario
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$join = "";
-}else{
-	$z.=" AND usuarios_documentos_pago.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
-	$join = " INNER JOIN usuarios_documentos_pago  ON usuarios_documentos_pago.idDocPago  = pagos_facturas_proveedores.idDocPago";
-}
-//Traigo los eventos guardados en la base de datos
-$arrCheques = array();
-$query = "SELECT 
-pagos_facturas_proveedores.idTipo, 
-pagos_facturas_proveedores.idFacturacion, 
-sistema_documentos_pago.Nombre AS Documento, 
-pagos_facturas_proveedores.N_DocPago, 
+
+/*******************************************************/
+// consulto los datos
+$SIS_query = '
+pagos_facturas_proveedores.idTipo,
+pagos_facturas_proveedores.idFacturacion,
+sistema_documentos_pago.Nombre AS Documento,
+pagos_facturas_proveedores.N_DocPago,
 pagos_facturas_proveedores.F_Pago,
 core_sistemas.Nombre AS Sistema,
 proveedor_listado.Nombre AS Proveedor,
 pagos_facturas_proveedores.MontoPagado,
-pagos_facturas_proveedores_tipo.Nombre AS TipoDoc
-
-FROM `pagos_facturas_proveedores`
+pagos_facturas_proveedores_tipo.Nombre AS TipoDoc';
+$SIS_join  = '
 LEFT JOIN `sistema_documentos_pago`           ON sistema_documentos_pago.idDocPago            = pagos_facturas_proveedores.idDocPago
 LEFT JOIN `core_sistemas`                     ON core_sistemas.idSistema                      = pagos_facturas_proveedores.idSistema
 LEFT JOIN `proveedor_listado`                 ON proveedor_listado.idProveedor                = pagos_facturas_proveedores.idProveedor
-LEFT JOIN `pagos_facturas_proveedores_tipo`   ON pagos_facturas_proveedores_tipo.idTipo       = pagos_facturas_proveedores.idTipo
-".$join." 
-WHERE pagos_facturas_proveedores.F_Pago_ano='".$Ano."' AND pagos_facturas_proveedores.F_Pago_mes='".$Mes."' 
-".$z." 
-ORDER BY sistema_documentos_pago.Nombre ASC, pagos_facturas_proveedores.F_Pago ASC, proveedor_listado.Nombre ASC  ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+LEFT JOIN `pagos_facturas_proveedores_tipo`   ON pagos_facturas_proveedores_tipo.idTipo       = pagos_facturas_proveedores.idTipo';
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$SIS_join.= " INNER JOIN usuarios_documentos_pago  ON usuarios_documentos_pago.idDocPago  = pagos_facturas_proveedores.idDocPago";
 }
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrCheques,$row );
+$SIS_where = 'pagos_facturas_proveedores.F_Pago_ano='.$Ano;
+$SIS_where.= ' AND pagos_facturas_proveedores.F_Pago_mes='.$Mes;
+$SIS_where.= " AND pagos_facturas_proveedores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//todas las empresas
+//verifico el tipo de usuario
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+	$SIS_where.=" AND usuarios_documentos_pago.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
+$SIS_order = 'sistema_documentos_pago.Nombre ASC, pagos_facturas_proveedores.F_Pago ASC, proveedor_listado.Nombre ASC';
+$arrCheques = array();
+$arrCheques = db_select_array (false, $SIS_query, 'pagos_facturas_proveedores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCheques');
 
 ?>
 
@@ -102,8 +86,7 @@ array_push( $arrCheques,$row );
 	<a target="_blank" rel="noopener noreferrer" href="principal_datos_documentos_pago.php" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Configurar Documentos</a>
 </div>
 <div class="clearfix"></div>
-                 
-                                 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -143,10 +126,10 @@ array_push( $arrCheques,$row );
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php 
+					<?php
 					filtrar($arrCheques, 'Documento');
-					$total = 0; 
-					foreach($arrCheques as $categoria=>$permisos){ 
+					$total = 0;
+					foreach($arrCheques as $categoria=>$permisos){
 						echo '<tr class="odd" ><td colspan="7"  style="background-color:#DDD"><strong>'.$categoria.'</strong></td></tr>';
 						$subtotal = 0;
 						foreach ($permisos as $cheques) {  ?>
@@ -179,7 +162,7 @@ array_push( $arrCheques,$row );
 											break;
 										}
 										echo '<a href="'.$ver.'" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
-											
+
 										?>
 
 									</div>
@@ -198,17 +181,13 @@ array_push( $arrCheques,$row );
 						<td style="background-color:#DDD"><strong>Total</strong></td>
 						<td align="right" style="background-color:#DDD"><strong>'.valores($total, 0).'</strong></td>
 						<td colspan="5"  style="background-color:#DDD"></td>
-					</tr>'; ?>                  
+					</tr>'; ?>
 				</tbody>
 			</table>
 		</div>
 	</div>
 </div>
 
-
-
-
-         
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

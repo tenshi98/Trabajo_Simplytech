@@ -300,10 +300,8 @@ $zz .= '&view='.$_GET['view'];
 						<td colspan="3"><?php if(isset($rowConso['InspectorNombre'])&&$rowConso['InspectorNombre']!=''){echo $rowConso['InspectorNombre'].' '.$rowConso['InspectorApellido'];}else{echo 'Sin Datos';} ?></td>
 					</tr>
 					
-				
-					
-					
-					
+
+	
 				</tbody>
 			</table>
 
@@ -369,8 +367,7 @@ $zz .= '&view='.$_GET['view'];
 						
 		<table id="items">
 			<tbody>
-				
-					
+
 				<td colspan="8" class="blank word_break">
 					<?php echo $rowConso['Observaciones']; ?>
 				</td>
@@ -402,7 +399,7 @@ $zz .= '&view='.$_GET['view'];
 					<img src="upload/<?php echo $arch['Nombre']; ?>" class="img-responsive">
 				</div>
 
-			<?php 
+			<?php
 				}
 				echo '</div>';
 				echo '</td></tr>';

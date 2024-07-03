@@ -187,8 +187,7 @@ array_push( $arrArchivos,$row );
 
 	
 			
-					
-					
+	
 		</div>
 	</div>
 </div>

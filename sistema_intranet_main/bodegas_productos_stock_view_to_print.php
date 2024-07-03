@@ -24,9 +24,9 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
-// Se trae un listado con todos los datos
-$arrProductos = array();
-$query = "SELECT 
+/*******************************************************/
+// consulto los datos
+$SIS_query = '
 bodegas_productos_facturacion_existencias.Creacion_fecha,
 bodegas_productos_facturacion_existencias.Cantidad_ing,
 bodegas_productos_facturacion_existencias.Cantidad_eg,
@@ -37,37 +37,23 @@ core_documentos_mercantiles.Nombre AS Documento,
 bodegas_productos_facturacion.N_Doc AS N_Doc,
 clientes_listado.Nombre AS Cliente,
 proveedor_listado.Nombre AS Proveedor,
-bodegas_productos_listado.Nombre AS NombreBodega
+bodegas_productos_listado.Nombre AS NombreBodega';
+$SIS_join  = '
+LEFT JOIN `bodegas_productos_facturacion_tipo`   ON bodegas_productos_facturacion_tipo.idTipo     = bodegas_productos_facturacion_existencias.idTipo
+LEFT JOIN `productos_listado`                    ON productos_listado.idProducto                  = bodegas_productos_facturacion_existencias.idProducto
+LEFT JOIN `sistema_productos_uml`                ON sistema_productos_uml.idUml                   = productos_listado.idUml
+LEFT JOIN `bodegas_productos_facturacion`        ON bodegas_productos_facturacion.idFacturacion   = bodegas_productos_facturacion_existencias.idFacturacion
+LEFT JOIN `core_documentos_mercantiles`          ON core_documentos_mercantiles.idDocumentos      = bodegas_productos_facturacion.idDocumentos
+LEFT JOIN `proveedor_listado`                    ON proveedor_listado.idProveedor                 = bodegas_productos_facturacion.idProveedor
+LEFT JOIN `clientes_listado`                     ON clientes_listado.idCliente                    = bodegas_productos_facturacion.idCliente
+LEFT JOIN `bodegas_productos_listado`            ON bodegas_productos_listado.idBodega            = bodegas_productos_facturacion_existencias.idBodega';
+$SIS_where = 'bodegas_productos_facturacion_existencias.idProducto='.$_GET['view'];
+$SIS_where.= ' AND bodegas_productos_facturacion_existencias.idBodega='.$_GET['idBodega'];
+$SIS_order = 'bodegas_productos_facturacion_existencias.Creacion_fecha DESC';
+$SIS_order = ' LIMIT 100';
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrProductos');
 
-FROM `bodegas_productos_facturacion_existencias`
-LEFT JOIN `bodegas_productos_facturacion_tipo`          ON bodegas_productos_facturacion_tipo.idTipo               = bodegas_productos_facturacion_existencias.idTipo
-LEFT JOIN `productos_listado`                           ON productos_listado.idProducto                            = bodegas_productos_facturacion_existencias.idProducto
-LEFT JOIN `sistema_productos_uml`                       ON sistema_productos_uml.idUml                             = productos_listado.idUml
-LEFT JOIN `bodegas_productos_facturacion`               ON bodegas_productos_facturacion.idFacturacion             = bodegas_productos_facturacion_existencias.idFacturacion
-LEFT JOIN `core_documentos_mercantiles`                 ON core_documentos_mercantiles.idDocumentos                = bodegas_productos_facturacion.idDocumentos
-LEFT JOIN `proveedor_listado`                           ON proveedor_listado.idProveedor                           = bodegas_productos_facturacion.idProveedor
-LEFT JOIN `clientes_listado`                            ON clientes_listado.idCliente                              = bodegas_productos_facturacion.idCliente
-LEFT JOIN `bodegas_productos_listado`                   ON bodegas_productos_listado.idBodega                      = bodegas_productos_facturacion_existencias.idBodega
-
-WHERE bodegas_productos_facturacion_existencias.idProducto=".$_GET['view']."  
-AND bodegas_productos_facturacion_existencias.idBodega=".$_GET['idBodega']."
-ORDER BY bodegas_productos_facturacion_existencias.Creacion_fecha DESC 
-LIMIT 100";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-			
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrProductos,$row );
-}  
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -77,7 +63,7 @@ require_once 'core/Web.Header.PrintFact.php';
 /**********************************************************************************************************************************/
 $my_html ='
 	<div class="panel panel-cascade panel-invoice">
-          
+
         <div class="panel-body">
 			Movimientos Bodega: <strong>'.$arrProductos[0]['NombreBodega'].'</strong><br/>
 			Producto: <strong>'.$arrProductos[0]['NombreProducto'].'</strong><br/>
@@ -99,11 +85,9 @@ $my_html ='
 							</tr>
 						</thead>
 						<tbody>';
-		
-		
-	
-							foreach ($arrProductos as $productos) { 
-							
+
+						foreach ($arrProductos as $productos) {
+
 							if(isset($productos['Proveedor'])&&$productos['Proveedor']){
 								$empresa = 'Proveedor : '.$productos['Proveedor'];
 							}else{
@@ -117,8 +101,7 @@ $my_html ='
 											<td width="160">'.Cantidades_decimales_justos($productos['Cantidad_ing']).' '.$productos['UnidadMedida'].'</td>
 											<td width="160">'.Cantidades_decimales_justos($productos['Cantidad_eg']).' '.$productos['UnidadMedida'].'</td>
 										</tr>';
-							}
-							
+						}
 
 						$my_html .='</tbody>
 					</table>

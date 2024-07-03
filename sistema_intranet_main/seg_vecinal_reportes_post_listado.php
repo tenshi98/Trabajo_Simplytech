@@ -80,7 +80,7 @@ if(!empty($_GET['infract_post'])){
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 /******************************************************************************/
 //Verifico el tipo de usuario que esta ingresando
-$z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado=1'; 
+$z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado=1';
 /******************************************************************************/
 $ubicacion  = $location;
 $ubicacion .= '&idTipofil='.$_GET['idTipofil'];

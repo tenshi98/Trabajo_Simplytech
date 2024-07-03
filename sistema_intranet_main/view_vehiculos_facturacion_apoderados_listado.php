@@ -171,12 +171,10 @@ $arrDetalle = db_select_array (false, $SIS_query, 'vehiculos_facturacion_apodera
 						</tr>
 
 					<?php } ?>
-						
-					
+		
 								
 
-					
-					
+	
 					<tr>
 						<td colspan="3"><strong>Total</strong></td>
 						<td align="right"><strong><?php echo Valores($t_total, 0); ?></strong></td>

@@ -141,8 +141,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 					$Form_Inputs->form_input_icon('Correo Envio Notificaciones', 'email_principal', $x3, 1,'fa fa-envelope-o');
 					$Form_Inputs->form_input_icon('Usuario Gmail Envio Notificaciones', 'Config_Gmail_Usuario', $x16, 1,'fa fa-envelope-o');
 					$Form_Inputs->form_input_icon('Password Usuario Gmail', 'Config_Gmail_Password', $x17, 1,'fa fa-key');
-					
-						
+
 					$Form_Inputs->form_input_hidden('idSistema', $_GET['id'], 2);
 					?>
 

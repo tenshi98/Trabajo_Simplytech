@@ -47,25 +47,12 @@ require_once 'core/Web.Header.Main.php';
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*******************************************************/
 // consulto los datos
-$query = "SELECT Nombre,idTipo
-FROM `seg_vecinal_clientes_listado`
-WHERE idCliente = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+$SIS_query = 'Nombre,idTipo';
+$SIS_join  = '';
+$SIS_where = 'idCliente = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 

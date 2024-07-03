@@ -34,7 +34,7 @@ require_once 'core/Web.Header.Main.php';
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['submit_filter'])){
 	//Variables
-	$arrRutas = array();
+	$arrRutas       = array();
 	$HoraSistema    = hora_actual();
 	$FechaSistema   = fecha_actual();
 
@@ -79,7 +79,6 @@ if(!empty($_GET['submit_filter'])){
 	$SIS_order = 'telemetria_listado.Nombre ASC';
 	$arrEquipo = array();
 	$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipo');
-
 
 	?>
 
@@ -460,29 +459,17 @@ if(!empty($_GET['submit_filter'])){
 	if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 		$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND id_Geo=1";
 	}else{
+		/*******************************************************/
+		// consulto los datos
+		$SIS_query = 'idTelemetria';
+		$SIS_join  = '';
+		$SIS_where = 'idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
+		$SIS_order = 0;
+		$arrPermisos = array();
+		$arrPermisos = db_select_array (false, $SIS_query, 'usuarios_equipos_telemetria', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+		/*******************************************************/
 		//filtro
 		$z = "idTelemetria=0";
-		//Se revisan los permisos a los contratos
-		$arrPermisos = array();
-		$query = "SELECT idTelemetria
-		FROM `usuarios_equipos_telemetria`
-		WHERE idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
-		//Consulta
-		$resultado = mysqli_query ($dbConn, $query);
-		//Si ejecuto correctamente la consulta
-		if(!$resultado){
-			//Genero numero aleatorio
-			$vardata = genera_password(8,'alfanumerico');
-
-			//Guardo el error en una variable temporal
-			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-
-		}
-		while ( $row = mysqli_fetch_assoc ($resultado)){
-		array_push( $arrPermisos,$row );
-		}
 		foreach ($arrPermisos as $prod) {
 			$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND id_Geo=2 AND idTelemetria=".$prod['idTelemetria'].")";
 		}

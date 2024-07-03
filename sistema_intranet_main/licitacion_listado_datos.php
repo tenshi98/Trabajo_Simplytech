@@ -53,25 +53,14 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 //verifico que sea un administrador
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+/*******************************************************/
 // consulto los datos
-$query = "SELECT Codigo, Nombre,FechaInicio, FechaTermino, Presupuesto, idBodegaProd, idBodegaIns,
-idSistema, idAprobado, idCliente, idTipoLicitacion, ValorMensual, idOpcionItem
-FROM `licitacion_listado`
-WHERE idLicitacion = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = '
+Codigo, Nombre,FechaInicio, FechaTermino, Presupuesto, idBodegaProd, idBodegaIns,
+idSistema, idAprobado, idCliente, idTipoLicitacion, ValorMensual, idOpcionItem';
+$SIS_join  = '';
+$SIS_where = 'idLicitacion = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'licitacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 
@@ -96,8 +85,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<li class=""><a href="<?php echo 'licitacion_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 						<li class=""><a href="<?php echo 'licitacion_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos</a></li>
 					</ul>
-				</li> 
-                          
+				</li>
 			</ul>
 		</header>
         <div class="table-responsive">
@@ -144,7 +132,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						document.getElementById('div_Presupuesto').style.display = 'none';
 
 						$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
-									
+
 							let TipoLicitacion_val= $("#idTipoLicitacion").val();
 
 							//si es A suma Alzada
@@ -165,7 +153,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 						$("#idTipoLicitacion").on("change", function(){ //se ejecuta al cambiar valor del select
 							let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
-							
+
 							//si es A suma Alzada
 							if(modelSelected1 == 1){
 								document.getElementById('div_ValorMensual').style.display = '';
@@ -180,7 +168,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 							}
 						});
-								
+
 					</script>
 
 					<div class="form-group">

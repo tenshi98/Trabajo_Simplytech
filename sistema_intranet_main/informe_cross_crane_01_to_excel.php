@@ -252,7 +252,7 @@ $nn           = 3;
 $ndias        = dias_transcurridos($_GET['f_inicio'], $_GET['f_termino']);
 $nColumnProm  = 1;
 //filtro por equipo
-filtrar($arrEquipos2, 'Equipo'); 
+filtrar($arrEquipos2, 'Equipo');
 //recorro los equipos 
 foreach($arrEquipos2 as $equipo=>$dias){
 	       

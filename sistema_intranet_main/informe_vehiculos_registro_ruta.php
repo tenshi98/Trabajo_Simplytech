@@ -31,43 +31,22 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['submit_filter'])){
-	//se verifica si se ingreso la hora, es un dato optativo
-	$z='';
-	$z='';if(isset($_GET['f_inicio'], $_GET['f_termino'], $_GET['h_inicio'], $_GET['h_termino'])&&$_GET['f_inicio']!=''&&$_GET['f_termino']!=''&&$_GET['h_inicio']!=''&&$_GET['h_termino']!=''){
-		$z.=" WHERE (TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
-	}elseif(isset($_GET['f_inicio'], $_GET['f_termino'])&&$_GET['f_inicio']!=''&&$_GET['f_termino']!=''){
-		$z.=" WHERE (FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
-	}
-	//Se traen todos los registros
-	$arrRutas = array();
-	$query = "SELECT
+	/*******************************************************/
+	// consulto los datos
+	$SIS_query = '
 	vehiculos_listado.Nombre AS NombreEquipo,
-	vehiculos_listado_tablarelacionada_".$_GET['idVehiculo'].".idTabla,
-	vehiculos_listado_tablarelacionada_".$_GET['idVehiculo'].".GeoLatitud,
-	vehiculos_listado_tablarelacionada_".$_GET['idVehiculo'].".GeoLongitud
-
-	FROM `vehiculos_listado_tablarelacionada_".$_GET['idVehiculo']."`
-	LEFT JOIN `vehiculos_listado` ON vehiculos_listado.idVehiculo = vehiculos_listado_tablarelacionada_".$_GET['idVehiculo'].".idVehiculo
-
-	".$z;
-
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-
+	vehiculos_listado_tablarelacionada_'.$_GET['idVehiculo'].'.idTabla,
+	vehiculos_listado_tablarelacionada_'.$_GET['idVehiculo'].'.GeoLatitud,
+	vehiculos_listado_tablarelacionada_'.$_GET['idVehiculo'].'.GeoLongitud';
+	$SIS_join  = 'LEFT JOIN `vehiculos_listado` ON vehiculos_listado.idVehiculo = vehiculos_listado_tablarelacionada_'.$_GET['idVehiculo'].'.idVehiculo';
+	if(isset($_GET['f_inicio'], $_GET['f_termino'], $_GET['h_inicio'], $_GET['h_termino'])&&$_GET['f_inicio']!=''&&$_GET['f_termino']!=''&&$_GET['h_inicio']!=''&&$_GET['h_termino']!=''){
+		$SIS_where ="(TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
+	}elseif(isset($_GET['f_inicio'], $_GET['f_termino'])&&$_GET['f_inicio']!=''&&$_GET['f_termino']!=''){
+		$SIS_where ="(FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
 	}
-	while ( $row = mysqli_fetch_assoc ($resultado)){
-	array_push( $arrRutas,$row );
-	}
-
+	$SIS_order = 0;
+	$arrRutas = array();
+	$arrRutas = db_select_array (false, $SIS_query, 'vehiculos_listado_tablarelacionada_'.$_GET['idVehiculo'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrRutas');
 
 	?>
 

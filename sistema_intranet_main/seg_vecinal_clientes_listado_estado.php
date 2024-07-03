@@ -50,29 +50,16 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Estado cambiado correc
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*******************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 seg_vecinal_clientes_listado.idCliente,
 seg_vecinal_clientes_listado.Nombre,
 core_estados.Nombre AS estado,
-seg_vecinal_clientes_listado.idTipo
-FROM `seg_vecinal_clientes_listado`
-LEFT JOIN `core_estados`   ON core_estados.idEstado       = seg_vecinal_clientes_listado.idEstado
-WHERE idCliente = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+seg_vecinal_clientes_listado.idTipo';
+$SIS_join  = 'LEFT JOIN `core_estados`   ON core_estados.idEstado = seg_vecinal_clientes_listado.idEstado';
+$SIS_where = 'idCliente = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 

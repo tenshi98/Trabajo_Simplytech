@@ -469,7 +469,6 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_hidden('idConsolidacion', $_GET['edit'], 2);
 
 				?>
-				
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase">
@@ -772,10 +771,8 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 						<td></td>
 					</tr>
 					
-				
-					
-					
-					
+
+	
 				</tbody>
 			</table>
 
@@ -871,7 +868,7 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 							</div>
 						</td>
 					</tr>
-			<?php 
+			<?php
 				}
 			} ?>
 

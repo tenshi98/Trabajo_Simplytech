@@ -125,8 +125,7 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 						<span><i class="fa fa-search" aria-hidden="true"></i> Seleccionar Imagen</span>
 						<input name="upload_image" id="upload_image" type="file" class="upload" />
 					</div>
-						
-					
+		
 					<div id="uploadimageModal" class="modal" role="dialog">
 						<div class="modal-dialog">
 							<div class="modal-content">

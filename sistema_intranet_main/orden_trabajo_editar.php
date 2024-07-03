@@ -356,8 +356,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_number('Cantidad de Aceite','Aceite', $x5, 2);
 				$Form_Inputs->form_input_number('Cantidad a consumir','Cantidad', $x6, 2);
 				$Form_Inputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x7);
-				
-					
+
 					
 				$Form_Inputs->form_input_hidden('tabla', $_GET['tabla'], 2);
 				$Form_Inputs->form_input_hidden('id_tabla', $_GET['id_tabla'], 2);

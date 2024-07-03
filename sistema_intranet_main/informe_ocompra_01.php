@@ -86,7 +86,7 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrServicios,$row );
-} 
+}
 /**************************************************************/
 // Se trae un listado con todos los productos
 $arrArriendos = array();
@@ -118,7 +118,7 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrArriendos,$row );
-} 
+}
 /**************************************************************/
 // Se trae un listado con todos los productos
 $arrInsumos = array();
@@ -150,7 +150,7 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrInsumos,$row );
-} 
+}
 /**************************************************************/
 // Se trae un listado con todos los productos
 $arrProductos = array();

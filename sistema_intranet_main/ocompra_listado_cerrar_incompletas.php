@@ -290,8 +290,7 @@ switch ($_GET['type']) {
 						$Form_Inputs->form_input_number('Monto Declarado', 'cant_ingresada', $x3, 2);
 
 						$Form_Inputs->form_input_hidden('CantComp', $x2, 2);
-					
-					
+	
 				    break;
 				}
 
@@ -408,7 +407,7 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrServicios,$row );
-} 
+}
 /**************************************************************/
 // Se trae un listado con todos los productos
 $arrArriendos = array();
@@ -441,7 +440,7 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrArriendos,$row );
-} 
+}
 /**************************************************************/
 // Se trae un listado con todos los productos
 $arrInsumos = array();
@@ -474,7 +473,7 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrInsumos,$row );
-} 
+}
 /**************************************************************/
 // Se trae un listado con todos los productos
 $arrProductos = array();
@@ -695,8 +694,7 @@ array_push( $arrBoletasEmp,$row );
 							</td>
 						</tr>
 					<?php } ?>
-					
-					
+	
 					                   
 				</tbody>
 			</table>

@@ -50,35 +50,22 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Cliente Borrado correc
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*******************************************************/
 // consulto los datos
-$query = "SELECT idTipo, Nombre,Contrato_Nombre,Contrato_Numero, Contrato_idPeriodo, Contrato_Fecha_Ini, 
+$SIS_query = '
+idTipo, Nombre,Contrato_Nombre,Contrato_Numero, Contrato_idPeriodo, Contrato_Fecha_Ini,
 Contrato_Fecha_Term, Contrato_N_Meses, Contrato_Representante_Legal, Contrato_Representante_Rut, Contrato_Representante_Fono,
-Contrato_Valor_Mensual, Contrato_Valor_Anual, Contrato_UF_Instalacion, Contrato_UF_Mensual, idTab_1, 
-idTab_2, idTab_3, idTab_4, idTab_5, idTab_6, idTab_7, idTab_8, idTab_9, idTab_10, idTab_11, idTab_12, 
-idTab_13, idTab_14, idTab_15, Contrato_Obs
-										
-FROM `clientes_listado`
-WHERE idCliente = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+Contrato_Valor_Mensual, Contrato_Valor_Anual, Contrato_UF_Instalacion, Contrato_UF_Mensual, idTab_1,
+idTab_2, idTab_3, idTab_4, idTab_5, idTab_6, idTab_7, idTab_8, idTab_9, idTab_10, idTab_11, idTab_12,
+idTab_13, idTab_14, idTab_15, Contrato_Obs';
+$SIS_join  = '';
+$SIS_where = 'idCliente = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 /*******************************************/
 //Listado con los tabs
 $arrHistorial = array();
 $arrHistorial = db_select_array (false, 'clientes_listado_historial_contratos.Creacion_fecha, clientes_listado_historial_contratos.Observacion, usuarios_listado.Nombre AS NombreUsuario', 'clientes_listado_historial_contratos', 'LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = clientes_listado_historial_contratos.idUsuario', 'clientes_listado_historial_contratos.idCliente='.$_GET['id'], 'clientes_listado_historial_contratos.Creacion_fecha ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrHistorial');
-
 
 ?>
 
@@ -156,7 +143,7 @@ $arrHistorial = db_select_array (false, 'clientes_listado_historial_contratos.Cr
 
 					$Form_Inputs->form_tittle(3, 'Duracion');
 					$Form_Inputs->form_date('Fecha inicio Contrato','Contrato_Fecha_Ini', $x4, 1);
-					$Form_Inputs->form_date('Fecha termino Contrato','Contrato_Fecha_Term', $x5, 1);		
+					$Form_Inputs->form_date('Fecha termino Contrato','Contrato_Fecha_Term', $x5, 1);
 					$Form_Inputs->form_select_n_auto('Duracion Contrato(Meses)','Contrato_N_Meses', $x6, 1, 1, 72);
 
 					$Form_Inputs->form_tittle(3, 'Representante Legal');

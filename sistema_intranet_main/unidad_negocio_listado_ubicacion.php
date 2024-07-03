@@ -46,25 +46,13 @@ require_once 'core/Web.Header.Main.php';
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*******************************************************/
 // consulto los datos
-$query = "SELECT Nombre,idConfig_1, idConfig_2, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, 
-idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idCliente
-FROM `maquinas_listado`
-WHERE idMaquina = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Nombre,idConfig_1, idConfig_2, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4,
+idUbicacion_lvl_5, idCliente';
+$SIS_join  = '';
+$SIS_where = 'idMaquina = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 

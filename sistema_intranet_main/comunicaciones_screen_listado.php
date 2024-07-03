@@ -25,10 +25,10 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){ $location .= "&Nombre=".$_GET['Nombre'];         $search .= "&Nombre=".$_GET['Nombre'];}
-if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){   $location .= "&Fecha=".$_GET['Fecha'];           $search .= "&Fecha=".$_GET['Fecha'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){        $location .= "&Nombre=".$_GET['Nombre'];         $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){          $location .= "&Fecha=".$_GET['Fecha'];           $search .= "&Fecha=".$_GET['Fecha'];}
 if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){    $location .= "&idEstado=".$_GET['idEstado'];     $search .= "&idEstado=".$_GET['idEstado'];}
-if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){ $location .= "&idTipo=".$_GET['idTipo'];         $search .= "&idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){        $location .= "&idTipo=".$_GET['idTipo'];         $search .= "&idTipo=".$_GET['idTipo'];}
 if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){  $location .= "&idUsuario=".$_GET['idUsuario'];   $search .= "&idUsuario=".$_GET['idUsuario'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion

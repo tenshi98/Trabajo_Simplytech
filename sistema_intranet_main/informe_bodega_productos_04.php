@@ -29,50 +29,27 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Se limitan los permisos a las bodegas asignadas
-$x1 ="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+/*******************************************************/
+//variables
+$año_pasado = ano_actual()-1;
+/*******************************************************/
+// consulto los datos
+$SIS_query = 'Creacion_ano,Creacion_mes,Cantidad_ing,Cantidad_eg,idTipo,SUM(ValorTotal) AS Valor';
+$SIS_join  = 'INNER JOIN usuarios_bodegas_productos ON usuarios_bodegas_productos.idBodega = bodegas_productos_facturacion_existencias.idBodega';
+$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where.= ' AND Creacion_ano >= '.$año_pasado;
+$SIS_where.= ' AND bodegas_productos_facturacion_existencias.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 //se verifica el tipo de usuario
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$x2 = "idUsuario>=0";
+	$SIS_where.= " AND usuarios_bodegas_productos.idUsuario>=0";
 }else{
-	$x2 = "idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
+	$SIS_where.= " AND usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
-//Variables
-$join_1  = "INNER JOIN usuarios_bodegas_productos ON usuarios_bodegas_productos.idBodega = bodegas_productos_facturacion_existencias.idBodega";
-$where_1 = " AND bodegas_productos_facturacion_existencias.".$x1." AND usuarios_bodegas_productos.".$x2;
-/**********************************************************/
-// Se trae un listado con los valores de las existencias actuales
-$año_pasado = ano_actual()-1;
-$z = "WHERE idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."'";
-$z.= " AND Creacion_ano >= ".$año_pasado;
-//se consulta
+$SIS_where.= ' GROUP BY Creacion_ano,Creacion_mes,idTipo';
+$SIS_order = 'Creacion_ano ASC, Creacion_mes ASC';
 $arrExistencias = array();
-$query = "SELECT Creacion_ano,Creacion_mes,Cantidad_ing,Cantidad_eg,idTipo,SUM(ValorTotal) AS Valor
-FROM `bodegas_productos_facturacion_existencias`
-".$join_1."
-".$z."
-".$where_1."
-GROUP BY Creacion_ano,Creacion_mes,idTipo
-ORDER BY Creacion_ano ASC, Creacion_mes ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrExistencias,$row );
-}
-	
-
+$arrExistencias = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrExistencias');
+/*******************************************************/
 $mes = array();
 foreach ($arrExistencias as $existencias) {
 	if(!isset($mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo1'])){ $mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo1'] = 0;}
@@ -127,12 +104,11 @@ foreach ($arrExistencias as $existencias) {
 			break;
 	}
 }
-								
+/*******************************************************/
 $xmes = mes_actual();
 $xaño = ano_actual();
 $grafico = array();
 for ($xcontador = 12; $xcontador > 0; $xcontador--) {
-									
 	if($xmes>0){
 		$grafico[$xcontador]['mes'] = $xmes;
 		$grafico[$xcontador]['año'] = $xaño;
@@ -145,7 +121,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		if(isset($mes[$xaño][$xmes]['tipo7'])){ $grafico[$xcontador]['tipo7'] = $mes[$xaño][$xmes]['tipo7'];}else{$grafico[$xcontador]['tipo7'] = 0;};
 		if(isset($mes[$xaño][$xmes]['tipo8'])){ $grafico[$xcontador]['tipo8'] = $mes[$xaño][$xmes]['tipo8'];}else{$grafico[$xcontador]['tipo8'] = 0;};
 		if(isset($mes[$xaño][$xmes]['tipo9'])){ $grafico[$xcontador]['tipo9'] = $mes[$xaño][$xmes]['tipo9'];}else{$grafico[$xcontador]['tipo9'] = 0;};
-									
+
 	}else{
 		$xmes = 12;
 		$xaño = $xaño-1;
@@ -161,11 +137,11 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		if(isset($mes[$xaño][$xmes]['tipo7'])){ $grafico[$xcontador]['tipo7'] = $mes[$xaño][$xmes]['tipo7'];}else{$grafico[$xcontador]['tipo7'] = 0;};
 		if(isset($mes[$xaño][$xmes]['tipo8'])){ $grafico[$xcontador]['tipo8'] = $mes[$xaño][$xmes]['tipo8'];}else{$grafico[$xcontador]['tipo8'] = 0;};
 		if(isset($mes[$xaño][$xmes]['tipo9'])){ $grafico[$xcontador]['tipo9'] = $mes[$xaño][$xmes]['tipo9'];}else{$grafico[$xcontador]['tipo9'] = 0;};
-			
-	}
-	$xmes = $xmes-1;								
-}
 
+	}
+	$xmes = $xmes-1;
+}
+/*******************************************************/
 //Configuro lo que quiero ver
 $s_Ventas              = 'true';
 $s_Gastos              = 'true';
@@ -221,7 +197,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 					<div class="table-responsive">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:5px;">
 							<?php
-							$trans_1='';				     
+							$trans_1='';
 							echo widget_bodega('Bodega de Productos',
 											   'bodegas_productos_listado', 'bodegas_productos_facturacion_existencias', 'bodegas_productos_facturacion_tipo', 
 											   'productos_listado', 'sistema_productos_uml', $s_data,1,
@@ -237,12 +213,12 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 					<div class="table-responsive">
 
 						<script>
-							
+
 							google.charts.setOnLoadCallback(drawChart1);
 
 							function drawChart1() {
 								var data1 = new google.visualization.DataTable();
-								data1.addColumn('string', 'Fecha'); 
+								data1.addColumn('string', 'Fecha');
 								data1.addColumn('number', 'Valor');
 								data1.addColumn({type: 'string', role: 'annotation'});
 
@@ -259,7 +235,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 									["<?php echo numero_a_mes_corto($grafico[10]['mes']); ?>", <?php echo valores_enteros($grafico[10]['tipo1']) ?>, '<?php echo valores_enteros($grafico[10]['tipo1']) ?>'],
 									["<?php echo numero_a_mes_corto($grafico[11]['mes']); ?>", <?php echo valores_enteros($grafico[11]['tipo1']) ?>, '<?php echo valores_enteros($grafico[11]['tipo1']) ?>'],
 									["<?php echo numero_a_mes_corto($grafico[12]['mes']); ?>", <?php echo valores_enteros($grafico[12]['tipo1']) ?>, '<?php echo valores_enteros($grafico[12]['tipo1']) ?>']
-			
+
 								]);
 
 								var options = {
@@ -286,15 +262,14 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 				<div class="tab-pane fade" id="tab3">
 					<div class="wmd-panel">
 						<div class="table-responsive">
-							
-										
+
 							<script>
 
 								google.charts.setOnLoadCallback(drawChart1);
 
 								function drawChart1() {
 									var data1 = new google.visualization.DataTable();
-									data1.addColumn('string', 'Fecha'); 
+									data1.addColumn('string', 'Fecha');
 									data1.addColumn('number', 'Valor');
 									data1.addColumn({type: 'string', role: 'annotation'});
 
@@ -311,7 +286,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 										["<?php echo numero_a_mes_corto($grafico[10]['mes']); ?>", <?php echo valores_enteros($grafico[10]['tipo2']) ?>, '<?php echo valores_enteros($grafico[10]['tipo2']) ?>'],
 										["<?php echo numero_a_mes_corto($grafico[11]['mes']); ?>", <?php echo valores_enteros($grafico[11]['tipo2']) ?>, '<?php echo valores_enteros($grafico[11]['tipo2']) ?>'],
 										["<?php echo numero_a_mes_corto($grafico[12]['mes']); ?>", <?php echo valores_enteros($grafico[12]['tipo2']) ?>, '<?php echo valores_enteros($grafico[12]['tipo2']) ?>']
-				
+
 									]);
 
 									var options = {
@@ -330,8 +305,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 								}
 							</script>
 							<div id="curve_chart2" style="height: 500px; width: 100%;"></div>
-							
-							
+
 						</div>
 					</div>
 				</div>
@@ -340,15 +314,14 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 				<div class="tab-pane fade" id="tab4">
 					<div class="wmd-panel">
 						<div class="table-responsive">
-							
-										
+
 							<script>
 
 								google.charts.setOnLoadCallback(drawChart1);
 
 								function drawChart1() {
 									var data1 = new google.visualization.DataTable();
-									data1.addColumn('string', 'Fecha'); 
+									data1.addColumn('string', 'Fecha');
 									data1.addColumn('number', 'Valor');
 									data1.addColumn({type: 'string', role: 'annotation'});
 
@@ -365,7 +338,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 										["<?php echo numero_a_mes_corto($grafico[10]['mes']); ?>", <?php echo valores_enteros($grafico[10]['tipo3']) ?>, '<?php echo valores_enteros($grafico[10]['tipo3']) ?>'],
 										["<?php echo numero_a_mes_corto($grafico[11]['mes']); ?>", <?php echo valores_enteros($grafico[11]['tipo3']) ?>, '<?php echo valores_enteros($grafico[11]['tipo3']) ?>'],
 										["<?php echo numero_a_mes_corto($grafico[12]['mes']); ?>", <?php echo valores_enteros($grafico[12]['tipo3']) ?>, '<?php echo valores_enteros($grafico[12]['tipo3']) ?>']
-				
+
 									]);
 
 									var options = {
@@ -384,8 +357,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 								}
 							</script>
 							<div id="curve_chart3" style="height: 500px; width: 100%;"></div>
-							
-							
+
 						</div>
 					</div>
 				</div>
@@ -394,15 +366,14 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 				<div class="tab-pane fade" id="tab5">
 					<div class="wmd-panel">
 						<div class="table-responsive">
-							
-										
+
 							<script>
 
 								google.charts.setOnLoadCallback(drawChart1);
 
 								function drawChart1() {
 									var data1 = new google.visualization.DataTable();
-									data1.addColumn('string', 'Fecha'); 
+									data1.addColumn('string', 'Fecha');
 									data1.addColumn('number', 'Valor');
 									data1.addColumn({type: 'string', role: 'annotation'});
 
@@ -419,7 +390,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 										["<?php echo numero_a_mes_corto($grafico[10]['mes']); ?>", <?php echo valores_enteros($grafico[10]['tipo4']) ?>, '<?php echo valores_enteros($grafico[10]['tipo4']) ?>'],
 										["<?php echo numero_a_mes_corto($grafico[11]['mes']); ?>", <?php echo valores_enteros($grafico[11]['tipo4']) ?>, '<?php echo valores_enteros($grafico[11]['tipo4']) ?>'],
 										["<?php echo numero_a_mes_corto($grafico[12]['mes']); ?>", <?php echo valores_enteros($grafico[12]['tipo4']) ?>, '<?php echo valores_enteros($grafico[12]['tipo4']) ?>']
-				
+
 									]);
 
 									var options = {
@@ -438,8 +409,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 								}
 							</script>
 							<div id="curve_chart4" style="height: 500px; width: 100%;"></div>
-							
-							
+
 						</div>
 					</div>
 				</div>
@@ -448,15 +418,14 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 				<div class="tab-pane fade" id="tab6">
 					<div class="wmd-panel">
 						<div class="table-responsive">
-							
-										
+
 							<script>
 
 								google.charts.setOnLoadCallback(drawChart1);
 
 								function drawChart1() {
 									var data1 = new google.visualization.DataTable();
-									data1.addColumn('string', 'Fecha'); 
+									data1.addColumn('string', 'Fecha');
 									data1.addColumn('number', 'Valor');
 									data1.addColumn({type: 'string', role: 'annotation'});
 
@@ -473,7 +442,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 										["<?php echo numero_a_mes_corto($grafico[10]['mes']); ?>", <?php echo valores_enteros($grafico[10]['tipo5']) ?>, '<?php echo valores_enteros($grafico[10]['tipo5']) ?>'],
 										["<?php echo numero_a_mes_corto($grafico[11]['mes']); ?>", <?php echo valores_enteros($grafico[11]['tipo5']) ?>, '<?php echo valores_enteros($grafico[11]['tipo5']) ?>'],
 										["<?php echo numero_a_mes_corto($grafico[12]['mes']); ?>", <?php echo valores_enteros($grafico[12]['tipo5']) ?>, '<?php echo valores_enteros($grafico[12]['tipo5']) ?>']
-				
+
 									]);
 
 									var options = {
@@ -492,8 +461,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 								}
 							</script>
 							<div id="curve_chart5" style="height: 500px; width: 100%;"></div>
-							
-							
+
 						</div>
 					</div>
 				</div>
@@ -502,15 +470,14 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 				<div class="tab-pane fade" id="tab7">
 					<div class="wmd-panel">
 						<div class="table-responsive">
-							
-										
+
 							<script>
 
 								google.charts.setOnLoadCallback(drawChart1);
 
 								function drawChart1() {
 									var data1 = new google.visualization.DataTable();
-									data1.addColumn('string', 'Fecha'); 
+									data1.addColumn('string', 'Fecha');
 									data1.addColumn('number', 'Valor');
 									data1.addColumn({type: 'string', role: 'annotation'});
 
@@ -527,7 +494,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 										["<?php echo numero_a_mes_corto($grafico[10]['mes']); ?>", <?php echo valores_enteros($grafico[10]['tipo6']) ?>, '<?php echo valores_enteros($grafico[10]['tipo6']) ?>'],
 										["<?php echo numero_a_mes_corto($grafico[11]['mes']); ?>", <?php echo valores_enteros($grafico[11]['tipo6']) ?>, '<?php echo valores_enteros($grafico[11]['tipo6']) ?>'],
 										["<?php echo numero_a_mes_corto($grafico[12]['mes']); ?>", <?php echo valores_enteros($grafico[12]['tipo6']) ?>, '<?php echo valores_enteros($grafico[12]['tipo6']) ?>']
-				
+
 									]);
 
 									var options = {
@@ -546,8 +513,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 								}
 							</script>
 							<div id="curve_chart6" style="height: 500px; width: 100%;"></div>
-							
-							
+
 						</div>
 					</div>
 				</div>
@@ -556,15 +522,14 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 				<div class="tab-pane fade" id="tab8">
 					<div class="wmd-panel">
 						<div class="table-responsive">
-							
-										
+
 							<script>
 
 								google.charts.setOnLoadCallback(drawChart1);
 
 								function drawChart1() {
 									var data1 = new google.visualization.DataTable();
-									data1.addColumn('string', 'Fecha'); 
+									data1.addColumn('string', 'Fecha');
 									data1.addColumn('number', 'Valor');
 									data1.addColumn({type: 'string', role: 'annotation'});
 
@@ -581,7 +546,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 										["<?php echo numero_a_mes_corto($grafico[10]['mes']); ?>", <?php echo valores_enteros($grafico[10]['tipo7']) ?>, '<?php echo valores_enteros($grafico[10]['tipo7']) ?>'],
 										["<?php echo numero_a_mes_corto($grafico[11]['mes']); ?>", <?php echo valores_enteros($grafico[11]['tipo7']) ?>, '<?php echo valores_enteros($grafico[11]['tipo7']) ?>'],
 										["<?php echo numero_a_mes_corto($grafico[12]['mes']); ?>", <?php echo valores_enteros($grafico[12]['tipo7']) ?>, '<?php echo valores_enteros($grafico[12]['tipo7']) ?>']
-				
+
 									]);
 
 									var options = {
@@ -600,8 +565,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 								}
 							</script>
 							<div id="curve_chart7" style="height: 500px; width: 100%;"></div>
-							
-							
+
 						</div>
 					</div>
 				</div>
@@ -610,15 +574,14 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 				<div class="tab-pane fade" id="tab9">
 					<div class="wmd-panel">
 						<div class="table-responsive">
-							
-										
+
 							<script>
 
 								google.charts.setOnLoadCallback(drawChart1);
 
 								function drawChart1() {
 									var data1 = new google.visualization.DataTable();
-									data1.addColumn('string', 'Fecha'); 
+									data1.addColumn('string', 'Fecha');
 									data1.addColumn('number', 'Valor');
 									data1.addColumn({type: 'string', role: 'annotation'});
 
@@ -635,7 +598,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 										["<?php echo numero_a_mes_corto($grafico[10]['mes']); ?>", <?php echo valores_enteros($grafico[10]['tipo8']) ?>, '<?php echo valores_enteros($grafico[10]['tipo8']) ?>'],
 										["<?php echo numero_a_mes_corto($grafico[11]['mes']); ?>", <?php echo valores_enteros($grafico[11]['tipo8']) ?>, '<?php echo valores_enteros($grafico[11]['tipo8']) ?>'],
 										["<?php echo numero_a_mes_corto($grafico[12]['mes']); ?>", <?php echo valores_enteros($grafico[12]['tipo8']) ?>, '<?php echo valores_enteros($grafico[12]['tipo8']) ?>']
-				
+
 									]);
 
 									var options = {
@@ -654,8 +617,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 								}
 							</script>
 							<div id="curve_chart8" style="height: 500px; width: 100%;"></div>
-							
-							
+
 						</div>
 					</div>
 				</div>
@@ -664,15 +626,14 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 				<div class="tab-pane fade" id="tab10">
 					<div class="wmd-panel">
 						<div class="table-responsive">
-							
-										
+
 							<script>
 
 								google.charts.setOnLoadCallback(drawChart1);
 
 								function drawChart1() {
 									var data1 = new google.visualization.DataTable();
-									data1.addColumn('string', 'Fecha'); 
+									data1.addColumn('string', 'Fecha');
 									data1.addColumn('number', 'Valor');
 									data1.addColumn({type: 'string', role: 'annotation'});
 
@@ -689,7 +650,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 										["<?php echo numero_a_mes_corto($grafico[10]['mes']); ?>", <?php echo valores_enteros($grafico[10]['tipo9']) ?>, '<?php echo valores_enteros($grafico[10]['tipo9']) ?>'],
 										["<?php echo numero_a_mes_corto($grafico[11]['mes']); ?>", <?php echo valores_enteros($grafico[11]['tipo9']) ?>, '<?php echo valores_enteros($grafico[11]['tipo9']) ?>'],
 										["<?php echo numero_a_mes_corto($grafico[12]['mes']); ?>", <?php echo valores_enteros($grafico[12]['tipo9']) ?>, '<?php echo valores_enteros($grafico[12]['tipo9']) ?>']
-				
+
 									]);
 
 									var options = {
@@ -708,8 +669,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 								}
 							</script>
 							<div id="curve_chart9" style="height: 500px; width: 100%;"></div>
-							
-							
+
 						</div>
 					</div>
 				</div>
@@ -718,15 +678,6 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
         </div>
 	</div>
 </div>
-
-
-
-
-
-
-
-
-         
 
 
 <?php

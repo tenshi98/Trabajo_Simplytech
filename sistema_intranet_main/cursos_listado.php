@@ -25,8 +25,8 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){  $location .= "&Nombre=".$_GET['Nombre'];         $search .= "&Nombre=".$_GET['Nombre'];}
-if(isset($_GET['Semanas']) && $_GET['Semanas']!=''){$location .= "&Semanas=".$_GET['Semanas'];       $search .= "&Semanas=".$_GET['Semanas'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){         $location .= "&Nombre=".$_GET['Nombre'];         $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['Semanas']) && $_GET['Semanas']!=''){       $location .= "&Semanas=".$_GET['Semanas'];       $search .= "&Semanas=".$_GET['Semanas'];}
 if(isset($_GET['F_inicio']) && $_GET['F_inicio']!=''){     $location .= "&F_inicio=".$_GET['F_inicio'];     $search .= "&F_inicio=".$_GET['F_inicio'];}
 if(isset($_GET['F_termino']) && $_GET['F_termino']!=''){   $location .= "&F_termino=".$_GET['F_termino'];   $search .= "&F_termino=".$_GET['F_termino'];}
 if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){     $location .= "&idEstado=".$_GET['idEstado'];     $search .= "&idEstado=".$_GET['idEstado'];}
@@ -464,8 +464,7 @@ $arrCiudad = db_select_array (false, $SIS_query, 'cursos_listado', $SIS_join, $S
 	</div>
 </div>
 <div class="clearfix"></div>
-                       
-                                 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>

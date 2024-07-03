@@ -1123,13 +1123,8 @@ if(!empty($_GET['idSolicitud'])){
 		LEFT JOIN `sistema_variedades_categorias`   ON sistema_variedades_categorias.idCategoria  = cross_solicitud_aplicacion_listado.idCategoria
 		LEFT JOIN `variedades_listado`              ON variedades_listado.idProducto              = cross_solicitud_aplicacion_listado.idProducto';
 		$SIS_order = 0;
-		$arrBorrame = array();
-		$arrBorrame = db_select_array (false, $SIS_query,
-		'cross_solicitud_aplicacion_listado',
-		$SIS_join,
-		$SIS_where,
-		$SIS_order,
-		$dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrBorrame');
+		$arrOTS = array();
+		$arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrOTS');
 
 		?>
 

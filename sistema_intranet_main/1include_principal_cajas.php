@@ -30,7 +30,7 @@ LEFT JOIN `caja_chica_listado`           ON caja_chica_listado.idCajaChica      
 LEFT JOIN `core_sistemas`                ON core_sistemas.idSistema             = caja_chica_facturacion.idSistema
 LEFT JOIN `trabajadores_listado`         ON trabajadores_listado.idTrabajador   = caja_chica_facturacion.idTrabajador
 LEFT JOIN `caja_chica_facturacion_tipo`  ON caja_chica_facturacion_tipo.idTipo  = caja_chica_facturacion.idTipo';
-$SIS_order = 'ORDER BY caja_chica_facturacion.Creacion_fecha DESC LIMIT 50';
+$SIS_order = 'caja_chica_facturacion.Creacion_fecha DESC LIMIT 50';
 $arrTipo = array();
 $arrTipo = db_select_array (false, $SIS_query, 'caja_chica_facturacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTipo');
 

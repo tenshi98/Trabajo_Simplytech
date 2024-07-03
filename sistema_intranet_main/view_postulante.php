@@ -138,9 +138,7 @@ $rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, 
 							}
 							?>
 						</p>
-							
-							
-										
+
 					</div>
 					<div class="clearfix"></div>
 

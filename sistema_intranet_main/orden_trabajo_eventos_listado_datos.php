@@ -53,32 +53,21 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 //Verifico el tipo de usuario que esta ingresando
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
-$m = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig_1=1 AND idEstado=1";		
-// Se traen todos los datos del producto
-$query = "SELECT 
+$m = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig_1=1 AND idEstado=1";
+/*******************************************************/
+// consulto los datos
+$SIS_query = '
 orden_trabajo_eventos_listado.Fecha,
 orden_trabajo_eventos_listado.Hora,
 orden_trabajo_eventos_listado.Observacion,
 orden_trabajo_eventos_listado.idTrabajador,
 orden_trabajo_eventos_listado.idCliente,
-orden_trabajo_eventos_listado.idMaquina
+orden_trabajo_eventos_listado.idMaquina';
+$SIS_join  = 'orden_trabajo_eventos_listado.idEvento = '.$_GET['id'];
+$SIS_where = '';
+$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_eventos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-FROM `orden_trabajo_eventos_listado`
-WHERE orden_trabajo_eventos_listado.idEvento = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado); ?>
+?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Evento', fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].' hrs', 'Editar Datos Básicos'); ?>

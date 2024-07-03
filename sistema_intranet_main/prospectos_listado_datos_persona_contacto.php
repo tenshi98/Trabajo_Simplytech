@@ -46,24 +46,14 @@ require_once 'core/Web.Header.Main.php';
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Se traen todos los datos de mi Prospecto
-$query = "SELECT Nombre,PersonaContacto, PersonaContacto_Fono, PersonaContacto_email, PersonaContacto_Cargo 
-FROM `prospectos_listado`
-WHERE idProspecto = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado); ?>
+/*******************************************************/
+// consulto los datos
+$SIS_query = 'Nombre,PersonaContacto, PersonaContacto_Fono, PersonaContacto_email, PersonaContacto_Cargo';
+$SIS_join  = '';
+$SIS_where = 'idProspecto = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'prospectos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowdata['Nombre'], 'Editar Persona de contacto'); ?>

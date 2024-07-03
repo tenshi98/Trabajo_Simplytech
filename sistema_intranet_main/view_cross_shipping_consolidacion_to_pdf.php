@@ -359,8 +359,7 @@ $html .= '
 						<tr style="background-color: #f1f1f1;">
 							<td colspan="8">Archivos Adjuntos</td>
 						</tr>';		  
-						
-					
+		
 						filtrar($arrArchivos, 'Tipo');
 						foreach($arrArchivos as $categoria=>$archivos){
 							$html .= '<tr><td colspan="8"  style="background-color:#DDD"><strong>'.$categoria.'</strong></td></tr>';

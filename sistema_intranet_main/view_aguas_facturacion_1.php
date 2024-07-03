@@ -183,8 +183,7 @@
 						<td align="right"><?php echo '(+) '.Valores($rowDatos['DetalleSaldoAnterior'], 0); ?></td>
 					</tr>
 				<?php } ?>
-					
-					
+	
 					
 			</tbody>
 		</table>

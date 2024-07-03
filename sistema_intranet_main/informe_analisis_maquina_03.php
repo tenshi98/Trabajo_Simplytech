@@ -399,10 +399,8 @@ array_push( $arrGrupo,$row );
 					
 		}
 	}
-					
-					
-					
-					
+	
+	
 					
 			
 			

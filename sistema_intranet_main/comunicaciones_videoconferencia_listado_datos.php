@@ -50,24 +50,14 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/VideoConferencia Borra
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Se traen todos los datos del producto
-$query = "SELECT Nombre,idEstado, idTipo, Fecha, HoraInicio, HoraTermino
-FROM `comunicaciones_videoconferencia_listado`
-WHERE idVideoConferencia = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado); ?>
+/*******************************************************/
+// consulto los datos
+$SIS_query = 'Nombre,idEstado, idTipo, Fecha, HoraInicio, HoraTermino';
+$SIS_join  = '';
+$SIS_where = 'idVideoConferencia = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'comunicaciones_videoconferencia_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'VideoConferencia', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
@@ -104,8 +94,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 					$Form_Inputs->form_time('Hora Inicio','HoraInicio', $x4, 2, 1);
 					$Form_Inputs->form_time('Hora Termino','HoraTermino', $x5, 2, 1);
 					$Form_Inputs->form_select('Estado','idEstado', $x6, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
-				
-					
+
 					$Form_Inputs->form_input_hidden('idVideoConferencia', $_GET['id'], 2);
 					?>
 

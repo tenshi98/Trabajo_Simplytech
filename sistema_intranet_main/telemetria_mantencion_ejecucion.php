@@ -107,7 +107,7 @@ if(!empty($_GET['edit'])){ ?>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['verify'])){
 //numero sensores equipo
-$N_Maximo_Sensores = 72; 
+$N_Maximo_Sensores = 72;
 //Traigo todos los valores	
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {

@@ -320,8 +320,7 @@ array_push( $arrFacturaciones,$row );
 					<div class="pull-left">Total</div>
 					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['MontoPactado'], 0); ?></small>
 					<br/>
-						
-					
+		
 				</li>
 
 				<li class="list-group-item">

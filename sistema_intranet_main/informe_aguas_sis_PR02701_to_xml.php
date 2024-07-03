@@ -26,39 +26,24 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /**********************************************************************************************************************************/
 //obtengo los datos de la empresa
 $rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
-
-// Se trae un listado con todos los productos
-$arrFacturacion = array();
-$query = "SELECT
+/*******************************************************/
+// consulto los datos
+$SIS_query = '
 core_sistemas.Rut AS SistemaRut,
 aguas_facturacion_listado_detalle.idCliente,
 aguas_clientes_listado.idTipo AS tipoCliente,
-aguas_facturacion_listado_detalle.DetConsMesTotalCantidad AS Medicion
-
-FROM `aguas_facturacion_listado_detalle`
+aguas_facturacion_listado_detalle.DetConsMesTotalCantidad AS Medicion';
+$SIS_join  = '
 LEFT JOIN `aguas_clientes_listado`      ON aguas_clientes_listado.idCliente     = aguas_facturacion_listado_detalle.idCliente
-LEFT JOIN `core_sistemas`               ON core_sistemas.idSistema              = aguas_facturacion_listado_detalle.idSistema
-WHERE aguas_facturacion_listado_detalle.idMes = ".$_GET['idMes']."
-AND aguas_facturacion_listado_detalle.Ano = ".$_GET['Ano']."
-AND aguas_facturacion_listado_detalle.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema']."
-ORDER BY aguas_facturacion_listado_detalle.DetConsMesTotalCantidad ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
+LEFT JOIN `core_sistemas`               ON core_sistemas.idSistema              = aguas_facturacion_listado_detalle.idSistema';
+$SIS_where = 'aguas_facturacion_listado_detalle.idMes = '.$_GET['idMes'];
+$SIS_where.= ' AND aguas_facturacion_listado_detalle.Ano = '.$_GET['Ano'];
+$SIS_where.= ' AND aguas_facturacion_listado_detalle.idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 'aguas_facturacion_listado_detalle.DetConsMesTotalCantidad ASC';
+$arrFacturacion = array();
+$arrFacturacion = db_select_array (false, $SIS_query, 'aguas_facturacion_listado_detalle', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrFacturacion');
 
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrFacturacion,$row );
-}
-
+/*******************************************************/
 //Programacion Cretiva
 $informepr = array();
 //definicion de variables vacias

@@ -164,11 +164,9 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){  $Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);}
 				if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){  $Form_Inputs->form_input_hidden('idLevel_4', $_GET['lv_4'], 2);}
 				if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){  $Form_Inputs->form_input_hidden('idLevel_5', $_GET['lv_5'], 2);}
-					
-					
+	
 				?>
-				
-					
+
 				    
 	   
 				<div class="form-group">

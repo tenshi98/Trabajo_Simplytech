@@ -423,8 +423,7 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 					</div>
 				</div>
 			<?php } ?>
-					
-					
+	
 		
 
 	</div>

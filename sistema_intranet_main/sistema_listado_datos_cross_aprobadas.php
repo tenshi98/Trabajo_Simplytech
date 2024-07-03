@@ -149,7 +149,6 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 				$Form_Inputs->form_input_hidden('idSistema', $_GET['id'], 2);
 				?>
-				
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_new">
@@ -271,7 +270,7 @@ $query = "SELECT
 idUsuario
 
 FROM usuarios_listado
-WHERE usuarios_listado.idUsuario='1' "; 
+WHERE usuarios_listado.idUsuario='1' ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta

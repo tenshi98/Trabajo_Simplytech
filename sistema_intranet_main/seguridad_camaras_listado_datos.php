@@ -47,26 +47,15 @@ require_once 'core/Web.Header.Main.php';
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*******************************************************/
 // consulto los datos
-$query = "SELECT Nombre,idSistema, idPais, idCiudad, idComuna, Direccion,
-N_Camaras, idSubconfiguracion, idTipoCamara, Config_usuario, Config_Password, 
-Config_IP, Config_Puerto, Config_Web
-FROM `seguridad_camaras_listado`
-WHERE idCamara = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado); ?>
+$SIS_query = 'Nombre,idSistema, idPais, idCiudad, idComuna, Direccion, N_Camaras, idSubconfiguracion, idTipoCamara, Config_usuario, Config_Password,
+Config_IP, Config_Puerto, Config_Web';
+$SIS_join  = '';
+$SIS_where = 'idCamara = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'seguridad_camaras_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Grupo Camaras', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
@@ -125,8 +114,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idCamara', $_GET['id'], 2);
-					
-					
+
 					?>
 
 					<script>

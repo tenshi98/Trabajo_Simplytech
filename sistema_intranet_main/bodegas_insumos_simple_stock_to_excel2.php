@@ -33,38 +33,24 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 //obtengo los datos de la empresa
 $rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
-//verifico que sea un administrador
-$arrProductos = array();
-$query = "SELECT
+/*******************************************************/
+// consulto los datos
+$SIS_query = '
 insumos_listado.StockLimite,
 insumos_listado.Nombre AS NombreProd,
 sistema_productos_uml.Nombre AS UnidadMedida,
 SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS stock_entrada,
 SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS stock_salida,
-bodegas_insumos_listado.Nombre AS NombreBodega
-
-FROM `bodegas_insumos_facturacion_existencias`
-LEFT JOIN `insumos_listado`    ON insumos_listado.idProducto    = bodegas_insumos_facturacion_existencias.idProducto
-LEFT JOIN `sistema_productos_uml`        ON sistema_productos_uml.idUml             = insumos_listado.idUml
-LEFT JOIN `bodegas_insumos_listado`    ON bodegas_insumos_listado.idBodega      = bodegas_insumos_facturacion_existencias.idBodega
-
-WHERE bodegas_insumos_facturacion_existencias.idBodega=".$_GET['idBodega']."
-GROUP BY bodegas_insumos_facturacion_existencias.idProducto";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-				
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrProductos,$row );
-}
+bodegas_insumos_listado.Nombre AS NombreBodega';
+$SIS_join  = '
+LEFT JOIN `insumos_listado`          ON insumos_listado.idProducto        = bodegas_insumos_facturacion_existencias.idProducto
+LEFT JOIN `sistema_productos_uml`    ON sistema_productos_uml.idUml       = insumos_listado.idUml
+LEFT JOIN `bodegas_insumos_listado`  ON bodegas_insumos_listado.idBodega  = bodegas_insumos_facturacion_existencias.idBodega';
+$SIS_where = 'bodegas_insumos_facturacion_existencias.idBodega='.$_GET['idBodega'];
+$SIS_where.= ' GROUP BY bodegas_insumos_facturacion_existencias.idProducto';
+$SIS_order = 0;
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrProductos');
 
 /**********************************************************************************************************************************/
 /*                                                          Ejecucion                                                             */
@@ -80,7 +66,7 @@ $spreadsheet->getProperties()->setCreator(DeSanitizar($rowEmpresa['Nombre']))
 							 ->setDescription('Document for Office 2007.')
 							 ->setKeywords('office 2007 openxml php')
 							 ->setCategory('office 2007 result file');
-					 						 
+
 // Add some data
 $spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('A1', 'Alerta')
@@ -88,7 +74,7 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('C1', 'Stock Minimo')
             ->setCellValue('D1', 'Stock Actual')
             ->setCellValue('E1', 'Unidad de Medida');
-            
+
 
 $nn=2;
 foreach ($arrProductos as $productos) {
@@ -102,8 +88,7 @@ foreach ($arrProductos as $productos) {
 					->setCellValue('D'.$nn, cantidades_excel($stock_actual))
 					->setCellValue('E'.$nn, DeSanitizar($productos['UnidadMedida']));
 		$nn++;
-	}         
-   
+	}
 }
 
 // Rename worksheet

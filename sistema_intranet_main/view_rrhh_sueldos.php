@@ -502,12 +502,9 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
                                 
                                 
                      
-					
-					
-					
-					
-					
-					
+	
+	
+	
 				
     						</tbody>
     					</table>

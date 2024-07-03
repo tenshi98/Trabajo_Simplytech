@@ -31,7 +31,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Inicia variable
-$SIS_where = "vehiculos_listado_error_detenciones.idDetencion>0"; 
+$SIS_where = "vehiculos_listado_error_detenciones.idDetencion>0";
 //verifico si existen los parametros de fecha
 if(isset($_GET['f_inicio'], $_GET['f_termino'])&&$_GET['f_inicio']!=''&&$_GET['f_termino']!=''){
 	$SIS_where.=" AND vehiculos_listado_error_detenciones.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";

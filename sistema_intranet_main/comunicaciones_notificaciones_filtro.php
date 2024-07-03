@@ -26,13 +26,13 @@ $location .='?pagina='.$_GET['pagina'];
 //Variables para filtro y paginacion
 $search = '';
 if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario']!=''){ $location .= "&idTipoUsuario=".$_GET['idTipoUsuario']; $search .= "&idTipoUsuario=".$_GET['idTipoUsuario'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){        $location .= "&Nombre=".$_GET['Nombre'];               $search .= "&Nombre=".$_GET['Nombre'];}
-if(isset($_GET['rango_a']) && $_GET['rango_a']!=''){      $location .= "&rango_a=".$_GET['rango_a'];             $search .= "&rango_a=".$_GET['rango_a'];}
-if(isset($_GET['rango_b']) && $_GET['rango_b']!=''){      $location .= "&rango_b=".$_GET['rango_b'];             $search .= "&rango_b=".$_GET['rango_b'];}
-if(isset($_GET['idCiudad']) && $_GET['idCiudad']!=''){    $location .= "&idCiudad=".$_GET['idCiudad'];           $search .= "&idCiudad=".$_GET['idCiudad'];}
-if(isset($_GET['idComuna']) && $_GET['idComuna']!=''){    $location .= "&idComuna=".$_GET['idComuna'];           $search .= "&idComuna=".$_GET['idComuna'];}
-if(isset($_GET['Direccion']) && $_GET['Direccion']!=''){  $location .= "&Direccion=".$_GET['Direccion'];         $search .= "&Direccion=".$_GET['Direccion'];}
-if(isset($_GET['idSistema']) && $_GET['idSistema']!=''){  $location .= "&idSistema=".$_GET['idSistema'];         $search .= "&idSistema=".$_GET['idSistema'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){               $location .= "&Nombre=".$_GET['Nombre'];               $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['rango_a']) && $_GET['rango_a']!=''){             $location .= "&rango_a=".$_GET['rango_a'];             $search .= "&rango_a=".$_GET['rango_a'];}
+if(isset($_GET['rango_b']) && $_GET['rango_b']!=''){             $location .= "&rango_b=".$_GET['rango_b'];             $search .= "&rango_b=".$_GET['rango_b'];}
+if(isset($_GET['idCiudad']) && $_GET['idCiudad']!=''){           $location .= "&idCiudad=".$_GET['idCiudad'];           $search .= "&idCiudad=".$_GET['idCiudad'];}
+if(isset($_GET['idComuna']) && $_GET['idComuna']!=''){           $location .= "&idComuna=".$_GET['idComuna'];           $search .= "&idComuna=".$_GET['idComuna'];}
+if(isset($_GET['Direccion']) && $_GET['Direccion']!=''){         $location .= "&Direccion=".$_GET['Direccion'];         $search .= "&Direccion=".$_GET['Direccion'];}
+if(isset($_GET['idSistema']) && $_GET['idSistema']!=''){         $location .= "&idSistema=".$_GET['idSistema'];         $search .= "&idSistema=".$_GET['idSistema'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -371,8 +371,7 @@ $arrNotificaciones = db_select_array (false, $SIS_query, 'principal_notificacion
 
 </div>
 <div class="clearfix"></div>
-                      
-                                 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>

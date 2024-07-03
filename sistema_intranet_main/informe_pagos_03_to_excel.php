@@ -128,7 +128,7 @@ foreach ($arrTipo1 as $tipo) {
 				->setCellValue('G'.$nn, $tipo['MontoPagado']);
 	$nn++;
 
-} 
+}
 /********************************************************/
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A'.$nn, 'Insumos');

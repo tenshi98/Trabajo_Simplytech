@@ -111,7 +111,7 @@ $query = "SELECT
 (SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ='".$trans_12."' AND visualizacion!=9999 LIMIT 1) AS tran_12
 
 FROM usuarios_listado
-WHERE usuarios_listado.idUsuario='".$_GET['id']."' "; 
+WHERE usuarios_listado.idUsuario='".$_GET['id']."' ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -249,8 +249,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 					if($colegios!=0 OR $idTipoUsuario==1) {
 						$Form_Inputs->form_select('Utilizar Colegios','idOpciones_8', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					}
-					
-					
+	
 					$Form_Inputs->form_input_hidden('idVehiculo', $_GET['id'], 2);
 					?>
 					

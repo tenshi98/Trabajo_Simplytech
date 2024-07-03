@@ -59,9 +59,19 @@ if(!empty($_GET['test_function'])){
 							</tr>
 						</thead>
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
-							<tr class="odd"><td>Fecha Actual</td>       <td><?php echo fecha_actual(); ?></td></tr>
+							<tr class="odd"><td>fecha_actual</td>       <td><?php echo fecha_actual(); ?></td></tr>
+							<tr class="odd"><td>fecha_actual_val</td>   <td><?php echo fecha_actual_val(); ?></td></tr>
+							<tr class="odd"><td>hora_actual</td>       <td><?php echo hora_actual(); ?></td></tr>
+							<tr class="odd"><td>hora_actual_val</td>       <td><?php echo hora_actual_val(); ?></td></tr>
+							<tr class="odd"><td>dia_actual</td>       <td><?php echo dia_actual(); ?></td></tr>
+							<tr class="odd"><td>semana_actual</td>       <td><?php echo semana_actual(); ?></td></tr>
+							<tr class="odd"><td>mes_actual</td>       <td><?php echo mes_actual(); ?></td></tr>
+							<tr class="odd"><td>ano_actual</td>       <td><?php echo ano_actual(); ?></td></tr>
+							<tr class="odd"><td>genera_password_unica</td>       <td><?php echo genera_password_unica(); ?></td></tr>
+							<tr class="odd"><td>generateServerSpecificHash</td>       <td><?php echo generateServerSpecificHash(); ?></td></tr>
+
+
 							<tr class="odd"><td>Fecha Archivos</td>     <td><?php echo Fecha_archivos(fecha_actual()); ?></td></tr>
-							<tr class="odd"><td>Fecha Actual Val</td>   <td><?php echo fecha_actual_val(); ?></td></tr>
 
 							<tr class="odd"><td>simpleEncode Fecha Actual</td>       <td><?php echo $enco1; ?></td></tr>
 							<tr class="odd"><td>simpleEncode Fecha Actual Val</td>   <td><?php echo $enco2; ?></td></tr>

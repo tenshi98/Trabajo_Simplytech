@@ -1727,10 +1727,8 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 							</tr>
 						<?php }
 					} ?>   
-					
-					
-					
-					
+	
+	
 					<tr class="odd">
 						<td colspan="6"><strong>Totales</strong></td>
 						<td align="right"><strong><?php echo valores($total_ING_Telemetria, 0); ?></strong></td>

@@ -506,10 +506,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 					</div>
 				</div>
 			</div>
-			
-			
-			
-			
+
         </div>
 	</div>
 </div>

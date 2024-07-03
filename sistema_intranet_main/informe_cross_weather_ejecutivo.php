@@ -321,7 +321,6 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 					$gr_tittle = 'Acumulado Dias Grado';
 					$gr_unimed = 'Acumulado Dias Grado';
 					echo GraphLinear_1('graphLinear_4', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
-									
 					
 					?>
 				</div>

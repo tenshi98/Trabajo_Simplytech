@@ -46,24 +46,14 @@ require_once 'core/Web.Header.Main.php';
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*******************************************************/
 // consulto los datos
-$query = "SELECT idEstadoFidelizacion, Nombre
-FROM `prospectos_listado`
-WHERE idProspecto = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado); ?>
+$SIS_query = 'idEstadoFidelizacion, Nombre';
+$SIS_join  = '';
+$SIS_where = 'idProspecto = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'prospectos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
@@ -102,9 +92,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_select('Estado Fidelizacion','idEstadoFidelizacion', $x1, 2, 'idEstadoFidelizacion', 'Nombre', 'prospectos_estado_fidelizacion', 0, '', $dbConn);
-					
-					
-	
+
 					$Form_Inputs->form_input_hidden('idProspecto', $_GET['id'], 2);
 					$Form_Inputs->form_input_hidden('FModificacion', fecha_actual(), 2);
 					$Form_Inputs->form_input_hidden('HModificacion', hora_actual(), 2);

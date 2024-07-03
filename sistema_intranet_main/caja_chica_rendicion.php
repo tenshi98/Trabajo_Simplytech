@@ -297,7 +297,7 @@ if(!empty($_GET['addFile'])){ ?>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['modBase'])){
 $w = "caja_chica_facturacion.idTipo=2 AND caja_chica_facturacion.idEstado=1";
-$z = "caja_chica_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
+$z = "caja_chica_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z .= " AND usuarios_cajas_chicas.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
@@ -561,7 +561,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
 $w = "caja_chica_facturacion.idTipo=2 AND caja_chica_facturacion.idEstado=1";
-$z = "caja_chica_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
+$z = "caja_chica_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z .= " AND usuarios_cajas_chicas.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
@@ -728,7 +728,6 @@ $arrTipo = db_select_array (false, $SIS_query, 'caja_chica_facturacion', $SIS_jo
 </div>
 <div class="clearfix"></div>
 
-                                 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>

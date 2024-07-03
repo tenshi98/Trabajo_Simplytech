@@ -60,28 +60,15 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Firma Borrada correcta
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*******************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 telemetria_historial_mantencion.idMantencion,
 telemetria_historial_mantencion.Path_Firma,
-core_telemetria_servicio_tecnico.Nombre AS Servicio
-FROM `telemetria_historial_mantencion`
-LEFT JOIN `core_telemetria_servicio_tecnico` ON core_telemetria_servicio_tecnico.idServicio  = telemetria_historial_mantencion.idServicio
-WHERE telemetria_historial_mantencion.idMantencion = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+core_telemetria_servicio_tecnico.Nombre AS Servicio';
+$SIS_join  = 'LEFT JOIN `core_telemetria_servicio_tecnico` ON core_telemetria_servicio_tecnico.idServicio  = telemetria_historial_mantencion.idServicio';
+$SIS_where = 'telemetria_historial_mantencion.idMantencion = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_historial_mantencion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 

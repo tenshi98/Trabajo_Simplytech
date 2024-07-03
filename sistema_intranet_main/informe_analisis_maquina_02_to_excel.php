@@ -164,7 +164,7 @@ $spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('A7', 'Serie: '.DeSanitizar($rowMaquina['MaquinaSerie']))
             ->setCellValue('B7', 'Fono : '.formatPhone($rowMaquina['SistemaOrigenFono']))
 			->setCellValue('A8', 'Fabricante: '.DeSanitizar($rowMaquina['MaquinaFabricante']))
-            ->setCellValue('B8', 'Rut: '.DeSanitizar($rowMaquina['SistemaOrigenRut'])); 
+            ->setCellValue('B8', 'Rut: '.DeSanitizar($rowMaquina['SistemaOrigenRut']));
 /*******************************/
 $Ubicacion = 'Ubicación: '.DeSanitizar($rowMaquina['MaquinaUbicacion']);
 if(isset($rowMaquina['MaquinaUbicacion_lvl_1'])&&$rowMaquina['MaquinaUbicacion_lvl_1']!=''){

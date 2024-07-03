@@ -284,7 +284,7 @@ $query = "SELECT
 (SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ='".$trans_12."' AND visualizacion!=9999 LIMIT 1) AS tran_12
 
 FROM usuarios_listado
-WHERE usuarios_listado.idUsuario='".$_GET['id']."' "; 
+WHERE usuarios_listado.idUsuario='".$_GET['id']."' ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -428,9 +428,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 								echo '<br/><strong>Proceso Aprobacion: </strong>'.$rowdata['AprobacionEstado'];
 								if(isset($rowdata['idProceso'])&&$rowdata['idProceso']==3){echo ' ('.$rowdata['AprobacionMotivo'].')';}
 							} ?>
-							
-							
-					
+
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Caracteristicos</h2>
@@ -484,7 +482,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 											</div>
 										</div>
 
-									<?php 
+									<?php
 									}
 								//si no existen cargas se muestra mensaje
 								}else{

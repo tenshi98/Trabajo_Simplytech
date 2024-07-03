@@ -311,8 +311,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
 
 				?>
-				
-					
+
 				<script>
 					//funcion para actualizar el valor total
 				document.getElementById("Valor").onkeyup = function() {myFunction()};

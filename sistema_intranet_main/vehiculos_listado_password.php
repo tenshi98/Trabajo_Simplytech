@@ -111,7 +111,7 @@ $query = "SELECT
 (SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ='".$trans_12."' AND visualizacion!=9999 LIMIT 1) AS tran_12
 
 FROM usuarios_listado
-WHERE usuarios_listado.idUsuario='".$_GET['id']."' "; 
+WHERE usuarios_listado.idUsuario='".$_GET['id']."' ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta

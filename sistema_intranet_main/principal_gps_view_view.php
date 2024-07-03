@@ -21,26 +21,12 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
+/*******************************************************/
 // consulto los datos
-$query = "SELECT  Nombre,LimiteVelocidad, GeoLatitud, GeoLongitud, GeoVelocidad, LastUpdateFecha, LastUpdateHora
-FROM `telemetria_listado`
-WHERE idTelemetria = ".$_GET['view']."
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+$SIS_query = 'Nombre,LimiteVelocidad, GeoLatitud, GeoLongitud, GeoVelocidad, LastUpdateFecha, LastUpdateHora';
+$SIS_join  = '';
+$SIS_where = 'idTelemetria = '.$_GET['view'];
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 
@@ -55,9 +41,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			$explanation  = '<strong>'.fecha_estandar($rowdata['LastUpdateFecha']).' - '.$rowdata['LastUpdateHora'].'</strong><br/>';
 			$explanation .= '<strong>Equipo: </strong>'.$rowdata['Nombre'].'<br/>';
 			$explanation .= '<strong>Velocidad: </strong>'.Cantidades($rowdata['GeoVelocidad'], 0).'/'.Cantidades($rowdata['LimiteVelocidad'], 0).' KM/h<br/>';
-					
+
 			echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); ?>
-			
+
         </div>
 	</div>
 </div>
@@ -68,7 +54,6 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	<div class="clearfix"></div>
 </div>
 
-         
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

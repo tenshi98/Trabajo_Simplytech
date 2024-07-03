@@ -37,7 +37,7 @@ if(!empty($_GET['submit_filter'])){
              
   
 //Solo las que correspondan		
-$z     = "WHERE quiz_realizadas.idQuizRealizadas!=0"; 
+$z     = "WHERE quiz_realizadas.idQuizRealizadas!=0";
 //Tipo de usuario
 $z.= " AND quiz_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 if(isset($_GET['idAlumno'])&&$_GET['idAlumno']!=''){           $z.=" AND alumnos_listado.idAlumno=".$_GET['idAlumno'];}

@@ -172,7 +172,7 @@ $query = "SELECT
 idUsuario
 
 FROM usuarios_listado
-WHERE usuarios_listado.idUsuario='1' "; 
+WHERE usuarios_listado.idUsuario='1' ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta

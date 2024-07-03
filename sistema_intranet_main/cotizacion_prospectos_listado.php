@@ -25,7 +25,7 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['idProspecto']) && $_GET['idProspecto']!=''){     $location .= "&idProspecto=".$_GET['idProspecto'];            $search .= "&idProspecto=".$_GET['idProspecto'];}
+if(isset($_GET['idProspecto']) && $_GET['idProspecto']!=''){        $location .= "&idProspecto=".$_GET['idProspecto'];            $search .= "&idProspecto=".$_GET['idProspecto'];}
 if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha']!=''){  $location .= "&Creacion_fecha=".$_GET['Creacion_fecha'];  $search .= "&Creacion_fecha=".$_GET['Creacion_fecha'];}
 /********************************************************************/
 if(isset($_GET['soli']) && $_GET['soli']!=''){   $location .= "&soli=".$_GET['soli']; 	}

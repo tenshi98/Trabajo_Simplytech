@@ -103,8 +103,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_number('Capacidad Nebulizador','Capacidad', $x1, 1);
-				
-					
+
 					$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 					?>
 

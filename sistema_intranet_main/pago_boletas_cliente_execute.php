@@ -20,36 +20,21 @@ require_once 'core/Load.Utils.Excel.php';
 //Si existe se elimina
 if(isset($_SESSION['pagos_boletas_clientes'][$_GET['idFacturacion']]['idFacturacion'])&&$_SESSION['pagos_boletas_clientes'][$_GET['idFacturacion']]['idFacturacion']!=''&&$_SESSION['pagos_boletas_clientes'][$_GET['idFacturacion']]['idFacturacion']==$_GET['idFacturacion']){
 	unset($_SESSION['pagos_boletas_clientes'][$_GET['idFacturacion']]);
-//Si no existe se crea	
+//Si no existe se crea
 }else{
-	//consulto todos los documentos relacionados al Cliente
-	$query = "SELECT 
+	/*******************************************************/
+	// consulto los datos
+	$SIS_query = '
 	boleta_honorarios_facturacion.idFacturacion,
 	boleta_honorarios_facturacion.N_Doc,
 	boleta_honorarios_facturacion.ValorTotal,
 	boleta_honorarios_facturacion.idSistema,
 	boleta_honorarios_facturacion.idCliente,
 	clientes_listado.Nombre AS ClienteNombre,
-	(SELECT SUM(MontoPagado) FROM `pagos_boletas_clientes` WHERE idFacturacion= boleta_honorarios_facturacion.idFacturacion LIMIT 1) AS MontoPagado
-
-	FROM `boleta_honorarios_facturacion`
-	LEFT JOIN `clientes_listado` ON clientes_listado.idCliente = boleta_honorarios_facturacion.idCliente
-		
-	WHERE boleta_honorarios_facturacion.idFacturacion=".$_GET['idFacturacion'];
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-
-	}
-	$row_data = mysqli_fetch_assoc ($resultado);
+	(SELECT SUM(MontoPagado) FROM `pagos_boletas_clientes` WHERE idFacturacion= boleta_honorarios_facturacion.idFacturacion LIMIT 1) AS MontoPagado';
+	$SIS_join  = 'LEFT JOIN `clientes_listado` ON clientes_listado.idCliente = boleta_honorarios_facturacion.idCliente';
+	$SIS_where = 'boleta_honorarios_facturacion.idFacturacion='.$_GET['idFacturacion'];
+	$row_data = db_select_data (false, $SIS_query, 'boleta_honorarios_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
 
 	/******************************************************************/
 	//Se traspasan los valores a variables de sesion
@@ -62,8 +47,6 @@ if(isset($_SESSION['pagos_boletas_clientes'][$_GET['idFacturacion']]['idFacturac
 	$_SESSION['pagos_boletas_clientes'][$row_data['idFacturacion']]['idCliente']          = $row_data['idCliente'];
 	$_SESSION['pagos_boletas_clientes'][$row_data['idFacturacion']]['ValorReal']          = '';
 
-	
 }
-		
 
 ?>

@@ -24,12 +24,12 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
-// Se trae un listado con todos los productos
-$arrFacturacion = array();
-$query = "SELECT
-Ano AS anoActual, 
+/*******************************************************/
+// consulto los datos
+$SIS_query = '
+Ano AS anoActual,
 idMes AS mesActual,
- 
+
 COUNT(idFacturacionDetalle) AS nClientes,
 SUM(DetalleConsumoCantidad) AS M3Consumidos,
 
@@ -45,35 +45,18 @@ SUM(DetalleOtrosCargos4Valor) AS OtrosCargos4,
 SUM(DetalleOtrosCargos5Valor) AS OtrosCargos5,
 SUM(DetalleTotalAPagar) AS TotalAPagar,
 
-(SELECT SUM(montoPago) AS Pagos FROM `aguas_clientes_pago` WHERE AnoPago = anoActual AND idMesPago = mesActual ) AS PagoReal,
-
+(SELECT SUM(montoPago) AS Pagos              FROM `aguas_clientes_pago`               WHERE AnoPago = anoActual AND idMesPago = mesActual ) AS PagoReal,
 (SELECT COUNT(idFacturacionDetalle) AS Pagos FROM `aguas_facturacion_listado_detalle` WHERE Ano = anoActual AND idMes = mesActual AND idEstado = 1 ) AS ClientesImp_N,
-(SELECT SUM(DetalleTotalVenta) AS Pagos FROM `aguas_facturacion_listado_detalle` WHERE Ano = anoActual AND idMes = mesActual AND idEstado = 1 ) AS ClientesImp_Val,
+(SELECT SUM(DetalleTotalVenta) AS Pagos      FROM `aguas_facturacion_listado_detalle` WHERE Ano = anoActual AND idMes = mesActual AND idEstado = 1 ) AS ClientesImp_Val,
 
-SUM(montoPago) AS PagoTotal
+SUM(montoPago) AS PagoTotal';
+$SIS_join  = '';
+$SIS_where = 'aguas_facturacion_listado_detalle.Fecha BETWEEN "'.$_GET['f_inicio'].'" AND "'.$_GET['f_termino'].'"';
+$SIS_where.= ' GROUP BY anoActual, mesActual';
+$SIS_order = 'anoActual ASC, mesActual ASC';
+$arrFacturacion = array();
+$arrFacturacion = db_select_array (false, $SIS_query, 'aguas_facturacion_listado_detalle', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrFacturacion');
 
-FROM `aguas_facturacion_listado_detalle`
-WHERE  aguas_facturacion_listado_detalle.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'
-GROUP BY anoActual, mesActual
-ORDER BY anoActual ASC, mesActual ASC
-
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrFacturacion,$row );
-}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -136,8 +119,7 @@ require_once 'core/Web.Header.PrintFact.php';
 							<td align="right" class="active"><?php echo Valores($fact['DetalleTotalVenta'], 0); ?></td>
 							<td align="right" class="info"><?php echo Valores($fact['PagoReal'], 0); ?></td>
 							<td align="right" class="info"><?php echo Valores($rev, 0); ?></td>
-							
-							
+
 						</tr>
 						<?php
 						//Se suman totales
@@ -189,9 +171,9 @@ require_once 'core/Web.Header.PrintFact.php';
 
 				function drawChart_1() {
 					var data = new google.visualization.DataTable();
-					data.addColumn('string', 'Fecha'); 
-					data.addColumn('number', 'Total Venta'); 
-					data.addColumn('number', 'Pagos del mes'); 
+					data.addColumn('string', 'Fecha');
+					data.addColumn('number', 'Total Venta');
+					data.addColumn('number', 'Pagos del mes');
 					data.addColumn({type: 'string', role: 'annotation'});
 					data.addRows([
 						<?php foreach ($arrFacturacion as $fac) { ?>
@@ -219,7 +201,6 @@ require_once 'core/Web.Header.PrintFact.php';
 					chart.draw(data, options);
 				}
 
-			
 				google.charts.setOnLoadCallback(drawChart_2);
 
 				function drawChart_2() {

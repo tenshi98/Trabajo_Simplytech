@@ -25,12 +25,12 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha']!=''){  $location .= "&Creacion_fecha=".$_GET['Creacion_fecha'];          $search .= "&Creacion_fecha=".$_GET['Creacion_fecha'];}
-if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){                  $location .= "&idTipo=".$_GET['idTipo'];                          $search .= "&idTipo=".$_GET['idTipo'];}
-if(isset($_GET['Temporada']) && $_GET['Temporada']!=''){            $location .= "&Temporada=".$_GET['Temporada'];                    $search .= "&Temporada=".$_GET['Temporada'];}
-if(isset($_GET['idCategoria']) && $_GET['idCategoria']!=''){        $location .= "&idCategoria=".$_GET['idCategoria'];                $search .= "&idCategoria=".$_GET['idCategoria'];}
-if(isset($_GET['idProducto']) && $_GET['idProducto']!=''){          $location .= "&idProducto=".$_GET['idProducto'];                  $search .= "&idProducto=".$_GET['idProducto'];}
-if(isset($_GET['idUbicacion']) && $_GET['idUbicacion']!=''){        $location .= "&idUbicacion=".$_GET['idUbicacion'];                $search .= "&idUbicacion=".$_GET['idUbicacion'];}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha']!=''){         $location .= "&Creacion_fecha=".$_GET['Creacion_fecha'];          $search .= "&Creacion_fecha=".$_GET['Creacion_fecha'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){                         $location .= "&idTipo=".$_GET['idTipo'];                          $search .= "&idTipo=".$_GET['idTipo'];}
+if(isset($_GET['Temporada']) && $_GET['Temporada']!=''){                   $location .= "&Temporada=".$_GET['Temporada'];                    $search .= "&Temporada=".$_GET['Temporada'];}
+if(isset($_GET['idCategoria']) && $_GET['idCategoria']!=''){               $location .= "&idCategoria=".$_GET['idCategoria'];                $search .= "&idCategoria=".$_GET['idCategoria'];}
+if(isset($_GET['idProducto']) && $_GET['idProducto']!=''){                 $location .= "&idProducto=".$_GET['idProducto'];                  $search .= "&idProducto=".$_GET['idProducto'];}
+if(isset($_GET['idUbicacion']) && $_GET['idUbicacion']!=''){               $location .= "&idUbicacion=".$_GET['idUbicacion'];                $search .= "&idUbicacion=".$_GET['idUbicacion'];}
 if(isset($_GET['idUbicacion_lvl_1']) && $_GET['idUbicacion_lvl_1']!=''){   $location .= "&idUbicacion_lvl_1=".$_GET['idUbicacion_lvl_1'];    $search .= "&idUbicacion_lvl_1=".$_GET['idUbicacion_lvl_1'];}
 if(isset($_GET['idUbicacion_lvl_2']) && $_GET['idUbicacion_lvl_2']!=''){   $location .= "&idUbicacion_lvl_2=".$_GET['idUbicacion_lvl_2'];    $search .= "&idUbicacion_lvl_2=".$_GET['idUbicacion_lvl_2'];}
 if(isset($_GET['idUbicacion_lvl_3']) && $_GET['idUbicacion_lvl_3']!=''){   $location .= "&idUbicacion_lvl_3=".$_GET['idUbicacion_lvl_3'];    $search .= "&idUbicacion_lvl_3=".$_GET['idUbicacion_lvl_3'];}

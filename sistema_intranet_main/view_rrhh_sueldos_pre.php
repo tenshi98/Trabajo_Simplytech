@@ -369,12 +369,9 @@ require_once 'core/Web.Header.Views.php';
                                 
                                 
                      
-					
-					
-					
-					
-					
-					
+	
+	
+	
 				
     						</tbody>
     					</table>

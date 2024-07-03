@@ -112,7 +112,7 @@ $query = "SELECT
 (SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ='".$trans_12."' AND visualizacion!=9999 LIMIT 1) AS tran_12
 
 FROM usuarios_listado
-WHERE usuarios_listado.idUsuario='".$_GET['id']."' "; 
+WHERE usuarios_listado.idUsuario='".$_GET['id']."' ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -256,8 +256,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 					$Form_Inputs->form_tittle(3, 'Datos Movilizacion');
 					$Form_Inputs->form_input_number('Velocidad Maxima','LimiteVelocidad', $x15, 1);
 					$Form_Inputs->form_input_number_spinner('N° Maximo Alertas de Velocidad','AlertLimiteVelocidad', $x16, 0, 15, 1, 0, 2);
-				
-					
+
 					
 					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);

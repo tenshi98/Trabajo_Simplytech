@@ -47,28 +47,17 @@ require_once 'core/Web.Header.Main.php';
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*******************************************************/
 // consulto los datos
-$query = "SELECT idRuta, idSistema, idTipo, Fecha, idDia, HoraInicio, HoraTermino, Nombre
-FROM `vehiculos_ruta_alternativa`
-WHERE idRutaAlt = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+$SIS_query = 'idRuta, idSistema, idTipo, Fecha, idDia, HoraInicio, HoraTermino, Nombre';
+$SIS_join  = '';
+$SIS_where = 'idRutaAlt = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'vehiculos_ruta_alternativa', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+/*******************************************************/
 //sistema
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
- ?>
+
+?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ruta Alternativa', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
@@ -93,7 +82,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					//Se verifican si existen los datos
 					if(isset($idRuta)){          $x1  = $idRuta;           }else{$x1  = $rowdata["idRuta"];}
 					if(isset($idTipo)){          $x2  = $idTipo;           }else{$x2  = $rowdata["idTipo"];}
-					if(isset($Fecha)){ $x3  = $Fecha;            }else{$x3  = $rowdata["Fecha"];}
+					if(isset($Fecha)){           $x3  = $Fecha;            }else{$x3  = $rowdata["Fecha"];}
 					if(isset($idDia)){           $x4  = $idDia;            }else{$x4  = $rowdata["idDia"];}
 					if(isset($HoraInicio)){      $x5  = $HoraInicio;       }else{$x5  = $rowdata["HoraInicio"];}
 					if(isset($HoraTermino)){     $x6  = $HoraTermino;      }else{$x6  = $rowdata["HoraTermino"];}
@@ -120,7 +109,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						document.getElementById('div_idDia').style.display = 'none';
 
 						$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
-							
+
 							let tipo_val= $("#idTipo").val();
 							//si es SI
 							if(tipo_val == 1){
@@ -136,12 +125,12 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 						$("#idTipo").on("change", function(){ //se ejecuta al cambiar valor del select
 							let modelSelected = $(this).val(); //Asignamos el valor seleccionado
-					
+
 							//si es SI
 							if(modelSelected == 1){
 								document.getElementById('div_Fecha').style.display = 'none';
 								document.getElementById('div_idDia').style.display = '';
-															
+
 							//si es NO
 							} else if(modelSelected == 2){
 								document.getElementById('div_Fecha').style.display = '';

@@ -110,9 +110,8 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_joi
 					$Form_Inputs->form_select_depend1('Región','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 											'Comuna','idComuna', $x7, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 											 $dbConn, 'form1');
-					$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x8, 1,'fa fa-map');	 
-					
-					
+					$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x8, 1,'fa fa-map');
+
 					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idCliente', $_GET['id'], 2);

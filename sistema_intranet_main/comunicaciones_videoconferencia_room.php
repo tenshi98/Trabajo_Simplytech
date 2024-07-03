@@ -32,24 +32,12 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-// Se traen todos los datos del Contratista
-$query = "SELECT  idUsuario
-FROM `comunicaciones_videoconferencia_listado`
-WHERE idVideoConferencia = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+/*******************************************************/
+// consulto los datos
+$SIS_query = 'idUsuario';
+$SIS_join  = '';
+$SIS_where = 'idVideoConferencia = '.$_GET['view'];
+$rowdata = db_select_data (false, $SIS_query, 'comunicaciones_videoconferencia_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 
@@ -65,28 +53,28 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/RTCMultiConnection/node_modules/FileBufferReader.js"></script>
 
 <style>
-.messaging {margin-top:15px;}
+    .messaging {margin-top:15px;}
 
-.messaging .inbox_msg {border: 1px solid #c4c4c4;}	
+    .messaging .inbox_msg {border: 1px solid #c4c4c4;}
 
-.messaging .inbox_msg .video_ib {padding: 30px 15px 0 25px;}
+    .messaging .inbox_msg .video_ib {padding: 30px 15px 0 25px;}
 
-.messaging .inbox_msg .chating {background: #f8f8f8 none repeat scroll 0 0;float: left;overflow: hidden;width: 100%;border:1px solid #c4c4c4;}
+    .messaging .inbox_msg .chating {background: #f8f8f8 none repeat scroll 0 0;float: left;overflow: hidden;width: 100%;border:1px solid #c4c4c4;}
 
-.messaging .inbox_msg .chating .headind_srch{ padding:10px 29px 10px 20px; overflow:hidden; border-bottom:1px solid #c4c4c4;}
-.messaging .inbox_msg .chating .headind_srch .recent_heading h4 {color: #05728f;font-size: 21px;margin: auto;}
+    .messaging .inbox_msg .chating .headind_srch{ padding:10px 29px 10px 20px; overflow:hidden; border-bottom:1px solid #c4c4c4;}
+    .messaging .inbox_msg .chating .headind_srch .recent_heading h4 {color: #05728f;font-size: 21px;margin: auto;}
 
-.messaging .inbox_msg .chating .inbox_chat { height: 610px; overflow-y: inherit; background:#ffffff;}
-.messaging .inbox_msg .chating .inbox_chat .msg_history {height: 516px;overflow-y: auto;padding: 5px;}
-.messaging .inbox_msg .chating .inbox_chat .msg_history .incoming_msg {margin-bottom:5px;}
-.messaging .inbox_msg .chating .inbox_chat .msg_history .incoming_msg .received_msg {display: inline-block;vertical-align: top;width: 100%;}
-.messaging .inbox_msg .chating .inbox_chat .msg_history .incoming_msg .received_msg .received_withd_msg p {background: #ebebeb none repeat scroll 0 0;border-radius: 3px;color: #646464;font-size: 14px;margin: 0;padding: 5px 10px 5px 12px;width: 100%;}
-.messaging .inbox_msg .chating .inbox_chat .msg_history .incoming_msg .received_msg .received_withd_msg .time_date {color: #747474;display: block;font-size: 12px;margin: 8px 0 0;}
+    .messaging .inbox_msg .chating .inbox_chat { height: 610px; overflow-y: inherit; background:#ffffff;}
+    .messaging .inbox_msg .chating .inbox_chat .msg_history {height: 516px;overflow-y: auto;padding: 5px;}
+    .messaging .inbox_msg .chating .inbox_chat .msg_history .incoming_msg {margin-bottom:5px;}
+    .messaging .inbox_msg .chating .inbox_chat .msg_history .incoming_msg .received_msg {display: inline-block;vertical-align: top;width: 100%;}
+    .messaging .inbox_msg .chating .inbox_chat .msg_history .incoming_msg .received_msg .received_withd_msg p {background: #ebebeb none repeat scroll 0 0;border-radius: 3px;color: #646464;font-size: 14px;margin: 0;padding: 5px 10px 5px 12px;width: 100%;}
+    .messaging .inbox_msg .chating .inbox_chat .msg_history .incoming_msg .received_msg .received_withd_msg .time_date {color: #747474;display: block;font-size: 12px;margin: 8px 0 0;}
 
-.messaging .inbox_msg .chating .inbox_chat .type_msg {border-top: 1px solid #c4c4c4;position: relative;}
-.messaging .inbox_msg .chating .inbox_chat .type_msg .input_msg_write .write_msg {background: rgba(0, 0, 0, 0) none repeat scroll 0 0;border: medium none;color: #4c4c4c;font-size: 15px;min-height: 48px;width: 100%;padding-top: 5px;padding-right: 40px;padding-bottom: 5px;padding-left: 5px;}
+    .messaging .inbox_msg .chating .inbox_chat .type_msg {border-top: 1px solid #c4c4c4;position: relative;}
+    .messaging .inbox_msg .chating .inbox_chat .type_msg .input_msg_write .write_msg {background: rgba(0, 0, 0, 0) none repeat scroll 0 0;border: medium none;color: #4c4c4c;font-size: 15px;min-height: 48px;width: 100%;padding-top: 5px;padding-right: 40px;padding-bottom: 5px;padding-left: 5px;}
 
-.messaging .inbox_msg {white-space: initial!important;}
+    .messaging .inbox_msg {white-space: initial!important;}
 </style>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
@@ -125,8 +113,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 						<div class="msg_history chat-output" id="file-container" >
 							<br/>
-											
-										
+
 						</div>
 
 						<div class="type_msg">
@@ -147,460 +134,460 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
 
 <script>
-// ......................................................
-// .......................UI Code........................
-// ......................................................
-<?php if(($rowdata['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
+    // ......................................................
+    // .......................UI Code........................
+    // ......................................................
+    <?php if(($rowdata['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
 
-	document.getElementById('open-room').onclick = function() {
-		disableInputButtons();
-		connection.open(document.getElementById('room-id').value, function(isRoomOpened, roomid, error) {
-			if(isRoomOpened === true) {
-			  //showRoomURL(connection.sessionid);
-			}
-			else {
-			  disableInputButtons(true);
-			  if(error === 'Room not available') {
-				Swal.fire({icon: 'error',title: 'Oops...',text: 'Esta Videoconferencia ya fue creada, unase a esta.'});
-				return;
-			  }
-			  alert(error);
-			}
-		});
-	};
-	
-	<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?>
-	
-		document.getElementById('join-room').onclick = function() {
-			disableInputButtons();
-			connection.join(document.getElementById('room-id').value, function(isJoinedRoom, roomid, error) {
-			  if (error) {
-					disableInputButtons(true);
-					if(error === 'Room not available') {
-					  Swal.fire({icon: 'error',title: 'Oops...',text: 'La Videoconferencia no existe, favor crearla antes de ingresar.'});
-					  return;
-					}
-					alert(error);
-				}
-			});
-		};
-	<?php } ?>
-<?php }else{ ?>
+        document.getElementById('open-room').onclick = function() {
+            disableInputButtons();
+            connection.open(document.getElementById('room-id').value, function(isRoomOpened, roomid, error) {
+                if(isRoomOpened === true) {
+                //showRoomURL(connection.sessionid);
+                }
+                else {
+                disableInputButtons(true);
+                if(error === 'Room not available') {
+                    Swal.fire({icon: 'error',title: 'Oops...',text: 'Esta Videoconferencia ya fue creada, unase a esta.'});
+                    return;
+                }
+                alert(error);
+                }
+            });
+        };
 
-	document.getElementById('join-room').onclick = function() {
-		disableInputButtons();
-		connection.join(document.getElementById('room-id').value, function(isJoinedRoom, roomid, error) {
-		  if (error) {
-				disableInputButtons(true);
-				if(error === 'Room not available') {
-				  Swal.fire({icon: 'error',title: 'Oops...',text: 'La Videoconferencia no existe, favor crearla antes de ingresar.'});
-				  return;
-				}
-				alert(error);
-			}
-		});
-	};
+        <?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?>
 
-<?php } ?>
+            document.getElementById('join-room').onclick = function() {
+                disableInputButtons();
+                connection.join(document.getElementById('room-id').value, function(isJoinedRoom, roomid, error) {
+                if (error) {
+                        disableInputButtons(true);
+                        if(error === 'Room not available') {
+                        Swal.fire({icon: 'error',title: 'Oops...',text: 'La Videoconferencia no existe, favor crearla antes de ingresar.'});
+                        return;
+                        }
+                        alert(error);
+                    }
+                });
+            };
+        <?php } ?>
+    <?php }else{ ?>
 
-// ......................................................
-// ..................RTCMultiConnection Code.............
-// ......................................................
+        document.getElementById('join-room').onclick = function() {
+            disableInputButtons();
+            connection.join(document.getElementById('room-id').value, function(isJoinedRoom, roomid, error) {
+            if (error) {
+                    disableInputButtons(true);
+                    if(error === 'Room not available') {
+                    Swal.fire({icon: 'error',title: 'Oops...',text: 'La Videoconferencia no existe, favor crearla antes de ingresar.'});
+                    return;
+                    }
+                    alert(error);
+                }
+            });
+        };
 
-var connection = new RTCMultiConnection();
+    <?php } ?>
 
-// by default, socket.io server is assumed to be deployed on your own URL
-//connection.socketURL = '/';
+    // ......................................................
+    // ..................RTCMultiConnection Code.............
+    // ......................................................
 
-// comment-out below line if you do not have your own socket.io server
-connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+    var connection = new RTCMultiConnection();
 
-connection.socketMessageEvent = 'VideoConferenciaRoom';
-connection.enableFileSharing = true; // by default, it is "false".
+    // by default, socket.io server is assumed to be deployed on your own URL
+    //connection.socketURL = '/';
 
-connection.session = {
-    audio: true,
-    video: true,
-    data: true
-};
+    // comment-out below line if you do not have your own socket.io server
+    connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
 
-connection.sdpConstraints.mandatory = {
-    OfferToReceiveAudio: true,
-    OfferToReceiveVideo: true
-};
+    connection.socketMessageEvent = 'VideoConferenciaRoom';
+    connection.enableFileSharing = true; // by default, it is "false".
 
-// STAR_FIX_VIDEO_AUTO_PAUSE_ISSUES
-// via: https://github.com/muaz-khan/RTCMultiConnection/issues/778#issuecomment-524853468
-var bitrates = 512;
-var resolutions = 'Ultra-HD';
-var videoConstraints = {};
-
-if (resolutions == 'HD') {
-    videoConstraints = {
-        width: {
-            ideal: 1280
-        },
-        height: {
-            ideal: 720
-        },
-        frameRate: 30
+    connection.session = {
+        audio: true,
+        video: true,
+        data: true
     };
-}
 
-if (resolutions == 'Ultra-HD') {
-    videoConstraints = {
-        width: {
-            ideal: 1920
-        },
-        height: {
-            ideal: 1080
-        },
-        frameRate: 30
+    connection.sdpConstraints.mandatory = {
+        OfferToReceiveAudio: true,
+        OfferToReceiveVideo: true
     };
-}
 
-connection.mediaConstraints = {
-    video: videoConstraints,
-    audio: true
-};
-
-var CodecsHandler = connection.CodecsHandler;
-
-connection.processSdp = function(sdp) {
-    var codecs = 'vp8';
-
-    if (codecs.length) {
-        sdp = CodecsHandler.preferCodec(sdp, codecs.toLowerCase());
-    }
+    // STAR_FIX_VIDEO_AUTO_PAUSE_ISSUES
+    // via: https://github.com/muaz-khan/RTCMultiConnection/issues/778#issuecomment-524853468
+    var bitrates = 512;
+    var resolutions = 'Ultra-HD';
+    var videoConstraints = {};
 
     if (resolutions == 'HD') {
-        sdp = CodecsHandler.setApplicationSpecificBandwidth(sdp, {
-            audio: 128,
-            video: bitrates,
-            screen: bitrates
-        });
-
-        sdp = CodecsHandler.setVideoBitrates(sdp, {
-            min: bitrates * 8 * 1024,
-            max: bitrates * 8 * 1024,
-        });
+        videoConstraints = {
+            width: {
+                ideal: 1280
+            },
+            height: {
+                ideal: 720
+            },
+            frameRate: 30
+        };
     }
 
     if (resolutions == 'Ultra-HD') {
-        sdp = CodecsHandler.setApplicationSpecificBandwidth(sdp, {
-            audio: 128,
-            video: bitrates,
-            screen: bitrates
-        });
-
-        sdp = CodecsHandler.setVideoBitrates(sdp, {
-            min: bitrates * 8 * 1024,
-            max: bitrates * 8 * 1024,
-        });
-    }
-
-    return sdp;
-};
-// END_FIX_VIDEO_AUTO_PAUSE_ISSUES
-
-// https://www.rtcmulticonnection.org/docs/iceServers/
-// use your own TURN-server here!
-connection.iceServers = [{
-    'urls': [
-        'stun:stun.l.google.com:19302',
-        'stun:stun1.l.google.com:19302',
-        'stun:stun2.l.google.com:19302',
-        'stun:stun.l.google.com:19302?transport=udp',
-    ]
-}];
-
-connection.videosContainer = document.getElementById('videos-container');
-connection.onstream = function(event) {
-
-    document.getElementById('share-file').disabled = false;
-    document.getElementById('input-text-chat').disabled = false;
-
-    var existing = document.getElementById(event.streamid);
-    if(existing && existing.parentNode) {
-      existing.parentNode.removeChild(existing);
-    }
-
-    event.mediaElement.removeAttribute('src');
-    event.mediaElement.removeAttribute('srcObject');
-    event.mediaElement.muted = true;
-    event.mediaElement.volume = 0;
-
-    var video = document.createElement('video');
-
-    try {
-        video.setAttributeNode(document.createAttribute('autoplay'));
-        video.setAttributeNode(document.createAttribute('playsinline'));
-    } catch (e) {
-        video.setAttribute('autoplay', true);
-        video.setAttribute('playsinline', true);
-    }
-
-    if(event.type === 'local') {
-      video.volume = 0;
-      try {
-          video.setAttributeNode(document.createAttribute('muted'));
-      } catch (e) {
-          video.setAttribute('muted', true);
-      }
-    }
-    video.srcObject = event.stream;
-
-    var width = parseInt(connection.videosContainer.clientWidth / 3) - 20;
-    var mediaElement = getHTMLMediaElement(video, {
-        title: event.userid,
-        buttons: ['full-screen'],
-        width: width,
-        showOnMouseEnter: false
-    });
-
-    connection.videosContainer.appendChild(mediaElement);
-
-    setTimeout(function() {
-        mediaElement.media.play();
-    }, 5000);
-
-    mediaElement.id = event.streamid;
-
-    // to keep room-id in cache
-    localStorage.setItem(connection.socketMessageEvent, connection.sessionid);
-
-    /*chkRecordConference.parentNode.style.display = 'none';
-
-    if(chkRecordConference.checked === true) {
-      btnStopRecording.style.display = 'inline-block';
-      recordingStatus.style.display = 'inline-block';
-
-      var recorder = connection.recorder;
-      if(!recorder) {
-        recorder = RecordRTC([event.stream], {
-          type: 'video'
-        });
-        recorder.startRecording();
-        connection.recorder = recorder;
-      }
-      else {
-        recorder.getInternalRecorder().addStreams([event.stream]);
-      }
-
-      if(!connection.recorder.streams) {
-        connection.recorder.streams = [];
-      }
-
-      connection.recorder.streams.push(event.stream);
-      recordingStatus.innerHTML = 'Recording ' + connection.recorder.streams.length + ' streams';
-    }*/
-
-    if(event.type === 'local') {
-      connection.socket.on('disconnect', function() {
-        if(!connection.getAllParticipants().length) {
-          location.reload();
-        }
-      });
-    }
-};
-
-/*var recordingStatus = document.getElementById('recording-status');
-var chkRecordConference = document.getElementById('record-entire-conference');
-var btnStopRecording = document.getElementById('btn-stop-recording');
-btnStopRecording.onclick = function() {
-  var recorder = connection.recorder;
-  if(!recorder) return alert('No recorder found.');
-  recorder.stopRecording(function() {
-    var blob = recorder.getBlob();
-    invokeSaveAsDialog(blob);
-
-    connection.recorder = null;
-    btnStopRecording.style.display = 'none';
-    recordingStatus.style.display = 'none';
-    chkRecordConference.parentNode.style.display = 'inline-block';
-  });
-};*/
-
-connection.onstreamended = function(event) {
-    var mediaElement = document.getElementById(event.streamid);
-    if (mediaElement) {
-        mediaElement.parentNode.removeChild(mediaElement);
-    }
-};
-
-connection.onMediaError = function(e) {
-    if (e.message === 'Concurrent mic process limit.') {
-        if (DetectRTC.audioInputDevices.length <= 1) {
-            Swal.fire({icon: 'error',title: 'Oops...',text: 'Favor seleccione un microfono valido.'});
-            return;
-        }
-
-        var secondaryMic = DetectRTC.audioInputDevices[1].deviceId;
-        connection.mediaConstraints.audio = {
-            deviceId: secondaryMic
+        videoConstraints = {
+            width: {
+                ideal: 1920
+            },
+            height: {
+                ideal: 1080
+            },
+            frameRate: 30
         };
-
-        connection.join(connection.sessionid);
     }
-};
 
-// ..................................
-// ALL below scripts are redundant!!!
-// ..................................
+    connection.mediaConstraints = {
+        video: videoConstraints,
+        audio: true
+    };
 
-function disableInputButtons(enable) {
-    document.getElementById('room-id').onkeyup();
+    var CodecsHandler = connection.CodecsHandler;
 
-    //document.getElementById('open-or-join-room').disabled = !enable;
-	<?php if(($rowdata['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
-		document.getElementById('open-room').disabled = !enable;
-		<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?>
-			document.getElementById('join-room').disabled = !enable;
-		<?php } ?>
-	<?php }else{ ?>
-		document.getElementById('join-room').disabled = !enable;
-    <?php } ?>
-    document.getElementById('room-id').disabled = !enable;
-}
+    connection.processSdp = function(sdp) {
+        var codecs = 'vp8';
 
-// ......................................................
-// ......................Handling Room-ID................
-// ......................................................
+        if (codecs.length) {
+            sdp = CodecsHandler.preferCodec(sdp, codecs.toLowerCase());
+        }
 
-/*function showRoomURL(roomid) {
-    var roomHashURL = '#' + roomid;
-    var roomQueryStringURL = '?roomid=' + roomid;
+        if (resolutions == 'HD') {
+            sdp = CodecsHandler.setApplicationSpecificBandwidth(sdp, {
+                audio: 128,
+                video: bitrates,
+                screen: bitrates
+            });
 
-    var html = '<h2>Unique URL for your room:</h2><br/>';
+            sdp = CodecsHandler.setVideoBitrates(sdp, {
+                min: bitrates * 8 * 1024,
+                max: bitrates * 8 * 1024,
+            });
+        }
 
-    html += 'Hash URL: <a href="' + roomHashURL + '" target="_blank" rel="noopener noreferrer">' + roomHashURL + '</a>';
-    html += '<br/>';
-    html += 'QueryString URL: <a href="' + roomQueryStringURL + '" target="_blank" rel="noopener noreferrer">' + roomQueryStringURL + '</a>';
+        if (resolutions == 'Ultra-HD') {
+            sdp = CodecsHandler.setApplicationSpecificBandwidth(sdp, {
+                audio: 128,
+                video: bitrates,
+                screen: bitrates
+            });
 
-    var roomURLsDiv = document.getElementById('room-urls');
-    roomURLsDiv.innerHTML = html;
+            sdp = CodecsHandler.setVideoBitrates(sdp, {
+                min: bitrates * 8 * 1024,
+                max: bitrates * 8 * 1024,
+            });
+        }
 
-    roomURLsDiv.style.display = 'block';
-}*/
+        return sdp;
+    };
+    // END_FIX_VIDEO_AUTO_PAUSE_ISSUES
 
-(function() {
-    var params = {},
-        r = /([^&=]+)=?([^&]*)/g;
+    // https://www.rtcmulticonnection.org/docs/iceServers/
+    // use your own TURN-server here!
+    connection.iceServers = [{
+        'urls': [
+            'stun:stun.l.google.com:19302',
+            'stun:stun1.l.google.com:19302',
+            'stun:stun2.l.google.com:19302',
+            'stun:stun.l.google.com:19302?transport=udp',
+        ]
+    }];
 
-    function d(s) {
-        return decodeURIComponent(s.replace(/\+/g, ' '));
-    }
-    var match, search = window.location.search;
-    while (match = r.exec(search.substring(1)))
-        params[d(match[1])] = d(match[2]);
-    window.params = params;
-})();
+    connection.videosContainer = document.getElementById('videos-container');
+    connection.onstream = function(event) {
 
-var roomid = '';
-if (localStorage.getItem(connection.socketMessageEvent)){
-    roomid = '<?php echo DB_NAME.'_VideoRoom_'.'_'.$_GET['view']; ?>';//localStorage.getItem(connection.socketMessageEvent);
-} else {
-    roomid = '<?php echo DB_NAME.'_VideoRoom_'.'_'.$_GET['view']; ?>';//connection.token();
-}
+        document.getElementById('share-file').disabled = false;
+        document.getElementById('input-text-chat').disabled = false;
 
-var txtRoomId = document.getElementById('room-id');
-txtRoomId.value = roomid;
-txtRoomId.onkeyup = txtRoomId.oninput = txtRoomId.onpaste = function() {
-    localStorage.setItem(connection.socketMessageEvent, document.getElementById('room-id').value);
-};
+        var existing = document.getElementById(event.streamid);
+        if(existing && existing.parentNode) {
+        existing.parentNode.removeChild(existing);
+        }
 
-var hashString = location.hash.replace('#', '');
-if (hashString.length && hashString.indexOf('comment-') == 0) {
-    hashString = '';
-}
+        event.mediaElement.removeAttribute('src');
+        event.mediaElement.removeAttribute('srcObject');
+        event.mediaElement.muted = true;
+        event.mediaElement.volume = 0;
 
-var roomid = params.roomid;
-if (!roomid && hashString.length) {
-    roomid = hashString;
-}
+        var video = document.createElement('video');
 
-if (roomid && roomid.length) {
-    document.getElementById('room-id').value = roomid;
-    localStorage.setItem(connection.socketMessageEvent, roomid);
+        try {
+            video.setAttributeNode(document.createAttribute('autoplay'));
+            video.setAttributeNode(document.createAttribute('playsinline'));
+        } catch (e) {
+            video.setAttribute('autoplay', true);
+            video.setAttribute('playsinline', true);
+        }
 
-    // auto-join-room
-    (function reCheckRoomPresence() {
-        connection.checkPresence(roomid, function(isRoomExist) {
-            if (isRoomExist) {
-                connection.join(roomid);
+        if(event.type === 'local') {
+        video.volume = 0;
+        try {
+            video.setAttributeNode(document.createAttribute('muted'));
+        } catch (e) {
+            video.setAttribute('muted', true);
+        }
+        }
+        video.srcObject = event.stream;
+
+        var width = parseInt(connection.videosContainer.clientWidth / 3) - 20;
+        var mediaElement = getHTMLMediaElement(video, {
+            title: event.userid,
+            buttons: ['full-screen'],
+            width: width,
+            showOnMouseEnter: false
+        });
+
+        connection.videosContainer.appendChild(mediaElement);
+
+        setTimeout(function() {
+            mediaElement.media.play();
+        }, 5000);
+
+        mediaElement.id = event.streamid;
+
+        // to keep room-id in cache
+        localStorage.setItem(connection.socketMessageEvent, connection.sessionid);
+
+        /*chkRecordConference.parentNode.style.display = 'none';
+
+        if(chkRecordConference.checked === true) {
+        btnStopRecording.style.display = 'inline-block';
+        recordingStatus.style.display = 'inline-block';
+
+        var recorder = connection.recorder;
+        if(!recorder) {
+            recorder = RecordRTC([event.stream], {
+            type: 'video'
+            });
+            recorder.startRecording();
+            connection.recorder = recorder;
+        }
+        else {
+            recorder.getInternalRecorder().addStreams([event.stream]);
+        }
+
+        if(!connection.recorder.streams) {
+            connection.recorder.streams = [];
+        }
+
+        connection.recorder.streams.push(event.stream);
+        recordingStatus.innerHTML = 'Recording ' + connection.recorder.streams.length + ' streams';
+        }*/
+
+        if(event.type === 'local') {
+        connection.socket.on('disconnect', function() {
+            if(!connection.getAllParticipants().length) {
+            location.reload();
+            }
+        });
+        }
+    };
+
+    /*var recordingStatus = document.getElementById('recording-status');
+    var chkRecordConference = document.getElementById('record-entire-conference');
+    var btnStopRecording = document.getElementById('btn-stop-recording');
+    btnStopRecording.onclick = function() {
+    var recorder = connection.recorder;
+    if(!recorder) return alert('No recorder found.');
+    recorder.stopRecording(function() {
+        var blob = recorder.getBlob();
+        invokeSaveAsDialog(blob);
+
+        connection.recorder = null;
+        btnStopRecording.style.display = 'none';
+        recordingStatus.style.display = 'none';
+        chkRecordConference.parentNode.style.display = 'inline-block';
+    });
+    };*/
+
+    connection.onstreamended = function(event) {
+        var mediaElement = document.getElementById(event.streamid);
+        if (mediaElement) {
+            mediaElement.parentNode.removeChild(mediaElement);
+        }
+    };
+
+    connection.onMediaError = function(e) {
+        if (e.message === 'Concurrent mic process limit.') {
+            if (DetectRTC.audioInputDevices.length <= 1) {
+                Swal.fire({icon: 'error',title: 'Oops...',text: 'Favor seleccione un microfono valido.'});
                 return;
             }
 
-            setTimeout(reCheckRoomPresence, 5000);
-        });
+            var secondaryMic = DetectRTC.audioInputDevices[1].deviceId;
+            connection.mediaConstraints.audio = {
+                deviceId: secondaryMic
+            };
+
+            connection.join(connection.sessionid);
+        }
+    };
+
+    // ..................................
+    // ALL below scripts are redundant!!!
+    // ..................................
+
+    function disableInputButtons(enable) {
+        document.getElementById('room-id').onkeyup();
+
+        //document.getElementById('open-or-join-room').disabled = !enable;
+        <?php if(($rowdata['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
+            document.getElementById('open-room').disabled = !enable;
+            <?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?>
+                document.getElementById('join-room').disabled = !enable;
+            <?php } ?>
+        <?php }else{ ?>
+            document.getElementById('join-room').disabled = !enable;
+        <?php } ?>
+        document.getElementById('room-id').disabled = !enable;
+    }
+
+    // ......................................................
+    // ......................Handling Room-ID................
+    // ......................................................
+
+    /*function showRoomURL(roomid) {
+        var roomHashURL = '#' + roomid;
+        var roomQueryStringURL = '?roomid=' + roomid;
+
+        var html = '<h2>Unique URL for your room:</h2><br/>';
+
+        html += 'Hash URL: <a href="' + roomHashURL + '" target="_blank" rel="noopener noreferrer">' + roomHashURL + '</a>';
+        html += '<br/>';
+        html += 'QueryString URL: <a href="' + roomQueryStringURL + '" target="_blank" rel="noopener noreferrer">' + roomQueryStringURL + '</a>';
+
+        var roomURLsDiv = document.getElementById('room-urls');
+        roomURLsDiv.innerHTML = html;
+
+        roomURLsDiv.style.display = 'block';
+    }*/
+
+    (function() {
+        var params = {},
+            r = /([^&=]+)=?([^&]*)/g;
+
+        function d(s) {
+            return decodeURIComponent(s.replace(/\+/g, ' '));
+        }
+        var match, search = window.location.search;
+        while (match = r.exec(search.substring(1)))
+            params[d(match[1])] = d(match[2]);
+        window.params = params;
     })();
 
-    disableInputButtons();
-}
+    var roomid = '';
+    if (localStorage.getItem(connection.socketMessageEvent)){
+        roomid = '<?php echo DB_NAME.'_VideoRoom_'.'_'.$_GET['view']; ?>';//localStorage.getItem(connection.socketMessageEvent);
+    } else {
+        roomid = '<?php echo DB_NAME.'_VideoRoom_'.'_'.$_GET['view']; ?>';//connection.token();
+    }
 
-// detect 2G
-if(navigator.connection &&
-   navigator.connection.type === 'cellular' &&
-   navigator.connection.downlinkMax <= 0.115) {
-  Swal.fire({icon: 'error',title: 'Oops...',text: '2G no esta soportado, favor conectese con 3G hacia arriba.'});
-}
+    var txtRoomId = document.getElementById('room-id');
+    txtRoomId.value = roomid;
+    txtRoomId.onkeyup = txtRoomId.oninput = txtRoomId.onpaste = function() {
+        localStorage.setItem(connection.socketMessageEvent, document.getElementById('room-id').value);
+    };
 
-// ......................................................
-// ................FileSharing/TextChat Code.............
-// ......................................................
+    var hashString = location.hash.replace('#', '');
+    if (hashString.length && hashString.indexOf('comment-') == 0) {
+        hashString = '';
+    }
 
-document.getElementById('share-file').onclick = function() {
-    var fileSelector = new FileSelector();
-    fileSelector.selectSingleFile(function(file) {
-        connection.send(file);
-    });
-};
+    var roomid = params.roomid;
+    if (!roomid && hashString.length) {
+        roomid = hashString;
+    }
 
-document.getElementById('input-text-chat').onkeyup = function(e) {
-    if (e.keyCode != 13) return;
+    if (roomid && roomid.length) {
+        document.getElementById('room-id').value = roomid;
+        localStorage.setItem(connection.socketMessageEvent, roomid);
 
-    // removing trailing/leading whitespace
-    this.value = this.value.replace(/^\s+|\s+$/g, '');
-    if (!this.value.length) return;
-	var msgxx = '<p><strong><?php echo $_SESSION['usuario']['basic_data']['Nombre'] ?> dijo:</strong><br/>' + this.value + '</p>';
+        // auto-join-room
+        (function reCheckRoomPresence() {
+            connection.checkPresence(roomid, function(isRoomExist) {
+                if (isRoomExist) {
+                    connection.join(roomid);
+                    return;
+                }
 
-    connection.send(msgxx);
-    appendDIV(msgxx);
-    this.value = '';
-};
+                setTimeout(reCheckRoomPresence, 5000);
+            });
+        })();
 
-var chatContainer = document.querySelector('.chat-output');
+        disableInputButtons();
+    }
 
-/*function appendDIV(event) {
-    var div = document.createElement('div');
-    div.innerHTML = event.data || event;
-    chatContainer.insertBefore(div, chatContainer.firstChild);
-    div.tabIndex = 0;
-    div.focus();
+    // detect 2G
+    if(navigator.connection &&
+    navigator.connection.type === 'cellular' &&
+    navigator.connection.downlinkMax <= 0.115) {
+    Swal.fire({icon: 'error',title: 'Oops...',text: '2G no esta soportado, favor conectese con 3G hacia arriba.'});
+    }
 
-    document.getElementById('input-text-chat').focus();
-} */
+    // ......................................................
+    // ................FileSharing/TextChat Code.............
+    // ......................................................
 
-function appendDIV(event) {
-    var div = document.createElement('div');
-    var data = event.data || event;
-    div.innerHTML = '<div class="incoming_msg">'
-						+ '<div class="received_msg">'
-							+ '<div class="received_withd_msg">'
-								+ data
-							+ '</div>'
-						+ '</div>'
-					+ '</div>';
+    document.getElementById('share-file').onclick = function() {
+        var fileSelector = new FileSelector();
+        fileSelector.selectSingleFile(function(file) {
+            connection.send(file);
+        });
+    };
 
-    chatContainer.insertBefore(div, chatContainer.firstChild);
-    div.tabIndex = 0;
-    div.focus();
+    document.getElementById('input-text-chat').onkeyup = function(e) {
+        if (e.keyCode != 13) return;
 
-    document.getElementById('input-text-chat').focus();
-}
+        // removing trailing/leading whitespace
+        this.value = this.value.replace(/^\s+|\s+$/g, '');
+        if (!this.value.length) return;
+        var msgxx = '<p><strong><?php echo $_SESSION['usuario']['basic_data']['Nombre'] ?> dijo:</strong><br/>' + this.value + '</p>';
 
-connection.onmessage = appendDIV;
-connection.filesContainer = document.getElementById('file-container');
+        connection.send(msgxx);
+        appendDIV(msgxx);
+        this.value = '';
+    };
+
+    var chatContainer = document.querySelector('.chat-output');
+
+    /*function appendDIV(event) {
+        var div = document.createElement('div');
+        div.innerHTML = event.data || event;
+        chatContainer.insertBefore(div, chatContainer.firstChild);
+        div.tabIndex = 0;
+        div.focus();
+
+        document.getElementById('input-text-chat').focus();
+    } */
+
+    function appendDIV(event) {
+        var div = document.createElement('div');
+        var data = event.data || event;
+        div.innerHTML = '<div class="incoming_msg">'
+                            + '<div class="received_msg">'
+                                + '<div class="received_withd_msg">'
+                                    + data
+                                + '</div>'
+                            + '</div>'
+                        + '</div>';
+
+        chatContainer.insertBefore(div, chatContainer.firstChild);
+        div.tabIndex = 0;
+        div.focus();
+
+        document.getElementById('input-text-chat').focus();
+    }
+
+    connection.onmessage = appendDIV;
+    connection.filesContainer = document.getElementById('file-container');
 
 </script>
 

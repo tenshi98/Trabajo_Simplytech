@@ -50,28 +50,15 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Estado cambiado correc
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*******************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 insumos_listado.idProducto,
 insumos_listado.Nombre,
-core_estados.Nombre AS estado
-FROM `insumos_listado`
-LEFT JOIN `core_estados`   ON core_estados.idEstado       = insumos_listado.idEstado
-WHERE idProducto = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+core_estados.Nombre AS estado';
+$SIS_join  = 'LEFT JOIN `core_estados`   ON core_estados.idEstado = insumos_listado.idEstado';
+$SIS_where = 'idProducto = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'insumos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 

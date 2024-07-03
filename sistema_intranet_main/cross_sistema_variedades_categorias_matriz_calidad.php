@@ -158,8 +158,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 										 'Matriz','idMatriz', $x2, 2, 'idMatriz', 'Nombre', 'cross_quality_calidad_matriz', $z, 0,
 										 $dbConn, 'form1');
 				
-				
-					
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idCategoria',$_GET['id'], 2);

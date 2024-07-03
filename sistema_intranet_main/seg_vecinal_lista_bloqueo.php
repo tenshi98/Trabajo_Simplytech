@@ -27,8 +27,8 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){    $location .= "&Fecha=".$_GET['Fecha'];            $search .= "&Fecha=".$_GET['Fecha'];}
-if(isset($_GET['Hora']) && $_GET['Hora']!=''){      $location .= "&Hora=".$_GET['Hora'];              $search .= "&Hora=".$_GET['Hora'];}
+if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){           $location .= "&Fecha=".$_GET['Fecha'];            $search .= "&Fecha=".$_GET['Fecha'];}
+if(isset($_GET['Hora']) && $_GET['Hora']!=''){             $location .= "&Hora=".$_GET['Hora'];              $search .= "&Hora=".$_GET['Hora'];}
 if(isset($_GET['IP_Client']) && $_GET['IP_Client']!=''){   $location .= "&IP_Client=".$_GET['IP_Client'];    $search .= "&IP_Client=".$_GET['IP_Client'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
@@ -69,235 +69,222 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Bloqueo Borrado correc
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['id'])){
-//valido los permisos
-validaPermisoUser($rowlevel['level'], 2, $dbConn);
-// consulto los datos
-$query = "SELECT Fecha, Hora, IP_Client, Motivo
-FROM `sistema_seguridad_bloqueo_ip`
-WHERE idBloqueo = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	?>
- 
+	//valido los permisos
+	validaPermisoUser($rowlevel['level'], 2, $dbConn);
+	/*******************************************************/
+	// consulto los datos
+	$SIS_query = 'Fecha, Hora, IP_Client, Motivo';
+	$SIS_join  = '';
+	$SIS_where = 'idBloqueo = '.$_GET['id'];
+	$rowdata = db_select_data (false, $SIS_query, 'sistema_seguridad_bloqueo_ip', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box">
-		<header>
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Modificacion de Categoria</h5>
-		</header>
-		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
+	?>
 
-				<?php
-				//Se verifican si existen los datos
-				if(isset($Fecha)){      $x1  = $Fecha;      }else{$x1  = $rowdata['Fecha'];}
-				if(isset($Hora)){       $x2  = $Hora;       }else{$x2  = $rowdata['Hora'];}
-				if(isset($IP_Client)){  $x3  = $IP_Client;  }else{$x3  = $rowdata['IP_Client'];}
-				if(isset($Motivo)){     $x4  = $Motivo;     }else{$x4  = $rowdata['Motivo'];}
+	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+		<div class="box">
+			<header>
+				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+				<h5>Modificacion de Categoria</h5>
+			</header>
+			<div class="body">
+				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
-				//se dibujan los inputs
-				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
-				$Form_Inputs->form_time('Hora','Hora', $x2, 2, 2);
-				$Form_Inputs->form_input_text('IP Cliente', 'IP_Client', $x3, 2);
-				$Form_Inputs->form_textarea('Motivo', 'Motivo', $x4, 1);
+					<?php
+					//Se verifican si existen los datos
+					if(isset($Fecha)){      $x1  = $Fecha;      }else{$x1  = $rowdata['Fecha'];}
+					if(isset($Hora)){       $x2  = $Hora;       }else{$x2  = $rowdata['Hora'];}
+					if(isset($IP_Client)){  $x3  = $IP_Client;  }else{$x3  = $rowdata['IP_Client'];}
+					if(isset($Motivo)){     $x4  = $Motivo;     }else{$x4  = $rowdata['Motivo'];}
 
-				$Form_Inputs->form_input_hidden('idBloqueo', $_GET['id'], 2);
-				?>
+					//se dibujan los inputs
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
+					$Form_Inputs->form_time('Hora','Hora', $x2, 2, 2);
+					$Form_Inputs->form_input_text('IP Cliente', 'IP_Client', $x3, 2);
+					$Form_Inputs->form_textarea('Motivo', 'Motivo', $x4, 1);
 
-				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
-				</div>
+					$Form_Inputs->form_input_hidden('idBloqueo', $_GET['id'], 2);
+					?>
 
-			</form>
-            <?php widget_validator(); ?>
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+						<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					</div>
+
+				</form>
+				<?php widget_validator(); ?>
+			</div>
 		</div>
 	</div>
-</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new'])){
-//valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+	//valido los permisos
+	validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
-<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box">
-		<header>
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Crear Bloqueo</h5>
-		</header>
-		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
+	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+		<div class="box">
+			<header>
+				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+				<h5>Crear Bloqueo</h5>
+			</header>
+			<div class="body">
+				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
-				<?php
-				//Se verifican si existen los datos
-				if(isset($Fecha)){      $x1  = $Fecha;      }else{$x1  = '';}
-				if(isset($Hora)){       $x2  = $Hora;       }else{$x2  = '';}
-				if(isset($IP_Client)){  $x3  = $IP_Client;  }else{$x3  = '';}
-				if(isset($Motivo)){     $x4  = $Motivo;     }else{$x4  = '';}
+					<?php
+					//Se verifican si existen los datos
+					if(isset($Fecha)){      $x1  = $Fecha;      }else{$x1  = '';}
+					if(isset($Hora)){       $x2  = $Hora;       }else{$x2  = '';}
+					if(isset($IP_Client)){  $x3  = $IP_Client;  }else{$x3  = '';}
+					if(isset($Motivo)){     $x4  = $Motivo;     }else{$x4  = '';}
 
-				//se dibujan los inputs
-				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
-				$Form_Inputs->form_time('Hora','Hora', $x2, 2, 2);
-				$Form_Inputs->form_input_text('IP Cliente', 'IP_Client', $x3, 2);
-				$Form_Inputs->form_textarea('Motivo', 'Motivo', $x4, 1);
-				?>
-	 
-				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
-				</div>
+					//se dibujan los inputs
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
+					$Form_Inputs->form_time('Hora','Hora', $x2, 2, 2);
+					$Form_Inputs->form_input_text('IP Cliente', 'IP_Client', $x3, 2);
+					$Form_Inputs->form_textarea('Motivo', 'Motivo', $x4, 1);
+					?>
 
-			</form>
-            <?php widget_validator(); ?>
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+						<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					</div>
+
+				</form>
+				<?php widget_validator(); ?>
+			</div>
 		</div>
 	</div>
-</div>
 
-
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
-//Se inicializa el paginador de resultados
-//tomo el numero de la pagina si es que este existe
-if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
-//Defino la cantidad total de elementos por pagina
-$cant_reg = 30;
-//resto de variables
-if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
-//Creo la variable con la ubicacion
-/**********************************************************/
-//Variable de busqueda
-$SIS_where = "idBloqueo!=0";
-/**********************************************************/
-//Se aplican los filtros
-if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){   $SIS_where .= " AND Fecha=".$_GET['Fecha'];}
-if(isset($_GET['Hora']) && $_GET['Hora']!=''){     $SIS_where .= " AND Hora=".$_GET['Hora'];}
-if(isset($_GET['IP_Client']) && $_GET['IP_Client']!=''){  $SIS_where .= " AND IP_Client=".$_GET['IP_Client'];}
+	//Se inicializa el paginador de resultados
+	//tomo el numero de la pagina si es que este existe
+	if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
+	//Defino la cantidad total de elementos por pagina
+	$cant_reg = 30;
+	//resto de variables
+	if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
+	//Creo la variable con la ubicacion
+	/**********************************************************/
+	//Variable de busqueda
+	$SIS_where = "idBloqueo!=0";
+	/**********************************************************/
+	//Se aplican los filtros
+	if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){          $SIS_where .= " AND Fecha=".$_GET['Fecha'];}
+	if(isset($_GET['Hora']) && $_GET['Hora']!=''){            $SIS_where .= " AND Hora=".$_GET['Hora'];}
+	if(isset($_GET['IP_Client']) && $_GET['IP_Client']!=''){  $SIS_where .= " AND IP_Client=".$_GET['IP_Client'];}
 
-/**********************************************************/
-//Realizo una consulta para saber el total de elementos existentes
-$cuenta_registros = db_select_nrows (false, 'idBloqueo', 'sistema_seguridad_bloqueo_ip', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
-//Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);
-// Se trae un listado con todos los elementos
-$SIS_query = 'idBloqueo, Fecha, Hora,IP_Client,Motivo';
-$SIS_join  = '';
-$SIS_order = 'Fecha DESC LIMIT '.$comienzo.', '.$cant_reg;
-$arrBloqueo = array();
-$arrBloqueo = db_select_array (false, $SIS_query, 'sistema_seguridad_bloqueo_ip', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrBloqueo');
+	/**********************************************************/
+	//Realizo una consulta para saber el total de elementos existentes
+	$cuenta_registros = db_select_nrows (false, 'idBloqueo', 'sistema_seguridad_bloqueo_ip', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
+	//Realizo la operacion para saber la cantidad de paginas que hay
+	$total_paginas = ceil($cuenta_registros / $cant_reg);
+	// Se trae un listado con todos los elementos
+	$SIS_query = 'idBloqueo, Fecha, Hora,IP_Client,Motivo';
+	$SIS_join  = '';
+	$SIS_order = 'Fecha DESC LIMIT '.$comienzo.', '.$cant_reg;
+	$arrBloqueo = array();
+	$arrBloqueo = db_select_array (false, $SIS_query, 'sistema_seguridad_bloqueo_ip', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrBloqueo');
 
-?>
+	?>
 
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
-	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
-		<li class="btn btn-default">Fecha Descendente</li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
-			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>
-	</ul>
+		<ul class="btn-group btn-breadcrumb pull-left">
+			<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+			<li class="btn btn-default">Fecha Descendente</li>
+			<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+				<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
+			<?php } ?>
+		</ul>
 
-	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Bloqueos</a><?php } ?>
+		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Bloqueos</a><?php } ?>
 
-</div>
-<div class="clearfix"></div>
-<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
-	<div class="well">
-		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
-				<?php
-				//Se verifican si existen los datos
-				if(isset($Fecha)){      $x1  = $Fecha;      }else{$x1  = '';}
-				if(isset($Hora)){       $x2  = $Hora;       }else{$x2  = '';}
-				if(isset($IP_Client)){  $x3  = $IP_Client;  }else{$x3  = '';}
-
-				//se dibujan los inputs
-				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_date('Fecha','Fecha', $x1, 1);
-				$Form_Inputs->form_time('Hora','Hora', $x2, 1, 2);
-				$Form_Inputs->form_input_text('IP Cliente', 'IP_Client', $x3, 1);
-
-				$Form_Inputs->form_input_hidden('pagina', 1, 1);
-				?>
-
-				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
-				</div>
-
-			</form>
-            <?php widget_validator(); ?>
-        </div>
 	</div>
-</div>
-<div class="clearfix"></div>
+	<div class="clearfix"></div>
+	<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
+		<div class="well">
+			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+				<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
+					<?php
+					//Se verifican si existen los datos
+					if(isset($Fecha)){      $x1  = $Fecha;      }else{$x1  = '';}
+					if(isset($Hora)){       $x2  = $Hora;       }else{$x2  = '';}
+					if(isset($IP_Client)){  $x3  = $IP_Client;  }else{$x3  = '';}
 
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<div class="box">
-		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de IP</h5>
-			<div class="toolbar">
+					//se dibujan los inputs
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_date('Fecha','Fecha', $x1, 1);
+					$Form_Inputs->form_time('Hora','Hora', $x2, 1, 2);
+					$Form_Inputs->form_input_text('IP Cliente', 'IP_Client', $x3, 1);
+
+					$Form_Inputs->form_input_hidden('pagina', 1, 1);
+					?>
+
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+						<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					</div>
+
+				</form>
+				<?php widget_validator(); ?>
+			</div>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="box">
+			<header>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de IP</h5>
+				<div class="toolbar">
+					<?php
+					//paginacion
+					echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
+				</div>
+			</header>
+			<div class="table-responsive">
+				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+					<thead>
+						<tr role="row">
+							<th width="120">Fecha</th>
+							<th width="120">Hora</th>
+							<th width="120">IP</th>
+							<th>Motivo</th>
+							<th width="10">Acciones</th>
+						</tr>
+					</thead>
+
+					<tbody role="alert" aria-live="polite" aria-relevant="all">
+					<?php foreach ($arrBloqueo as $bloqueo) { ?>
+						<tr class="odd">
+							<td><?php echo fecha_estandar($bloqueo['Fecha']); ?></td>
+							<td><?php echo $bloqueo['Hora']; ?></td>
+							<td><?php echo $bloqueo['IP_Client']; ?></td>
+							<td class="word_break"><?php echo $bloqueo['Motivo']; ?></td>
+							<td>
+								<div class="btn-group" style="width: 70px;" >
+									<a href="<?php echo $location.'&id='.$bloqueo['idBloqueo']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+									<?php
+									$ubicacion = $location.'&del='.simpleEncode($bloqueo['idBloqueo'], fecha_actual());
+									$dialogo   = '¿Realmente deseas eliminar el registro '.$bloqueo['IP_Client'].'?'; ?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+								</div>
+							</td>
+						</tr>
+					<?php } ?>
+					</tbody>
+				</table>
+			</div>
+			<div class="pagrow">
 				<?php
 				//paginacion
-				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
+				echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
-		</header>
-		<div class="table-responsive">
-			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
-				<thead>
-					<tr role="row">
-						<th width="120">Fecha</th>
-						<th width="120">Hora</th>
-						<th width="120">IP</th>
-						<th>Motivo</th>
-						<th width="10">Acciones</th>
-					</tr>
-				</thead>
-
-				<tbody role="alert" aria-live="polite" aria-relevant="all">
-				<?php foreach ($arrBloqueo as $bloqueo) { ?>
-					<tr class="odd">
-						<td><?php echo fecha_estandar($bloqueo['Fecha']); ?></td>
-						<td><?php echo $bloqueo['Hora']; ?></td>
-						<td><?php echo $bloqueo['IP_Client']; ?></td>
-						<td class="word_break"><?php echo $bloqueo['Motivo']; ?></td>
-						<td>
-							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo $location.'&id='.$bloqueo['idBloqueo']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-								<?php
-								$ubicacion = $location.'&del='.simpleEncode($bloqueo['idBloqueo'], fecha_actual());
-								$dialogo   = '¿Realmente deseas eliminar el registro '.$bloqueo['IP_Client'].'?'; ?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-							</div>
-						</td>
-					</tr>
-				<?php } ?>
-				</tbody>
-			</table>
-		</div>
-		<div class="pagrow">
-			<?php
-			//paginacion
-			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
 	</div>
-</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

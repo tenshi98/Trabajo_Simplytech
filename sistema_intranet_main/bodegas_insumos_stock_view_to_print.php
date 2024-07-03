@@ -24,9 +24,9 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
-// Se trae un listado con todos los datos
-$arrProductos = array();
-$query = "SELECT 
+/*******************************************************/
+// consulto los datos
+$SIS_query = '
 bodegas_insumos_facturacion_existencias.idFacturacion,
 bodegas_insumos_facturacion_existencias.Creacion_fecha,
 bodegas_insumos_facturacion_existencias.Cantidad_ing,
@@ -40,36 +40,22 @@ trabajadores_listado.Nombre AS trab_nombre,
 trabajadores_listado.ApellidoPat AS trab_appat,
 trabajadores_listado.ApellidoMat AS trab_apmat,
 proveedor_listado.Nombre AS Proveedor,
-(SELECT Nombre FROM bodegas_insumos_listado WHERE idBodega=".$_GET['idBodega']." LIMIT 1) AS NombreBodega
-
-FROM `bodegas_insumos_facturacion_existencias`
+(SELECT Nombre FROM bodegas_insumos_listado WHERE idBodega='.$_GET['idBodega'].' LIMIT 1) AS NombreBodega';
+$SIS_join  = '
 LEFT JOIN `bodegas_insumos_facturacion_tipo`    ON bodegas_insumos_facturacion_tipo.idTipo       = bodegas_insumos_facturacion_existencias.idTipo
 LEFT JOIN `insumos_listado`                     ON insumos_listado.idProducto                    = bodegas_insumos_facturacion_existencias.idProducto
-LEFT JOIN `sistema_productos_uml`                         ON sistema_productos_uml.idUml                             = insumos_listado.idUml
+LEFT JOIN `sistema_productos_uml`               ON sistema_productos_uml.idUml                   = insumos_listado.idUml
 LEFT JOIN `bodegas_insumos_facturacion`         ON bodegas_insumos_facturacion.idFacturacion     = bodegas_insumos_facturacion_existencias.idFacturacion
-LEFT JOIN `core_documentos_mercantiles`      ON core_documentos_mercantiles.idDocumentos   = bodegas_insumos_facturacion.idDocumentos
+LEFT JOIN `core_documentos_mercantiles`         ON core_documentos_mercantiles.idDocumentos      = bodegas_insumos_facturacion.idDocumentos
 LEFT JOIN `proveedor_listado`                   ON proveedor_listado.idProveedor                 = bodegas_insumos_facturacion.idProveedor
-LEFT JOIN `trabajadores_listado`                ON trabajadores_listado.idTrabajador             = bodegas_insumos_facturacion.idTrabajador
+LEFT JOIN `trabajadores_listado`                ON trabajadores_listado.idTrabajador             = bodegas_insumos_facturacion.idTrabajador';
+$SIS_where = 'bodegas_insumos_facturacion_existencias.idProducto='.$_GET['view'];
+$SIS_where.= ' AND bodegas_insumos_facturacion_existencias.idBodega='.$_GET['idBodega'];
+$SIS_order = 'bodegas_insumos_facturacion_existencias.Creacion_fecha DESC';
+$SIS_order.= ' LIMIT 100';
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrProductos');
 
-WHERE bodegas_insumos_facturacion_existencias.idProducto=".$_GET['view']."  
-AND bodegas_insumos_facturacion_existencias.idBodega=".$_GET['idBodega']."
-ORDER BY bodegas_insumos_facturacion_existencias.Creacion_fecha DESC 
-LIMIT 100";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrProductos,$row );
-}  
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -79,7 +65,7 @@ require_once 'core/Web.Header.PrintFact.php';
 /**********************************************************************************************************************************/
 $my_html ='
 	<div class="panel panel-cascade panel-invoice">
-          
+
         <div class="panel-body">
 			Movimientos Bodega: <strong>'.$arrProductos[0]['NombreBodega'].'</strong><br/>
 			Insumo: <strong>'.$arrProductos[0]['NombreProducto'].'</strong><br/>
@@ -102,25 +88,24 @@ $my_html ='
 						</thead>
 						<tbody>';
 
-							foreach ($arrProductos as $productos) { 
-							
-							if(isset($productos['Proveedor'])&&$productos['Proveedor']){
-								$empresa = 'Proveedor : '.$productos['Proveedor'];
-								$ndoc = $productos['Documento'].' N° '.$productos['N_Doc'];
-							}else{
-								$empresa = 'Trabajador : '.$productos['trab_nombre'].' '.$productos['trab_appat'].' '.$productos['trab_apmat'];
-								$ndoc = 'Documento N° '.$productos['idFacturacion'];
+							foreach ($arrProductos as $productos) {
+
+								if(isset($productos['Proveedor'])&&$productos['Proveedor']){
+									$empresa = 'Proveedor : '.$productos['Proveedor'];
+									$ndoc = $productos['Documento'].' N° '.$productos['N_Doc'];
+								}else{
+									$empresa = 'Trabajador : '.$productos['trab_nombre'].' '.$productos['trab_appat'].' '.$productos['trab_apmat'];
+									$ndoc = 'Documento N° '.$productos['idFacturacion'];
+								}
+								$my_html .='<tr">
+												<td>'.$productos['TipoMovimiento'].'</td>
+												<td>'.$empresa.'</td>
+												<td>'.$ndoc.'</td>
+												<td width="160">'.Fecha_estandar($productos['Creacion_fecha']).'</td>
+												<td width="160">'.Cantidades_decimales_justos($productos['Cantidad_ing']).' '.$productos['UnidadMedida'].'</td>
+												<td width="160">'.Cantidades_decimales_justos($productos['Cantidad_eg']).' '.$productos['UnidadMedida'].'</td>
+											</tr>';
 							}
-							$my_html .='<tr">
-											<td>'.$productos['TipoMovimiento'].'</td>
-											<td>'.$empresa.'</td>
-											<td>'.$ndoc.'</td>
-											<td width="160">'.Fecha_estandar($productos['Creacion_fecha']).'</td>
-											<td width="160">'.Cantidades_decimales_justos($productos['Cantidad_ing']).' '.$productos['UnidadMedida'].'</td>
-											<td width="160">'.Cantidades_decimales_justos($productos['Cantidad_eg']).' '.$productos['UnidadMedida'].'</td>
-										</tr>';
-							}
-							
 
 						$my_html .='</tbody>
 					</table>

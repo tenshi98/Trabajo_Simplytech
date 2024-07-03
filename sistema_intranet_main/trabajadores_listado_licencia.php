@@ -61,25 +61,12 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Archivo Borrado correc
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*******************************************************/
 // consulto los datos
-$query = "SELECT Nombre,ApellidoPat,ApellidoMat,idTipoLicencia,CA_Licencia,
-LicenciaFechaControlUltimo,LicenciaFechaControl, File_Licencia
-FROM `trabajadores_listado`
-WHERE idTrabajador = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Nombre,ApellidoPat,ApellidoMat,idTipoLicencia,CA_Licencia,LicenciaFechaControlUltimo,LicenciaFechaControl, File_Licencia';
+$SIS_join  = '';
+$SIS_where = 'idTrabajador = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 
@@ -131,11 +118,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					$Form_Inputs->form_input_text('CA Licencia', 'CA_Licencia', $x2, 1);
 					$Form_Inputs->form_date('Fecha Ultimo Control','LicenciaFechaControlUltimo', $x3, 1);
 					$Form_Inputs->form_date('Fecha Control','LicenciaFechaControl', $x4, 1);
-					
+
 					if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){
-        
+
 						echo '<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter"><h3>Archivo</h3>';
-						echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['File_Licencia'], ''); 
+						echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['File_Licencia'], '');
 						echo '</div>
 						<a href="'.$new_location.'&id='.$_GET['id'].'&del_File_Licencia='.$_GET['id'].'" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 						<div class="clearfix"></div>';

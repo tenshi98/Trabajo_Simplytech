@@ -400,7 +400,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
-        	 
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idCentroCosto)){  $x1  = $idCentroCosto;  }else{$x1  = $_SESSION['servicios_ing_nd_basicos']['idCentroCosto'];}
@@ -999,7 +999,6 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_servicios_facturacion', 
 </div>
 <div class="clearfix"></div>
 
-                                 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>

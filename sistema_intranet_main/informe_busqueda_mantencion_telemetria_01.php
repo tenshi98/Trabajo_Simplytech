@@ -171,7 +171,7 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
-$w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
+$w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];

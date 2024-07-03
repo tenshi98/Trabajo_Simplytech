@@ -228,10 +228,9 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_camaras_listado', $SIS
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 	</ul>
 
-</div>                    
+</div>
 <div class="clearfix"></div>
 
-                                 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>

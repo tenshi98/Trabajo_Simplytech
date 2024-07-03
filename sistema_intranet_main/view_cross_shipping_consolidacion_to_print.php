@@ -281,10 +281,8 @@ require_once 'core/Web.Header.Print.php';
 						<td colspan="3"><?php if(isset($rowConso['InspectorNombre'])&&$rowConso['InspectorNombre']!=''){echo $rowConso['InspectorNombre'].' '.$rowConso['InspectorApellido'];}else{echo 'Sin Datos';} ?></td>
 					</tr>
 					
-				
-					
-					
-					
+
+	
 				</tbody>
 			</table>
 
@@ -350,8 +348,7 @@ require_once 'core/Web.Header.Print.php';
 						
 		<table id="items">
 			<tbody>
-				
-					
+
 				<td colspan="8" class="blank word_break">
 					<?php echo $rowConso['Observaciones']; ?>
 				</td>
@@ -383,7 +380,7 @@ require_once 'core/Web.Header.Print.php';
 					<img src="upload/<?php echo $arch['Nombre']; ?>" class="img-responsive">
 				</div>
 
-			<?php 
+			<?php
 				}
 				echo '</div>';
 				echo '</td></tr>';

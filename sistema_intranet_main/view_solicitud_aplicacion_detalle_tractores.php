@@ -243,8 +243,7 @@ filtrar($arrOTS, 'idTelemetria');
 					</div>
 				</div>
 			<?php $ssx++; } ?>
-					
-					
+	
 		
 
 	</div>

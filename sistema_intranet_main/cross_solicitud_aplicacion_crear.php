@@ -1899,8 +1899,8 @@ if(!empty($_GET['clone_idSolicitud'])){
 			<?php
 			//recorro
 			foreach ($arrTipo as $tipo) {
-				echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
-				echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
+				echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';
+			echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 			}
 			?>
 			let Componente = select.options[select.selectedIndex].value;

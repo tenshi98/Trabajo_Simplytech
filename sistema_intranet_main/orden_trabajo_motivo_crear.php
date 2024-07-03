@@ -736,7 +736,6 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 					<th colspan="5">Detalle</th>
 					<th width="160">Acciones</th>
 				</tr>
-				
 
 				<?php /**********************************************************************************/?>
 				<tr class="item-row fact_tittle">

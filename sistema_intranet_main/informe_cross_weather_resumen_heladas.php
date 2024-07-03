@@ -42,7 +42,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$x_table = 'telemetria_listado_aux_equipo';
 }else{
 	$x_table = 'telemetria_listado_aux';
-} 
+}
 /**********************************************************/
 //Variable de busqueda
 $SIS_where = $x_table.".idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];

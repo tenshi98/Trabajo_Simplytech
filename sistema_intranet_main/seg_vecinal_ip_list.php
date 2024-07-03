@@ -66,7 +66,7 @@ $cant_reg = 30;
 //resto de variables
 if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 //Inicia variable
-$SIS_where = "seg_vecinal_clientes_listado_ip.idIpUsuario!=0"; 
+$SIS_where = "seg_vecinal_clientes_listado_ip.idIpUsuario!=0";
 //verifico si existen los parametros de fecha
 if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){$SIS_where.=' AND seg_vecinal_clientes_listado_ip.idCliente='.$_GET['idCliente'];}
 

@@ -280,8 +280,7 @@ array_push( $arrPuntos,$row );
 						$Form_Inputs->form_input_hidden('idUbicaciones', $_GET['mod'], 2);
 						
 						?>
-						
-					
+		
 						<div class="form-group">
 							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Actualizar Punto" name="submit_edit_punto">
 						</div>

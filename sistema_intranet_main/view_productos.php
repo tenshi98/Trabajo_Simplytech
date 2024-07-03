@@ -137,7 +137,7 @@ $SIS_where = 'bodegas_productos_facturacion_existencias.idProducto='.$X_Puntero;
 $SIS_where.= ' AND bodegas_productos_facturacion_existencias.Creacion_fecha>"'.restarDias(fecha_actual(),360).'"';
 $SIS_where.= ' AND (bodegas_productos_facturacion.idTipo = 1 OR bodegas_productos_facturacion.idTipo = 2)';
 $SIS_where.= ' GROUP BY bodegas_productos_facturacion.idTipo, bodegas_productos_facturacion_existencias.Creacion_mes';
-$SIS_order = 'ORDER BY bodegas_productos_facturacion_existencias.Creacion_fecha ASC';
+$SIS_order = 'bodegas_productos_facturacion_existencias.Creacion_fecha ASC';
 $arrPromedioProd = array();
 $arrPromedioProd = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPromedioProd');
 

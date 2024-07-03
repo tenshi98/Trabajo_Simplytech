@@ -47,42 +47,29 @@ require_once 'core/Web.Header.Main.php';
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*******************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 telemetria_historial_mantencion.idSistema,
-telemetria_historial_mantencion.Fecha, 
-telemetria_historial_mantencion.Duracion, 
-telemetria_historial_mantencion.Resumen, 
+telemetria_historial_mantencion.Fecha,
+telemetria_historial_mantencion.Duracion,
+telemetria_historial_mantencion.Resumen,
 telemetria_historial_mantencion.Resolucion,
 telemetria_historial_mantencion.Recepcion_Nombre,
-telemetria_historial_mantencion.Recepcion_Rut, 
-telemetria_historial_mantencion.Recepcion_Email, 
+telemetria_historial_mantencion.Recepcion_Rut,
+telemetria_historial_mantencion.Recepcion_Email,
 telemetria_historial_mantencion.idServicio,
-telemetria_historial_mantencion.idOpciones_1, 
-telemetria_historial_mantencion.idOpciones_2, 
-telemetria_historial_mantencion.idOpciones_3, 
-telemetria_historial_mantencion.h_Inicio, 
+telemetria_historial_mantencion.idOpciones_1,
+telemetria_historial_mantencion.idOpciones_2,
+telemetria_historial_mantencion.idOpciones_3,
+telemetria_historial_mantencion.h_Inicio,
 telemetria_historial_mantencion.h_Termino,
-core_telemetria_servicio_tecnico.Nombre AS Servicio
+core_telemetria_servicio_tecnico.Nombre AS Servicio';
+$SIS_join  = 'LEFT JOIN `core_telemetria_servicio_tecnico` ON core_telemetria_servicio_tecnico.idServicio  = telemetria_historial_mantencion.idServicio';
+$SIS_where = 'telemetria_historial_mantencion.idMantencion = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_historial_mantencion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-FROM `telemetria_historial_mantencion`
-LEFT JOIN `core_telemetria_servicio_tecnico` ON core_telemetria_servicio_tecnico.idServicio  = telemetria_historial_mantencion.idServicio
-
-WHERE telemetria_historial_mantencion.idMantencion = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado); ?>
+?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Mantencion', $rowdata['Servicio'], 'Editar Datos Básicos'); ?>
@@ -116,7 +103,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 					if(isset($idOpciones_1)){      $x2  = $idOpciones_1;       }else{$x2  = $rowdata['idOpciones_1'];}
 					if(isset($idOpciones_2)){      $x2 .= ','.$idOpciones_2;   }else{$x2 .= ','.$rowdata['idOpciones_2'];}
 					if(isset($idOpciones_3)){      $x2 .= ','.$idOpciones_3;   }else{$x2 .= ','.$rowdata['idOpciones_3'];}
-					if(isset($Fecha)){   $x3  = $Fecha;              }else{$x3  = $rowdata['Fecha'];}
+					if(isset($Fecha)){             $x3  = $Fecha;              }else{$x3  = $rowdata['Fecha'];}
 					if(isset($h_Inicio)){          $x4  = $h_Inicio;           }else{$x4  = $rowdata['h_Inicio'];}
 					if(isset($h_Termino)){         $x5  = $h_Termino;          }else{$x5  = $rowdata['h_Termino'];}
 					if(isset($Resumen)){           $x7  = $Resumen;            }else{$x7  = $rowdata['Resumen'];}

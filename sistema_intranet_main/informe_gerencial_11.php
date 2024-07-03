@@ -634,7 +634,7 @@ array_push( $arrInsumos2,$row );
 											<td align="right"><?php echo valores($consumos['ValorIngreso'], 0); ?></td>
 											<td align="right"><?php echo valores($cantidad*$consumos['ValorIngreso'], 0); ?></td>
 										</tr>
-								<?php 
+								<?php
 									}
 								}
 							} 

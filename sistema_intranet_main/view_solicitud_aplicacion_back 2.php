@@ -729,8 +729,7 @@ array_push( $arrHistorial,$row );
 					}else{
 						echo '<tr class="item-row linea_punteada"><td colspan="5">No hay Productos Quimicos Asignados</td></tr>';
 					} ?>
-					
-					
+	
                         
 				</tbody>
 			</table>

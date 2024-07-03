@@ -50,30 +50,17 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Verificacion cambiado 
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*******************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 seg_vecinal_clientes_listado.idCliente,
 seg_vecinal_clientes_listado.Nombre,
 seg_vecinal_clientes_listado.idVerificado,
 core_seguridad_verificacion.Nombre AS verificacion,
-seg_vecinal_clientes_listado.idTipo
-FROM `seg_vecinal_clientes_listado`
-LEFT JOIN `core_seguridad_verificacion`   ON core_seguridad_verificacion.idVerificado  = seg_vecinal_clientes_listado.idVerificado
-WHERE idCliente = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+seg_vecinal_clientes_listado.idTipo';
+$SIS_join  = 'LEFT JOIN `core_seguridad_verificacion`   ON core_seguridad_verificacion.idVerificado  = seg_vecinal_clientes_listado.idVerificado';
+$SIS_where = 'idCliente = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 
@@ -118,7 +105,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<td>
 							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
 								<?php if ($rowlevel['level']>=2){ ?>
-								   <?php if ( $rowdata['idVerificado']==2){ ?>   
+								   <?php if ( $rowdata['idVerificado']==2){ ?>
 										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowdata['idCliente'].'&verificacion='.simpleEncode(2, fecha_actual()) ; ?>">OFF</a>
 										<a class="btn btn-sm btn-info locked_active" href="#">ON</a>
 								   <?php } else { ?>

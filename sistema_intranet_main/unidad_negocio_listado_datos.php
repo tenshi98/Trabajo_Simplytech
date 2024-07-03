@@ -46,28 +46,16 @@ require_once 'core/Web.Header.Main.php';
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*******************************************************/
+// consulto los datos
+$SIS_query = 'Codigo, Nombre,Modelo, Serie, Fabricante, fincorporacion, idSistema, idConfig_1, idConfig_2, idCliente';
+$SIS_join  = '';
+$SIS_where = 'idMaquina = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+/*******************************************************/
 //verifico que sea un administrador
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-// consulto los datos
-$query = "SELECT Codigo, Nombre,Modelo, Serie, Fabricante, fincorporacion, idSistema, idConfig_1, idConfig_2,
-idCliente
-FROM `maquinas_listado`
-WHERE idMaquina = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
 
 ?>
 
@@ -129,9 +117,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					$Form_Inputs->form_input_text('Modelo', 'Modelo', $x4, 1);
 					$Form_Inputs->form_input_text('Serie', 'Serie', $x5, 1);
 					$Form_Inputs->form_input_text('Fabricante', 'Fabricante', $x6, 1);
-					$Form_Inputs->form_date('Fecha de Incorporacion','fincorporacion', $x7, 1); 
-					
-					
+					$Form_Inputs->form_date('Fecha de Incorporacion','fincorporacion', $x7, 1);
+
 					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idMaquina', $_GET['id'], 2);

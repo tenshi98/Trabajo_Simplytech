@@ -61,24 +61,12 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Tarjeta Borrada correc
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Se traen todos los datos del producto
-$query = "SELECT Nombre,Direccion_img
-FROM `card_listado`
-WHERE idCard = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+/*******************************************************/
+// consulto los datos
+$SIS_query = 'Nombre,Direccion_img';
+$SIS_join  = '';
+$SIS_where = 'idCard = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'card_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 
@@ -116,8 +104,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						//Se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
 						$Form_Inputs->form_multiple_upload('Seleccionar archivo','Direccion_img', 1, '"jpg", "png", "gif", "jpeg"');
-						
-						
+
 						$Form_Inputs->form_input_hidden('idCard', $_GET['id'], 2);
 						?>
 

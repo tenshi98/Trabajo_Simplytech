@@ -278,8 +278,7 @@ array_push( $arrProductos,$row );
 						<td><?php echo Cantidades_decimales_justos($productos['Cantidad_eg']); ?></td>
 						<td><?php echo Cantidades_decimales_justos($productos['Valor']); ?></td>
 						<td><?php echo Cantidades_decimales_justos($productos['ValorTotal']); ?></td>
-						
-					
+		
 					</tr>
 				<?php } ?>
 				</tbody>

@@ -21,7 +21,7 @@ require_once '../../Legacy/gestion_modular/funciones/Helpers.Functions.Propias.a
 //Tiempo Maximo de la consulta, 40 minutos por defecto
 set_time_limit(2400);         
 //Memora RAM Maxima del servidor, 4GB por defecto
-ini_set('memory_limit', '4096M'); 
+ini_set('memory_limit', '4096M');
 /**********************************************************************************************************************************/
 /*                                                      Codigo                                                                    */
 /**********************************************************************************************************************************/
