@@ -164,8 +164,7 @@ $arrCargas = db_select_array (false, $SIS_query, 'apoderados_listado_hijos', $SI
 							?>
 						</div>
 						<div class="clearfix"></div>
-						
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<p class="text-muted">
 							<?php

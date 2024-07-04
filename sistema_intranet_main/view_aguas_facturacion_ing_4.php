@@ -265,7 +265,7 @@
 								<br/>
 									<div class="pull-left">Adicionales por prorrateo</div>
 									<small class="pull-right">
-										<?php 
+										<?php
 										if($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsProrateo']>0){
 											$bla = $_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsProrateoSigno'].' '.$_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsProrateo'];
 										}elseif($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsProrateo']<0){
@@ -361,7 +361,7 @@
 								<br/>
 									<div class="pull-left">Diferencia medidor general</div>
 									<small class="pull-right">
-										<?php 
+										<?php
 										if($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfDifMedGeneral']>0){
 											$bla = '(+)'.Cantidades($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfDifMedGeneral'], 2);
 										}elseif($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfDifMedGeneral']<0){

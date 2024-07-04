@@ -307,7 +307,7 @@ $html .= '<div class="row">
 								<td style="vertical-align: top;">'.$otro['Nombre'].'</td>
 								<td align="right">'.Valores($otro['vTotal'], 0).'</td>
 							</tr>';
-						} 
+						}
 					}
 				$html .= '</tbody>
 			</table>

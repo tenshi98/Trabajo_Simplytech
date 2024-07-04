@@ -71,207 +71,170 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Usuario Borrado correc
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['edit'])){
-// consulto los datos
-$query = "SELECT idUsuario
-FROM `comunicaciones_chat_listado_usuarios`
-WHERE idUsers = ".$_GET['edit'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-//Verifico el tipo de usuario que esta ingresando
-$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
-//Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
-} ?>
+	/*******************************************************/
+	// consulto los datos
+	$SIS_query = 'idUsuario';
+	$SIS_join  = '';
+	$SIS_where = 'idUsers = '.$_GET['edit'];
+	$rowdata = db_select_data (false, $SIS_query, 'comunicaciones_chat_listado_usuarios', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	/*******************************************************/
+	//Verifico el tipo de usuario que esta ingresando
+	$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
+	//Verifico el tipo de usuario que esta ingresando
+	if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+		$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
+	}
 
-<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box">
-		<header>
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Editar Usuario</h5>
-		</header>
-		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
+	?>
 
-				<?php
-				//Se verifican si existen los datos
-				if(isset($idUsuario)){     $x1  = $idUsuario;    }else{$x1  = $rowdata['idUsuario'];}
+	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+		<div class="box">
+			<header>
+				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+				<h5>Editar Usuario</h5>
+			</header>
+			<div class="body">
+				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
-				//se dibujan los inputs
-				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x1, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
+					<?php
+					//Se verifican si existen los datos
+					if(isset($idUsuario)){     $x1  = $idUsuario;    }else{$x1  = $rowdata['idUsuario'];}
 
-				$Form_Inputs->form_input_hidden('idUsers', $_GET['edit'], 2);
-				$Form_Inputs->form_input_hidden('idChat', $_GET['id'], 2);
-				?>
+					//se dibujan los inputs
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x1, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 
-				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
-				</div>
-			</form>
-			<?php widget_validator(); ?>
+					$Form_Inputs->form_input_hidden('idUsers', $_GET['edit'], 2);
+					$Form_Inputs->form_input_hidden('idChat', $_GET['id'], 2);
+					?>
+
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+						<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					</div>
+				</form>
+				<?php widget_validator(); ?>
+			</div>
 		</div>
 	</div>
-</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new'])){
-//valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);
-//Verifico el tipo de usuario que esta ingresando
-$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
-//Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
-} ?>
+	//valido los permisos
+	validaPermisoUser($rowlevel['level'], 3, $dbConn);
+	//Verifico el tipo de usuario que esta ingresando
+	$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
+	//Verifico el tipo de usuario que esta ingresando
+	if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
+		$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
+	}
 
-<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box">
-		<header>
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Agregar Usuario</h5>
-		</header>
-		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
+	?>
 
-				<?php
-				//Se verifican si existen los datos
-				if(isset($idUsuario)){     $x1  = $idUsuario;    }else{$x1  = '';}
+	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+		<div class="box">
+			<header>
+				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+				<h5>Agregar Usuario</h5>
+			</header>
+			<div class="body">
+				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
-				//se dibujan los inputs
-				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x1, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
+					<?php
+					//Se verifican si existen los datos
+					if(isset($idUsuario)){     $x1  = $idUsuario;    }else{$x1  = '';}
 
-				$Form_Inputs->form_input_hidden('idChat', $_GET['id'], 2);
+					//se dibujan los inputs
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x1, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 
-				?>
+					$Form_Inputs->form_input_hidden('idChat', $_GET['id'], 2);
 
-				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
-				</div>
-			</form>
-			<?php widget_validator(); ?>
+					?>
+
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+						<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					</div>
+				</form>
+				<?php widget_validator(); ?>
+			</div>
 		</div>
 	</div>
-</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
-// consulto los datos
-$query = "SELECT Nombre
-FROM `comunicaciones_chat_listado`
-WHERE idChat = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+	/*******************************************************/
+	// consulto los datos
+	$SIS_query = 'Nombre';
+	$SIS_join  = '';
+	$SIS_where = 'idChat = '.$_GET['id'];
+	$rowdata = db_select_data (false, $SIS_query, 'comunicaciones_chat_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-// Se trae un listado con todas las cargas familiares
-$arrUsuarios = array();
-$query = "SELECT 
-comunicaciones_chat_listado_usuarios.idUsers,
-usuarios_listado.Nombre AS Usuario
-FROM `comunicaciones_chat_listado_usuarios`
-LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario   = comunicaciones_chat_listado_usuarios.idUsuario
+	/*******************************************************/
+	// consulto los datos
+	$SIS_query = '
+	comunicaciones_chat_listado_usuarios.idUsers,
+	usuarios_listado.Nombre AS Usuario';
+	$SIS_join  = 'LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario = comunicaciones_chat_listado_usuarios.idUsuario';
+	$SIS_where = 'comunicaciones_chat_listado_usuarios.idChat ='.$_GET['id'];
+	$SIS_order = 'usuarios_listado.Nombre ASC';
+	$arrUsuarios = array();
+	$arrUsuarios = db_select_array (false, $SIS_query, 'comunicaciones_chat_listado_usuarios', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsuarios');
 
-WHERE comunicaciones_chat_listado_usuarios.idChat = ".$_GET['id']."
-ORDER BY usuarios_listado.Nombre ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrUsuarios,$row );
-}
+	?>
 
-
-
-?>
-
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Chat', $rowdata['Nombre'], 'Usuarios Participantes'); ?>
-	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
-		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Usuario</a><?php } ?>
-	</div>
-</div>
-<div class="clearfix"></div>
-
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<div class="box">
-		<header>
-			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'comunicaciones_chat_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
-				<li class=""><a href="<?php echo 'comunicaciones_chat_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
-				<li class="active"><a href="<?php echo 'comunicaciones_chat_listado_usuarios.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Usuarios</a></li>         
-			</ul>
-		</header>
-        <div class="table-responsive">
-			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
-				<thead>
-					<tr role="row">
-						<th>Usuario</th>
-						<th width="10">Acciones</th>
-					</tr>
-				</thead>
-				<tbody role="alert" aria-live="polite" aria-relevant="all">
-				<?php foreach ($arrUsuarios as $usr) { ?>
-					<tr class="odd">
-						<td><?php echo $usr['Usuario']; ?></td>
-						<td>
-							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($usr['idUsers'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el usuario '.$usr['Usuario'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>
-							</div>
-						</td>
-					</tr>
-				<?php } ?>
-				</tbody>
-			</table>
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Chat', $rowdata['Nombre'], 'Usuarios Participantes'); ?>
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
+			<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Usuario</a><?php } ?>
 		</div>
 	</div>
-</div>
-
-<div class="clearfix"></div>
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 	<div class="clearfix"></div>
-</div>
+
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="box">
+			<header>
+				<ul class="nav nav-tabs pull-right">
+					<li class=""><a href="<?php echo 'comunicaciones_chat_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+					<li class=""><a href="<?php echo 'comunicaciones_chat_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
+					<li class="active"><a href="<?php echo 'comunicaciones_chat_listado_usuarios.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Usuarios</a></li>         
+				</ul>
+			</header>
+			<div class="table-responsive">
+				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+					<thead>
+						<tr role="row">
+							<th>Usuario</th>
+							<th width="10">Acciones</th>
+						</tr>
+					</thead>
+					<tbody role="alert" aria-live="polite" aria-relevant="all">
+					<?php foreach ($arrUsuarios as $usr) { ?>
+						<tr class="odd">
+							<td><?php echo $usr['Usuario']; ?></td>
+							<td>
+								<div class="btn-group" style="width: 35px;" >
+									<?php if ($rowlevel['level']>=4){
+										$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($usr['idUsers'], fecha_actual());
+										$dialogo   = '¿Realmente deseas eliminar el usuario '.$usr['Usuario'].'?'; ?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<?php } ?>
+								</div>
+							</td>
+						</tr>
+					<?php } ?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+		<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="clearfix"></div>
+	</div>
 
 <?php } ?>
 <?php

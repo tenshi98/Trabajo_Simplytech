@@ -56,8 +56,8 @@ include '1include_ocompra.php'; ?>
 				</a>
 			</div>
 
-	<?php } ?>
-
+	
+<?php } ?>
 <?php
 //si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){

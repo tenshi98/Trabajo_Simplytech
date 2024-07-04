@@ -149,8 +149,7 @@ $arrFinalOpciones[0]  = 'No Asignado';
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
 							<strong>Identificador Empresa : </strong><?php echo $rowdata['IdentificadorEmpresa']; ?><br/>
 						</p>
-						
-						
+
 						<h2 class="text-primary">Datos de Configuracion</h2>
 						<p class="text-muted">
 							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
@@ -174,8 +173,7 @@ $arrFinalOpciones[0]  = 'No Asignado';
 							
 							
 						</p>
-						
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Jornada Laboral</h2>
 						<p class="text-muted">
 							<strong>Hora Inicio Jornada : </strong><?php echo $rowdata['Jornada_inicio'].' hrs'; ?><br/>
@@ -375,7 +373,6 @@ $arrUsers = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join,
 </div>
 
 <?php } ?>
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

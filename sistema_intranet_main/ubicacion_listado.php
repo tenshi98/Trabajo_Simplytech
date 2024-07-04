@@ -141,11 +141,10 @@ foreach($arrLicitacion as $key) {
 
 	//Creo Variables para la rejilla
 	for ($i = 1; $i <= $nmax; $i++) {
-		$d[$i]  = $key['LVL_'.$i.'_id'];   
-		$n[$i]  = $key['LVL_'.$i.'_Nombre'];   
+		$d[$i]  = $key['LVL_'.$i.'_id'];
+		$n[$i]  = $key['LVL_'.$i.'_Nombre'];
 	}
-	
-	
+
     if( $d['1']!=''){
 		$array3d[$d['1']]['id']     = $d['1'];
 		$array3d[$d['1']]['Nombre'] = $n['1'];
@@ -167,7 +166,6 @@ foreach($arrLicitacion as $key) {
 		$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']]['Nombre'] = $n['5'];
 	}
 
-	
 }
 
 
@@ -192,10 +190,10 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 		}else{
 			$loc = $location;
 		}
-		
+
         if (isset($value['Nombre'])){
 			echo '<li><div class="blum">';
-			echo '<div class="pull-left">'.$value['Nombre'].'</div>';		
+			echo '<div class="pull-left">'.$value['Nombre'].'</div>';
 			echo '<div class="clearfix"></div>';
 			echo '</div>';
 		}
@@ -236,7 +234,7 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					<table id="dataTable" class="table table-bordered table-condensed dataTable">
-										  
+
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
 							<tr class="odd">
 								<td>Nombre</td>
@@ -409,8 +407,7 @@ $arrArea = db_select_array (false, $SIS_query, 'ubicacion_listado', $SIS_join, $
 	</div>
 </div>
 <div class="clearfix"></div>
-                   
-                                 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>

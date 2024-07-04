@@ -132,7 +132,7 @@ $TotalGeneral = 0;
 					<tr role="row">
 						<th>Empresa</th>
 						<th>Rut</th>
-						<?php 
+						<?php
 						$nFormPago = 0;
 						foreach ($arrDocumentos as $ins) {
 							echo '<th>'.$ins['Nombre'].'</th>';

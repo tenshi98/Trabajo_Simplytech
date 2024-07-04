@@ -158,7 +158,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idCategoria',$_GET['id'], 2);
-			
+
 				?>
 
 				<div class="form-group">
@@ -279,9 +279,9 @@ array_push( $arrProductos,$row );
 								</div>
 							</td>
 						</tr>
-					 <?php } 
+					 <?php }
 					} ?>
-								   
+
 				</tbody>
 			</table>
 		</div>

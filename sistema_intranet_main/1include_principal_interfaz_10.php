@@ -21,7 +21,6 @@ $_SESSION['menu'] = 2;
 
 </style>
 
-
 <div class="box noborderbox">
 	<header class="header">
 		<ul class="nav nav-tabs">

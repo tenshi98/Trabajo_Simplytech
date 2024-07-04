@@ -662,7 +662,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_otros
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowdata['vUnitario']), 2);
 
-				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
+				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn);
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 
 				/**************************************/
@@ -733,7 +733,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_otros
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 
-				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
+				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn);
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);	
 				
 				/**************************************/
@@ -813,7 +813,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_servi
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowdata['vUnitario']), 2);
 
-				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
+				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn);
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 
 				/**************************************/
@@ -884,7 +884,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_servi
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 
-				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
+				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn);
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 
 				/**************************************/
@@ -963,7 +963,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_arrie
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowdata['vUnitario']), 2);
 
-				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
+				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn);
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 
 				/**************************************/
@@ -1034,7 +1034,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_arrie
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 
-				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
+				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn);
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);	
 				
 				/**************************************/
@@ -1127,7 +1127,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowdata['vUnitario']), 2);
 
-				echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
+				echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn);
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 
 				/**************************************/
@@ -1184,7 +1184,7 @@ $zx2 = "idProducto=0";
 foreach ($arrPermisos as $prod) {
 	$zx2 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }
-	 
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -1213,7 +1213,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 
-				echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
+				echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn);
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 
 				/**************************************/
@@ -1306,7 +1306,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowdata['vUnitario']), 2);
 
-				echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
+				echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn);
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 
 				/**************************************/
@@ -1362,7 +1362,7 @@ $arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos', $S
 $zx1 = "idProducto=0";
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
-}	 
+}
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -1391,7 +1391,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 
-				echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
+				echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn);
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 				
 				
@@ -1448,7 +1448,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				if(isset($Creacion_fecha)){   $x2  = $Creacion_fecha; }else{$x2  = $rowdata['Creacion_fecha'];}
 				if(isset($Observaciones)){    $x3  = $Observaciones;  }else{$x3  = $rowdata['Observaciones'];}
 
-				//se dibujan los inputs	
+				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
 				$Form_Inputs->form_date('Fecha de Orden de Compra','Creacion_fecha', $x2, 2);

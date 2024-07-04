@@ -186,7 +186,7 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 
 					$gr_tittle = 'Temperaturas';
 					$gr_unimed = '(°C)';
-					echo GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
+					echo GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0);
 				?>			
 			</div>
 		</div>

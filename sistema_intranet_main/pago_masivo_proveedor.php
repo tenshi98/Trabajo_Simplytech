@@ -255,7 +255,7 @@ $Form_Inputs = new Inputs();
 							</tr>
 						</thead>
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
-						<?php 
+						<?php
 						$Total = 0;
 						$MontoCancelado = 0;
 						$NCCancelado = 0;
@@ -315,7 +315,7 @@ $Form_Inputs = new Inputs();
 										<td align="right"><?php echo valores($tipo['ValorTotal']-($tipo['MontoPagado']+$tipo['MontoNC']), 0);$TotalDeuda = $TotalDeuda + $tipo['ValorTotal']-($tipo['MontoPagado']+$tipo['MontoNC']); ?></td>
 										<td align="right"></td>
 										<td align="right">
-											<?php 
+											<?php
 											$total = $tipo['ValorTotal']-($tipo['MontoPagado']+$tipo['MontoNC']);
 											if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=''){
 												echo valores($tipo['ValorPagado'], 0);
@@ -393,7 +393,7 @@ $Form_Inputs = new Inputs();
 										<td align="right"><?php echo valores($tipo['ValorTotal']-($tipo['MontoPagado']+$tipo['MontoNC']), 0);$TotalDeuda = $TotalDeuda + $tipo['ValorTotal']-($tipo['MontoPagado']+$tipo['MontoNC']); ?></td>
 										<td align="right"></td>
 										<td align="right">
-											<?php 
+											<?php
 											$total = $tipo['ValorTotal']-($tipo['MontoPagado']+$tipo['MontoNC']);
 											if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=''){
 												echo valores($tipo['ValorPagado'], 0);
@@ -471,7 +471,7 @@ $Form_Inputs = new Inputs();
 										<td align="right"><?php echo valores($tipo['ValorTotal']-($tipo['MontoPagado']+$tipo['MontoNC']), 0);$TotalDeuda = $TotalDeuda + $tipo['ValorTotal']-($tipo['MontoPagado']+$tipo['MontoNC']); ?></td>
 										<td align="right"></td>
 										<td align="right">
-											<?php 
+											<?php
 											$total = $tipo['ValorTotal']-($tipo['MontoPagado']+$tipo['MontoNC']);
 											if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=''){
 												echo valores($tipo['ValorPagado'], 0);
@@ -549,7 +549,7 @@ $Form_Inputs = new Inputs();
 										<td align="right"><?php echo valores($tipo['ValorTotal']-($tipo['MontoPagado']+$tipo['MontoNC']), 0);$TotalDeuda = $TotalDeuda + $tipo['ValorTotal']-($tipo['MontoPagado']+$tipo['MontoNC']); ?></td>
 										<td align="right"></td>
 										<td align="right">
-											<?php 
+											<?php
 											$total = $tipo['ValorTotal']-($tipo['MontoPagado']+$tipo['MontoNC']);
 											if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=''){
 												echo valores($tipo['ValorPagado'], 0);
@@ -833,7 +833,7 @@ $Form_Inputs = new Inputs();
 						
 						
 						$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-						
+
 						?>
 
 						<div class="form-group">
@@ -1314,7 +1314,7 @@ array_push( $arrTipo4,$row );
 							</tr>
 						</thead>
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
-						<?php 
+						<?php
 						$Total = 0;
 						$MontoCancelado = 0;
 						$NCCancelado = 0;
@@ -1688,8 +1688,8 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</div>
 	</div>
 </div>
-<?php } ?>
 
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

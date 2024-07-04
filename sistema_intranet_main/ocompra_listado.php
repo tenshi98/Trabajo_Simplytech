@@ -543,7 +543,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($_SESSION['ocompra_otros'][$_GET['editOtros']]['vUnitario']), 2);
 
-				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
+				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn);
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 
 				$Form_Inputs->form_input_hidden('idFrecuencia', 2, 2);
@@ -603,7 +603,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 
-				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
+				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn);
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 
 				$Form_Inputs->form_input_hidden('idFrecuencia', 2, 2);
@@ -928,7 +928,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($_SESSION['ocompra_insumos'][$_GET['editIns']]['vUnitario']), 2);
 
-				echo prod_print_value('insumos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
+				echo prod_print_value('insumos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn);
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 
 				?>
@@ -1015,7 +1015,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 
-				echo prod_print_value('insumos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
+				echo prod_print_value('insumos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn);
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 
 				?>
@@ -1081,7 +1081,7 @@ array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
-}	 
+}
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -1117,7 +1117,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($_SESSION['ocompra_productos'][$_GET['editProd']]['vUnitario']), 2);
 
-				echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
+				echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn);
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 
 				?>
@@ -1173,7 +1173,7 @@ array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
-}	 
+}
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -1202,13 +1202,11 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 
-				echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
+				echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn);
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 
 				?>
-					
-			
-			  
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_prod">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -1241,7 +1239,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				if(isset($Creacion_fecha)){   $x2 = $Creacion_fecha; }else{$x2 = $_SESSION['ocompra_basicos']['Creacion_fecha'];}
 				if(isset($Observaciones)){    $x3 = $Observaciones;  }else{$x3 = $_SESSION['ocompra_basicos']['Observaciones'];}
 
-				//se dibujan los inputs	
+				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
 				$Form_Inputs->form_date('Fecha de Orden de Compra','Creacion_fecha', $x2, 2);
@@ -1287,14 +1285,12 @@ $total = 0;
 
 	</div>
 	<div class="clearfix"></div>
-</div> 
-
+</div>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 	<div id="page-wrap">
 		<div id="header"> Orden de Compra</div>
-	   
 
 		<div id="customer">
 
@@ -1496,8 +1492,7 @@ $total = 0;
 								</div>
 							</td>
 						</tr>
-					 <?php 
-						
+					 <?php
 					}
 				} ?>
 
@@ -1530,8 +1525,7 @@ $total = 0;
 								</div>
 							</td>
 						</tr>
-					 <?php 
-						
+					 <?php
 					}
 				} ?>
 
@@ -1562,8 +1556,7 @@ $total = 0;
 								</div>
 							</td>
 						</tr>
-					 <?php 
-						
+					 <?php
 					}
 				} ?>
 
@@ -1713,7 +1706,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				if(isset($Creacion_fecha)){   $x2  = $Creacion_fecha; }else{$x2  = '';}
 				if(isset($Observaciones)){    $x3  = $Observaciones;  }else{$x3  = '';}
 
-				//se dibujan los inputs	
+				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
 				$Form_Inputs->form_date('Fecha de Orden de Compra','Creacion_fecha', $x2, 2);
@@ -1837,7 +1830,7 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'ocompra_listado', $SIS_jo
 				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = '';}
 				if(isset($Creacion_fecha)){   $x2  = $Creacion_fecha; }else{$x2  = '';}
 
-				//se dibujan los inputs	
+				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
 				$Form_Inputs->form_date('Fecha de Orden de Compra','Creacion_fecha', $x2, 1);

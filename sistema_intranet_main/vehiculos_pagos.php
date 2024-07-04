@@ -356,7 +356,7 @@ array_push( $arrFacturaciones,$row );
 					<div class="pull-left">Total</div>
 					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['MontoTotal'], 0); ?></small>
 					<br/>
-		
+
 				</li>
 				<?php if($rowFacturacion['montoPago']!=0){ ?>
 					<li class="list-group-item">
@@ -396,8 +396,8 @@ array_push( $arrFacturaciones,$row );
 		<a href="<?php echo $location; ?>"  class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 		<div class="clearfix"></div>
 	</div>
-<?php } ?>
 
+<?php } ?>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 //filtro sistema
@@ -422,7 +422,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Apoderado','idApoderado', $x1, 2, 'idApoderado', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'apoderados_listado', $z, '', $dbConn);
 
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 2); 
+				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 2);
 				?>
 
 				<div class="form-group">
@@ -439,8 +439,8 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 
 	
 	
-<?php } ?>
 
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

@@ -197,9 +197,7 @@
 				<td align="right"><?php echo '(+) '.Valores($rowDatos['DetalleSaldoAnterior'], 0); ?></td>
 			</tr>
 			<?php } ?>
-			
-			
-			
+
 		</tbody>
 		</table>
 		<div class="row text-right" style="margin-top:20px;">
@@ -217,7 +215,7 @@
 			<?php
 			if($rowDatos['DetalleTotalVenta']>0){
 				echo Valores($rowDatos['DetalleTotalVenta'], 0).'<br>';
-				echo Valores($Exento, 0).'<br>'; 
+				echo Valores($Exento, 0).'<br>';
 				echo Valores($rowDatos['DetalleTotalAPagar'], 0).'<br>';
 			}else{
 				echo Valores(0, 0).'<br>';
@@ -298,7 +296,7 @@
 					<br/>
 						<div class="pull-left">Adicionales por prorrateo</div>
 						<small class="pull-right">
-						<?php 
+						<?php
 						if($rowDatos['DetConsProrateo']>0){
 							$bla = $rowDatos['DetConsProrateo'];
 						}else{

@@ -251,7 +251,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 								</div>
 								<div class="buttons">
 									<a href="<?php echo 'view_tema.php?idTheme='.$temas['idTheme']; ?>" class="iframe"><i class="fa fa-eye" aria-hidden="true"></i> &nbsp;Ver</a>
-									<a href="<?php echo $new_location.'&idTheme='.$temas['idTheme'].'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].'&edit_theme=true'; ?>"><i class="fa fa-check" aria-hidden="true"></i> &nbsp;Seleccionar</a> 
+									<a href="<?php echo $new_location.'&idTheme='.$temas['idTheme'].'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].'&edit_theme=true'; ?>"><i class="fa fa-check" aria-hidden="true"></i> &nbsp;Seleccionar</a>
 								</div>
 							</div>
 						</div>

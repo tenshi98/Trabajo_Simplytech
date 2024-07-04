@@ -134,16 +134,15 @@ foreach($arrLicitacion as $key) {
 
 	//Creo Variables para la rejilla
 	for ($i = 1; $i <= $nmax; $i++) {
-		$d[$i]  = $key['LVL_'.$i.'_id'];   
-		$n[$i]  = $key['LVL_'.$i.'_Nombre'];   
+		$d[$i]  = $key['LVL_'.$i.'_id'];
+		$n[$i]  = $key['LVL_'.$i.'_Nombre'];
 		$c[$i]  = $key['LVL_'.$i.'_Codigo'];
 		$x[$i]  = $key['LVL_'.$i.'_Cantidad'];
 		$s[$i]  = $key['LVL_'.$i.'_Valor'];
 		$v[$i]  = $key['LVL_'.$i.'_ValorTotal'];
 		$u[$i]  = $key['LVL_'.$i.'_idFrecuencia'];
 	}
-	
-	
+
     if( $d['1']!=''){
 		$array3d[$d['1']]['lvl']          = 1;
 		$array3d[$d['1']]['id']           = $d['1'];
@@ -576,7 +575,7 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					<table id="dataTable" class="table table-bordered table-condensed dataTable">
-										  
+
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
 		
 							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){ ?>

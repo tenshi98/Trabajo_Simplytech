@@ -586,7 +586,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 						if(isset($TotalHoras[$prod['idPorcentaje']]['Total'])&&$TotalHoras[$prod['idPorcentaje']]['Total']!=''){
 							echo '
 							<tr class="invoice-total" bgcolor="#f1f1f1">
-								<td colspan="10" align="right">Horas extras al '.$prod['Nombre'].'%</td> 
+								<td colspan="10" align="right">Horas extras al '.$prod['Nombre'].'%</td>
 								<td align="right">'.$TotalHoras[$prod['idPorcentaje']]['Total'].' Horas</td>
 							</tr>
 							';

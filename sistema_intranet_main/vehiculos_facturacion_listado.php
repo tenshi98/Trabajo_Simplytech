@@ -148,14 +148,12 @@ if(!empty($_GET['moddatos'])){ ?>
 
 	</div>
 	<div class="clearfix"></div>
-</div> 
-
+</div>
 
 <div class="col-xs-12 col-sm-11 col-md-11 col-lg-11 fcenter table-responsive">
 
 	<div id="page-wrap">
 		<div id="header"> Ingreso Datos </div>
-	   
 
 		<div id="customer">
 
@@ -234,7 +232,7 @@ if(!empty($_GET['moddatos'])){ ?>
 				<tr>
 					<td colspan="4" class="blank">
 						<p>
-							<?php 
+							<?php
 							if(isset($_SESSION['vehiculos_basicos']['Observaciones'])&&$_SESSION['vehiculos_basicos']['Observaciones']!=''){
 								echo $_SESSION['vehiculos_basicos']['Observaciones'];
 							}else{

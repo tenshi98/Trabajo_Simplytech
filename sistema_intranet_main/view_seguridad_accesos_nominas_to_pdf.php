@@ -158,7 +158,7 @@ $html .= '
 								<td style="vertical-align: top;">'.$otro['HoraEntrada'].' - '.$otro['HoraSalida'].'</td>
 								<td style="vertical-align: top;">'.$otro['Estado'].'</td>
 							</tr>';
-						} 
+						}
 					}
 				$html .= '
 					</tbody>

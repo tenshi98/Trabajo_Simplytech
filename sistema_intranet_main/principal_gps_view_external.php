@@ -118,7 +118,7 @@ require_once 'core/Web.Header.Views.php';
 										<tr class="odd">
 											<td>'.$data['Sistema'].'</td>
 											<td>'.$data['Nombre'].'</td>
-											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>	
+											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>
 										</tr>
 										';
 									}
@@ -146,7 +146,7 @@ require_once 'core/Web.Header.Views.php';
 										<tr class="odd">
 											<td>'.$data['Sistema'].'</td>
 											<td>'.$data['Nombre'].'</td>
-											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>	
+											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>
 										</tr>
 										';
 									}
@@ -195,7 +195,7 @@ require_once 'core/Web.Header.Views.php';
 										<tr class="odd">
 											<td>'.$data['Sistema'].'</td>
 											<td>'.$data['Nombre'].'</td>
-											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>	
+											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>
 										</tr>';
 									}
 									
@@ -209,7 +209,7 @@ require_once 'core/Web.Header.Views.php';
 										<tr class="odd">
 											<td>'.$data['Sistema'].'</td>
 											<td>'.$data['Nombre'].'</td>
-											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>	
+											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>
 										</tr>
 										';
 									}

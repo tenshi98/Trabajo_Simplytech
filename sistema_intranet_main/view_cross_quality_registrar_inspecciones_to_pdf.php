@@ -207,7 +207,7 @@ $html .= '
 								<td style="vertical-align: top;">'.$trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat'].'</td>
 								<td style="vertical-align: top;">'.$trab['Cargo'].'</td>
 							</tr>';
-						} 
+						}
 					}
 					if ($arrMaquinas!=false && !empty($arrMaquinas) && $arrMaquinas!='') {
 						$html .= '<tr class="active"><td colspan="6"><strong>Maquinas a Utilizar</strong></td></tr>';

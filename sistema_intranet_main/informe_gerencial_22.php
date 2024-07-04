@@ -1261,7 +1261,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_total, 0); ?></span></td>
 								<td align="right"><?php if(isset($ing_total)&&$ing_total!=0){echo porcentaje($margen_total/$ing_total);}else{echo '0 %';} ?></td>
 							</tr>
-						<?php } 
+						<?php }
 					}
 					/*****************************************************/
 					if($arrTemp[3]!=false && !empty($arrTemp[3]) && $arrTemp[3]!=''){

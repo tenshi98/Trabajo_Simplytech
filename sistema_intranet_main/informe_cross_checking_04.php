@@ -175,7 +175,7 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen de Solicitudes de Aplicacion</h5>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#data_main" data-toggle="tab"><i class="fa fa-bars" aria-hidden="true"></i> Resumen Solicitudes</a></li>
-				<?php 
+				<?php
 				foreach ($arrOTS as $categoria=>$subcategorias) { ?>
 					<li class=""><a href="#data_tab_<?php echo $categoria; ?>" data-toggle="tab"><i class="fa fa-asterisk" aria-hidden="true"></i> <?php echo $subcategorias[0]['TractorNombre']; ?></a></li>
 				<?php } ?>
@@ -322,7 +322,7 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 
 										<td><?php echo Cantidades($ot['CuartelCantPlantas'], 0); ?></td>
 										<td>
-											<?php 
+											<?php
 											//se verifica plantas faltantes
 											if(isset($ot['GeoDistance'])&&$ot['GeoDistance']!=0&&isset($ot['CuartelDistanciaPlant'])&&$ot['CuartelDistanciaPlant']!=''&&$ot['CuartelDistanciaPlant']!=0){
 												//$aplicadas    = ($ot['GeoDistance']*1000)/$ot['CuartelDistanciaPlant'];
@@ -349,8 +349,7 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 								<?php } ?>
 							</tbody>
 						</table>
-						
-						
+
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 
 							<thead>

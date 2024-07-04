@@ -114,8 +114,8 @@ alert_post_data(2,1,2,0, $Alert_Text);
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
- 
+</div>
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['id'])){
 //valido los permisos
@@ -322,8 +322,7 @@ array_push( $arrCargas,$row );
 							}
 							?>
 						</p>
-						
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
 						<p class="text-muted">
 							<strong>Persona de Contacto : </strong><?php echo $rowdata['ContactoPersona']; ?><br/>

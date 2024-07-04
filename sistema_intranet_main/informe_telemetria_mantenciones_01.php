@@ -196,7 +196,7 @@ foreach ($arrOpciones as $mant) {
 					<tr class="odd">
 						<td><?php echo $mant['Servicio']; ?></td>
 						<td>
-							<?php 
+							<?php
 							$ntot = 0;
 							if(isset($mant['idOpciones_1'])&&$mant['idOpciones_1']!=0){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[1]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[1]['Nombre'];$ntot++;}}
 							if(isset($mant['idOpciones_2'])&&$mant['idOpciones_2']!=0){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[2]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[2]['Nombre'];$ntot++;}}

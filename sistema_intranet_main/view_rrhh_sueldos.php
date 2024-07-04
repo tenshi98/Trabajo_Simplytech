@@ -278,7 +278,7 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
 									</tr>
     							<?php } ?>
     							<?php if(isset($rowdata['TotalHorasExtras'])&&$rowdata['TotalHorasExtras']!=''){ ?>
-									<tr>	
+									<tr>
 										<td colspan="3">Horas Extras</td>
 										<td align="right"><?php echo valores($rowdata['TotalHorasExtras'], 0); ?></td>
 									</tr>
@@ -301,7 +301,7 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
 									</tr>
     							<?php } ?>
 								<?php if(isset($rowdata['TotalBonoTurno'])&&$rowdata['TotalBonoTurno']!=''){ ?>
-									<tr>	
+									<tr>
 										<td colspan="3">Bonos por Turnos Imponibles</td>
 										<td align="right"><?php echo valores($rowdata['TotalBonoTurno'], 0); ?></td>
 									</tr>
@@ -336,7 +336,7 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
 									}
 								} ?>
 								<?php if(isset($rowdata['TotalBonoTemporalAfecto'])&&$rowdata['TotalBonoTemporalAfecto']!=''){ ?>
-									<tr>	
+									<tr>
 										<td colspan="3">Bonos Temporales Imponibles</td>
 										<td align="right"><?php echo valores($rowdata['TotalBonoTemporalAfecto'], 0); ?></td>
 									</tr>
@@ -356,7 +356,7 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
 								} ?>
 
 								<?php if(isset($rowdata['TotalBonoFijoNoAfecto'])&&$rowdata['TotalBonoFijoNoAfecto']!=''){ ?>
-									<tr>	
+									<tr>
 										<td colspan="3">Bonos Fijos No Imponibles</td>
 										<td align="right"><?php echo valores($rowdata['TotalBonoFijoNoAfecto'], 0); ?></td>
 									</tr>
@@ -375,7 +375,7 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
 									}
 								} ?>
 								<?php if(isset($rowdata['TotalBonoTemporalNoAfecto'])&&$rowdata['TotalBonoTemporalNoAfecto']!=''){ ?>
-									<tr>	
+									<tr>
 										<td colspan="3">Bonos Temporales No Imponibles</td>
 										<td align="right"><?php echo valores($rowdata['TotalBonoTemporalNoAfecto'], 0); ?></td>
 									</tr>

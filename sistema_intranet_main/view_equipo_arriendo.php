@@ -86,8 +86,7 @@ $rowdata = db_select_data (false, $SIS_query, 'equipos_arriendo_listado', $SIS_j
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripción</h2>
 						<p class="text-muted"><?php echo $rowdata['Descripcion']; ?></p>
-						
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<p class="text-muted">
 							<?php

@@ -997,7 +997,7 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotGastos[$i]    = $arrTotGastos[$i] + $arrTemp_5[1][$i];
 							$arrTotGastos[13]    = $arrTotGastos[13] + $arrTemp_5[1][$i];
 							$arrTotColGastos[$i] = $arrTotColGastos[$i]  + $arrTemp_5[1][$i];
-						} 
+						}
 					}
 					//Recorro los que tienen IVA
 					if($arrTotGastos[13]!=0){
@@ -1019,7 +1019,7 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotGastos[$i]    = $arrTotGastos[$i] + $arrTemp_6[$i];
 							$arrTotGastos[13]    = $arrTotGastos[13] + $arrTemp_6[$i];
 							$arrTotColGastos[$i] = $arrTotColGastos[$i]  + $arrTemp_6[$i];
-						} 
+						}
 					}
 					//Recorro los que tienen IVA
 					if($arrTotGastos[13]!=0){
@@ -1041,7 +1041,7 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotGastos[$i]    = $arrTotGastos[$i] + $arrTemp_7[$i];
 							$arrTotGastos[13]    = $arrTotGastos[13] + $arrTemp_7[$i];
 							$arrTotColGastos[$i] = $arrTotColGastos[$i]  + $arrTemp_7[$i];
-						} 
+						}
 					}
 					//Recorro los que tienen IVA
 					if($arrTotGastos[13]!=0){
@@ -1063,7 +1063,7 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotGastos[$i]    = $arrTotGastos[$i] + $arrTemp_8[$i];
 							$arrTotGastos[13]    = $arrTotGastos[13] + $arrTemp_8[$i];
 							$arrTotColGastos[$i] = $arrTotColGastos[$i]  + $arrTemp_8[$i];
-						} 
+						}
 					}
 					//Recorro los que tienen IVA
 					if($arrTotGastos[13]!=0){
@@ -1085,7 +1085,7 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotGastos[$i]    = $arrTotGastos[$i] + $arrTemp_9[$i];
 							$arrTotGastos[13]    = $arrTotGastos[13] + $arrTemp_9[$i];
 							$arrTotColGastos[$i] = $arrTotColGastos[$i]  + $arrTemp_9[$i];
-						} 
+						}
 					}
 					//Recorro los que tienen IVA
 					if($arrTotGastos[13]!=0){

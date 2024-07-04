@@ -238,7 +238,7 @@ switch ($_GET['type']) {
 
 				<?php
 				
-				//se dibujan los inputs	
+				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 
 				//Se verifican si existen los datos
@@ -295,7 +295,7 @@ switch ($_GET['type']) {
 				}
 
 				$Form_Inputs->form_input_hidden('type', $_GET['type'], 2);
-				$Form_Inputs->form_input_hidden('idExistencia', $_GET['id'], 2); 
+				$Form_Inputs->form_input_hidden('idExistencia', $_GET['id'], 2);
 				?>
 
 				<div class="form-group">

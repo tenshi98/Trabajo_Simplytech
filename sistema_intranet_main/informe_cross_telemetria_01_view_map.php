@@ -203,8 +203,8 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelaciona
 		<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 		<div class="clearfix"></div>
 	</div>
-<?php } ?>
 
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

@@ -553,7 +553,6 @@ $arrUsers = db_select_array (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_
 </div>
 
 <?php } ?>
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

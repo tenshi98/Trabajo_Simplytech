@@ -227,8 +227,7 @@ foreach ($arrPromedioProd as $productos) {
 								<strong>Tipo Planilla de Calidad : </strong><?php echo $rowdata['MatrizCalidad']; ?><br/>
 							</p>
 						<?php } ?>
-						
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripción</h2>
 						<p class="text-muted"><?php echo $rowdata['Descripcion']; ?></p>
 

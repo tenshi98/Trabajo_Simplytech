@@ -294,7 +294,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
                 </li>
 			</ul>
 		</header>
-		
+
         <div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>

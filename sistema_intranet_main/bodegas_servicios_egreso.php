@@ -522,8 +522,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idTipo', 2, 2);
 				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
-				
-						
+
 				?>
 
 				<script>
@@ -594,8 +593,7 @@ $Form_Inputs = new Inputs();
 
 	</div>
 	<div class="clearfix"></div>
-</div> 
-
+</div>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 

@@ -139,7 +139,7 @@ $arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_insumos', $SIS
 $zx2 = "idProducto=0";
 foreach ($arrPermisos as $prod) {
 	$zx2 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
-}	 
+}
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -187,7 +187,7 @@ $arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos', $S
 $zx1 = "idProducto=0";
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
-}	 
+}
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -282,7 +282,7 @@ $max = 1000000 ;
 						<td width="90"><?php echo Cantidades_decimales_justos($receta['Cantidad']).' '.$receta['UnidadMedida']; ?></td>
 						<?php $total = $receta['ingreso']-$receta['egreso']; ?>
 						<td width="90"><?php echo $total.' '.$receta['UnidadMedida'] ?></td>
-						<?php 
+						<?php
 						$maximo = floor($total/$receta['Cantidad']);
 						if($max>$maximo){$max=$maximo;} 
 						
@@ -351,7 +351,7 @@ $arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos', $S
 $zx1 = "idProducto=0";
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idTipoProducto=2 AND idEstado=1 AND idProducto=".$prod['idProducto'].")";
-}	 
+}
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -503,8 +503,7 @@ $Form_Inputs = new Inputs();
 
 	</div>
 	<div class="clearfix"></div>
-</div> 
-
+</div>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 

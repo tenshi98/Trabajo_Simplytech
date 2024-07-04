@@ -87,7 +87,7 @@ if(!empty($_GET['new_mant'])){ ?>
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf093; Subir Archivo" name="submit_edit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-							  
+
 			</form>
 			<?php widget_validator(); ?>
 		</div>
@@ -327,7 +327,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 									<td>
 										<div class="btn-group" style="width: 70px;" >
 											<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($tipo['doc_mantencion'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
-											<?php 
+											<?php
 											$ubicacion = $new_location.'&del_doc_mantencion='.simpleEncode($tipo['idMantenciones'], fecha_actual());
 											$dialogo   = '¿Realmente deseas eliminar el documento '.$tipo['doc_mantencion'].'?'; ?>
 											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>

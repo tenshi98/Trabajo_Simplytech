@@ -416,8 +416,7 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 								</table>
 							</div>
 						<?php } ?>
-						
-						
+
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<h2 class="text-primary">Datos Cuerpo</h2>
 							<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -597,7 +596,7 @@ $arrSitio = db_select_array (false, $SIS_query, 'sitios_listado', $SIS_join, $SI
 	</div>
 </div>
 <div class="clearfix"></div>
-                               
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>

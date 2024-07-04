@@ -164,7 +164,7 @@ $arrDetalle = db_select_array (false, $SIS_query, 'vehiculos_facturacion_apodera
 								<?php echo $det['EstadoPago'];
 								//si esta pagado
 								if(isset($det['idEstadoPago'])&&$det['idEstadoPago']==2){
-									echo ' (Documento Pago '.$det['DocumentoPago'].' N°'.$det['DocumentoNumero'].', fecha '.fecha_estandar($det['DocumentoFecha']).')'; 
+									echo ' (Documento Pago '.$det['DocumentoPago'].' N°'.$det['DocumentoNumero'].', fecha '.fecha_estandar($det['DocumentoFecha']).')';
 								} ?>
 							</td>
 							<td align="right"><?php echo Valores($det['Monto'], 0);$t_total=$t_total+$det['Monto']; ?></td>

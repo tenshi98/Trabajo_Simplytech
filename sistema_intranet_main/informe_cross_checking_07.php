@@ -223,9 +223,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 						<th>Lavado de maquinaria</th>
 						<th>Caldo sobrante</th>
 						<th>Uso de EPP</th>
-						
-						
-						
+
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">

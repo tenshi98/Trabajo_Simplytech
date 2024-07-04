@@ -38,7 +38,7 @@
 			if($count_tab==5){echo '<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu">';}
 			//Cross Shipping
 			$temp = $prm_x[32] + $prm_x[33] + $prm_x[34] + $prm_x[35] + $prm_x[36] + $prm_x[37];					
-			if($temp!=0) { 
+			if($temp!=0) {
 				echo '<li><a href="#Menu_tab_6" data-toggle="tab"><i class="fa fa-truck" aria-hidden="true"></i> Cross Shipping</a></li>';
 				$count_tab++;
 			}
@@ -47,7 +47,7 @@
 			if($count_tab==5){echo '<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu">';}
 			//Cross Checking
 			$temp = $prm_x[38] + $prm_x[39] + $prm_x[40] + $prm_x[41];						
-			if($temp!=0) { 
+			if($temp!=0) {
 				echo '<li><a href="#Menu_tab_7" data-toggle="tab"><i class="fa fa-map-marker" aria-hidden="true"></i> Cross Checking</a></li>';
 				$count_tab++;
 			}
@@ -56,7 +56,7 @@
 			if($count_tab==5){echo '<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu">';}
 			//Facturacion Furgones
 			$temp = $prm_x[42] + $prm_x[43];						
-			if($temp!=0) { 
+			if($temp!=0) {
 				echo '<li><a href="#Menu_tab_8" data-toggle="tab"><i class="fa fa-usd" aria-hidden="true"></i> Facturacion Furgones</a></li>';
 				$count_tab++;
 			}
@@ -65,7 +65,7 @@
 			if($count_tab==5){echo '<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu">';}
 			//Facturacion Furgones
 			$temp = $prm_x[50];						
-			if($temp!=0) { 
+			if($temp!=0) {
 				echo '<li><a href="#Menu_tab_9" data-toggle="tab"><i class="fa fa-cogs" aria-hidden="true"></i> Reserva de Oficinas</a></li>';
 				$count_tab++;
 			}
@@ -79,7 +79,7 @@
 			/**************************************************/
 			if($count_tab==5){echo '<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu">';}
 			//Log de cambios					
-			if($idTipoUsuario==1 OR $idTipoUsuario==2) { 
+			if($idTipoUsuario==1 OR $idTipoUsuario==2) {
 				echo '<li><a href="#Menu_tab_99" data-toggle="tab"><i class="fa fa-refresh" aria-hidden="true"></i> Actualizaciones</a></li>';
 				$count_tab++;
 			}

@@ -49,7 +49,6 @@ $arrRutas = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacio
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">google.charts.load('current', {'packages':['line','corechart']});</script>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>

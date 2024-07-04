@@ -348,7 +348,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 				<tr>
 					<td colspan="7" class="blank">
 						<p>
-							<?php 
+							<?php
 							if(isset($rowdata['Observaciones'])&&$rowdata['Observaciones']!=''){
 								echo $rowdata['Observaciones'];
 							}else{
@@ -638,7 +638,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				<tr>
 					<td colspan="5" class="blank">
 						<p>
-							<?php 
+							<?php
 							if(isset($_SESSION['rem_basicos']['Observaciones'])&&$_SESSION['rem_basicos']['Observaciones']!=''){
 								echo $_SESSION['rem_basicos']['Observaciones'];
 							}else{

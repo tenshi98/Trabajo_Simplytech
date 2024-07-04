@@ -1121,8 +1121,8 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 			alert_post_data(4,2,2,0, $Alert_Text);
 		?>
 	</div>
-<?php } ?>
 
+<?php } ?>
 <?php
 //si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){

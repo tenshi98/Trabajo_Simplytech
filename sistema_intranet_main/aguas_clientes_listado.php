@@ -492,7 +492,6 @@ $arrUsers = db_select_array (false, $SIS_query, 'aguas_clientes_listado', $SIS_j
 </div>
 
 <?php } ?>
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

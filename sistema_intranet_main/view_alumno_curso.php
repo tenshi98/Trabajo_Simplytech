@@ -106,12 +106,11 @@ $arrArchivos = db_select_array (false, $SIS_query, 'alumnos_cursos_documentacion
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>
 								<?php foreach ($arrElearnng as $permiso){ ?>
-									<tr><td><?php echo $permiso['NombreElearning']; ?></td></tr> 
+									<tr><td><?php echo $permiso['NombreElearning']; ?></td></tr>
 								<?php } ?>
 							</tbody>
 						</table>
-						
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos Relacionados</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>

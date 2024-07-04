@@ -288,7 +288,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 									</div>
 								</td>
 							</tr>
-						<?php } 
+						<?php }
 					} ?>
 				</tbody>
 			</table>

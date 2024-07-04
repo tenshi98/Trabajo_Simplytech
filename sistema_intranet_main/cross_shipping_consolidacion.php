@@ -379,8 +379,6 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 				$Form_Inputs->form_tittle(3, 'Otros');
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x29, 1);
-				
-				
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
@@ -420,8 +418,8 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 	</div>
 	<div class="clearfix"></div>
-</div> 
- 
+</div>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 	<div id="page-wrap">
@@ -510,9 +508,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						<td class="meta-head">Patente Carro</td>
 						<td><?php echo $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['PatenteCarro']; ?></td>
 					</tr>
-						
-						
-						
+
 					<tr><td class="meta-head" colspan="4"><strong>Cuerpo Parametros Evaluados</strong></td></tr>
 					<tr>
 						<td class="meta-head">Condición CTN</td>
@@ -723,8 +719,6 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 										 $dbConn, 'form1');
 
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x5, 1);
-				
-				
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
@@ -766,7 +760,6 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'ctn_asc':        $order_by = 'cross_shipping_consolidacion.CTNNombreCompañia ASC ';                         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Contenedor Ascendente';break;
 		case 'ctn_desc':       $order_by = 'cross_shipping_consolidacion.CTNNombreCompañia DESC ';                        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Contenedor Descendente';break;
 
-				
 		default: $order_by = 'cross_shipping_consolidacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha del informe Descendente';
 	}
 }else{
@@ -856,8 +849,8 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
- 
+<div class="clearfix"></div>
+
 <?php
 //variable 
 $pasa = 0;

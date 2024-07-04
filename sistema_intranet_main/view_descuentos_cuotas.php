@@ -143,7 +143,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuota
 			if(isset($row_data['Monto'])&&$row_data['Monto']!=''){
 				echo '<strong>Monto Cuotas : </strong>'.valores($row_data['Monto'],0).'<br/>';
 			}
-			if(isset($row_data['N_Cuotas'])&&$row_data['N_Cuotas']!=''&&$row_data['N_Cuotas']!='0'){ 
+			if(isset($row_data['N_Cuotas'])&&$row_data['N_Cuotas']!=''&&$row_data['N_Cuotas']!='0'){
 				echo '<strong>N° Cuotas: </strong>'.$row_data['N_Cuotas'].'<br/>';
 			}
 			?>

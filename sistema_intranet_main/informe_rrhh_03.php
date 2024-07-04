@@ -115,7 +115,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 						</tr>
 					</thead>
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php 
+					<?php
 					filtrar($arrAsistencias, 'idTrabajador');
 					foreach($arrAsistencias as $categoria=>$permisos){ ?>
 						<tr class="odd">

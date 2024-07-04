@@ -151,7 +151,7 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'ocompra_listado', $SIS_jo
 				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = '';}
 				if(isset($Creacion_fecha)){   $x2  = $Creacion_fecha; }else{$x2  = '';}
 
-				//se dibujan los inputs	
+				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
 				$Form_Inputs->form_date('Fecha de Orden de Compra','Creacion_fecha', $x2, 1);

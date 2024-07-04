@@ -329,7 +329,7 @@ array_push( $arrHistorial,$row );
 								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['TempMin']).' °'; ?></td>
 								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['TempMax']).' °'; ?></td>
 							</tr>
-							<?php 
+							<?php
 							if($arrTrac[$cuartel['idCuarteles']]){
 								//Se recorren los tractores
 								foreach ($arrTrac[$cuartel['idCuarteles']] as $tract){ ?>

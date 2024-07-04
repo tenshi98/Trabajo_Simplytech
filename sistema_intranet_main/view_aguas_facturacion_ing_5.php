@@ -241,9 +241,7 @@
 								<td align="right"><?php echo '(+) '.Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleSaldoAnterior'], 0); ?></td>
 							</tr>
 						<?php } ?>
-						
-						
-						
+
 					</tbody>
 				</table>
 				<div class="row text-right" style="margin-top:20px;">
@@ -259,7 +257,7 @@
 					</div>
 					<div class="col-xs-2">
 						<strong>
-							<?php 
+							<?php
 							if($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleTotalVenta']>0){
 								echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleTotalVenta']/1.19), 0).'<br>';
 								echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleTotalVenta']-($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleTotalVenta']/1.19)), 0).'<br>';
@@ -341,7 +339,7 @@
 								<br/>
 									<div class="pull-left">Adicionales por prorrateo</div>
 									<small class="pull-right">
-										<?php 
+										<?php
 										if($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsProrateo']>0){
 											$bla = $_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsProrateoSigno'].' '.$_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsProrateo'];
 										}elseif($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsProrateo']<0){
@@ -437,7 +435,7 @@
 								<br/>
 									<div class="pull-left">Diferencia medidor general</div>
 									<small class="pull-right">
-										<?php 
+										<?php
 										if($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfDifMedGeneral']>0){
 											$bla = '(+)'.Cantidades($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfDifMedGeneral'], 2);
 										}elseif($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfDifMedGeneral']<0){

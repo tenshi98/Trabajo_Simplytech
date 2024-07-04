@@ -373,8 +373,7 @@ $location .= '&idFacturacion='.$_GET['idFacturacion'];
 $arrTrabajador = array();
 $arrTrabajador = db_select_array (false, 'idFactTrab,TrabajadorNombre,TrabajadorRut,TotalHaberes,TotalDescuentos,TotalAPagar,MontoPagado', 'rrhh_sueldos_facturacion_trabajadores', '', 'idFacturacion ='.$_GET['idFacturacion'].' AND TotalAPagar>MontoPagado', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTrabajador');
 
-?> 
-
+?>
 
 <div class="row inbox">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -414,7 +413,7 @@ $arrTrabajador = db_select_array (false, 'idFactTrab,TrabajadorNombre,Trabajador
 							</tr>
 						</thead>
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
-							<?php 
+							<?php
 							if ($arrTrabajador!=false && !empty($arrTrabajador) && $arrTrabajador!='') {
 								foreach ($arrTrabajador as $tipo){
 									$TotalPagar = $tipo['TotalAPagar'] - $tipo['MontoPagado'];
@@ -632,8 +631,8 @@ $_SESSION['form_require'].=',idFacturacion';
 		</div>
 	</div>
 </div>
-<?php } ?>
 
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

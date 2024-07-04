@@ -534,7 +534,7 @@ array_push( $arrHistorial,$row );
 
 								<td class="item-name"><?php echo porcentaje($LitrosApliXhect/$row_data['Mojamiento']); ?></td>
 								<td class="item-name">
-									<?php 
+									<?php
 										if ($arrTracxCuartel) {
 											foreach ($arrTracxCuartel as $tract) {
 												if($cuartel['idZona']==$tract['idZona']){

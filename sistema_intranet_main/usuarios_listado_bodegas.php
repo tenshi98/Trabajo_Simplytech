@@ -384,7 +384,7 @@ if($arriendos!=0){
 								</div>
 							</td>
 						</tr>
-						<?php } 
+						<?php }
 					}else{
 						echo '<tr class="odd"><td colspan="3">No tiene permisos relacionados a Bodega de Insumos</td></tr>';
 					}

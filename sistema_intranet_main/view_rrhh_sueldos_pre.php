@@ -137,7 +137,7 @@ require_once 'core/Web.Header.Views.php';
 									</tr>
     							<?php } ?>
     							<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalHorasExtras'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalHorasExtras']!=''){ ?>
-									<tr>	
+									<tr>
 										<td colspan="3">Horas Extras</td>
 										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalHorasExtras'], 0); ?></td>
 									</tr>
@@ -163,7 +163,7 @@ require_once 'core/Web.Header.Views.php';
 									</tr>
     							<?php } ?>
 								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTurno'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTurno']!=''){ ?>
-									<tr>	
+									<tr>
 										<td colspan="3">Bonos por Turnos Imponibles</td>
 										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTurno'], 0); ?></td>
 									</tr>
@@ -201,7 +201,7 @@ require_once 'core/Web.Header.Views.php';
 									}
 								} ?>
 								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTemporalAfecto'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTemporalAfecto']!=''){ ?>
-									<tr>	
+									<tr>
 										<td colspan="3">Bonos Temporales Imponibles</td>
 										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTemporalAfecto'], 0); ?></td>
 									</tr>
@@ -221,7 +221,7 @@ require_once 'core/Web.Header.Views.php';
 								} ?>
 
 								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoFijoNoAfecto'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoFijoNoAfecto']!=''){ ?>
-									<tr>	
+									<tr>
 										<td colspan="3">Bonos Fijos No Imponibles</td>
 										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoFijoNoAfecto'], 0); ?></td>
 									</tr>
@@ -240,7 +240,7 @@ require_once 'core/Web.Header.Views.php';
 									}
 								} ?>
 								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTemporalNoAfecto'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTemporalNoAfecto']!=''){ ?>
-									<tr>	
+									<tr>
 										<td colspan="3">Bonos Temporales No Imponibles</td>
 										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTemporalNoAfecto'], 0); ?></td>
 									</tr>

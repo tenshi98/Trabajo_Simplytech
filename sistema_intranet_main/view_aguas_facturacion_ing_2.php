@@ -30,11 +30,11 @@
 						</div>
 						<div class="panel-body">
 							<p>
-								<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteRut'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteRut']!=''){             echo 'R.U.T.: '.$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteRut'].'<br/>';} ?> 
-								<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteGiro'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteGiro']!=''){           echo 'Rubro: '.$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteGiro'].'<br/>';} ?> 
-								<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteDireccion'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteDireccion']!=''){ echo 'Dirección: '.$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteDireccion'].'<br/>';} ?> 
-								<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteNombreComuna'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteNombreComuna']!=''){  echo 'Comuna: '.$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteNombreComuna'].'<br/>';} ?> 
-								<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFono1'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFono1']!=''){         echo 'Telefono Fijo: '.formatPhone($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFono1']).'<br/>';} ?> 
+								<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteRut'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteRut']!=''){             echo 'R.U.T.: '.$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteRut'].'<br/>';} ?>
+								<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteGiro'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteGiro']!=''){           echo 'Rubro: '.$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteGiro'].'<br/>';} ?>
+								<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteDireccion'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteDireccion']!=''){ echo 'Dirección: '.$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteDireccion'].'<br/>';} ?>
+								<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteNombreComuna'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteNombreComuna']!=''){  echo 'Comuna: '.$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteNombreComuna'].'<br/>';} ?>
+								<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFono1'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFono1']!=''){         echo 'Telefono Fijo: '.formatPhone($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFono1']).'<br/>';} ?>
 								<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFono2'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFono2']!=''){         echo 'Telefono Movil: '.formatPhone($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFono2']).'<br/>';} ?>
 							</p>
 						</div>
@@ -236,7 +236,7 @@
 				</div>
 				<div class="col-xs-2">
 					<strong>
-						<?php 
+						<?php
 						if($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleTotalVenta']>0){
 							echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleTotalVenta']/1.19), 0).'<br>';
 							echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleTotalVenta']-($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleTotalVenta']/1.19)), 0).'<br>';
@@ -293,7 +293,7 @@
 								</div>
 								<div class="panel-body">
 									<p>
-										<?php 
+										<?php
 										if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsMesAnteriorFecha'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsMesAnteriorFecha']!='0000-00-00'&&$_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsMesAnteriorFecha']!=''){
 											$mes_anterior = Fecha_estandar($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsMesAnteriorFecha']);
 										}else{
@@ -303,7 +303,7 @@
 										<small class="pull-right"><?php echo valores_truncados($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsMesAnteriorCantidad']) ?> m3</small>
 
 										<br/>
-										<?php 
+										<?php
 										if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsMesActualFecha'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsMesActualFecha']!='0000-00-00'&&$_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsMesActualFecha']!=''){
 											$mes_actual = Fecha_estandar($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsMesActualFecha']);
 										}else{
@@ -331,7 +331,7 @@
 													$bla = '(+) 0';
 												}
 												echo $bla.' m3'; ?>
-											</small>	
+											</small>
 										<?php } ?>
 
 										<br/>
@@ -424,7 +424,7 @@
 								<br/>
 									<div class="pull-left">Diferencia medidor general</div>
 									<small class="pull-right">
-										<?php 
+										<?php
 										if($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfDifMedGeneral']>0){
 											$bla = '(+)'.Cantidades($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfDifMedGeneral'], 2);
 										}elseif($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfDifMedGeneral']<0){

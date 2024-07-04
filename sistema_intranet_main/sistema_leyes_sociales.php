@@ -148,10 +148,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 							             'Nivel 4', 'SEGURIDAD_idLevel_4',  $x18,  1,  'idLevel_4',  'Nombre',  'centrocosto_listado_level_4',  0,   0,
 							             'Nivel 5', 'SEGURIDAD_idLevel_5',  $x19,  1,  'idLevel_5',  'Nombre',  'centrocosto_listado_level_5',  0,   0,
 							             $dbConn, 'form1');
-				
-				
-				
-				
+
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idMantenedor', $_GET['id'], 2);
 				?>
@@ -340,7 +337,7 @@ $ndata_1 = db_select_nrows (false, 'idSistema', 'sistema_leyes_sociales', '', "i
 					<?php foreach ($arrImpuestos as $imp) { ?>
 					<tr class="odd">
 						<td>
-							<?php 
+							<?php
 							if(isset($imp['AFP_CC_Nombre'])&&$imp['AFP_CC_Nombre']!=''){
 								echo '<strong>Centro Costo IVA: </strong>'.$imp['AFP_CC_Nombre'];
 								if(isset($imp['AFP_CC_Level_1'])&&$imp['AFP_CC_Level_1']!=''){echo ' - '.$imp['AFP_CC_Level_1'];}

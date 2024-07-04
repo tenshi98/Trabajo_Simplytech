@@ -95,7 +95,7 @@ if(!empty($_GET['new_oc'])){  ?>
 				if(isset($Creacion_fecha)){   $x2  = $Creacion_fecha; }else{$x2  = '';}
 				if(isset($Observaciones)){    $x3  = $Observaciones;  }else{$x3  = '';}
 
-				//se dibujan los inputs	
+				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha de Orden de Compra','Creacion_fecha', $x2, 2);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x3, 1);
@@ -116,8 +116,7 @@ if(!empty($_GET['new_oc'])){  ?>
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
-
+</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['edit_Otros'])){
@@ -609,7 +608,7 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrProveedores,$row );
 }
-	 
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -896,7 +895,7 @@ array_push( $arrProveedores,$row );
 				//Se verifican si existen los datos
 				if(isset($idSistema)){        $x1  = $idSistema;      }else{$x1  = '';}
 
-				//se dibujan los inputs	
+				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Sistema','idSistema', $x1, 1, 'idSistema', 'Nombre', 'core_sistemas',0, '', $dbConn);
 

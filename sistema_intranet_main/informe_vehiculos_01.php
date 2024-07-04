@@ -176,14 +176,13 @@ array_push( $arrVehiculos,$row );
 							echo '<td style="background-color: #ccc;">'.$cost['Nombre'].'</td>';
 						} ?>
 						<td style="background-color: #ccc;">Total Costos</td>
-						
-						
+
 						<td style="background-color: #ccc;">Total Recolectado</td>
 						<td style="background-color: #ccc;">Diferencia</td>
 
 					</tr>
 
-					<?php 
+					<?php
 						$total_prog = 0;
 						$total_cost = 0;
 						$total_reco = 0;
@@ -224,11 +223,11 @@ array_push( $arrVehiculos,$row );
 							
 							<?php $subtotal = 0; ?>
 							<td align="right"><?php echo valores($pas_sueldo,0); $subtotal = $subtotal + $pas_sueldo; ?></td>
-							<?php 
+							<?php
 							$cost = 0;
 							foreach ($arrCostos as $costo) { ?>
 								<td align="right"><?php echo  valores($trab['Costo_'.$cost],0); ?></td>
-							<?php 
+							<?php
 							$subtotal = $subtotal + $trab['Costo_'.$cost];
 							$cost++;
 							} ?>

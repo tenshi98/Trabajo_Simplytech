@@ -168,14 +168,14 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 							</thead>
 
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
-							<?php 
+							<?php
 							$nx=1;
 							foreach ($arrPuntos as $pos) { ?>
 								<tr class="odd">
 									<td><?php echo $nx; ?></td>
 									<td><?php echo 'lat: '.$pos['Latitud'].'<br/>lng: '.$pos['Longitud']; ?></td>
 								</tr>
-							<?php 
+							<?php
 							$nx++;
 							} ?>        
 							</tbody>

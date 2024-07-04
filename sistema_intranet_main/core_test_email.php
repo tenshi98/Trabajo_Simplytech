@@ -114,7 +114,7 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
 								?>
 
 								<div class="form-group">
-									<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf003; Enviar Prueba" name="submit_email"> 
+									<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf003; Enviar Prueba" name="submit_email">
 								</div>
 
 							</form>
@@ -145,7 +145,7 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
 								?>
 
 								<div class="form-group">
-									<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf003; Enviar Prueba" name="submit_email_image"> 
+									<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf003; Enviar Prueba" name="submit_email_image">
 								</div>
 
 							</form>
@@ -181,7 +181,7 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
 								?>
 
 								<div class="form-group">
-									<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf003; Enviar Prueba" name="submit_email_google"> 
+									<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf003; Enviar Prueba" name="submit_email_google">
 								</div>
 
 							</form>
@@ -225,7 +225,6 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
         </div>
 	</div>
 </div>
-
 
 <?php widget_validator(); ?>
 

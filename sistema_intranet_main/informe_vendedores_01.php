@@ -216,7 +216,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				if(isset($Creacion_fecha)){   $x2  = $Creacion_fecha; }else{$x2  = '';}
 				if(isset($idUsuario)){        $x3  = $idUsuario;      }else{$x3  = '';}
 
-				//se dibujan los inputs	
+				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 1, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
 				$Form_Inputs->form_date('Fecha de Cotizacion','Creacion_fecha', $x2, 1);

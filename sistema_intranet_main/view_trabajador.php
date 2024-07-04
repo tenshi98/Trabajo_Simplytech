@@ -266,8 +266,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 							}
 							?>
 						</p>
-						
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
 						<p class="text-muted">
 							<strong>Persona de Contacto : </strong><?php echo $rowdata['ContactoPersona']; ?><br/>
@@ -357,7 +356,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 								<?php if(isset($rowdata['Observaciones'])&&$rowdata['Observaciones']!=''){echo $rowdata['Observaciones'];}else{echo 'Sin Observaciones';} ?>
 								<div class="clearfix"></div>
 							</div>
-								
+
 						</p>
 						
 							
@@ -577,8 +576,8 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 			</div>
 		</div>
 	</div>
-<?php } ?>
 
+<?php } ?>
 <?php
 //si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){

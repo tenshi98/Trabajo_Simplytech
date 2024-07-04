@@ -231,9 +231,7 @@
 			<td align="right"><?php echo '(+) '.Valores($rowDatos['DetalleSaldoAnterior'], 0); ?></td>
 			</tr>
 		<?php } ?>
-			
-			
-			
+
 		</tbody>
 	</table>
 	<div class="row text-right" style="margin-top:20px;">

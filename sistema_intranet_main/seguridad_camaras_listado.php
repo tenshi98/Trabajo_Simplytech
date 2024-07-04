@@ -215,7 +215,7 @@ array_push( $arrCamaras,$row );
 												<td><?php echo $zona['Config_Password']; ?></td>
 												<td><?php echo $zona['Config_IP']; ?></td>
 											<?php } ?>
-											<td><label class="label <?php if(isset($zona['idEstado'])&&$zona['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $zona['estado']; ?></label></td>	
+											<td><label class="label <?php if(isset($zona['idEstado'])&&$zona['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $zona['estado']; ?></label></td>
 										</tr>
 									<?php } ?>
 								</tbody>
@@ -506,8 +506,8 @@ $arrCamaras = db_select_array (false, $SIS_query, 'seguridad_camaras_listado', $
 
 
 	
-<?php } ?>
 
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

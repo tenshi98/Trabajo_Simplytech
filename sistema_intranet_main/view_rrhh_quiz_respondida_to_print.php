@@ -222,7 +222,7 @@ require_once 'core/Web.Header.Print.php';
 					
 								<tr class="item-row linea_punteada">
 									<td class="item-name">
-										<strong><?php echo $preg['Tipo']; ?> : </strong><?php echo $preg['Pregunta']; ?><br/>	
+										<strong><?php echo $preg['Tipo']; ?> : </strong><?php echo $preg['Pregunta']; ?><br/>
 										<?php
 										$resp_correct = 1;
 										if(isset($preg['Opcion_1'])&&$preg['Opcion_1']!=''){$tex = '';$r_ini = '';$r_fin = '';if($preg['OpcionCorrecta']==$resp_correct){$tex = ' <strong>-> correcta</strong>';};if($rowdata['Respuesta_'.$i]==$resp_correct){$r_ini = '<span class="color-green">';$r_fin = '</span>';};echo $r_ini.' - '.$preg['Opcion_1'].$r_fin.$tex.'<br/>';$resp_correct++;}

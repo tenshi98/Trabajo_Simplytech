@@ -292,7 +292,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					<table id="dataTable" class="table table-bordered table-condensed dataTable">
-										  
+
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
 		
 							<tr class="odd">
@@ -401,8 +401,8 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 			</tbody>
 		</table>
 	</div>
-<?php } ?>
 
+<?php } ?>
 <?php
 //si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){

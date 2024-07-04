@@ -297,7 +297,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 					<?php if(isset($row_data['Valor'])&&$row_data['Valor']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td align="right"><strong>Total</strong></td>
-							<?php 
+							<?php
 							if(isset($row_data['idTipo'])&&$row_data['idTipo']==1){
 								echo '<td align="right">'.Valores($row_data['Valor'], 0).'</td>';
 								echo '<td align="right"></td>';

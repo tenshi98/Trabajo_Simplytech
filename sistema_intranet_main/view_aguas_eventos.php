@@ -126,7 +126,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_eventos', $SIS_joi
 				<tr>
 					<td colspan="6" class="blank">
 						<p>
-							<?php 
+							<?php
 							if(isset($rowdata['Observacion'])&&$rowdata['Observacion']!=''){
 								echo $rowdata['Observacion'];
 							}else{

@@ -79,8 +79,8 @@ if($_SESSION['usuario']['basic_data']['password']=='81dc9bdb52d04dc20036dbd8313e
 			</div>
 		</div>
 	</div>
-<?php } ?>
 
+<?php } ?>
 <?php include '1include_principal.php'; ?>
 <?php widget_validator(); ?>
 

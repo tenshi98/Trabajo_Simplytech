@@ -415,7 +415,6 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; ?>
 						});
 					</script>
 
-							
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -626,7 +625,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'vehiculos_ruta_alternativa', $S
 						<td><?php echo $usuarios['Ruta']; ?></td>
 						<td><?php echo $usuarios['Nombre']; ?></td>
 						<td>
-							<?php 
+							<?php
 							if($usuarios['idTipo']){
 								echo $usuarios['Dia'];
 							}else{
@@ -664,8 +663,8 @@ $arrUsers = db_select_array (false, $SIS_query, 'vehiculos_ruta_alternativa', $S
 
 
 	
-<?php } ?>
 
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

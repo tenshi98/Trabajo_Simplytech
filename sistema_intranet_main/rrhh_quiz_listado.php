@@ -152,14 +152,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_ckeditor('Indicaciones','Texto_Inicio', $x10, 1,2);
 
 				$Form_Inputs->form_tittle(3, 'Footer');
-				$Form_Inputs->form_input_text('Texto Pie', 'Footer_texto', $x11, 1); 
-				
+				$Form_Inputs->form_input_text('Texto Pie', 'Footer_texto', $x11, 1);
+
 				$Form_Inputs->form_tittle(3, 'Estado');
 				$Form_Inputs->form_select('Estado','idEstado', $x12, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
-				
-				
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idQuiz', $_GET['id_quiz'], 2);
@@ -824,7 +821,7 @@ foreach ($arrPreguntas as $preg) {
 					
 								<tr class="item-row linea_punteada">
 									<td class="item-name">
-										<strong><?php echo $preg['Tipo']; ?> : </strong><span style="word-wrap: break-word;white-space: initial;"><?php echo $preg['Pregunta']; ?></span><hr>	
+										<strong><?php echo $preg['Tipo']; ?> : </strong><span style="word-wrap: break-word;white-space: initial;"><?php echo $preg['Pregunta']; ?></span><hr>
 										<?php
 										$resp_correct = 1;
 										if(isset($preg['Opcion_1'])&&$preg['Opcion_1']!=''){$tex = '';if($preg['OpcionCorrecta']==$resp_correct){$tex = ' <strong>-> correcta</strong>';};echo ' - '.$preg['Opcion_1'].$tex.'<br/>';$resp_correct++;}
@@ -839,7 +836,7 @@ foreach ($arrPreguntas as $preg) {
 									<td width="120" >
 										<div class="btn-group" style="width: 70px;" >
 											<a href="<?php echo $location.'&id_quiz='.$_GET['id_quiz'].'&editPreg='.$preg['idPregunta']; ?>" title="Editar Pregunta" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-											<?php 
+											<?php
 											$ubicacion = $location.'&id_quiz='.$_GET['id_quiz'].'&del_pregunta='.simpleEncode($preg['idPregunta'], fecha_actual());
 											$dialogo   = '¿Realmente deseas eliminar '.str_replace('"','',$preg['Pregunta']).'?'; ?>
 											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Pregunta" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
@@ -1112,8 +1109,8 @@ $arrUsers = db_select_array (false, $SIS_query, 'rrhh_quiz_listado', $SIS_join, 
 
 
 	
-<?php } ?>
 
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

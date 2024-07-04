@@ -71,7 +71,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 						</tr>
 					</thead>
 					<tbody role="alert" aria-live="polite" aria-relevant="all">			
-						<?php 
+						<?php
 						$extra_data  = '';
 						$extra_data .= '&f_inicio='.fecha_actual();
 						$extra_data .= '&f_termino='.fecha_actual();

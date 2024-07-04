@@ -277,8 +277,7 @@ array_push( $arrArchivos,$row );
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Resumen de Visita</h2>
 						<div class="text-muted well well-sm no-shadow" ><?php echo $rowdata['Resolucion']; ?></div>
-						
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos Adjuntos</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>
@@ -564,7 +563,7 @@ foreach ($arrOpciones as $mant) {
 					<tr class="odd">
 						<td><?php echo $mant['Servicio']; ?></td>
 						<td>
-							<?php 
+							<?php
 							$ntot = 0;
 							if(isset($mant['idOpciones_1'])&&$mant['idOpciones_1']!=0){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[1]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[1]['Nombre'];$ntot++;}}
 							if(isset($mant['idOpciones_2'])&&$mant['idOpciones_2']!=0){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[2]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[2]['Nombre'];$ntot++;}}

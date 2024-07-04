@@ -387,8 +387,8 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 						</script>
 
 
-				<?php } ?>
-
+				
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

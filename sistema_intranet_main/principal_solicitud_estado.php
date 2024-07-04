@@ -124,7 +124,7 @@ $arrTracxCuartel = db_select_array (false, $SIS_query, 'cross_solicitud_aplicaci
 						</tr>
 					</thead>
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
-						<?php 
+						<?php
 						$VelPromedio      = 0;
 						$Mojamiento       = 0;
 						$MojamientoReal   = 0;

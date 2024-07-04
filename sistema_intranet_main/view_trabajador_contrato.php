@@ -142,7 +142,7 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 					// Catch compilation errors (errors caused by the compilation of the template : misplaced tags)
 					errorHandler(error);
 				}
-				
+
 				<?php
 				//se deben validar
 				if(isset($rowdata['Trabajador_FechaContrato'])&&$rowdata['Trabajador_FechaContrato']!=''){   $Trabajador_FechaContrato       = Fecha_estandar($rowdata['Trabajador_FechaContrato']);        }else{$Trabajador_FechaContrato       = 'Sin datos';}

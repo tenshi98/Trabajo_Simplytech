@@ -273,9 +273,7 @@ $zz .= '&view='.$_GET['view'];
 						<td class="meta-head">Patente Carro</td>
 						<td><?php if(isset($rowConso['PatenteCarro'])&&$rowConso['PatenteCarro']!=''){echo $rowConso['PatenteCarro'];}else{echo 'Sin Datos';} ?></td>
 					</tr>
-						
-						
-						
+
 					<tr><td class="meta-head" colspan="4"><strong>Cuerpo Parametros Evaluados</strong></td></tr>
 					<tr>
 						<td class="meta-head">Condición CTN</td>
@@ -308,9 +306,9 @@ $zz .= '&view='.$_GET['view'];
 		</div>
 
 		<div class="row">
-			<?php 
-			filtrar($arrEstibas, 'Estiba');  
-			foreach($arrEstibas as $categoria=>$estibas){ 
+			<?php
+			filtrar($arrEstibas, 'Estiba');
+			foreach($arrEstibas as $categoria=>$estibas){
 				echo '
 						
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -386,9 +384,9 @@ $zz .= '&view='.$_GET['view'];
                 <td>Archivos Adjuntos</td>
             </tr>
 
-			<?php 
-			filtrar($arrArchivos, 'Tipo');  
-			foreach($arrArchivos as $categoria=>$archivos){ 
+			<?php
+			filtrar($arrArchivos, 'Tipo');
+			foreach($arrArchivos as $categoria=>$archivos){
 				echo '<tr class="odd" ><td colspan="2"  style="background-color:#DDD"><strong>'.$categoria.'</strong></td></tr>';
 				echo '<tr class="item-row"><td>';
 				echo '<div class="row">';

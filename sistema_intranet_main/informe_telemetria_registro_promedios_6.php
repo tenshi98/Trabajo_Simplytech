@@ -298,7 +298,6 @@ if(isset($count)&&$count>9000){
 document.getElementById("loading").style.display = "none";
 </script>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Informe Promedio Camara', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Informe grupo '.$rowGrupo['Nombre'].' del equipo '.$rowEquipo['Nombre']); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
@@ -483,8 +482,8 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		</div>
 	</div>
 </div>
-<?php } ?>
 
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

@@ -486,7 +486,7 @@ array_push( $arrPermisos,$row );
 foreach ($arrPermisos as $prod) {
 	$zx2 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }
-	 
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -546,7 +546,7 @@ array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
-}	 
+}
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -660,7 +660,7 @@ foreach ($arrPermisos as $prod) {
 				if(isset($Creacion_fecha)){   $x1  = $Creacion_fecha; }else{$x1  = $_SESSION['solicitud_basicos']['Creacion_fecha'];}
 				if(isset($Observaciones)){    $x2  = $Observaciones;  }else{$x2  = $_SESSION['solicitud_basicos']['Observaciones'];}
 
-				//se dibujan los inputs	
+				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha de Solicitud','Creacion_fecha', $x1, 2);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x2, 1);
@@ -703,8 +703,7 @@ $total = 0;
 
 	</div>
 	<div class="clearfix"></div>
-</div> 
-
+</div>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
@@ -917,7 +916,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				if(isset($Creacion_fecha)){   $x1  = $Creacion_fecha; }else{$x1  = '';}
 				if(isset($Observaciones)){    $x2  = $Observaciones;  }else{$x2  = '';}
 
-				//se dibujan los inputs	
+				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha de Solicitud','Creacion_fecha', $x1, 2);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x2, 1);

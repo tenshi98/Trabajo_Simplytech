@@ -81,7 +81,6 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'ctn_asc':        $order_by = 'cross_shipping_consolidacion.CTNNombreCompañia ASC ';                         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Contenedor Ascendente';break;
 		case 'ctn_desc':       $order_by = 'cross_shipping_consolidacion.CTNNombreCompañia DESC ';                        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Contenedor Descendente';break;
 
-				
 		default: $order_by = 'cross_shipping_consolidacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha del informe Descendente';
 	}
 }else{

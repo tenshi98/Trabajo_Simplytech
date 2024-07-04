@@ -278,7 +278,7 @@ array_push( $arrPuntos,$row );
 						$Form_Inputs->form_input_hidden('Longitud', $rowUbicacion['Longitud'], 2);
 						$Form_Inputs->form_input_hidden('idZona', $_GET['edit_puntos'], 2);
 						$Form_Inputs->form_input_hidden('idUbicaciones', $_GET['mod'], 2);
-						
+
 						?>
 		
 						<div class="form-group">
@@ -769,7 +769,6 @@ $arrCercas = db_select_array (false, $SIS_query, 'vehiculos_geocercas', $SIS_joi
 </div>
 
 <?php } ?>
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

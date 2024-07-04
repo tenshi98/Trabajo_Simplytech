@@ -153,7 +153,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							document.getElementById("ValorTotal").value = CantIngreso * Valor;
 						}
 					}
-				
+
 				</script>
 				<script>
 					document.getElementById('div_idFrecuencia').style.display = 'none';
@@ -185,8 +185,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							document.getElementById('div_Valor').style.display = '';
 							document.getElementById('div_ValorTotal').style.display = '';
 						}
-								
-								
+
 					});
 
 					$("#idUtilizable").on("change", function(){ //se ejecuta al cambiar valor del select
@@ -326,7 +325,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 							document.getElementById("ValorTotal").value = CantIngreso * Valor;
 						}
 					}
-				
+
 				</script>
 				<script>
 					document.getElementById('div_idFrecuencia').style.display = 'none';
@@ -511,13 +510,12 @@ foreach($arrLicitacion as $key) {
 
 	//Creo Variables para la rejilla
 	for ($i = 1; $i <= $nmax; $i++) {
-		$d[$i]  = $key['LVL_'.$i.'_id'];   
-		$n[$i]  = $key['LVL_'.$i.'_Nombre'];   
+		$d[$i]  = $key['LVL_'.$i.'_id'];
+		$n[$i]  = $key['LVL_'.$i.'_Nombre'];
 		$c[$i]  = $key['LVL_'.$i.'_Codigo'];
 		$u[$i]  = $key['LVL_'.$i.'_idUtilizable'];
 	}
-	
-	
+
     if( $d['1']!=''){
 		$array3d[$d['1']]['id']     = $d['1'];
 		$array3d[$d['1']]['Nombre'] = $n['1'];
@@ -695,11 +693,11 @@ function arrayToUL(array $array, array $TipoMaq, $lv, $rowlevel,$location, $nmax
 		}else{
 			$loc = $location;
 		}
-		
+
         if (isset($value['Nombre'])){
 			echo '<li><div class="blum">';
 			echo '<div class="pull-left"><strong>'.$TipoMaq[$value['Tipo']]['Nombre'].':</strong> '.$value['Codigo'].' - '.$value['Nombre'].'</div>';
-						
+
 			echo '<div class="btn-group pull-right" >';
 				//Boton editar
 				if ($rowlevel>=2){

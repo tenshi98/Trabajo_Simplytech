@@ -432,7 +432,7 @@ $zx1 = "idProducto=0";
 //recorro
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idTipoProducto=1 AND idEstado=1 AND idProducto=".$prod['idProducto'].")";
-}	 
+}
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -558,7 +558,7 @@ $arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_jo
 							<th width="10">Acciones</th>
 						</tr>
 
-						<?php 
+						<?php
 						$total = 0;
 						if (isset($_SESSION['receta_productos'])){
 							//recorro el lsiatdo entregado por la base de datos
@@ -618,8 +618,8 @@ $arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_jo
 	<a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>"  class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
 	<div class="clearfix"></div>
-</div> 
- 
+</div>
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new'])){
 //valido los permisos

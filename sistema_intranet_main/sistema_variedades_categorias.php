@@ -226,8 +226,8 @@ array_push( $arrTiposEmbalaje,$row );
 									</thead>
 									<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 										<?php
-										filtrar($arrMatrizCalidad, 'Proceso');  
-										foreach($arrMatrizCalidad as $Proceso=>$listproc){ 
+										filtrar($arrMatrizCalidad, 'Proceso');
+										foreach($arrMatrizCalidad as $Proceso=>$listproc){
 											echo '<tr class="odd" ><td style="background-color:#DDD"><strong>'.$Proceso.'</strong></td></tr>';
 											foreach ($listproc as $subprocesos) { ?>
 											<tr class="odd">
@@ -235,7 +235,7 @@ array_push( $arrTiposEmbalaje,$row );
 											</tr>
 										 <?php }
 										} ?>
-													   
+
 									</tbody>
 								</table>
 							</div>
@@ -256,8 +256,8 @@ array_push( $arrTiposEmbalaje,$row );
 									</thead>
 									<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 										<?php
-										filtrar($arrMatrizProceso, 'Proceso');  
-										foreach($arrMatrizProceso as $Proceso=>$listproc){ 
+										filtrar($arrMatrizProceso, 'Proceso');
+										foreach($arrMatrizProceso as $Proceso=>$listproc){
 											echo '<tr class="odd" ><td style="background-color:#DDD"><strong>'.$Proceso.'</strong></td></tr>';
 											foreach ($listproc as $subprocesos) { ?>
 											<tr class="odd">
@@ -265,7 +265,7 @@ array_push( $arrTiposEmbalaje,$row );
 											</tr>
 										 <?php }
 										} ?>
-													   
+
 									</tbody>
 								</table>
 							</div>
@@ -286,8 +286,8 @@ array_push( $arrTiposEmbalaje,$row );
 									</thead>
 									<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 										<?php
-										filtrar($arrTiposEmbalaje, 'Proceso');  
-										foreach($arrTiposEmbalaje as $Proceso=>$listproc){ 
+										filtrar($arrTiposEmbalaje, 'Proceso');
+										foreach($arrTiposEmbalaje as $Proceso=>$listproc){
 											echo '<tr class="odd" ><td style="background-color:#DDD"><strong>'.$Proceso.'</strong></td></tr>';
 											foreach ($listproc as $subprocesos) { ?>
 											<tr class="odd">
@@ -295,7 +295,7 @@ array_push( $arrTiposEmbalaje,$row );
 											</tr>
 										 <?php }
 										} ?>
-													   
+
 									</tbody>
 								</table>
 							</div>
@@ -480,8 +480,8 @@ $arrCategorias = db_select_array (false, $SIS_query, 'sistema_variedades_categor
 		</div>
 	</div>
 </div>
-<?php } ?>
 
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

@@ -130,7 +130,6 @@ if(isset($rowdata['Cancelador'])&&$rowdata['Cancelador']!=''){ ?>
 	</div>
 
 <?php } ?>
-
 <?php
 //Agrego el boton crear solo si se tiene acceso a la transaccion o es superadministrador
 if((isset($_GET['editForm'])&&$_GET['editForm']='true') OR $_SESSION['usuario']['basic_data']['idTipoUsuario']==1) {

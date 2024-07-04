@@ -309,7 +309,7 @@ $html .= '
 								<td style="vertical-align: top;">'.$otro['Nombre'].'</td>
 								<td align="right">'.Valores($otro['vTotal'], 0).'</td>
 							</tr>';
-						} 
+						}
 					}
 					if(isset($row_data['ValorNeto'])&&$row_data['ValorNeto']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">

@@ -485,8 +485,8 @@ $arrUsers = db_select_array (false, $SIS_query, 'vehiculos_rutas', $SIS_join, $S
 
 
 	
-<?php } ?>
 
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

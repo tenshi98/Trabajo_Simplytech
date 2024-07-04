@@ -68,7 +68,6 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Matriz Borrada correct
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['edit'])){
 //verifico que sea un administrador
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
@@ -157,12 +156,11 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select_depend1('Proceso','idProceso', $x1, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, 0,
 										 'Matriz','idMatriz', $x2, 2, 'idMatriz', 'Nombre', 'cross_quality_proceso_matriz', $z, 0,
 										 $dbConn, 'form1');
-				
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idCategoria',$_GET['id'], 2);
-			
+
 				?>
 
 				<div class="form-group">
@@ -283,9 +281,9 @@ array_push( $arrProductos,$row );
 								</div>
 							</td>
 						</tr>
-					 <?php } 
+					 <?php }
 					} ?>
-								   
+
 				</tbody>
 			</table>
 		</div>
@@ -299,7 +297,6 @@ array_push( $arrProductos,$row );
 </div>
 
 <?php } ?>
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

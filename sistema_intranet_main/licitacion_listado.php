@@ -357,7 +357,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					<table id="dataTable" class="table table-bordered table-condensed dataTable">
-										  
+
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
 							<tr class="odd">
 								<td width="200">Codigo Contrato</td>
@@ -551,7 +551,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 						}
 					});
-							
+
 				</script>  
 	   
 				<div class="form-group">

@@ -320,7 +320,7 @@ array_push( $arrInsumos2,$row );
 					</thead>
 
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
-						<?php 
+						<?php
 						$total = 0;
 						foreach ($arrCountOT as $count) {
 							$total = $total + $count['Cuenta']; ?>
@@ -390,7 +390,7 @@ array_push( $arrInsumos2,$row );
 					</thead>
 
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
-						<?php 
+						<?php
 						$total = 0;
 						foreach ($arrCountType as $count) {
 							$total = $total + $count['Cuenta']; ?>
@@ -458,7 +458,7 @@ array_push( $arrInsumos2,$row );
 					</thead>
 
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
-						<?php 
+						<?php
 						$total = 0;
 						foreach ($arrCountMaq as $count) {
 							$total = $total + $count['Cuenta']; ?>

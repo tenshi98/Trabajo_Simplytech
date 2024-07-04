@@ -134,7 +134,7 @@ foreach ($arrTabs as $tab) {
 					// Catch compilation errors (errors caused by the compilation of the template : misplaced tags)
 					errorHandler(error);
 				}
-				
+
 				<?php
 				//no son necesarios validar
 				$N_Documento    = N_doc($rowdata['idCliente'], 5).'-'.N_doc($X_idTab, 2);

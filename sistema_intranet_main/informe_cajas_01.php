@@ -223,7 +223,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				if(isset($idTipo)){                     $x5  = $idTipo;                    }else{$x5  = '';}
 				if(isset($idEstado)){                   $x6  = $idEstado;                  }else{$x6  = '';}
 
-				//se dibujan los inputs	
+				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_join_filter('Caja','idCajaChica', $x1, 2, 'idCajaChica', 'Nombre', 'caja_chica_listado', 'usuarios_cajas_chicas', $z, $dbConn);
 				$Form_Inputs->form_select_filter('Trabajador Asignado','idTrabajador', $x2, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);

@@ -110,18 +110,16 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 
 				$Form_Inputs->form_input_hidden('idLevel_'.$_GET['lvl'], $_GET['edit'], 2);
-				$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);  
-				
-				
+				$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
+
 				if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){  $Form_Inputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);}
 				if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){  $Form_Inputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);}
 				if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){  $Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);}
 				if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){  $Form_Inputs->form_input_hidden('idLevel_4', $_GET['lv_4'], 2);}
 				if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){  $Form_Inputs->form_input_hidden('idLevel_5', $_GET['lv_5'], 2);}
-				  	 
-				?> 
-				 
-	   
+
+				?>
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_idLevel">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -164,11 +162,9 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){  $Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);}
 				if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){  $Form_Inputs->form_input_hidden('idLevel_4', $_GET['lv_4'], 2);}
 				if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){  $Form_Inputs->form_input_hidden('idLevel_5', $_GET['lv_5'], 2);}
-	
+
 				?>
 
-				    
-	   
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_idLevel">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -252,10 +248,10 @@ foreach($arrLicitacion as $key) {
 
 	//Creo Variables para la rejilla
 	for ($i = 1; $i <= $nmax; $i++) {
-		$d[$i]  = $key['LVL_'.$i.'_id'];   
-		$n[$i]  = $key['LVL_'.$i.'_Nombre'];   
+		$d[$i]  = $key['LVL_'.$i.'_id'];
+		$n[$i]  = $key['LVL_'.$i.'_Nombre'];
 	}
-	
+
     if( $d['1']!=''){
 		$array3d[$d['1']]['id']     = $d['1'];
 		$array3d[$d['1']]['Nombre'] = $n['1'];
@@ -301,11 +297,11 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 		}else{
 			$loc = $location;
 		}
-		
+
         if (isset($value['Nombre'])){
 			echo '<li><div class="blum">';
 			echo '<div class="pull-left">'.$value['Nombre'].'</div>';
-						
+
 			echo '<div class="btn-group pull-right" >';
 				//Boton editar
 				if ($rowlevel>=2){
@@ -373,9 +369,7 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 			<?php //Se imprime el arbol
 			echo arrayToUL($array3d, 0, $rowlevel['level'],$new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'], $nmax);
 			?>
-			
-			
-			
+
 		</div>
 	</div>
 </div>

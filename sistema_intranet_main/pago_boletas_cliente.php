@@ -95,7 +95,7 @@ if(isset($_SESSION['pagos_boletas_clientes'])){
 		}
 	}
 }
-					
+
 ?>
 
 <div class="row inbox">
@@ -134,7 +134,7 @@ if(isset($_SESSION['pagos_boletas_clientes'])){
 						</tr>
 					</thead>
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
-						<?php 
+						<?php
 						$TotalFact = 0;
 						$MontoCancelado = 0;
 						$TotalGeneral = 0;
@@ -315,7 +315,7 @@ if(isset($_SESSION['pagos_boletas_clientes'])){
 						
 						
 						$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-						
+
 						?>
 
 						<div class="form-group">
@@ -676,8 +676,8 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</div>
 	</div>
 </div>
-<?php } ?>
 
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

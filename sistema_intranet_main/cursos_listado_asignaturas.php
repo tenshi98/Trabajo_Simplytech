@@ -61,161 +61,128 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Asignatura eliminada c
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['new'])){
-//valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);
-//se crea filtro
-//filtro para la asignatura
-$z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+	//valido los permisos
+	validaPermisoUser($rowlevel['level'], 3, $dbConn);
+	//se crea filtro
+	//filtro para la asignatura
+	$z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
-?>
+	?>
 
-<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box">
-		<header>
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Agregar Asignatura</h5>
-		</header>
-		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
+	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+		<div class="box">
+			<header>
+				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+				<h5>Agregar Asignatura</h5>
+			</header>
+			<div class="body">
+				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
-				<?php
-				//Se verifican si existen los datos
-				if(isset($idAsignatura)){     $x1  = $idAsignatura;    }else{$x1  = '';}
+					<?php
+					//Se verifican si existen los datos
+					if(isset($idAsignatura)){     $x1  = $idAsignatura;    }else{$x1  = '';}
 
-				//se dibujan los inputs
-				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_filter('Asignatura','idAsignatura', $x1, 2, 'idCurso', 'Nombre', 'alumnos_cursos',$z, '', $dbConn);
+					//se dibujan los inputs
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_select_filter('Asignatura','idAsignatura', $x1, 2, 'idCurso', 'Nombre', 'alumnos_cursos',$z, '', $dbConn);
 
-				$Form_Inputs->form_input_hidden('idCurso', $_GET['id'], 2);
+					$Form_Inputs->form_input_hidden('idCurso', $_GET['id'], 2);
 
-				?>
+					?>
 
-				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
-				</div>
-			</form>
-			<?php widget_validator(); ?>
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+						<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					</div>
+				</form>
+				<?php widget_validator(); ?>
+			</div>
 		</div>
 	</div>
-</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
-// consulto los datos
-$query = "SELECT Nombre
-FROM `cursos_listado`
-WHERE idCurso = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+	/*******************************************************/
+	// consulto los datos
+	$SIS_query = 'Nombre';
+	$SIS_join  = '';
+	$SIS_where = 'idCurso = '.$_GET['id'];
+	$rowdata = db_select_data (false, $SIS_query, 'cursos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
+	/*******************************************************/
+	// consulto los datos
+	$SIS_query = '
+	cursos_listado_asignaturas.idRelacionados,
+	alumnos_cursos.Nombre AS NombreCurso';
+	$SIS_join  = 'LEFT JOIN `alumnos_cursos`   ON alumnos_cursos.idCurso = cursos_listado_asignaturas.idAsignatura';
+	$SIS_where = 'cursos_listado_asignaturas.idCurso = '.$_GET['id'];
+	$SIS_order = 'alumnos_cursos.Nombre ASC';
+	$arrCursos = array();
+	$arrCursos = db_select_array (false, $SIS_query, 'cursos_listado_asignaturas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCursos');
 
+	?>
 
-// SE TRAE UN LISTADO DE TODOS LOS PERMISOS ASIGNADOS SOLO A UN USUARIO
-$arrCursos = array();
-$query =
-"SELECT 
-cursos_listado_asignaturas.idRelacionados, 
-alumnos_cursos.Nombre AS NombreCurso
-
-FROM `cursos_listado_asignaturas`
-LEFT JOIN `alumnos_cursos`   ON alumnos_cursos.idCurso     = cursos_listado_asignaturas.idAsignatura
-WHERE cursos_listado_asignaturas.idCurso = ".$_GET['id']."
-ORDER BY alumnos_cursos.Nombre ASC  
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrCursos,$row );
-}
-
-
-?>
-
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Curso', $rowdata['Nombre'], 'Editar Asignaturas Relacionadas'); ?>
-	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
-		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Asignatura</a><?php } ?>
-	</div>
-</div>
-<div class="clearfix"></div>
-
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<div class="box">
-		<header>
-			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'cursos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
-				<li class=""><a href="<?php echo 'cursos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
-				<li class=""><a href="<?php echo 'cursos_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-				<li class="dropdown">
-					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-					<ul class="dropdown-menu" role="menu">
-						<li class="active"><a href="<?php echo 'cursos_listado_asignaturas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Asignaturas Relacionadas</a></li>
-						<li class=""><a href="<?php echo 'cursos_listado_documentacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Documentos Relacionados</a></li>
-						<li class=""><a href="<?php echo 'cursos_listado_videoconferencia.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >VideoConferencias Relacionadas</a></li>
-					</ul>
-                </li>
-			</ul>
-		</header>
-        <div class="table-responsive">
-			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
-				<thead>
-					<tr role="row">
-						<th>Asignatura</th>
-						<th width="10">Acciones</th>
-					</tr>
-				</thead>
-				<tbody role="alert" aria-live="polite" aria-relevant="all">
-
-					<?php foreach ($arrCursos as $curso){ ?>
-						<tr>
-							<td><?php echo $curso['NombreCurso']; ?></td>
-							<td>
-								<div class="btn-group" style="width: 35px;" >
-									<?php if ($rowlevel['level']>=4){
-										$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($curso['idRelacionados'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar la asignatura '.$curso['NombreCurso'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-									<?php } ?>
-								</div>
-							</td>
-						</tr>
-					<?php } ?>
-						                
-				</tbody>
-			</table>
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Curso', $rowdata['Nombre'], 'Editar Asignaturas Relacionadas'); ?>
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
+			<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Asignatura</a><?php } ?>
 		</div>
 	</div>
-</div>
-
-<div class="clearfix"></div>
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 	<div class="clearfix"></div>
-</div>
+
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="box">
+			<header>
+				<ul class="nav nav-tabs pull-right">
+					<li class=""><a href="<?php echo 'cursos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+					<li class=""><a href="<?php echo 'cursos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
+					<li class=""><a href="<?php echo 'cursos_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+					<li class="dropdown">
+						<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+						<ul class="dropdown-menu" role="menu">
+							<li class="active"><a href="<?php echo 'cursos_listado_asignaturas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Asignaturas Relacionadas</a></li>
+							<li class=""><a href="<?php echo 'cursos_listado_documentacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Documentos Relacionados</a></li>
+							<li class=""><a href="<?php echo 'cursos_listado_videoconferencia.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >VideoConferencias Relacionadas</a></li>
+						</ul>
+					</li>
+				</ul>
+			</header>
+			<div class="table-responsive">
+				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+					<thead>
+						<tr role="row">
+							<th>Asignatura</th>
+							<th width="10">Acciones</th>
+						</tr>
+					</thead>
+					<tbody role="alert" aria-live="polite" aria-relevant="all">
+
+						<?php foreach ($arrCursos as $curso){ ?>
+							<tr>
+								<td><?php echo $curso['NombreCurso']; ?></td>
+								<td>
+									<div class="btn-group" style="width: 35px;" >
+										<?php if ($rowlevel['level']>=4){
+											$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($curso['idRelacionados'], fecha_actual());
+											$dialogo   = '¿Realmente deseas eliminar la asignatura '.$curso['NombreCurso'].'?'; ?>
+											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<?php } ?>
+									</div>
+								</td>
+							</tr>
+						<?php } ?>
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+		<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="clearfix"></div>
+	</div>
 
 <?php } ?>
 <?php

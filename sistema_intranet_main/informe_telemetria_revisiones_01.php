@@ -121,7 +121,7 @@ $rowEquipo = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join,
 							}
 										
 						?>
-								
+
 						<tr class="odd <?php echo $danger ?>">		
 							<td><?php echo $rowEquipo['Nombre'] ?></td>
 							<td><?php echo fecha_estandar($rowEquipo['LastUpdateFecha']).' a las '.$rowEquipo['LastUpdateHora'].' hrs'; ?></td>

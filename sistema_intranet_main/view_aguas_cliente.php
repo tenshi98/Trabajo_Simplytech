@@ -484,7 +484,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 					</div>
 				</div>
 			<?php } ?>
-		
+
         </div>
 	</div>
 </div>

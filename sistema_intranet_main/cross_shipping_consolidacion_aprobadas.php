@@ -74,7 +74,6 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'instructivo_asc':   $order_by = 'cross_shipping_instructivo.Nombre ASC ';                                      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Instructivo Ascendente';break;
 		case 'instructivo_desc':  $order_by = 'cross_shipping_instructivo.Nombre DESC ';                                     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Instructivo Descendente';break;
 
-				
 		default: $order_by = 'cross_shipping_consolidacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha del informe Descendente';
 	}
 }else{

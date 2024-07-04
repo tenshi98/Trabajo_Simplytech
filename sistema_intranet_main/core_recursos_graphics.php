@@ -94,7 +94,7 @@ require_once 'core/Web.Header.Main.php';
 				$Graphics_lineDash = "var lineDash = ['', '', '','','','dashdot','dot'];";
 				$Graphics_lineWidth = "var lineWidth = ['', '', '','','','4','4'];";
 
-				echo GraphLinear_1('graphLinear_1', 'Seleccion Normal', 'Eje-x Titulo', 'Eje-y Titulo', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
+				echo GraphLinear_1('graphLinear_1', 'Seleccion Normal', 'Eje-x Titulo', 'Eje-y Titulo', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0);
 				echo GraphLinear_2('graphLinear_2', 'Seleccion con Rango', 'Eje-x Titulo', 'Eje-y Titulo', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
 				
 				?>
@@ -136,7 +136,7 @@ require_once 'core/Web.Header.Main.php';
 				$Graphics_markerColor = "var markerColor = ['','','','',''];";
 				$Graphics_markerLine  = "var markerLine = ['','','','',''];";
 
-				echo GraphBarr_1('graphBarra_2', 'Agrupado', 'Eje-x Titulo', 'Eje-y Titulo', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_info, $Graphics_markerColor, $Graphics_markerLine,1, 1); 
+				echo GraphBarr_1('graphBarra_2', 'Agrupado', 'Eje-x Titulo', 'Eje-y Titulo', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_info, $Graphics_markerColor, $Graphics_markerLine,1, 1);
 				echo GraphBarr_1('graphBarra_3', 'Apilado', 'Eje-x Titulo', 'Eje-y Titulo', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_info, $Graphics_markerColor, $Graphics_markerLine,2, 2); 
 				
 				?>
@@ -172,7 +172,7 @@ require_once 'core/Web.Header.Main.php';
 				$Graphics_markerColor = "var markerColor = ['',''];";
 				$Graphics_markerLine  = "var markerLine = ['',''];";
 
-				echo GraphBarrLat_1('graphBarraLat_2', 'Agrupado', 'Eje-x Titulo', 'Eje-y Titulo', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_info, $Graphics_markerColor, $Graphics_markerLine,1, 1); 
+				echo GraphBarrLat_1('graphBarraLat_2', 'Agrupado', 'Eje-x Titulo', 'Eje-y Titulo', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_info, $Graphics_markerColor, $Graphics_markerLine,1, 1);
 				echo GraphBarrLat_1('graphBarraLat_3', 'Apilado', 'Eje-x Titulo', 'Eje-y Titulo', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_info, $Graphics_markerColor, $Graphics_markerLine,2, 3); 
 				
 				?>

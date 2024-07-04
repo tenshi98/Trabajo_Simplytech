@@ -290,7 +290,7 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
-					<?php 
+					<?php
 					filtrar($arrBody, 'idTipo');
 					foreach($arrBody as $Tipo=>$TipoBody){
 						echo '<tr class="odd" >

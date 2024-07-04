@@ -112,11 +112,11 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 									<tr class="odd">
 										<td><?php echo $rowMed['SensoresNombre_'.$i]; ?></td>
 										<td><?php echo fecha_estandar($rowMed['SensoresFechaUso_'.$i]); ?></td>
-										<td><?php echo Cantidades($rowMed['SensoresAccionC_'.$i], 2); ?></td>	
-										<td><?php echo Cantidades($rowMed['SensoresAccionMedC_'.$i], 2); ?></td>	
+										<td><?php echo Cantidades($rowMed['SensoresAccionC_'.$i], 2); ?></td>
+										<td><?php echo Cantidades($rowMed['SensoresAccionMedC_'.$i], 2); ?></td>
 										<td><?php if(isset($rowMed['SensoresAccionC_'.$i])&&$rowMed['SensoresAccionC_'.$i]!=0){echo porcentaje($rowMed['SensoresAccionMedC_'.$i]/$rowMed['SensoresAccionC_'.$i]);} ?></td>
-										<td><?php echo Cantidades($rowMed['SensoresAccionT_'.$i]/3600, 2); ?></td>	
-										<td><?php echo Cantidades($rowMed['SensoresAccionMedT_'.$i]/3600, 2); ?></td>	
+										<td><?php echo Cantidades($rowMed['SensoresAccionT_'.$i]/3600, 2); ?></td>
+										<td><?php echo Cantidades($rowMed['SensoresAccionMedT_'.$i]/3600, 2); ?></td>
 										<td><?php if(isset($rowMed['SensoresAccionT_'.$i])&&$rowMed['SensoresAccionT_'.$i]!=0){echo porcentaje($rowMed['SensoresAccionMedT_'.$i]/$rowMed['SensoresAccionT_'.$i]);} ?></td>
 										<td><?php echo Cantidades($rowMed['SensoresAccionAlerta_'.$i], 2); ?></td>	
 									</tr>

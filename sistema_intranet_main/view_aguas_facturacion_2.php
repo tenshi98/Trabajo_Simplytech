@@ -321,7 +321,7 @@
 									<br/>
 										<div class="pull-left">Adicionales por prorrateo</div>
 										<small class="pull-right">
-										<?php 
+										<?php
 										if($rowDatos['DetConsProrateo']>0){
 											$bla = $rowDatos['DetConsProrateoSigno'].' '.$rowDatos['DetConsProrateo'];
 										}elseif($rowDatos['DetConsProrateo']<0){
@@ -424,7 +424,7 @@
 					<br/>
 						<div class="pull-left">Diferencia medidor general</div>
 						<small class="pull-right">
-						<?php 
+						<?php
 						if($rowDatos['AguasInfDifMedGeneral']>0){
 							$bla = '(+)'.Cantidades($rowDatos['AguasInfDifMedGeneral'], 2);
 						}elseif($rowDatos['AguasInfDifMedGeneral']<0){

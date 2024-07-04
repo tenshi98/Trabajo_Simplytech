@@ -287,7 +287,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 				<tr>
 					<td colspan="8" class="blank">
 						<p>
-							<?php 
+							<?php
 							if(isset($rowdata['Observaciones'])&&$rowdata['Observaciones']!=''){
 								echo $rowdata['Observaciones'];
 							}else{

@@ -218,7 +218,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<?php 
+						<?php
 							$Titulo = 'Potencia hora punta (Periodo: '.$rowSistema['CrossEnergy_PeriodoInicio'].' al '.$rowSistema['CrossEnergy_PeriodoTermino'].' / Horario: '.$rowSistema['CrossEnergy_HorarioInicio'].'-'.$rowSistema['CrossEnergy_HorarioTermino'].')';
 							echo GraphBarr_1('graphBarra_1', $Titulo, 'Fecha', 'Amperaje', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_info, $Graphics_markerColor, $Graphics_markerLine,1, 0); 
 	
@@ -228,7 +228,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<?php 
+						<?php
 							$Titulo = 'Demanda de suministro (Periodo: '.$Demanda_FechaInicio.' al '.$Demanda_FechaTermino.' / Horario: '.$Demanda_HoraInicio.'-'.$Demanda_HoraTermino.')';
 							echo GraphBarr_1('graphBarra_2', $Titulo, 'Fecha', 'Amperaje', $Graphics_xData_2, $Graphics_yData_2, $Graphics_names_2, $Graphics_info_2, $Graphics_markerColor_2, $Graphics_markerLine_2,1, 0); 
 						?>

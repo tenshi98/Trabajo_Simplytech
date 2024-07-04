@@ -422,7 +422,7 @@ $html .= '
 								<td colspan="4" style="vertical-align: top;">Guia de Despacho N°'.$guia['N_Doc'].'</td>
 								<td align="right">'.Valores($guia['ValorNeto'], 0).'</td>
 							</tr>';
-						} 
+						}
 					}
 
 					//si existen guias
@@ -433,7 +433,7 @@ $html .= '
 								<td colspan="4" style="vertical-align: top;">'.$otro['Nombre'].'</td>
 								<td align="right">'.Valores($otro['vTotal'], 0).'</td>
 							</tr>';
-						} 
+						}
 					}
 
 					//Recorro y guard el nombre de los impuestos 

@@ -77,8 +77,8 @@ foreach($arrLicitacion as $key) {
 
 	//Creo Variables para la rejilla
 	for ($i = 1; $i <= $nmax; $i++) {
-		$d[$i]  = $key['LVL_'.$i.'_id'];   
-		$n[$i]  = $key['LVL_'.$i.'_Nombre'];   
+		$d[$i]  = $key['LVL_'.$i.'_id'];
+		$n[$i]  = $key['LVL_'.$i.'_Nombre'];
 	}
 
     if( $d['1']!=''){
@@ -145,7 +145,7 @@ function arrayToUL(array $array, $lv, $nmax){
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					<table id="dataTable" class="table table-bordered table-condensed dataTable">
-										  
+
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
 		
 							<tr class="odd">

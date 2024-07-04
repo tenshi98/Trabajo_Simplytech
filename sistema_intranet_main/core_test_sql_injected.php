@@ -36,6 +36,33 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Sistema Borrado correc
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// consulto los datos
+$query1 = "SELECT
+usuarios_listado.password,
+usuarios_listado.usuario,
+usuarios_listado.Nombre,
+usuarios_tipos.Nombre AS Usuario_Tipo
+
+FROM `usuarios_listado`
+LEFT JOIN `usuarios_tipos` ON usuarios_tipos.idTipoUsuario = usuarios_listado.idTipoUsuario
+WHERE usuarios_listado.usuario = '".$usuario_1."' AND usuarios_listado.password = '".md5($password_1)."'";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+$rowUser1   = mysqli_fetch_assoc ($resultado);
+
+// consulto los datos
+$query2 = "SELECT
+usuarios_listado.password,
+usuarios_listado.usuario,
+usuarios_listado.Nombre,
+usuarios_tipos.Nombre AS Usuario_Tipo
+
+FROM `usuarios_listado`
+LEFT JOIN `usuarios_tipos` ON usuarios_tipos.idTipoUsuario = usuarios_listado.idTipoUsuario
+WHERE usuarios_listado.usuario = '".$usuario_2."' AND usuarios_listado.password = '".md5($password_2)."'";
+//Consulta
+$resultado = mysqli_query ($dbConn, $query);
+$rowUser2 = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -59,24 +86,10 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 					if (!empty($_POST['usuario']))    $usuario_1   = $_POST['usuario'];
 					if (!empty($_POST['password']))   $password_1  = $_POST['password'];
 
-					// consulto los datos
-					$query = "SELECT
-					usuarios_listado.password,
-					usuarios_listado.usuario,
-					usuarios_listado.Nombre,
-					usuarios_tipos.Nombre AS Usuario_Tipo
-
-					FROM `usuarios_listado`
-					LEFT JOIN `usuarios_tipos` ON usuarios_tipos.idTipoUsuario = usuarios_listado.idTipoUsuario
-					WHERE usuarios_listado.usuario = '".$usuario_1."' AND usuarios_listado.password = '".md5($password_1)."'";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					$rowUser = mysqli_fetch_assoc ($resultado);
-
 					echo '<pre>';
-						var_dump($query);
+						var_dump($query1);
 						echo '<br/>';
-						var_dump($rowUser);
+						var_dump($rowUser1);
 					echo '</pre>';
 
 					echo '<pre>';
@@ -94,24 +107,10 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 					if (!empty($_POST['usuario']))    $usuario_2    = $_POST['usuario'];
 					if (!empty($_POST['password']))   $password_2   = $_POST['password'];
 
-					// consulto los datos
-					$query = "SELECT
-					usuarios_listado.password,
-					usuarios_listado.usuario,
-					usuarios_listado.Nombre,
-					usuarios_tipos.Nombre AS Usuario_Tipo
-
-					FROM `usuarios_listado`
-					LEFT JOIN `usuarios_tipos` ON usuarios_tipos.idTipoUsuario = usuarios_listado.idTipoUsuario
-					WHERE usuarios_listado.usuario = '".$usuario_2."' AND usuarios_listado.password = '".md5($password_2)."'";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					$rowUser = mysqli_fetch_assoc ($resultado);
-
 					echo '<pre>';
-						var_dump($query);
+						var_dump($query2);
 						echo '<br/>';
-						var_dump($rowUser);
+						var_dump($rowUser2);
 					echo '</pre>';
 
 					echo '<pre>';

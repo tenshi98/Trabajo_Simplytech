@@ -146,7 +146,7 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 					// Catch compilation errors (errors caused by the compilation of the template : misplaced tags)
 					errorHandler(error);
 				}
-				
+
 				<?php
 				//se deben validar
 				if(isset($rowdata['Empleador_Nombre'])&&$rowdata['Empleador_Nombre']!=''){$Empleador_Nombre     = $rowdata['Empleador_Nombre'];       }else{$Empleador_Nombre      = 'Sin datos';}
