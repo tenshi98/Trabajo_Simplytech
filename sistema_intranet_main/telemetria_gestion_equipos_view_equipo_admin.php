@@ -58,12 +58,12 @@ $SIS_join  = '
 LEFT JOIN `core_ubicacion_ciudad`    ON core_ubicacion_ciudad.idCiudad  = telemetria_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`   ON core_ubicacion_comunas.idComuna = telemetria_listado.idComuna';
 $SIS_where = 'idTelemetria ='.simpleDecode($_GET['view'], fecha_actual());
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /****************************************************************/
 //Se arma la consulta
 $cadena = '';
-for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 	$cadena .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
 	$cadena .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
 	$cadena .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
@@ -85,7 +85,7 @@ LEFT JOIN `telemetria_listado_sensores_unimed`      ON telemetria_listado_sensor
 LEFT JOIN `telemetria_listado_sensores_med_actual`  ON telemetria_listado_sensores_med_actual.idTelemetria  = telemetria_listado.idTelemetria
 LEFT JOIN `telemetria_listado_sensores_activo`      ON telemetria_listado_sensores_activo.idTelemetria      = telemetria_listado.idTelemetria';
 $SIS_where = 'telemetria_listado.idTelemetria ='.simpleDecode($_GET['view'], fecha_actual());
-$rowMed = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowMed');
+$rowMed = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowMed');
 
 /****************************************************************/
 //Se traen todas las unidades de medida
@@ -101,7 +101,7 @@ foreach ($arrUnimed as $sen) {
 /****************************************************************/
 //Se consultan datos
 $arrGrupo = array();
-$arrGrupo = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupo');
+$arrGrupo = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupo');
 
 $grupo = array();
 foreach ($arrGrupos as $sen) {
@@ -110,7 +110,7 @@ foreach ($arrGrupos as $sen) {
 
 /****************************************************************/
 //numero sensores equipo
-$N_Maximo_Sensores = $rowdata['cantSensores'];
+$N_Maximo_Sensores = $rowData['cantSensores'];
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
@@ -128,7 +128,7 @@ LEFT JOIN `telemetria_listado_sensores_unimed`  ON telemetria_listado_sensores_u
 $SIS_where = 'telemetria_listado_errores_999.idTelemetria = '.simpleDecode($_GET['view'], fecha_actual());
 $SIS_order = 'telemetria_listado_errores_999.idErrores DESC LIMIT 20';
 $arrAlertas999 = array();
-$arrAlertas999 = db_select_array (false, $SIS_query, 'telemetria_listado_errores_999', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrAlertas999');
+$arrAlertas999 = db_select_array (false, $SIS_query, 'telemetria_listado_errores_999', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrAlertas999');
 
 /****************************************************************/
 // Se trae un listado con todas las fuera de linea
@@ -137,7 +137,7 @@ $SIS_join  = '';
 $SIS_where = 'idTelemetria ='.simpleDecode($_GET['view'], fecha_actual());
 $SIS_order = 'idFueraLinea DESC LIMIT 20';
 $arrFlinea = array();
-$arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera_linea', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrFlinea');
+$arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera_linea', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrFlinea');
 
 /****************************************************************/
 // Se trae un listado con todas las fuera de linea
@@ -146,7 +146,7 @@ $SIS_join  = '';
 $SIS_where = 'idTelemetria ='.simpleDecode($_GET['view'], fecha_actual());
 $SIS_order = 'Fecha DESC, Hora DESC LIMIT 20';
 $arrGPS0 = array();
-$arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGPS0');
+$arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGPS0');
 
 ?>
 
@@ -154,11 +154,11 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Equipo <?php echo $rowdata['Nombre']; ?></h5>
+			<h5>Equipo <?php echo $rowData['Nombre']; ?></h5>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
 
-				<?php if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){ ?>
+				<?php if(isset($rowData['id_Sensores'])&&$rowData['id_Sensores']==1){ ?>
 					<li class=""><a href="#mediciones" data-toggle="tab"><i class="fa fa-wifi" aria-hidden="true"></i> Ultimas Mediciones</a></li>
 				<?php } ?>
 
@@ -174,36 +174,36 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 				<div class="wmd-panel">
 
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<?php if ($rowdata['Direccion_img']=='') { ?>
+						<?php if ($rowData['Direccion_img']=='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 						<?php }else{  ?>
 							<?php if (isset($_GET['data_1'])&&$_GET['data_1']=='si') { ?>
-								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo 'https://'.$_GET['data_2'].$rowdata['Direccion_img']; ?>">
+								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo 'https://'.$_GET['data_2'].$rowData['Direccion_img']; ?>">
 							<?php }else{  ?>
-								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowData['Direccion_img']; ?>">
 							<?php } ?>
 						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary">Datos del Equipo</h2>
 						<p class="text-muted">
-							<?php if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){ ?><strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['IdentificadorEmpresa'])&&$rowdata['IdentificadorEmpresa']!=''){ ?><strong>Identificador Empresa : </strong><?php echo $rowdata['IdentificadorEmpresa']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_Num_Tel'])&&$rowdata['Sim_Num_Tel']!=''){ ?><strong>SIM - Numero Telefonico : </strong><?php echo $rowdata['Sim_Num_Tel']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_Num_Serie'])&&$rowdata['Sim_Num_Serie']!=''){ ?><strong>SIM - Numero Serie : </strong><?php echo $rowdata['Sim_Num_Serie']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_Compania'])&&$rowdata['Sim_Compania']!=''){ ?><strong>SIM - Compañia : </strong><?php echo $rowdata['Sim_Compania']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_marca'])&&$rowdata['Sim_marca']!=''){ ?><strong>BAM - Marca : </strong><?php echo $rowdata['Sim_marca']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_modelo'])&&$rowdata['Sim_modelo']!=''){ ?><strong>BAM - Modelo : </strong><?php echo $rowdata['Sim_modelo']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['IP_Client'])&&$rowdata['IP_Client']!=''){ ?><strong>IP Cliente : </strong><?php echo $rowdata['IP_Client']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['idTelemetria'])&&$rowdata['idTelemetria']!=''){ ?><strong>ID Equipo : </strong><?php echo $rowdata['idTelemetria']; ?><br/><?php } ?>
+							<?php if(isset($rowData['Nombre'])&&$rowData['Nombre']!=''){ ?><strong>Nombre : </strong><?php echo $rowData['Nombre']; ?><br/><?php } ?>
+							<?php if(isset($rowData['IdentificadorEmpresa'])&&$rowData['IdentificadorEmpresa']!=''){ ?><strong>Identificador Empresa : </strong><?php echo $rowData['IdentificadorEmpresa']; ?><br/><?php } ?>
+							<?php if(isset($rowData['Sim_Num_Tel'])&&$rowData['Sim_Num_Tel']!=''){ ?><strong>SIM - Numero Telefonico : </strong><?php echo $rowData['Sim_Num_Tel']; ?><br/><?php } ?>
+							<?php if(isset($rowData['Sim_Num_Serie'])&&$rowData['Sim_Num_Serie']!=''){ ?><strong>SIM - Numero Serie : </strong><?php echo $rowData['Sim_Num_Serie']; ?><br/><?php } ?>
+							<?php if(isset($rowData['Sim_Compania'])&&$rowData['Sim_Compania']!=''){ ?><strong>SIM - Compañia : </strong><?php echo $rowData['Sim_Compania']; ?><br/><?php } ?>
+							<?php if(isset($rowData['Sim_marca'])&&$rowData['Sim_marca']!=''){ ?><strong>BAM - Marca : </strong><?php echo $rowData['Sim_marca']; ?><br/><?php } ?>
+							<?php if(isset($rowData['Sim_modelo'])&&$rowData['Sim_modelo']!=''){ ?><strong>BAM - Modelo : </strong><?php echo $rowData['Sim_modelo']; ?><br/><?php } ?>
+							<?php if(isset($rowData['IP_Client'])&&$rowData['IP_Client']!=''){ ?><strong>IP Cliente : </strong><?php echo $rowData['IP_Client']; ?><br/><?php } ?>
+							<?php if(isset($rowData['idTelemetria'])&&$rowData['idTelemetria']!=''){ ?><strong>ID Equipo : </strong><?php echo $rowData['idTelemetria']; ?><br/><?php } ?>
 						</p>
 
 						<h2 class="text-primary">Datos de Configuracion</h2>
 						<p class="text-muted">
-							<?php if($rowdata['id_Sensores']==1){ ?>
-							<strong>Cantidad de Sensores : </strong><?php echo $rowdata['cantSensores']; ?><br/>
+							<?php if($rowData['id_Sensores']==1){ ?>
+							<strong>Cantidad de Sensores : </strong><?php echo $rowData['cantSensores']; ?><br/>
 							<?php } ?>
-							<strong>Tiempo Fuera Linea Maximo : </strong><?php echo $rowdata['TiempoFueraLinea']; ?> Horas<br/>
+							<strong>Tiempo Fuera Linea Maximo : </strong><?php echo $rowData['TiempoFueraLinea']; ?> Horas<br/>
 						</p>
 
 					</div>
@@ -212,7 +212,7 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 				</div>
 			</div>
 
-			<?php if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){ ?>
+			<?php if(isset($rowData['id_Sensores'])&&$rowData['id_Sensores']==1){ ?>
 				<div class="tab-pane fade" id="mediciones">
 					<div class="wmd-panel">
 						<div class="table-responsive">
@@ -234,7 +234,7 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 									</tr>
 								</thead>
 								<tbody role="alert" aria-live="polite" aria-relevant="all">
-									<?php for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+									<?php for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 										//solo sensores activos
 										if(isset($rowMed['SensoresActivo_'.$i])&&$rowMed['SensoresActivo_'.$i]==1){ ?>
 											<tr class="odd">

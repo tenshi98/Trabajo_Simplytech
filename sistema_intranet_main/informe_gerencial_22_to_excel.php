@@ -32,7 +32,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /**********************************************************************************************************************************/
 //Solo compras pagadas totalmente
 $z1   = "(idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)";
-$z2   = "(idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)";   
+$z2   = "(idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)";
 $z3   = "(idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)";
 $z4   = "(idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)";
 $z5   = "(idFacturacion!=0)";     //siempre pasa
@@ -123,7 +123,7 @@ if(isset($_GET['f_inicio'], $_GET['f_termino'])&&$_GET['f_inicio']!=''&&$_GET['f
 }
 /*************************************************************************************************/
 function return_query($type, $table){
-	
+
 	switch ($type) {
 		case 1:
 			$data = '
@@ -240,7 +240,7 @@ function return_query($type, $table){
 	}
 
 	return $data;
-}	
+}
 function return_join($type, $table){
 	switch ($type) {
 		case 1:
@@ -315,7 +315,7 @@ function return_filter($type, $table, $filter){
 	switch ($type) {
 		case 1:
 			$data = $filter.'
-			GROUP BY 
+			GROUP BY
 			'.$table.'.Creacion_ano,
 			'.$table.'.Creacion_mes,
 			'.$table.'.idCentroCosto,
@@ -326,7 +326,7 @@ function return_filter($type, $table, $filter){
 			break;
 		case 2:
 			$data = $filter.'
-			GROUP BY 
+			GROUP BY
 			'.$table.'.Creacion_ano,
 			'.$table.'.Creacion_mes,
 			'.$table.'.idCentroCosto,
@@ -335,7 +335,7 @@ function return_filter($type, $table, $filter){
 			break;
 		case 3:
 			$data = $filter.'
-			GROUP BY 
+			GROUP BY
 			'.$table.'.Pago_ano,
 			'.$table.'.Pago_mes,
 			'.$table.'.IVA_idCentroCosto,
@@ -344,7 +344,7 @@ function return_filter($type, $table, $filter){
 			break;
 		case 4:
 			$data = $filter.'
-			GROUP BY 
+			GROUP BY
 			'.$table.'.Pago_ano,
 			'.$table.'.Pago_mes,
 			'.$table.'.PPM_idCentroCosto,
@@ -353,7 +353,7 @@ function return_filter($type, $table, $filter){
 			break;
 		case 5:
 			$data = $filter.'
-			GROUP BY 
+			GROUP BY
 			'.$table.'.Pago_ano,
 			'.$table.'.Pago_mes,
 			'.$table.'.RET_idCentroCosto,
@@ -362,7 +362,7 @@ function return_filter($type, $table, $filter){
 			break;
 		case 6:
 			$data = $filter.'
-			GROUP BY 
+			GROUP BY
 			'.$table.'.Pago_ano,
 			'.$table.'.Pago_mes,
 			'.$table.'.IMPRENT_idCentroCosto,
@@ -371,7 +371,7 @@ function return_filter($type, $table, $filter){
 			break;
 		case 7:
 			$data = $filter.'
-			GROUP BY 
+			GROUP BY
 			'.$table.'.Pago_ano,
 			'.$table.'.Pago_mes,
 			'.$table.'.AFP_idCentroCosto,
@@ -380,7 +380,7 @@ function return_filter($type, $table, $filter){
 			break;
 		case 8:
 			$data = $filter.'
-			GROUP BY 
+			GROUP BY
 			'.$table.'.Pago_ano,
 			'.$table.'.Pago_mes,
 			'.$table.'.SALUD_idCentroCosto,
@@ -389,7 +389,7 @@ function return_filter($type, $table, $filter){
 			break;
 		case 9:
 			$data = $filter.'
-			GROUP BY 
+			GROUP BY
 			'.$table.'.Pago_ano,
 			'.$table.'.Pago_mes,
 			'.$table.'.SEGURIDAD_idCentroCosto,
@@ -488,7 +488,7 @@ foreach($arrTemporal_1 as $temp) {
 	if($inc==0 OR $arrTemp[1][$inc]['idLevel_2']!=$temp['idLevel_2']){          $count_change++;}//se verifica cambio de cliente
 	//validacion
 	if($count_change!=0){
-		//si cambia se suma 1 al indice y se crean variables vacias	
+		//si cambia se suma 1 al indice y se crean variables vacias
 		$inc++;
 		//se crean las variables
 		$arrTemp[1][$inc]['Tipo']           = 'Arriendos';
@@ -505,7 +505,6 @@ foreach($arrTemporal_1 as $temp) {
 		$arrTemp[1][$inc]['Total_5'] = 0;
 		$arrTemp[1][$inc]['Total_6'] = 0;
 	}
-		
 
 	//se busca el tipo
 	switch ($temp['idTipo']) {
@@ -516,7 +515,7 @@ foreach($arrTemporal_1 as $temp) {
 		case 10: $valor_5 = $temp['Total'];     break; //Nota Debito Proveedor
 		case 11: $valor_6 = $temp['Total']*-1;  break; //Nota Credito Proveedor
 	}
-		
+
 	switch ($temp['Servicio']) {
 		case 'Telemetría':
 			$arrTemp[1][$inc]['Total_1'] = $arrTemp[1][$inc]['Total_1'] + $valor_1 + $valor_2 + $valor_3;
@@ -542,7 +541,6 @@ foreach($arrTemporal_1 as $temp) {
 			$arrTemp[1][$inc]['Total_5'] = $arrTemp[1][$inc]['Total_5'] + 0;
 			$arrTemp[1][$inc]['Total_6'] = $arrTemp[1][$inc]['Total_6'] + $valor_4 + $valor_5 + $valor_6;
 			break;
-			
 	}
 }
 /***********************/
@@ -566,7 +564,7 @@ foreach($arrTemporal_2 as $temp) {
 	if($inc==0 OR $arrTemp[2][$inc]['idLevel_2']!=$temp['idLevel_2']){          $count_change++;}//se verifica cambio de cliente
 	//validacion
 	if($count_change!=0){
-		//si cambia se suma 1 al indice y se crean variables vacias	
+		//si cambia se suma 1 al indice y se crean variables vacias
 		$inc++;
 		//se crean las variables
 		$arrTemp[2][$inc]['Tipo']           = 'Insumos';
@@ -583,7 +581,6 @@ foreach($arrTemporal_2 as $temp) {
 		$arrTemp[2][$inc]['Total_5'] = 0;
 		$arrTemp[2][$inc]['Total_6'] = 0;
 	}
-		
 
 	//se busca el tipo
 	switch ($temp['idTipo']) {
@@ -594,7 +591,7 @@ foreach($arrTemporal_2 as $temp) {
 		case 10: $valor_5 = $temp['Total'];     break; //Nota Debito Proveedor
 		case 11: $valor_6 = $temp['Total']*-1;  break; //Nota Credito Proveedor
 	}
-		
+
 	switch ($temp['Servicio']) {
 		case 'Telemetría':
 			$arrTemp[2][$inc]['Total_1'] = $arrTemp[2][$inc]['Total_1'] + $valor_1 + $valor_2 + $valor_3;
@@ -620,7 +617,6 @@ foreach($arrTemporal_2 as $temp) {
 			$arrTemp[2][$inc]['Total_5'] = $arrTemp[2][$inc]['Total_5'] + 0;
 			$arrTemp[2][$inc]['Total_6'] = $arrTemp[2][$inc]['Total_6'] + $valor_4 + $valor_5 + $valor_6;
 			break;
-			
 	}
 }
 /***********************/
@@ -644,7 +640,7 @@ foreach($arrTemporal_3 as $temp) {
 	if($inc==0 OR $arrTemp[3][$inc]['idLevel_2']!=$temp['idLevel_2']){          $count_change++;}//se verifica cambio de cliente
 	//validacion
 	if($count_change!=0){
-		//si cambia se suma 1 al indice y se crean variables vacias	
+		//si cambia se suma 1 al indice y se crean variables vacias
 		$inc++;
 		//se crean las variables
 		$arrTemp[3][$inc]['Tipo']           = 'Productos';
@@ -661,7 +657,6 @@ foreach($arrTemporal_3 as $temp) {
 		$arrTemp[3][$inc]['Total_5'] = 0;
 		$arrTemp[3][$inc]['Total_6'] = 0;
 	}
-		
 
 	//se busca el tipo
 	switch ($temp['idTipo']) {
@@ -672,7 +667,7 @@ foreach($arrTemporal_3 as $temp) {
 		case 10: $valor_5 = $temp['Total'];     break; //Nota Debito Proveedor
 		case 11: $valor_6 = $temp['Total']*-1;  break; //Nota Credito Proveedor
 	}
-		
+
 	switch ($temp['Servicio']) {
 		case 'Telemetría':
 			$arrTemp[3][$inc]['Total_1'] = $arrTemp[3][$inc]['Total_1'] + $valor_1 + $valor_2 + $valor_3;
@@ -698,7 +693,6 @@ foreach($arrTemporal_3 as $temp) {
 			$arrTemp[3][$inc]['Total_5'] = $arrTemp[3][$inc]['Total_5'] + 0;
 			$arrTemp[3][$inc]['Total_6'] = $arrTemp[3][$inc]['Total_6'] + $valor_4 + $valor_5 + $valor_6;
 			break;
-			
 	}
 }
 /***********************/
@@ -722,7 +716,7 @@ foreach($arrTemporal_4 as $temp) {
 	if($inc==0 OR $arrTemp[4][$inc]['idLevel_2']!=$temp['idLevel_2']){          $count_change++;}//se verifica cambio de cliente
 	//validacion
 	if($count_change!=0){
-		//si cambia se suma 1 al indice y se crean variables vacias	
+		//si cambia se suma 1 al indice y se crean variables vacias
 		$inc++;
 		//se crean las variables
 		$arrTemp[4][$inc]['Tipo']           = 'Servicios';
@@ -749,7 +743,7 @@ foreach($arrTemporal_4 as $temp) {
 		case 10: $valor_5 = $temp['Total'];     break; //Nota Debito Proveedor
 		case 11: $valor_6 = $temp['Total']*-1;  break; //Nota Credito Proveedor
 	}
-		
+
 	switch ($temp['Servicio']) {
 		case 'Telemetría':
 			$arrTemp[4][$inc]['Total_1'] = $arrTemp[4][$inc]['Total_1'] + $valor_1 + $valor_2 + $valor_3;
@@ -775,7 +769,6 @@ foreach($arrTemporal_4 as $temp) {
 			$arrTemp[4][$inc]['Total_5'] = $arrTemp[4][$inc]['Total_5'] + 0;
 			$arrTemp[4][$inc]['Total_6'] = $arrTemp[4][$inc]['Total_6'] + $valor_4 + $valor_5 + $valor_6;
 			break;
-			
 	}
 }
 /***********************/
@@ -792,7 +785,7 @@ foreach($arrTemporal_5 as $temp) {
 	if($inc==0 OR $arrTemp[5][$inc]['idLevel_2']!=$temp['idLevel_2']){          $count_change++;}//se verifica cambio de cliente
 	//validacion
 	if($count_change!=0){
-		//si cambia se suma 1 al indice y se crean variables vacias	
+		//si cambia se suma 1 al indice y se crean variables vacias
 		$inc++;
 		//se crean las variables
 		$arrTemp[5][$inc]['Tipo']           = 'Boletas Honorarios';
@@ -822,7 +815,7 @@ foreach($arrTemporal_6 as $temp) {
 	if($inc==0 OR $arrTemp[6][$inc]['idLevel_2']!=$temp['idLevel_2']){          $count_change++;}//se verifica cambio de cliente
 	//validacion
 	if($count_change!=0){
-		//si cambia se suma 1 al indice y se crean variables vacias	
+		//si cambia se suma 1 al indice y se crean variables vacias
 		$inc++;
 		//se crean las variables
 		$arrTemp[6][$inc]['Tipo']           = 'Liquidacion Sueldo';
@@ -852,7 +845,7 @@ foreach($arrTemporal_7 as $temp) {
 	if($inc==0 OR $arrTemp[7][$inc]['idLevel_2']!=$temp['idLevel_2']){          $count_change++;}//se verifica cambio de cliente
 	//validacion
 	if($count_change!=0){
-		//si cambia se suma 1 al indice y se crean variables vacias	
+		//si cambia se suma 1 al indice y se crean variables vacias
 		$inc++;
 		//se crean las variables
 		$arrTemp[7][$inc]['Tipo']           = 'Rendiciones';
@@ -882,7 +875,7 @@ foreach($arrTemporal_8_1 as $temp) {
 	if($inc==0 OR $arrTemp[8][$inc]['idLevel_2']!=$temp['idLevel_2']){          $count_change++;}//se verifica cambio de cliente
 	//validacion
 	if($count_change!=0){
-		//si cambia se suma 1 al indice y se crean variables vacias	
+		//si cambia se suma 1 al indice y se crean variables vacias
 		$inc++;
 		//se crean las variables
 		$arrTemp[8][$inc]['Tipo']           = 'Formulario 29 IVA';
@@ -912,7 +905,7 @@ foreach($arrTemporal_8_2 as $temp) {
 	if($inc==0 OR $arrTemp[9][$inc]['idLevel_2']!=$temp['idLevel_2']){          $count_change++;}//se verifica cambio de cliente
 	//validacion
 	if($count_change!=0){
-		//si cambia se suma 1 al indice y se crean variables vacias	
+		//si cambia se suma 1 al indice y se crean variables vacias
 		$inc++;
 		//se crean las variables
 		$arrTemp[9][$inc]['Tipo']           = 'Formulario 29 PPM';
@@ -942,7 +935,7 @@ foreach($arrTemporal_8_3 as $temp) {
 	if($inc==0 OR $arrTemp[10][$inc]['idLevel_2']!=$temp['idLevel_2']){          $count_change++;}//se verifica cambio de cliente
 	//validacion
 	if($count_change!=0){
-		//si cambia se suma 1 al indice y se crean variables vacias	
+		//si cambia se suma 1 al indice y se crean variables vacias
 		$inc++;
 		//se crean las variables
 		$arrTemp[10][$inc]['Tipo']           = 'Formulario 29 Retenciones';
@@ -972,7 +965,7 @@ foreach($arrTemporal_8_4 as $temp) {
 	if($inc==0 OR $arrTemp[11][$inc]['idLevel_2']!=$temp['idLevel_2']){          $count_change++;}//se verifica cambio de cliente
 	//validacion
 	if($count_change!=0){
-		//si cambia se suma 1 al indice y se crean variables vacias	
+		//si cambia se suma 1 al indice y se crean variables vacias
 		$inc++;
 		//se crean las variables
 		$arrTemp[11][$inc]['Tipo']           = 'Formulario 29 Impuesto a la Renta';
@@ -1002,7 +995,7 @@ foreach($arrTemporal_9_1 as $temp) {
 	if($inc==0 OR $arrTemp[12][$inc]['idLevel_2']!=$temp['idLevel_2']){          $count_change++;}//se verifica cambio de cliente
 	//validacion
 	if($count_change!=0){
-		//si cambia se suma 1 al indice y se crean variables vacias	
+		//si cambia se suma 1 al indice y se crean variables vacias
 		$inc++;
 		//se crean las variables
 		$arrTemp[12][$inc]['Tipo']           = 'Previred AFP';
@@ -1032,7 +1025,7 @@ foreach($arrTemporal_9_2 as $temp) {
 	if($inc==0 OR $arrTemp[13][$inc]['idLevel_2']!=$temp['idLevel_2']){          $count_change++;}//se verifica cambio de cliente
 	//validacion
 	if($count_change!=0){
-		//si cambia se suma 1 al indice y se crean variables vacias	
+		//si cambia se suma 1 al indice y se crean variables vacias
 		$inc++;
 		//se crean las variables
 		$arrTemp[13][$inc]['Tipo']           = 'Previred Salud';
@@ -1062,7 +1055,7 @@ foreach($arrTemporal_9_3 as $temp) {
 	if($inc==0 OR $arrTemp[14][$inc]['idLevel_2']!=$temp['idLevel_2']){          $count_change++;}//se verifica cambio de cliente
 	//validacion
 	if($count_change!=0){
-		//si cambia se suma 1 al indice y se crean variables vacias	
+		//si cambia se suma 1 al indice y se crean variables vacias
 		$inc++;
 		//se crean las variables
 		$arrTemp[14][$inc]['Tipo']           = 'Previred Seguridad';
@@ -1086,7 +1079,6 @@ $arrCC_lv2 = array();
 foreach ($arrCentroCosto as $trab) {     $arrCC[$trab['idCentroCosto']] = $trab['Nombre'];}
 foreach ($arrCentroCosto_lv1 as $trab) { $arrCC_lv1[$trab['idLevel_1']] = $trab['Nombre'];}
 foreach ($arrCentroCosto_lv2 as $trab) { $arrCC_lv2[$trab['idLevel_2']] = $trab['Nombre'];}
-
 
 /**********************************************************************************************************************************/
 /*                                                          Ejecucion                                                             */
@@ -1129,7 +1121,7 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('S2', '%')
             ->setCellValue('T2', 'Total margen cliente')
             ->setCellValue('U2', '%');
-     
+
 $nn                         = 3;
 $total_ING_Telemetria       = 0;
 $total_ING_Instalacion      = 0;
@@ -1144,7 +1136,7 @@ $total_margen_serv          = 0;
 $total_margen_total         = 0;
 $total_ing_total            = 0;
 
-/**********************************************************/	
+/**********************************************************/
 if($arrTemp[1]!=false && !empty($arrTemp[1]) && $arrTemp[1]!=''){
 	foreach ($arrTemp[1] as $trab) {
 		//calculos
@@ -1166,11 +1158,11 @@ if($arrTemp[1]!=false && !empty($arrTemp[1]) && $arrTemp[1]!=''){
 		$total_margen_total         = $total_margen_total + $margen_total;
 		$total_ing_total            = $total_ing_total + $ing_total;
 		//divisiones
-		if(isset($trab['ING_Telemetria'])&&$trab['ING_Telemetria']!=0){        $prc_1 = porcentaje($margen_tel/$trab['ING_Telemetria']);        }else{$prc_1 = '0 %';}
-		if(isset($trab['ING_Instalacion'])&&$trab['ING_Instalacion']!=0){      $prc_2 = porcentaje($margen_ins/$trab['ING_Instalacion']);       }else{$prc_2 = '0 %';}
+		if(isset($trab['ING_Telemetria'])&&$trab['ING_Telemetria']!=0){           $prc_1 = porcentaje($margen_tel/$trab['ING_Telemetria']);        }else{$prc_1 = '0 %';}
+		if(isset($trab['ING_Instalacion'])&&$trab['ING_Instalacion']!=0){         $prc_2 = porcentaje($margen_ins/$trab['ING_Instalacion']);       }else{$prc_2 = '0 %';}
 		if(isset($trab['ING_ServicioTecnico'])&&$trab['ING_ServicioTecnico']!=0){ $prc_3 = porcentaje($margen_serv/$trab['ING_ServicioTecnico']);  }else{$prc_3 = '0 %';}
-		if(isset($ing_total)&&$ing_total!=0){                                      $prc_4 = porcentaje($margen_total/$ing_total);                   }else{$prc_4 = '0 %';} 
-							
+		if(isset($ing_total)&&$ing_total!=0){                                     $prc_4 = porcentaje($margen_total/$ing_total);                   }else{$prc_4 = '0 %';}
+
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Arriendos')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
@@ -1192,12 +1184,12 @@ if($arrTemp[1]!=false && !empty($arrTemp[1]) && $arrTemp[1]!=''){
 					->setCellValue('R'.$nn, $margen_serv)
 					->setCellValue('S'.$nn, $prc_3)
 					->setCellValue('T'.$nn, $margen_total)
-					->setCellValue('U'.$nn, $prc_4);					
-							
+					->setCellValue('U'.$nn, $prc_4);
+
 		$nn++;
 	}
 }
-/**********************************************************/	
+/**********************************************************/
 if($arrTemp[2]!=false && !empty($arrTemp[2]) && $arrTemp[2]!=''){
 	foreach ($arrTemp[2] as $trab) {
 		//calculos
@@ -1219,11 +1211,11 @@ if($arrTemp[2]!=false && !empty($arrTemp[2]) && $arrTemp[2]!=''){
 		$total_margen_total         = $total_margen_total + $margen_total;
 		$total_ing_total            = $total_ing_total + $ing_total;
 		//divisiones
-		if(isset($trab['ING_Telemetria'])&&$trab['ING_Telemetria']!=0){        $prc_1 = porcentaje($margen_tel/$trab['ING_Telemetria']);        }else{$prc_1 = '0 %';}
-		if(isset($trab['ING_Instalacion'])&&$trab['ING_Instalacion']!=0){      $prc_2 = porcentaje($margen_ins/$trab['ING_Instalacion']);       }else{$prc_2 = '0 %';}
+		if(isset($trab['ING_Telemetria'])&&$trab['ING_Telemetria']!=0){           $prc_1 = porcentaje($margen_tel/$trab['ING_Telemetria']);        }else{$prc_1 = '0 %';}
+		if(isset($trab['ING_Instalacion'])&&$trab['ING_Instalacion']!=0){         $prc_2 = porcentaje($margen_ins/$trab['ING_Instalacion']);       }else{$prc_2 = '0 %';}
 		if(isset($trab['ING_ServicioTecnico'])&&$trab['ING_ServicioTecnico']!=0){ $prc_3 = porcentaje($margen_serv/$trab['ING_ServicioTecnico']);  }else{$prc_3 = '0 %';}
-		if(isset($ing_total)&&$ing_total!=0){                                      $prc_4 = porcentaje($margen_total/$ing_total);                   }else{$prc_4 = '0 %';} 
-							
+		if(isset($ing_total)&&$ing_total!=0){                                     $prc_4 = porcentaje($margen_total/$ing_total);                   }else{$prc_4 = '0 %';}
+
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Arriendos')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
@@ -1245,12 +1237,12 @@ if($arrTemp[2]!=false && !empty($arrTemp[2]) && $arrTemp[2]!=''){
 					->setCellValue('R'.$nn, $margen_serv)
 					->setCellValue('S'.$nn, $prc_3)
 					->setCellValue('T'.$nn, $margen_total)
-					->setCellValue('U'.$nn, $prc_4);					
-							
+					->setCellValue('U'.$nn, $prc_4);
+
 		$nn++;
 	}
 }
-/**********************************************************/	
+/**********************************************************/
 if($arrTemp[3]!=false && !empty($arrTemp[3]) && $arrTemp[3]!=''){
 	foreach ($arrTemp[3] as $trab) {
 		//calculos
@@ -1272,11 +1264,11 @@ if($arrTemp[3]!=false && !empty($arrTemp[3]) && $arrTemp[3]!=''){
 		$total_margen_total         = $total_margen_total + $margen_total;
 		$total_ing_total            = $total_ing_total + $ing_total;
 		//divisiones
-		if(isset($trab['ING_Telemetria'])&&$trab['ING_Telemetria']!=0){        $prc_1 = porcentaje($margen_tel/$trab['ING_Telemetria']);        }else{$prc_1 = '0 %';}
-		if(isset($trab['ING_Instalacion'])&&$trab['ING_Instalacion']!=0){      $prc_2 = porcentaje($margen_ins/$trab['ING_Instalacion']);       }else{$prc_2 = '0 %';}
+		if(isset($trab['ING_Telemetria'])&&$trab['ING_Telemetria']!=0){           $prc_1 = porcentaje($margen_tel/$trab['ING_Telemetria']);        }else{$prc_1 = '0 %';}
+		if(isset($trab['ING_Instalacion'])&&$trab['ING_Instalacion']!=0){         $prc_2 = porcentaje($margen_ins/$trab['ING_Instalacion']);       }else{$prc_2 = '0 %';}
 		if(isset($trab['ING_ServicioTecnico'])&&$trab['ING_ServicioTecnico']!=0){ $prc_3 = porcentaje($margen_serv/$trab['ING_ServicioTecnico']);  }else{$prc_3 = '0 %';}
-		if(isset($ing_total)&&$ing_total!=0){                                      $prc_4 = porcentaje($margen_total/$ing_total);                   }else{$prc_4 = '0 %';} 
-							
+		if(isset($ing_total)&&$ing_total!=0){                                     $prc_4 = porcentaje($margen_total/$ing_total);                   }else{$prc_4 = '0 %';}
+
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Arriendos')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
@@ -1298,12 +1290,12 @@ if($arrTemp[3]!=false && !empty($arrTemp[3]) && $arrTemp[3]!=''){
 					->setCellValue('R'.$nn, $margen_serv)
 					->setCellValue('S'.$nn, $prc_3)
 					->setCellValue('T'.$nn, $margen_total)
-					->setCellValue('U'.$nn, $prc_4);					
-							
+					->setCellValue('U'.$nn, $prc_4);
+
 		$nn++;
 	}
 }
-/**********************************************************/	
+/**********************************************************/
 if($arrTemp[4]!=false && !empty($arrTemp[4]) && $arrTemp[4]!=''){
 	foreach ($arrTemp[4] as $trab) {
 		//calculos
@@ -1325,11 +1317,11 @@ if($arrTemp[4]!=false && !empty($arrTemp[4]) && $arrTemp[4]!=''){
 		$total_margen_total         = $total_margen_total + $margen_total;
 		$total_ing_total            = $total_ing_total + $ing_total;
 		//divisiones
-		if(isset($trab['ING_Telemetria'])&&$trab['ING_Telemetria']!=0){        $prc_1 = porcentaje($margen_tel/$trab['ING_Telemetria']);        }else{$prc_1 = '0 %';}
-		if(isset($trab['ING_Instalacion'])&&$trab['ING_Instalacion']!=0){      $prc_2 = porcentaje($margen_ins/$trab['ING_Instalacion']);       }else{$prc_2 = '0 %';}
+		if(isset($trab['ING_Telemetria'])&&$trab['ING_Telemetria']!=0){           $prc_1 = porcentaje($margen_tel/$trab['ING_Telemetria']);        }else{$prc_1 = '0 %';}
+		if(isset($trab['ING_Instalacion'])&&$trab['ING_Instalacion']!=0){         $prc_2 = porcentaje($margen_ins/$trab['ING_Instalacion']);       }else{$prc_2 = '0 %';}
 		if(isset($trab['ING_ServicioTecnico'])&&$trab['ING_ServicioTecnico']!=0){ $prc_3 = porcentaje($margen_serv/$trab['ING_ServicioTecnico']);  }else{$prc_3 = '0 %';}
-		if(isset($ing_total)&&$ing_total!=0){                                      $prc_4 = porcentaje($margen_total/$ing_total);                   }else{$prc_4 = '0 %';} 
-							
+		if(isset($ing_total)&&$ing_total!=0){                                     $prc_4 = porcentaje($margen_total/$ing_total);                   }else{$prc_4 = '0 %';}
+
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Arriendos')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
@@ -1351,8 +1343,8 @@ if($arrTemp[4]!=false && !empty($arrTemp[4]) && $arrTemp[4]!=''){
 					->setCellValue('R'.$nn, $margen_serv)
 					->setCellValue('S'.$nn, $prc_3)
 					->setCellValue('T'.$nn, $margen_total)
-					->setCellValue('U'.$nn, $prc_4);					
-							
+					->setCellValue('U'.$nn, $prc_4);
+
 		$nn++;
 	}
 }
@@ -1361,14 +1353,14 @@ if($arrTemp[5]!=false && !empty($arrTemp[5]) && $arrTemp[5]!=''){
 	foreach ($arrTemp[5] as $trab) {
 		//calculos
 		$margen_total   = $trab['Total']*-1;
-		$ing_total      = $margen_total;						
+		$ing_total      = $margen_total;
 		//Totales
 		$total_EG_Costos     = $total_EG_Costos + $trab['Total'];
 		$total_margen_total  = $total_margen_total + $margen_total;
 		$total_ing_total     = $total_ing_total + $ing_total;
 		//divisiones
-		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total);}else{ $prc_4 = '0 %';} 				
-		
+		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total);}else{ $prc_4 = '0 %';}
+
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Servicios')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
@@ -1390,8 +1382,8 @@ if($arrTemp[5]!=false && !empty($arrTemp[5]) && $arrTemp[5]!=''){
 					->setCellValue('R'.$nn, '')
 					->setCellValue('S'.$nn, '')
 					->setCellValue('T'.$nn, $margen_total)
-					->setCellValue('U'.$nn, $prc_4);					
-							
+					->setCellValue('U'.$nn, $prc_4);
+
 		$nn++;
 	}
 }
@@ -1400,14 +1392,14 @@ if($arrTemp[6]!=false && !empty($arrTemp[6]) && $arrTemp[6]!=''){
 	foreach ($arrTemp[6] as $trab) {
 		//calculos
 		$margen_total   = $trab['Total']*-1;
-		$ing_total      = $margen_total;						
+		$ing_total      = $margen_total;
 		//Totales
 		$total_EG_Costos     = $total_EG_Costos + $trab['Total'];
 		$total_margen_total  = $total_margen_total + $margen_total;
 		$total_ing_total     = $total_ing_total + $ing_total;
 		//divisiones
-		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total);}else{ $prc_4 = '0 %';} 				
-		
+		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total);}else{ $prc_4 = '0 %';}
+
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Servicios')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
@@ -1429,8 +1421,8 @@ if($arrTemp[6]!=false && !empty($arrTemp[6]) && $arrTemp[6]!=''){
 					->setCellValue('R'.$nn, '')
 					->setCellValue('S'.$nn, '')
 					->setCellValue('T'.$nn, $margen_total)
-					->setCellValue('U'.$nn, $prc_4);					
-							
+					->setCellValue('U'.$nn, $prc_4);
+
 		$nn++;
 	}
 }
@@ -1439,14 +1431,14 @@ if($arrTemp[7]!=false && !empty($arrTemp[7]) && $arrTemp[7]!=''){
 	foreach ($arrTemp[7] as $trab) {
 		//calculos
 		$margen_total   = $trab['Total']*-1;
-		$ing_total      = $margen_total;						
+		$ing_total      = $margen_total;
 		//Totales
 		$total_EG_Costos     = $total_EG_Costos + $trab['Total'];
 		$total_margen_total  = $total_margen_total + $margen_total;
 		$total_ing_total     = $total_ing_total + $ing_total;
 		//divisiones
-		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total);}else{ $prc_4 = '0 %';} 				
-		
+		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total);}else{ $prc_4 = '0 %';}
+
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Servicios')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
@@ -1468,8 +1460,8 @@ if($arrTemp[7]!=false && !empty($arrTemp[7]) && $arrTemp[7]!=''){
 					->setCellValue('R'.$nn, '')
 					->setCellValue('S'.$nn, '')
 					->setCellValue('T'.$nn, $margen_total)
-					->setCellValue('U'.$nn, $prc_4);					
-							
+					->setCellValue('U'.$nn, $prc_4);
+
 		$nn++;
 	}
 }
@@ -1478,14 +1470,14 @@ if($arrTemp[8]!=false && !empty($arrTemp[8]) && $arrTemp[8]!=''){
 	foreach ($arrTemp[8] as $trab) {
 		//calculos
 		$margen_total   = $trab['Total']*-1;
-		$ing_total      = $margen_total;						
+		$ing_total      = $margen_total;
 		//Totales
 		$total_EG_Costos     = $total_EG_Costos + $trab['Total'];
 		$total_margen_total  = $total_margen_total + $margen_total;
 		$total_ing_total     = $total_ing_total + $ing_total;
 		//divisiones
-		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total);}else{ $prc_4 = '0 %';} 				
-		
+		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total);}else{ $prc_4 = '0 %';}
+
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Servicios')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
@@ -1507,8 +1499,8 @@ if($arrTemp[8]!=false && !empty($arrTemp[8]) && $arrTemp[8]!=''){
 					->setCellValue('R'.$nn, '')
 					->setCellValue('S'.$nn, '')
 					->setCellValue('T'.$nn, $margen_total)
-					->setCellValue('U'.$nn, $prc_4);					
-							
+					->setCellValue('U'.$nn, $prc_4);
+
 		$nn++;
 	}
 }
@@ -1517,14 +1509,14 @@ if($arrTemp[9]!=false && !empty($arrTemp[9]) && $arrTemp[9]!=''){
 	foreach ($arrTemp[9] as $trab) {
 		//calculos
 		$margen_total   = $trab['Total']*-1;
-		$ing_total      = $margen_total;						
+		$ing_total      = $margen_total;
 		//Totales
 		$total_EG_Costos     = $total_EG_Costos + $trab['Total'];
 		$total_margen_total  = $total_margen_total + $margen_total;
 		$total_ing_total     = $total_ing_total + $ing_total;
 		//divisiones
-		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total);}else{ $prc_4 = '0 %';} 				
-		
+		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total);}else{ $prc_4 = '0 %';}
+
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Servicios')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
@@ -1546,8 +1538,8 @@ if($arrTemp[9]!=false && !empty($arrTemp[9]) && $arrTemp[9]!=''){
 					->setCellValue('R'.$nn, '')
 					->setCellValue('S'.$nn, '')
 					->setCellValue('T'.$nn, $margen_total)
-					->setCellValue('U'.$nn, $prc_4);					
-							
+					->setCellValue('U'.$nn, $prc_4);
+
 		$nn++;
 	}
 }
@@ -1556,14 +1548,14 @@ if($arrTemp[10]!=false && !empty($arrTemp[10]) && $arrTemp[10]!=''){
 	foreach ($arrTemp[10] as $trab) {
 		//calculos
 		$margen_total   = $trab['Total']*-1;
-		$ing_total      = $margen_total;						
+		$ing_total      = $margen_total;
 		//Totales
 		$total_EG_Costos     = $total_EG_Costos + $trab['Total'];
 		$total_margen_total  = $total_margen_total + $margen_total;
 		$total_ing_total     = $total_ing_total + $ing_total;
 		//divisiones
-		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total);}else{ $prc_4 = '0 %';} 				
-		
+		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total);}else{ $prc_4 = '0 %';}
+
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Servicios')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
@@ -1585,8 +1577,8 @@ if($arrTemp[10]!=false && !empty($arrTemp[10]) && $arrTemp[10]!=''){
 					->setCellValue('R'.$nn, '')
 					->setCellValue('S'.$nn, '')
 					->setCellValue('T'.$nn, $margen_total)
-					->setCellValue('U'.$nn, $prc_4);					
-							
+					->setCellValue('U'.$nn, $prc_4);
+
 		$nn++;
 	}
 }
@@ -1595,14 +1587,14 @@ if($arrTemp[11]!=false && !empty($arrTemp[11]) && $arrTemp[11]!=''){
 	foreach ($arrTemp[11] as $trab) {
 		//calculos
 		$margen_total   = $trab['Total']*-1;
-		$ing_total      = $margen_total;						
+		$ing_total      = $margen_total;
 		//Totales
 		$total_EG_Costos     = $total_EG_Costos + $trab['Total'];
 		$total_margen_total  = $total_margen_total + $margen_total;
 		$total_ing_total     = $total_ing_total + $ing_total;
 		//divisiones
-		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total);}else{ $prc_4 = '0 %';} 				
-		
+		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total);}else{ $prc_4 = '0 %';}
+
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Servicios')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
@@ -1624,8 +1616,8 @@ if($arrTemp[11]!=false && !empty($arrTemp[11]) && $arrTemp[11]!=''){
 					->setCellValue('R'.$nn, '')
 					->setCellValue('S'.$nn, '')
 					->setCellValue('T'.$nn, $margen_total)
-					->setCellValue('U'.$nn, $prc_4);					
-							
+					->setCellValue('U'.$nn, $prc_4);
+
 		$nn++;
 	}
 }
@@ -1634,14 +1626,14 @@ if($arrTemp[12]!=false && !empty($arrTemp[12]) && $arrTemp[12]!=''){
 	foreach ($arrTemp[12] as $trab) {
 		//calculos
 		$margen_total   = $trab['Total']*-1;
-		$ing_total      = $margen_total;						
+		$ing_total      = $margen_total;
 		//Totales
 		$total_EG_Costos     = $total_EG_Costos + $trab['Total'];
 		$total_margen_total  = $total_margen_total + $margen_total;
 		$total_ing_total     = $total_ing_total + $ing_total;
 		//divisiones
-		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total);}else{ $prc_4 = '0 %';} 				
-		
+		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total);}else{ $prc_4 = '0 %';}
+
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Servicios')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
@@ -1663,8 +1655,8 @@ if($arrTemp[12]!=false && !empty($arrTemp[12]) && $arrTemp[12]!=''){
 					->setCellValue('R'.$nn, '')
 					->setCellValue('S'.$nn, '')
 					->setCellValue('T'.$nn, $margen_total)
-					->setCellValue('U'.$nn, $prc_4);					
-							
+					->setCellValue('U'.$nn, $prc_4);
+
 		$nn++;
 	}
 }
@@ -1673,14 +1665,14 @@ if($arrTemp[13]!=false && !empty($arrTemp[13]) && $arrTemp[13]!=''){
 	foreach ($arrTemp[13] as $trab) {
 		//calculos
 		$margen_total   = $trab['Total']*-1;
-		$ing_total      = $margen_total;						
+		$ing_total      = $margen_total;
 		//Totales
 		$total_EG_Costos     = $total_EG_Costos + $trab['Total'];
 		$total_margen_total  = $total_margen_total + $margen_total;
 		$total_ing_total     = $total_ing_total + $ing_total;
 		//divisiones
-		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total);}else{ $prc_4 = '0 %';} 				
-		
+		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total);}else{ $prc_4 = '0 %';}
+
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Servicios')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
@@ -1702,8 +1694,8 @@ if($arrTemp[13]!=false && !empty($arrTemp[13]) && $arrTemp[13]!=''){
 					->setCellValue('R'.$nn, '')
 					->setCellValue('S'.$nn, '')
 					->setCellValue('T'.$nn, $margen_total)
-					->setCellValue('U'.$nn, $prc_4);					
-							
+					->setCellValue('U'.$nn, $prc_4);
+
 		$nn++;
 	}
 }
@@ -1712,14 +1704,14 @@ if($arrTemp[14]!=false && !empty($arrTemp[14]) && $arrTemp[14]!=''){
 	foreach ($arrTemp[14] as $trab) {
 		//calculos
 		$margen_total   = $trab['Total']*-1;
-		$ing_total      = $margen_total;						
+		$ing_total      = $margen_total;
 		//Totales
 		$total_EG_Costos     = $total_EG_Costos + $trab['Total'];
 		$total_margen_total  = $total_margen_total + $margen_total;
 		$total_ing_total     = $total_ing_total + $ing_total;
 		//divisiones
-		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total);}else{ $prc_4 = '0 %';} 				
-		
+		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total);}else{ $prc_4 = '0 %';}
+
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Servicios')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
@@ -1741,8 +1733,8 @@ if($arrTemp[14]!=false && !empty($arrTemp[14]) && $arrTemp[14]!=''){
 					->setCellValue('R'.$nn, '')
 					->setCellValue('S'.$nn, '')
 					->setCellValue('T'.$nn, $margen_total)
-					->setCellValue('U'.$nn, $prc_4);					
-							
+					->setCellValue('U'.$nn, $prc_4);
+
 		$nn++;
 	}
 }
@@ -1751,7 +1743,7 @@ if(isset($total_ING_Telemetria)&&$total_ING_Telemetria!=0){           $prc_1 = p
 if(isset($total_ING_Instalacion)&&$total_ING_Instalacion!=0){         $prc_2 = porcentaje($total_margen_ins/$total_ING_Instalacion);       }else{$prc_2 = '0 %';}
 if(isset($total_ING_ServicioTecnico)&&$total_ING_ServicioTecnico!=0){ $prc_3 = porcentaje($total_margen_serv/$total_ING_ServicioTecnico);  }else{$prc_3 = '0 %';} 
 if(isset($total_ing_total)&&$total_ing_total!=0){                     $prc_4 = porcentaje($total_margen_total/$total_ing_total);           }else{$prc_4 = '0 %';} 
-		
+
 //Totales
 $spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('A'.$nn, 'Totales')
@@ -1770,8 +1762,6 @@ $spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('S'.$nn, $prc_3)
 			->setCellValue('T'.$nn, $total_margen_total)
 			->setCellValue('U'.$nn, $prc_4);
-						
-				
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Rentabilidad');

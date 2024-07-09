@@ -65,7 +65,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'usuario, email, Nombre,Rut, fNacimiento, Direccion, Fono, idCiudad, idComuna';
 	$SIS_join  = '';
 	$SIS_where = 'idUsuario = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -73,21 +73,21 @@ if(!empty($_GET['id'])){
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-				<h5>Modificacion datos del Usuario <?php echo $rowdata['Nombre']; ?></h5>
+				<h5>Modificacion datos del Usuario <?php echo $rowData['Nombre']; ?></h5>
 			</header>
 			<div class="body">
 				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){          $x1  = $Nombre;        }else{$x1  = $rowdata['Nombre'];}
-					if(isset($Fono)){            $x2  = $Fono;          }else{$x2  = $rowdata['Fono'];}
-					if(isset($email)){           $x3  = $email;         }else{$x3  = $rowdata['email'];}
-					if(isset($Rut)){             $x4  = $Rut;           }else{$x4  = $rowdata['Rut'];}
-					if(isset($fNacimiento)){     $x5  = $fNacimiento;   }else{$x5  = $rowdata['fNacimiento'];}
-					if(isset($idCiudad)){        $x6  = $idCiudad;      }else{$x6  = $rowdata['idCiudad'];}
-					if(isset($idComuna)){        $x7  = $idComuna;      }else{$x7  = $rowdata['idComuna'];}
-					if(isset($Direccion)){       $x8  = $Direccion;     }else{$x8  = $rowdata['Direccion'];}
+					if(isset($Nombre)){          $x1  = $Nombre;        }else{$x1  = $rowData['Nombre'];}
+					if(isset($Fono)){            $x2  = $Fono;          }else{$x2  = $rowData['Fono'];}
+					if(isset($email)){           $x3  = $email;         }else{$x3  = $rowData['email'];}
+					if(isset($Rut)){             $x4  = $Rut;           }else{$x4  = $rowData['Rut'];}
+					if(isset($fNacimiento)){     $x5  = $fNacimiento;   }else{$x5  = $rowData['fNacimiento'];}
+					if(isset($idCiudad)){        $x6  = $idCiudad;      }else{$x6  = $rowData['idCiudad'];}
+					if(isset($idComuna)){        $x7  = $idComuna;      }else{$x7  = $rowData['idComuna'];}
+					if(isset($Direccion)){       $x8  = $Direccion;     }else{$x8  = $rowData['Direccion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -193,7 +193,7 @@ if(!empty($_GET['id'])){
 	LEFT JOIN `core_ubicacion_ciudad`    ON core_ubicacion_ciudad.idCiudad    = usuarios_listado.idCiudad
 	LEFT JOIN `core_ubicacion_comunas`   ON core_ubicacion_comunas.idComuna   = usuarios_listado.idComuna';
 	$SIS_where = 'usuarios_listado.idUsuario = '.$_GET['view'];
-	$rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -223,30 +223,30 @@ if(!empty($_GET['id'])){
 					<div class="wmd-panel">
 
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-							<?php if ($rowdata['Direccion_img']=='') { ?>
+							<?php if ($rowData['Direccion_img']=='') { ?>
 								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 							<?php }else{  ?>
-								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowData['Direccion_img']; ?>">
 							<?php } ?>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 							<h2 class="text-primary">Datos del Perfil</h2>
 							<p class="text-muted">
-								<strong>Usuario : </strong><?php echo $rowdata['usuario']; ?><br/>
-								<strong>Estado : </strong><?php echo $rowdata['estado']; ?><br/>
-								<strong>Ultimo Acceso : </strong><?php echo $rowdata['Ultimo_acceso']; ?>
+								<strong>Usuario : </strong><?php echo $rowData['usuario']; ?><br/>
+								<strong>Estado : </strong><?php echo $rowData['estado']; ?><br/>
+								<strong>Ultimo Acceso : </strong><?php echo $rowData['Ultimo_acceso']; ?>
 							</p>
 
 							<h2 class="text-primary">Datos Personales</h2>
 							<p class="text-muted">
-								<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
-								<strong>Fono : </strong><?php echo formatPhone($rowdata['Fono']); ?><br/>
-								<strong>Email : </strong><?php echo $rowdata['email']; ?><br/>
-								<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
-								<strong>Fecha de Nacimiento : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
-								<strong>Ciudad : </strong><?php echo $rowdata['Ciudad']; ?><br/>
-								<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-								<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?>
+								<strong>Nombre : </strong><?php echo $rowData['Nombre']; ?><br/>
+								<strong>Fono : </strong><?php echo formatPhone($rowData['Fono']); ?><br/>
+								<strong>Email : </strong><?php echo $rowData['email']; ?><br/>
+								<strong>Rut : </strong><?php echo $rowData['Rut']; ?><br/>
+								<strong>Fecha de Nacimiento : </strong><?php echo Fecha_completa($rowData['fNacimiento']); ?><br/>
+								<strong>Ciudad : </strong><?php echo $rowData['Ciudad']; ?><br/>
+								<strong>Comuna : </strong><?php echo $rowData['Comuna']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowData['Direccion']; ?>
 							</p>
 						</div>
 						<div class="clearfix"></div>

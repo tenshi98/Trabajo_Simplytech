@@ -55,7 +55,7 @@ LEFT JOIN `core_sistemas`     ON core_sistemas.idSistema     = trabajadores_hora
 LEFT JOIN `usuarios_listado`  ON usuarios_listado.idUsuario  = trabajadores_horas_extras_mensuales_facturacion.idUsuario
 LEFT JOIN `core_tiempo_meses` ON core_tiempo_meses.idMes     = trabajadores_horas_extras_mensuales_facturacion.idMes';
 $SIS_where = 'trabajadores_horas_extras_mensuales_facturacion.idFacturacion ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'trabajadores_horas_extras_mensuales_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'trabajadores_horas_extras_mensuales_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /*****************************************/
 // Se trae un listado con todos los otros
@@ -139,15 +139,15 @@ $arrHorasTotal = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_
 					</tr>
 					<tr>
 						<td class="meta-head">Periodo</td>
-						<td><?php echo $row_data['Ano'].' - '.$row_data['Mes']; ?></td>
+						<td><?php echo $rowData['Ano'].' - '.$rowData['Mes']; ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Usuario Ingreso</td>
-						<td><?php echo $row_data['Usuario']?></td>
+						<td><?php echo $rowData['Usuario']?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Sistema</td>
-						<td><?php echo $row_data['SistemaOrigen']?></td>
+						<td><?php echo $rowData['SistemaOrigen']?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -155,11 +155,11 @@ $arrHorasTotal = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Facturacion</td>
-						<td colspan="2"><?php echo Fecha_estandar($row_data['Creacion_fecha']); ?></td>
+						<td colspan="2"><?php echo Fecha_estandar($rowData['Creacion_fecha']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Fecha Ingreso</td>
-						<td colspan="2"><?php echo Fecha_estandar($row_data['fecha_auto']); ?></td>
+						<td colspan="2"><?php echo Fecha_estandar($rowData['fecha_auto']); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -243,7 +243,7 @@ $arrHorasTotal = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_
 
 				<tr>
 					<td colspan="10" class="blank word_break">
-						<?php echo $row_data['Observaciones']; ?>
+						<?php echo $rowData['Observaciones']; ?>
 					</td>
 				</tr>
 				<tr>

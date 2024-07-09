@@ -60,7 +60,7 @@ LEFT JOIN `trabajadores_listado`            ON trabajadores_listado.idTrabajador
 LEFT JOIN `usuarios_listado` usuario_queja  ON usuario_queja.idUsuario              = gestion_quejas.idUsuarioQueja
 LEFT JOIN `core_tipo_queja_general`         ON core_tipo_queja_general.idTipoQueja  = gestion_quejas.idTipoQueja';
 $SIS_where = 'gestion_quejas.idQueja ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'gestion_quejas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'gestion_quejas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 ?>
 
@@ -70,7 +70,7 @@ $rowdata = db_select_data (false, $SIS_query, 'gestion_quejas', $SIS_join, $SIS_
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Quejas Generales.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowdata['FechaQueja']); ?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowData['FechaQueja']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -82,24 +82,24 @@ $rowdata = db_select_data (false, $SIS_query, 'gestion_quejas', $SIS_join, $SIS_
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 invoice-col">
 			Datos de la queja
 			<address>
-				<strong>Usuario: </strong>'.$rowdata['Usuario'].'<br/>
-				<strong>Fecha Queja: </strong>'.fecha_estandar($rowdata['FechaQueja']).'<br/>';
-				if(isset($rowdata['UsuarioQueja'])&&$rowdata['UsuarioQueja']!=''){echo '<strong>Usuario Queja: </strong>'.$rowdata['UsuarioQueja'].'<br/>';}
-				if(isset($rowdata['TrabajadorNombre'])&&$rowdata['TrabajadorNombre']!=''){echo '<strong>Trabajador Queja: </strong>'.$rowdata['TrabajadorNombre'].' '.$rowdata['TrabajadorApellidoPat'].' '.$rowdata['TrabajadorApellidoMat'].'<br/>';}
-				if(isset($rowdata['UsuarioQueja'])&&$rowdata['UsuarioQueja']!=''){echo '<strong>Persona Queja: </strong>'.$rowdata['NombreQueja'].'<br/>';}
+				<strong>Usuario: </strong>'.$rowData['Usuario'].'<br/>
+				<strong>Fecha Queja: </strong>'.fecha_estandar($rowData['FechaQueja']).'<br/>';
+				if(isset($rowData['UsuarioQueja'])&&$rowData['UsuarioQueja']!=''){echo '<strong>Usuario Queja: </strong>'.$rowData['UsuarioQueja'].'<br/>';}
+				if(isset($rowData['TrabajadorNombre'])&&$rowData['TrabajadorNombre']!=''){echo '<strong>Trabajador Queja: </strong>'.$rowData['TrabajadorNombre'].' '.$rowData['TrabajadorApellidoPat'].' '.$rowData['TrabajadorApellidoMat'].'<br/>';}
+				if(isset($rowData['UsuarioQueja'])&&$rowData['UsuarioQueja']!=''){echo '<strong>Persona Queja: </strong>'.$rowData['NombreQueja'].'<br/>';}
 				echo '
-				<strong>Tipo Queja: </strong>'.$rowdata['TipoQueja'].'<br/>
+				<strong>Tipo Queja: </strong>'.$rowData['TipoQueja'].'<br/>
 			</address>
 		</div>';
 		?>
 
 	</div>
 
-	<?php if(isset($rowdata['Observaciones'])&&$rowdata['Observaciones']!=''){ ?>
+	<?php if(isset($rowData['Observaciones'])&&$rowData['Observaciones']!=''){ ?>
 		<div class="col-xs-12">
 			<div class="row">
 				<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-				<p class="text-muted well well-sm no-shadow" ><?php echo $rowdata['Observaciones']; ?></p>
+				<p class="text-muted well well-sm no-shadow" ><?php echo $rowData['Observaciones']; ?></p>
 			</div>
 		</div>
 	<?php } ?>

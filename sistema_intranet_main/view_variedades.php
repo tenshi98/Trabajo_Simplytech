@@ -58,7 +58,7 @@ LEFT JOIN `sistema_variedades_tipo`       ON sistema_variedades_tipo.idTipo     
 LEFT JOIN `sistema_variedades_categorias` ON sistema_variedades_categorias.idCategoria  = variedades_listado.idCategoria
 LEFT JOIN `core_estados`                  ON core_estados.idEstado                      = variedades_listado.idEstado';
 $SIS_where = 'variedades_listado.idProducto ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'variedades_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'variedades_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 ?>
 
@@ -66,7 +66,7 @@ $rowdata = db_select_data (false, $SIS_query, 'variedades_listado', $SIS_join, $
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Datos de la variedad <?php echo $rowdata['Nombre']; ?></h5>
+			<h5>Datos de la variedad <?php echo $rowData['Nombre']; ?></h5>
 		</header>
         <div class="tab-content">
 
@@ -74,25 +74,25 @@ $rowdata = db_select_data (false, $SIS_query, 'variedades_listado', $SIS_join, $
 				<div class="wmd-panel">
 
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<?php if ($rowdata['Direccion_img']=='') { ?>
+						<?php if ($rowData['Direccion_img']=='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/productos.jpg">
 						<?php }else{
-							echo widget_TipoImagen($rowdata['idTipoImagen'], DB_SITE_REPO, DB_SITE_MAIN_PATH, 'upload', $rowdata['Direccion_img']);
+							echo widget_TipoImagen($rowData['idTipoImagen'], DB_SITE_REPO, DB_SITE_MAIN_PATH, 'upload', $rowData['Direccion_img']);
 						} ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Producto</h2>
 						<p class="text-muted">
-							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
-							<strong>Codigo : </strong><?php echo $rowdata['Codigo']; ?><br/>
-							<strong>Especie : </strong><?php echo $rowdata['Categoria']; ?><br/>
-							<strong>Grupo Especie : </strong><?php echo $rowdata['Tipo']; ?><br/>
-							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?>
+							<strong>Nombre : </strong><?php echo $rowData['Nombre']; ?><br/>
+							<strong>Codigo : </strong><?php echo $rowData['Codigo']; ?><br/>
+							<strong>Especie : </strong><?php echo $rowData['Categoria']; ?><br/>
+							<strong>Grupo Especie : </strong><?php echo $rowData['Tipo']; ?><br/>
+							<strong>Estado : </strong><?php echo $rowData['Estado']; ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripción</h2>
-						<p class="text-muted"><?php echo $rowdata['Descripcion']; ?></p>
+						<p class="text-muted"><?php echo $rowData['Descripcion']; ?></p>
 						
 						
 						
@@ -100,12 +100,12 @@ $rowdata = db_select_data (false, $SIS_query, 'variedades_listado', $SIS_join, $
 						<p class="text-muted">
 							<?php
 							//Ficha Tecnica
-							if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
-								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['FichaTecnica'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Ficha Tecnica</a>';
+							if(isset($rowData['FichaTecnica'])&&$rowData['FichaTecnica']!=''){
+								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['FichaTecnica'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Ficha Tecnica</a>';
 							}
 							//Hoja de seguridad
-							if(isset($rowdata['HDS'])&&$rowdata['HDS']!=''){
-								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['HDS'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Hoja de Seguridad</a>';
+							if(isset($rowData['HDS'])&&$rowData['HDS']!=''){
+								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['HDS'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Hoja de Seguridad</a>';
 							}
 							?>
 

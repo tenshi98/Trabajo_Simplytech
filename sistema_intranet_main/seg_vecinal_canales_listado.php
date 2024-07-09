@@ -73,7 +73,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'idCategoria, Nombre,Direccion, Channel_ID';
 	$SIS_join  = '';
 	$SIS_where = 'idCanal = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_canales_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'seg_vecinal_canales_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -88,10 +88,10 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idCategoria)){  $x1 = $idCategoria;  }else{$x1 = $rowdata['idCategoria'];}
-					if(isset($Nombre)){       $x2 = $Nombre;       }else{$x2 = $rowdata['Nombre'];}
-					if(isset($Direccion)){    $x3 = $Direccion;    }else{$x3 = $rowdata['Direccion'];}
-					if(isset($Channel_ID)){   $x4 = $Channel_ID;   }else{$x4 = $rowdata['Channel_ID'];}
+					if(isset($idCategoria)){  $x1 = $idCategoria;  }else{$x1 = $rowData['idCategoria'];}
+					if(isset($Nombre)){       $x2 = $Nombre;       }else{$x2 = $rowData['Nombre'];}
+					if(isset($Direccion)){    $x3 = $Direccion;    }else{$x3 = $rowData['Direccion'];}
+					if(isset($Channel_ID)){   $x4 = $Channel_ID;   }else{$x4 = $rowData['Channel_ID'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

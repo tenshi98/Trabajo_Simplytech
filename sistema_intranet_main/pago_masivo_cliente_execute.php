@@ -59,23 +59,23 @@ if(isset($_GET['type'])&&$_GET['type']!=''){
 					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 									
 				}
-				$row_data = mysqli_fetch_assoc ($resultado);
+				$rowData = mysqli_fetch_assoc ($resultado);
 
 				/******************************************************************/
 				//Se traspasan los valores a variables de sesion
-				$_SESSION['pago_clientes_insumos'][$row_data['idFacturacion']]['idFacturacion']      = $row_data['idFacturacion'];
-				$_SESSION['pago_clientes_insumos'][$row_data['idFacturacion']]['N_Doc']              = $row_data['N_Doc'];
-				$_SESSION['pago_clientes_insumos'][$row_data['idFacturacion']]['Documento']          = $row_data['Documento'];
-				$_SESSION['pago_clientes_insumos'][$row_data['idFacturacion']]['Cliente']            = $row_data['ClienteNombre'];
-				$_SESSION['pago_clientes_insumos'][$row_data['idFacturacion']]['ValorTotal']         = $row_data['ValorTotal'];
-				$_SESSION['pago_clientes_insumos'][$row_data['idFacturacion']]['MontoPagado']        = $row_data['MontoPagado'];
-				$_SESSION['pago_clientes_insumos'][$row_data['idFacturacion']]['idSistema']          = $row_data['idSistema'];
-				$_SESSION['pago_clientes_insumos'][$row_data['idFacturacion']]['idCliente']          = $row_data['idCliente'];
-				$_SESSION['pago_clientes_insumos'][$row_data['idFacturacion']]['idDocumentos']       = $row_data['idDocumentos'];
-				$_SESSION['pago_clientes_insumos'][$row_data['idFacturacion']]['ValorPagado']        = '';
-				$_SESSION['pago_clientes_insumos'][$row_data['idFacturacion']]['FacRelacionada']     = '';
-				$_SESSION['pago_clientes_insumos'][$row_data['idFacturacion']]['idFacRelacionada']   = 0;
-				$_SESSION['pago_clientes_insumos'][$row_data['idFacturacion']]['MontoNC']            = 0;
+				$_SESSION['pago_clientes_insumos'][$rowData['idFacturacion']]['idFacturacion']      = $rowData['idFacturacion'];
+				$_SESSION['pago_clientes_insumos'][$rowData['idFacturacion']]['N_Doc']              = $rowData['N_Doc'];
+				$_SESSION['pago_clientes_insumos'][$rowData['idFacturacion']]['Documento']          = $rowData['Documento'];
+				$_SESSION['pago_clientes_insumos'][$rowData['idFacturacion']]['Cliente']            = $rowData['ClienteNombre'];
+				$_SESSION['pago_clientes_insumos'][$rowData['idFacturacion']]['ValorTotal']         = $rowData['ValorTotal'];
+				$_SESSION['pago_clientes_insumos'][$rowData['idFacturacion']]['MontoPagado']        = $rowData['MontoPagado'];
+				$_SESSION['pago_clientes_insumos'][$rowData['idFacturacion']]['idSistema']          = $rowData['idSistema'];
+				$_SESSION['pago_clientes_insumos'][$rowData['idFacturacion']]['idCliente']          = $rowData['idCliente'];
+				$_SESSION['pago_clientes_insumos'][$rowData['idFacturacion']]['idDocumentos']       = $rowData['idDocumentos'];
+				$_SESSION['pago_clientes_insumos'][$rowData['idFacturacion']]['ValorPagado']        = '';
+				$_SESSION['pago_clientes_insumos'][$rowData['idFacturacion']]['FacRelacionada']     = '';
+				$_SESSION['pago_clientes_insumos'][$rowData['idFacturacion']]['idFacRelacionada']   = 0;
+				$_SESSION['pago_clientes_insumos'][$rowData['idFacturacion']]['MontoNC']            = 0;
 
 			}
 					
@@ -120,23 +120,23 @@ if(isset($_GET['type'])&&$_GET['type']!=''){
 					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 									
 				}
-				$row_data = mysqli_fetch_assoc ($resultado);
+				$rowData = mysqli_fetch_assoc ($resultado);
 
 				/******************************************************************/
 				//Se traspasan los valores a variables de sesion
-				$_SESSION['pago_clientes_productos'][$row_data['idFacturacion']]['idFacturacion']      = $row_data['idFacturacion'];
-				$_SESSION['pago_clientes_productos'][$row_data['idFacturacion']]['N_Doc']              = $row_data['N_Doc'];
-				$_SESSION['pago_clientes_productos'][$row_data['idFacturacion']]['Documento']          = $row_data['Documento'];
-				$_SESSION['pago_clientes_productos'][$row_data['idFacturacion']]['Cliente']            = $row_data['ClienteNombre'];
-				$_SESSION['pago_clientes_productos'][$row_data['idFacturacion']]['ValorTotal']         = $row_data['ValorTotal'];
-				$_SESSION['pago_clientes_productos'][$row_data['idFacturacion']]['MontoPagado']        = $row_data['MontoPagado'];
-				$_SESSION['pago_clientes_productos'][$row_data['idFacturacion']]['idSistema']          = $row_data['idSistema'];
-				$_SESSION['pago_clientes_productos'][$row_data['idFacturacion']]['idCliente']          = $row_data['idCliente'];
-				$_SESSION['pago_clientes_productos'][$row_data['idFacturacion']]['idDocumentos']       = $row_data['idDocumentos'];
-				$_SESSION['pago_clientes_productos'][$row_data['idFacturacion']]['ValorPagado']        = '';
-				$_SESSION['pago_clientes_productos'][$row_data['idFacturacion']]['FacRelacionada']     = '';
-				$_SESSION['pago_clientes_productos'][$row_data['idFacturacion']]['idFacRelacionada']   = 0;
-				$_SESSION['pago_clientes_productos'][$row_data['idFacturacion']]['MontoNC']            = 0;
+				$_SESSION['pago_clientes_productos'][$rowData['idFacturacion']]['idFacturacion']      = $rowData['idFacturacion'];
+				$_SESSION['pago_clientes_productos'][$rowData['idFacturacion']]['N_Doc']              = $rowData['N_Doc'];
+				$_SESSION['pago_clientes_productos'][$rowData['idFacturacion']]['Documento']          = $rowData['Documento'];
+				$_SESSION['pago_clientes_productos'][$rowData['idFacturacion']]['Cliente']            = $rowData['ClienteNombre'];
+				$_SESSION['pago_clientes_productos'][$rowData['idFacturacion']]['ValorTotal']         = $rowData['ValorTotal'];
+				$_SESSION['pago_clientes_productos'][$rowData['idFacturacion']]['MontoPagado']        = $rowData['MontoPagado'];
+				$_SESSION['pago_clientes_productos'][$rowData['idFacturacion']]['idSistema']          = $rowData['idSistema'];
+				$_SESSION['pago_clientes_productos'][$rowData['idFacturacion']]['idCliente']          = $rowData['idCliente'];
+				$_SESSION['pago_clientes_productos'][$rowData['idFacturacion']]['idDocumentos']       = $rowData['idDocumentos'];
+				$_SESSION['pago_clientes_productos'][$rowData['idFacturacion']]['ValorPagado']        = '';
+				$_SESSION['pago_clientes_productos'][$rowData['idFacturacion']]['FacRelacionada']     = '';
+				$_SESSION['pago_clientes_productos'][$rowData['idFacturacion']]['idFacRelacionada']   = 0;
+				$_SESSION['pago_clientes_productos'][$rowData['idFacturacion']]['MontoNC']            = 0;
 
 			}
 			break;
@@ -180,23 +180,23 @@ if(isset($_GET['type'])&&$_GET['type']!=''){
 					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 									
 				}
-				$row_data = mysqli_fetch_assoc ($resultado);
+				$rowData = mysqli_fetch_assoc ($resultado);
 
 				/******************************************************************/
 				//Se traspasan los valores a variables de sesion
-				$_SESSION['pago_clientes_arriendo'][$row_data['idFacturacion']]['idFacturacion']      = $row_data['idFacturacion'];
-				$_SESSION['pago_clientes_arriendo'][$row_data['idFacturacion']]['N_Doc']              = $row_data['N_Doc'];
-				$_SESSION['pago_clientes_arriendo'][$row_data['idFacturacion']]['Documento']          = $row_data['Documento'];
-				$_SESSION['pago_clientes_arriendo'][$row_data['idFacturacion']]['Cliente']            = $row_data['ClienteNombre'];
-				$_SESSION['pago_clientes_arriendo'][$row_data['idFacturacion']]['ValorTotal']         = $row_data['ValorTotal'];
-				$_SESSION['pago_clientes_arriendo'][$row_data['idFacturacion']]['MontoPagado']        = $row_data['MontoPagado'];
-				$_SESSION['pago_clientes_arriendo'][$row_data['idFacturacion']]['idSistema']          = $row_data['idSistema'];
-				$_SESSION['pago_clientes_arriendo'][$row_data['idFacturacion']]['idCliente']          = $row_data['idCliente'];
-				$_SESSION['pago_clientes_arriendo'][$row_data['idFacturacion']]['idDocumentos']       = $row_data['idDocumentos'];
-				$_SESSION['pago_clientes_arriendo'][$row_data['idFacturacion']]['ValorPagado']        = '';
-				$_SESSION['pago_clientes_arriendo'][$row_data['idFacturacion']]['FacRelacionada']     = '';
-				$_SESSION['pago_clientes_arriendo'][$row_data['idFacturacion']]['idFacRelacionada']   = 0;
-				$_SESSION['pago_clientes_arriendo'][$row_data['idFacturacion']]['MontoNC']            = 0;
+				$_SESSION['pago_clientes_arriendo'][$rowData['idFacturacion']]['idFacturacion']      = $rowData['idFacturacion'];
+				$_SESSION['pago_clientes_arriendo'][$rowData['idFacturacion']]['N_Doc']              = $rowData['N_Doc'];
+				$_SESSION['pago_clientes_arriendo'][$rowData['idFacturacion']]['Documento']          = $rowData['Documento'];
+				$_SESSION['pago_clientes_arriendo'][$rowData['idFacturacion']]['Cliente']            = $rowData['ClienteNombre'];
+				$_SESSION['pago_clientes_arriendo'][$rowData['idFacturacion']]['ValorTotal']         = $rowData['ValorTotal'];
+				$_SESSION['pago_clientes_arriendo'][$rowData['idFacturacion']]['MontoPagado']        = $rowData['MontoPagado'];
+				$_SESSION['pago_clientes_arriendo'][$rowData['idFacturacion']]['idSistema']          = $rowData['idSistema'];
+				$_SESSION['pago_clientes_arriendo'][$rowData['idFacturacion']]['idCliente']          = $rowData['idCliente'];
+				$_SESSION['pago_clientes_arriendo'][$rowData['idFacturacion']]['idDocumentos']       = $rowData['idDocumentos'];
+				$_SESSION['pago_clientes_arriendo'][$rowData['idFacturacion']]['ValorPagado']        = '';
+				$_SESSION['pago_clientes_arriendo'][$rowData['idFacturacion']]['FacRelacionada']     = '';
+				$_SESSION['pago_clientes_arriendo'][$rowData['idFacturacion']]['idFacRelacionada']   = 0;
+				$_SESSION['pago_clientes_arriendo'][$rowData['idFacturacion']]['MontoNC']            = 0;
 
 			}
 			break;
@@ -240,23 +240,23 @@ if(isset($_GET['type'])&&$_GET['type']!=''){
 					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 									
 				}
-				$row_data = mysqli_fetch_assoc ($resultado);
+				$rowData = mysqli_fetch_assoc ($resultado);
 
 				/******************************************************************/
 				//Se traspasan los valores a variables de sesion
-				$_SESSION['pago_clientes_servicio'][$row_data['idFacturacion']]['idFacturacion']      = $row_data['idFacturacion'];
-				$_SESSION['pago_clientes_servicio'][$row_data['idFacturacion']]['N_Doc']              = $row_data['N_Doc'];
-				$_SESSION['pago_clientes_servicio'][$row_data['idFacturacion']]['Documento']          = $row_data['Documento'];
-				$_SESSION['pago_clientes_servicio'][$row_data['idFacturacion']]['Cliente']            = $row_data['ClienteNombre'];
-				$_SESSION['pago_clientes_servicio'][$row_data['idFacturacion']]['ValorTotal']         = $row_data['ValorTotal'];
-				$_SESSION['pago_clientes_servicio'][$row_data['idFacturacion']]['MontoPagado']        = $row_data['MontoPagado'];
-				$_SESSION['pago_clientes_servicio'][$row_data['idFacturacion']]['idSistema']          = $row_data['idSistema'];
-				$_SESSION['pago_clientes_servicio'][$row_data['idFacturacion']]['idCliente']          = $row_data['idCliente'];
-				$_SESSION['pago_clientes_servicio'][$row_data['idFacturacion']]['idDocumentos']       = $row_data['idDocumentos'];
-				$_SESSION['pago_clientes_servicio'][$row_data['idFacturacion']]['ValorPagado']        = '';
-				$_SESSION['pago_clientes_servicio'][$row_data['idFacturacion']]['FacRelacionada']     = '';
-				$_SESSION['pago_clientes_servicio'][$row_data['idFacturacion']]['idFacRelacionada']   = 0;
-				$_SESSION['pago_clientes_servicio'][$row_data['idFacturacion']]['MontoNC']            = 0;
+				$_SESSION['pago_clientes_servicio'][$rowData['idFacturacion']]['idFacturacion']      = $rowData['idFacturacion'];
+				$_SESSION['pago_clientes_servicio'][$rowData['idFacturacion']]['N_Doc']              = $rowData['N_Doc'];
+				$_SESSION['pago_clientes_servicio'][$rowData['idFacturacion']]['Documento']          = $rowData['Documento'];
+				$_SESSION['pago_clientes_servicio'][$rowData['idFacturacion']]['Cliente']            = $rowData['ClienteNombre'];
+				$_SESSION['pago_clientes_servicio'][$rowData['idFacturacion']]['ValorTotal']         = $rowData['ValorTotal'];
+				$_SESSION['pago_clientes_servicio'][$rowData['idFacturacion']]['MontoPagado']        = $rowData['MontoPagado'];
+				$_SESSION['pago_clientes_servicio'][$rowData['idFacturacion']]['idSistema']          = $rowData['idSistema'];
+				$_SESSION['pago_clientes_servicio'][$rowData['idFacturacion']]['idCliente']          = $rowData['idCliente'];
+				$_SESSION['pago_clientes_servicio'][$rowData['idFacturacion']]['idDocumentos']       = $rowData['idDocumentos'];
+				$_SESSION['pago_clientes_servicio'][$rowData['idFacturacion']]['ValorPagado']        = '';
+				$_SESSION['pago_clientes_servicio'][$rowData['idFacturacion']]['FacRelacionada']     = '';
+				$_SESSION['pago_clientes_servicio'][$rowData['idFacturacion']]['idFacRelacionada']   = 0;
+				$_SESSION['pago_clientes_servicio'][$rowData['idFacturacion']]['MontoNC']            = 0;
 
 			}
 			break;

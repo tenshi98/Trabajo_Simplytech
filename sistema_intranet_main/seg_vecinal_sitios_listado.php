@@ -73,7 +73,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'Nombre,Direccion';
 	$SIS_join  = '';
 	$SIS_where = 'idSitio = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_sitios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'seg_vecinal_sitios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -88,8 +88,8 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){       $x1 = $Nombre;       }else{$x1 = $rowdata['Nombre'];}
-					if(isset($Direccion)){    $x2 = $Direccion;    }else{$x2 = $rowdata['Direccion'];}
+					if(isset($Nombre)){       $x1 = $Nombre;       }else{$x1 = $rowData['Nombre'];}
+					if(isset($Direccion)){    $x2 = $Direccion;    }else{$x2 = $rowData['Direccion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

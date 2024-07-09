@@ -89,7 +89,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado); 
+$rowData = mysqli_fetch_assoc ($resultado); 
  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -103,19 +103,19 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idEtapa)){      $x1  = $idEtapa;        }else{$x1  = $rowdata['idEtapa'];}
-				if(isset($Observacion)){  $x2  = $Observacion;    }else{$x2  = $rowdata['Observacion'];}
+				if(isset($idEtapa)){      $x1  = $idEtapa;        }else{$x1  = $rowData['idEtapa'];}
+				if(isset($Observacion)){  $x2  = $Observacion;    }else{$x2  = $rowData['Observacion'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Etapa Fidelizacion','idEtapa', $x1, 2, 'idEtapa', 'Nombre', 'prospectos_etapa', 0, '', $dbConn);
 				$Form_Inputs->form_ckeditor('Observacion', 'Observacion', $x2, 2, 2);
 				//si existe archivo se mustra previsualizador
-				if(isset($rowdata['Archivo'])&&$rowdata['Archivo']!=''){ ?>
+				if(isset($rowData['Archivo'])&&$rowData['Archivo']!=''){ ?>
 
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 						<h3>Archivo</h3>
-						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['Archivo'], ''); ?>
+						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowData['Archivo'], ''); ?>
 					</div>
 					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_archivo='.$_GET['edit']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 					<div class="clearfix"></div>
@@ -202,7 +202,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 // Se trae un listado con todas las etapa el Prospecto
 $arrEtapa = array();
@@ -240,7 +240,7 @@ array_push( $arrEtapa,$row );
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowdata['Nombre'], 'Etapa Fidelizacion'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowData['Nombre'], 'Etapa Fidelizacion'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar Etapa Fidelizacion</a><?php } ?>
 	</div>

@@ -84,7 +84,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'Fecha,Hora,Nombre,idSistema, Rut, NDocCedula, Destino, HoraSalida';
 	$SIS_join  = '';
 	$SIS_where = 'idAcceso = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'seguridad_accesos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'seguridad_accesos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -99,14 +99,14 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Fecha)){          $x1  = $Fecha;          }else{$x1  = $rowdata['Fecha'];}
-					if(isset($Hora)){           $x2  = $Hora;           }else{$x2  = $rowdata['Hora'];}
-					if(isset($HoraSalida)){     $x3  = $HoraSalida;     }else{$x3  = $rowdata['HoraSalida'];}
-					if(isset($Nombre)){         $x4  = $Nombre;         }else{$x4  = $rowdata['Nombre'];}
-					if(isset($Rut)){            $x5  = $Rut;            }else{$x5  = $rowdata['Rut'];}
-					if(isset($NDocCedula)){     $x6  = $NDocCedula;     }else{$x6  = $rowdata['NDocCedula'];}
-					if(isset($Destino)){        $x7  = $Destino;        }else{$x7  = $rowdata['Destino'];}
-					if(isset($PersonaReunion)){ $x8  = $PersonaReunion; }else{$x8  = $rowdata['PersonaReunion'];}
+					if(isset($Fecha)){          $x1  = $Fecha;          }else{$x1  = $rowData['Fecha'];}
+					if(isset($Hora)){           $x2  = $Hora;           }else{$x2  = $rowData['Hora'];}
+					if(isset($HoraSalida)){     $x3  = $HoraSalida;     }else{$x3  = $rowData['HoraSalida'];}
+					if(isset($Nombre)){         $x4  = $Nombre;         }else{$x4  = $rowData['Nombre'];}
+					if(isset($Rut)){            $x5  = $Rut;            }else{$x5  = $rowData['Rut'];}
+					if(isset($NDocCedula)){     $x6  = $NDocCedula;     }else{$x6  = $rowData['NDocCedula'];}
+					if(isset($Destino)){        $x7  = $Destino;        }else{$x7  = $rowData['Destino'];}
+					if(isset($PersonaReunion)){ $x8  = $PersonaReunion; }else{$x8  = $rowData['PersonaReunion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -240,7 +240,7 @@ if(!empty($_GET['id'])){
 	}
 	/**********************************************************/
 	//Se aplican los filtros
-	if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != '')  {
+	if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){
 		$SIS_where .= " AND seguridad_accesos.idUsuario = '".$_GET['idUsuario']."'";
 	}
 	if(isset($_GET['h_inicio'], $_GET['h_termino']) && $_GET['h_inicio'] != '' && $_GET['h_termino']!=''){

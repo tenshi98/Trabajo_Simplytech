@@ -42,7 +42,7 @@ $SIS_join  = '
 LEFT JOIN `telemetria_listado`   ON telemetria_listado.idTelemetria    = cross_solicitud_aplicacion_listado_tractores.idTelemetria
 LEFT JOIN `vehiculos_listado`    ON vehiculos_listado.idVehiculo       = cross_solicitud_aplicacion_listado_tractores.idVehiculo';
 $SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idTelemetria ='.$X_idTelemetria;
-$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /*****************************************/
 //Se traen las rutas
@@ -94,8 +94,8 @@ foreach ($arrMediciones as $med) {
 		//burbuja
 		$explanation  = '<div class="iw-subTitle">Caudales Equipo</div>';
 		$explanation .= '<p>';
-		$explanation .= 'Tractor: '.$row_data['VehiculoNombreBack'].'<br/>';
-		$explanation .= 'Equipo: '.$row_data['VehiculoNombre'];
+		$explanation .= 'Tractor: '.$rowData['VehiculoNombreBack'].'<br/>';
+		$explanation .= 'Equipo: '.$rowData['VehiculoNombre'];
 		$explanation .= '</p>';
 		$explanation .= '<p>';
 		$explanation .= 'Hora: '.$med['HoraSistema'].'<br/>';

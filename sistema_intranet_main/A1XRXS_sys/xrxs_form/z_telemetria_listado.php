@@ -712,7 +712,7 @@ require_once '0_validate_user_1.php';
 
 			if($errorn==0){
 				// Se obtiene el nombre del archivo
-				$rowdata = db_select_data (false, 'Direccion_img', 'telemetria_listado', '', 'idTelemetria = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'Direccion_img', 'telemetria_listado', '', 'idTelemetria = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//se borran los datos
 				$resultado = db_delete_data (false, 'telemetria_listado', 'idTelemetria = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -764,12 +764,12 @@ require_once '0_validate_user_1.php';
 					$result = mysqli_query($dbConn, $query);
 
 					//se elimina el archivo
-					if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+					if(isset($rowData['Direccion_img'])&&$rowData['Direccion_img']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+							if(!is_writable('upload/'.$rowData['Direccion_img'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['Direccion_img']);
+								unlink('upload/'.$rowData['Direccion_img']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
@@ -910,7 +910,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'Direccion_img', 'telemetria_listado', '', 'idTelemetria = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'Direccion_img', 'telemetria_listado', '', 'idTelemetria = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -920,12 +920,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+				if(isset($rowData['Direccion_img'])&&$rowData['Direccion_img']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+						if(!is_writable('upload/'.$rowData['Direccion_img'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['Direccion_img']);
+							unlink('upload/'.$rowData['Direccion_img']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -974,19 +974,19 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			//obtengo los datos de la maquina previamente seleccionada
-			$rowdata = db_select_data (false, 'idSistema', 'telemetria_listado', '', 'idTelemetria = '.$idTelemetria, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'idSistema', 'telemetria_listado', '', 'idTelemetria = '.$idTelemetria, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
 			$ndata_2 = 0;
 			//Se verifica si el dato existe
-			if(isset($Nombre)&&isset($rowdata['idSistema'])){
-				$ndata_1 = db_select_nrows (false, 'Nombre', 'telemetria_listado', '', "Nombre='".$Nombre."' AND idSistema='".$rowdata['idSistema']."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			if(isset($Nombre)&&isset($rowData['idSistema'])){
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'telemetria_listado', '', "Nombre='".$Nombre."' AND idSistema='".$rowData['idSistema']."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//Se verifica si el dato existe
-			if(isset($Identificador)&&isset($rowdata['idSistema'])){
-				$ndata_2 = db_select_nrows (false, 'Identificador', 'telemetria_listado', '', "Identificador='".$Identificador."' AND idSistema='".$rowdata['idSistema']."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			if(isset($Identificador)&&isset($rowData['idSistema'])){
+				$ndata_2 = db_select_nrows (false, 'Identificador', 'telemetria_listado', '', "Identificador='".$Identificador."' AND idSistema='".$rowData['idSistema']."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El nombre del equipo ya existe en el sistema';}
@@ -1085,7 +1085,7 @@ require_once '0_validate_user_1.php';
 				LEFT JOIN `telemetria_listado_sensores_accion_alerta`   ON telemetria_listado_sensores_accion_alerta.idTelemetria   = telemetria_listado.idTelemetria
 				LEFT JOIN `telemetria_listado_sensores_revision`        ON telemetria_listado_sensores_revision.idTelemetria        = telemetria_listado.idTelemetria
 				LEFT JOIN `telemetria_listado_sensores_revision_grupo`  ON telemetria_listado_sensores_revision_grupo.idTelemetria  = telemetria_listado.idTelemetria';
-				$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, 'telemetria_listado.idTelemetria = '.$idTelemetria, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, 'telemetria_listado.idTelemetria = '.$idTelemetria, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*******************************************************************/
 				//Datos ingresados
@@ -1093,60 +1093,60 @@ require_once '0_validate_user_1.php';
 				if(isset($Nombre) && $Nombre!=''){              $SIS_data .= ",'".$Nombre."'";          }else{$SIS_data .= ",''";}
 
 				//Datos copiados
-				if(isset($rowdata['idSistema']) && $rowdata['idSistema']!=''){                                          $SIS_data .= ",'".$rowdata['idSistema']."'";                       }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idCiudad']) && $rowdata['idCiudad']!=''){                                            $SIS_data .= ",'".$rowdata['idCiudad']."'";                        }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idComuna']) && $rowdata['idComuna']!=''){                                            $SIS_data .= ",'".$rowdata['idComuna']."'";                        }else{$SIS_data .= ",''";}
-				if(isset($rowdata['Direccion']) && $rowdata['Direccion']!=''){                                          $SIS_data .= ",'".$rowdata['Direccion']."'";                       }else{$SIS_data .= ",''";}
-				if(isset($rowdata['GeoLatitud']) && $rowdata['GeoLatitud']!=''){                                        $SIS_data .= ",'".$rowdata['GeoLatitud']."'";                      }else{$SIS_data .= ",''";}
-				if(isset($rowdata['GeoLongitud']) && $rowdata['GeoLongitud']!=''){                                      $SIS_data .= ",'".$rowdata['GeoLongitud']."'";                     }else{$SIS_data .= ",''";}
-				if(isset($rowdata['GeoVelocidad']) && $rowdata['GeoVelocidad']!=''){                                    $SIS_data .= ",'".$rowdata['GeoVelocidad']."'";                    }else{$SIS_data .= ",''";}
-				if(isset($rowdata['GeoDireccion']) && $rowdata['GeoDireccion']!=''){                                    $SIS_data .= ",'".$rowdata['GeoDireccion']."'";                    }else{$SIS_data .= ",''";}
-				if(isset($rowdata['GeoMovimiento']) && $rowdata['GeoMovimiento']!=''){                                  $SIS_data .= ",'".$rowdata['GeoMovimiento']."'";                   }else{$SIS_data .= ",''";}
-				if(isset($rowdata['GeoTiempoDetencion']) && $rowdata['GeoTiempoDetencion']!=''){                        $SIS_data .= ",'".$rowdata['GeoTiempoDetencion']."'";              }else{$SIS_data .= ",''";}
-				if(isset($rowdata['id_Geo']) && $rowdata['id_Geo']!=''){                                                $SIS_data .= ",'".$rowdata['id_Geo']."'";                          }else{$SIS_data .= ",''";}
-				if(isset($rowdata['id_Sensores']) && $rowdata['id_Sensores']!=''){                                      $SIS_data .= ",'".$rowdata['id_Sensores']."'";                     }else{$SIS_data .= ",''";}
-				if(isset($rowdata['cantSensores']) && $rowdata['cantSensores']!=''){                                    $SIS_data .= ",'".$rowdata['cantSensores']."'";                    }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idDispositivo']) && $rowdata['idDispositivo']!=''){                                  $SIS_data .= ",'".$rowdata['idDispositivo']."'";                   }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idShield']) && $rowdata['idShield']!=''){                                            $SIS_data .= ",'".$rowdata['idShield']."'";                        }else{$SIS_data .= ",''";}
-				if(isset($rowdata['LimiteVelocidad']) && $rowdata['LimiteVelocidad']!=''){                              $SIS_data .= ",'".$rowdata['LimiteVelocidad']."'";                 }else{$SIS_data .= ",''";}
-				if(isset($rowdata['TiempoFueraLinea']) && $rowdata['TiempoFueraLinea']!=''){                            $SIS_data .= ",'".$rowdata['TiempoFueraLinea']."'";                }else{$SIS_data .= ",''";}
-				if(isset($rowdata['TiempoDetencion']) && $rowdata['TiempoDetencion']!=''){                              $SIS_data .= ",'".$rowdata['TiempoDetencion']."'";                 }else{$SIS_data .= ",''";}
-				if(isset($rowdata['Direccion_img']) && $rowdata['Direccion_img']!=''){                                  $SIS_data .= ",'".$rowdata['Direccion_img']."'";                   }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idZona']) && $rowdata['idZona']!=''){                                                $SIS_data .= ",'".$rowdata['idZona']."'";                          }else{$SIS_data .= ",''";}
-				if(isset($rowdata['SensorActivacionID']) && $rowdata['SensorActivacionID']!=''){                        $SIS_data .= ",'".$rowdata['SensorActivacionID']."'";              }else{$SIS_data .= ",''";}
-				if(isset($rowdata['SensorActivacionValor']) && $rowdata['SensorActivacionValor']!=''){                  $SIS_data .= ",'".$rowdata['SensorActivacionValor']."'";           }else{$SIS_data .= ",''";}
-				if(isset($rowdata['Jornada_inicio']) && $rowdata['Jornada_inicio']!=''){                                $SIS_data .= ",'".$rowdata['Jornada_inicio']."'";                  }else{$SIS_data .= ",''";}
-				if(isset($rowdata['Jornada_termino']) && $rowdata['Jornada_termino']!=''){                              $SIS_data .= ",'".$rowdata['Jornada_termino']."'";                 }else{$SIS_data .= ",''";}
-				if(isset($rowdata['Colacion_inicio']) && $rowdata['Colacion_inicio']!=''){                              $SIS_data .= ",'".$rowdata['Colacion_inicio']."'";                 }else{$SIS_data .= ",''";}
-				if(isset($rowdata['Colacion_termino']) && $rowdata['Colacion_termino']!=''){                            $SIS_data .= ",'".$rowdata['Colacion_termino']."'";                }else{$SIS_data .= ",''";}
-				if(isset($rowdata['Microparada']) && $rowdata['Microparada']!=''){                                      $SIS_data .= ",'".$rowdata['Microparada']."'";                     }else{$SIS_data .= ",''";}
-				if(isset($rowdata['Capacidad']) && $rowdata['Capacidad']!=''){                                          $SIS_data .= ",'".$rowdata['Capacidad']."'";                       }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idUsoPredio']) && $rowdata['idUsoPredio']!=''){                                      $SIS_data .= ",'".$rowdata['idUsoPredio']."'";                     }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idTipo']) && $rowdata['idTipo']!=''){                                                $SIS_data .= ",'".$rowdata['idTipo']."'";                          }else{$SIS_data .= ",''";}
-				if(isset($rowdata['Marca']) && $rowdata['Marca']!=''){                                                  $SIS_data .= ",'".$rowdata['Marca']."'";                           }else{$SIS_data .= ",''";}
-				if(isset($rowdata['Modelo']) && $rowdata['Modelo']!=''){                                                $SIS_data .= ",'".$rowdata['Modelo']."'";                          }else{$SIS_data .= ",''";}
-				if(isset($rowdata['Patente']) && $rowdata['Patente']!=''){                                              $SIS_data .= ",'".$rowdata['Patente']."'";                         }else{$SIS_data .= ",''";}
-				if(isset($rowdata['Num_serie']) && $rowdata['Num_serie']!=''){                                          $SIS_data .= ",'".$rowdata['Num_serie']."'";                       }else{$SIS_data .= ",''";}
-				if(isset($rowdata['AnoFab']) && $rowdata['AnoFab']!=''){                                                $SIS_data .= ",'".$rowdata['AnoFab']."'";                          }else{$SIS_data .= ",''";}
-				if(isset($rowdata['CapacidadPersonas']) && $rowdata['CapacidadPersonas']!=''){                          $SIS_data .= ",'".$rowdata['CapacidadPersonas']."'";               }else{$SIS_data .= ",''";}
-				if(isset($rowdata['CapacidadKilos']) && $rowdata['CapacidadKilos']!=''){                                $SIS_data .= ",'".$rowdata['CapacidadKilos']."'";                  }else{$SIS_data .= ",''";}
-				if(isset($rowdata['MCubicos']) && $rowdata['MCubicos']!=''){                                            $SIS_data .= ",'".$rowdata['MCubicos']."'";                        }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idTab']) && $rowdata['idTab']!=''){                                                  $SIS_data .= ",'".$rowdata['idTab']."'";                           }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idGrupoDespliegue']) && $rowdata['idGrupoDespliegue']!=''){                          $SIS_data .= ",'".$rowdata['idGrupoDespliegue']."'";               }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idGrupoVmonofasico']) && $rowdata['idGrupoVmonofasico']!=''){                        $SIS_data .= ",'".$rowdata['idGrupoVmonofasico']."'";              }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idGrupoVTrifasico']) && $rowdata['idGrupoVTrifasico']!=''){                          $SIS_data .= ",'".$rowdata['idGrupoVTrifasico']."'";               }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idGrupoPotencia']) && $rowdata['idGrupoPotencia']!=''){                              $SIS_data .= ",'".$rowdata['idGrupoPotencia']."'";                 }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idGrupoConsumoMesHabil']) && $rowdata['idGrupoConsumoMesHabil']!=''){                $SIS_data .= ",'".$rowdata['idGrupoConsumoMesHabil']."'";          }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idGrupoConsumoMesCurso']) && $rowdata['idGrupoConsumoMesCurso']!=''){                $SIS_data .= ",'".$rowdata['idGrupoConsumoMesCurso']."'";          }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idGrupoEstanque']) && $rowdata['idGrupoEstanque']!=''){                              $SIS_data .= ",'".$rowdata['idGrupoEstanque']."'";                 }else{$SIS_data .= ",''";}
-				if(isset($rowdata['CrossCrane_tiempo_revision']) && $rowdata['CrossCrane_tiempo_revision']!=''){        $SIS_data .= ",'".$rowdata['CrossCrane_tiempo_revision']."'";      }else{$SIS_data .= ",''";}
-				if(isset($rowdata['CrossCrane_grupo_amperaje']) && $rowdata['CrossCrane_grupo_amperaje']!=''){          $SIS_data .= ",'".$rowdata['CrossCrane_grupo_amperaje']."'";       }else{$SIS_data .= ",''";}
-				if(isset($rowdata['CrossCrane_grupo_elevacion']) && $rowdata['CrossCrane_grupo_elevacion']!=''){        $SIS_data .= ",'".$rowdata['CrossCrane_grupo_elevacion']."'";      }else{$SIS_data .= ",''";}
-				if(isset($rowdata['CrossCrane_grupo_giro']) && $rowdata['CrossCrane_grupo_giro']!=''){                  $SIS_data .= ",'".$rowdata['CrossCrane_grupo_giro']."'";           }else{$SIS_data .= ",''";}
-				if(isset($rowdata['CrossCrane_grupo_carro']) && $rowdata['CrossCrane_grupo_carro']!=''){                $SIS_data .= ",'".$rowdata['CrossCrane_grupo_carro']."'";          }else{$SIS_data .= ",''";}
-				if(isset($rowdata['CrossCrane_grupo_voltaje']) && $rowdata['CrossCrane_grupo_voltaje']!=''){            $SIS_data .= ",'".$rowdata['CrossCrane_grupo_voltaje']."'";        }else{$SIS_data .= ",''";}
-				if(isset($rowdata['CrossCrane_grupo_motor_subida']) && $rowdata['CrossCrane_grupo_motor_subida']!=''){  $SIS_data .= ",'".$rowdata['CrossCrane_grupo_motor_subida']."'";   }else{$SIS_data .= ",''";}
-				if(isset($rowdata['CrossCrane_grupo_motor_bajada']) && $rowdata['CrossCrane_grupo_motor_bajada']!=''){  $SIS_data .= ",'".$rowdata['CrossCrane_grupo_motor_bajada']."'";   }else{$SIS_data .= ",''";}
+				if(isset($rowData['idSistema']) && $rowData['idSistema']!=''){                                          $SIS_data .= ",'".$rowData['idSistema']."'";                       }else{$SIS_data .= ",''";}
+				if(isset($rowData['idCiudad']) && $rowData['idCiudad']!=''){                                            $SIS_data .= ",'".$rowData['idCiudad']."'";                        }else{$SIS_data .= ",''";}
+				if(isset($rowData['idComuna']) && $rowData['idComuna']!=''){                                            $SIS_data .= ",'".$rowData['idComuna']."'";                        }else{$SIS_data .= ",''";}
+				if(isset($rowData['Direccion']) && $rowData['Direccion']!=''){                                          $SIS_data .= ",'".$rowData['Direccion']."'";                       }else{$SIS_data .= ",''";}
+				if(isset($rowData['GeoLatitud']) && $rowData['GeoLatitud']!=''){                                        $SIS_data .= ",'".$rowData['GeoLatitud']."'";                      }else{$SIS_data .= ",''";}
+				if(isset($rowData['GeoLongitud']) && $rowData['GeoLongitud']!=''){                                      $SIS_data .= ",'".$rowData['GeoLongitud']."'";                     }else{$SIS_data .= ",''";}
+				if(isset($rowData['GeoVelocidad']) && $rowData['GeoVelocidad']!=''){                                    $SIS_data .= ",'".$rowData['GeoVelocidad']."'";                    }else{$SIS_data .= ",''";}
+				if(isset($rowData['GeoDireccion']) && $rowData['GeoDireccion']!=''){                                    $SIS_data .= ",'".$rowData['GeoDireccion']."'";                    }else{$SIS_data .= ",''";}
+				if(isset($rowData['GeoMovimiento']) && $rowData['GeoMovimiento']!=''){                                  $SIS_data .= ",'".$rowData['GeoMovimiento']."'";                   }else{$SIS_data .= ",''";}
+				if(isset($rowData['GeoTiempoDetencion']) && $rowData['GeoTiempoDetencion']!=''){                        $SIS_data .= ",'".$rowData['GeoTiempoDetencion']."'";              }else{$SIS_data .= ",''";}
+				if(isset($rowData['id_Geo']) && $rowData['id_Geo']!=''){                                                $SIS_data .= ",'".$rowData['id_Geo']."'";                          }else{$SIS_data .= ",''";}
+				if(isset($rowData['id_Sensores']) && $rowData['id_Sensores']!=''){                                      $SIS_data .= ",'".$rowData['id_Sensores']."'";                     }else{$SIS_data .= ",''";}
+				if(isset($rowData['cantSensores']) && $rowData['cantSensores']!=''){                                    $SIS_data .= ",'".$rowData['cantSensores']."'";                    }else{$SIS_data .= ",''";}
+				if(isset($rowData['idDispositivo']) && $rowData['idDispositivo']!=''){                                  $SIS_data .= ",'".$rowData['idDispositivo']."'";                   }else{$SIS_data .= ",''";}
+				if(isset($rowData['idShield']) && $rowData['idShield']!=''){                                            $SIS_data .= ",'".$rowData['idShield']."'";                        }else{$SIS_data .= ",''";}
+				if(isset($rowData['LimiteVelocidad']) && $rowData['LimiteVelocidad']!=''){                              $SIS_data .= ",'".$rowData['LimiteVelocidad']."'";                 }else{$SIS_data .= ",''";}
+				if(isset($rowData['TiempoFueraLinea']) && $rowData['TiempoFueraLinea']!=''){                            $SIS_data .= ",'".$rowData['TiempoFueraLinea']."'";                }else{$SIS_data .= ",''";}
+				if(isset($rowData['TiempoDetencion']) && $rowData['TiempoDetencion']!=''){                              $SIS_data .= ",'".$rowData['TiempoDetencion']."'";                 }else{$SIS_data .= ",''";}
+				if(isset($rowData['Direccion_img']) && $rowData['Direccion_img']!=''){                                  $SIS_data .= ",'".$rowData['Direccion_img']."'";                   }else{$SIS_data .= ",''";}
+				if(isset($rowData['idZona']) && $rowData['idZona']!=''){                                                $SIS_data .= ",'".$rowData['idZona']."'";                          }else{$SIS_data .= ",''";}
+				if(isset($rowData['SensorActivacionID']) && $rowData['SensorActivacionID']!=''){                        $SIS_data .= ",'".$rowData['SensorActivacionID']."'";              }else{$SIS_data .= ",''";}
+				if(isset($rowData['SensorActivacionValor']) && $rowData['SensorActivacionValor']!=''){                  $SIS_data .= ",'".$rowData['SensorActivacionValor']."'";           }else{$SIS_data .= ",''";}
+				if(isset($rowData['Jornada_inicio']) && $rowData['Jornada_inicio']!=''){                                $SIS_data .= ",'".$rowData['Jornada_inicio']."'";                  }else{$SIS_data .= ",''";}
+				if(isset($rowData['Jornada_termino']) && $rowData['Jornada_termino']!=''){                              $SIS_data .= ",'".$rowData['Jornada_termino']."'";                 }else{$SIS_data .= ",''";}
+				if(isset($rowData['Colacion_inicio']) && $rowData['Colacion_inicio']!=''){                              $SIS_data .= ",'".$rowData['Colacion_inicio']."'";                 }else{$SIS_data .= ",''";}
+				if(isset($rowData['Colacion_termino']) && $rowData['Colacion_termino']!=''){                            $SIS_data .= ",'".$rowData['Colacion_termino']."'";                }else{$SIS_data .= ",''";}
+				if(isset($rowData['Microparada']) && $rowData['Microparada']!=''){                                      $SIS_data .= ",'".$rowData['Microparada']."'";                     }else{$SIS_data .= ",''";}
+				if(isset($rowData['Capacidad']) && $rowData['Capacidad']!=''){                                          $SIS_data .= ",'".$rowData['Capacidad']."'";                       }else{$SIS_data .= ",''";}
+				if(isset($rowData['idUsoPredio']) && $rowData['idUsoPredio']!=''){                                      $SIS_data .= ",'".$rowData['idUsoPredio']."'";                     }else{$SIS_data .= ",''";}
+				if(isset($rowData['idTipo']) && $rowData['idTipo']!=''){                                                $SIS_data .= ",'".$rowData['idTipo']."'";                          }else{$SIS_data .= ",''";}
+				if(isset($rowData['Marca']) && $rowData['Marca']!=''){                                                  $SIS_data .= ",'".$rowData['Marca']."'";                           }else{$SIS_data .= ",''";}
+				if(isset($rowData['Modelo']) && $rowData['Modelo']!=''){                                                $SIS_data .= ",'".$rowData['Modelo']."'";                          }else{$SIS_data .= ",''";}
+				if(isset($rowData['Patente']) && $rowData['Patente']!=''){                                              $SIS_data .= ",'".$rowData['Patente']."'";                         }else{$SIS_data .= ",''";}
+				if(isset($rowData['Num_serie']) && $rowData['Num_serie']!=''){                                          $SIS_data .= ",'".$rowData['Num_serie']."'";                       }else{$SIS_data .= ",''";}
+				if(isset($rowData['AnoFab']) && $rowData['AnoFab']!=''){                                                $SIS_data .= ",'".$rowData['AnoFab']."'";                          }else{$SIS_data .= ",''";}
+				if(isset($rowData['CapacidadPersonas']) && $rowData['CapacidadPersonas']!=''){                          $SIS_data .= ",'".$rowData['CapacidadPersonas']."'";               }else{$SIS_data .= ",''";}
+				if(isset($rowData['CapacidadKilos']) && $rowData['CapacidadKilos']!=''){                                $SIS_data .= ",'".$rowData['CapacidadKilos']."'";                  }else{$SIS_data .= ",''";}
+				if(isset($rowData['MCubicos']) && $rowData['MCubicos']!=''){                                            $SIS_data .= ",'".$rowData['MCubicos']."'";                        }else{$SIS_data .= ",''";}
+				if(isset($rowData['idTab']) && $rowData['idTab']!=''){                                                  $SIS_data .= ",'".$rowData['idTab']."'";                           }else{$SIS_data .= ",''";}
+				if(isset($rowData['idGrupoDespliegue']) && $rowData['idGrupoDespliegue']!=''){                          $SIS_data .= ",'".$rowData['idGrupoDespliegue']."'";               }else{$SIS_data .= ",''";}
+				if(isset($rowData['idGrupoVmonofasico']) && $rowData['idGrupoVmonofasico']!=''){                        $SIS_data .= ",'".$rowData['idGrupoVmonofasico']."'";              }else{$SIS_data .= ",''";}
+				if(isset($rowData['idGrupoVTrifasico']) && $rowData['idGrupoVTrifasico']!=''){                          $SIS_data .= ",'".$rowData['idGrupoVTrifasico']."'";               }else{$SIS_data .= ",''";}
+				if(isset($rowData['idGrupoPotencia']) && $rowData['idGrupoPotencia']!=''){                              $SIS_data .= ",'".$rowData['idGrupoPotencia']."'";                 }else{$SIS_data .= ",''";}
+				if(isset($rowData['idGrupoConsumoMesHabil']) && $rowData['idGrupoConsumoMesHabil']!=''){                $SIS_data .= ",'".$rowData['idGrupoConsumoMesHabil']."'";          }else{$SIS_data .= ",''";}
+				if(isset($rowData['idGrupoConsumoMesCurso']) && $rowData['idGrupoConsumoMesCurso']!=''){                $SIS_data .= ",'".$rowData['idGrupoConsumoMesCurso']."'";          }else{$SIS_data .= ",''";}
+				if(isset($rowData['idGrupoEstanque']) && $rowData['idGrupoEstanque']!=''){                              $SIS_data .= ",'".$rowData['idGrupoEstanque']."'";                 }else{$SIS_data .= ",''";}
+				if(isset($rowData['CrossCrane_tiempo_revision']) && $rowData['CrossCrane_tiempo_revision']!=''){        $SIS_data .= ",'".$rowData['CrossCrane_tiempo_revision']."'";      }else{$SIS_data .= ",''";}
+				if(isset($rowData['CrossCrane_grupo_amperaje']) && $rowData['CrossCrane_grupo_amperaje']!=''){          $SIS_data .= ",'".$rowData['CrossCrane_grupo_amperaje']."'";       }else{$SIS_data .= ",''";}
+				if(isset($rowData['CrossCrane_grupo_elevacion']) && $rowData['CrossCrane_grupo_elevacion']!=''){        $SIS_data .= ",'".$rowData['CrossCrane_grupo_elevacion']."'";      }else{$SIS_data .= ",''";}
+				if(isset($rowData['CrossCrane_grupo_giro']) && $rowData['CrossCrane_grupo_giro']!=''){                  $SIS_data .= ",'".$rowData['CrossCrane_grupo_giro']."'";           }else{$SIS_data .= ",''";}
+				if(isset($rowData['CrossCrane_grupo_carro']) && $rowData['CrossCrane_grupo_carro']!=''){                $SIS_data .= ",'".$rowData['CrossCrane_grupo_carro']."'";          }else{$SIS_data .= ",''";}
+				if(isset($rowData['CrossCrane_grupo_voltaje']) && $rowData['CrossCrane_grupo_voltaje']!=''){            $SIS_data .= ",'".$rowData['CrossCrane_grupo_voltaje']."'";        }else{$SIS_data .= ",''";}
+				if(isset($rowData['CrossCrane_grupo_motor_subida']) && $rowData['CrossCrane_grupo_motor_subida']!=''){  $SIS_data .= ",'".$rowData['CrossCrane_grupo_motor_subida']."'";   }else{$SIS_data .= ",''";}
+				if(isset($rowData['CrossCrane_grupo_motor_bajada']) && $rowData['CrossCrane_grupo_motor_bajada']!=''){  $SIS_data .= ",'".$rowData['CrossCrane_grupo_motor_bajada']."'";   }else{$SIS_data .= ",''";}
 
 				//datos en bruto
 				$SIS_data .= ",'0'";        //GeoErrores
@@ -1226,19 +1226,19 @@ require_once '0_validate_user_1.php';
 					$SIS_columns15 = 'idTelemetria';   //Columna
 
 					//Recorro la configuracion de los sensores
-					for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
-						if(isset($rowdata['SensoresNombre_'.$i]) && $rowdata['SensoresNombre_'.$i]!=''){                $SIS_data01 .= ",'".$rowdata['SensoresNombre_'.$i]."'";         $SIS_columns01 .= ',SensoresNombre_'.$i;}
-						if(isset($rowdata['SensoresTipo_'.$i]) && $rowdata['SensoresTipo_'.$i]!=''){                    $SIS_data02 .= ",'".$rowdata['SensoresTipo_'.$i]."'";           $SIS_columns02 .= ',SensoresTipo_'.$i;}
-						if(isset($rowdata['SensoresGrupo_'.$i]) && $rowdata['SensoresGrupo_'.$i]!=''){                  $SIS_data03 .= ",'".$rowdata['SensoresGrupo_'.$i]."'";          $SIS_columns03 .= ',SensoresGrupo_'.$i;}
-						if(isset($rowdata['SensoresUniMed_'.$i]) && $rowdata['SensoresUniMed_'.$i]!=''){                $SIS_data04 .= ",'".$rowdata['SensoresUniMed_'.$i]."'";         $SIS_columns04 .= ',SensoresUniMed_'.$i;}
-						if(isset($rowdata['SensoresActivo_'.$i]) && $rowdata['SensoresActivo_'.$i]!=''){                $SIS_data05 .= ",'".$rowdata['SensoresActivo_'.$i]."'";         $SIS_columns05 .= ',SensoresActivo_'.$i;}
-						if(isset($rowdata['SensoresUso_'.$i]) && $rowdata['SensoresUso_'.$i]!=''){                      $SIS_data06 .= ",'".$rowdata['SensoresUso_'.$i]."'";            $SIS_columns06 .= ',SensoresUso_'.$i;}
-						if(isset($rowdata['SensoresFechaUso_'.$i]) && $rowdata['SensoresFechaUso_'.$i]!=''){            $SIS_data07 .= ",'".$rowdata['SensoresFechaUso_'.$i]."'";       $SIS_columns07 .= ',SensoresFechaUso_'.$i;}
-						if(isset($rowdata['SensoresAccionC_'.$i]) && $rowdata['SensoresAccionC_'.$i]!=''){              $SIS_data08 .= ",'".$rowdata['SensoresAccionC_'.$i]."'";        $SIS_columns08 .= ',SensoresAccionC_'.$i;}
-						if(isset($rowdata['SensoresAccionT_'.$i]) && $rowdata['SensoresAccionT_'.$i]!=''){              $SIS_data09 .= ",'".$rowdata['SensoresAccionT_'.$i]."'";        $SIS_columns09 .= ',SensoresAccionT_'.$i;}
-						if(isset($rowdata['SensoresAccionAlerta_'.$i]) && $rowdata['SensoresAccionAlerta_'.$i]!=''){    $SIS_data10 .= ",'".$rowdata['SensoresAccionAlerta_'.$i]."'";   $SIS_columns10 .= ',SensoresAccionAlerta_'.$i;}
-						if(isset($rowdata['SensoresRevision_'.$i]) && $rowdata['SensoresRevision_'.$i]!=''){            $SIS_data11 .= ",'".$rowdata['SensoresRevision_'.$i]."'";       $SIS_columns11 .= ',SensoresRevision_'.$i;}
-						if(isset($rowdata['SensoresRevisionGrupo_'.$i]) && $rowdata['SensoresRevisionGrupo_'.$i]!=''){  $SIS_data12 .= ",'".$rowdata['SensoresRevisionGrupo_'.$i]."'";  $SIS_columns12 .= ',SensoresRevisionGrupo_'.$i;}
+					for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
+						if(isset($rowData['SensoresNombre_'.$i]) && $rowData['SensoresNombre_'.$i]!=''){                $SIS_data01 .= ",'".$rowData['SensoresNombre_'.$i]."'";         $SIS_columns01 .= ',SensoresNombre_'.$i;}
+						if(isset($rowData['SensoresTipo_'.$i]) && $rowData['SensoresTipo_'.$i]!=''){                    $SIS_data02 .= ",'".$rowData['SensoresTipo_'.$i]."'";           $SIS_columns02 .= ',SensoresTipo_'.$i;}
+						if(isset($rowData['SensoresGrupo_'.$i]) && $rowData['SensoresGrupo_'.$i]!=''){                  $SIS_data03 .= ",'".$rowData['SensoresGrupo_'.$i]."'";          $SIS_columns03 .= ',SensoresGrupo_'.$i;}
+						if(isset($rowData['SensoresUniMed_'.$i]) && $rowData['SensoresUniMed_'.$i]!=''){                $SIS_data04 .= ",'".$rowData['SensoresUniMed_'.$i]."'";         $SIS_columns04 .= ',SensoresUniMed_'.$i;}
+						if(isset($rowData['SensoresActivo_'.$i]) && $rowData['SensoresActivo_'.$i]!=''){                $SIS_data05 .= ",'".$rowData['SensoresActivo_'.$i]."'";         $SIS_columns05 .= ',SensoresActivo_'.$i;}
+						if(isset($rowData['SensoresUso_'.$i]) && $rowData['SensoresUso_'.$i]!=''){                      $SIS_data06 .= ",'".$rowData['SensoresUso_'.$i]."'";            $SIS_columns06 .= ',SensoresUso_'.$i;}
+						if(isset($rowData['SensoresFechaUso_'.$i]) && $rowData['SensoresFechaUso_'.$i]!=''){            $SIS_data07 .= ",'".$rowData['SensoresFechaUso_'.$i]."'";       $SIS_columns07 .= ',SensoresFechaUso_'.$i;}
+						if(isset($rowData['SensoresAccionC_'.$i]) && $rowData['SensoresAccionC_'.$i]!=''){              $SIS_data08 .= ",'".$rowData['SensoresAccionC_'.$i]."'";        $SIS_columns08 .= ',SensoresAccionC_'.$i;}
+						if(isset($rowData['SensoresAccionT_'.$i]) && $rowData['SensoresAccionT_'.$i]!=''){              $SIS_data09 .= ",'".$rowData['SensoresAccionT_'.$i]."'";        $SIS_columns09 .= ',SensoresAccionT_'.$i;}
+						if(isset($rowData['SensoresAccionAlerta_'.$i]) && $rowData['SensoresAccionAlerta_'.$i]!=''){    $SIS_data10 .= ",'".$rowData['SensoresAccionAlerta_'.$i]."'";   $SIS_columns10 .= ',SensoresAccionAlerta_'.$i;}
+						if(isset($rowData['SensoresRevision_'.$i]) && $rowData['SensoresRevision_'.$i]!=''){            $SIS_data11 .= ",'".$rowData['SensoresRevision_'.$i]."'";       $SIS_columns11 .= ',SensoresRevision_'.$i;}
+						if(isset($rowData['SensoresRevisionGrupo_'.$i]) && $rowData['SensoresRevisionGrupo_'.$i]!=''){  $SIS_data12 .= ",'".$rowData['SensoresRevisionGrupo_'.$i]."'";  $SIS_columns12 .= ',SensoresRevisionGrupo_'.$i;}
 					}
 
 					//Creo registro dentro de cada tabla relacionada a los sensores

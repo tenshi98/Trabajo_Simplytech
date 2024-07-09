@@ -100,8 +100,8 @@ require_once '0_validate_user_1.php';
 					$Version = 1;
 				//si hay datos, obtener la ultima version
 				}elseif($ndata_1>0){
-					$rowdata = db_select_data (false, 'Version', 'telemetria_listado_script', '', 'idTelemetria ='.$idTelemetria, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$Version = $rowdata['Version'] + 1;
+					$rowData = db_select_data (false, 'Version', 'telemetria_listado_script', '', 'idTelemetria ='.$idTelemetria, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$Version = $rowData['Version'] + 1;
 				}
 
 				//subcolumnas en caso de existir sensores
@@ -292,7 +292,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'ScriptFile', 'telemetria_listado_script', '', 'idScript = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'ScriptFile', 'telemetria_listado_script', '', 'idScript = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -302,12 +302,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['ScriptFile'])&&$rowdata['ScriptFile']!=''){
+				if(isset($rowData['ScriptFile'])&&$rowData['ScriptFile']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['ScriptFile'])){
+						if(!is_writable('upload/'.$rowData['ScriptFile'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['ScriptFile']);
+							unlink('upload/'.$rowData['ScriptFile']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log

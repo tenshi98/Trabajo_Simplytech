@@ -76,7 +76,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'idCliente, Creacion_fecha, idEstado, Cierre_fecha';
 	$SIS_join  = '';
 	$SIS_where = 'idContabPrevired = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'contabilidad_clientes_previred', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'contabilidad_clientes_previred', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	//filtro
 	$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
@@ -94,10 +94,10 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idCliente)){        $x1 = $idCliente;        }else{$x1 = $rowdata['idCliente'];}
-					if(isset($Creacion_fecha)){   $x2 = $Creacion_fecha;   }else{$x2 = $rowdata['Creacion_fecha'];}
-					if(isset($idEstado)){         $x3 = $idEstado;         }else{$x3 = $rowdata['idEstado'];}
-					if(isset($Cierre_fecha)){     $x4 = $Cierre_fecha;     }else{$x4 = $rowdata['Cierre_fecha'];}
+					if(isset($idCliente)){        $x1 = $idCliente;        }else{$x1 = $rowData['idCliente'];}
+					if(isset($Creacion_fecha)){   $x2 = $Creacion_fecha;   }else{$x2 = $rowData['Creacion_fecha'];}
+					if(isset($idEstado)){         $x3 = $idEstado;         }else{$x3 = $rowData['idEstado'];}
+					if(isset($Cierre_fecha)){     $x4 = $Cierre_fecha;     }else{$x4 = $rowData['Cierre_fecha'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -109,7 +109,7 @@ if(!empty($_GET['id'])){
 					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idContabPrevired', $_GET['id'], 2);
 					$Form_Inputs->form_input_hidden('idUsuarioCierre', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-					$Form_Inputs->form_input_hidden('idEstadoOld', $rowdata['idEstado'], 2);
+					$Form_Inputs->form_input_hidden('idEstadoOld', $rowData['idEstado'], 2);
 
 					?>
 

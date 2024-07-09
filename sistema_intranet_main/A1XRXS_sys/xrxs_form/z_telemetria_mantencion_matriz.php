@@ -227,20 +227,20 @@ require_once '0_validate_user_1.php';
 
 				/*******************************************************************/
 				// Se traen todos los datos de la maquina
-				$rowdata = db_select_data (false, $SIS_query, 'telemetria_mantencion_matriz', '', 'idMatriz = '.$idMatriz, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, $SIS_query, 'telemetria_mantencion_matriz', '', 'idMatriz = '.$idMatriz, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*******************************************************************/
 				//filtros
-				if(isset($rowdata['idSistema']) && $rowdata['idSistema']!=''){     $SIS_data  = "'".$rowdata['idSistema']."'";     }else{$SIS_data  = "''";}
-				if(isset($rowdata['idEstado']) && $rowdata['idEstado']!=''){       $SIS_data .= ",'".$rowdata['idEstado']."'";     }else{$SIS_data .= ",''";}
-				if(isset($rowdata['cantPuntos']) && $rowdata['cantPuntos']!=''){   $SIS_data .= ",'".$rowdata['cantPuntos']."'";   }else{$SIS_data .= ",''";}
+				if(isset($rowData['idSistema']) && $rowData['idSistema']!=''){     $SIS_data  = "'".$rowData['idSistema']."'";     }else{$SIS_data  = "''";}
+				if(isset($rowData['idEstado']) && $rowData['idEstado']!=''){       $SIS_data .= ",'".$rowData['idEstado']."'";     }else{$SIS_data .= ",''";}
+				if(isset($rowData['cantPuntos']) && $rowData['cantPuntos']!=''){   $SIS_data .= ",'".$rowData['cantPuntos']."'";   }else{$SIS_data .= ",''";}
 				if(isset($Nombre) && $Nombre!=''){                                 $SIS_data .= ",'".$Nombre."'";                  }else{$SIS_data .= ",''";}
 
 				for ($i = 1; $i <= 72; $i++) {
-					if(isset($rowdata['PuntoNombre_'.$i]) && $rowdata['PuntoNombre_'.$i]!=''){        $SIS_data .= ",'".$rowdata['PuntoNombre_'.$i]."'";     }else{$SIS_data .= ",''";}
-					if(isset($rowdata['SensoresTipo_'.$i]) && $rowdata['SensoresTipo_'.$i]!=''){      $SIS_data .= ",'".$rowdata['SensoresTipo_'.$i]."'";    }else{$SIS_data .= ",''";}
-					if(isset($rowdata['SensoresValor_'.$i]) && $rowdata['SensoresValor_'.$i]!=''){    $SIS_data .= ",'".$rowdata['SensoresValor_'.$i]."'";   }else{$SIS_data .= ",''";}
-					if(isset($rowdata['SensoresNumero_'.$i]) && $rowdata['SensoresNumero_'.$i]!=''){  $SIS_data .= ",'".$rowdata['SensoresNumero_'.$i]."'";  }else{$SIS_data .= ",''";}
+					if(isset($rowData['PuntoNombre_'.$i]) && $rowData['PuntoNombre_'.$i]!=''){        $SIS_data .= ",'".$rowData['PuntoNombre_'.$i]."'";     }else{$SIS_data .= ",''";}
+					if(isset($rowData['SensoresTipo_'.$i]) && $rowData['SensoresTipo_'.$i]!=''){      $SIS_data .= ",'".$rowData['SensoresTipo_'.$i]."'";    }else{$SIS_data .= ",''";}
+					if(isset($rowData['SensoresValor_'.$i]) && $rowData['SensoresValor_'.$i]!=''){    $SIS_data .= ",'".$rowData['SensoresValor_'.$i]."'";   }else{$SIS_data .= ",''";}
+					if(isset($rowData['SensoresNumero_'.$i]) && $rowData['SensoresNumero_'.$i]!=''){  $SIS_data .= ",'".$rowData['SensoresNumero_'.$i]."'";  }else{$SIS_data .= ",''";}
 
 				}
 

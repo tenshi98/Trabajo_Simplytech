@@ -59,12 +59,12 @@ core_estados.Nombre AS estado,
 cross_predios_listado.idEstado';
 $SIS_join  = 'LEFT JOIN `core_estados`     ON core_estados.idEstado = cross_predios_listado.idEstado';
 $SIS_where = 'cross_predios_listado.idPredio = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'cross_predios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'cross_predios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Predio', $rowdata['Nombre'], 'Editar Estado'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Predio', $rowData['Nombre'], 'Editar Estado'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -88,16 +88,16 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_predios_listado', $SIS_join
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<tr class="odd">
-						<td><?php echo 'Predio '.$rowdata['estado']; ?></td>
+						<td><?php echo 'Predio '.$rowData['estado']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
 								<?php if ($rowlevel['level']>=2){ ?>
-								   <?php if ( $rowdata['estado']=='Activo' ){ ?>
-										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowdata['idPredio'].'&estado='.simpleEncode(2, fecha_actual()) ; ?>">OFF</a>
+								   <?php if ( $rowData['estado']=='Activo' ){ ?>
+										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowData['idPredio'].'&estado='.simpleEncode(2, fecha_actual()) ; ?>">OFF</a>
 										<a class="btn btn-sm btn-info locked_active" href="#">ON</a>
 								   <?php } else { ?>
 										<a class="btn btn-sm btn-info locked_active" href="#">OFF</a>
-										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowdata['idPredio'].'&estado='.simpleEncode(1, fecha_actual()) ; ?>" >ON</a>
+										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowData['idPredio'].'&estado='.simpleEncode(1, fecha_actual()) ; ?>" >ON</a>
 									<?php } ?>
 								<?php } ?>
 							</div>

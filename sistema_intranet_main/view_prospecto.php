@@ -87,7 +87,7 @@ LEFT JOIN `usuarios_listado`                  ON usuarios_listado.idUsuario     
 LEFT JOIN `prospectos_estado_fidelizacion`    ON prospectos_estado_fidelizacion.idEstadoFidelizacion  = prospectos_listado.idEstadoFidelizacion
 LEFT JOIN `prospectos_etapa`                  ON prospectos_etapa.idEtapa                             = prospectos_listado.idEtapa';
 $SIS_where = 'prospectos_listado.idProspecto ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'prospectos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'prospectos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /*******************************************/
 //Listado con los tabs
@@ -152,63 +152,63 @@ $arrEtapa = db_select_array (false, $SIS_query, 'prospectos_etapa_fidelizacion',
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Prospecto</h2>
 							<p class="text-muted word_break">
-								<strong>Vendedor : </strong><?php echo $rowdata['prospectoVendedor']; ?><br/>
-								<strong>Fecha de Registrado : </strong><?php echo Fecha_completa($rowdata['prospectoFecha']); ?><br/>
-								<strong>Estado Fidelizacion: </strong><?php echo $rowdata['prospectoEstado']; ?><br/>
-								<strong>Etapa Fidelizacion: </strong><?php echo $rowdata['prospectoEtapa']; ?>
+								<strong>Vendedor : </strong><?php echo $rowData['prospectoVendedor']; ?><br/>
+								<strong>Fecha de Registrado : </strong><?php echo Fecha_completa($rowData['prospectoFecha']); ?><br/>
+								<strong>Estado Fidelizacion: </strong><?php echo $rowData['prospectoEstado']; ?><br/>
+								<strong>Etapa Fidelizacion: </strong><?php echo $rowData['prospectoEtapa']; ?>
 							</p>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 							<p class="text-muted word_break">
-								<strong>Tipo de Prospecto : </strong><?php echo $rowdata['tipoProspecto']; ?><br/>
-								<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
-								<strong>Fecha de Ingreso Sistema : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
-								<strong>Región : </strong><?php echo $rowdata['nombre_region']; ?><br/>
-								<strong>Comuna : </strong><?php echo $rowdata['nombre_comuna']; ?><br/>
-								<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
-								<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
-								<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
+								<strong>Tipo de Prospecto : </strong><?php echo $rowData['tipoProspecto']; ?><br/>
+								<strong>Nombre Fantasia: </strong><?php echo $rowData['Nombre']; ?><br/>
+								<strong>Fecha de Ingreso Sistema : </strong><?php echo Fecha_completa($rowData['fNacimiento']); ?><br/>
+								<strong>Región : </strong><?php echo $rowData['nombre_region']; ?><br/>
+								<strong>Comuna : </strong><?php echo $rowData['nombre_comuna']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowData['Direccion']; ?><br/>
+								<strong>Sistema Relacionado : </strong><?php echo $rowData['sistema']; ?><br/>
+								<strong>Estado : </strong><?php echo $rowData['estado']; ?>
 							</p>
 
 							<?php if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){ ?>
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Unidades de Negocio</h2>
 								<p class="text-muted word_break">
 									<?php
-										if(isset($rowdata['idTab_1'])&&$rowdata['idTab_1']==2&&isset($arrTabsSorter[1])){ echo ' - '.$arrTabsSorter[1].'<br/>';}
-										if(isset($rowdata['idTab_2'])&&$rowdata['idTab_2']==2&&isset($arrTabsSorter[2])){ echo ' - '.$arrTabsSorter[2].'<br/>';}
-										if(isset($rowdata['idTab_3'])&&$rowdata['idTab_3']==2&&isset($arrTabsSorter[3])){ echo ' - '.$arrTabsSorter[3].'<br/>';}
-										if(isset($rowdata['idTab_4'])&&$rowdata['idTab_4']==2&&isset($arrTabsSorter[4])){ echo ' - '.$arrTabsSorter[4].'<br/>';}
-										if(isset($rowdata['idTab_5'])&&$rowdata['idTab_5']==2&&isset($arrTabsSorter[5])){ echo ' - '.$arrTabsSorter[5].'<br/>';}
-										if(isset($rowdata['idTab_6'])&&$rowdata['idTab_6']==2&&isset($arrTabsSorter[6])){ echo ' - '.$arrTabsSorter[6].'<br/>';}
-										if(isset($rowdata['idTab_7'])&&$rowdata['idTab_7']==2&&isset($arrTabsSorter[7])){ echo ' - '.$arrTabsSorter[7].'<br/>';}
-										if(isset($rowdata['idTab_8'])&&$rowdata['idTab_8']==2&&isset($arrTabsSorter[8])){ echo ' - '.$arrTabsSorter[8].'<br/>';} 
+										if(isset($rowData['idTab_1'])&&$rowData['idTab_1']==2&&isset($arrTabsSorter[1])){ echo ' - '.$arrTabsSorter[1].'<br/>';}
+										if(isset($rowData['idTab_2'])&&$rowData['idTab_2']==2&&isset($arrTabsSorter[2])){ echo ' - '.$arrTabsSorter[2].'<br/>';}
+										if(isset($rowData['idTab_3'])&&$rowData['idTab_3']==2&&isset($arrTabsSorter[3])){ echo ' - '.$arrTabsSorter[3].'<br/>';}
+										if(isset($rowData['idTab_4'])&&$rowData['idTab_4']==2&&isset($arrTabsSorter[4])){ echo ' - '.$arrTabsSorter[4].'<br/>';}
+										if(isset($rowData['idTab_5'])&&$rowData['idTab_5']==2&&isset($arrTabsSorter[5])){ echo ' - '.$arrTabsSorter[5].'<br/>';}
+										if(isset($rowData['idTab_6'])&&$rowData['idTab_6']==2&&isset($arrTabsSorter[6])){ echo ' - '.$arrTabsSorter[6].'<br/>';}
+										if(isset($rowData['idTab_7'])&&$rowData['idTab_7']==2&&isset($arrTabsSorter[7])){ echo ' - '.$arrTabsSorter[7].'<br/>';}
+										if(isset($rowData['idTab_8'])&&$rowData['idTab_8']==2&&isset($arrTabsSorter[8])){ echo ' - '.$arrTabsSorter[8].'<br/>';} 
 									?>
 								</p>		
 							<?php } ?>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
 							<p class="text-muted word_break">
-								<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
-								<strong>Razón Social : </strong><?php echo $rowdata['RazonSocial']; ?><br/>
-								<strong>Giro de la empresa: </strong><?php echo $rowdata['Giro']; ?><br/>
-								<strong>Rubro : </strong><?php echo $rowdata['Rubro']; ?><br/>
+								<strong>Rut : </strong><?php echo $rowData['Rut']; ?><br/>
+								<strong>Razón Social : </strong><?php echo $rowData['RazonSocial']; ?><br/>
+								<strong>Giro de la empresa: </strong><?php echo $rowData['Giro']; ?><br/>
+								<strong>Rubro : </strong><?php echo $rowData['Rubro']; ?><br/>
 							</p>
 											
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
 							<p class="text-muted word_break">
-								<strong>Telefono Fijo : </strong><?php echo formatPhone($rowdata['Fono1']); ?><br/>
-								<strong>Telefono Movil : </strong><?php echo formatPhone($rowdata['Fono2']); ?><br/>
-								<strong>Fax : </strong><?php echo $rowdata['Fax']; ?><br/>
-								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
-								<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowdata['Web']; ?>"><?php echo $rowdata['Web']; ?></a>
+								<strong>Telefono Fijo : </strong><?php echo formatPhone($rowData['Fono1']); ?><br/>
+								<strong>Telefono Movil : </strong><?php echo formatPhone($rowData['Fono2']); ?><br/>
+								<strong>Fax : </strong><?php echo $rowData['Fax']; ?><br/>
+								<strong>Email : </strong><a href="mailto:<?php echo $rowData['email']; ?>"><?php echo $rowData['email']; ?></a><br/>
+								<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowData['Web']; ?>"><?php echo $rowData['Web']; ?></a>
 							</p>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Persona de Contacto</h2>
 							<p class="text-muted word_break">
-								<strong>Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto']; ?><br/>
-								<strong>Cargo Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto_Cargo']; ?><br/>
-								<strong>Telefono : </strong><?php echo formatPhone($rowdata['PersonaContacto_Fono']); ?><br/>
-								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['PersonaContacto_email']; ?>"><?php echo $rowdata['PersonaContacto_email']; ?></a><br/>
+								<strong>Persona de Contacto : </strong><?php echo $rowData['PersonaContacto']; ?><br/>
+								<strong>Cargo Persona de Contacto : </strong><?php echo $rowData['PersonaContacto_Cargo']; ?><br/>
+								<strong>Telefono : </strong><?php echo formatPhone($rowData['PersonaContacto_Fono']); ?><br/>
+								<strong>Email : </strong><a href="mailto:<?php echo $rowData['PersonaContacto_email']; ?>"><?php echo $rowData['PersonaContacto_email']; ?></a><br/>
 							</p>
 						</div>
 					</div>
@@ -218,9 +218,9 @@ $arrEtapa = db_select_array (false, $SIS_query, 'prospectos_etapa_fidelizacion',
 						<?php
 							//se arma la dirección
 							$direccion = "";
-							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){           $direccion .= $rowdata["Direccion"];}
-							if(isset($rowdata["nombre_comuna"])&&$rowdata["nombre_comuna"]!=''){   $direccion .= ', '.$rowdata["nombre_comuna"];}
-							if(isset($rowdata["nombre_region"])&&$rowdata["nombre_region"]!=''){   $direccion .= ', '.$rowdata["nombre_region"];}
+							if(isset($rowData["Direccion"])&&$rowData["Direccion"]!=''){           $direccion .= $rowData["Direccion"];}
+							if(isset($rowData["nombre_comuna"])&&$rowData["nombre_comuna"]!=''){   $direccion .= ', '.$rowData["nombre_comuna"];}
+							if(isset($rowData["nombre_region"])&&$rowData["nombre_region"]!=''){   $direccion .= ', '.$rowData["nombre_region"];}
 							//se despliega mensaje en caso de no existir dirección
 							if($direccion!=''){
 								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);

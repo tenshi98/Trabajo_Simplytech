@@ -76,11 +76,11 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	telemetria_listado.SensorActivacionValor'.$subquery;
 	$SIS_join  = 'LEFT JOIN `telemetria_listado_sensores_nombre` ON telemetria_listado_sensores_nombre.idTelemetria = telemetria_listado.idTelemetria';
 	$SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['idTelemetria'];
-	$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	//verifico el sensor de activacion este configurado
-	if(isset($rowdata['SensorActivacionID'])&&$rowdata['SensorActivacionID']!=''&&$rowdata['SensorActivacionID']!=0){
-		$SIS_where.=" AND Sensor_".$rowdata['SensorActivacionID']." = '".$rowdata['SensorActivacionValor']."'";
+	if(isset($rowData['SensorActivacionID'])&&$rowData['SensorActivacionID']!=''&&$rowData['SensorActivacionID']!=0){
+		$SIS_where.=" AND Sensor_".$rowData['SensorActivacionID']." = '".$rowData['SensorActivacionValor']."'";
 	}else{
 		//Se escribe el dato
 		echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">';
@@ -176,7 +176,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Historial Operaciones de <?php echo $rowdata['Nombre']; ?></h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Historial Operaciones de <?php echo $rowData['Nombre']; ?></h5>
 			</header>
 			<div class="row">
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -346,9 +346,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 												foreach ($arrOperaciones as $oper) {
 													//Verifico si es igual al valor
 													if($med['Sensor_'.$oper['N_Sensor']]==$oper['ValorActivo']&&$oper['idFuncion']!=15){
-														echo $rowdata['SensoresNombre_'.$oper['N_Sensor']].' - '.$oper['Funcion'].'<br/>';
+														echo $rowData['SensoresNombre_'.$oper['N_Sensor']].' - '.$oper['Funcion'].'<br/>';
 													}elseif($oper['idFuncion']==15&&($med['Sensor_'.$oper['N_Sensor']]<$oper['RangoMinimo'] OR $med['Sensor_'.$oper['N_Sensor']]>$oper['RangoMaximo'])){
-														echo $rowdata['SensoresNombre_'.$oper['N_Sensor']].' - '.$oper['Funcion'].'<br/>';
+														echo $rowData['SensoresNombre_'.$oper['N_Sensor']].' - '.$oper['Funcion'].'<br/>';
 													}
 												}
 												?>

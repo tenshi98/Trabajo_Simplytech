@@ -66,7 +66,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);	?>
+$rowData = mysqli_fetch_assoc ($resultado);	?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -79,9 +79,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idTipoContrato)){   $x1  = $idTipoContrato;     }else{$x1  = $rowdata['idTipoContrato'];}
-				if(isset($Porc_Empleador)){   $x2  = $Porc_Empleador;     }else{$x2  = $rowdata['Porc_Empleador'];}
-				if(isset($Porc_Trabajador)){  $x3  = $Porc_Trabajador;    }else{$x3  = $rowdata['Porc_Trabajador'];}
+				if(isset($idTipoContrato)){   $x1  = $idTipoContrato;     }else{$x1  = $rowData['idTipoContrato'];}
+				if(isset($Porc_Empleador)){   $x2  = $Porc_Empleador;     }else{$x2  = $rowData['Porc_Empleador'];}
+				if(isset($Porc_Trabajador)){  $x3  = $Porc_Trabajador;    }else{$x3  = $rowData['Porc_Trabajador'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

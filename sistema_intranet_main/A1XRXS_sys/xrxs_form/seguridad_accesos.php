@@ -464,7 +464,7 @@ require_once '0_validate_user_1.php';
 
 			if($errorn==0){
 				// Se obtiene el nombre del archivo
-				$rowdata = db_select_data (false, 'Direccion_img', 'seguridad_accesos', '', "idAcceso = ".$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'Direccion_img', 'seguridad_accesos', '', "idAcceso = ".$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//se borran los datos
 				$resultado = db_delete_data (false, 'seguridad_accesos', 'idAcceso = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -472,12 +472,12 @@ require_once '0_validate_user_1.php';
 				if($resultado==true){
 
 					//se elimina la foto
-					if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+					if(isset($rowData['Direccion_img'])&&$rowData['Direccion_img']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+							if(!is_writable('upload/'.$rowData['Direccion_img'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['Direccion_img']);
+								unlink('upload/'.$rowData['Direccion_img']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
@@ -504,7 +504,7 @@ require_once '0_validate_user_1.php';
 			//Usuario
 			$idAcceso = $_GET['del_img'];
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'Direccion_img', 'seguridad_accesos', '', "idAcceso = ".$idAcceso, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'Direccion_img', 'seguridad_accesos', '', "idAcceso = ".$idAcceso, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -514,12 +514,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+				if(isset($rowData['Direccion_img'])&&$rowData['Direccion_img']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+						if(!is_writable('upload/'.$rowData['Direccion_img'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['Direccion_img']);
+							unlink('upload/'.$rowData['Direccion_img']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log

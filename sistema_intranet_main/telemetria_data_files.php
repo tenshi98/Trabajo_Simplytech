@@ -44,7 +44,7 @@ validaPermisoUser($rowlevel['level'], 1, $dbConn);
 $SIS_query = 'Nombre,FTP_Carpeta';
 $SIS_join  = '';
 $SIS_where = 'idTelemetria = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //muestro enlace
 echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">';
@@ -52,10 +52,10 @@ echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:
 echo '</div>';
 
 //verifico que exista el rut
-if(isset($rowdata["FTP_Carpeta"])&&$rowdata["FTP_Carpeta"]!=''){
+if(isset($rowData["FTP_Carpeta"])&&$rowData["FTP_Carpeta"]!=''){
 	//se crea la ruta
-	$ruta     = DB_SITE_MAIN.'/ClientFiles/index.php?FTPFolder='.$rowdata["FTP_Carpeta"];
-	$s_folder = DB_SITE_MAIN.'/ClientFiles/_data/'.$rowdata["FTP_Carpeta"];
+	$ruta     = DB_SITE_MAIN.'/ClientFiles/index.php?FTPFolder='.$rowData["FTP_Carpeta"];
+	$s_folder = DB_SITE_MAIN.'/ClientFiles/_data/'.$rowData["FTP_Carpeta"];
 
 	//si no existe la carpeta, la creo
 	if (!file_exists($s_folder)){

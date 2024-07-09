@@ -162,10 +162,10 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 
-if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
+if(isset($rowData['idConfig_1'])&&$rowData['idConfig_1']==1){
 	//Se crean las variables
 	$nmax = 10;
 	$z = '';
@@ -601,7 +601,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Unidades de Negocio', $rowdata['Nombre'], 'Resumen'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Unidades de Negocio', $rowData['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -623,12 +623,12 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Descripcion</a></li>
 						<?php
 						//Uso de componentes
-						if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
+						if(isset($rowData['idConfig_1'])&&$rowData['idConfig_1']==1){ ?>
 							<li class=""><a href="<?php echo 'unidad_negocio_listado_componentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Componentes</a></li>
 						<?php } ?>
 						<?php
 						//uso de matriz de analisis
-						if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
+						if(isset($rowData['idConfig_2'])&&$rowData['idConfig_2']==1){ ?>
 							<li class=""><a href="<?php echo 'unidad_negocio_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-microchip" aria-hidden="true"></i> Matriz Analisis</a></li>
 						<?php } ?>
 
@@ -641,68 +641,68 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<?php if ($rowdata['Direccion_img']=='') { ?>
+						<?php if ($rowData['Direccion_img']=='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 						<?php }else{  ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowData['Direccion_img']; ?>">
 						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 						<p class="text-muted">
-							<strong>Cliente : </strong><?php echo $rowdata['Cliente']; ?><br/>
-							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
-							<strong>Codigo : </strong><?php echo $rowdata['Codigo']; ?><br/>
-							<strong>Modelo : </strong><?php echo $rowdata['Modelo']; ?><br/>
-							<strong>Serie : </strong><?php echo $rowdata['Serie']; ?><br/>
-							<strong>Fabricante : </strong><?php echo $rowdata['Fabricante']; ?><br/>
-							<strong>Fecha incorporacion : </strong><?php echo fecha_estandar($rowdata['fincorporacion']); ?><br/>
-							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
-							<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=''){echo '<strong>Ubicación : </strong>'.$rowdata['Ubicacion'];} ?>
-							<?php if(isset($rowdata['Ubicacion_lvl_1'])&&$rowdata['Ubicacion_lvl_1']!=''){echo ' - '.$rowdata['Ubicacion_lvl_1'];} ?>
-							<?php if(isset($rowdata['Ubicacion_lvl_2'])&&$rowdata['Ubicacion_lvl_2']!=''){echo ' - '.$rowdata['Ubicacion_lvl_2'];} ?>
-							<?php if(isset($rowdata['Ubicacion_lvl_3'])&&$rowdata['Ubicacion_lvl_3']!=''){echo ' - '.$rowdata['Ubicacion_lvl_3'];} ?>
-							<?php if(isset($rowdata['Ubicacion_lvl_4'])&&$rowdata['Ubicacion_lvl_4']!=''){echo ' - '.$rowdata['Ubicacion_lvl_4'];} ?>
-							<?php if(isset($rowdata['Ubicacion_lvl_5'])&&$rowdata['Ubicacion_lvl_5']!=''){echo ' - '.$rowdata['Ubicacion_lvl_5'];} ?>
+							<strong>Cliente : </strong><?php echo $rowData['Cliente']; ?><br/>
+							<strong>Nombre : </strong><?php echo $rowData['Nombre']; ?><br/>
+							<strong>Codigo : </strong><?php echo $rowData['Codigo']; ?><br/>
+							<strong>Modelo : </strong><?php echo $rowData['Modelo']; ?><br/>
+							<strong>Serie : </strong><?php echo $rowData['Serie']; ?><br/>
+							<strong>Fabricante : </strong><?php echo $rowData['Fabricante']; ?><br/>
+							<strong>Fecha incorporacion : </strong><?php echo fecha_estandar($rowData['fincorporacion']); ?><br/>
+							<strong>Estado : </strong><?php echo $rowData['Estado']; ?><br/>
+							<?php if(isset($rowData['Ubicacion'])&&$rowData['Ubicacion']!=''){echo '<strong>Ubicación : </strong>'.$rowData['Ubicacion'];} ?>
+							<?php if(isset($rowData['Ubicacion_lvl_1'])&&$rowData['Ubicacion_lvl_1']!=''){echo ' - '.$rowData['Ubicacion_lvl_1'];} ?>
+							<?php if(isset($rowData['Ubicacion_lvl_2'])&&$rowData['Ubicacion_lvl_2']!=''){echo ' - '.$rowData['Ubicacion_lvl_2'];} ?>
+							<?php if(isset($rowData['Ubicacion_lvl_3'])&&$rowData['Ubicacion_lvl_3']!=''){echo ' - '.$rowData['Ubicacion_lvl_3'];} ?>
+							<?php if(isset($rowData['Ubicacion_lvl_4'])&&$rowData['Ubicacion_lvl_4']!=''){echo ' - '.$rowData['Ubicacion_lvl_4'];} ?>
+							<?php if(isset($rowData['Ubicacion_lvl_5'])&&$rowData['Ubicacion_lvl_5']!=''){echo ' - '.$rowData['Ubicacion_lvl_5'];} ?>
 
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Configuracion</h2>
 						<p class="text-muted">
-							<strong>Componentes : </strong><?php echo $rowdata['Componentes']; ?><br/>
-							<strong>Matriz de Analisis: </strong><?php echo $rowdata['Matriz']; ?>
+							<strong>Componentes : </strong><?php echo $rowData['Componentes']; ?><br/>
+							<strong>Matriz de Analisis: </strong><?php echo $rowData['Matriz']; ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripción</h2>
-						<p class="text-muted"><?php echo $rowdata['Descripcion']; ?></p>
+						<p class="text-muted"><?php echo $rowData['Descripcion']; ?></p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>
 								<?php
 								//Ficha Tecnica
-								if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
+								if(isset($rowData['FichaTecnica'])&&$rowData['FichaTecnica']!=''){
 									echo '
 										<tr class="item-row">
 											<td>Ficha Tecnica</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['FichaTecnica'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['FichaTecnica'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['FichaTecnica'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['FichaTecnica'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
 									';
 								}
 								//Hoja de seguridad
-								if(isset($rowdata['HDS'])&&$rowdata['HDS']!=''){
+								if(isset($rowData['HDS'])&&$rowData['HDS']!=''){
 									echo '
 										<tr class="item-row">
 											<td>Hoja de seguridad</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['HDS'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['HDS'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['HDS'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['HDS'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
@@ -717,7 +717,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 
 					<?php
 						//Uso de componentes
-						if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
+						if(isset($rowData['idConfig_1'])&&$rowData['idConfig_1']==1){ ?>
 						<table id="dataTable" class="table table-bordered table-condensed dataTable">
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<tr>

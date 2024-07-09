@@ -53,12 +53,12 @@ $SIS_query = 'Nombre,Config_IDGoogle, Config_Google_apiKey, Config_FCM_apiKey, C
 Config_WhatsappToken, Config_WhatsappInstanceId';
 $SIS_join  = '';
 $SIS_where = 'idSistema ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar APIS'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowData['Nombre'], 'Editar APIS'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -94,12 +94,12 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Config_IDGoogle)){            $x1 = $Config_IDGoogle;            }else{$x1 = $rowdata['Config_IDGoogle'];}
-					if(isset($Config_Google_apiKey)){       $x2 = $Config_Google_apiKey;       }else{$x2 = $rowdata['Config_Google_apiKey'];}
-					if(isset($Config_FCM_apiKey)){          $x3 = $Config_FCM_apiKey;          }else{$x3 = $rowdata['Config_FCM_apiKey'];}
-					if(isset($Config_FCM_Main_apiKey)){     $x4 = $Config_FCM_Main_apiKey;     }else{$x4 = $rowdata['Config_FCM_Main_apiKey'];}
-					if(isset($Config_WhatsappToken)){       $x5 = $Config_WhatsappToken;       }else{$x5 = $rowdata['Config_WhatsappToken'];}
-					if(isset($Config_WhatsappInstanceId)){  $x6 = $Config_WhatsappInstanceId;  }else{$x6 = $rowdata['Config_WhatsappInstanceId'];}
+					if(isset($Config_IDGoogle)){            $x1 = $Config_IDGoogle;            }else{$x1 = $rowData['Config_IDGoogle'];}
+					if(isset($Config_Google_apiKey)){       $x2 = $Config_Google_apiKey;       }else{$x2 = $rowData['Config_Google_apiKey'];}
+					if(isset($Config_FCM_apiKey)){          $x3 = $Config_FCM_apiKey;          }else{$x3 = $rowData['Config_FCM_apiKey'];}
+					if(isset($Config_FCM_Main_apiKey)){     $x4 = $Config_FCM_Main_apiKey;     }else{$x4 = $rowData['Config_FCM_Main_apiKey'];}
+					if(isset($Config_WhatsappToken)){       $x5 = $Config_WhatsappToken;       }else{$x5 = $rowData['Config_WhatsappToken'];}
+					if(isset($Config_WhatsappInstanceId)){  $x6 = $Config_WhatsappInstanceId;  }else{$x6 = $rowData['Config_WhatsappInstanceId'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

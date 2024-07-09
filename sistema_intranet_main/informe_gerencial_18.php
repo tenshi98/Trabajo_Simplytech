@@ -70,7 +70,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 /*************************************************************/
 //Se crean las variables
@@ -509,7 +509,7 @@ foreach ($arrCompIns as $ot){
 //variable
 $CompCliente = array();
 //se consulta solo si esta configurado el cliente
-if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''&&$rowdata['idCliente']!=0){
+if(isset($rowData['idCliente'])&&$rowData['idCliente']!=''&&$rowData['idCliente']!=0){
 	$arrFacCliente = array();
 	$query = "SELECT 
 	sistema_documentos_pago.Nombre AS Documento,
@@ -524,7 +524,7 @@ if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''&&$rowdata['idCliente'
 	
 	WHERE bodegas_servicios_facturacion.idTipo=2 
 	AND pagos_facturas_clientes.idTipo=3 
-	AND bodegas_servicios_facturacion.idCliente=".$rowdata['idCliente']." 
+	AND bodegas_servicios_facturacion.idCliente=".$rowData['idCliente']." 
 	AND bodegas_servicios_facturacion.Creacion_ano BETWEEN '".$ano_min."' AND '".$ano_max."'
 
 	GROUP BY bodegas_servicios_facturacion.Creacion_ano,
@@ -738,39 +738,39 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 		
 							<tr class="odd">
 								<td width="200">Codigo Contrato</td>
-								<td><?php echo $rowdata['Codigo']; ?></td>
+								<td><?php echo $rowData['Codigo']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Nombre Contrato</td>
-								<td><?php echo $rowdata['Nombre']; ?></td>
+								<td><?php echo $rowData['Nombre']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Sistema</td>
-								<td><?php echo $rowdata['Sistema']; ?></td>
+								<td><?php echo $rowData['Sistema']; ?></td>
 							</tr>
 
-							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){ ?>
+							<?php if(isset($rowData['idCliente'])&&$rowData['idCliente']!=''){ ?>
 								<tr class="odd">
 									<td>Cliente</td>
-									<td><?php echo $rowdata['Cliente']; ?></td>
+									<td><?php echo $rowData['Cliente']; ?></td>
 								</tr>
 							<?php } ?>
 
 							<tr class="odd">
 								<td>Duracion</td>
-								<td><?php echo 'Del '.Fecha_estandar($rowdata['FechaInicio']).' al '.Fecha_estandar($rowdata['FechaTermino']); ?></td>
+								<td><?php echo 'Del '.Fecha_estandar($rowData['FechaInicio']).' al '.Fecha_estandar($rowData['FechaTermino']); ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Estado</td>
-								<td><?php echo $rowdata['Estado']; ?></td>
+								<td><?php echo $rowData['Estado']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Bodega Productos Utilizada</td>
-								<td><?php echo $rowdata['BodegaProductos']; ?></td>
+								<td><?php echo $rowData['BodegaProductos']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Bodega Insumos Utilizada</td>
-								<td><?php echo $rowdata['BodegaInsumos']; ?></td>
+								<td><?php echo $rowData['BodegaInsumos']; ?></td>
 							</tr>
 
 						</tbody>

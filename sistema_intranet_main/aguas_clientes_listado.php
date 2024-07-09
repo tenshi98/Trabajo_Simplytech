@@ -120,12 +120,12 @@ LEFT JOIN `core_ubicacion_comunas`  comuna            ON comuna.idComuna        
 LEFT JOIN `aguas_analisis_aguas_tipo_punto_muestreo`  ON aguas_analisis_aguas_tipo_punto_muestreo.idPuntoMuestreo   = aguas_clientes_listado.idPuntoMuestreo
 LEFT JOIN `aguas_analisis_sectores`                   ON aguas_analisis_sectores.idSector                           = aguas_clientes_listado.idSector';
 $SIS_where = 'aguas_clientes_listado.idCliente = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente '.$rowdata['Identificador'], $rowdata['Nombre'], 'Resumen'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente '.$rowData['Identificador'], $rowData['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -156,54 +156,54 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_joi
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 							<p class="text-muted word_break">
-								<strong>Tipo de Cliente : </strong><?php echo $rowdata['tipoCliente']; ?><br/>
-								<strong>Nombre: </strong><?php echo $rowdata['Nombre']; ?><br/>
-								<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
-								<strong>Fecha de Ingreso Sistema : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
-								<strong>Región : </strong><?php echo $rowdata['nombre_region']; ?><br/>
-								<strong>Comuna : </strong><?php echo $rowdata['nombre_comuna']; ?><br/>
-								<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
-								<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
-								<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
+								<strong>Tipo de Cliente : </strong><?php echo $rowData['tipoCliente']; ?><br/>
+								<strong>Nombre: </strong><?php echo $rowData['Nombre']; ?><br/>
+								<strong>Rut : </strong><?php echo $rowData['Rut']; ?><br/>
+								<strong>Fecha de Ingreso Sistema : </strong><?php echo Fecha_completa($rowData['fNacimiento']); ?><br/>
+								<strong>Región : </strong><?php echo $rowData['nombre_region']; ?><br/>
+								<strong>Comuna : </strong><?php echo $rowData['nombre_comuna']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowData['Direccion']; ?><br/>
+								<strong>Sistema Relacionado : </strong><?php echo $rowData['sistema']; ?><br/>
+								<strong>Estado : </strong><?php echo $rowData['estado']; ?>
 							</p>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
 							<p class="text-muted word_break">
-								<strong>Telefono Fijo : </strong><?php echo formatPhone($rowdata['Fono1']); ?><br/>
-								<strong>Telefono Movil : </strong><?php echo formatPhone($rowdata['Fono2']); ?><br/>
-								<strong>Fax : </strong><?php echo $rowdata['Fax']; ?><br/>
-								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
-								<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowdata['Web']; ?>"><?php echo $rowdata['Web']; ?></a>
+								<strong>Telefono Fijo : </strong><?php echo formatPhone($rowData['Fono1']); ?><br/>
+								<strong>Telefono Movil : </strong><?php echo formatPhone($rowData['Fono2']); ?><br/>
+								<strong>Fax : </strong><?php echo $rowData['Fax']; ?><br/>
+								<strong>Email : </strong><a href="mailto:<?php echo $rowData['email']; ?>"><?php echo $rowData['email']; ?></a><br/>
+								<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowData['Web']; ?>"><?php echo $rowData['Web']; ?></a>
 							</p>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Persona de Contacto</h2>
 							<p class="text-muted word_break">
-								<strong>Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto']; ?><br/>
-								<strong>Telefono : </strong><?php echo formatPhone($rowdata['PersonaContacto_Fono']); ?><br/>
-								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['PersonaContacto_email']; ?>"><?php echo $rowdata['PersonaContacto_email']; ?></a><br/>
+								<strong>Persona de Contacto : </strong><?php echo $rowData['PersonaContacto']; ?><br/>
+								<strong>Telefono : </strong><?php echo formatPhone($rowData['PersonaContacto_Fono']); ?><br/>
+								<strong>Email : </strong><a href="mailto:<?php echo $rowData['PersonaContacto_email']; ?>"><?php echo $rowData['PersonaContacto_email']; ?></a><br/>
 							</p>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Facturacion</h2>
 							<p class="text-muted word_break">
-								<strong>Identificador : </strong><?php echo $rowdata['Identificador']; ?><br/>
-								<strong>ID medidor : </strong><?php echo $rowdata['medidor']; ?><br/>
-								<strong>ID remarcador : </strong><?php echo $rowdata['remarcador']; ?><br/>
-								<strong>Unidades Habitacionales : </strong><?php echo $rowdata['UnidadHabitacional']; ?><br/>
-								<strong>Arranque : </strong><?php echo $rowdata['Arranque']; ?><br/>
-								<strong>Estado : </strong><?php echo $rowdata['EstadoPago']; ?><br/>
-								<strong>Forma Facturacion : </strong><?php echo $rowdata['DocFacturable']; ?><br/>
-								<strong>Región Facturacion : </strong><?php echo $rowdata['nombre_region_fact']; ?><br/>
-								<strong>Ciudad Facturacion : </strong><?php echo $rowdata['nombre_comuna_fact']; ?><br/>
-								<strong>Dirección Facturacion : </strong><?php echo $rowdata['DireccionFact']; ?><br/>
-								<strong>Giro de la empresa : </strong><?php echo $rowdata['Giro']; ?><br/>
-								<strong>Rubro de la empresa : </strong><?php echo $rowdata['Rubro']; ?><br/>
-								<strong>Razón Social de la empresa : </strong><?php echo $rowdata['RazonSocial']; ?><br/>
+								<strong>Identificador : </strong><?php echo $rowData['Identificador']; ?><br/>
+								<strong>ID medidor : </strong><?php echo $rowData['medidor']; ?><br/>
+								<strong>ID remarcador : </strong><?php echo $rowData['remarcador']; ?><br/>
+								<strong>Unidades Habitacionales : </strong><?php echo $rowData['UnidadHabitacional']; ?><br/>
+								<strong>Arranque : </strong><?php echo $rowData['Arranque']; ?><br/>
+								<strong>Estado : </strong><?php echo $rowData['EstadoPago']; ?><br/>
+								<strong>Forma Facturacion : </strong><?php echo $rowData['DocFacturable']; ?><br/>
+								<strong>Región Facturacion : </strong><?php echo $rowData['nombre_region_fact']; ?><br/>
+								<strong>Ciudad Facturacion : </strong><?php echo $rowData['nombre_comuna_fact']; ?><br/>
+								<strong>Dirección Facturacion : </strong><?php echo $rowData['DireccionFact']; ?><br/>
+								<strong>Giro de la empresa : </strong><?php echo $rowData['Giro']; ?><br/>
+								<strong>Rubro de la empresa : </strong><?php echo $rowData['Rubro']; ?><br/>
+								<strong>Razón Social de la empresa : </strong><?php echo $rowData['RazonSocial']; ?><br/>
 							</p>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Medicion</h2>
 							<p class="text-muted word_break">
-								<strong>Sector : </strong><?php echo $rowdata['Sector']; ?><br/>
-								<strong>Tipo de Medicion : </strong><?php echo $rowdata['TipoPunto']; ?><br/>
+								<strong>Sector : </strong><?php echo $rowData['Sector']; ?><br/>
+								<strong>Tipo de Medicion : </strong><?php echo $rowData['TipoPunto']; ?><br/>
 							</p>
 						</div>
 					</div>
@@ -212,8 +212,8 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_joi
 					<div class="row">
 						<?php
 							//se despliega mensaje en caso de no existir dirección
-							if($rowdata["latitud"]!=0 && $rowdata["longitud"]!=0){
-								echo mapa_from_gps($rowdata["latitud"], $rowdata["longitud"], $rowdata['Identificador'], $rowdata['Nombre'], $rowdata['Direccion'], $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);
+							if($rowData["latitud"]!=0 && $rowData["longitud"]!=0){
+								echo mapa_from_gps($rowData["latitud"], $rowData["longitud"], $rowData['Identificador'], $rowData['Nombre'], $rowData['Direccion'], $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);
 							}else{
 								$Alert_Text = 'No tiene latitud y longitud definida';
 								alert_post_data(4,2,2,0, $Alert_Text);

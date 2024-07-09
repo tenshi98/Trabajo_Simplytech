@@ -61,7 +61,7 @@ LEFT JOIN `seg_vecinal_clientes_tipos`   ON seg_vecinal_clientes_tipos.idTipo  =
 LEFT JOIN `core_ubicacion_ciudad`        ON core_ubicacion_ciudad.idCiudad     = seg_vecinal_servicios_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`       ON core_ubicacion_comunas.idComuna    = seg_vecinal_servicios_listado.idComuna';
 $SIS_where = 'seg_vecinal_servicios_listado.idServicio ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_servicios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'seg_vecinal_servicios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 ?>
 
@@ -85,26 +85,26 @@ $rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_servicios_listado', $
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 							<p class="text-muted word_break">
-								<strong>Tipo : </strong><?php echo $rowdata['Tipo']; ?><br/>
-								<strong>Nombre: </strong><?php echo $rowdata['Nombre']; ?><br/>
-								<strong>Región : </strong><?php echo $rowdata['Ciudad']; ?><br/>
-								<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-								<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
+								<strong>Tipo : </strong><?php echo $rowData['Tipo']; ?><br/>
+								<strong>Nombre: </strong><?php echo $rowData['Nombre']; ?><br/>
+								<strong>Región : </strong><?php echo $rowData['Ciudad']; ?><br/>
+								<strong>Comuna : </strong><?php echo $rowData['Comuna']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowData['Direccion']; ?><br/>
 							</p>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
 							<p class="text-muted word_break">
-								<strong>Telefono Fijo : </strong><?php echo formatPhone($rowdata['Fono1']); ?><br/>
-								<strong>Telefono Movil : </strong><?php echo formatPhone($rowdata['Fono2']); ?><br/>
-								<strong>Fax : </strong><?php echo $rowdata['Fax']; ?><br/>
-								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
-								<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowdata['Web']; ?>"><?php echo $rowdata['Web']; ?></a>
+								<strong>Telefono Fijo : </strong><?php echo formatPhone($rowData['Fono1']); ?><br/>
+								<strong>Telefono Movil : </strong><?php echo formatPhone($rowData['Fono2']); ?><br/>
+								<strong>Fax : </strong><?php echo $rowData['Fax']; ?><br/>
+								<strong>Email : </strong><a href="mailto:<?php echo $rowData['email']; ?>"><?php echo $rowData['email']; ?></a><br/>
+								<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowData['Web']; ?>"><?php echo $rowData['Web']; ?></a>
 							</p>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Horario de Atencion</h2>
 							<p class="text-muted word_break">
-								<strong>Inicio : </strong><?php echo $rowdata['HoraInicio']; ?><br/>
-								<strong>Termino : </strong><?php echo $rowdata['HoraTermino']; ?><br/>
+								<strong>Inicio : </strong><?php echo $rowData['HoraInicio']; ?><br/>
+								<strong>Termino : </strong><?php echo $rowData['HoraTermino']; ?><br/>
 							</p>
 						</div>
 					</div>
@@ -114,9 +114,9 @@ $rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_servicios_listado', $
 						<?php
 							//se arma la dirección
 							$direccion = "";
-							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){  $direccion .= $rowdata["Direccion"];}
-							if(isset($rowdata["Comuna"])&&$rowdata["Comuna"]!=''){        $direccion .= ', '.$rowdata["Comuna"];}
-							if(isset($rowdata["Ciudad"])&&$rowdata["Ciudad"]!=''){        $direccion .= ', '.$rowdata["Ciudad"];}
+							if(isset($rowData["Direccion"])&&$rowData["Direccion"]!=''){  $direccion .= $rowData["Direccion"];}
+							if(isset($rowData["Comuna"])&&$rowData["Comuna"]!=''){        $direccion .= ', '.$rowData["Comuna"];}
+							if(isset($rowData["Ciudad"])&&$rowData["Ciudad"]!=''){        $direccion .= ', '.$rowData["Ciudad"];}
 							//se despliega mensaje en caso de no existir dirección
 							if($direccion!=''){
 								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);

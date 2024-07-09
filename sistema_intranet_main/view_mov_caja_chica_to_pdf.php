@@ -79,7 +79,7 @@ LEFT JOIN `trabajadores_listado`                ON trabajadores_listado.idTrabaj
 LEFT JOIN `caja_chica_facturacion`   fact_rel   ON fact_rel.idFacturacion               = caja_chica_facturacion.idFacturacionRelacionada
 LEFT JOIN `trabajadores_listado`     trab_rel   ON trab_rel.idTrabajador                = fact_rel.idTrabajador';
 $SIS_where = 'caja_chica_facturacion.idFacturacion ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'caja_chica_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'caja_chica_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /***********************************************/
 // Se trae un listado con todos los productos utilizados
@@ -117,32 +117,30 @@ $html .= '
 	<tbody>
 		<tr>
 			<td>
-	
 				<table style="text-align: left; width: 100%;"  cellpadding="0" cellspacing="0">
 					<tbody>
 						<tr class="oddrow">
-							<td colspan="2" rowspan="1" style="vertical-align: top;">'.$row_data['CajaTipo'].'</td>
+							<td colspan="2" rowspan="1" style="vertical-align: top;">'.$rowData['CajaTipo'].'</td>
 							<td style="vertical-align: top;">Numero Documento: '.n_doc($_GET['view'], 8).'</td>
 						</tr>
 						<tr>';
 
 							//se verifica el tipo de movimiento
-							switch ($row_data['idTipo']) {
+							switch ($rowData['idTipo']) {
 								//Ingreso
 								case 1:
 									$html .= '
 									<td style="vertical-align: top; width:50%;">
 										Datos del Movimiento
-										<strong>'.$row_data['CajaNombre'].'</strong><br/>
-										Sistema: '.$row_data['CajaSistema'].'<br/>
-										Usuario: '.$row_data['Usuario'].'<br/>
-										Estado: '.$row_data['CajaEstado'].'<br/>
-										Fecha Real: '.Fecha_estandar($row_data['fecha_auto']).'<br/>
-										Fecha Ingresada: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
+										<strong>'.$rowData['CajaNombre'].'</strong><br/>
+										Sistema: '.$rowData['CajaSistema'].'<br/>
+										Usuario: '.$rowData['Usuario'].'<br/>
+										Estado: '.$rowData['CajaEstado'].'<br/>
+										Fecha Real: '.Fecha_estandar($rowData['fecha_auto']).'<br/>
+										Fecha Ingresada: '.Fecha_estandar($rowData['Creacion_fecha']).'<br/>
 									</td>
 
 									<td style="vertical-align: top;width:50%;">
-				
 									</td>';
 
 									break;
@@ -151,26 +149,24 @@ $html .= '
 									$html .= '
 									<td style="vertical-align: top; width:50%;">
 										Datos del Movimiento
-										<strong>'.$row_data['CajaNombre'].'</strong><br/>
-										Sistema: '.$row_data['CajaSistema'].'<br/>
-										Usuario: '.$row_data['Usuario'].'<br/>
-										Estado: '.$row_data['CajaEstado'].'<br/>
-										Fecha Real: '.Fecha_estandar($row_data['fecha_auto']).'<br/>
-										Fecha Ingresada: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
+										<strong>'.$rowData['CajaNombre'].'</strong><br/>
+										Sistema: '.$rowData['CajaSistema'].'<br/>
+										Usuario: '.$rowData['Usuario'].'<br/>
+										Estado: '.$rowData['CajaEstado'].'<br/>
+										Fecha Real: '.Fecha_estandar($rowData['fecha_auto']).'<br/>
+										Fecha Ingresada: '.Fecha_estandar($rowData['Creacion_fecha']).'<br/>
 									</td>
 
 									<td style="vertical-align: top;width:50%;">
 										Trabajador
-										<strong>'.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].' '.$row_data['TrabajadorApellidoMat'].'</strong><br/>
-										Rut: '.$row_data['TrabajadorRut'].'<br/>
-										Cargo: '.$row_data['TrabajadorCargo'].'<br/>
-										Fono: '.formatPhone($row_data['TrabajadorFono']).'<br/>
+										<strong>'.$rowData['TrabajadorNombre'].' '.$rowData['TrabajadorApellidoPat'].' '.$rowData['TrabajadorApellidoMat'].'</strong><br/>
+										Rut: '.$rowData['TrabajadorRut'].'<br/>
+										Cargo: '.$rowData['TrabajadorCargo'].'<br/>
+										Fono: '.formatPhone($rowData['TrabajadorFono']).'<br/>
 									</td>';
-									
 									break;
-								//Rendicion 
+								//Rendicion
 								case 3:
-									
 									break;
 
 							}
@@ -196,8 +192,7 @@ $html .= '
 						foreach ($arrRendiciones as $prod) {
 							$html .= '<tr>
 								<td style="vertical-align: top;"><strong>'.$prod['Item'].'</td>';
-								
-								if(isset($row_data['idTipo'])&&$row_data['idTipo']==1){
+								if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){
 									$html .= '<td align="right" style="vertical-align: top;">'.Valores($prod['Valor'], 0).'</td>';
 									$html .= '<td align="right" style="vertical-align: top;"></td>';
 								}else{
@@ -219,8 +214,7 @@ $html .= '
 										$html .= ' N°'.$prod['N_Doc'];
 									}
 								$html .= '</td>';
-								
-								if(isset($row_data['idTipo'])&&$row_data['idTipo']==1){
+								if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){
 									$html .= '<td align="right" style="vertical-align: top;">'.Valores($prod['Valor'], 0).'</td>';
 									$html .= '<td align="right" style="vertical-align: top;"></td>';
 								}else{
@@ -231,16 +225,16 @@ $html .= '
 						}
 					}
 
-					if(isset($row_data['Valor'])&&$row_data['Valor']!=0){
+					if(isset($rowData['Valor'])&&$rowData['Valor']!=0){
 						$html .= '
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td align="right"><strong>Total</strong></td>';
-							if(isset($row_data['idTipo'])&&$row_data['idTipo']==1){
-								$html .= '<td align="right" style="vertical-align: top;">'.Valores($row_data['Valor'], 0).'</td>';
+							if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){
+								$html .= '<td align="right" style="vertical-align: top;">'.Valores($rowData['Valor'], 0).'</td>';
 								$html .= '<td align="right" style="vertical-align: top;"></td>';
 							}else{
 								$html .= '<td align="right" style="vertical-align: top;"></td>';
-								$html .= '<td align="right" style="vertical-align: top;">'.Valores($row_data['Valor'], 0).'</td>';
+								$html .= '<td align="right" style="vertical-align: top;">'.Valores($rowData['Valor'], 0).'</td>';
 							}
 						$html .= '</tr>';
 					}
@@ -257,12 +251,12 @@ $html .= '
 				<table style="text-align: left; width: 100%;margin-top:20px;" cellpadding="5" cellspacing="0">
 					<tbody>
 						<tr>
-							<td style="vertical-align: top;text-align: left;background-color: #f9f9f9;border: 1px solid #EEE;">'.$row_data['Observaciones'].'</td>
+							<td style="vertical-align: top;text-align: left;background-color: #f9f9f9;border: 1px solid #EEE;">'.$rowData['Observaciones'].'</td>
 						</tr>
 					</tbody>
 				</table>';
 
-				if($row_data['idTipo']==2){
+				if($rowData['idTipo']==2){
 					$html .= '
 					<br/>
 					<br/>
@@ -281,20 +275,18 @@ $html .= '
 						</tbody>
 					</table>';
 				}
-				
 			$html .= '</td>
 		</tr>
 	</tbody>
 </table>';
- 
 
 /**********************************************************************************************************************************/
 /*                                                          Impresion PDF                                                         */
 /**********************************************************************************************************************************/
 //Config
-$pdf_titulo     = $row_data['TipoDoc'];
+$pdf_titulo     = $rowData['TipoDoc'];
 $pdf_subtitulo  = '';
-$pdf_file       = $row_data['TipoDoc'].'.pdf';
+$pdf_file       = $rowData['TipoDoc'].'.pdf';
 $OpcDom         = "'A4', 'landscape'";
 $OpcTcpOrt      = "P";  //P->PORTRAIT - L->LANDSCAPE
 $OpcTcpPg       = "A4"; //Tipo de Hoja

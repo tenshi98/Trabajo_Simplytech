@@ -66,7 +66,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);	?>
+$rowData = mysqli_fetch_assoc ($resultado);	?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -79,10 +79,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Tramo)){         $x1  = $Tramo;           }else{$x1  = $rowdata['Tramo'];}
-				if(isset($Valor_Desde)){   $x2  = $Valor_Desde;     }else{$x2  = $rowdata['Valor_Desde'];}
-				if(isset($Valor_Hasta)){   $x3  = $Valor_Hasta;     }else{$x3  = $rowdata['Valor_Hasta'];}
-				if(isset($Valor_Pago)){    $x4  = $Valor_Pago;      }else{$x4  = $rowdata['Valor_Pago'];}
+				if(isset($Tramo)){         $x1  = $Tramo;           }else{$x1  = $rowData['Tramo'];}
+				if(isset($Valor_Desde)){   $x2  = $Valor_Desde;     }else{$x2  = $rowData['Valor_Desde'];}
+				if(isset($Valor_Hasta)){   $x3  = $Valor_Hasta;     }else{$x3  = $rowData['Valor_Hasta'];}
+				if(isset($Valor_Pago)){    $x4  = $Valor_Pago;      }else{$x4  = $rowData['Valor_Pago'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

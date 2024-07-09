@@ -64,7 +64,7 @@ LEFT JOIN `core_estados`             ON core_estados.idEstado               = ge
 LEFT JOIN `core_sistemas_opciones`   ON core_sistemas_opciones.idOpciones   = gestion_reserva_oficinas.idServicioCafeteria
 LEFT JOIN `oficinas_listado`         ON oficinas_listado.idOficina          = gestion_reserva_oficinas.idOficina';
 $SIS_where = 'gestion_reserva_oficinas.idReserva ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'gestion_reserva_oficinas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'gestion_reserva_oficinas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 ?>
 
@@ -74,7 +74,7 @@ $rowdata = db_select_data (false, $SIS_query, 'gestion_reserva_oficinas', $SIS_j
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Reserva de Oficina.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowdata['Fecha']); ?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowData['Fecha']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -86,31 +86,31 @@ $rowdata = db_select_data (false, $SIS_query, 'gestion_reserva_oficinas', $SIS_j
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Datos Reserva
 			<address>
-				<strong>Usuario: </strong>'.$rowdata['Usuario'].'<br/>
-				<strong>Solicitante: </strong>'.$rowdata['Solicitante'].'<br/>
-				<strong>Sala de Reuniones: </strong>'.$rowdata['Oficina'].'<br/>
-				<strong>Fecha: </strong>'.fecha_estandar($rowdata['Fecha']).'<br/>
-				<strong>Horas: </strong>'.$rowdata['Hora_Inicio'].' - '.$rowdata['Hora_Termino'].'<br/>
-				<strong>Cantidad Asistentes: </strong>'.$rowdata['CantidadAsistentes'].' personas<br/>
+				<strong>Usuario: </strong>'.$rowData['Usuario'].'<br/>
+				<strong>Solicitante: </strong>'.$rowData['Solicitante'].'<br/>
+				<strong>Sala de Reuniones: </strong>'.$rowData['Oficina'].'<br/>
+				<strong>Fecha: </strong>'.fecha_estandar($rowData['Fecha']).'<br/>
+				<strong>Horas: </strong>'.$rowData['Hora_Inicio'].' - '.$rowData['Hora_Termino'].'<br/>
+				<strong>Cantidad Asistentes: </strong>'.$rowData['CantidadAsistentes'].' personas<br/>
 			</address>
 		</div>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Otros Datos
 			<address>
-				<strong>Servicio de Cafeteria: </strong>'.$rowdata['Cafeteria'].'<br/>
-				<strong>Estado: </strong>'.$rowdata['estado'].'<br/>
-				<strong>Sistema: </strong>'.$rowdata['Sistema'].'<br/>
+				<strong>Servicio de Cafeteria: </strong>'.$rowData['Cafeteria'].'<br/>
+				<strong>Estado: </strong>'.$rowData['estado'].'<br/>
+				<strong>Sistema: </strong>'.$rowData['Sistema'].'<br/>
 			</address>
 		</div>';
 		?>
 
 	</div>
 
-	<?php if(isset($rowdata['Observaciones'])&&$rowdata['Observaciones']!=''){ ?>
+	<?php if(isset($rowData['Observaciones'])&&$rowData['Observaciones']!=''){ ?>
 		<div class="col-xs-12">
 			<div class="row">
 				<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-				<p class="text-muted well well-sm no-shadow" ><?php echo $rowdata['Observaciones']; ?></p>
+				<p class="text-muted well well-sm no-shadow" ><?php echo $rowData['Observaciones']; ?></p>
 			</div>
 		</div>
 	<?php } ?>

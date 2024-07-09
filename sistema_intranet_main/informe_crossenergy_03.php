@@ -60,17 +60,17 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	LEFT JOIN `telemetria_listado_sensores_med_actual`  ON telemetria_listado_sensores_med_actual.idTelemetria  = telemetria_listado.idTelemetria
 	LEFT JOIN `telemetria_listado_sensores_activo`      ON telemetria_listado_sensores_activo.idTelemetria      = telemetria_listado.idTelemetria';
 	//Obtengo los datos
-	$rowdata = db_select_data (false, $subquery_1, 'telemetria_listado', $SIS_join, 'telemetria_listado.idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $subquery_1, 'telemetria_listado', $SIS_join, 'telemetria_listado.idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	//Temporales
 	$Subquery    = '';
 	$Subquery_2  = '';
 	//recorro los sensores
-	for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+	for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 		//Si el sensor esta activo
-		if(isset($rowdata['SensoresActivo_'.$i])&&$rowdata['SensoresActivo_'.$i]==1){
+		if(isset($rowData['SensoresActivo_'.$i])&&$rowData['SensoresActivo_'.$i]==1){
 			//para la subconsulta
-			if($rowdata['SensoresGrupo_'.$i]==$_GET['idGrupo']){
+			if($rowData['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 				$Subquery .= ',Sensor_'.$i;
 				//si viene vacio
 				if(isset($Subquery_2)&&$Subquery_2!=''){
@@ -136,7 +136,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-				<h5>Estado del Equipo <?php echo $rowdata['Nombre']; ?></h5>
+				<h5>Estado del Equipo <?php echo $rowData['Nombre']; ?></h5>
 			</header>
 			<div class="table-responsive" id="grf">
 				<?php

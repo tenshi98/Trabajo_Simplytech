@@ -52,7 +52,7 @@ if(!$resultado){
 	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
 
 }
-$row_data = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 //Se traen las rutas
 $arrZonas = array();
@@ -134,8 +134,8 @@ foreach ($arrMediciones as $med) {
 		//burbuja
 		$explanation  = '<div class="iw-subTitle">Caudales Equipo</div>';
 		$explanation .= '<p>';
-		$explanation .= 'Tractor: '.$row_data['VehiculoNombreBack'].'<br/>';
-		$explanation .= 'Equipo: '.$row_data['VehiculoNombre'];
+		$explanation .= 'Tractor: '.$rowData['VehiculoNombreBack'].'<br/>';
+		$explanation .= 'Equipo: '.$rowData['VehiculoNombre'];
 		$explanation .= '</p>';
 		$explanation .= '<p>';
 		$explanation .= 'Hora: '.$med['HoraSistema'].'<br/>';

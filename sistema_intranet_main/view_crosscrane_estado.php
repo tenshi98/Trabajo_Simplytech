@@ -99,12 +99,12 @@ LEFT JOIN `telemetria_listado_sensores_accion_med_c`    ON telemetria_listado_se
 LEFT JOIN `telemetria_listado_sensores_accion_med_t`    ON telemetria_listado_sensores_accion_med_t.idTelemetria   = telemetria_listado.idTelemetria
 LEFT JOIN `telemetria_listado_sensores_accion_alerta`   ON telemetria_listado_sensores_accion_alerta.idTelemetria  = telemetria_listado.idTelemetria';
 $SIS_where = 'telemetria_listado.idTelemetria ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_permisos');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_permisos');
 
 /********************************************************************************************/
 $F_inicio  = fecha_actual();
 $F_inicio2 = restarDias(fecha_actual(),1);
-$H_inicio  = restahoras($rowdata['CrossCrane_tiempo_revision'], hora_actual());
+$H_inicio  = restahoras($rowData['CrossCrane_tiempo_revision'], hora_actual());
 $H_inicio2 = restahoras('03:00:00', hora_actual());
 $H_inicio3 = restahoras('00:10:00', hora_actual());
 $F_termino = fecha_actual();
@@ -118,22 +118,22 @@ if($H_inicio>$H_termino){
 }
 
 //numero sensores equipo
-$N_Maximo_Sensores = $rowdata['cantSensores'];
+$N_Maximo_Sensores = $rowData['cantSensores'];
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_amperaje']){
+	if($rowData['SensoresGrupo_'.$i]==$rowData['CrossCrane_grupo_amperaje']){
 		$subquery .= ',AVG(NULLIF(IF(Sensor_'.$i.'!=0,Sensor_'.$i.',0),0)) AS Sensor_amperaje_'.$i.'_Prom';
 	}
-	if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_elevacion']){
+	if($rowData['SensoresGrupo_'.$i]==$rowData['CrossCrane_grupo_elevacion']){
 		$subquery .= ',AVG(NULLIF(IF(Sensor_'.$i.'!=0,Sensor_'.$i.',0),0)) AS Sensor_elevacion_'.$i.'_Prom';
 	}
-	if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_giro']){
+	if($rowData['SensoresGrupo_'.$i]==$rowData['CrossCrane_grupo_giro']){
 		$subquery .= ',AVG(NULLIF(IF(Sensor_'.$i.'!=0,Sensor_'.$i.',0),0)) AS Sensor_giro_'.$i.'_Prom';
 	}
-	if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_carro']){
+	if($rowData['SensoresGrupo_'.$i]==$rowData['CrossCrane_grupo_carro']){
 		$subquery .= ',AVG(NULLIF(IF(Sensor_'.$i.'!=0,Sensor_'.$i.',0),0)) AS Sensor_carro_'.$i.'_Prom';
 	}
-	if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_voltaje']){
+	if($rowData['SensoresGrupo_'.$i]==$rowData['CrossCrane_grupo_voltaje']){
 		$subquery .= ',AVG(NULLIF(IF(Sensor_'.$i.'!=0,Sensor_'.$i.',0),0)) AS Sensor_voltaje_'.$i.'_Prom';
 	}
 }
@@ -156,37 +156,37 @@ foreach ($arrUnimed as $sen) {
 	$arrUnimedX[$sen['idUniMed']]= ' '.$sen['Nombre'];	;
 }
 /********************************************************************************************/
-if(isset($rowdata['CrossCrane_tiempo_revision'])&&$rowdata['CrossCrane_tiempo_revision']=='00:00:00'){
+if(isset($rowData['CrossCrane_tiempo_revision'])&&$rowData['CrossCrane_tiempo_revision']=='00:00:00'){
 	echo '<div class="col-xs-12" style="margin-top:15px;">';
 		$Alert_Text  = 'No se ha configurado el tiempo de revision';
 		alert_post_data(4,2,2,0, $Alert_Text);
 	echo '</div>';
 }
-if(isset($rowdata['CrossCrane_grupo_amperaje'])&&$rowdata['CrossCrane_grupo_amperaje']==0){
+if(isset($rowData['CrossCrane_grupo_amperaje'])&&$rowData['CrossCrane_grupo_amperaje']==0){
 	echo '<div class="col-xs-12" >';
 		$Alert_Text  = 'No se ha configurado el grupo de alimentacion';
 		alert_post_data(4,2,2,0, $Alert_Text);
 	echo '</div>';
 }
-if(isset($rowdata['CrossCrane_grupo_elevacion'])&&$rowdata['CrossCrane_grupo_elevacion']==0){
+if(isset($rowData['CrossCrane_grupo_elevacion'])&&$rowData['CrossCrane_grupo_elevacion']==0){
 	echo '<div class="col-xs-12" >';
 		$Alert_Text  = 'No se ha configurado el grupo de elevacion';
 		alert_post_data(4,2,2,0, $Alert_Text);
 	echo '</div>';
 }
-if(isset($rowdata['CrossCrane_grupo_giro'])&&$rowdata['CrossCrane_grupo_giro']==0){
+if(isset($rowData['CrossCrane_grupo_giro'])&&$rowData['CrossCrane_grupo_giro']==0){
 	echo '<div class="col-xs-12" >';
 		$Alert_Text  = 'No se ha configurado el grupo de giro';
 		alert_post_data(4,2,2,0, $Alert_Text);
 	echo '</div>';
 }
-if(isset($rowdata['CrossCrane_grupo_carro'])&&$rowdata['CrossCrane_grupo_carro']==0){
+if(isset($rowData['CrossCrane_grupo_carro'])&&$rowData['CrossCrane_grupo_carro']==0){
 	echo '<div class="col-xs-12" >';
 		$Alert_Text  = 'No se ha configurado el grupo de carro';
 		alert_post_data(4,2,2,0, $Alert_Text);
 	echo '</div>';
 }
-if(isset($rowdata['CrossCrane_grupo_voltaje'])&&$rowdata['CrossCrane_grupo_voltaje']==0){
+if(isset($rowData['CrossCrane_grupo_voltaje'])&&$rowData['CrossCrane_grupo_voltaje']==0){
 	echo '<div class="col-xs-12" >';
 		$Alert_Text  = 'No se ha configurado el grupo de voltaje';
 		alert_post_data(4,2,2,0, $Alert_Text);
@@ -212,13 +212,13 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Estado del Equipo <?php echo $rowdata['Nombre'].' (Hora Refresco: '.hora_actual().')'; ?></h5>
+			<h5>Estado del Equipo <?php echo $rowData['Nombre'].' (Hora Refresco: '.hora_actual().')'; ?></h5>
 		</header>
         <div class="tab-content">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<?php
 				//numero sensores equipo
-				$N_Maximo_Sensores = $rowdata['cantSensores'];
+				$N_Maximo_Sensores = $rowData['cantSensores'];
 				//variables
 				$alimentacion_total         = 0;
 				$alimentacion_min           = 9999;
@@ -266,7 +266,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				//recorro
 				for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 
-					if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_amperaje']){
+					if($rowData['SensoresGrupo_'.$i]==$rowData['CrossCrane_grupo_amperaje']){
 						//suma totales
 						$alimentacion_total     = $alimentacion_total + $rowResult['Sensor_amperaje_'.$i.'_Prom'];
 						$alimentacion_cuenta++;
@@ -276,7 +276,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						if($rowResult['Sensor_amperaje_'.$i.'_Prom']>$alimentacion_max){$alimentacion_max = $rowResult['Sensor_amperaje_'.$i.'_Prom'];}
 					}
 
-					if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_elevacion']){
+					if($rowData['SensoresGrupo_'.$i]==$rowData['CrossCrane_grupo_elevacion']){
 						//suma totales
 						$elevacion_total     = $elevacion_total + $rowResult['Sensor_elevacion_'.$i.'_Prom'];
 						$elevacion_cuenta++;
@@ -286,7 +286,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						if($rowResult['Sensor_elevacion_'.$i.'_Prom']>$elevacion_max){$elevacion_max = $rowResult['Sensor_elevacion_'.$i.'_Prom'];}
 					}
 
-					if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_giro']){
+					if($rowData['SensoresGrupo_'.$i]==$rowData['CrossCrane_grupo_giro']){
 						//suma totales
 						$giro_total     = $giro_total + $rowResult['Sensor_giro_'.$i.'_Prom'];
 						$giro_cuenta++;
@@ -296,7 +296,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						if($rowResult['Sensor_giro_'.$i.'_Prom']>$giro_max){$giro_max = $rowResult['Sensor_giro_'.$i.'_Prom'];}
 					}
 
-					if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_carro']){
+					if($rowData['SensoresGrupo_'.$i]==$rowData['CrossCrane_grupo_carro']){
 						//suma totales
 						$carro_total     = $carro_total + $rowResult['Sensor_carro_'.$i.'_Prom'];
 						$carro_cuenta++;
@@ -306,12 +306,12 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						if($rowResult['Sensor_carro_'.$i.'_Prom']>$carro_max){$carro_max = $rowResult['Sensor_carro_'.$i.'_Prom'];}
 					}
 
-					if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_voltaje']){
+					if($rowData['SensoresGrupo_'.$i]==$rowData['CrossCrane_grupo_voltaje']){
 						//promedio
 						$voltaje_prom_total = $voltaje_prom_total + $rowResult['Sensor_voltaje_'.$i.'_Prom'];
 						$voltaje_prom_cuenta++;
 						//actual
-						$voltaje_actual_total = $voltaje_actual_total + $rowdata['SensoresMedActual_'.$i];
+						$voltaje_actual_total = $voltaje_actual_total + $rowData['SensoresMedActual_'.$i];
 						$voltaje_actual_cuenta++;
 					}
 
@@ -477,7 +477,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				}
 
 				//Alertas
-				if(isset($rowdata['Alertas'])&&$rowdata['Alertas']!=0){
+				if(isset($rowData['Alertas'])&&$rowData['Alertas']!=0){
 					$icon_Alertas = '<span style="color:#da4932"><i class="fa fa-exclamation-triangle faa-bounce animated" aria-hidden="true"></i></span>';
 				}else{
 					$icon_Alertas = '<span style="color:#60c060"><i class="fa fa-check-circle" aria-hidden="true"></i></span>';
@@ -507,16 +507,16 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				$link .= '&idGrafico=1&submit_filter=+Filtrar';
 				//alimentacion
 				$link_alimentacion  = $link;
-				$link_alimentacion .= '&idGrupo='.$rowdata['CrossCrane_grupo_amperaje'];
+				$link_alimentacion .= '&idGrupo='.$rowData['CrossCrane_grupo_amperaje'];
 				//elevacion
 				$link_elevacion  = $link;
-				$link_elevacion .= '&idGrupo='.$rowdata['CrossCrane_grupo_elevacion'];
+				$link_elevacion .= '&idGrupo='.$rowData['CrossCrane_grupo_elevacion'];
 				//giro
 				$link_giro  = $link;
-				$link_giro .= '&idGrupo='.$rowdata['CrossCrane_grupo_giro'];
+				$link_giro .= '&idGrupo='.$rowData['CrossCrane_grupo_giro'];
 				//carro
 				$link_carro  = $link;
-				$link_carro .= '&idGrupo='.$rowdata['CrossCrane_grupo_carro'];
+				$link_carro .= '&idGrupo='.$rowData['CrossCrane_grupo_carro'];
 				//voltaje
 				$link_voltaje  = 'informe_telemetria_registro_sensores_17.php';
 				if($H_inicio2>$H_termino){
@@ -532,7 +532,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				}
 				$link_voltaje .= '&idTelemetria='.$X_Puntero;
 				$link_voltaje .= '&idGrafico=1&submit_filter=+Filtrar';
-				$link_voltaje .= '&idGrupo='.$rowdata['CrossCrane_grupo_voltaje'];
+				$link_voltaje .= '&idGrupo='.$rowData['CrossCrane_grupo_voltaje'];
 				//Alertas
 				$link_Alertas  = 'informe_telemetria_errores_6.php';
 				$link_Alertas .= '?f_inicio='.$Fecha_inicio;
@@ -827,7 +827,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 							<div class="box-body">
 								<div class="value">
 									<span><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
-									<span><?php echo $rowdata['Alertas']; ?></span>
+									<span><?php echo $rowData['Alertas']; ?></span>
 								</div>
 							</div>
 						</div>
@@ -878,7 +878,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 								async function initMap() {
 									const { Map } = await google.maps.importLibrary("maps");
 
-									var myLatlng = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud']; ?>, <?php echo $rowdata['GeoLongitud']; ?>);
+									var myLatlng = new google.maps.LatLng(<?php echo $rowData['GeoLatitud']; ?>, <?php echo $rowData['GeoLongitud']; ?>);
 
 									var myOptions = {
 										zoom: 15,
@@ -894,9 +894,9 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 													'<div class="iw-title">Equipo</div>' +
 													'<div class="iw-content">' +
 													'<p>'+
-													'<strong>Nombre: </strong><?php echo $rowdata['Nombre']; ?><br/>' +
-													'<strong>Fecha: </strong><?php echo fecha_estandar($rowdata['LastUpdateFecha']); ?><br/>' +
-													'<strong>Hora: </strong><?php echo $rowdata['LastUpdateHora']; ?><br/>' +
+													'<strong>Nombre: </strong><?php echo $rowData['Nombre']; ?><br/>' +
+													'<strong>Fecha: </strong><?php echo fecha_estandar($rowData['LastUpdateFecha']); ?><br/>' +
+													'<strong>Hora: </strong><?php echo $rowData['LastUpdateHora']; ?><br/>' +
 													'</p>' +
 													'</div>' +
 													'<div class="iw-bottom-gradient"></div>' +

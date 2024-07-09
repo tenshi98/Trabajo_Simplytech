@@ -51,12 +51,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,Identificador,id_Geo,id_Sensores,cantSensores, idDispositivo, idShield,
 idFormaEnvio, TiempoFueraLinea, idUsoPredio,idTab, idBackup, NregBackup, idAlertaTemprana,
 AlertaTemprCritica, AlertaTemprNormal, idUsoFTP, FTP_Carpeta,idGenerador';
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Configuracion'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowData['Nombre'], 'Editar Configuracion'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -71,15 +71,15 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'telemetria_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-						<?php if($rowdata['id_Sensores']==1){ ?>
+						<?php if($rowData['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
 						<?php } ?>
-						<?php if($rowdata['id_Geo']==1){ ?>
+						<?php if($rowData['id_Geo']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
-						<?php }elseif($rowdata['id_Geo']==2){ ?>
+						<?php }elseif($rowData['id_Geo']==2){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
-						<?php if($rowdata['id_Sensores']==1){ ?>
+						<?php if($rowData['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
 							<li class=""><a href="<?php echo 'telemetria_listado_sensor_operaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Definicion Operacional</a></li>
 						<?php } ?>
@@ -100,24 +100,24 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Identificador)){             $x1  = $Identificador;             }else{$x1  = $rowdata['Identificador'];}
-					if(isset($idDispositivo)){             $x2  = $idDispositivo;             }else{$x2  = $rowdata['idDispositivo'];}
-					if(isset($idShield)){                  $x3  = $idShield;                  }else{$x3  = $rowdata['idShield'];}
-					if(isset($idFormaEnvio)){              $x4  = $idFormaEnvio;              }else{$x4  = $rowdata['idFormaEnvio'];}
-					if(isset($TiempoFueraLinea)){          $x5  = $TiempoFueraLinea;          }else{$x5  = $rowdata['TiempoFueraLinea'];}
-					if(isset($idTab)){                     $x6  = $idTab;                     }else{$x6  = $rowdata['idTab'];}
-					if(isset($id_Geo)){                    $x7  = $id_Geo;                    }else{$x7  = $rowdata['id_Geo'];}
-					if(isset($id_Sensores)){               $x8  = $id_Sensores;               }else{$x8  = $rowdata['id_Sensores'];}
-					if(isset($cantSensores)){              $x9  = $cantSensores;              }else{$x9  = $rowdata['cantSensores'];}
-					if(isset($idUsoPredio)){               $x10 = $idUsoPredio;               }else{$x10 = $rowdata['idUsoPredio'];}
-					if(isset($idBackup)){                  $x11 = $idBackup;                  }else{$x11 = $rowdata['idBackup'];}
-					if(isset($NregBackup)){                $x12 = $NregBackup;                }else{$x12 = $rowdata['NregBackup'];}
-					if(isset($idGenerador)){               $x13 = $idGenerador;               }else{$x13 = $rowdata['idGenerador'];}
-					if(isset($idAlertaTemprana)){          $x14 = $idAlertaTemprana;          }else{$x14 = $rowdata['idAlertaTemprana'];}
-					if(isset($AlertaTemprCritica)){        $x15 = $AlertaTemprCritica;        }else{$x15 = $rowdata['AlertaTemprCritica'];}
-					if(isset($AlertaTemprNormal)){         $x16 = $AlertaTemprNormal;         }else{$x16 = $rowdata['AlertaTemprNormal'];}
-					if(isset($idUsoFTP)){                  $x17 = $idUsoFTP;                  }else{$x17 = $rowdata['idUsoFTP'];}
-					if(isset($FTP_Carpeta)){               $x18 = $FTP_Carpeta;               }else{$x18 = $rowdata['FTP_Carpeta'];}
+					if(isset($Identificador)){             $x1  = $Identificador;             }else{$x1  = $rowData['Identificador'];}
+					if(isset($idDispositivo)){             $x2  = $idDispositivo;             }else{$x2  = $rowData['idDispositivo'];}
+					if(isset($idShield)){                  $x3  = $idShield;                  }else{$x3  = $rowData['idShield'];}
+					if(isset($idFormaEnvio)){              $x4  = $idFormaEnvio;              }else{$x4  = $rowData['idFormaEnvio'];}
+					if(isset($TiempoFueraLinea)){          $x5  = $TiempoFueraLinea;          }else{$x5  = $rowData['TiempoFueraLinea'];}
+					if(isset($idTab)){                     $x6  = $idTab;                     }else{$x6  = $rowData['idTab'];}
+					if(isset($id_Geo)){                    $x7  = $id_Geo;                    }else{$x7  = $rowData['id_Geo'];}
+					if(isset($id_Sensores)){               $x8  = $id_Sensores;               }else{$x8  = $rowData['id_Sensores'];}
+					if(isset($cantSensores)){              $x9  = $cantSensores;              }else{$x9  = $rowData['cantSensores'];}
+					if(isset($idUsoPredio)){               $x10 = $idUsoPredio;               }else{$x10 = $rowData['idUsoPredio'];}
+					if(isset($idBackup)){                  $x11 = $idBackup;                  }else{$x11 = $rowData['idBackup'];}
+					if(isset($NregBackup)){                $x12 = $NregBackup;                }else{$x12 = $rowData['NregBackup'];}
+					if(isset($idGenerador)){               $x13 = $idGenerador;               }else{$x13 = $rowData['idGenerador'];}
+					if(isset($idAlertaTemprana)){          $x14 = $idAlertaTemprana;          }else{$x14 = $rowData['idAlertaTemprana'];}
+					if(isset($AlertaTemprCritica)){        $x15 = $AlertaTemprCritica;        }else{$x15 = $rowData['AlertaTemprCritica'];}
+					if(isset($AlertaTemprNormal)){         $x16 = $AlertaTemprNormal;         }else{$x16 = $rowData['AlertaTemprNormal'];}
+					if(isset($idUsoFTP)){                  $x17 = $idUsoFTP;                  }else{$x17 = $rowData['idUsoFTP'];}
+					if(isset($FTP_Carpeta)){               $x18 = $FTP_Carpeta;               }else{$x18 = $rowData['FTP_Carpeta'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

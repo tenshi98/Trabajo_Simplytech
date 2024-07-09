@@ -113,12 +113,12 @@ require_once '0_validate_user_1.php';
 				//variable con la dirección
 				$address = '';
 				if(isset($idCiudad) && $idCiudad!=''){
-					$rowdata = db_select_data (false, 'Nombre', 'core_ubicacion_ciudad', '', 'idCiudad = "'.$idCiudad.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$address .= $rowdata['Nombre'].', ';
+					$rowData = db_select_data (false, 'Nombre', 'core_ubicacion_ciudad', '', 'idCiudad = "'.$idCiudad.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$address .= $rowData['Nombre'].', ';
 				}
 				if(isset($idComuna) && $idComuna!=''){
-					$rowdata = db_select_data (false, 'Nombre', 'core_ubicacion_comunas', '', 'idComuna = "'.$idComuna.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$address .= $rowdata['Nombre'].', ';
+					$rowData = db_select_data (false, 'Nombre', 'core_ubicacion_comunas', '', 'idComuna = "'.$idComuna.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$address .= $rowData['Nombre'].', ';
 				}
 				if(isset($Direccion) && $Direccion!=''){
 					$address .= $Direccion;
@@ -202,12 +202,12 @@ require_once '0_validate_user_1.php';
 				//variable con la dirección
 				$address = '';
 				if(isset($idCiudad) && $idCiudad!=''){
-					$rowdata = db_select_data (false, 'Nombre', 'core_ubicacion_ciudad', '', 'idCiudad = "'.$idCiudad.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$address .= $rowdata['Nombre'].', ';
+					$rowData = db_select_data (false, 'Nombre', 'core_ubicacion_ciudad', '', 'idCiudad = "'.$idCiudad.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$address .= $rowData['Nombre'].', ';
 				}
 				if(isset($idComuna) && $idComuna!=''){
-					$rowdata = db_select_data (false, 'Nombre', 'core_ubicacion_comunas', '', 'idComuna = "'.$idComuna.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$address .= $rowdata['Nombre'].', ';
+					$rowData = db_select_data (false, 'Nombre', 'core_ubicacion_comunas', '', 'idComuna = "'.$idComuna.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$address .= $rowData['Nombre'].', ';
 				}
 				if(isset($Direccion) && $Direccion!=''){
 					$address .= $Direccion;

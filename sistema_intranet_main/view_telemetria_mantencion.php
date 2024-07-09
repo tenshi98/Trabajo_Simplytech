@@ -73,7 +73,7 @@ LEFT JOIN `core_sistemas`                           ON core_sistemas.idSistema  
 LEFT JOIN `core_ubicacion_ciudad`   sis_or_ciudad   ON sis_or_ciudad.idCiudad                       = core_sistemas.idCiudad
 LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna   ON sis_or_comuna.idComuna                       = core_sistemas.idComuna';
 $SIS_where = 'telemetria_historial_mantencion.idMantencion ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'telemetria_historial_mantencion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_historial_mantencion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /**********************************/
 $arrOpciones = array();
@@ -135,39 +135,39 @@ $arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantenc
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Empresa Visitada</strong>
 					<address>
-						Nombre: '.$row_data['SistemaOrigen'].'<br/>
-						Ubicación: '.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
-						Dirección: '.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono Fijo: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
-						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
-						Email: '.$row_data['SistemaOrigenEmail'].'<br/>
-						Persona contacto:'.$row_data['SistemaContacto'].'<br/>
-						Aprobador Nombre: '.$row_data['Recepcion_Nombre'].'<br/>
-						Aprobador Rut: '.$row_data['Recepcion_Rut'].'<br/>
-						Aprobador Email: '.$row_data['Recepcion_Email'].'<br/>
+						Nombre: '.$rowData['SistemaOrigen'].'<br/>
+						Ubicación: '.$rowData['SistemaOrigenCiudad'].', '.$rowData['SistemaOrigenComuna'].'<br/>
+						Dirección: '.$rowData['SistemaOrigenDireccion'].'<br/>
+						Fono Fijo: '.formatPhone($rowData['SistemaOrigenFono']).'<br/>
+						Rut: '.$rowData['SistemaOrigenRut'].'<br/>
+						Email: '.$rowData['SistemaOrigenEmail'].'<br/>
+						Persona contacto:'.$rowData['SistemaContacto'].'<br/>
+						Aprobador Nombre: '.$rowData['Recepcion_Nombre'].'<br/>
+						Aprobador Rut: '.$rowData['Recepcion_Rut'].'<br/>
+						Aprobador Email: '.$rowData['Recepcion_Email'].'<br/>
 					</address>
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Tecnico a Cargo</strong>
 					<address>
-						Nombre: '.$row_data['NombreEncargado'].'<br/>
-						Fecha: '.Fecha_estandar($row_data['Fecha']).'<br/>
-						Hora Inicio: '.$row_data['h_Inicio'].'<br/>
-						Hora Termino: '.$row_data['h_Termino'].'<br/>
-						Duracion: '.$row_data['Duracion'].'<br/>
+						Nombre: '.$rowData['NombreEncargado'].'<br/>
+						Fecha: '.Fecha_estandar($rowData['Fecha']).'<br/>
+						Hora Inicio: '.$rowData['h_Inicio'].'<br/>
+						Hora Termino: '.$rowData['h_Termino'].'<br/>
+						Duracion: '.$rowData['Duracion'].'<br/>
 					</address>
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Trabajo</strong>
 					<address>
-						Servicio: '.$row_data['Servicio'].'<br/>
+						Servicio: '.$rowData['Servicio'].'<br/>
 						Opciones: ';
 						$ntot = 0;
-						if(isset($row_data['idOpciones_1'])&&$row_data['idOpciones_1']==2){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[1]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[1]['Nombre'];$ntot++;}}
-						if(isset($row_data['idOpciones_2'])&&$row_data['idOpciones_2']==2){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[2]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[2]['Nombre'];$ntot++;}}
-						if(isset($row_data['idOpciones_3'])&&$row_data['idOpciones_3']==2){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[3]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[3]['Nombre'];$ntot++;}}
+						if(isset($rowData['idOpciones_1'])&&$rowData['idOpciones_1']==2){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[1]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[1]['Nombre'];$ntot++;}}
+						if(isset($rowData['idOpciones_2'])&&$rowData['idOpciones_2']==2){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[2]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[2]['Nombre'];$ntot++;}}
+						if(isset($rowData['idOpciones_3'])&&$rowData['idOpciones_3']==2){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[3]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[3]['Nombre'];$ntot++;}}
 						echo '
 						<br/>
 					</address>
@@ -193,14 +193,14 @@ $arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantenc
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Diagnostico tecnico y acciones realizadas:</p>
-			<div class="text-muted well well-sm no-shadow" ><?php echo $row_data['Resumen']; ?></div>
+			<div class="text-muted well well-sm no-shadow" ><?php echo $rowData['Resumen']; ?></div>
 		</div>
 	</div>
 
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Resumen de Visita:</p>
-			<div class="text-muted well well-sm no-shadow" ><?php echo $row_data['Resolucion']; ?></div>
+			<div class="text-muted well well-sm no-shadow" ><?php echo $rowData['Resolucion']; ?></div>
 		</div>
 	</div>
 	
@@ -227,9 +227,9 @@ $arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantenc
 	<div class="row firma">
 
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont">
-			<?php if(isset($row_data['Path_Firma'])&&$row_data['Path_Firma']!=''){ ?>
+			<?php if(isset($rowData['Path_Firma'])&&$rowData['Path_Firma']!=''){ ?>
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcenter">
-					<img style="" class="media-object user-img width100" alt="Imagen Referencia" src="upload/<?php echo $row_data['Path_Firma']; ?>">
+					<img style="" class="media-object user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowData['Path_Firma']; ?>">
 				</div>
 			<?php } ?>
 			<p>Firma Aprobador</p>

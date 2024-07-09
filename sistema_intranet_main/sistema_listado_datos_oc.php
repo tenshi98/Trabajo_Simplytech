@@ -94,7 +94,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado); 
+$rowData = mysqli_fetch_assoc ($resultado); 
 
 
  ?>
@@ -110,7 +110,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idUsuario)){     $x1  = $idUsuario;   }else{$x1  = $rowdata['idUsuario'];}
+				if(isset($idUsuario)){     $x1  = $idUsuario;   }else{$x1  = $rowData['idUsuario'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -193,7 +193,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 // consulto los datos
 $arrAprobador = array();
@@ -301,7 +301,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata_x = mysqli_fetch_assoc ($resultado);
+$rowData_x = mysqli_fetch_assoc ($resultado);
 
 //verifico que sea un administrador
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
@@ -314,18 +314,18 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$Count_Shipping     = 1;
 }else{
 	//Totales de los permisos que se pueden acceder
-	$Count_productos    = $rowdata_x['tran_1'] + $rowdata_x['tran_2'] + $rowdata_x['tran_3'] + $rowdata_x['tran_4'] + $rowdata_x['tran_5'];
-	$Count_insumos      = $rowdata_x['tran_11'] + $rowdata_x['tran_12'] + $rowdata_x['tran_13'] + $rowdata_x['tran_14'] + $rowdata_x['tran_15'];
-	$Count_OT           = $rowdata_x['tran_21'] + $rowdata_x['tran_22'];
-	$Count_OC           = $rowdata_x['tran_26'] + $rowdata_x['tran_27'];
-	$Count_Variedades   = $rowdata_x['tran_31'] + $rowdata_x['tran_32'] + $rowdata_x['tran_33'] + $rowdata_x['tran_34'];
-	$Count_Shipping     = $rowdata_x['tran_35'] + $rowdata_x['tran_36'] + $rowdata_x['tran_37'];
+	$Count_productos    = $rowData_x['tran_1'] + $rowData_x['tran_2'] + $rowData_x['tran_3'] + $rowData_x['tran_4'] + $rowData_x['tran_5'];
+	$Count_insumos      = $rowData_x['tran_11'] + $rowData_x['tran_12'] + $rowData_x['tran_13'] + $rowData_x['tran_14'] + $rowData_x['tran_15'];
+	$Count_OT           = $rowData_x['tran_21'] + $rowData_x['tran_22'];
+	$Count_OC           = $rowData_x['tran_26'] + $rowData_x['tran_27'];
+	$Count_Variedades   = $rowData_x['tran_31'] + $rowData_x['tran_32'] + $rowData_x['tran_33'] + $rowData_x['tran_34'];
+	$Count_Shipping     = $rowData_x['tran_35'] + $rowData_x['tran_36'] + $rowData_x['tran_37'];
 }
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Aprobador OC'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowData['Nombre'], 'Editar Aprobador OC'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Aprobador</a>
 	</div>

@@ -60,7 +60,7 @@ idContratista,idCentroCosto,idLevel_1,idLevel_2,idLevel_3,idLevel_4,idLevel_5,
 idTipoTrabajo, PorcentajeTrabajoPesado,idBanco, idTipoCuenta, N_Cuenta,UbicacionTrabajo';
 $SIS_join  = '';
 $SIS_where = 'idTrabajador ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
@@ -68,7 +68,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Datos Laborales'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat'], 'Editar Datos Laborales'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -108,38 +108,38 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idTipo)){                   $x1  = $idTipo;                    }else{$x1  = $rowdata['idTipo'];}
-					if(isset($Cargo)){                    $x2  = $Cargo;                     }else{$x2  = $rowdata['Cargo'];}
+					if(isset($idTipo)){                   $x1  = $idTipo;                    }else{$x1  = $rowData['idTipo'];}
+					if(isset($Cargo)){                    $x2  = $Cargo;                     }else{$x2  = $rowData['Cargo'];}
 
-					if(isset($idContratista)){            $x3  = $idContratista;             }else{$x3  = $rowdata['idContratista'];}
-					if(isset($idTipoTrabajador)){         $x4  = $idTipoTrabajador;          }else{$x4  = $rowdata['idTipoTrabajador'];}
-					if(isset($idTipoContrato)){           $x5  = $idTipoContrato;            }else{$x5  = $rowdata['idTipoContrato'];}
-					if(isset($idTipoContratoTrab)){       $x6  = $idTipoContratoTrab;        }else{$x6  = $rowdata['idTipoContratoTrab'];}
-					if(isset($horas_pactadas)){           $x7  = $horas_pactadas;            }else{$x7  = $rowdata['horas_pactadas'];}
-					if(isset($FechaContrato)){            $x8  = $FechaContrato;             }else{$x8  = $rowdata['FechaContrato'];}
-					if(isset($F_Inicio_Contrato)){        $x9  = $F_Inicio_Contrato;         }else{$x9  = $rowdata['F_Inicio_Contrato'];}
-					if(isset($F_Termino_Contrato)){       $x10 = $F_Termino_Contrato;        }else{$x10 = $rowdata['F_Termino_Contrato'];}
-					if(isset($idTipoTrabajo)){            $x11 = $idTipoTrabajo;             }else{$x11 = $rowdata['idTipoTrabajo'];}
-					if(isset($PorcentajeTrabajoPesado)){  $x12 = $PorcentajeTrabajoPesado;   }else{$x12 = $rowdata['PorcentajeTrabajoPesado'];}
-					if(isset($UbicacionTrabajo)){         $x13 = $UbicacionTrabajo;          }else{$x13 = $rowdata['UbicacionTrabajo'];}
+					if(isset($idContratista)){            $x3  = $idContratista;             }else{$x3  = $rowData['idContratista'];}
+					if(isset($idTipoTrabajador)){         $x4  = $idTipoTrabajador;          }else{$x4  = $rowData['idTipoTrabajador'];}
+					if(isset($idTipoContrato)){           $x5  = $idTipoContrato;            }else{$x5  = $rowData['idTipoContrato'];}
+					if(isset($idTipoContratoTrab)){       $x6  = $idTipoContratoTrab;        }else{$x6  = $rowData['idTipoContratoTrab'];}
+					if(isset($horas_pactadas)){           $x7  = $horas_pactadas;            }else{$x7  = $rowData['horas_pactadas'];}
+					if(isset($FechaContrato)){            $x8  = $FechaContrato;             }else{$x8  = $rowData['FechaContrato'];}
+					if(isset($F_Inicio_Contrato)){        $x9  = $F_Inicio_Contrato;         }else{$x9  = $rowData['F_Inicio_Contrato'];}
+					if(isset($F_Termino_Contrato)){       $x10 = $F_Termino_Contrato;        }else{$x10 = $rowData['F_Termino_Contrato'];}
+					if(isset($idTipoTrabajo)){            $x11 = $idTipoTrabajo;             }else{$x11 = $rowData['idTipoTrabajo'];}
+					if(isset($PorcentajeTrabajoPesado)){  $x12 = $PorcentajeTrabajoPesado;   }else{$x12 = $rowData['PorcentajeTrabajoPesado'];}
+					if(isset($UbicacionTrabajo)){         $x13 = $UbicacionTrabajo;          }else{$x13 = $rowData['UbicacionTrabajo'];}
 
-					if(isset($SueldoLiquido)){            $x14 = $SueldoLiquido;             }else{$x14 = $rowdata['SueldoLiquido'];}
-					if(isset($SueldoDia)){                $x15 = $SueldoDia;                 }else{$x15 = $rowdata['SueldoDia'];}
-					if(isset($SueldoHora)){               $x16 = $SueldoHora;                }else{$x16 = $rowdata['SueldoHora'];}
-					if(isset($Gratificacion)){            $x17 = $Gratificacion;             }else{$x17 = $rowdata['Gratificacion'];}
+					if(isset($SueldoLiquido)){            $x14 = $SueldoLiquido;             }else{$x14 = $rowData['SueldoLiquido'];}
+					if(isset($SueldoDia)){                $x15 = $SueldoDia;                 }else{$x15 = $rowData['SueldoDia'];}
+					if(isset($SueldoHora)){               $x16 = $SueldoHora;                }else{$x16 = $rowData['SueldoHora'];}
+					if(isset($Gratificacion)){            $x17 = $Gratificacion;             }else{$x17 = $rowData['Gratificacion'];}
 
-					if(isset($idBanco)){                  $x18 = $idBanco;                   }else{$x18 = $rowdata['idBanco'];}
-					if(isset($idTipoCuenta)){             $x19 = $idTipoCuenta;              }else{$x19 = $rowdata['idTipoCuenta'];}
-					if(isset($N_Cuenta)){                 $x20 = $N_Cuenta;                  }else{$x20 = $rowdata['N_Cuenta'];}
+					if(isset($idBanco)){                  $x18 = $idBanco;                   }else{$x18 = $rowData['idBanco'];}
+					if(isset($idTipoCuenta)){             $x19 = $idTipoCuenta;              }else{$x19 = $rowData['idTipoCuenta'];}
+					if(isset($N_Cuenta)){                 $x20 = $N_Cuenta;                  }else{$x20 = $rowData['N_Cuenta'];}
 
-					if(isset($idCentroCosto)){            $x21 = $idCentroCosto;             }else{$x21 = $rowdata['idCentroCosto'];}
-					if(isset($idLevel_1)){                $x22 = $idLevel_1;                 }else{$x22 = $rowdata['idLevel_1'];}
-					if(isset($idLevel_2)){                $x23 = $idLevel_2;                 }else{$x23 = $rowdata['idLevel_2'];}
-					if(isset($idLevel_3)){                $x24 = $idLevel_3;                 }else{$x24 = $rowdata['idLevel_3'];}
-					if(isset($idLevel_4)){                $x25 = $idLevel_4;                 }else{$x25 = $rowdata['idLevel_4'];}
-					if(isset($idLevel_5)){                $x26 = $idLevel_5;                 }else{$x26 = $rowdata['idLevel_5'];}
+					if(isset($idCentroCosto)){            $x21 = $idCentroCosto;             }else{$x21 = $rowData['idCentroCosto'];}
+					if(isset($idLevel_1)){                $x22 = $idLevel_1;                 }else{$x22 = $rowData['idLevel_1'];}
+					if(isset($idLevel_2)){                $x23 = $idLevel_2;                 }else{$x23 = $rowData['idLevel_2'];}
+					if(isset($idLevel_3)){                $x24 = $idLevel_3;                 }else{$x24 = $rowData['idLevel_3'];}
+					if(isset($idLevel_4)){                $x25 = $idLevel_4;                 }else{$x25 = $rowData['idLevel_4'];}
+					if(isset($idLevel_5)){                $x26 = $idLevel_5;                 }else{$x26 = $rowData['idLevel_5'];}
 
-					if(isset($Observaciones)){            $x27 = $Observaciones;             }else{$x27 = $rowdata['Observaciones'];}
+					if(isset($Observaciones)){            $x27 = $Observaciones;             }else{$x27 = $rowData['Observaciones'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

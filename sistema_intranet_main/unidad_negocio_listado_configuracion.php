@@ -51,12 +51,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,idConfig_1, idConfig_2';
 $SIS_join  = '';
 $SIS_where = 'idMaquina = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Unidades de Negocio', $rowdata['Nombre'], 'Editar Configuracion'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Unidades de Negocio', $rowData['Nombre'], 'Editar Configuracion'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -78,12 +78,12 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SI
 						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Descripcion</a></li>
 						<?php
 						//Uso de componentes
-						if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
+						if(isset($rowData['idConfig_1'])&&$rowData['idConfig_1']==1){ ?>
 							<li class=""><a href="<?php echo 'unidad_negocio_listado_componentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Componentes</a></li>
 						<?php } ?>
 						<?php
 						//uso de matriz de analisis
-						if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
+						if(isset($rowData['idConfig_2'])&&$rowData['idConfig_2']==1){ ?>
 							<li class=""><a href="<?php echo 'unidad_negocio_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-microchip" aria-hidden="true"></i> Matriz Analisis</a></li>
 						<?php } ?>
 
@@ -97,8 +97,8 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SI
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idConfig_1)){  $x1  = $idConfig_1;  }else{$x1  = $rowdata['idConfig_1'];}
-					if(isset($idConfig_2)){  $x2  = $idConfig_2;  }else{$x2  = $rowdata['idConfig_2'];}
+					if(isset($idConfig_1)){  $x1  = $idConfig_1;  }else{$x1  = $rowData['idConfig_1'];}
+					if(isset($idConfig_2)){  $x2  = $idConfig_2;  }else{$x2  = $rowData['idConfig_2'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

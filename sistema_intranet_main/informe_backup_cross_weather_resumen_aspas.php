@@ -43,7 +43,7 @@ telemetria_listado.SensorActivacionValor AS EquipoSensorActivacionValor,
 core_sistemas.CrossTech_HeladaTemp AS TempMinima';
 $SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = telemetria_listado.idSistema';
 $SIS_where = 'telemetria_listado.idTelemetria='.$idTelemetria;
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /**********************************************************/
 //Variable de busqueda
@@ -53,7 +53,7 @@ if(isset($_GET['f_inicio'], $_GET['f_termino']) && $_GET['f_inicio'] != '' && $_
 }
 
 //numero sensores equipo
-$N_Maximo_Sensores = $rowdata['EquipoN_Sensores'];
+$N_Maximo_Sensores = $rowData['EquipoN_Sensores'];
 $consql = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
     $consql .= ',backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.' AS SensorValue_'.$i;
@@ -86,9 +86,9 @@ foreach($arrConsulta as $temp) {
 
 	//variables
 	$Temperatura          = $temp['SensorValue_1'];
-	$Temperatura_min      = $rowdata['TempMinima'];
-	$Temperatura_actMaq   = $temp['SensorValue_'.$rowdata['EquipoSensorActivacionID']];
-	$Temperatura_actConf  = $rowdata['EquipoSensorActivacionValor'];
+	$Temperatura_min      = $rowData['TempMinima'];
+	$Temperatura_actMaq   = $temp['SensorValue_'.$rowData['EquipoSensorActivacionID']];
+	$Temperatura_actConf  = $rowData['EquipoSensorActivacionValor'];
 
 	/*---------------------Funcionamiento---------------------*/
 	//si la hora de referencia esta vacia
@@ -187,7 +187,7 @@ foreach($arrConsulta as $temp) {
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 			<div class="box box-blue box-solid">
 				<div class="box-header with-border">
-					<h3 class="box-title">Tiempo Temperatura Bajo <?php echo $rowdata['TempMinima']; ?> C°</h3>
+					<h3 class="box-title">Tiempo Temperatura Bajo <?php echo $rowData['TempMinima']; ?> C°</h3>
 				</div>
 				<div class="box-body">
 					<div class="value">
@@ -271,7 +271,7 @@ foreach($arrConsulta as $temp) {
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo 'Detalle Helada (Bajo '.$rowdata['TempMinima'].'°C)'; ?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo 'Detalle Helada (Bajo '.$rowData['TempMinima'].'°C)'; ?></h5>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">

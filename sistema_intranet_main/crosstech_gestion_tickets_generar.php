@@ -72,7 +72,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'idCliente,idArea,idTipoTicket,idPrioridad,Titulo,Descripcion';
 	$SIS_join  = '';
 	$SIS_where = 'idTicket = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'crosstech_gestion_tickets', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'crosstech_gestion_tickets', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	//Verifico el tipo de usuario que esta ingresando
 	$clientfil = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado=1';
@@ -90,11 +90,11 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idCliente)){      $x1  = $idCliente;      }else{$x1  = $rowdata['idCliente'];}
-					if(isset($idArea)){         $x2  = $idArea;         }else{$x2  = $rowdata['idArea'];}
-					if(isset($idPrioridad)){    $x3  = $idPrioridad;    }else{$x3  = $rowdata['idPrioridad'];}
-					if(isset($Titulo)){         $x4  = $Titulo;         }else{$x4  = $rowdata['Titulo'];}
-					if(isset($Descripcion)){    $x5  = $Descripcion;    }else{$x5  = $rowdata['Descripcion'];}
+					if(isset($idCliente)){      $x1  = $idCliente;      }else{$x1  = $rowData['idCliente'];}
+					if(isset($idArea)){         $x2  = $idArea;         }else{$x2  = $rowData['idArea'];}
+					if(isset($idPrioridad)){    $x3  = $idPrioridad;    }else{$x3  = $rowData['idPrioridad'];}
+					if(isset($Titulo)){         $x4  = $Titulo;         }else{$x4  = $rowData['Titulo'];}
+					if(isset($Descripcion)){    $x5  = $Descripcion;    }else{$x5  = $rowData['Descripcion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

@@ -52,12 +52,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,ApellidoPat,ApellidoMat,Observaciones';
 $SIS_join  = '';
 $SIS_where = 'idPostulante = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Postulante', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Otros Datos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Postulante', $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat'], 'Editar Otros Datos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -88,7 +88,7 @@ $rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, 
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Observaciones)){       $x9 = $Observaciones;        }else{$x9 = $rowdata['Observaciones'];}
+					if(isset($Observaciones)){       $x9 = $Observaciones;        }else{$x9 = $rowData['Observaciones'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

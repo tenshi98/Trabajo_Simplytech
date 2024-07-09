@@ -55,12 +55,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,MontoProgramado';
 $SIS_join  = '';
 $SIS_where = 'idCajaChica = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'caja_chica_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'caja_chica_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Caja Chica', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Caja Chica', $rowData['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -86,8 +86,8 @@ $rowdata = db_select_data (false, $SIS_query, 'caja_chica_listado', $SIS_join, $
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){           $x1  = $Nombre;           }else{$x1  = $rowdata['Nombre'];}
-					if(isset($MontoProgramado)){  $x2  = $MontoProgramado;  }else{$x2  = $rowdata['MontoProgramado'];}
+					if(isset($Nombre)){           $x1  = $Nombre;           }else{$x1  = $rowData['Nombre'];}
+					if(isset($MontoProgramado)){  $x2  = $MontoProgramado;  }else{$x2  = $rowData['MontoProgramado'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

@@ -52,12 +52,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,ApellidoPat,ApellidoMat,ContactoPersona, ContactoFono';
 $SIS_join  = '';
 $SIS_where = 'idTrabajador = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Datos de Contacto'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat'], 'Editar Datos de Contacto'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -93,8 +93,8 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($ContactoPersona)){    $x1  = $ContactoPersona;    }else{$x1  = $rowdata['ContactoPersona'];}
-					if(isset($ContactoFono)){       $x2  = $ContactoFono;       }else{$x2  = $rowdata['ContactoFono'];}
+					if(isset($ContactoPersona)){    $x1  = $ContactoPersona;    }else{$x1  = $rowData['ContactoPersona'];}
+					if(isset($ContactoFono)){       $x2  = $ContactoFono;       }else{$x2  = $rowData['ContactoFono'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

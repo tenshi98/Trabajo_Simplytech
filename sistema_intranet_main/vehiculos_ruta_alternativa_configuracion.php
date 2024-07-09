@@ -88,7 +88,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 //Se traen las rutas
 $query = "SELECT idUbicaciones, Latitud, Longitud, direccion
@@ -135,7 +135,7 @@ array_push( $arrRutas,$row );
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ruta', $rowdata['Nombre'], 'Editar Ruta'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ruta', $rowData['Nombre'], 'Editar Ruta'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -408,13 +408,13 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 //Se traen las rutas
 $arrRutas = array();
 $query = "SELECT idUbicaciones, Latitud, Longitud, direccion
 FROM `vehiculos_rutas_ubicaciones`
-WHERE idRuta = ".$rowdata['idRuta']."
+WHERE idRuta = ".$rowData['idRuta']."
 ORDER BY idUbicaciones ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -457,7 +457,7 @@ array_push( $arrRutasAlt,$row );
 } ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ruta Alternativa', $rowdata['Nombre'], 'Editar Ruta'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ruta Alternativa', $rowData['Nombre'], 'Editar Ruta'); ?>
 </div>
 <div class="clearfix"></div>
 

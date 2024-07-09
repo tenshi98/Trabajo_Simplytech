@@ -57,7 +57,7 @@ if(!$resultado){
 	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
 		
 }
-$rowdata = mysqli_fetch_assoc ($resultado);	 
+$rowData = mysqli_fetch_assoc ($resultado);	 
 
 // Se trae un listado con todas las preguntas
 $arrPreguntas = array();
@@ -101,20 +101,20 @@ array_push( $arrPreguntas,$row );
 //Tipo Puntuacion
 $TipoPuntuacion = '';
 //Escala
-if(isset($rowdata['idTipoEvaluacion'])&&$rowdata['idTipoEvaluacion']==1){
-	$TipoPuntuacion = $rowdata['TipoEvaluacion'].' : '.$rowdata['Escala'];
+if(isset($rowData['idTipoEvaluacion'])&&$rowData['idTipoEvaluacion']==1){
+	$TipoPuntuacion = $rowData['TipoEvaluacion'].' : '.$rowData['Escala'];
 //Porcentaje	
 }else{
-	$TipoPuntuacion = $rowdata['TipoEvaluacion'].' : '.$rowdata['Aprobado'];
+	$TipoPuntuacion = $rowData['TipoEvaluacion'].' : '.$rowData['Aprobado'];
 }
 //Tipo Evaluacion
 $TipoEvaluacion = '';
 //Cerrada
-if(isset($rowdata['idTipoQuiz'])&&$rowdata['idTipoQuiz']==1){
-	$TipoEvaluacion = $rowdata['TipoQuiz'];
+if(isset($rowData['idTipoQuiz'])&&$rowData['idTipoQuiz']==1){
+	$TipoEvaluacion = $rowData['TipoQuiz'];
 //Abierta 	
 }else{
-	$TipoEvaluacion = $rowdata['TipoQuiz'];
+	$TipoEvaluacion = $rowData['TipoQuiz'];
 }
 
 					
@@ -166,9 +166,9 @@ foreach($arrPreguntas as $categoria=>$permisos){
 			if (err) { throw e};
 			doc=new Docxgen(content);
 			doc.setData( {"Header_fecha":"<?php echo Fecha_estandar(fecha_actual()); ?>",
-							"Header_texto":"<?php echo $rowdata['Nombre']; ?>",
-							"sistema":"<?php echo $rowdata['sistema']; ?>",
-							"Estado":"<?php echo $rowdata['Estado']; ?>",
+							"Header_texto":"<?php echo $rowData['Nombre']; ?>",
+							"sistema":"<?php echo $rowData['sistema']; ?>",
+							"Estado":"<?php echo $rowData['Estado']; ?>",
 							"TipoPuntuacion":"<?php echo $TipoPuntuacion; ?>",
 							"TipoEvaluacion":"<?php echo $TipoEvaluacion; ?>",
 							"Contenido":"<?php echo $Contenido; ?>"

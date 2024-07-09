@@ -89,7 +89,7 @@ if(!empty($_GET['id'])){
 	core_estados.Nombre AS Estado';
 	$SIS_join  = 'LEFT JOIN `core_estados`  ON core_estados.idEstado = centrocosto_listado.idEstado';
 	$SIS_where = 'centrocosto_listado.idCentroCosto='.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'centrocosto_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'centrocosto_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -168,7 +168,7 @@ if(!empty($_GET['id'])){
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Centro de Costo', $rowdata['Nombre'], 'Resumen'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Centro de Costo', $rowData['Nombre'], 'Resumen'); ?>
 	</div>
 	<div class="clearfix"></div>
 
@@ -196,11 +196,11 @@ if(!empty($_GET['id'])){
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<tr class="odd">
 									<td>Nombre</td>
-									<td><?php echo $rowdata['Nombre']; ?></td>
+									<td><?php echo $rowData['Nombre']; ?></td>
 								</tr>
 								<tr class="odd">
 									<td>Estado</td>
-									<td><?php echo $rowdata['Estado']; ?></td>
+									<td><?php echo $rowData['Estado']; ?></td>
 								</tr>
 								<tr>
 									<td colspan="2" style="background-color: #ccc;">Itemizado</td>

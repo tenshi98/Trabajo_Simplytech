@@ -134,11 +134,11 @@ if(!empty($_GET['detalle'])){
 	//realizo el filtrado de acuerdo al filtro anterior
 	$SIS_where = 'usuarios_listado.idEstado = 1';
 	if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario']!=''){    $SIS_where .= " AND usuarios_listado.idTipoUsuario = '".$_GET['idTipoUsuario']."'";}
-	if(isset($_GET['Nombre']) && $_GET['Nombre'] != '')  {              $SIS_where .= " AND usuarios_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
-	if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != '')  {          $SIS_where .= " AND usuarios_listado.idCiudad = '".$_GET['idCiudad']."'";}
-	if(isset($_GET['idComuna']) && $_GET['idComuna'] != '')  {          $SIS_where .= " AND usuarios_listado.idComuna = '".$_GET['idComuna']."'";}
-	if(isset($_GET['Direccion']) && $_GET['Direccion'] != '')  {        $SIS_where .= " AND usuarios_listado.Direccion LIKE '%".EstandarizarInput($_GET['Direccion'])."%'";}
-	if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {        $SIS_where .= " AND usuarios_sistemas.idSistema = '".$_GET['idSistema']."'";}
+	if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){              $SIS_where .= " AND usuarios_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
+	if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != ''){          $SIS_where .= " AND usuarios_listado.idCiudad = '".$_GET['idCiudad']."'";}
+	if(isset($_GET['idComuna']) && $_GET['idComuna'] != ''){          $SIS_where .= " AND usuarios_listado.idComuna = '".$_GET['idComuna']."'";}
+	if(isset($_GET['Direccion']) && $_GET['Direccion'] != ''){        $SIS_where .= " AND usuarios_listado.Direccion LIKE '%".EstandarizarInput($_GET['Direccion'])."%'";}
+	if(isset($_GET['idSistema']) && $_GET['idSistema'] != ''){        $SIS_where .= " AND usuarios_sistemas.idSistema = '".$_GET['idSistema']."'";}
 	if(isset($_GET['rango_a']) && $_GET['rango_a'] != ''&&isset($_GET['rango_b']) && $_GET['rango_b']!=''){
 		$SIS_where .= " AND usuarios_listado.fNacimiento BETWEEN '".$_GET['rango_a']."' AND '".$_GET['rango_b']."'";
 	}
@@ -184,13 +184,13 @@ if(!empty($_GET['detalle'])){
 					$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 
 					if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario']!=''){    $Form_Inputs->form_input_hidden('idTipoUsuario', $_GET['idTipoUsuario'], 2);}
-					if(isset($_GET['Nombre']) && $_GET['Nombre'] != '')  {              $Form_Inputs->form_input_hidden('Nombre', $_GET['Nombre'], 2);}
-					if(isset($_GET['rango_a']) && $_GET['rango_a'] != '')  {            $Form_Inputs->form_input_hidden('rango_a', $_GET['rango_a'], 2);}
-					if(isset($_GET['rango_b']) && $_GET['rango_b'] != '')  {            $Form_Inputs->form_input_hidden('rango_b', $_GET['rango_b'], 2);}
-					if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != '')  {          $Form_Inputs->form_input_hidden('idCiudad', $_GET['idCiudad'], 2);}
-					if(isset($_GET['idComuna']) && $_GET['idComuna'] != '')  {          $Form_Inputs->form_input_hidden('idComuna', $_GET['idComuna'], 2);}
-					if(isset($_GET['Direccion']) && $_GET['Direccion'] != '')  {        $Form_Inputs->form_input_hidden('Direccion', $_GET['Direccion'], 2);}
-					if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {        $Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);}
+					if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){              $Form_Inputs->form_input_hidden('Nombre', $_GET['Nombre'], 2);}
+					if(isset($_GET['rango_a']) && $_GET['rango_a'] != ''){            $Form_Inputs->form_input_hidden('rango_a', $_GET['rango_a'], 2);}
+					if(isset($_GET['rango_b']) && $_GET['rango_b'] != ''){            $Form_Inputs->form_input_hidden('rango_b', $_GET['rango_b'], 2);}
+					if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != ''){          $Form_Inputs->form_input_hidden('idCiudad', $_GET['idCiudad'], 2);}
+					if(isset($_GET['idComuna']) && $_GET['idComuna'] != ''){          $Form_Inputs->form_input_hidden('idComuna', $_GET['idComuna'], 2);}
+					if(isset($_GET['Direccion']) && $_GET['Direccion'] != ''){        $Form_Inputs->form_input_hidden('Direccion', $_GET['Direccion'], 2);}
+					if(isset($_GET['idSistema']) && $_GET['idSistema'] != ''){        $Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);}
 
 					?>
 

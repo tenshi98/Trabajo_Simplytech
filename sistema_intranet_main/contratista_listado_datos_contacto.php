@@ -55,12 +55,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'PersonaContacto, Fono1,Fono2, Fax, email, Web, Nombre';
 $SIS_join  = '';
 $SIS_where = 'idContratista = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'contratista_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'contratista_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Contratista', $rowdata['Nombre'], 'Editar Datos de contacto'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Contratista', $rowData['Nombre'], 'Editar Datos de contacto'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -87,12 +87,12 @@ $rowdata = db_select_data (false, $SIS_query, 'contratista_listado', $SIS_join, 
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($PersonaContacto)){  $x11 = $PersonaContacto;   }else{$x11 = $rowdata['PersonaContacto'];}
-					if(isset($Fono1)){            $x12 = $Fono1;             }else{$x12 = $rowdata['Fono1'];}
-					if(isset($Fono2)){            $x13 = $Fono2;             }else{$x13 = $rowdata['Fono2'];}
-					if(isset($Fax)){              $x14 = $Fax;               }else{$x14 = $rowdata['Fax'];}
-					if(isset($email)){            $x15 = $email;             }else{$x15 = $rowdata['email'];}
-					if(isset($Web)){              $x16 = $Web;               }else{$x16 = $rowdata['Web'];}
+					if(isset($PersonaContacto)){  $x11 = $PersonaContacto;   }else{$x11 = $rowData['PersonaContacto'];}
+					if(isset($Fono1)){            $x12 = $Fono1;             }else{$x12 = $rowData['Fono1'];}
+					if(isset($Fono2)){            $x13 = $Fono2;             }else{$x13 = $rowData['Fono2'];}
+					if(isset($Fax)){              $x14 = $Fax;               }else{$x14 = $rowData['Fax'];}
+					if(isset($email)){            $x15 = $email;             }else{$x15 = $rowData['email'];}
+					if(isset($Web)){              $x16 = $Web;               }else{$x16 = $rowData['Web'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

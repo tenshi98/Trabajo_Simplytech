@@ -69,7 +69,7 @@ LEFT JOIN `core_ot_tipos`         ON core_ot_tipos.idTipo               = orden_
 LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador  = orden_trabajo_listado.idSupervisor
 LEFT JOIN `clientes_listado`      ON clientes_listado.idCliente         = maquinas_listado.idCliente';
 $SIS_where = 'orden_trabajo_listado.idOT ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /***************************************************/
 //Se traen a todos los trabajadores relacionados a las ot
@@ -86,7 +86,7 @@ $arrTrabajadores = array();
 $arrTrabajadores = db_select_array (false, $SIS_query, 'orden_trabajo_listado_responsable', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTrabajadores');
 
 //Si la OT solo esta programada
-if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){
+if(isset($rowData['idEstado'])&&$rowData['idEstado']!=''&&$rowData['idEstado']==1){
 
 	/***************************************************/
 	// Se trae un listado con todos los insumos utilizados
@@ -205,33 +205,33 @@ $zz .= '&view='.$_GET['view'];
 							<td class="meta-head"><strong>DATOS BASICOS</strong></td>
 							<td class="meta-head"></td>
 						</tr>
-						<?php if(isset($rowdata['ClienteNombre'])&&$rowdata['ClienteNombre']!=''){ ?>
+						<?php if(isset($rowData['ClienteNombre'])&&$rowData['ClienteNombre']!=''){ ?>
 							<tr>
 								<td class="meta-head">Cliente</td>
-								<td><?php echo $rowdata['ClienteNombre'] ?></td>
+								<td><?php echo $rowData['ClienteNombre'] ?></td>
 							</tr>
 						<?php } ?>
 						<tr>
 							<td class="meta-head">Maquina</td>
-							<td><?php echo $rowdata['NombreMaquina']?></td>
+							<td><?php echo $rowData['NombreMaquina']?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Prioridad</td>
-							<td><?php echo $rowdata['NombrePrioridad']?></td>
+							<td><?php echo $rowData['NombrePrioridad']?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Tipo de Trabajo</td>
-							<td><?php echo $rowdata['NombreTipo']?></td>
+							<td><?php echo $rowData['NombreTipo']?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Estado</td>
-							<td><?php echo $rowdata['NombreEstado']?></td>
+							<td><?php echo $rowData['NombreEstado']?></td>
 						</tr>
 
-						<?php if(isset($rowdata['idSupervisor'])&&$rowdata['idSupervisor']!=''&&$rowdata['idSupervisor']!=0){ ?>
+						<?php if(isset($rowData['idSupervisor'])&&$rowData['idSupervisor']!=''&&$rowData['idSupervisor']!=0){ ?>
 							<tr>
 								<td class="meta-head">Supervisor</td>
-								<td><?php echo $rowdata['NombreTrab'].' '.$rowdata['ApellidoPat']?></td>
+								<td><?php echo $rowData['NombreTrab'].' '.$rowData['ApellidoPat']?></td>
 							</tr>
 						<?php } ?>
 
@@ -240,44 +240,44 @@ $zz .= '&view='.$_GET['view'];
 				<table id="meta" class="otdata2">
 					<tbody>
 
-						<?php if($rowdata['f_creacion']!='0000-00-00'){ ?>
+						<?php if($rowData['f_creacion']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Fecha creación</td>
-								<td><?php if($rowdata['f_creacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_creacion']);} ?></td>
+								<td><?php if($rowData['f_creacion']!='0000-00-00'){echo Fecha_estandar($rowData['f_creacion']);} ?></td>
 							</tr>
 						<?php } ?>
 
-						<?php if($rowdata['f_programacion']!='0000-00-00'){ ?>
+						<?php if($rowData['f_programacion']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Fecha programada</td>
-								<td><?php if($rowdata['f_programacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_programacion']);} ?></td>
+								<td><?php if($rowData['f_programacion']!='0000-00-00'){echo Fecha_estandar($rowData['f_programacion']);} ?></td>
 							</tr>
 						<?php } ?>
-						<?php if($rowdata['f_termino']!='0000-00-00'){ ?>
+						<?php if($rowData['f_termino']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Fecha termino</td>
-								<td><?php if($rowdata['f_termino']!='0000-00-00'){echo Fecha_estandar($rowdata['f_termino']);} ?></td>
+								<td><?php if($rowData['f_termino']!='0000-00-00'){echo Fecha_estandar($rowData['f_termino']);} ?></td>
 							</tr>
 						<?php } ?>
 
-						<?php if($rowdata['horaInicio']!='00:00:00'){ ?>
+						<?php if($rowData['horaInicio']!='00:00:00'){ ?>
 							<tr>
 								<td class="meta-head">Hora inicio</td>
-								<td><?php if($rowdata['horaInicio']!='00:00:00'){echo $rowdata['horaInicio'];} ?></td>
+								<td><?php if($rowData['horaInicio']!='00:00:00'){echo $rowData['horaInicio'];} ?></td>
 							</tr>
 						<?php } ?>
 
-						<?php if($rowdata['horaTermino']!='00:00:00'){ ?>
+						<?php if($rowData['horaTermino']!='00:00:00'){ ?>
 							<tr>
 								<td class="meta-head">Hora termino</td>
-								<td><?php if($rowdata['horaTermino']!='00:00:00'){echo $rowdata['horaTermino'];} ?></td>
+								<td><?php if($rowData['horaTermino']!='00:00:00'){echo $rowData['horaTermino'];} ?></td>
 							</tr>
 						<?php } ?>
 
-						<?php if($rowdata['horaProg']!='00:00:00'){ ?>
+						<?php if($rowData['horaProg']!='00:00:00'){ ?>
 							<tr>
 								<td class="meta-head">Tiempo Programado</td>
-								<td><?php if($rowdata['horaProg']!='00:00:00'){echo $rowdata['horaProg'];} ?></td>
+								<td><?php if($rowData['horaProg']!='00:00:00'){echo $rowData['horaProg'];} ?></td>
 							</tr>
 						<?php } ?>
 
@@ -304,11 +304,11 @@ $zz .= '&view='.$_GET['view'];
 					<?php } 
 					/**********************************************************************************/
 					if($arrInsumos!=false && !empty($arrInsumos) && $arrInsumos!='') { ?>
-						<tr class="item-row fact_tittle"><td colspan="6">Insumos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';} ?></td></tr>
+						<tr class="item-row fact_tittle"><td colspan="6">Insumos <?php if(isset($rowData['idEstado'])&&$rowData['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';} ?></td></tr>
 						<?php foreach ($arrInsumos as $insumos) {
 							if(isset($insumos['Cantidad'])&&$insumos['Cantidad']!=0){ ?>
 								<tr class="item-row linea_punteada">
-									<td class="item-name" colspan="5"><?php echo $insumos['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
+									<td class="item-name" colspan="5"><?php echo $insumos['NombreProducto']; if(isset($rowData['NombreBodega'])&&$rowData['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
 									<td class="item-name"><?php echo Cantidades_decimales_justos($insumos['Cantidad']).' '.$insumos['UnidadMedida']; ?></td>
 								</tr>
 							<?php
@@ -318,11 +318,11 @@ $zz .= '&view='.$_GET['view'];
 					<?php } 
 					/**********************************************************************************/
 					if($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') { ?>
-						<tr class="item-row fact_tittle"><td colspan="6">Productos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';} ?></td></tr>
+						<tr class="item-row fact_tittle"><td colspan="6">Productos <?php if(isset($rowData['idEstado'])&&$rowData['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';} ?></td></tr>
 						<?php foreach ($arrProductos as $prod) {
 							if(isset($prod['Cantidad'])&&$prod['Cantidad']!=0){ ?>
 								<tr class="item-row linea_punteada">
-									<td class="item-name" colspan="5"><?php echo $prod['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
+									<td class="item-name" colspan="5"><?php echo $prod['NombreProducto']; if(isset($rowData['NombreBodega'])&&$rowData['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
 									<td class="item-name"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['UnidadMedida']; ?></td>
 								</tr>
 							<?php 
@@ -332,7 +332,7 @@ $zz .= '&view='.$_GET['view'];
 					<?php } 
 					/**********************************************************************************/
 					if($arrTrabajo!=false && !empty($arrTrabajo) && $arrTrabajo!='') { ?>
-						<tr class="item-row fact_tittle"><td colspan="6">Trabajos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Ejecutados';} ?></td></tr>
+						<tr class="item-row fact_tittle"><td colspan="6">Trabajos <?php if(isset($rowData['idEstado'])&&$rowData['idEstado']==1){echo 'Programados';}else{echo 'Ejecutados';} ?></td></tr>
 						<?php foreach ($arrTrabajo as $trab) {  ?>
 							<tr class="item-row linea_punteada">
 								<td class="item-name" colspan="2"><?php echo $trab['NombreComponente']; ?></td>
@@ -374,7 +374,7 @@ $zz .= '&view='.$_GET['view'];
 					<?php } 
 					/**********************************************************************************/?>
 
-					<tr><td colspan="6" class="blank"><p><?php echo $rowdata['Observaciones']?></p></td></tr>
+					<tr><td colspan="6" class="blank"><p><?php echo $rowData['Observaciones']?></p></td></tr>
 					<tr><td colspan="6" class="blank"><p>Observacion</p></td></tr>
 
 				</tbody>

@@ -73,7 +73,7 @@ LEFT JOIN `trabajadores_listado`                ON trabajadores_listado.idTrabaj
 LEFT JOIN `caja_chica_facturacion`   fact_rel   ON fact_rel.idFacturacion               = caja_chica_facturacion.idFacturacionRelacionada
 LEFT JOIN `trabajadores_listado`     trab_rel   ON trab_rel.idTrabajador                = fact_rel.idTrabajador';
 $SIS_where = 'caja_chica_facturacion.idFacturacion ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'caja_chica_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'caja_chica_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /***********************************************/		
 // Se trae un listado con todos los productos utilizados
@@ -108,7 +108,7 @@ $html = '
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
-				<i class="fa fa-globe" aria-hidden="true"></i> '.$row_data['CajaTipo'].'
+				<i class="fa fa-globe" aria-hidden="true"></i> '.$rowData['CajaTipo'].'
 				<small class="pull-right">Numero Documento: '.n_doc($_GET['view'], 8).'</small>
 			</h2>
 		</div>
@@ -117,19 +117,19 @@ $html = '
 	<div class="row invoice-info">';
 
 		//se verifica el tipo de movimiento
-		switch ($row_data['idTipo']) {
+		switch ($rowData['idTipo']) {
 			//Ingreso
 			case 1:
 				$html .= '
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					Datos del Movimiento
 					<address>
-						<strong>'.$row_data['CajaNombre'].'</strong><br/>
-						Sistema: '.$row_data['CajaSistema'].'<br/>
-						Usuario: '.$row_data['Usuario'].'<br/>
-						Estado: '.$row_data['CajaEstado'].'<br/>
-						Fecha Real: '.Fecha_estandar($row_data['fecha_auto']).'<br/>
-						Fecha Ingresada: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
+						<strong>'.$rowData['CajaNombre'].'</strong><br/>
+						Sistema: '.$rowData['CajaSistema'].'<br/>
+						Usuario: '.$rowData['Usuario'].'<br/>
+						Estado: '.$rowData['CajaEstado'].'<br/>
+						Fecha Real: '.Fecha_estandar($rowData['fecha_auto']).'<br/>
+						Fecha Ingresada: '.Fecha_estandar($rowData['Creacion_fecha']).'<br/>
 					</address>
 				</div>
 
@@ -144,22 +144,22 @@ $html = '
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					Datos del Movimiento
 					<address>
-						<strong>'.$row_data['CajaNombre'].'</strong><br/>
-						Sistema: '.$row_data['CajaSistema'].'<br/>
-						Usuario: '.$row_data['Usuario'].'<br/>
-						Estado: '.$row_data['CajaEstado'].'<br/>
-						Fecha Real: '.Fecha_estandar($row_data['fecha_auto']).'<br/>
-						Fecha Ingresada: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
+						<strong>'.$rowData['CajaNombre'].'</strong><br/>
+						Sistema: '.$rowData['CajaSistema'].'<br/>
+						Usuario: '.$rowData['Usuario'].'<br/>
+						Estado: '.$rowData['CajaEstado'].'<br/>
+						Fecha Real: '.Fecha_estandar($rowData['fecha_auto']).'<br/>
+						Fecha Ingresada: '.Fecha_estandar($rowData['Creacion_fecha']).'<br/>
 					</address>
 				</div>
 
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					Trabajador
 					<address>
-						<strong>'.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].' '.$row_data['TrabajadorApellidoMat'].'</strong><br/>
-						Rut: '.$row_data['TrabajadorRut'].'<br/>
-						Cargo: '.$row_data['TrabajadorCargo'].'<br/>
-						Fono: '.formatPhone($row_data['TrabajadorFono']).'<br/>
+						<strong>'.$rowData['TrabajadorNombre'].' '.$rowData['TrabajadorApellidoPat'].' '.$rowData['TrabajadorApellidoMat'].'</strong><br/>
+						Rut: '.$rowData['TrabajadorRut'].'<br/>
+						Cargo: '.$rowData['TrabajadorCargo'].'<br/>
+						Fono: '.formatPhone($rowData['TrabajadorFono']).'<br/>
 					</address>
 				</div>';
 				
@@ -191,7 +191,7 @@ $html = '
 							$html .= '<tr>
 								<td><strong>'.$prod['Item'].'</td>';
 								
-								if(isset($row_data['idTipo'])&&$row_data['idTipo']==1){
+								if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){
 									$html .= '<td align="right">'.Valores($prod['Valor'], 0).'</td>';
 									$html .= '<td align="right"></td>';
 								}else{
@@ -214,7 +214,7 @@ $html = '
 									}
 								$html .= '</td>';
 								
-								if(isset($row_data['idTipo'])&&$row_data['idTipo']==1){
+								if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){
 									$html .= '<td align="right">'.Valores($prod['Valor'], 0).'</td>';
 									$html .= '<td align="right"></td>';
 								}else{
@@ -225,16 +225,16 @@ $html = '
 						}
 					}
 
-					if(isset($row_data['Valor'])&&$row_data['Valor']!=0){
+					if(isset($rowData['Valor'])&&$rowData['Valor']!=0){
 						$html .= '
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td align="right"><strong>Total</strong></td>';
-							if(isset($row_data['idTipo'])&&$row_data['idTipo']==1){
-								$html .= '<td align="right">'.Valores($row_data['Valor'], 0).'</td>';
+							if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){
+								$html .= '<td align="right">'.Valores($rowData['Valor'], 0).'</td>';
 								$html .= '<td align="right"></td>';
 							}else{
 								$html .= '<td align="right"></td>';
-								$html .= '<td align="right">'.Valores($row_data['Valor'], 0).'</td>';
+								$html .= '<td align="right">'.Valores($rowData['Valor'], 0).'</td>';
 							} 
 								
 						$html .= '</tr>';
@@ -248,11 +248,11 @@ $html = '
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" >'.$row_data['Observaciones'].'</p>
+			<p class="text-muted well well-sm no-shadow" >'.$rowData['Observaciones'].'</p>
 		</div>
 	</div>';
 	
-	if($row_data['idTipo']==2){
+	if($rowData['idTipo']==2){
 		$html .= '<div class="row firma">
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont"><p>Firma Transportista</p></div>
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont" style="left:50%;"><p>Firma Receptor</p></div>

@@ -93,7 +93,7 @@ if(!empty($_GET['id'])){
 	LEFT JOIN `core_ubicacion_ciudad`    ON core_ubicacion_ciudad.idCiudad      = apoderados_listado.idCiudad
 	LEFT JOIN `core_ubicacion_comunas`   ON core_ubicacion_comunas.idComuna     = apoderados_listado.idComuna';
 	$SIS_where = 'apoderados_listado.idApoderado = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -125,7 +125,7 @@ if(!empty($_GET['id'])){
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apoderado', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Resumen'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apoderado', $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat'], 'Resumen'); ?>
 	</div>
 	<div class="clearfix"></div>
 
@@ -142,12 +142,12 @@ if(!empty($_GET['id'])){
 							<li class=""><a href="<?php echo 'apoderados_listado_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
 							<?php
 							//Si se utiliza la APP
-							if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>
+							if(isset($rowData['idOpciones_1'])&&$rowData['idOpciones_1']==1){ ?>
 								<li class=""><a href="<?php echo 'apoderados_listado_subcuentas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sitemap" aria-hidden="true"></i> Subcuentas</a></li>
 							<?php } ?>
 							<?php
 							//Si se utiliza subcuentas
-							if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
+							if(isset($rowData['idOpciones_2'])&&$rowData['idOpciones_2']==1){ ?>
 								<li class=""><a href="<?php echo 'apoderados_listado_password.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-key" aria-hidden="true"></i> Password</a></li>
 							<?php } ?>
 							<li class=""><a href="<?php echo 'apoderados_listado_hijos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-child" aria-hidden="true"></i> Hijos</a></li>
@@ -166,32 +166,32 @@ if(!empty($_GET['id'])){
 					<div class="wmd-panel">
 
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-							<?php if ($rowdata['Direccion_img']=='') { ?>
+							<?php if ($rowData['Direccion_img']=='') { ?>
 								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 							<?php }else{  ?>
-								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowData['Direccion_img']; ?>">
 							<?php } ?>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 							<p class="text-muted">
-								<strong>Nombre : </strong><?php echo $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat']; ?><br/>
-								<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
-								<strong>Fecha de Nacimiento : </strong><?php echo Fecha_estandar($rowdata['FNacimiento']); ?><br/>
-								<strong>Fono : </strong><?php echo formatPhone($rowdata['Fono1']); ?><br/>
-								<strong>Fono : </strong><?php echo formatPhone($rowdata['Fono2']); ?><br/>
-								<strong>Dirección : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['nombre_comuna'].', '.$rowdata['nombre_region']; ?><br/>
-								<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
-								<strong>Sistema : </strong><?php echo $rowdata['Sistema']; ?><br/>
-								<strong>Fecha de Inicio Contrato : </strong><?php if(isset($rowdata['F_Inicio_Contrato'])&&$rowdata['F_Inicio_Contrato']!='0000-00-00'){echo Fecha_estandar($rowdata['F_Inicio_Contrato']);}else{echo 'Sin fecha de inicio';} ?><br/>
-								<strong>Fecha de Termino Contrato : </strong><?php if(isset($rowdata['F_Termino_Contrato'])&&$rowdata['F_Termino_Contrato']!='0000-00-00'){echo Fecha_estandar($rowdata['F_Termino_Contrato']);}else{echo 'Sin fecha de termino';} ?><br/>
+								<strong>Nombre : </strong><?php echo $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat']; ?><br/>
+								<strong>Rut : </strong><?php echo $rowData['Rut']; ?><br/>
+								<strong>Fecha de Nacimiento : </strong><?php echo Fecha_estandar($rowData['FNacimiento']); ?><br/>
+								<strong>Fono : </strong><?php echo formatPhone($rowData['Fono1']); ?><br/>
+								<strong>Fono : </strong><?php echo formatPhone($rowData['Fono2']); ?><br/>
+								<strong>Dirección : </strong><?php echo $rowData['Direccion'].', '.$rowData['nombre_comuna'].', '.$rowData['nombre_region']; ?><br/>
+								<strong>Estado : </strong><?php echo $rowData['Estado']; ?><br/>
+								<strong>Sistema : </strong><?php echo $rowData['Sistema']; ?><br/>
+								<strong>Fecha de Inicio Contrato : </strong><?php if(isset($rowData['F_Inicio_Contrato'])&&$rowData['F_Inicio_Contrato']!='0000-00-00'){echo Fecha_estandar($rowData['F_Inicio_Contrato']);}else{echo 'Sin fecha de inicio';} ?><br/>
+								<strong>Fecha de Termino Contrato : </strong><?php if(isset($rowData['F_Termino_Contrato'])&&$rowData['F_Termino_Contrato']!='0000-00-00'){echo Fecha_estandar($rowData['F_Termino_Contrato']);}else{echo 'Sin fecha de termino';} ?><br/>
 							</p>
 
 							<?php
 							//Si se utiliza la APP
-							if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){
+							if(isset($rowData['idOpciones_1'])&&$rowData['idOpciones_1']==1){
 								//Si se utiliza subcuentas
-								if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
+								if(isset($rowData['idOpciones_2'])&&$rowData['idOpciones_2']==1){ ?>
 									<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Acceso Subcuentas APP</h2>
 									<?php foreach ($arrSubcuentas as $sub) { ?>
 										<p class="text-muted">
@@ -203,8 +203,8 @@ if(!empty($_GET['id'])){
 								<?php }else{ ?>
 									<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Acceso APP</h2>
 									<p class="text-muted">
-										<strong>Usuario : </strong><?php echo $rowdata['Rut']; ?><br/>
-										<strong>Password : </strong><?php echo $rowdata['Password']; ?><br/>
+										<strong>Usuario : </strong><?php echo $rowData['Rut']; ?><br/>
+										<strong>Password : </strong><?php echo $rowData['Password']; ?><br/>
 									</p>
 								<?php } ?>
 							<?php } ?>
@@ -212,14 +212,11 @@ if(!empty($_GET['id'])){
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Hijos</h2>
 							<div class="row">
 								<?php
-								//Verifico el total de cargas
-								$nn = 0;
-								$n_carga = 1;
-								foreach ($arrCargas as $carga) {
-									$nn++;
-								}
 								//Se existen cargas estas se despliegan
-								if($nn!=0){
+								if($arrCargas!=false){
+									//variable
+									$n_carga = 1;
+									//se recorre
 									foreach ($arrCargas as $carga) { ?>
 										<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 pull-left">
 											<div class="info-box" style="box-shadow:none; color:#999 !important;">
@@ -249,14 +246,14 @@ if(!empty($_GET['id'])){
 								<tbody>
 									<?php
 									//Contrato
-									if(isset($rowdata['File_Contrato'])&&$rowdata['File_Contrato']!=''){
+									if(isset($rowData['File_Contrato'])&&$rowData['File_Contrato']!=''){
 										echo '
 											<tr class="item-row">
 												<td>Contrato</td>
 												<td width="10">
 													<div class="btn-group" style="width: 70px;">
-														<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Contrato'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-														<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Contrato'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+														<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['File_Contrato'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+														<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['File_Contrato'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 													</div>
 												</td>
 											</tr>
@@ -267,7 +264,7 @@ if(!empty($_GET['id'])){
 							</table>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Ubicación</h2>
-							<?php echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Dirección', 'Calle', $rowdata['Direccion'], $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); ?>
+							<?php echo mapa_from_gps($rowData['GeoLatitud'], $rowData['GeoLongitud'], 'Dirección', 'Calle', $rowData['Direccion'], $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); ?>
 
 						</div>
 						<div class="clearfix"></div>

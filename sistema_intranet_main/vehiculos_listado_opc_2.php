@@ -65,7 +65,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 /************************************************/
 //Accesos a los equipos de telemetria
@@ -125,16 +125,16 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdatax = mysqli_fetch_assoc ($resultado);
+$rowDatax = mysqli_fetch_assoc ($resultado);
 
 
-$telemetria  = $rowdatax['tran_1'] + $rowdatax['tran_2'];
-$bodega      = $rowdatax['tran_3'] + $rowdatax['tran_4'] + $rowdatax['tran_5'] + $rowdatax['tran_6'];
-$ruta        = $rowdatax['tran_7'] + $rowdatax['tran_8'];
-$trabajador  = $rowdatax['tran_9'];
-$pasajeros   = $rowdatax['tran_10'];
-$peonetas    = $rowdatax['tran_11'];
-$colegios    = $rowdatax['tran_12'];
+$telemetria  = $rowDatax['tran_1'] + $rowDatax['tran_2'];
+$bodega      = $rowDatax['tran_3'] + $rowDatax['tran_4'] + $rowDatax['tran_5'] + $rowDatax['tran_6'];
+$ruta        = $rowDatax['tran_7'] + $rowDatax['tran_8'];
+$trabajador  = $rowDatax['tran_9'];
+$pasajeros   = $rowDatax['tran_10'];
+$peonetas    = $rowDatax['tran_11'];
+$colegios    = $rowDatax['tran_12'];
 
 $todos = $telemetria + $bodega + $ruta + $trabajador + $pasajeros + $peonetas + $colegios;
 
@@ -144,9 +144,9 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php 
-	$vehiculo = $rowdata['Nombre'];
-	if(isset($rowdata['Patente'])&&$rowdata['Patente']!=''){
-		$vehiculo .= ' Patente '.$rowdata['Patente'];
+	$vehiculo = $rowData['Nombre'];
+	if(isset($rowData['Patente'])&&$rowData['Patente']!=''){
+		$vehiculo .= ' Patente '.$rowData['Patente'];
 	}
 	echo widget_title('bg-aqua', 'fa-cog', 100, 'Vehiculo', $vehiculo, 'Editar Bodega'); ?>
 </div>
@@ -164,30 +164,30 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<?php if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>		
+						<?php if(isset($rowData['idOpciones_1'])&&$rowData['idOpciones_1']==1){ ?>		
 							<li class=""><a href="<?php echo 'vehiculos_listado_opc_1.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Telemetria</a></li>
 						<?php }
-						if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
+						if(isset($rowData['idOpciones_2'])&&$rowData['idOpciones_2']==1){ ?>
 							<li class="active"><a href="<?php echo 'vehiculos_listado_opc_2.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-database" aria-hidden="true"></i> Bodega</a></li>
 						<?php }
-						if(isset($rowdata['idOpciones_3'])&&$rowdata['idOpciones_3']==1){ ?>
+						if(isset($rowData['idOpciones_3'])&&$rowData['idOpciones_3']==1){ ?>
 							<li class=""><a href="<?php echo 'vehiculos_listado_opc_3.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ruta</a></li>
 						<?php }
-						if(isset($rowdata['idOpciones_4'])&&$rowdata['idOpciones_4']==1){ ?>
+						if(isset($rowData['idOpciones_4'])&&$rowData['idOpciones_4']==1){ ?>
 							<li class=""><a href="<?php echo 'vehiculos_listado_opc_4.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-car" aria-hidden="true"></i> Conductor</a></li>
 						<?php }
-						if(isset($rowdata['idOpciones_5'])&&$rowdata['idOpciones_5']==1){ ?>
+						if(isset($rowData['idOpciones_5'])&&$rowData['idOpciones_5']==1){ ?>
 							<li class=""><a href="<?php echo 'vehiculos_listado_opc_5.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-users" aria-hidden="true"></i> Pasajeros</a></li>
 						<?php }
-						if(isset($rowdata['idOpciones_6'])&&$rowdata['idOpciones_6']==1){ ?>
+						if(isset($rowData['idOpciones_6'])&&$rowData['idOpciones_6']==1){ ?>
 							<li class=""><a href="<?php echo 'vehiculos_listado_password.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-key" aria-hidden="true"></i> Password APP</a></li>
 						<?php }
 						//Si se utilizan peonetas 
-						if(isset($rowdata['idOpciones_7'])&&$rowdata['idOpciones_7']==1){ ?>
+						if(isset($rowData['idOpciones_7'])&&$rowData['idOpciones_7']==1){ ?>
 							<li class=""><a href="<?php echo 'vehiculos_listado_peonetas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-users" aria-hidden="true"></i> Peonetas</a></li>
 						<?php }
 						//Si se utilizan colegios 
-						if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){ ?>
+						if(isset($rowData['idOpciones_8'])&&$rowData['idOpciones_8']==1){ ?>
 							<li class=""><a href="<?php echo 'vehiculos_listado_colegios.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-graduation-cap" aria-hidden="true"></i> Colegios</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'vehiculos_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
@@ -214,7 +214,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idBodega)){     $x1  = $idBodega;      }else{$x1  = $rowdata['idBodega'];}
+					if(isset($idBodega)){     $x1  = $idBodega;      }else{$x1  = $rowData['idBodega'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

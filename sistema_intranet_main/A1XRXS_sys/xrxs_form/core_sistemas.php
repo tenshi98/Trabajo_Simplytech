@@ -563,7 +563,7 @@ require_once '0_validate_user_1.php';
 
 			if($errorn==0){
 				// Se obtiene el nombre del archivo
-				$rowdata = db_select_data (false, 'Config_imgLogo', 'core_sistemas','', 'idSistema = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'Config_imgLogo', 'core_sistemas','', 'idSistema = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//se borran los datos
 				$resultado = db_delete_data (false, 'core_sistemas','idSistema = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -571,12 +571,12 @@ require_once '0_validate_user_1.php';
 				if($resultado==true){
 
 					//se elimina el archivo
-					if(isset($rowdata['Config_imgLogo'])&&$rowdata['Config_imgLogo']!=''){
+					if(isset($rowData['Config_imgLogo'])&&$rowData['Config_imgLogo']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['Config_imgLogo'])){
+							if(!is_writable('upload/'.$rowData['Config_imgLogo'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['Config_imgLogo']);
+								unlink('upload/'.$rowData['Config_imgLogo']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
@@ -719,7 +719,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre de la imagen
-			$rowdata = db_select_data (false, 'Config_imgLogo', 'core_sistemas','', 'idSistema = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'Config_imgLogo', 'core_sistemas','', 'idSistema = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -729,12 +729,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['Config_imgLogo'])&&$rowdata['Config_imgLogo']!=''){
+				if(isset($rowData['Config_imgLogo'])&&$rowData['Config_imgLogo']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['Config_imgLogo'])){
+						if(!is_writable('upload/'.$rowData['Config_imgLogo'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['Config_imgLogo']);
+							unlink('upload/'.$rowData['Config_imgLogo']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log

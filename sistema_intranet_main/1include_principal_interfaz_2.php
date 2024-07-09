@@ -298,7 +298,7 @@ $subconsulta = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SI
 		$Url .= '&trans_9='.$trans[9];
 		$Url .= '&idOpcionesTel='.$n_permisos['idOpcionesTel'];
 		$Url .= '&x_seg='.$x_seg;
-							
+
 		echo '
 			<script type="text/javascript">
 				function actualiza_contenido() {
@@ -335,7 +335,7 @@ $subconsulta = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SI
 	/*****************************************************************************************************************/
 	if($n_permisos['idOpcionesGen_1']=='1' OR $idTipoUsuario==1){
 
-		echo widget_comunes($subconsulta['Comuna'], 
+		echo widget_comunes($subconsulta['Comuna'],
 							$subconsulta['Wheater'],
 							$_SESSION['usuario']['basic_data']['Nombre'],
 							$subconsulta['Notificacion'],
@@ -348,29 +348,28 @@ $subconsulta = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SI
 	/*                                Visualizacion de los widgets de las transacciones                              */
 	/*****************************************************************************************************************/
 	if($n_permisos['idOpcionesGen_2']=='1' OR $idTipoUsuario==1){
-		
 
 		/*******************************************/
 		//Acceso a los widget de recordatorio
 		//Solicitudes
 		if(isset($prm_x[13])&&$prm_x[13]=='1' OR $idTipoUsuario==1){
-			$totalSol = $subconsulta['CuentaSolProd'] + $subconsulta['CuentaSolIns'] + $subconsulta['CuentaSolArr'] + $subconsulta['CuentaSolServ'] + $subconsulta['CuentaSolOtro'];					
+			$totalSol = $subconsulta['CuentaSolProd'] + $subconsulta['CuentaSolIns'] + $subconsulta['CuentaSolArr'] + $subconsulta['CuentaSolServ'] + $subconsulta['CuentaSolOtro'];
 		}else{
 			$totalSol = 0;
 		}
 		//Facturas por pagar
-		$PermFactCompra = $prm_x[15] + $prm_x[16] + $prm_x[17] + $prm_x[18];					
+		$PermFactCompra = $prm_x[15] + $prm_x[16] + $prm_x[17] + $prm_x[18];
 		if($PermFactCompra!=0 OR $idTipoUsuario==1){
-			$totalFactCompra       = $subconsulta['CountFactArriendo'] + $subconsulta['CountFactInsumo'] + $subconsulta['CountFactProducto'] + $subconsulta['CountFactServicio'];					
-			$totalFactCompra_retr  = $subconsulta['CountFactArriendo_retr'] + $subconsulta['CountFactInsumo_retr'] + $subconsulta['CountFactProducto_retr'] + $subconsulta['CountFactServicio_retr'];					
+			$totalFactCompra       = $subconsulta['CountFactArriendo'] + $subconsulta['CountFactInsumo'] + $subconsulta['CountFactProducto'] + $subconsulta['CountFactServicio'];
+			$totalFactCompra_retr  = $subconsulta['CountFactArriendo_retr'] + $subconsulta['CountFactInsumo_retr'] + $subconsulta['CountFactProducto_retr'] + $subconsulta['CountFactServicio_retr'];
 		}else{
 			$totalFactCompra       = 0;
 			$totalFactCompra_retr  = 0;
 		}
 		//Facturas por cobrar
-		$PermFactVenta = $prm_x[19] + $prm_x[20] + $prm_x[21] + $prm_x[22];					
+		$PermFactVenta = $prm_x[19] + $prm_x[20] + $prm_x[21] + $prm_x[22];
 		if($PermFactVenta!=0 OR $idTipoUsuario==1){
-			$totalFactVenta       = $subconsulta['CountFactArriendoVent'] + $subconsulta['CountFactProductoVent'] + $subconsulta['CountFactServicioVent'];					
+			$totalFactVenta       = $subconsulta['CountFactArriendoVent'] + $subconsulta['CountFactProductoVent'] + $subconsulta['CountFactServicioVent'];
 		}else{
 			$totalFactVenta       = 0;
 		}
@@ -390,15 +389,13 @@ $subconsulta = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SI
 								);
 
 
-	} 
+	}
 	/*****************************************************************************************************************/
 	/*                             Visualizacion de los widget de geolocalizacion                                    */
 	/*****************************************************************************************************************/
 	//Vehiculos
 	echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="update_tel">';
 		if($prm_x[7]=='1' OR $idTipoUsuario==1) {
-			
-			
 
 			echo widget_GPS_equipos('Mapa GPS','Vehiculos', 1, 2, $_SESSION['usuario']['basic_data']['idSistema'], 
 									$_SESSION['usuario']['basic_data']['Config_IDGoogle'],
@@ -407,28 +404,28 @@ $subconsulta = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SI
 			echo widget_Resumen_GPS_equipos('Vehiculos', 1, $_SESSION['usuario']['basic_data']['idSistema'],
 									$_SESSION['usuario']['basic_data']['idTipoUsuario'],
 									$_SESSION['usuario']['basic_data']['idUsuario'],$dbConn);
-					
+
 		}
-		//Fijos		
+		//Fijos
 		if($prm_x[8]=='1' OR $idTipoUsuario==1) {
 
-			echo widget_GPS_equipos('Mapa GPS','Fijos', 2, 2, $_SESSION['usuario']['basic_data']['idSistema'], 
+			echo widget_GPS_equipos('Mapa GPS','Fijos', 2, 2, $_SESSION['usuario']['basic_data']['idSistema'],
 									$_SESSION['usuario']['basic_data']['Config_IDGoogle'],
 									$_SESSION['usuario']['basic_data']['idTipoUsuario'],
 									$_SESSION['usuario']['basic_data']['idUsuario'],$dbConn);
-			echo widget_GPS_equipos_lista('Ultimas Mediciones', 2, 0, $trans[8], 
+			echo widget_GPS_equipos_lista('Ultimas Mediciones', 2, 0, $trans[8],
 										  $_SESSION['usuario']['basic_data']['idSistema'],
 										  $_SESSION['usuario']['basic_data']['idTipoUsuario'],
 										  $_SESSION['usuario']['basic_data']['idUsuario'], $dbConn);
 
 		}
-		//Equipos		
+		//Equipos
 		if($prm_x[9]=='1' OR $idTipoUsuario==1) {
-			
+
 			echo widget_Equipos('Equipo', 2, 0,$trans[9], $_SESSION['usuario']['basic_data']['idSistema'],
 								$_SESSION['usuario']['basic_data']['idTipoUsuario'],
 								$_SESSION['usuario']['basic_data']['idUsuario'], $dbConn);
-			echo widget_Resumen_equipo('Ultimas Mediciones', 2, 0, $trans[9], 
+			echo widget_Resumen_equipo('Ultimas Mediciones', 2, 0, $trans[9],
 										$_SESSION['usuario']['basic_data']['idSistema'],
 										$_SESSION['usuario']['basic_data']['idTipoUsuario'],
 										$_SESSION['usuario']['basic_data']['idUsuario'], $dbConn);
@@ -443,29 +440,29 @@ $subconsulta = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SI
 
 		//Bodega de Productos
 		echo widget_bodega('Bodega de Productos',
-						   'bodegas_productos_listado', 'bodegas_productos_facturacion_existencias', 'bodegas_productos_facturacion_tipo', 
+						   'bodegas_productos_listado', 'bodegas_productos_facturacion_existencias', 'bodegas_productos_facturacion_tipo',
 						   'productos_listado', 'sistema_productos_uml', 'tipo1,tipo2,tipo3,tipo4,tipo5,tipo6,tipo7,tipo8,tipo9',1,
 						   $trans[1],$dbConn, 'usuarios_bodegas_productos', $_SESSION['usuario']['basic_data']['idSistema']);
 
 		//Bodega de Insumos
 		echo widget_bodega('Bodega de Insumos',
-						   'bodegas_insumos_listado', 'bodegas_insumos_facturacion_existencias', 'bodegas_insumos_facturacion_tipo', 
+						   'bodegas_insumos_listado', 'bodegas_insumos_facturacion_existencias', 'bodegas_insumos_facturacion_tipo',
 						   'insumos_listado', 'sistema_productos_uml', 'tipo1,tipo2,tipo3,tipo4,tipo5,tipo6,tipo7,tipo8,tipo9',2,
 						   $trans[1],$dbConn, 'usuarios_bodegas_insumos', $_SESSION['usuario']['basic_data']['idSistema']);
 
-	//Si no es gerente solo puede ver las que tengasn permisos			   
+	//Si no es gerente solo puede ver las que tengasn permisos
 	}else{
 		//Bodega de Productos
 		if($prm_x[2]=='1' OR $idTipoUsuario==1) {
 			echo widget_bodega('Bodega de Productos',
-								'bodegas_productos_listado', 'bodegas_productos_facturacion_existencias', 'bodegas_productos_facturacion_tipo', 
+								'bodegas_productos_listado', 'bodegas_productos_facturacion_existencias', 'bodegas_productos_facturacion_tipo',
 								'productos_listado', 'sistema_productos_uml', 'tipo1,tipo2,tipo3,tipo4,tipo5,tipo6,tipo7,tipo8,tipo9',1,
 								$trans[2],$dbConn, 'usuarios_bodegas_productos', $_SESSION['usuario']['basic_data']['idSistema']);
 		}
 		//Bodega de Insumos
 		if($prm_x[3]=='1' OR $idTipoUsuario==1) {
 			echo widget_bodega('Bodega de Insumos',
-								'bodegas_insumos_listado', 'bodegas_insumos_facturacion_existencias', 'bodegas_insumos_facturacion_tipo', 
+								'bodegas_insumos_listado', 'bodegas_insumos_facturacion_existencias', 'bodegas_insumos_facturacion_tipo',
 								'insumos_listado', 'sistema_productos_uml', 'tipo1,tipo2,tipo3,tipo4,tipo5,tipo6,tipo7,tipo8,tipo9',2,
 								$trans[3],$dbConn, 'usuarios_bodegas_insumos', $_SESSION['usuario']['basic_data']['idSistema']);
 		}

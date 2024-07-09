@@ -60,12 +60,12 @@ Social_Instagram,Social_Googleplus,Social_Linkedin,Nosotros_Titulo,Nosotros_Subt
 Nosotros_Texto,Nosotros_Link';
 $SIS_join  = '';
 $SIS_where = 'sitios_listado.idSitio = '.simpleDecode($_GET['id'], fecha_actual());
-$rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sitio', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sitio', $rowData['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -79,10 +79,10 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<?php if(isset($rowdata['Config_Menu'])&&$rowdata['Config_Menu']==1){ ?>            <li class=""><a href="<?php echo 'sitios_listado_menu.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list" aria-hidden="true"></i> Menu</a></li><?php } ?>
-						<?php if(isset($rowdata['Config_MenuOtros'])&&$rowdata['Config_MenuOtros']==1){ ?>  <li class=""><a href="<?php echo 'sitios_listado_menu_otros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list" aria-hidden="true"></i> Menu Otros</a></li><?php } ?>
-						<?php if(isset($rowdata['Config_Carousel'])&&$rowdata['Config_Carousel']==1){ ?>    <li class=""><a href="<?php echo 'sitios_listado_carousel.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Carousel</a></li><?php } ?>
-						<?php if(isset($rowdata['Config_Links_Rel'])&&$rowdata['Config_Links_Rel']==1){ ?>  <li class=""><a href="<?php echo 'sitios_listado_links.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-link" aria-hidden="true"></i> Links Relacionados</a></li><?php } ?>
+						<?php if(isset($rowData['Config_Menu'])&&$rowData['Config_Menu']==1){ ?>            <li class=""><a href="<?php echo 'sitios_listado_menu.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list" aria-hidden="true"></i> Menu</a></li><?php } ?>
+						<?php if(isset($rowData['Config_MenuOtros'])&&$rowData['Config_MenuOtros']==1){ ?>  <li class=""><a href="<?php echo 'sitios_listado_menu_otros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list" aria-hidden="true"></i> Menu Otros</a></li><?php } ?>
+						<?php if(isset($rowData['Config_Carousel'])&&$rowData['Config_Carousel']==1){ ?>    <li class=""><a href="<?php echo 'sitios_listado_carousel.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Carousel</a></li><?php } ?>
+						<?php if(isset($rowData['Config_Links_Rel'])&&$rowData['Config_Links_Rel']==1){ ?>  <li class=""><a href="<?php echo 'sitios_listado_links.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-link" aria-hidden="true"></i> Links Relacionados</a></li><?php } ?>
 
 						<li class=""><a href="<?php echo 'sitios_listado_body.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Body</a></li>
 					</ul>
@@ -95,41 +95,41 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){                  $x1  = $Nombre;                  }else{$x1  = $rowdata['Nombre'];}
-					if(isset($Domain)){                  $x2  = $Domain;                  }else{$x2  = $rowdata['Domain'];}
-					if(isset($Whatsapp_tittle)){         $x3  = $Whatsapp_tittle;         }else{$x3  = $rowdata['Whatsapp_tittle'];}
-					if(isset($Whatsapp_number_1)){       $x4  = $Whatsapp_number_1;       }else{$x4  = $rowdata['Whatsapp_number_1'];}
-					if(isset($Whatsapp_number_2)){       $x5  = $Whatsapp_number_2;       }else{$x5  = $rowdata['Whatsapp_number_2'];}
-					if(isset($Header_Titulo)){           $x6  = $Header_Titulo;           }else{$x6  = $rowdata['Header_Titulo'];}
-					if(isset($Header_TituloStyle)){      $x7  = $Header_TituloStyle;      }else{$x7  = $rowdata['Header_TituloStyle'];}
-					if(isset($Header_Texto)){            $x8  = $Header_Texto;            }else{$x8  = $rowdata['Header_Texto'];}
-					if(isset($Header_TextoStyle)){       $x9  = $Header_TextoStyle;       }else{$x9  = $rowdata['Header_TextoStyle'];}
-					if(isset($Header_LinkNombre)){       $x10 = $Header_LinkNombre;       }else{$x10 = $rowdata['Header_LinkNombre'];}
-					if(isset($Header_LinkStyle)){        $x11 = $Header_LinkStyle;        }else{$x11 = $rowdata['Header_LinkStyle'];}
-					if(isset($Header_LinkURL)){          $x12 = $Header_LinkURL;          }else{$x12 = $rowdata['Header_LinkURL'];}
-					if(isset($Header_idNewTab)){         $x13 = $Header_idNewTab;         }else{$x13 = $rowdata['Header_idNewTab'];}
-					if(isset($Header_idPopup)){          $x14 = $Header_idPopup;          }else{$x14 = $rowdata['Header_idPopup'];}
-					if(isset($Contact_Tittle)){          $x15 = $Contact_Tittle;          }else{$x15 = $rowdata['Contact_Tittle'];}
-					if(isset($Contact_Tittle_body)){     $x16 = $Contact_Tittle_body;     }else{$x16 = $rowdata['Contact_Tittle_body'];}
-					if(isset($Contact_Address_tittle)){  $x17 = $Contact_Address_tittle;  }else{$x17 = $rowdata['Contact_Address_tittle'];}
-					if(isset($Contact_Address_body)){    $x18 = $Contact_Address_body;    }else{$x18 = $rowdata['Contact_Address_body'];}
-					if(isset($Contact_Email_tittle)){    $x19 = $Contact_Email_tittle;    }else{$x19 = $rowdata['Contact_Email_tittle'];}
-					if(isset($Contact_Email_body)){      $x20 = $Contact_Email_body;      }else{$x20 = $rowdata['Contact_Email_body'];}
-					if(isset($Contact_Phone_tittle)){    $x21 = $Contact_Phone_tittle;    }else{$x21 = $rowdata['Contact_Phone_tittle'];}
-					if(isset($Contact_Phone_body)){      $x22 = $Contact_Phone_body;      }else{$x22 = $rowdata['Contact_Phone_body'];}
-					if(isset($Contact_Recep_asunto)){    $x23 = $Contact_Recep_asunto;    }else{$x23 = $rowdata['Contact_Recep_asunto'];}
-					if(isset($Contact_Recep_mail)){      $x24 = $Contact_Recep_mail;      }else{$x24 = $rowdata['Contact_Recep_mail'];}
-					if(isset($Contact_Recep_name)){      $x25 = $Contact_Recep_name;      }else{$x25 = $rowdata['Contact_Recep_name'];}
-					if(isset($Social_Tittle)){           $x26 = $Social_Tittle;           }else{$x26 = $rowdata['Social_Tittle'];}
-					if(isset($Social_Twitter)){          $x27 = $Social_Twitter;          }else{$x27 = $rowdata['Social_Twitter'];}
-					if(isset($Social_Facebook)){         $x28 = $Social_Facebook;         }else{$x28 = $rowdata['Social_Facebook'];}
-					if(isset($Social_Instagram)){        $x29 = $Social_Instagram;        }else{$x29 = $rowdata['Social_Instagram'];}
-					if(isset($Social_Googleplus)){       $x30 = $Social_Googleplus;       }else{$x30 = $rowdata['Social_Googleplus'];}
-					if(isset($Social_Linkedin)){         $x31 = $Social_Linkedin;         }else{$x31 = $rowdata['Social_Linkedin'];}
-					if(isset($Nosotros_Titulo)){         $x32 = $Nosotros_Titulo;         }else{$x32 = $rowdata['Nosotros_Titulo'];}
-					if(isset($Nosotros_Subtitulo)){      $x33 = $Nosotros_Subtitulo;      }else{$x33 = $rowdata['Nosotros_Subtitulo'];}
-					if(isset($Nosotros_Texto)){          $x34 = $Nosotros_Texto;          }else{$x34 = $rowdata['Nosotros_Texto'];}
-					if(isset($Nosotros_Link)){           $x35 = $Nosotros_Link;           }else{$x35 = $rowdata['Nosotros_Link'];}
+					if(isset($Nombre)){                  $x1  = $Nombre;                  }else{$x1  = $rowData['Nombre'];}
+					if(isset($Domain)){                  $x2  = $Domain;                  }else{$x2  = $rowData['Domain'];}
+					if(isset($Whatsapp_tittle)){         $x3  = $Whatsapp_tittle;         }else{$x3  = $rowData['Whatsapp_tittle'];}
+					if(isset($Whatsapp_number_1)){       $x4  = $Whatsapp_number_1;       }else{$x4  = $rowData['Whatsapp_number_1'];}
+					if(isset($Whatsapp_number_2)){       $x5  = $Whatsapp_number_2;       }else{$x5  = $rowData['Whatsapp_number_2'];}
+					if(isset($Header_Titulo)){           $x6  = $Header_Titulo;           }else{$x6  = $rowData['Header_Titulo'];}
+					if(isset($Header_TituloStyle)){      $x7  = $Header_TituloStyle;      }else{$x7  = $rowData['Header_TituloStyle'];}
+					if(isset($Header_Texto)){            $x8  = $Header_Texto;            }else{$x8  = $rowData['Header_Texto'];}
+					if(isset($Header_TextoStyle)){       $x9  = $Header_TextoStyle;       }else{$x9  = $rowData['Header_TextoStyle'];}
+					if(isset($Header_LinkNombre)){       $x10 = $Header_LinkNombre;       }else{$x10 = $rowData['Header_LinkNombre'];}
+					if(isset($Header_LinkStyle)){        $x11 = $Header_LinkStyle;        }else{$x11 = $rowData['Header_LinkStyle'];}
+					if(isset($Header_LinkURL)){          $x12 = $Header_LinkURL;          }else{$x12 = $rowData['Header_LinkURL'];}
+					if(isset($Header_idNewTab)){         $x13 = $Header_idNewTab;         }else{$x13 = $rowData['Header_idNewTab'];}
+					if(isset($Header_idPopup)){          $x14 = $Header_idPopup;          }else{$x14 = $rowData['Header_idPopup'];}
+					if(isset($Contact_Tittle)){          $x15 = $Contact_Tittle;          }else{$x15 = $rowData['Contact_Tittle'];}
+					if(isset($Contact_Tittle_body)){     $x16 = $Contact_Tittle_body;     }else{$x16 = $rowData['Contact_Tittle_body'];}
+					if(isset($Contact_Address_tittle)){  $x17 = $Contact_Address_tittle;  }else{$x17 = $rowData['Contact_Address_tittle'];}
+					if(isset($Contact_Address_body)){    $x18 = $Contact_Address_body;    }else{$x18 = $rowData['Contact_Address_body'];}
+					if(isset($Contact_Email_tittle)){    $x19 = $Contact_Email_tittle;    }else{$x19 = $rowData['Contact_Email_tittle'];}
+					if(isset($Contact_Email_body)){      $x20 = $Contact_Email_body;      }else{$x20 = $rowData['Contact_Email_body'];}
+					if(isset($Contact_Phone_tittle)){    $x21 = $Contact_Phone_tittle;    }else{$x21 = $rowData['Contact_Phone_tittle'];}
+					if(isset($Contact_Phone_body)){      $x22 = $Contact_Phone_body;      }else{$x22 = $rowData['Contact_Phone_body'];}
+					if(isset($Contact_Recep_asunto)){    $x23 = $Contact_Recep_asunto;    }else{$x23 = $rowData['Contact_Recep_asunto'];}
+					if(isset($Contact_Recep_mail)){      $x24 = $Contact_Recep_mail;      }else{$x24 = $rowData['Contact_Recep_mail'];}
+					if(isset($Contact_Recep_name)){      $x25 = $Contact_Recep_name;      }else{$x25 = $rowData['Contact_Recep_name'];}
+					if(isset($Social_Tittle)){           $x26 = $Social_Tittle;           }else{$x26 = $rowData['Social_Tittle'];}
+					if(isset($Social_Twitter)){          $x27 = $Social_Twitter;          }else{$x27 = $rowData['Social_Twitter'];}
+					if(isset($Social_Facebook)){         $x28 = $Social_Facebook;         }else{$x28 = $rowData['Social_Facebook'];}
+					if(isset($Social_Instagram)){        $x29 = $Social_Instagram;        }else{$x29 = $rowData['Social_Instagram'];}
+					if(isset($Social_Googleplus)){       $x30 = $Social_Googleplus;       }else{$x30 = $rowData['Social_Googleplus'];}
+					if(isset($Social_Linkedin)){         $x31 = $Social_Linkedin;         }else{$x31 = $rowData['Social_Linkedin'];}
+					if(isset($Nosotros_Titulo)){         $x32 = $Nosotros_Titulo;         }else{$x32 = $rowData['Nosotros_Titulo'];}
+					if(isset($Nosotros_Subtitulo)){      $x33 = $Nosotros_Subtitulo;      }else{$x33 = $rowData['Nosotros_Subtitulo'];}
+					if(isset($Nosotros_Texto)){          $x34 = $Nosotros_Texto;          }else{$x34 = $rowData['Nosotros_Texto'];}
+					if(isset($Nosotros_Link)){           $x35 = $Nosotros_Link;           }else{$x35 = $rowData['Nosotros_Link'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -143,7 +143,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 					$Form_Inputs->form_input_phone('Numero Whatsapp 2', 'Whatsapp_number_2', $x5, 1);
 
 					//Si el carrousel esta desactivado
-					if(isset($rowdata['Config_Carousel'])&&$rowdata['Config_Carousel']==2){
+					if(isset($rowData['Config_Carousel'])&&$rowData['Config_Carousel']==2){
 						$Form_Inputs->form_tittle(3, 'Header');
 						$Form_Inputs->form_input_text('Título', 'Header_Titulo', $x6, 2);
 						$Form_Inputs->form_input_icon('Estilo del Titulo', 'Header_TituloStyle', $x7, 1,'fa fa-file-image-o');

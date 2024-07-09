@@ -59,7 +59,7 @@ variedades_listado.Nombre AS ProductoNombre,
 cross_quality_registrar_inspecciones.idCategoria,
 cross_quality_registrar_inspecciones.idTipo,
 cross_quality_registrar_inspecciones.idSistema,
-(SELECT 
+(SELECT
 cross_quality_calidad_matriz.cantPuntos
 FROM `sistema_variedades_categorias_matriz_calidad`
 LEFT JOIN `cross_quality_calidad_matriz` ON cross_quality_calidad_matriz.idMatriz = sistema_variedades_categorias_matriz_calidad.idMatriz
@@ -68,7 +68,7 @@ AND sistema_variedades_categorias_matriz_calidad.idProceso = cross_quality_regis
 AND sistema_variedades_categorias_matriz_calidad.idSistema = cross_quality_registrar_inspecciones.idSistema
 ) AS Producto_cantPuntos,
 
-(SELECT 
+(SELECT
 sistema_variedades_categorias_matriz_calidad.idMatriz
 FROM `sistema_variedades_categorias_matriz_calidad`
 LEFT JOIN `cross_quality_calidad_matriz` ON cross_quality_calidad_matriz.idMatriz = sistema_variedades_categorias_matriz_calidad.idMatriz
@@ -96,15 +96,15 @@ LEFT JOIN `ubicacion_listado_level_3`              ON ubicacion_listado_level_3.
 LEFT JOIN `ubicacion_listado_level_4`              ON ubicacion_listado_level_4.idLevel_4          = cross_quality_registrar_inspecciones.idUbicacion_lvl_4
 LEFT JOIN `ubicacion_listado_level_5`              ON ubicacion_listado_level_5.idLevel_5          = cross_quality_registrar_inspecciones.idUbicacion_lvl_5';
 $SIS_where = 'cross_quality_registrar_inspecciones.idAnalisis ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /***************************************************/
 // Se trae un listado con todos los trabajadores
 $SIS_query = '
 trabajadores_listado.Nombre,
-trabajadores_listado.ApellidoPat, 
+trabajadores_listado.ApellidoPat,
 trabajadores_listado.ApellidoMat,
-trabajadores_listado.Cargo, 
+trabajadores_listado.Cargo,
 trabajadores_listado.Rut';
 $SIS_join  = 'LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador   = cross_quality_registrar_inspecciones_trabajador.idTrabajador';
 $SIS_where = 'cross_quality_registrar_inspecciones_trabajador.idAnalisis ='.$X_Puntero;
@@ -126,7 +126,7 @@ $arrMaquinas = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 /***************************************************/
 // Se trae un listado con todas las muestras
 $SIS_query = '
-cross_quality_registrar_inspecciones_muestras.idMuestras, 
+cross_quality_registrar_inspecciones_muestras.idMuestras,
 cross_quality_registrar_inspecciones_muestras.n_folio_pallet,
 cross_quality_registrar_inspecciones_muestras.lote,
 productores_listado.Nombre AS ClienteNombre';
@@ -140,47 +140,45 @@ $arrMuestras = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 //Se define el contenido del PDF
 $html = '
 <style>
-body {font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;font-size: 14px;line-height: 1.42857143;color: #333;}
-table {border-collapse: collapse;border-spacing: 0;}
-tr.oddrow td{display: line;border-bottom: 1px solid #EEE;}
-.tableline td, .tableline th{border-bottom: 1px solid #EEE;line-height: 1.42857143;}
+	body {font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;font-size: 14px;line-height: 1.42857143;color: #333;}
+	table {border-collapse: collapse;border-spacing: 0;}
+	tr.oddrow td{display: line;border-bottom: 1px solid #EEE;}
+	.tableline td, .tableline th{border-bottom: 1px solid #EEE;line-height: 1.42857143;}
 </style>';
- 
+
 $html .= '
 <table style="border: 1px solid #f4f4f4;margin: 1%; width: 98%;"   cellpadding="10" cellspacing="0">
 	<tbody>
 		<tr>
 			<td>
-	
 				<table style="text-align: left; width: 100%;"  cellpadding="0" cellspacing="0">
 					<tbody>
 						<tr class="oddrow">
-							<td colspan="2" rowspan="1" style="vertical-align: top;">'.$row_data['TipoAnalisis'].'</td>
-							<td style="vertical-align: top;">Fecha Creacion: '.Fecha_estandar($row_data['fecha_auto']).'</td>
+							<td colspan="2" rowspan="1" style="vertical-align: top;">'.$rowData['TipoAnalisis'].'</td>
+							<td style="vertical-align: top;">Fecha Creacion: '.Fecha_estandar($rowData['fecha_auto']).'</td>
 						</tr>
 						<tr>
 							<td style="vertical-align: top; width:33%;">
 								Datos Básicos<br/>
 								<strong>Producto</strong><br/>
-								'.$row_data['ProductoCategoria'].', '.$row_data['ProductoNombre'].'<br/>
-								Ubicación: '.$row_data['UbicacionNombre'].'<br/>';
-								if(isset($row_data['UbicacionNombre_lvl_1'])&&$row_data['UbicacionNombre_lvl_1']!=''){$html .= ' - '.$row_data['UbicacionNombre_lvl_1'];}
-								if(isset($row_data['UbicacionNombre_lvl_2'])&&$row_data['UbicacionNombre_lvl_2']!=''){$html .= ' - '.$row_data['UbicacionNombre_lvl_2'];}
-								if(isset($row_data['UbicacionNombre_lvl_3'])&&$row_data['UbicacionNombre_lvl_3']!=''){$html .= ' - '.$row_data['UbicacionNombre_lvl_3'];}
-								if(isset($row_data['UbicacionNombre_lvl_4'])&&$row_data['UbicacionNombre_lvl_4']!=''){$html .= ' - '.$row_data['UbicacionNombre_lvl_4'];}
-								if(isset($row_data['UbicacionNombre_lvl_5'])&&$row_data['UbicacionNombre_lvl_5']!=''){$html .= ' - '.$row_data['UbicacionNombre_lvl_5'];}
+								'.$rowData['ProductoCategoria'].', '.$rowData['ProductoNombre'].'<br/>
+								Ubicación: '.$rowData['UbicacionNombre'].'<br/>';
+								if(isset($rowData['UbicacionNombre_lvl_1'])&&$rowData['UbicacionNombre_lvl_1']!=''){$html .= ' - '.$rowData['UbicacionNombre_lvl_1'];}
+								if(isset($rowData['UbicacionNombre_lvl_2'])&&$rowData['UbicacionNombre_lvl_2']!=''){$html .= ' - '.$rowData['UbicacionNombre_lvl_2'];}
+								if(isset($rowData['UbicacionNombre_lvl_3'])&&$rowData['UbicacionNombre_lvl_3']!=''){$html .= ' - '.$rowData['UbicacionNombre_lvl_3'];}
+								if(isset($rowData['UbicacionNombre_lvl_4'])&&$rowData['UbicacionNombre_lvl_4']!=''){$html .= ' - '.$rowData['UbicacionNombre_lvl_4'];}
+								if(isset($rowData['UbicacionNombre_lvl_5'])&&$rowData['UbicacionNombre_lvl_5']!=''){$html .= ' - '.$rowData['UbicacionNombre_lvl_5'];}
 							$html .= '</td>
 
 							<td style="vertical-align: top;width:33%;">
 								Fecha Creacion<br/>
-								Fecha Ingreso: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
-								Temporada: '.$row_data['Temporada'].'<br/>
+								Fecha Ingreso: '.Fecha_estandar($rowData['Creacion_fecha']).'<br/>
+								Temporada: '.$rowData['Temporada'].'<br/>
 							</td>
-								   
 							<td style="vertical-align: top;width:33%;">
 								Datos Creacion<br/>
-								Sistema: '.$row_data['Sistema'].'<br/>
-								Usuario: '.$row_data['Usuario'].'<br/>
+								Sistema: '.$rowData['Sistema'].'<br/>
+								Usuario: '.$rowData['Usuario'].'<br/>
 							</td>
 						</tr>
 					</tbody>
@@ -251,7 +249,7 @@ $html .= '
 				<table style="text-align: left; width: 100%;margin-top:20px;" cellpadding="5" cellspacing="0">
 					<tbody>
 						<tr>
-							<td style="vertical-align: top;text-align: left;background-color: #f9f9f9;border: 1px solid #EEE;">'.$row_data['Observaciones'].'</td>
+							<td style="vertical-align: top;text-align: left;background-color: #f9f9f9;border: 1px solid #EEE;">'.$rowData['Observaciones'].'</td>
 						</tr>
 					</tbody>
 				</table>';
@@ -260,14 +258,14 @@ $html .= '
 		</tr>
 	</tbody>
 </table>';
- 
+
 /**********************************************************************************************************************************/
 /*                                                          Impresion PDF                                                         */
 /**********************************************************************************************************************************/
 //Config
-$pdf_titulo     = $row_data['TipoAnalisis'];
+$pdf_titulo     = $rowData['TipoAnalisis'];
 $pdf_subtitulo  = '';
-$pdf_file       = $row_data['TipoAnalisis'].'.pdf';
+$pdf_file       = $rowData['TipoAnalisis'].'.pdf';
 $OpcDom         = "'A4', 'landscape'";
 $OpcTcpOrt      = "P";  //P->PORTRAIT - L->LANDSCAPE
 $OpcTcpPg       = "A4"; //Tipo de Hoja

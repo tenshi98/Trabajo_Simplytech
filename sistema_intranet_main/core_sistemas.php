@@ -127,12 +127,12 @@ LEFT JOIN `core_config_ram`                    ON core_config_ram.idConfigRam   
 LEFT JOIN `core_config_time`                   ON core_config_time.idConfigTime                    = core_sistemas.idConfigTime
 LEFT JOIN `core_sistemas_opciones`  socialUso  ON socialUso.idOpciones                             = core_sistemas.Social_idUso';
 $SIS_where = 'core_sistemas.idSistema ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Resumen'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowData['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -170,90 +170,90 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<h2 class="text-primary">Datos Básicos</h2>
 							<p class="text-muted word_break">
-								<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
-								<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
-								<strong>Ciudad : </strong><?php echo $rowdata['Ciudad']; ?><br/>
-								<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-								<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
-								<strong>Rubro : </strong><?php echo $rowdata['Rubro']; ?>
+								<strong>Nombre : </strong><?php echo $rowData['Nombre']; ?><br/>
+								<strong>Rut : </strong><?php echo $rowData['Rut']; ?><br/>
+								<strong>Ciudad : </strong><?php echo $rowData['Ciudad']; ?><br/>
+								<strong>Comuna : </strong><?php echo $rowData['Comuna']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowData['Direccion']; ?><br/>
+								<strong>Rubro : </strong><?php echo $rowData['Rubro']; ?>
 							</p>
 									
 									
 							<h2 class="text-primary">Datos de contacto</h2>
 							<p class="text-muted word_break">
-								<strong>Nombre Contacto : </strong><?php echo $rowdata['Contacto_Nombre']; ?><br/>
-								<strong>Fono 1: </strong><?php echo formatPhone($rowdata['Contacto_Fono1']); ?><br/>
-								<strong>Fono 2: </strong><?php echo formatPhone($rowdata['Contacto_Fono2']); ?><br/>
-								<strong>Fax : </strong><?php echo $rowdata['Contacto_Fax']; ?><br/>
-								<strong>Web : </strong><?php echo $rowdata['Contacto_Web']; ?><br/>
-								<strong>Email : </strong><?php echo $rowdata['Contacto_Email']; ?>
+								<strong>Nombre Contacto : </strong><?php echo $rowData['Contacto_Nombre']; ?><br/>
+								<strong>Fono 1: </strong><?php echo formatPhone($rowData['Contacto_Fono1']); ?><br/>
+								<strong>Fono 2: </strong><?php echo formatPhone($rowData['Contacto_Fono2']); ?><br/>
+								<strong>Fax : </strong><?php echo $rowData['Contacto_Fax']; ?><br/>
+								<strong>Web : </strong><?php echo $rowData['Contacto_Web']; ?><br/>
+								<strong>Email : </strong><?php echo $rowData['Contacto_Email']; ?>
 							</p>
 
 							<h2 class="text-primary">Contrato</h2>
 							<p class="text-muted word_break">
-								<strong>Nombre Contrato : </strong><?php echo $rowdata['Contrato_Nombre']; ?><br/>
-								<strong>Numero de Contrato : </strong><?php echo $rowdata['Contrato_Numero']; ?><br/>
-								<strong>Fecha inicio Contrato : </strong><?php echo $rowdata['Contrato_Fecha']; ?><br/>
-								<strong>Duracion Contrato(Meses) : </strong><?php echo $rowdata['Contrato_Duracion']; ?>
+								<strong>Nombre Contrato : </strong><?php echo $rowData['Contrato_Nombre']; ?><br/>
+								<strong>Numero de Contrato : </strong><?php echo $rowData['Contrato_Numero']; ?><br/>
+								<strong>Fecha inicio Contrato : </strong><?php echo $rowData['Contrato_Fecha']; ?><br/>
+								<strong>Duracion Contrato(Meses) : </strong><?php echo $rowData['Contrato_Duracion']; ?>
 							</p>
 
 							<h2 class="text-primary">Configuracion</h2>
 							<h3 class="text-muted" style="font-size: 16px!important;color: #337ab7;">Visualizacion General</h3>
 							<p class="text-muted word_break">
-								<strong>Tema : </strong><?php echo $rowdata['Tema']; ?><br/>
-								<strong>Mostrar Repositorio Comun : </strong><?php echo $rowdata['OpcionesGen_9']; ?><br/>
-								<strong>Gestor de Correo : </strong><?php echo $rowdata['OpcionesGen_8']; ?><br/>
+								<strong>Tema : </strong><?php echo $rowData['Tema']; ?><br/>
+								<strong>Mostrar Repositorio Comun : </strong><?php echo $rowData['OpcionesGen_9']; ?><br/>
+								<strong>Gestor de Correo : </strong><?php echo $rowData['OpcionesGen_8']; ?><br/>
 							</p>
 
 							<h3 class="text-muted" style="font-size: 16px!important;color: #337ab7;">Visualizacion Pagina Inicio</h3>
 							<p class="text-muted word_break">
-								<strong>Interfaz : </strong><?php echo $rowdata['OpcionesGen_7']; ?><br/>
-								<strong>Tipo Resumen Telemetria : </strong><?php echo $rowdata['OpcionTelemetria']; ?><br/>
-								<strong>Refresh Pagina Principal : </strong><?php echo $rowdata['OpcionesGen_4'].' ('.$rowdata['idOpcionesGen_6'].' segundos)'; ?><br/>
-								<strong>Widget Comunes : </strong><?php echo $rowdata['OpcionesGen_1']; ?><br/>
-								<strong>Widget de acceso directo : </strong><?php echo $rowdata['OpcionesGen_2']; ?><br/>
-								<strong>Valores promedios de las mediciones : </strong><?php echo $rowdata['OpcionesGen_3']; ?><br/>
-								<strong>Nuevo Widget CrossC : </strong><?php echo $rowdata['OpcionesGen_10']; ?><br/>
+								<strong>Interfaz : </strong><?php echo $rowData['OpcionesGen_7']; ?><br/>
+								<strong>Tipo Resumen Telemetria : </strong><?php echo $rowData['OpcionTelemetria']; ?><br/>
+								<strong>Refresh Pagina Principal : </strong><?php echo $rowData['OpcionesGen_4'].' ('.$rowData['idOpcionesGen_6'].' segundos)'; ?><br/>
+								<strong>Widget Comunes : </strong><?php echo $rowData['OpcionesGen_1']; ?><br/>
+								<strong>Widget de acceso directo : </strong><?php echo $rowData['OpcionesGen_2']; ?><br/>
+								<strong>Valores promedios de las mediciones : </strong><?php echo $rowData['OpcionesGen_3']; ?><br/>
+								<strong>Nuevo Widget CrossC : </strong><?php echo $rowData['OpcionesGen_10']; ?><br/>
 							</p>
 
 							<h3 class="text-muted" style="font-size: 16px!important;color: #337ab7;">Configuracion Sistema</h3>
 							<p class="text-muted word_break">
-								<strong>Memoria Ram Maxima : </strong><?php if(isset($rowdata['ConfigRam'])&&$rowdata['ConfigRam']!=0){echo $rowdata['ConfigRam'].' MB';}else{ echo '4096 MB';} ?><br/>
-								<strong>Tiempo Maximo de espera : </strong><?php if(isset($rowdata['ConfigTime'])&&$rowdata['ConfigTime']!=0){echo $rowdata['ConfigTime'].' Minutos';}else{ echo '40 Minutos';} ?><br/>
-								<strong>Motor PDF : </strong><?php echo $rowdata['OpcionesGen_5']; ?><br/>
-								<strong>Correo Respaldo Datos : </strong><?php echo $rowdata['Config_CorreoRespaldo']; ?><br/>
-								<strong>Correo Envio Notificaciones : </strong><?php echo $rowdata['email_principal']; ?><br/>
-								<strong>Usuario Gmail Envio Notificaciones : </strong><?php echo $rowdata['Config_Gmail_Usuario']; ?><br/>
-								<strong>Password Usuario Gmail : </strong><?php echo $rowdata['Config_Gmail_Password']; ?><br/>
-								<strong>Whatsapp Token : </strong><?php echo $rowdata['Config_WhatsappToken']; ?><br/>
-								<strong>Whatsapp Instance Id : </strong><?php echo $rowdata['Config_WhatsappInstanceId']; ?><br/>
+								<strong>Memoria Ram Maxima : </strong><?php if(isset($rowData['ConfigRam'])&&$rowData['ConfigRam']!=0){echo $rowData['ConfigRam'].' MB';}else{ echo '4096 MB';} ?><br/>
+								<strong>Tiempo Maximo de espera : </strong><?php if(isset($rowData['ConfigTime'])&&$rowData['ConfigTime']!=0){echo $rowData['ConfigTime'].' Minutos';}else{ echo '40 Minutos';} ?><br/>
+								<strong>Motor PDF : </strong><?php echo $rowData['OpcionesGen_5']; ?><br/>
+								<strong>Correo Respaldo Datos : </strong><?php echo $rowData['Config_CorreoRespaldo']; ?><br/>
+								<strong>Correo Envio Notificaciones : </strong><?php echo $rowData['email_principal']; ?><br/>
+								<strong>Usuario Gmail Envio Notificaciones : </strong><?php echo $rowData['Config_Gmail_Usuario']; ?><br/>
+								<strong>Password Usuario Gmail : </strong><?php echo $rowData['Config_Gmail_Password']; ?><br/>
+								<strong>Whatsapp Token : </strong><?php echo $rowData['Config_WhatsappToken']; ?><br/>
+								<strong>Whatsapp Instance Id : </strong><?php echo $rowData['Config_WhatsappInstanceId']; ?><br/>
 							</p>
 
 							<h2 class="text-primary">APIS</h2>
 							<p class="text-muted word_break">
-								<strong>ID Google (Mapas) : </strong><?php echo $rowdata['Config_IDGoogle']; ?><br/>
-								<strong>ApiKey (Android) : </strong><?php echo $rowdata['Config_Google_apiKey']; ?><br/>
-								<strong>ApiKey (Firebase) : </strong><?php echo $rowdata['Config_FCM_apiKey']; ?><br/>
-								<strong>Main ApiKey (Firebase) : </strong><?php echo $rowdata['Config_FCM_Main_apiKey']; ?><br/>
+								<strong>ID Google (Mapas) : </strong><?php echo $rowData['Config_IDGoogle']; ?><br/>
+								<strong>ApiKey (Android) : </strong><?php echo $rowData['Config_Google_apiKey']; ?><br/>
+								<strong>ApiKey (Firebase) : </strong><?php echo $rowData['Config_FCM_apiKey']; ?><br/>
+								<strong>Main ApiKey (Firebase) : </strong><?php echo $rowData['Config_FCM_Main_apiKey']; ?><br/>
 							</p>
 
 							<h2 class="text-primary">Bodegas OT</h2>
 							<p class="text-muted word_break">
-								<strong>Bodega Productos : </strong><?php echo $rowdata['BodegaProd']; ?><br/>
-								<strong>Bodega Insumos : </strong><?php echo $rowdata['BodegaIns']; ?><br/>
+								<strong>Bodega Productos : </strong><?php echo $rowData['BodegaProd']; ?><br/>
+								<strong>Bodega Insumos : </strong><?php echo $rowData['BodegaIns']; ?><br/>
 							</p>
 
 							<h2 class="text-primary">Social</h2>
 							<p class="text-muted word_break">
-								<strong>Uso de widget Sociales : </strong><?php echo $rowdata['SocialUso']; ?><br/>
-								<?php if(isset($rowdata['Social_idUso'])&&$rowdata['Social_idUso']==1){ ?>
-									<strong>Facebook : </strong><?php echo $rowdata['Social_facebook']; ?><br/>
-									<strong>Twitter : </strong><?php echo $rowdata['Social_twitter']; ?><br/>
-									<strong>Instagram : </strong><?php echo $rowdata['Social_instagram']; ?><br/>
-									<strong>Linkedin : </strong><?php echo $rowdata['Social_linkedin']; ?><br/>
-									<strong>Rss : </strong><?php echo $rowdata['Social_rss']; ?><br/>
-									<strong>Youtube : </strong><?php echo $rowdata['Social_youtube']; ?><br/>
-									<strong>Tumblr : </strong><?php echo $rowdata['Social_tumblr']; ?><br/>
+								<strong>Uso de widget Sociales : </strong><?php echo $rowData['SocialUso']; ?><br/>
+								<?php if(isset($rowData['Social_idUso'])&&$rowData['Social_idUso']==1){ ?>
+									<strong>Facebook : </strong><?php echo $rowData['Social_facebook']; ?><br/>
+									<strong>Twitter : </strong><?php echo $rowData['Social_twitter']; ?><br/>
+									<strong>Instagram : </strong><?php echo $rowData['Social_instagram']; ?><br/>
+									<strong>Linkedin : </strong><?php echo $rowData['Social_linkedin']; ?><br/>
+									<strong>Rss : </strong><?php echo $rowData['Social_rss']; ?><br/>
+									<strong>Youtube : </strong><?php echo $rowData['Social_youtube']; ?><br/>
+									<strong>Tumblr : </strong><?php echo $rowData['Social_tumblr']; ?><br/>
 								<?php } ?>
 							</p>
 						</div>
@@ -264,9 +264,9 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 						<?php
 							//se arma la dirección
 							$direccion = "";
-							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){  $direccion .= $rowdata["Direccion"];}
-							if(isset($rowdata["Comuna"])&&$rowdata["Comuna"]!=''){        $direccion .= ', '.$rowdata["Comuna"];}
-							if(isset($rowdata["Ciudad"])&&$rowdata["Ciudad"]!=''){        $direccion .= ', '.$rowdata["Ciudad"];}
+							if(isset($rowData["Direccion"])&&$rowData["Direccion"]!=''){  $direccion .= $rowData["Direccion"];}
+							if(isset($rowData["Comuna"])&&$rowData["Comuna"]!=''){        $direccion .= ', '.$rowData["Comuna"];}
+							if(isset($rowData["Ciudad"])&&$rowData["Ciudad"]!=''){        $direccion .= ', '.$rowData["Ciudad"];}
 							//se despliega mensaje en caso de no existir dirección
 							if($direccion!=''){
 								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);

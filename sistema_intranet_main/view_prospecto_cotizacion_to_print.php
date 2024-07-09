@@ -89,7 +89,7 @@ LEFT JOIN `prospectos_listado`                      ON prospectos_listado.idPros
 LEFT JOIN `core_ubicacion_ciudad`    clientciudad   ON clientciudad.idCiudad            = prospectos_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`   clientcomuna   ON clientcomuna.idComuna            = prospectos_listado.idComuna';
 $SIS_where = 'cotizacion_prospectos_listado.idCotizacion ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'cotizacion_prospectos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'cotizacion_prospectos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /*****************************************/
 //Insumos
@@ -210,20 +210,20 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 					<table style="text-align: left; width: 100%;"  cellpadding="0" cellspacing="0">
 						<tr>
 							<td width="50%">';
-							if(isset($row_data['SistemaLogo'])&&$row_data['SistemaLogo']!=''){
-								$html .= '<img src="upload/'.$row_data['SistemaLogo'].'" alt="" style="width:100%">';
+							if(isset($rowData['SistemaLogo'])&&$rowData['SistemaLogo']!=''){
+								$html .= '<img src="upload/'.$rowData['SistemaLogo'].'" alt="" style="width:100%">';
 							}else{
 								$html .= '<img src="../LIB_assets/img/logo_empresa.jpg" alt="" style="width:100%">';
 							}
 							$html .= '
 							</td>
 							<td width="50%" style="text-align: left; font-size: 16px;">
-								<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
-								<strong>Rut : </strong>'.$row_data['SistemaOrigenRut'].'<br/>
-								<strong>Teléfonos : </strong>'.formatPhone($row_data['SistemaOrigenFono1']).' - '.formatPhone($row_data['SistemaOrigenFono2']).'<br/>
-								<strong>Dirección Comercial : </strong>'.$row_data['SistemaOrigenDireccion'].', '.$row_data['SistemaOrigenComuna'].', '.$row_data['SistemaOrigenCiudad'].'<br/>
-								<strong>E-mail : </strong>'.$row_data['SistemaOrigenEmail'].'<br/>
-								<strong>Web : </strong>'.$row_data['SistemaOrigenWeb'].'<br/>
+								<strong>'.$rowData['SistemaOrigen'].'</strong><br/>
+								<strong>Rut : </strong>'.$rowData['SistemaOrigenRut'].'<br/>
+								<strong>Teléfonos : </strong>'.formatPhone($rowData['SistemaOrigenFono1']).' - '.formatPhone($rowData['SistemaOrigenFono2']).'<br/>
+								<strong>Dirección Comercial : </strong>'.$rowData['SistemaOrigenDireccion'].', '.$rowData['SistemaOrigenComuna'].', '.$rowData['SistemaOrigenCiudad'].'<br/>
+								<strong>E-mail : </strong>'.$rowData['SistemaOrigenEmail'].'<br/>
+								<strong>Web : </strong>'.$rowData['SistemaOrigenWeb'].'<br/>
 
 							</td>
 						</tr>
@@ -234,19 +234,19 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 						</tr>
 						<tr>
 							<td>
-								<strong>Fecha : </strong>'.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
-								<strong>Empresa : </strong>'.$row_data['NombreProspecto'].'<br/>
-								<strong>Dirección : </strong>'.$row_data['DireccionProspecto'].'<br/>
-								<strong>Fono : </strong>'.formatPhone($row_data['Fono1Prospecto']).' - '.formatPhone($row_data['Fono2Prospecto']).'<br/>
-								<strong>Giro : </strong>'.$row_data['GiroProspecto'].'<br/>
-								<strong>Solicita : </strong>'.$row_data['PersonaContactoProspecto'].'<br/>
+								<strong>Fecha : </strong>'.Fecha_estandar($rowData['Creacion_fecha']).'<br/>
+								<strong>Empresa : </strong>'.$rowData['NombreProspecto'].'<br/>
+								<strong>Dirección : </strong>'.$rowData['DireccionProspecto'].'<br/>
+								<strong>Fono : </strong>'.formatPhone($rowData['Fono1Prospecto']).' - '.formatPhone($rowData['Fono2Prospecto']).'<br/>
+								<strong>Giro : </strong>'.$rowData['GiroProspecto'].'<br/>
+								<strong>Solicita : </strong>'.$rowData['PersonaContactoProspecto'].'<br/>
 							</td>
 							<td>
-								<strong>Lugar : </strong>'.$row_data['SistemaOrigenComuna'].', '.$row_data['SistemaOrigenCiudad'].'<br/>
-								<strong>RUT : </strong>'.$row_data['RutProspecto'].'<br/>
-								<strong>Ciudad/Comuna : </strong>'.$row_data['ComunaProspecto'].'<br/>
-								<strong>Región : </strong>'.$row_data['CiudadProspecto'].'<br/>
-								<strong>Email : </strong>'.$row_data['EmailProspecto'].'<br/>
+								<strong>Lugar : </strong>'.$rowData['SistemaOrigenComuna'].', '.$rowData['SistemaOrigenCiudad'].'<br/>
+								<strong>RUT : </strong>'.$rowData['RutProspecto'].'<br/>
+								<strong>Ciudad/Comuna : </strong>'.$rowData['ComunaProspecto'].'<br/>
+								<strong>Región : </strong>'.$rowData['CiudadProspecto'].'<br/>
+								<strong>Email : </strong>'.$rowData['EmailProspecto'].'<br/>
 								<strong>Cargo : </strong><br/>
 							</td>
 						</tr>
@@ -339,88 +339,88 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 							</tr>';
 						}
 
-					if(isset($row_data['ValorNetoImp'])&&$row_data['ValorNetoImp']!=0){
+					if(isset($rowData['ValorNetoImp'])&&$rowData['ValorNetoImp']!=0){
 						$html .= '
 						<tr>
 							<td colspan="5" align="right"><strong>Neto Imponible</strong></td>
-							<td align="right">'.Valores($row_data['ValorNetoImp'], 0).'</td>
+							<td align="right">'.Valores($rowData['ValorNetoImp'], 0).'</td>
 						</tr>';
 					}
-					if(isset($row_data['Impuesto_01'])&&$row_data['Impuesto_01']!=0){
+					if(isset($rowData['Impuesto_01'])&&$rowData['Impuesto_01']!=0){
 						$html .= '
 						<tr>
 							<td colspan="5" align="right"><strong>'.$impuestos[0]['nimp'].'</strong></td>
-							<td align="right">'.Valores($row_data['Impuesto_01'], 0).'</td>
+							<td align="right">'.Valores($rowData['Impuesto_01'], 0).'</td>
 						</tr>';
 					}
-					if(isset($row_data['Impuesto_02'])&&$row_data['Impuesto_02']!=0){
+					if(isset($rowData['Impuesto_02'])&&$rowData['Impuesto_02']!=0){
 						$html .= '
 						<tr>
 							<td colspan="5" align="right"><strong>'.$impuestos[1]['nimp'].'</strong></td>
-							<td align="right">'.Valores($row_data['Impuesto_02'], 0).'</td>
+							<td align="right">'.Valores($rowData['Impuesto_02'], 0).'</td>
 						</tr>';
 					}
-					if(isset($row_data['Impuesto_03'])&&$row_data['Impuesto_03']!=0){
+					if(isset($rowData['Impuesto_03'])&&$rowData['Impuesto_03']!=0){
 						$html .= '
 						<tr>
 							<td colspan="5" align="right"><strong>'.$impuestos[2]['nimp'].'</strong></td>
-							<td align="right">'.Valores($row_data['Impuesto_03'], 0).'</td>
+							<td align="right">'.Valores($rowData['Impuesto_03'], 0).'</td>
 						</tr>';
 					} 
-					if(isset($row_data['Impuesto_04'])&&$row_data['Impuesto_04']!=0){
+					if(isset($rowData['Impuesto_04'])&&$rowData['Impuesto_04']!=0){
 						$html .= '
 						<tr>
 							<td colspan="5" align="right"><strong>'.$impuestos[3]['nimp'].'</strong></td>
-							<td align="right">'.Valores($row_data['Impuesto_04'], 0).'</td>
+							<td align="right">'.Valores($rowData['Impuesto_04'], 0).'</td>
 						</tr>';
 					}
-					if(isset($row_data['Impuesto_05'])&&$row_data['Impuesto_05']!=0){
+					if(isset($rowData['Impuesto_05'])&&$rowData['Impuesto_05']!=0){
 						$html .= '
 						<tr>
 							<td colspan="5" align="right"><strong>'.$impuestos[4]['nimp'].'</strong></td>
-							<td align="right">'.Valores($row_data['Impuesto_05'], 0).'</td>
+							<td align="right">'.Valores($rowData['Impuesto_05'], 0).'</td>
 						</tr>';
 					}
-					if(isset($row_data['Impuesto_06'])&&$row_data['Impuesto_06']!=0){
+					if(isset($rowData['Impuesto_06'])&&$rowData['Impuesto_06']!=0){
 						$html .= '
 						<tr>
 							<td colspan="5" align="right"><strong>'.$impuestos[5]['nimp'].'</strong></td>
-							<td align="right">'.Valores($row_data['Impuesto_06'], 0).'</td>
+							<td align="right">'.Valores($rowData['Impuesto_06'], 0).'</td>
 						</tr>';
 					}
-					if(isset($row_data['Impuesto_07'])&&$row_data['Impuesto_07']!=0){
+					if(isset($rowData['Impuesto_07'])&&$rowData['Impuesto_07']!=0){
 						$html .= '
 						<tr>
 							<td colspan="5" align="right"><strong>'.$impuestos[6]['nimp'].'</strong></td>
-							<td align="right">'.Valores($row_data['Impuesto_07'], 0).'</td>
+							<td align="right">'.Valores($rowData['Impuesto_07'], 0).'</td>
 						</tr>';
 					}
-					if(isset($row_data['Impuesto_08'])&&$row_data['Impuesto_08']!=0){
+					if(isset($rowData['Impuesto_08'])&&$rowData['Impuesto_08']!=0){
 						$html .= '
 						<tr>
 							<td colspan="5" align="right"><strong>'.$impuestos[7]['nimp'].'</strong></td>
-							<td align="right">'.Valores($row_data['Impuesto_08'], 0).'</td>
+							<td align="right">'.Valores($rowData['Impuesto_08'], 0).'</td>
 						</tr>';
 					}
-					if(isset($row_data['Impuesto_09'])&&$row_data['Impuesto_09']!=0){
+					if(isset($rowData['Impuesto_09'])&&$rowData['Impuesto_09']!=0){
 						$html .= '
 						<tr>
 							<td colspan="5" align="right"><strong>'.$impuestos[8]['nimp'].'</strong></td>
-							<td align="right">'.Valores($row_data['Impuesto_09'], 0).'</td>
+							<td align="right">'.Valores($rowData['Impuesto_09'], 0).'</td>
 						</tr>';
 					}
-					if(isset($row_data['Impuesto_10'])&&$row_data['Impuesto_10']!=0){
+					if(isset($rowData['Impuesto_10'])&&$rowData['Impuesto_10']!=0){
 						$html .= '
 						<tr>
 							<td colspan="5" align="right"><strong>'.$impuestos[9]['nimp'].'</strong></td>
-							<td align="right">'.Valores($row_data['Impuesto_10'], 0).'</td>
+							<td align="right">'.Valores($rowData['Impuesto_10'], 0).'</td>
 						</tr>';
 					} 
-					if(isset($row_data['ValorTotal'])&&$row_data['ValorTotal']!=0){
+					if(isset($rowData['ValorTotal'])&&$rowData['ValorTotal']!=0){
 						$html .= '
 						<tr>
 							<td colspan="5" align="right"><strong>Total</strong></td>
-							<td align="right">'.Valores($row_data['ValorTotal'], 0).'</td>
+							<td align="right">'.Valores($rowData['ValorTotal'], 0).'</td>
 						</tr>';
 					}
 				
@@ -438,7 +438,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 							<td class="title">Condiciones Comerciales</td>
 						</tr>
 						<tr>
-							<td style="padding: 10px;">'.$row_data['Observaciones'].'</td>
+							<td style="padding: 10px;">'.$rowData['Observaciones'].'</td>
 						</tr>
 					</table>
 

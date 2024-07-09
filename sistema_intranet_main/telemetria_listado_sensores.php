@@ -69,7 +69,7 @@ if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
-$rowdata = db_select_data (false, 'Nombre,Funcion, idSensorFuncion', 'telemetria_listado_sensores', '', 'idSensores ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, 'Nombre,Funcion, idSensorFuncion', 'telemetria_listado_sensores', '', 'idSensores ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -84,9 +84,9 @@ $rowdata = db_select_data (false, 'Nombre,Funcion, idSensorFuncion', 'telemetria
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)){              $x1  = $Nombre;             }else{$x1  = $rowdata['Nombre'];}
-				if(isset($Funcion)){             $x2  = $Funcion;            }else{$x2  = $rowdata['Funcion'];}
-				if(isset($idSensorFuncion)){     $x3  = $idSensorFuncion;    }else{$x3  = $rowdata['idSensorFuncion'];}
+				if(isset($Nombre)){              $x1  = $Nombre;             }else{$x1  = $rowData['Nombre'];}
+				if(isset($Funcion)){             $x2  = $Funcion;            }else{$x2  = $rowData['Funcion'];}
+				if(isset($idSensorFuncion)){     $x3  = $idSensorFuncion;    }else{$x3  = $rowData['idSensorFuncion'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

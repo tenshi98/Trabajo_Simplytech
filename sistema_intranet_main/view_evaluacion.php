@@ -59,7 +59,7 @@ LEFT JOIN `cursos_listado`                 ON cursos_listado.idCurso            
 LEFT JOIN `quiz_listado`                   ON quiz_listado.idQuiz                      = alumnos_evaluaciones_asignadas.idQuiz
 LEFT JOIN `core_sistemas`                  ON core_sistemas.idSistema                  = alumnos_evaluaciones_asignadas.idSistema';
 $SIS_where = 'alumnos_evaluaciones_asignadas.idAsignadas='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'alumnos_evaluaciones_asignadas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'alumnos_evaluaciones_asignadas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /**********************************************************/
 // consulto los datos
@@ -100,14 +100,14 @@ $arrAlumnos = db_select_array (false, $SIS_query, 'alumnos_evaluaciones_asignada
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 						<p class="text-muted">
-							<strong>Tipo Asignacion : </strong><?php echo $rowdata['Asignar']; ?><br/>
-							<strong>Grupo: </strong><?php echo $rowdata['Curso']; ?><br/>
-							<strong>Evaluacion : </strong><?php echo $rowdata['Quiz']; ?><br/>
-							<strong>Fecha Programada : </strong><?php echo fecha_estandar($rowdata['Programada_fecha']); ?><br/>
-							<strong>N° Preguntas : </strong><?php echo $rowdata['N_preguntas']; ?><br/>
-							<strong>N° Alumnos : </strong><?php echo $rowdata['N_Alumnos']; ?><br/>
-							<strong>N° Fallas : </strong><?php echo $rowdata['N_Alumnos_Falla']; ?><br/>
-							<strong>N° Reintentos : </strong><?php echo $rowdata['N_Alumnos_Rep']; ?><br/>
+							<strong>Tipo Asignacion : </strong><?php echo $rowData['Asignar']; ?><br/>
+							<strong>Grupo: </strong><?php echo $rowData['Curso']; ?><br/>
+							<strong>Evaluacion : </strong><?php echo $rowData['Quiz']; ?><br/>
+							<strong>Fecha Programada : </strong><?php echo fecha_estandar($rowData['Programada_fecha']); ?><br/>
+							<strong>N° Preguntas : </strong><?php echo $rowData['N_preguntas']; ?><br/>
+							<strong>N° Alumnos : </strong><?php echo $rowData['N_Alumnos']; ?><br/>
+							<strong>N° Fallas : </strong><?php echo $rowData['N_Alumnos_Falla']; ?><br/>
+							<strong>N° Reintentos : </strong><?php echo $rowData['N_Alumnos_Rep']; ?><br/>
 						</p>
 
 					</div>

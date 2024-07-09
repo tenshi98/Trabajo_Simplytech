@@ -76,7 +76,7 @@ if(!empty($_GET['edit'])){
 	$SIS_query = 'idUsuario';
 	$SIS_join  = '';
 	$SIS_where = 'idUsers = '.$_GET['edit'];
-	$rowdata = db_select_data (false, $SIS_query, 'comunicaciones_videoconferencia_listado_usuarios', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'comunicaciones_videoconferencia_listado_usuarios', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	//Verifico el tipo de usuario que esta ingresando
@@ -99,7 +99,7 @@ if(!empty($_GET['edit'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idUsuario)){     $x1  = $idUsuario;    }else{$x1  = $rowdata['idUsuario'];}
+					if(isset($idUsuario)){     $x1  = $idUsuario;    }else{$x1  = $rowData['idUsuario'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -170,7 +170,7 @@ if(!empty($_GET['edit'])){
 	$SIS_query = 'Nombre';
 	$SIS_join  = '';
 	$SIS_where = 'idVideoConferencia ='.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'comunicaciones_videoconferencia_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'comunicaciones_videoconferencia_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -186,7 +186,7 @@ if(!empty($_GET['edit'])){
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'VideoConferencia', $rowdata['Nombre'], 'Usuarios Participantes'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'VideoConferencia', $rowData['Nombre'], 'Usuarios Participantes'); ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 			<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Usuario</a><?php } ?>
 		</div>

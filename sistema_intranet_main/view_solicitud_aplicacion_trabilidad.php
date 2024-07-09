@@ -88,7 +88,7 @@ LEFT JOIN `telemetria_listado`                             ON telemetria_listado
 LEFT JOIN `vehiculos_listado`                              ON vehiculos_listado.idVehiculo                               = cross_solicitud_aplicacion_listado_tractores.idVehiculo
 LEFT JOIN `telemetria_listado_sensores_nombre`             ON telemetria_listado_sensores_nombre.idTelemetria            = cross_solicitud_aplicacion_listado_tractores.idTelemetria';
 $SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idTractores ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /***************************************/
 $subquery = '';
@@ -99,7 +99,7 @@ $subquery .= ',GeoLongitud';
 $subquery .= ',GeoMovimiento';
 $subquery .= ',GeoVelocidad';
 //se recorre deacuerdo a la cantidad de sensores
-for ($i = 1; $i <= $row_data['cantSensores']; $i++) {
+for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 	$subquery .= ',Sensor_'.$i;
 }
 
@@ -107,16 +107,16 @@ for ($i = 1; $i <= $row_data['cantSensores']; $i++) {
 //se consulta
 $SIS_query = 'idTabla'.$subquery;
 $SIS_join  = '';
-$SIS_where = 'idZona = 0 AND idSolicitud = '.$row_data['idSolicitud'].' AND FechaSistema ="'.$row_data['f_ejecucion'].'"';
+$SIS_where = 'idZona = 0 AND idSolicitud = '.$rowData['idSolicitud'].' AND FechaSistema ="'.$rowData['f_ejecucion'].'"';
 $SIS_order = 'FechaSistema ASC, HoraSistema ASC';
 $arrMediciones = array();
-$arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$row_data['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMediciones');
+$arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$rowData['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMediciones');
 
 /*****************************************/
 //se consulta
 $SIS_query = 'idUbicaciones, Latitud, Longitud';
 $SIS_join  = '';
-$SIS_where = 'idZona ='.$row_data['idZona'];
+$SIS_where = 'idZona ='.$rowData['idZona'];
 $SIS_order = 'idUbicaciones ASC';
 $arrPuntos = array();
 $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ubicaciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPuntos');
@@ -128,8 +128,8 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
-				<i class="fa fa-globe" aria-hidden="true"></i> Detalles Solicitud de Aplicacion N°<?php echo n_doc($row_data['NSolicitud'], 7); ?>.
-				<small class="pull-right">Fecha Termino: <?php echo Fecha_estandar($row_data['f_termino']); ?></small>
+				<i class="fa fa-globe" aria-hidden="true"></i> Detalles Solicitud de Aplicacion N°<?php echo n_doc($rowData['NSolicitud'], 7); ?>.
+				<small class="pull-right">Fecha Termino: <?php echo Fecha_estandar($rowData['f_termino']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -140,29 +140,29 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Identificación</strong>
 					<address>
-						Predio: '.$row_data['PredioNombre'].'<br/>
-						Especie: '.$row_data['VariedadCat'].'<br/>
-						Variedad: '.$row_data['VariedadNombre'].'<br/>
-						Cuartel: '.$row_data['CuartelNombre'].'<br/>
-						Tractor: '.$row_data['TractorNombre'].'<br/>
-						Nebulizador: '.$row_data['NebNombre'].'<br/>
+						Predio: '.$rowData['PredioNombre'].'<br/>
+						Especie: '.$rowData['VariedadCat'].'<br/>
+						Variedad: '.$rowData['VariedadNombre'].'<br/>
+						Cuartel: '.$rowData['CuartelNombre'].'<br/>
+						Tractor: '.$rowData['TractorNombre'].'<br/>
+						Nebulizador: '.$rowData['NebNombre'].'<br/>
 					</address>
 				</div>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Velocidad Tractores (Km/hr)</strong>
 					<address>
-						Minima: '.Cantidades($row_data['GeoVelocidadMin'], 2).'<br/>
-						Maxima: '.Cantidades($row_data['GeoVelocidadMax'], 2).'<br/>
-						Promedio: '.Cantidades($row_data['GeoVelocidadProm'], 2).'<br/>
-						Programada: '.Cantidades($row_data['VelTractor'], 2).'<br/>
+						Minima: '.Cantidades($rowData['GeoVelocidadMin'], 2).'<br/>
+						Maxima: '.Cantidades($rowData['GeoVelocidadMax'], 2).'<br/>
+						Promedio: '.Cantidades($rowData['GeoVelocidadProm'], 2).'<br/>
+						Programada: '.Cantidades($rowData['VelTractor'], 2).'<br/>
 					</address>
 				</div>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Distancia Recorrida(Metros)</strong>
 					<address>
-						Recorrida: '.Cantidades($row_data['GeoDistance'], 2).'<br/>
-						Estimada: '.Cantidades($row_data['CuartelDistanciaPlant']*$row_data['CuartelCantPlantas'], 2).'<br/>
-						Faltante: '.Cantidades(($row_data['CuartelDistanciaPlant']*$row_data['CuartelCantPlantas']) - ($row_data['GeoDistance']), 2).'<br/>
+						Recorrida: '.Cantidades($rowData['GeoDistance'], 2).'<br/>
+						Estimada: '.Cantidades($rowData['CuartelDistanciaPlant']*$rowData['CuartelCantPlantas'], 2).'<br/>
+						Faltante: '.Cantidades(($rowData['CuartelDistanciaPlant']*$rowData['CuartelCantPlantas']) - ($rowData['GeoDistance']), 2).'<br/>
 				</div>';
 		?>
 
@@ -180,12 +180,12 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 					</tr>
 				</thead>
 				<tbody>
-					<?php for ($i = 1; $i <= $row_data['cantSensores']; $i++) {  ?>
+					<?php for ($i = 1; $i <= $rowData['cantSensores']; $i++) {  ?>
 						<tr>
-							<td><?php echo $row_data['Sensor_'.$i.'_Nombre']; ?></td>
-							<td><?php echo $row_data['Sensor_'.$i.'_Min']; ?></td>
-							<td><?php echo $row_data['Sensor_'.$i.'_Max']; ?></td>
-							<td><?php echo $row_data['Sensor_'.$i.'_Prom']; ?></td>
+							<td><?php echo $rowData['Sensor_'.$i.'_Nombre']; ?></td>
+							<td><?php echo $rowData['Sensor_'.$i.'_Min']; ?></td>
+							<td><?php echo $rowData['Sensor_'.$i.'_Max']; ?></td>
+							<td><?php echo $rowData['Sensor_'.$i.'_Prom']; ?></td>
 						</tr>
 					<?php } ?>
 				</tbody>

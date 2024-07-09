@@ -623,14 +623,14 @@ require_once '0_validate_user_1.php';
 
 			/*****************************************************/
 			//Consulta por los datos de evaluacion
-			$rowdata = db_select_data (false, 'idSistema, idAsignar, idCurso, idQuiz, N_Alumnos_Rep', 'alumnos_evaluaciones_asignadas', '', 'idAsignadas = "'.$idAsignadas.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'idSistema, idAsignar, idCurso, idQuiz, N_Alumnos_Rep', 'alumnos_evaluaciones_asignadas', '', 'idAsignadas = "'.$idAsignadas.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			/*****************************************************/
 			//Variables
-			$idAsignar      = $rowdata['idAsignar'];
-			$idCurso        = $rowdata['idCurso'];
-			$idQuiz         = $rowdata['idQuiz'];
-			$idSistema      = $rowdata['idSistema'];
-			$N_Alumnos_Rep  = $rowdata['N_Alumnos_Rep'];
+			$idAsignar      = $rowData['idAsignar'];
+			$idCurso        = $rowData['idCurso'];
+			$idQuiz         = $rowData['idQuiz'];
+			$idSistema      = $rowData['idSistema'];
+			$N_Alumnos_Rep  = $rowData['N_Alumnos_Rep'];
 			$ndata_1        = 0;
 
 			//Lista de alumnos reprobados

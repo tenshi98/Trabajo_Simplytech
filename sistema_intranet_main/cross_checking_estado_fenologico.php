@@ -73,7 +73,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'Nombre,Codigo, idEstado, idSistema';
 	$SIS_join  = '';
 	$SIS_where = 'idEstadoFen = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'cross_checking_estado_fenologico', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'cross_checking_estado_fenologico', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -88,9 +88,9 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){     $x1  = $Nombre;     }else{$x1  = $rowdata['Nombre'];}
-					if(isset($Codigo)){     $x2  = $Codigo;     }else{$x2  = $rowdata['Codigo'];}
-					if(isset($idEstado)){   $x3  = $idEstado;   }else{$x3  = $rowdata['idEstado'];}
+					if(isset($Nombre)){     $x1  = $Nombre;     }else{$x1  = $rowData['Nombre'];}
+					if(isset($Codigo)){     $x2  = $Codigo;     }else{$x2  = $rowData['Codigo'];}
+					if(isset($idEstado)){   $x3  = $idEstado;   }else{$x3  = $rowData['idEstado'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

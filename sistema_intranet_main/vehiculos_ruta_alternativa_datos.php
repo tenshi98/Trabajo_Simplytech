@@ -52,7 +52,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'idRuta, idSistema, idTipo, Fecha, idDia, HoraInicio, HoraTermino, Nombre';
 $SIS_join  = '';
 $SIS_where = 'idRutaAlt = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'vehiculos_ruta_alternativa', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'vehiculos_ruta_alternativa', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 /*******************************************************/
 //sistema
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
@@ -60,7 +60,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ruta Alternativa', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ruta Alternativa', $rowData['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -80,13 +80,13 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idRuta)){          $x1  = $idRuta;           }else{$x1  = $rowdata["idRuta"];}
-					if(isset($idTipo)){          $x2  = $idTipo;           }else{$x2  = $rowdata["idTipo"];}
-					if(isset($Fecha)){           $x3  = $Fecha;            }else{$x3  = $rowdata["Fecha"];}
-					if(isset($idDia)){           $x4  = $idDia;            }else{$x4  = $rowdata["idDia"];}
-					if(isset($HoraInicio)){      $x5  = $HoraInicio;       }else{$x5  = $rowdata["HoraInicio"];}
-					if(isset($HoraTermino)){     $x6  = $HoraTermino;      }else{$x6  = $rowdata["HoraTermino"];}
-					if(isset($Nombre)){          $x7  = $Nombre;           }else{$x7  = $rowdata["Nombre"];}
+					if(isset($idRuta)){          $x1  = $idRuta;           }else{$x1  = $rowData["idRuta"];}
+					if(isset($idTipo)){          $x2  = $idTipo;           }else{$x2  = $rowData["idTipo"];}
+					if(isset($Fecha)){           $x3  = $Fecha;            }else{$x3  = $rowData["Fecha"];}
+					if(isset($idDia)){           $x4  = $idDia;            }else{$x4  = $rowData["idDia"];}
+					if(isset($HoraInicio)){      $x5  = $HoraInicio;       }else{$x5  = $rowData["HoraInicio"];}
+					if(isset($HoraTermino)){     $x6  = $HoraTermino;      }else{$x6  = $rowData["HoraTermino"];}
+					if(isset($Nombre)){          $x7  = $Nombre;           }else{$x7  = $rowData["Nombre"];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

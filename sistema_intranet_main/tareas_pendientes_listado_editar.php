@@ -106,7 +106,7 @@ if(!empty($_GET['edit_cambio_estado'])){
 $SIS_query = 'idEstado';
 $SIS_join  = '';
 $SIS_where = 'idTareas ='.simpleDecode($_GET['view'], fecha_actual());
-$rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'tareas_pendientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //Filtro
 switch ($_GET['edit_cambio_estado']) {
@@ -128,7 +128,7 @@ switch ($_GET['edit_cambio_estado']) {
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idEstado)){     $x1 = $idEstado;     }else{$x1 = $rowdata['idEstado'];}
+				if(isset($idEstado)){     $x1 = $idEstado;     }else{$x1 = $rowData['idEstado'];}
 				if(isset($Observacion)){  $x2 = $Observacion;  }else{$x2 = '';}
 
 				//se dibujan los inputs
@@ -159,7 +159,7 @@ switch ($_GET['edit_cambio_estado']) {
 $SIS_query = 'idEstadoTarea,Observacion';
 $SIS_join  = '';
 $SIS_where = 'idTrabajoTareas ='.simpleDecode($_GET['edit_trabajo_tarea'], fecha_actual());
-$rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado_tareas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'tareas_pendientes_listado_tareas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -174,8 +174,8 @@ $rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado_tareas'
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idEstadoTarea)){  $x1 = $idEstadoTarea;    }else{$x1 = $rowdata['idEstadoTarea'];}
-				if(isset($Observacion)){    $x2 = $Observacion;      }else{$x2 = $rowdata['Observacion'];}
+				if(isset($idEstadoTarea)){  $x1 = $idEstadoTarea;    }else{$x1 = $rowData['idEstadoTarea'];}
+				if(isset($Observacion)){    $x2 = $Observacion;      }else{$x2 = $rowData['Observacion'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -460,7 +460,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 $SIS_query = 'idPrioridad, idTipo, Nombre,Observaciones';
 $SIS_join  = '';
 $SIS_where = 'idTareas ='.simpleDecode($_GET['view'], fecha_actual());
-$rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'tareas_pendientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -475,10 +475,10 @@ $rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado', $SIS_
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idPrioridad)){    $x1 = $idPrioridad;    }else{$x1 = $rowdata['idPrioridad'];}
-				if(isset($idTipo)){         $x2 = $idTipo;         }else{$x2 = $rowdata['idTipo'];}
-				if(isset($Nombre)){         $x3 = $Nombre;         }else{$x3 = $rowdata['Nombre'];}
-				if(isset($Observaciones)){  $x4 = $Observaciones;  }else{$x4 = $rowdata['Observaciones'];}
+				if(isset($idPrioridad)){    $x1 = $idPrioridad;    }else{$x1 = $rowData['idPrioridad'];}
+				if(isset($idTipo)){         $x2 = $idTipo;         }else{$x2 = $rowData['idTipo'];}
+				if(isset($Nombre)){         $x3 = $Nombre;         }else{$x3 = $rowData['Nombre'];}
+				if(isset($Observaciones)){  $x4 = $Observaciones;  }else{$x4 = $rowData['Observaciones'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -531,7 +531,7 @@ LEFT JOIN `core_tareas_pendientes_prioridad` ON core_tareas_pendientes_prioridad
 LEFT JOIN `core_tareas_pendientes_tipos`     ON core_tareas_pendientes_tipos.idTipo          = tareas_pendientes_listado.idTipo
 LEFT JOIN `usuarios_listado`         cancel  ON cancel.idUsuario                             = tareas_pendientes_listado.idUsuarioCierre';
 $SIS_where = 'tareas_pendientes_listado.idTareas ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'tareas_pendientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /***************************************************/
 //Se traen a todos los trabajadores relacionados a las ot
@@ -591,7 +591,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_h
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
 
-		<?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1&&($_SESSION['usuario']['basic_data']['idUsuario']==$rowdata['idUsuario'] OR $_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){  ?>
+		<?php if(isset($rowData['idEstado'])&&$rowData['idEstado']==1&&($_SESSION['usuario']['basic_data']['idUsuario']==$rowData['idUsuario'] OR $_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){  ?>
 			<a href="<?php echo $new_location.'&edit_cambio_estado=1'; ?>"  class="btn btn-primary"><i class="fa fa-check-square-o" aria-hidden="true"></i> Pasar a Ejecucion</a>
 		<?php } ?>
 		<?php
@@ -609,7 +609,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_h
 			}
 		}
 		//muestro el boton solo si todas las tareas estan ejecutadas
-		if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==2&&$total_tareas!=0&&$total_tareas==$tareas_cerradas&&($_SESSION['usuario']['basic_data']['idUsuario']==$rowdata['idUsuario'] OR $_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){  ?>
+		if(isset($rowData['idEstado'])&&$rowData['idEstado']==2&&$total_tareas!=0&&$total_tareas==$tareas_cerradas&&($_SESSION['usuario']['basic_data']['idUsuario']==$rowData['idUsuario'] OR $_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){  ?>
 			<a href="<?php echo $new_location.'&edit_cambio_estado=2'; ?>"  class="btn btn-primary"><i class="fa fa-check-square-o" aria-hidden="true"></i> Cerrar Tarea</a>
 		<?php } ?>
 	</div>
@@ -628,34 +628,34 @@ $arrHistorial = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_h
 						<td class="meta-head">
 							<?php
 							//solo se puede agregar responsables por quien creo la tarea o es superadministrador
-							if($_SESSION['usuario']['basic_data']['idUsuario']==$rowdata['idUsuario'] OR $_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?>
+							if($_SESSION['usuario']['basic_data']['idUsuario']==$rowData['idUsuario'] OR $_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?>
 								<a href="<?php echo $new_location.'&modBase=true' ?>" title="Modificar Datos Básicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a>
 							<?php } ?>
 						</td>
 					</tr>
 					<tr>
 						<td class="meta-head">Estado</td>
-						<td><?php echo $rowdata['Estado']; ?></td>
+						<td><?php echo $rowData['Estado']; ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Prioridad</td>
-						<td><?php echo $rowdata['Prioridad']; ?></td>
+						<td><?php echo $rowData['Prioridad']; ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Tipo de Tarea</td>
-						<td><?php echo $rowdata['Tipo']; ?></td>
+						<td><?php echo $rowData['Tipo']; ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Nombre de la Tarea</td>
-						<td><?php echo $rowdata['Nombre']; ?></td>
+						<td><?php echo $rowData['Nombre']; ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Creador</td>
-						<td><?php echo $rowdata['Creador']; ?></td>
+						<td><?php echo $rowData['Creador']; ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Sistema</td>
-						<td><?php echo $rowdata['Sistema']; ?></td>
+						<td><?php echo $rowData['Sistema']; ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -663,12 +663,12 @@ $arrHistorial = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_h
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td><?php echo Fecha_estandar($rowdata['f_creacion']); ?></td>
+						<td><?php echo Fecha_estandar($rowData['f_creacion']); ?></td>
 					</tr>
-					<?php if(isset($rowdata['f_termino'])&&$rowdata['f_termino']!='0000-00-00'){ ?>
+					<?php if(isset($rowData['f_termino'])&&$rowData['f_termino']!='0000-00-00'){ ?>
 						<tr>
 							<td class="meta-head">Fecha Termino</td>
-							<td><?php echo Fecha_estandar($rowdata['f_termino']); ?></td>
+							<td><?php echo Fecha_estandar($rowData['f_termino']); ?></td>
 						</tr>
 					<?php } ?>
 				</tbody>
@@ -686,14 +686,14 @@ $arrHistorial = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_h
 					<td colspan="6">Tarea</td>
 				</tr>
 				<tr class="item-row linea_punteada" style="white-space: initial;">
-					<td class="item-name" colspan="6"><?php echo $rowdata['Observaciones']; ?></td>
+					<td class="item-name" colspan="6"><?php echo $rowData['Observaciones']; ?></td>
 				</tr>
 				<?php /**********************************************************************************/?>
 				<tr class="item-row fact_tittle">
 					<td colspan="5">Responsables</td>
 					<?php
 					//solo se puede agregar responsables por quien creo la tarea o es superadministrador
-					if($_SESSION['usuario']['basic_data']['idUsuario']==$rowdata['idUsuario'] OR $_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?>
+					if($_SESSION['usuario']['basic_data']['idUsuario']==$rowData['idUsuario'] OR $_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?>
 						<td><a href="<?php echo $new_location.'&addResponsable=true' ?>" title="Agregar Responsables" class="btn btn-xs btn-primary tooltip"><i class="fa fa-plus" aria-hidden="true"></i> Agregar</a></td>
 					<?php } ?>
 				</tr>
@@ -715,7 +715,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_h
 					<td>
 						<?php
 						//solo se puede agregar responsables por quien creo la tarea o es superadministrador
-						if($arrRepresentantes!=false && !empty($arrRepresentantes) && $arrRepresentantes!='' &&($_SESSION['usuario']['basic_data']['idUsuario']==$rowdata['idUsuario'] OR $_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
+						if($arrRepresentantes!=false && !empty($arrRepresentantes) && $arrRepresentantes!='' &&($_SESSION['usuario']['basic_data']['idUsuario']==$rowData['idUsuario'] OR $_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
 							<a href="<?php echo $new_location.'&addtarea=true' ?>" title="Agregar Tarea" class="btn btn-xs btn-primary tooltip"><i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
 						<?php } ?>
 					</td>
@@ -728,7 +728,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_h
 							<td class="item-name" width="160"><?php echo $tarea['EstadoTarea']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<?php if(isset($tarea['idEstadoTarea'])&&$tarea['idEstadoTarea']==1&&($_SESSION['usuario']['basic_data']['idUsuario']==$tarea['idUsuario'] OR $_SESSION['usuario']['basic_data']['idUsuario']==$rowdata['idUsuario'])){ ?>
+									<?php if(isset($tarea['idEstadoTarea'])&&$tarea['idEstadoTarea']==1&&($_SESSION['usuario']['basic_data']['idUsuario']==$tarea['idUsuario'] OR $_SESSION['usuario']['basic_data']['idUsuario']==$rowData['idUsuario'])){ ?>
 										<a href="<?php echo $new_location.'&edit_trabajo_tarea='.simpleEncode($tarea['idTrabajoTareas'], fecha_actual()); ?>" title="Editar Trabajos" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>

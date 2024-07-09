@@ -52,7 +52,7 @@ Cargas_tramo,TotalCargasFamiliares,SueldoImponible,SueldoNoImponible,TotalHabere
 AFP_Porcentaje,AFP_Total,AFP_SIS,Salud_idAFP,Salud_Nombre,Salud_Porcentaje,Salud_Total ,TotalDescuentos,
 SegCesantia_Empleador,SegCesantia_Trabajador,ImpuestoRenta,RentaAfecta,TotalAPagar,MontoPagado,CentroCosto,
 MutualNombre,MutualPorcentaje,MutualValor,Salud_idCotizacion,Salud_CotizacionPorcentaje,Salud_CotizacionValor';
-$rowdata = db_select_data (false, $SIS_query, 'rrhh_sueldos_facturacion_trabajadores', '', 'idFactTrab ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'rrhh_sueldos_facturacion_trabajadores', '', 'idFactTrab ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /**************************************************************/
 //Anticipos
@@ -113,23 +113,23 @@ $arrPagos = db_select_array (false, 'sistema_documentos_pago.Nombre AS DocPago,p
 					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<p>
 							<strong>Economicos de la facturacion</strong><br/>
-							<strong>UF</strong>: <span class="pull-right"><?php echo valores($rowdata['UF'], 0); ?></span><br/>
-							<strong>UTM</strong>: <span class="pull-right"><?php echo valores($rowdata['UTM'], 0); ?></span><br/>
-							<strong>Renta Minima</strong>: <span class="pull-right"><?php echo valores($rowdata['IMM'], 0); ?></span><br/>
-							<strong>Tope Imponible AFP</strong>: <span class="pull-right"><?php echo valores($rowdata['TopeImpAFP'], 0); ?></span><br/>
-							<strong>Tope Imponible IPS</strong>: <span class="pull-right"><?php echo valores($rowdata['TopeImpIPS'], 0); ?></span><br/>
-							<strong>Tope Seguro Cesantia</strong>: <span class="pull-right"><?php echo valores($rowdata['TopeSegCesantia'], 0); ?></span><br/>
-							<strong>Tope APV Mensual</strong>: <span class="pull-right"><?php echo valores($rowdata['TopeAPVMensual'], 0); ?></span><br/>
-							<strong>Tope Deposito Convenido</strong>: <span class="pull-right"><?php echo valores($rowdata['TopeDepConv'], 0); ?></span><br/>
+							<strong>UF</strong>: <span class="pull-right"><?php echo valores($rowData['UF'], 0); ?></span><br/>
+							<strong>UTM</strong>: <span class="pull-right"><?php echo valores($rowData['UTM'], 0); ?></span><br/>
+							<strong>Renta Minima</strong>: <span class="pull-right"><?php echo valores($rowData['IMM'], 0); ?></span><br/>
+							<strong>Tope Imponible AFP</strong>: <span class="pull-right"><?php echo valores($rowData['TopeImpAFP'], 0); ?></span><br/>
+							<strong>Tope Imponible IPS</strong>: <span class="pull-right"><?php echo valores($rowData['TopeImpIPS'], 0); ?></span><br/>
+							<strong>Tope Seguro Cesantia</strong>: <span class="pull-right"><?php echo valores($rowData['TopeSegCesantia'], 0); ?></span><br/>
+							<strong>Tope APV Mensual</strong>: <span class="pull-right"><?php echo valores($rowData['TopeAPVMensual'], 0); ?></span><br/>
+							<strong>Tope Deposito Convenido</strong>: <span class="pull-right"><?php echo valores($rowData['TopeDepConv'], 0); ?></span><br/>
 						</p>
 					</div>
 					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<p>
 							<strong>Pago Empresa</strong><br/>
 							<?php
-							if(isset($rowdata['AFP_SIS'])){echo '<strong>AFP Seguro de Invalidez y Sobrevivencia</strong>: <span class="pull-right">'.Valores($rowdata['AFP_SIS'], 0).'</span> <br/>';}
-							if(isset($rowdata['SegCesantia_Empleador'])){echo '<strong>Seg Cesantia Empleador</strong>: <span class="pull-right">'.Valores($rowdata['SegCesantia_Empleador'], 0).'</span> <br/>';}
-							if(isset($rowdata['MutualValor'])&&$rowdata['MutualValor']!=''){echo '<strong>'.$rowdata['MutualNombre'].' ('.$rowdata['MutualPorcentaje'].'%)</strong>: <span class="pull-right">'.valores($rowdata['MutualValor'], 0).'</span> <br/>';}
+							if(isset($rowData['AFP_SIS'])){echo '<strong>AFP Seguro de Invalidez y Sobrevivencia</strong>: <span class="pull-right">'.Valores($rowData['AFP_SIS'], 0).'</span> <br/>';}
+							if(isset($rowData['SegCesantia_Empleador'])){echo '<strong>Seg Cesantia Empleador</strong>: <span class="pull-right">'.Valores($rowData['SegCesantia_Empleador'], 0).'</span> <br/>';}
+							if(isset($rowData['MutualValor'])&&$rowData['MutualValor']!=''){echo '<strong>'.$rowData['MutualNombre'].' ('.$rowData['MutualPorcentaje'].'%)</strong>: <span class="pull-right">'.valores($rowData['MutualValor'], 0).'</span> <br/>';}
 							?>
 						</p>
 					</div>
@@ -142,7 +142,7 @@ $arrPagos = db_select_array (false, 'sistema_documentos_pago.Nombre AS DocPago,p
 
 <?php
 //Si el documento esta pagado se muestran los datos relacionados al pago
-if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
+if(isset($rowData['MontoPagado'])&&$rowData['MontoPagado']!=0){ ?>
 	<div class="" style="margin-top:10px;">
 		<div class="col-xs-12">
 			<div class="panel panel-success">
@@ -180,16 +180,16 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
 								<tbody>
 									<tr>
 										<th>Monto Abonado:</th>
-										<td align="right"><?php echo Valores($rowdata['MontoPagado'], 0) ?></td>
+										<td align="right"><?php echo Valores($rowData['MontoPagado'], 0) ?></td>
 									</tr>
 									<tr>
 										<th>Monto Facturado:</th>
-										<td align="right"><?php echo Valores($rowdata['TotalAPagar'], 0) ?></td>
+										<td align="right"><?php echo Valores($rowData['TotalAPagar'], 0) ?></td>
 									</tr>
 									<tr>
 										<th>Diferencia:</th>
 										<?php
-										$diferencia = valores_enteros($rowdata['MontoPagado'] - $rowdata['TotalAPagar']);
+										$diferencia = valores_enteros($rowData['MontoPagado'] - $rowData['TotalAPagar']);
 										if($diferencia<0){
 											echo '<td align="right" class="text-danger"><h6><i class="fa fa-arrow-down" aria-hidden="true"></i> '.Valores($diferencia, 0).'</h6></td>';
 										}elseif($diferencia>0){
@@ -217,7 +217,7 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
     		<div class="invoice-title">
     			<h2>
 					Liquidacion de Remuneraciones
-					<small class="pull-right">Mes <?php echo fecha2NombreMes($rowdata['Creacion_fecha']).' de '.fecha2Ano($rowdata['Creacion_fecha']); ?></small>
+					<small class="pull-right">Mes <?php echo fecha2NombreMes($rowData['Creacion_fecha']).' de '.fecha2Ano($rowData['Creacion_fecha']); ?></small>
     			</h2>
     			
     		</div>
@@ -225,8 +225,8 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
     		<div class="row">
     			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     				<address>
-						<strong>Empresa:</strong><?php echo $rowdata['SistemaNombre']; ?><br/>
-						<strong>Rut:</strong><?php echo $rowdata['SistemaRut']; ?>
+						<strong>Empresa:</strong><?php echo $rowData['SistemaNombre']; ?><br/>
+						<strong>Rut:</strong><?php echo $rowData['SistemaRut']; ?>
     				</address>
     			</div>
     		</div>
@@ -234,19 +234,19 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
     		<div class="row">
     			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
     				<address>
-						<strong>Trabajador Sr(a):</strong><?php echo $rowdata['TrabajadorNombre']; ?><br/>
-						<strong>R.U.T.:</strong><?php echo $rowdata['TrabajadorRut']; ?><br/>
-    					<strong>Fecha Contrato:</strong><?php echo $rowdata['TrabajadorContrato']; ?><br/>
-    					<strong>Cargo:</strong><?php echo $rowdata['TrabajadorCargo']; ?><br/>
-    					<strong>Centro de Costo:</strong><?php echo $rowdata['CentroCosto']; ?><br/>
+						<strong>Trabajador Sr(a):</strong><?php echo $rowData['TrabajadorNombre']; ?><br/>
+						<strong>R.U.T.:</strong><?php echo $rowData['TrabajadorRut']; ?><br/>
+    					<strong>Fecha Contrato:</strong><?php echo $rowData['TrabajadorContrato']; ?><br/>
+    					<strong>Cargo:</strong><?php echo $rowData['TrabajadorCargo']; ?><br/>
+    					<strong>Centro de Costo:</strong><?php echo $rowData['CentroCosto']; ?><br/>
     				</address>
     			</div>
     			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
     				<address>
 						<?php
-							if(isset($rowdata['DiasPactados'])){echo '<strong>Dias Pactados</strong>: '.$rowdata['DiasPactados'].' Dias<br/>';}
-							if(isset($rowdata['diasLicencias'])){echo '<strong>Licencias</strong>: '.$rowdata['diasLicencias'].' Dias<br/>';}
-							if(isset($rowdata['diasInasistencia'])){echo '<strong>Dias Inasistencias</strong>: '.$rowdata['diasInasistencia'].' Dias<br/>';}
+							if(isset($rowData['DiasPactados'])){echo '<strong>Dias Pactados</strong>: '.$rowData['DiasPactados'].' Dias<br/>';}
+							if(isset($rowData['diasLicencias'])){echo '<strong>Licencias</strong>: '.$rowData['diasLicencias'].' Dias<br/>';}
+							if(isset($rowData['diasInasistencia'])){echo '<strong>Dias Inasistencias</strong>: '.$rowData['diasInasistencia'].' Dias<br/>';}
 						?>
 					</address>
     			</div>
@@ -266,21 +266,21 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
     					<table class="table table-condensed">
     						<tbody>
     							<tr>
-									<td><?php echo $rowdata['TipoContratoTrab'].' '.valores($rowdata['SueldoPactado'], 0); ?></td>
-    								<td class="text-center" colspan="2"><?php echo $rowdata['DiasTrabajados']?> Dias Remunerados</td>
-    								<td align="right"><?php echo valores($rowdata['SueldoPagado'], 0); ?></td>
+									<td><?php echo $rowData['TipoContratoTrab'].' '.valores($rowData['SueldoPactado'], 0); ?></td>
+    								<td class="text-center" colspan="2"><?php echo $rowData['DiasTrabajados']?> Dias Remunerados</td>
+    								<td align="right"><?php echo valores($rowData['SueldoPagado'], 0); ?></td>
     							</tr>
     							
-    							<?php if(isset($rowdata['Gratificacion'])&&$rowdata['Gratificacion']!=''){ ?>
+    							<?php if(isset($rowData['Gratificacion'])&&$rowData['Gratificacion']!=''){ ?>
 									<tr>
 										<td colspan="3">Gratificacion</td>
-										<td align="right"><?php echo valores($rowdata['Gratificacion'], 0); ?></td>
+										<td align="right"><?php echo valores($rowData['Gratificacion'], 0); ?></td>
 									</tr>
     							<?php } ?>
-    							<?php if(isset($rowdata['TotalHorasExtras'])&&$rowdata['TotalHorasExtras']!=''){ ?>
+    							<?php if(isset($rowData['TotalHorasExtras'])&&$rowData['TotalHorasExtras']!=''){ ?>
 									<tr>
 										<td colspan="3">Horas Extras</td>
-										<td align="right"><?php echo valores($rowdata['TotalHorasExtras'], 0); ?></td>
+										<td align="right"><?php echo valores($rowData['TotalHorasExtras'], 0); ?></td>
 									</tr>
 									<?php
 									foreach ($arrHoraExtra as $prod) { ?>
@@ -293,17 +293,17 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
 									<?php	
 									}
 								} ?>
-								<?php if(isset($rowdata['TotalCargasFamiliares'])&&$rowdata['TotalCargasFamiliares']!=''){ ?>
+								<?php if(isset($rowData['TotalCargasFamiliares'])&&$rowData['TotalCargasFamiliares']!=''){ ?>
 									<tr>
 										<td>Asignación Familiar</td>
-										<td colspan="2"><?php echo $rowdata['Cargas_n'].' Cargas (Tramo '.$rowdata['Cargas_tramo'].')'  ?></td>
-										<td align="right"><?php echo valores($rowdata['Cargas_valor'], 0); ?></td>
+										<td colspan="2"><?php echo $rowData['Cargas_n'].' Cargas (Tramo '.$rowData['Cargas_tramo'].')'  ?></td>
+										<td align="right"><?php echo valores($rowData['Cargas_valor'], 0); ?></td>
 									</tr>
     							<?php } ?>
-								<?php if(isset($rowdata['TotalBonoTurno'])&&$rowdata['TotalBonoTurno']!=''){ ?>
+								<?php if(isset($rowData['TotalBonoTurno'])&&$rowData['TotalBonoTurno']!=''){ ?>
 									<tr>
 										<td colspan="3">Bonos por Turnos Imponibles</td>
-										<td align="right"><?php echo valores($rowdata['TotalBonoTurno'], 0); ?></td>
+										<td align="right"><?php echo valores($rowData['TotalBonoTurno'], 0); ?></td>
 									</tr>
 									<?php
 									foreach ($arrBonoTurno as $prod) { ?>
@@ -316,10 +316,10 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
 									<?php	
 									}
 								} ?>
-								<?php if(isset($rowdata['TotalBonoFijoAfecto'])&&$rowdata['TotalBonoFijoAfecto']!=''){ ?>
+								<?php if(isset($rowData['TotalBonoFijoAfecto'])&&$rowData['TotalBonoFijoAfecto']!=''){ ?>
 									<tr>
 										<td colspan="3">Bonos Fijos Imponibles</td>
-										<td align="right"><?php echo valores($rowdata['TotalBonoFijoAfecto'], 0); ?></td>
+										<td align="right"><?php echo valores($rowData['TotalBonoFijoAfecto'], 0); ?></td>
 									</tr>
 									<?php
 									foreach ($arrBonoFijo as $prod) {
@@ -335,10 +335,10 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
 										}
 									}
 								} ?>
-								<?php if(isset($rowdata['TotalBonoTemporalAfecto'])&&$rowdata['TotalBonoTemporalAfecto']!=''){ ?>
+								<?php if(isset($rowData['TotalBonoTemporalAfecto'])&&$rowData['TotalBonoTemporalAfecto']!=''){ ?>
 									<tr>
 										<td colspan="3">Bonos Temporales Imponibles</td>
-										<td align="right"><?php echo valores($rowdata['TotalBonoTemporalAfecto'], 0); ?></td>
+										<td align="right"><?php echo valores($rowData['TotalBonoTemporalAfecto'], 0); ?></td>
 									</tr>
 									<?php
 									foreach ($arrBonoTemporal as $prod) {
@@ -355,10 +355,10 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
 									}
 								} ?>
 
-								<?php if(isset($rowdata['TotalBonoFijoNoAfecto'])&&$rowdata['TotalBonoFijoNoAfecto']!=''){ ?>
+								<?php if(isset($rowData['TotalBonoFijoNoAfecto'])&&$rowData['TotalBonoFijoNoAfecto']!=''){ ?>
 									<tr>
 										<td colspan="3">Bonos Fijos No Imponibles</td>
-										<td align="right"><?php echo valores($rowdata['TotalBonoFijoNoAfecto'], 0); ?></td>
+										<td align="right"><?php echo valores($rowData['TotalBonoFijoNoAfecto'], 0); ?></td>
 									</tr>
 									<?php
 									foreach ($arrBonoFijo as $prod) {
@@ -374,10 +374,10 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
 										}
 									}
 								} ?>
-								<?php if(isset($rowdata['TotalBonoTemporalNoAfecto'])&&$rowdata['TotalBonoTemporalNoAfecto']!=''){ ?>
+								<?php if(isset($rowData['TotalBonoTemporalNoAfecto'])&&$rowData['TotalBonoTemporalNoAfecto']!=''){ ?>
 									<tr>
 										<td colspan="3">Bonos Temporales No Imponibles</td>
-										<td align="right"><?php echo valores($rowdata['TotalBonoTemporalNoAfecto'], 0); ?></td>
+										<td align="right"><?php echo valores($rowData['TotalBonoTemporalNoAfecto'], 0); ?></td>
 									</tr>
 									<?php
 									foreach ($arrBonoTemporal as $prod) {
@@ -395,36 +395,36 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
 								} ?>
     							<tr>
 									<td align="right" colspan="3"><strong>Total Imponible</strong></td>
-									<td align="right"><strong><?php echo valores($rowdata['SueldoImponible'], 0); ?></strong></td>
+									<td align="right"><strong><?php echo valores($rowData['SueldoImponible'], 0); ?></strong></td>
 								</tr>
 								<tr>
 									<td align="right" colspan="3"><strong>Total No Imponible</strong></td>
-									<td align="right"><strong><?php echo valores($rowdata['SueldoNoImponible'], 0); ?></strong></td>
+									<td align="right"><strong><?php echo valores($rowData['SueldoNoImponible'], 0); ?></strong></td>
 								</tr>
 								<tr>
 									<td align="right" colspan="3"><strong>Total Haberes</strong></td>
-									<td align="right"><strong><?php echo valores($rowdata['TotalHaberes'], 0); ?></strong></td>
+									<td align="right"><strong><?php echo valores($rowData['TotalHaberes'], 0); ?></strong></td>
 								</tr>
     							
     							
     							
 								<tr class="active"><td class="text-center" colspan="4"><strong>Deberes</strong></td></tr>
-								<?php if(isset($rowdata['AFP_Total'])&&$rowdata['AFP_Total']!=''){ ?>
+								<?php if(isset($rowData['AFP_Total'])&&$rowData['AFP_Total']!=''){ ?>
 									<tr>
-										<td colspan="3"><?php echo $rowdata['AFP_Nombre'].' ('.$rowdata['AFP_Porcentaje'].'%)'; ?></td>
-										<td align="right"><?php echo valores($rowdata['AFP_Total'], 0); ?></td>
+										<td colspan="3"><?php echo $rowData['AFP_Nombre'].' ('.$rowData['AFP_Porcentaje'].'%)'; ?></td>
+										<td align="right"><?php echo valores($rowData['AFP_Total'], 0); ?></td>
 									</tr>
 								<?php }
-								if(isset($rowdata['Salud_Total'])&&$rowdata['Salud_Total']!=''){ ?>
+								if(isset($rowData['Salud_Total'])&&$rowData['Salud_Total']!=''){ ?>
 									<tr>
-										<td colspan="3"><?php echo $rowdata['Salud_Nombre'].' ('.$rowdata['Salud_Porcentaje'].'%)'; ?></td>
-										<td align="right"><?php echo valores($rowdata['Salud_Total'], 0); ?></td>
+										<td colspan="3"><?php echo $rowData['Salud_Nombre'].' ('.$rowData['Salud_Porcentaje'].'%)'; ?></td>
+										<td align="right"><?php echo valores($rowData['Salud_Total'], 0); ?></td>
 									</tr>
 								<?php }
-								if(isset($rowdata['Salud_idCotizacion'])&&$rowdata['Salud_idCotizacion']==1){ ?>
+								if(isset($rowData['Salud_idCotizacion'])&&$rowData['Salud_idCotizacion']==1){ ?>
 									<tr>
-										<td colspan="3"><?php echo 'Cotizacion Adicional Voluntaria  ('.$rowdata['Salud_CotizacionPorcentaje'].'%)'; ?></td>
-										<td align="right"><?php echo valores($rowdata['Salud_CotizacionValor'], 0); ?></td>
+										<td colspan="3"><?php echo 'Cotizacion Adicional Voluntaria  ('.$rowData['Salud_CotizacionPorcentaje'].'%)'; ?></td>
+										<td align="right"><?php echo valores($rowData['Salud_CotizacionValor'], 0); ?></td>
 									</tr>
 								<?php }
 								foreach ($arrDescuentoFijo as $prod) {
@@ -437,13 +437,13 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
 											//APV
 											if($prod['idDescuentoFijo']==1){
 												//Si el monto establecido es superior al tope
-												if($prod['DescuentoMonto']>$rowdata['TopeAPVMensual']){
+												if($prod['DescuentoMonto']>$rowData['TopeAPVMensual']){
 													echo '<span style="color: #ce4844;">Pasa Tope</span>';
 												}
 											//Deposito Convenido	
 											}elseif($prod['idDescuentoFijo']==2){
 												//Si el monto establecido es superior al tope
-												if($prod['DescuentoMonto']>$rowdata['TopeDepConv']){
+												if($prod['DescuentoMonto']>$rowData['TopeDepConv']){
 													echo '<span style="color: #ce4844;">Pasa Tope</span>';
 												}
 											}
@@ -453,16 +453,16 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
 										</tr>
 									<?php }
 								}
-								if(isset($rowdata['SegCesantia_Trabajador'])&&$rowdata['SegCesantia_Trabajador']!=''){ ?>
+								if(isset($rowData['SegCesantia_Trabajador'])&&$rowData['SegCesantia_Trabajador']!=''){ ?>
 									<tr>
 										<td colspan="3">Seguro de Cesantia</td>
-										<td align="right"><?php echo valores($rowdata['SegCesantia_Trabajador'], 0); ?></td>
+										<td align="right"><?php echo valores($rowData['SegCesantia_Trabajador'], 0); ?></td>
 									</tr>
 								<?php }
-								if(isset($rowdata['ImpuestoRenta'])&&$rowdata['ImpuestoRenta']!=''&&$rowdata['ImpuestoRenta']!=0){ ?>
+								if(isset($rowData['ImpuestoRenta'])&&$rowData['ImpuestoRenta']!=''&&$rowData['ImpuestoRenta']!=0){ ?>
 									<tr>
-										<td colspan="3">Impuesto a la Renta (<?php echo valores($rowdata['RentaAfecta'], 0); ?>)</td>
-										<td align="right"><?php echo valores($rowdata['ImpuestoRenta'], 0); ?></td>
+										<td colspan="3">Impuesto a la Renta (<?php echo valores($rowData['RentaAfecta'], 0); ?>)</td>
+										<td align="right"><?php echo valores($rowData['ImpuestoRenta'], 0); ?></td>
 									</tr>
 								<?php }
 								foreach ($arrAnticipos as $prod) { ?>
@@ -479,7 +479,7 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
 								<?php } ?>
 								<tr>
 									<td align="right" colspan="3"><strong>Total Deberes</strong></td>
-									<td align="right"><strong><?php echo valores($rowdata['TotalDescuentos'], 0); ?></strong></td>
+									<td align="right"><strong><?php echo valores($rowData['TotalDescuentos'], 0); ?></strong></td>
 								</tr>
 								
 								
@@ -489,15 +489,15 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
 								<tr class="active"><td class="text-center" colspan="4"><strong>Alcance Liquido</strong></td></tr>
 								<tr>
 									<td align="right" colspan="3"><strong>Alcance Liquido</strong></td>
-									<td align="right"><strong><?php echo valores($rowdata['TotalHaberes'], 0); ?></strong></td>
+									<td align="right"><strong><?php echo valores($rowData['TotalHaberes'], 0); ?></strong></td>
 								</tr>
 								<tr>
 									<td align="right" colspan="3"><strong>Total Deberes</strong></td>
-									<td align="right"><strong><?php echo valores($rowdata['TotalDescuentos'], 0); ?></strong></td>
+									<td align="right"><strong><?php echo valores($rowData['TotalDescuentos'], 0); ?></strong></td>
 								</tr>
     							<tr>
 									<td align="right" colspan="3"><strong>Total a Pagar</strong></td>
-									<td align="right"><strong><?php echo valores($rowdata['TotalAPagar'], 0); ?></strong></td>
+									<td align="right"><strong><?php echo valores($rowData['TotalAPagar'], 0); ?></strong></td>
 								</tr>
                                 
                                 

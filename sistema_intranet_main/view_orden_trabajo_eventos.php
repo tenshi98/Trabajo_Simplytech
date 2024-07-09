@@ -60,7 +60,7 @@ LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador  = orden_
 LEFT JOIN `maquinas_listado`      ON maquinas_listado.idMaquina         = orden_trabajo_eventos_listado.idMaquina
 LEFT JOIN `clientes_listado`      ON clientes_listado.idCliente         = orden_trabajo_eventos_listado.idCliente';
 $SIS_where = 'orden_trabajo_eventos_listado.idEvento ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_eventos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_eventos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /***************************************************/
 //Listado de archivos
@@ -89,19 +89,19 @@ $arrArchivos = db_select_array (false, $SIS_query, 'orden_trabajo_eventos_listad
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Evento</h2>
 						<p class="text-muted">
-							<strong>Usuario Ingreso : </strong><?php echo $rowdata['Usuario']; ?><br/>
-							<strong>Trabajador : </strong><?php echo $rowdata['TrabApellidoPat'].' '.$rowdata['TrabApellidoMat'].' '.$rowdata['TrabNombre']; ?><br/>
-							<strong>Maquina : </strong><?php if(isset($rowdata['NombreCliente'])&&$rowdata['NombreCliente']!=''){echo $rowdata['NombreCliente'].' - '.$rowdata['NombreMaquina'];}else{echo $rowdata['NombreMaquina'];} ?><br/>
-							<strong>Fecha : </strong><?php echo $rowdata['Fecha']; ?><br/>
-							<strong>Hora : </strong><?php echo $rowdata['Hora']; ?><br/>
-							<strong>Sistema : </strong><?php echo $rowdata['Sistema']; ?><br/>
+							<strong>Usuario Ingreso : </strong><?php echo $rowData['Usuario']; ?><br/>
+							<strong>Trabajador : </strong><?php echo $rowData['TrabApellidoPat'].' '.$rowData['TrabApellidoMat'].' '.$rowData['TrabNombre']; ?><br/>
+							<strong>Maquina : </strong><?php if(isset($rowData['NombreCliente'])&&$rowData['NombreCliente']!=''){echo $rowData['NombreCliente'].' - '.$rowData['NombreMaquina'];}else{echo $rowData['NombreMaquina'];} ?><br/>
+							<strong>Fecha : </strong><?php echo $rowData['Fecha']; ?><br/>
+							<strong>Hora : </strong><?php echo $rowData['Hora']; ?><br/>
+							<strong>Sistema : </strong><?php echo $rowData['Sistema']; ?><br/>
 
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Observacion</h2>
 						<p class="text-muted word_break">
 							<div class="text-muted well well-sm no-shadow">
-								<?php if(isset($rowdata['Observacion'])&&$rowdata['Observacion']!=''){echo $rowdata['Observacion'];}else{echo 'Sin Observaciones';} ?>
+								<?php if(isset($rowData['Observacion'])&&$rowData['Observacion']!=''){echo $rowData['Observacion'];}else{echo 'Sin Observaciones';} ?>
 								<div class="clearfix"></div>
 							</div>
 						</p>

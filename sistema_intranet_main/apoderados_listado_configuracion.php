@@ -55,12 +55,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,ApellidoPat, ApellidoMat, File_Contrato, idOpciones_1,idOpciones_2';
 $SIS_join  = '';
 $SIS_where = 'idApoderado = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apoderado', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Configuracion'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apoderado', $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat'], 'Configuracion'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -77,12 +77,12 @@ $rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $
 						<li class="active"><a href="<?php echo 'apoderados_listado_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
 						<?php
 						//Si se utiliza la APP
-						if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>
+						if(isset($rowData['idOpciones_1'])&&$rowData['idOpciones_1']==1){ ?>
 							<li class=""><a href="<?php echo 'apoderados_listado_subcuentas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sitemap" aria-hidden="true"></i> Subcuentas</a></li>
 						<?php } ?>
 						<?php
 						//Si se utiliza subcuentas
-						if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
+						if(isset($rowData['idOpciones_2'])&&$rowData['idOpciones_2']==1){ ?>
 							<li class=""><a href="<?php echo 'apoderados_listado_password.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-key" aria-hidden="true"></i> Password</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'apoderados_listado_hijos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-child" aria-hidden="true"></i> Hijos</a></li>
@@ -101,8 +101,8 @@ $rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idOpciones_1)){    $x1  = $idOpciones_1;    }else{$x1  = $rowdata['idOpciones_1'];}
-					if(isset($idOpciones_2)){    $x2  = $idOpciones_2;    }else{$x2  = $rowdata['idOpciones_2'];}
+					if(isset($idOpciones_1)){    $x1  = $idOpciones_1;    }else{$x1  = $rowData['idOpciones_1'];}
+					if(isset($idOpciones_2)){    $x2  = $idOpciones_2;    }else{$x2  = $rowData['idOpciones_2'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

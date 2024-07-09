@@ -356,30 +356,30 @@ require_once '0_validate_user_1.php';
 				$nmax = 25;
 
 				// Se obtiene el nombre del archivo
-				$rowdata = db_select_data (false, 'Direccion_img, FichaTecnica, HDS', 'maquinas_listado', '', 'idMaquina = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'Direccion_img, FichaTecnica, HDS', 'maquinas_listado', '', 'idMaquina = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//se borran los datos
 				$resultado = db_delete_data (false, 'maquinas_listado', 'idMaquina = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Se elimina la imagen
-				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+				if(isset($rowData['Direccion_img'])&&$rowData['Direccion_img']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+						if(!is_writable('upload/'.$rowData['Direccion_img'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['Direccion_img']);
+							unlink('upload/'.$rowData['Direccion_img']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
 					}
 				}
 				//Se elimina el archivo adjunto
-				if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
+				if(isset($rowData['FichaTecnica'])&&$rowData['FichaTecnica']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['FichaTecnica'])){
+						if(!is_writable('upload/'.$rowData['FichaTecnica'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['FichaTecnica']);
+							unlink('upload/'.$rowData['FichaTecnica']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -387,12 +387,12 @@ require_once '0_validate_user_1.php';
 				}
 
 				//Se elimina el archivo adjunto
-				if(isset($rowdata['HDS'])&&$rowdata['HDS']!=''){
+				if(isset($rowData['HDS'])&&$rowData['HDS']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['HDS'])){
+						if(!is_writable('upload/'.$rowData['HDS'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['HDS']);
+							unlink('upload/'.$rowData['HDS']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -636,7 +636,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre de la imagen
-			$rowdata = db_select_data (false, 'Direccion_img', 'maquinas_listado', '', 'idMaquina = "'.simpleDecode($_GET['del_img'], fecha_actual()).'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'Direccion_img', 'maquinas_listado', '', 'idMaquina = "'.simpleDecode($_GET['del_img'], fecha_actual()).'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -646,12 +646,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+				if(isset($rowData['Direccion_img'])&&$rowData['Direccion_img']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+						if(!is_writable('upload/'.$rowData['Direccion_img'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['Direccion_img']);
+							unlink('upload/'.$rowData['Direccion_img']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -672,7 +672,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'FichaTecnica', 'maquinas_listado', '', 'idMaquina = "'.simpleDecode($_GET['del_file'], fecha_actual()).'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'FichaTecnica', 'maquinas_listado', '', 'idMaquina = "'.simpleDecode($_GET['del_file'], fecha_actual()).'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -682,12 +682,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
+				if(isset($rowData['FichaTecnica'])&&$rowData['FichaTecnica']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['FichaTecnica'])){
+						if(!is_writable('upload/'.$rowData['FichaTecnica'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['FichaTecnica']);
+							unlink('upload/'.$rowData['FichaTecnica']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -708,7 +708,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'HDS', 'maquinas_listado', '', 'idMaquina = "'.simpleDecode($_GET['del_hds'], fecha_actual()).'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'HDS', 'maquinas_listado', '', 'idMaquina = "'.simpleDecode($_GET['del_hds'], fecha_actual()).'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -718,12 +718,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['HDS'])&&$rowdata['HDS']!=''){
+				if(isset($rowData['HDS'])&&$rowData['HDS']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['HDS'])){
+						if(!is_writable('upload/'.$rowData['HDS'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['HDS']);
+							unlink('upload/'.$rowData['HDS']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -890,18 +890,18 @@ require_once '0_validate_user_1.php';
 				for ($i = $_GET['lvl']; $i <= $_GET['nmax']; $i++) {
 
 					// Se obtiene el nombre del archivo
-					$rowdata = db_select_data (false, 'Direccion_img', 'maquinas_listado_level_'.$i, '', 'idLevel_'.$_GET['lvl'].' = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$rowData = db_select_data (false, 'Direccion_img', 'maquinas_listado_level_'.$i, '', 'idLevel_'.$_GET['lvl'].' = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 					//se borran los datos
 					$resultado = db_delete_data (false, 'maquinas_listado_level_'.$i, 'idLevel_'.$_GET['lvl'].' = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 					//Se elimina la imagen
-					if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+					if(isset($rowData['Direccion_img'])&&$rowData['Direccion_img']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+							if(!is_writable('upload/'.$rowData['Direccion_img'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['Direccion_img']);
+								unlink('upload/'.$rowData['Direccion_img']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
@@ -1119,14 +1119,14 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			//obtengo los datos de la maquina previamente seleccionada
-			$rowdata = db_select_data (false, 'idSistema', 'maquinas_listado', '', 'idMaquina ='.$idMaquina, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'idSistema', 'maquinas_listado', '', 'idMaquina ='.$idMaquina, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
-			if(isset($Nombre)&&isset($rowdata['idSistema'])){
-				$ndata_1 = db_select_nrows (false, 'Nombre', 'maquinas_listado', '', "Nombre='".$Nombre."' AND idSistema='".$rowdata['idSistema']."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			if(isset($Nombre)&&isset($rowData['idSistema'])){
+				$ndata_1 = db_select_nrows (false, 'Nombre', 'maquinas_listado', '', "Nombre='".$Nombre."' AND idSistema='".$rowData['idSistema']."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El nombre de la maquina ya existe en el sistema';}
@@ -1137,23 +1137,23 @@ require_once '0_validate_user_1.php';
 
 				/*******************************************************************/
 				// Se traen todos los datos de la maquina
-				$rowdata = db_select_data (false, 'idSistema, Codigo, Modelo, Serie, Fabricante, fincorporacion, Descripcion, idConfig_1, idConfig_2, idConfig_3, idConfig_4, idCliente', 'maquinas_listado', '', 'idMaquina ='.$idMaquina, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'idSistema, Codigo, Modelo, Serie, Fabricante, fincorporacion, Descripcion, idConfig_1, idConfig_2, idConfig_3, idConfig_4, idCliente', 'maquinas_listado', '', 'idMaquina ='.$idMaquina, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Se crea la maquina
-				$SIS_data  = "'".$rowdata['idSistema']."'";
+				$SIS_data  = "'".$rowData['idSistema']."'";
 				$SIS_data .= ",'2'";                        //inactivo hasta editar
-				$SIS_data .= ",'".$rowdata['Codigo']."'";
+				$SIS_data .= ",'".$rowData['Codigo']."'";
 				$SIS_data .= ",'".$Nombre."'";
-				$SIS_data .= ",'".$rowdata['Modelo']."'";
-				$SIS_data .= ",'".$rowdata['Serie']."'";
-				$SIS_data .= ",'".$rowdata['Fabricante']."'";
-				$SIS_data .= ",'".$rowdata['fincorporacion']."'";
-				$SIS_data .= ",'".$rowdata['Descripcion']."'";
-				$SIS_data .= ",'".$rowdata['idConfig_1']."'";
-				$SIS_data .= ",'".$rowdata['idConfig_2']."'";
-				$SIS_data .= ",'".$rowdata['idConfig_3']."'";
-				$SIS_data .= ",'".$rowdata['idConfig_4']."'";
-				$SIS_data .= ",'".$rowdata['idCliente']."'";
+				$SIS_data .= ",'".$rowData['Modelo']."'";
+				$SIS_data .= ",'".$rowData['Serie']."'";
+				$SIS_data .= ",'".$rowData['Fabricante']."'";
+				$SIS_data .= ",'".$rowData['fincorporacion']."'";
+				$SIS_data .= ",'".$rowData['Descripcion']."'";
+				$SIS_data .= ",'".$rowData['idConfig_1']."'";
+				$SIS_data .= ",'".$rowData['idConfig_2']."'";
+				$SIS_data .= ",'".$rowData['idConfig_3']."'";
+				$SIS_data .= ",'".$rowData['idConfig_4']."'";
+				$SIS_data .= ",'".$rowData['idCliente']."'";
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSistema, idEstado, Codigo, Nombre,Modelo,
@@ -3472,24 +3472,24 @@ require_once '0_validate_user_1.php';
 
 				/*******************************************************************/
 				// Se traen todos los datos de la maquina
-				$rowdata = db_select_data (false, 'idMaquina, cantPuntos, idEstado'.$qry , 'maquinas_listado_matriz', '', 'idMatriz ='.$idMatriz, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'idMaquina, cantPuntos, idEstado'.$qry , 'maquinas_listado_matriz', '', 'idMatriz ='.$idMatriz, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*******************************************************************/
 				//filtros
-				if(isset($rowdata['idMaquina']) && $rowdata['idMaquina']!=''){     $SIS_data  = "'".$rowdata['idMaquina']."'";     }else{$SIS_data  = "''";}
-				if(isset($rowdata['cantPuntos']) && $rowdata['cantPuntos']!=''){   $SIS_data .= ",'".$rowdata['cantPuntos']."'";   }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idEstado']) && $rowdata['idEstado']!=''){       $SIS_data .= ",'".$rowdata['idEstado']."'";     }else{$SIS_data .= ",''";}
+				if(isset($rowData['idMaquina']) && $rowData['idMaquina']!=''){     $SIS_data  = "'".$rowData['idMaquina']."'";     }else{$SIS_data  = "''";}
+				if(isset($rowData['cantPuntos']) && $rowData['cantPuntos']!=''){   $SIS_data .= ",'".$rowData['cantPuntos']."'";   }else{$SIS_data .= ",''";}
+				if(isset($rowData['idEstado']) && $rowData['idEstado']!=''){       $SIS_data .= ",'".$rowData['idEstado']."'";     }else{$SIS_data .= ",''";}
 				if(isset($Nombre) && $Nombre!=''){                                 $SIS_data .= ",'".$Nombre."'";                  }else{$SIS_data .= ",''";}
 
 				for ($i = 1; $i <= 50; $i++) {
-					if(isset($rowdata['PuntoNombre_'.$i]) && $rowdata['PuntoNombre_'.$i]!=''){                    $SIS_data .= ",'".$rowdata['PuntoNombre_'.$i]."'";           }else{$SIS_data .= ",''";}
-					if(isset($rowdata['PuntoMedAceptable_'.$i]) && $rowdata['PuntoMedAceptable_'.$i]!=''){        $SIS_data .= ",'".$rowdata['PuntoMedAceptable_'.$i]."'";     }else{$SIS_data .= ",''";}
-					if(isset($rowdata['PuntoMedAlerta_'.$i]) && $rowdata['PuntoMedAlerta_'.$i]!=''){              $SIS_data .= ",'".$rowdata['PuntoMedAlerta_'.$i]."'";        }else{$SIS_data .= ",''";}
-					if(isset($rowdata['PuntoMedCondenatorio_'.$i]) && $rowdata['PuntoMedCondenatorio_'.$i]!=''){  $SIS_data .= ",'".$rowdata['PuntoMedCondenatorio_'.$i]."'";  }else{$SIS_data .= ",''";}
-					if(isset($rowdata['PuntoUltimaMed_'.$i]) && $rowdata['PuntoUltimaMed_'.$i]!=''){              $SIS_data .= ",'".$rowdata['PuntoUltimaMed_'.$i]."'";        }else{$SIS_data .= ",''";}
-					if(isset($rowdata['PuntoUniMed_'.$i]) && $rowdata['PuntoUniMed_'.$i]!=''){                    $SIS_data .= ",'".$rowdata['PuntoUniMed_'.$i]."'";           }else{$SIS_data .= ",''";}
-					if(isset($rowdata['PuntoidTipo_'.$i]) && $rowdata['PuntoidTipo_'.$i]!=''){                    $SIS_data .= ",'".$rowdata['PuntoidTipo_'.$i]."'";           }else{$SIS_data .= ",''";}
-					if(isset($rowdata['PuntoidGrupo_'.$i]) && $rowdata['PuntoidGrupo_'.$i]!=''){                  $SIS_data .= ",'".$rowdata['PuntoidGrupo_'.$i]."'";          }else{$SIS_data .= ",''";}
+					if(isset($rowData['PuntoNombre_'.$i]) && $rowData['PuntoNombre_'.$i]!=''){                    $SIS_data .= ",'".$rowData['PuntoNombre_'.$i]."'";           }else{$SIS_data .= ",''";}
+					if(isset($rowData['PuntoMedAceptable_'.$i]) && $rowData['PuntoMedAceptable_'.$i]!=''){        $SIS_data .= ",'".$rowData['PuntoMedAceptable_'.$i]."'";     }else{$SIS_data .= ",''";}
+					if(isset($rowData['PuntoMedAlerta_'.$i]) && $rowData['PuntoMedAlerta_'.$i]!=''){              $SIS_data .= ",'".$rowData['PuntoMedAlerta_'.$i]."'";        }else{$SIS_data .= ",''";}
+					if(isset($rowData['PuntoMedCondenatorio_'.$i]) && $rowData['PuntoMedCondenatorio_'.$i]!=''){  $SIS_data .= ",'".$rowData['PuntoMedCondenatorio_'.$i]."'";  }else{$SIS_data .= ",''";}
+					if(isset($rowData['PuntoUltimaMed_'.$i]) && $rowData['PuntoUltimaMed_'.$i]!=''){              $SIS_data .= ",'".$rowData['PuntoUltimaMed_'.$i]."'";        }else{$SIS_data .= ",''";}
+					if(isset($rowData['PuntoUniMed_'.$i]) && $rowData['PuntoUniMed_'.$i]!=''){                    $SIS_data .= ",'".$rowData['PuntoUniMed_'.$i]."'";           }else{$SIS_data .= ",''";}
+					if(isset($rowData['PuntoidTipo_'.$i]) && $rowData['PuntoidTipo_'.$i]!=''){                    $SIS_data .= ",'".$rowData['PuntoidTipo_'.$i]."'";           }else{$SIS_data .= ",''";}
+					if(isset($rowData['PuntoidGrupo_'.$i]) && $rowData['PuntoidGrupo_'.$i]!=''){                  $SIS_data .= ",'".$rowData['PuntoidGrupo_'.$i]."'";          }else{$SIS_data .= ",''";}
 
 				}
 
@@ -3643,7 +3643,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'Direccion_img', 'maquinas_listado_level_'.$_GET['lvl'], '', 'idLevel_'.$_GET['lvl'].' = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'Direccion_img', 'maquinas_listado_level_'.$_GET['lvl'], '', 'idLevel_'.$_GET['lvl'].' = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -3653,12 +3653,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//Se elimina la imagen
-				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+				if(isset($rowData['Direccion_img'])&&$rowData['Direccion_img']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+						if(!is_writable('upload/'.$rowData['Direccion_img'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['Direccion_img']);
+							unlink('upload/'.$rowData['Direccion_img']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log

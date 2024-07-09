@@ -81,7 +81,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);	
+$rowData = mysqli_fetch_assoc ($resultado);	
 	
 	?>
 
@@ -96,8 +96,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idEstado)){         $x1  = $idEstado;         }else{$x1  = $rowdata['idEstado'];}
-				if(isset($Observaciones)){    $x2  = $Observaciones;    }else{$x2  = $rowdata['Observaciones'];}
+				if(isset($idEstado)){         $x1  = $idEstado;         }else{$x1  = $rowData['idEstado'];}
+				if(isset($Observaciones)){    $x2  = $Observaciones;    }else{$x2  = $rowData['Observaciones'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

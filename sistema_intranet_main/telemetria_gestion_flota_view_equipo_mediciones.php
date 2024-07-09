@@ -45,7 +45,7 @@ LEFT JOIN `telemetria_listado_sensores_unimed`       ON telemetria_listado_senso
 LEFT JOIN `telemetria_listado_sensores_med_actual`   ON telemetria_listado_sensores_med_actual.idTelemetria  = telemetria_listado.idTelemetria
 LEFT JOIN `telemetria_listado_sensores_activo`       ON telemetria_listado_sensores_activo.idTelemetria      = telemetria_listado.idTelemetria';
 $SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['view'];
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 //Se traen todas las unidades de medida
 $arrUnimed = array();
@@ -62,25 +62,25 @@ foreach ($arrUnimed as $sen) {
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Datos del Equipo <?php echo $rowdata['Nombre']; ?></h5>
+			<h5>Datos del Equipo <?php echo $rowData['Nombre']; ?></h5>
 		</header>
         <div class="table-responsive">
 			<?php
-			$explanation  = '<strong>'.fecha_estandar($rowdata['LastUpdateFecha']).' - '.$rowdata['LastUpdateHora'].'</strong><br/>';
-			if(isset($rowdata['id_Geo'])&&$rowdata['id_Geo']!=''&&$rowdata['id_Geo']==1){
-				$explanation .= '<strong>Velocidad: </strong>'.Cantidades($rowdata['GeoVelocidad'], 0).' KM/h<br/>';
+			$explanation  = '<strong>'.fecha_estandar($rowData['LastUpdateFecha']).' - '.$rowData['LastUpdateHora'].'</strong><br/>';
+			if(isset($rowData['id_Geo'])&&$rowData['id_Geo']!=''&&$rowData['id_Geo']==1){
+				$explanation .= '<strong>Velocidad: </strong>'.Cantidades($rowData['GeoVelocidad'], 0).' KM/h<br/>';
 			}
 			for ($i = 1; $i <= $_GET['cantSensores']; $i++) {
 				//solo sensores activos
-				if(isset($rowdata['SensoresActivo_'.$i])&&$rowdata['SensoresActivo_'.$i]==1){
-					if(isset($rowdata['SensoresMedActual_'.$i])&&$rowdata['SensoresMedActual_'.$i]<99900){$xdata=Cantidades_decimales_justos($rowdata['SensoresMedActual_'.$i]);}else{$xdata='Sin Datos';}
-					$explanation .= '<strong>'.$rowdata['SensoresNombre_'.$i].': </strong>'.$xdata;
-					$explanation .= ' '.$arrFinalUnimed[$rowdata['SensoresUniMed_'.$i]];
+				if(isset($rowData['SensoresActivo_'.$i])&&$rowData['SensoresActivo_'.$i]==1){
+					if(isset($rowData['SensoresMedActual_'.$i])&&$rowData['SensoresMedActual_'.$i]<99900){$xdata=Cantidades_decimales_justos($rowData['SensoresMedActual_'.$i]);}else{$xdata='Sin Datos';}
+					$explanation .= '<strong>'.$rowData['SensoresNombre_'.$i].': </strong>'.$xdata;
+					$explanation .= ' '.$arrFinalUnimed[$rowData['SensoresUniMed_'.$i]];
 					$explanation .= '<br/>';
 				}
 			}
 
-			echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); ?>
+			echo mapa_from_gps($rowData['GeoLatitud'], $rowData['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); ?>
 
         </div>
 	</div>

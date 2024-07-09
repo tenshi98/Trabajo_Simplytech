@@ -52,12 +52,12 @@ $SIS_query = 'Nombre,idConfig_1, idConfig_2, idUbicacion, idUbicacion_lvl_1, idU
 idUbicacion_lvl_5, idCliente';
 $SIS_join  = '';
 $SIS_where = 'idMaquina = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Unidades de Negocio', $rowdata['Nombre'], 'Editar Ubicación'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Unidades de Negocio', $rowData['Nombre'], 'Editar Ubicación'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -79,12 +79,12 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SI
 						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Descripcion</a></li>
 						<?php
 						//Uso de componentes
-						if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
+						if(isset($rowData['idConfig_1'])&&$rowData['idConfig_1']==1){ ?>
 							<li class=""><a href="<?php echo 'unidad_negocio_listado_componentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Componentes</a></li>
 						<?php } ?>
 						<?php
 						//uso de matriz de analisis
-						if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
+						if(isset($rowData['idConfig_2'])&&$rowData['idConfig_2']==1){ ?>
 							<li class=""><a href="<?php echo 'unidad_negocio_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-microchip" aria-hidden="true"></i> Matriz Analisis</a></li>
 						<?php } ?>
 
@@ -98,16 +98,16 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SI
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idUbicacion)){   $x1  = $idUbicacion;   }else{$x1  = $rowdata['idUbicacion'];}
-					if(isset($idLevel_1)){     $x2  = $idLevel_1;     }else{$x2  = $rowdata['idUbicacion_lvl_1'];}
-					if(isset($idLevel_2)){     $x3  = $idLevel_2;     }else{$x3  = $rowdata['idUbicacion_lvl_2'];}
-					if(isset($idLevel_3)){     $x4  = $idLevel_3;     }else{$x4  = $rowdata['idUbicacion_lvl_3'];}
-					if(isset($idLevel_4)){     $x5  = $idLevel_4;     }else{$x5  = $rowdata['idUbicacion_lvl_4'];}
-					if(isset($idLevel_5)){     $x6  = $idLevel_5;     }else{$x6  = $rowdata['idUbicacion_lvl_5'];}
+					if(isset($idUbicacion)){   $x1  = $idUbicacion;   }else{$x1  = $rowData['idUbicacion'];}
+					if(isset($idLevel_1)){     $x2  = $idLevel_1;     }else{$x2  = $rowData['idUbicacion_lvl_1'];}
+					if(isset($idLevel_2)){     $x3  = $idLevel_2;     }else{$x3  = $rowData['idUbicacion_lvl_2'];}
+					if(isset($idLevel_3)){     $x4  = $idLevel_3;     }else{$x4  = $rowData['idUbicacion_lvl_3'];}
+					if(isset($idLevel_4)){     $x5  = $idLevel_4;     }else{$x5  = $rowData['idUbicacion_lvl_4'];}
+					if(isset($idLevel_5)){     $x6  = $idLevel_5;     }else{$x6  = $rowData['idUbicacion_lvl_5'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
-					$Form_Inputs->form_select_depend5('Ubicación', 'idUbicacion',  $x1,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idCliente = '.$rowdata['idCliente'].' AND idEstado=1',   0,
+					$Form_Inputs->form_select_depend5('Ubicación', 'idUbicacion',  $x1,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idCliente = '.$rowData['idCliente'].' AND idEstado=1',   0,
 							                 'Nivel 1', 'idUbicacion_lvl_1',  $x2,  2,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0,
 							                 'Nivel 2', 'idUbicacion_lvl_2',  $x3,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
 							                 'Nivel 3', 'idUbicacion_lvl_3',  $x4,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,

@@ -44,9 +44,9 @@ if (validarNumero($_GET['view'])){
 include '1include_ocompra.php'; ?>
 <?php
 	//solo si la orden esta aprobada
-	if($row_data['idEstado']==2){
+	if($rowData['idEstado']==2){
 								
-		$zz  = '?idSistema='.$row_data['idSistema'];
+		$zz  = '?idSistema='.$rowData['idSistema'];
 		$zz .= '&view='.$_GET['view'];
 		?>
 

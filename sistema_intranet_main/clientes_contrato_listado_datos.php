@@ -55,12 +55,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'idTipo, Nombre,fNacimiento, idCiudad, idComuna, Direccion, idSistema, Rut';
 $SIS_join  = '';
 $SIS_where = 'idCliente = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowData['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -75,7 +75,7 @@ $rowdata = db_select_data (false, $SIS_query, 'clientes_listado', $SIS_join, $SI
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'clientes_contrato_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-volume-control-phone" aria-hidden="true"></i> Persona Contacto</a></li>
-						<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
+						<?php if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){ ?>
 							<li class=""><a href="<?php echo 'clientes_contrato_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'clientes_contrato_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
@@ -93,19 +93,19 @@ $rowdata = db_select_data (false, $SIS_query, 'clientes_listado', $SIS_join, $SI
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idTipo)){           $x1  = $idTipo;            }else{$x1  = $rowdata['idTipo'];}
-					if(isset($Nombre)){           $x2  = $Nombre;            }else{$x2  = $rowdata['Nombre'];}
-					if(isset($Rut)){              $x3  = $Rut;               }else{$x3  = $rowdata['Rut'];}
-					if(isset($fNacimiento)){      $x4  = $fNacimiento;       }else{$x4  = $rowdata['fNacimiento'];}
-					if(isset($idCiudad)){         $x5  = $idCiudad;          }else{$x5  = $rowdata['idCiudad'];}
-					if(isset($idComuna)){         $x6  = $idComuna;          }else{$x6  = $rowdata['idComuna'];}
-					if(isset($Direccion)){        $x7  = $Direccion;         }else{$x7  = $rowdata['Direccion'];}
+					if(isset($idTipo)){           $x1  = $idTipo;            }else{$x1  = $rowData['idTipo'];}
+					if(isset($Nombre)){           $x2  = $Nombre;            }else{$x2  = $rowData['Nombre'];}
+					if(isset($Rut)){              $x3  = $Rut;               }else{$x3  = $rowData['Rut'];}
+					if(isset($fNacimiento)){      $x4  = $fNacimiento;       }else{$x4  = $rowData['fNacimiento'];}
+					if(isset($idCiudad)){         $x5  = $idCiudad;          }else{$x5  = $rowData['idCiudad'];}
+					if(isset($idComuna)){         $x6  = $idComuna;          }else{$x6  = $rowData['idComuna'];}
+					if(isset($Direccion)){        $x7  = $Direccion;         }else{$x7  = $rowData['Direccion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_select('Tipo de Cliente','idTipo', $x1, 2, 'idTipo', 'Nombre', 'clientes_tipos', 0, '', $dbConn);
 					//Si el cliente es una empresa
-					if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){
+					if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){
 						$Form_Inputs->form_input_text('Nombre Fantasia', 'Nombre', $x2, 2);
 					//si es una persona
 					}else{

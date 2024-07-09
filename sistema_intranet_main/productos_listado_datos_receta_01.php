@@ -219,7 +219,7 @@ $SIS_join  = '
 LEFT JOIN `productos_listado`      ON productos_listado.idProducto   = productos_recetas.idProductoRel
 LEFT JOIN `sistema_productos_uml`  ON sistema_productos_uml.idUml    = productos_listado.idUml';
 $SIS_where = 'productos_recetas.idReceta='.$_GET['edit'];
-$row_data = db_select_data (false, $SIS_query, 'productos_recetas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'productos_recetas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //Se revisan los permisos a los productos
 $SIS_query = 'idProducto';
@@ -259,8 +259,8 @@ foreach ($arrPermisos as $prod) {
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idProductoRel)){    $x1  = $idProductoRel;   }else{$x1  = $row_data['idProductoRel'];}
-				if(isset($Number)){           $x2  = $Number;          }else{$x2  = Cantidades_decimales_justos($row_data['Cantidad']);}
+				if(isset($idProductoRel)){    $x1  = $idProductoRel;   }else{$x1  = $rowData['idProductoRel'];}
+				if(isset($Number)){           $x2  = $Number;          }else{$x2  = Cantidades_decimales_justos($rowData['Cantidad']);}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -270,7 +270,7 @@ foreach ($arrPermisos as $prod) {
 				echo '<div class="form-group" id="div_">
 					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Unidad de Medida</label>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-						<input type="text" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled value="'.$row_data['Unimed'].'">
+						<input type="text" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled value="'.$rowData['Unimed'].'">
 					</div>
 				</div>';
 
@@ -318,7 +318,7 @@ foreach ($arrPermisos as $prod) {
 $SIS_query = 'sistema_productos_uml.Nombre AS Unimed';
 $SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
 $SIS_where = 'productos_listado.idProducto='.$_SESSION['receta_productos'][$_GET['editProd']]['idProducto'];
-$row_data = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //Se revisan los permisos a los productos
 $SIS_query = 'idProducto';
@@ -369,7 +369,7 @@ foreach ($arrPermisos as $prod) {
 				echo '<div class="form-group" id="div_">
 					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Unidad de Medida</label>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-						<input type="text" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled value="'.$row_data['Unimed'].'">
+						<input type="text" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled value="'.$rowData['Unimed'].'">
 					</div>
 				</div>';
 
@@ -503,7 +503,7 @@ productos_listado.Nombre,
 sistema_productos_uml.Nombre AS Unidad';
 $SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
 $SIS_where = 'productos_listado.idProducto = '.$_SESSION['receta']['idProducto'];
-$rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 // Se trae un listado con todos los productos
 $SIS_query = '
@@ -529,11 +529,11 @@ $arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_jo
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<tr>
 							<td class="meta-head">Producto</td>
-							<td><?php echo $rowdata['Nombre']?></td>
+							<td><?php echo $rowData['Nombre']?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Medida</td>
-							<td><?php echo $_SESSION['receta']['medida'].' '.$rowdata['Unidad']; ?></td>
+							<td><?php echo $_SESSION['receta']['medida'].' '.$rowData['Unidad']; ?></td>
 						</tr>
 					</tbody>
 				</table>
@@ -544,7 +544,7 @@ $arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_jo
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Productos a utilizar (Calculo para 1 <?php echo $rowdata['Unidad']; ?>)</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Productos a utilizar (Calculo para 1 <?php echo $rowData['Unidad']; ?>)</h5>
 				<div class="toolbar">
 					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&addProd=true' ?>" class="btn btn-xs btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Productos</a>
 				</div>
@@ -593,8 +593,8 @@ $arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_jo
 						} ?>
 						<tr>
 							<td class="meta-head" align="right"><strong>Total</strong></td>
-							<td class="meta-head"><strong><?php echo $total.' '.$rowdata['Unidad']; ?></strong></td>
-							<td class="meta-head"><strong><?php echo Cantidades_decimales_justos($total/$_SESSION['receta']['medida']).' '.$rowdata['Unidad']; ?></strong></td>
+							<td class="meta-head"><strong><?php echo $total.' '.$rowData['Unidad']; ?></strong></td>
+							<td class="meta-head"><strong><?php echo Cantidades_decimales_justos($total/$_SESSION['receta']['medida']).' '.$rowData['Unidad']; ?></strong></td>
 							<td></td>
 						</tr>
 					</tbody>
@@ -667,7 +667,7 @@ productos_listado.idOpciones_1,
 productos_listado.idOpciones_2';
 $SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
 $SIS_where = 'idProducto = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 // Se trae un listado con productos de la receta
 $SIS_query = ' 
@@ -686,7 +686,7 @@ $arrRecetas = db_select_array (false, $SIS_query, 'productos_recetas', $SIS_join
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowdata['Nombre'], 'Editar Receta'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowData['Nombre'], 'Editar Receta'); ?>
 	<?php
 	$conteoRecetas  = 0;
 	$total = 0;
@@ -721,19 +721,19 @@ $arrRecetas = db_select_array (false, $SIS_query, 'productos_recetas', $SIS_join
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'productos_listado_datos_opciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Opciones</a></li>
 						<li class=""><a href="<?php echo 'productos_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
-						<?php if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2&&$rowdata['idTipoReceta']==1){ ?>
+						<?php if(isset($rowData['idTipoProducto'])&&$rowData['idTipoProducto']==2&&$rowData['idTipoReceta']==1){ ?>
 							<li class="active"><a href="<?php echo 'productos_listado_datos_receta_01.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-align-left" aria-hidden="true"></i> Receta</a></li>
-						<?php }elseif(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2&&$rowdata['idTipoReceta']==2){ ?>
+						<?php }elseif(isset($rowData['idTipoProducto'])&&$rowData['idTipoProducto']==2&&$rowData['idTipoReceta']==2){ ?>
 							<li class=""><a href="<?php echo 'productos_listado_datos_receta_02.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-align-left" aria-hidden="true"></i> Receta</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'productos_listado_datos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<li class=""><a href="<?php echo 'productos_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
 						<li class=""><a href="<?php echo 'productos_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Ficha</a></li>
 						<li class=""><a href="<?php echo 'productos_listado_datos_hds.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> HDS</a></li>
-						<?php if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>
+						<?php if(isset($rowData['idOpciones_1'])&&$rowData['idOpciones_1']==1){ ?>
 							<li class=""><a href="<?php echo 'productos_listado_datos_ot.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Sistema Mantenlubric</a></li>
 						<?php } ?>
-						<?php if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
+						<?php if(isset($rowData['idOpciones_2'])&&$rowData['idOpciones_2']==1){ ?>
 							<li class=""><a href="<?php echo 'productos_listado_datos_cross.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Sistema CROSS</a></li>
 						<?php } ?>
 
@@ -770,7 +770,7 @@ $arrRecetas = db_select_array (false, $SIS_query, 'productos_recetas', $SIS_join
 
 					<tr class="odd">
 						<td align="right"><strong>Total</strong></td>
-						<td><strong><?php echo Cantidades_decimales_justos($total).' '.$rowdata['UnidadMedida']; ?></strong></td>		
+						<td><strong><?php echo Cantidades_decimales_justos($total).' '.$rowData['UnidadMedida']; ?></strong></td>		
 						<td></td>
 					</tr>
 				</tbody>

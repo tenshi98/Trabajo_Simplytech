@@ -537,7 +537,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['ocompra_otros'][$_GET['editOtros']]['idOtros'], 2);
 
-				//if(isset($row_data['Proveedor'])&&$row_data['Proveedor']!=''){$prov=$row_data['Proveedor'];}else{$prov='Sin proveedor';}
+				//if(isset($rowData['Proveedor'])&&$rowData['Proveedor']!=''){$prov=$rowData['Proveedor'];}else{$prov='Sin proveedor';}
 				//$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', $prov);
 				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['ocompra_otros'][$_GET['editOtros']]['vUnitario']));
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
@@ -864,7 +864,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$row_data = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 //filtro
 $zx2 = "idProducto=0";
@@ -921,8 +921,8 @@ foreach ($arrPermisos as $prod) {
 
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['ocompra_insumos'][$_GET['editIns']]['idProducto'], 2);
 
-				if(isset($row_data['Proveedor'])&&$row_data['Proveedor']!=''){$prov=$row_data['Proveedor'];}else{$prov='Sin proveedor';}
-				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $row_data['Unimed']);
+				if(isset($rowData['Proveedor'])&&$rowData['Proveedor']!=''){$prov=$rowData['Proveedor'];}else{$prov='Sin proveedor';}
+				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $rowData['Unimed']);
 				$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', $prov);
 				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['ocompra_insumos'][$_GET['editIns']]['vUnitario']));
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
@@ -1054,7 +1054,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$row_data = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 //filtro
 $zx1 = "idProducto=0";
@@ -1110,8 +1110,8 @@ foreach ($arrPermisos as $prod) {
 
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['ocompra_productos'][$_GET['editProd']]['idProducto'], 2);
 
-				if(isset($row_data['Proveedor'])&&$row_data['Proveedor']!=''){$prov=$row_data['Proveedor'];}else{$prov='Sin proveedor';}
-				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $row_data['Unimed']);
+				if(isset($rowData['Proveedor'])&&$rowData['Proveedor']!=''){$prov=$rowData['Proveedor'];}else{$prov='Sin proveedor';}
+				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $rowData['Unimed']);
 				$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', $prov);
 				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['ocompra_productos'][$_GET['editProd']]['vUnitario']));
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);

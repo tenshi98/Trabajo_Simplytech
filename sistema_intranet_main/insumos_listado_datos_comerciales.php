@@ -55,7 +55,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,StockLimite,ValorIngreso,ValorEgreso, idProveedorFijo';
 $SIS_join  = '';
 $SIS_where = 'idProducto = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'insumos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'insumos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //Verifico el tipo de usuario que esta ingresando
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
@@ -63,7 +63,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Insumos', $rowdata['Nombre'], 'Editar Datos Comerciales'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Insumos', $rowData['Nombre'], 'Editar Datos Comerciales'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -93,10 +93,10 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idProveedorFijo)){  $x1  = $idProveedorFijo;  }else{$x1  = $rowdata['idProveedorFijo'];}
-					if(isset($StockLimite)){      $x2  = $StockLimite;      }else{$x2  = Cantidades_decimales_justos($rowdata['StockLimite']);}
-					if(isset($ValorIngreso)){     $x3  = $ValorIngreso;     }else{$x3  = Cantidades_decimales_justos($rowdata['ValorIngreso']);}
-					if(isset($ValorEgreso)){      $x4  = $ValorEgreso;      }else{$x4  = Cantidades_decimales_justos($rowdata['ValorEgreso']);}
+					if(isset($idProveedorFijo)){  $x1  = $idProveedorFijo;  }else{$x1  = $rowData['idProveedorFijo'];}
+					if(isset($StockLimite)){      $x2  = $StockLimite;      }else{$x2  = Cantidades_decimales_justos($rowData['StockLimite']);}
+					if(isset($ValorIngreso)){     $x3  = $ValorIngreso;     }else{$x3  = Cantidades_decimales_justos($rowData['ValorIngreso']);}
+					if(isset($ValorEgreso)){      $x4  = $ValorEgreso;      }else{$x4  = Cantidades_decimales_justos($rowData['ValorEgreso']);}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

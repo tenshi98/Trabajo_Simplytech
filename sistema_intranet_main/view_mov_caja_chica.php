@@ -95,7 +95,7 @@ LEFT JOIN `trabajadores_listado`     trab_soli  ON trab_soli.idTrabajador       
 LEFT JOIN `trabajadores_listado`     trab_revi  ON trab_revi.idTrabajador               = caja_chica_facturacion.idRevisado
 LEFT JOIN `trabajadores_listado`     trab_apro  ON trab_apro.idTrabajador               = caja_chica_facturacion.idAprobado';
 $SIS_where = 'caja_chica_facturacion.idFacturacion ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'caja_chica_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'caja_chica_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /*****************************************/
 // Se trae un listado con todos los productos utilizados
@@ -149,7 +149,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
-				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $row_data['CajaTipo']?>.
+				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $rowData['CajaTipo']?>.
 				<small class="pull-right">Numero Documento: <?php echo n_doc($X_Puntero, 8) ?></small>
 			</h2>
 		</div>
@@ -159,19 +159,19 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 
 		<?php
 		//se verifica el tipo de movimiento
-		switch ($row_data['idTipo']) {
+		switch ($rowData['idTipo']) {
 			//Ingreso
 			case 1:
 				echo '
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					Datos del Movimiento
 					<address>
-						Caja: <strong>'.$row_data['CajaNombre'].'</strong><br/>
-						Sistema: '.$row_data['CajaSistema'].'<br/>
-						Usuario: '.$row_data['Usuario'].'<br/>
-						Estado Ingreso: '.$row_data['CajaEstado'].'<br/>
-						Fecha Real Ingreso: '.Fecha_estandar($row_data['fecha_auto']).'<br/>
-						Fecha Ingreso: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
+						Caja: <strong>'.$rowData['CajaNombre'].'</strong><br/>
+						Sistema: '.$rowData['CajaSistema'].'<br/>
+						Usuario: '.$rowData['Usuario'].'<br/>
+						Estado Ingreso: '.$rowData['CajaEstado'].'<br/>
+						Fecha Real Ingreso: '.Fecha_estandar($rowData['fecha_auto']).'<br/>
+						Fecha Ingreso: '.Fecha_estandar($rowData['Creacion_fecha']).'<br/>
 					</address>
 				</div>
 
@@ -188,22 +188,22 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					Datos del Movimiento
 					<address>
-						Caja: <strong>'.$row_data['CajaNombre'].'</strong><br/>
-						Sistema: '.$row_data['CajaSistema'].'<br/>
-						Usuario: '.$row_data['Usuario'].'<br/>
-						Estado Egreso: '.$row_data['CajaEstado'].'<br/>
-						Fecha Real Egreso: '.Fecha_estandar($row_data['fecha_auto']).'<br/>
-						Fecha Egreso: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
+						Caja: <strong>'.$rowData['CajaNombre'].'</strong><br/>
+						Sistema: '.$rowData['CajaSistema'].'<br/>
+						Usuario: '.$rowData['Usuario'].'<br/>
+						Estado Egreso: '.$rowData['CajaEstado'].'<br/>
+						Fecha Real Egreso: '.Fecha_estandar($rowData['fecha_auto']).'<br/>
+						Fecha Egreso: '.Fecha_estandar($rowData['Creacion_fecha']).'<br/>
 					</address>
 				</div>
 
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					Trabajador
 					<address>
-						<strong>'.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].' '.$row_data['TrabajadorApellidoMat'].'</strong><br/>
-						Rut: '.$row_data['TrabajadorRut'].'<br/>
-						Cargo: '.$row_data['TrabajadorCargo'].'<br/>
-						Fono: '.formatPhone($row_data['TrabajadorFono']).'<br/>
+						<strong>'.$rowData['TrabajadorNombre'].' '.$rowData['TrabajadorApellidoPat'].' '.$rowData['TrabajadorApellidoMat'].'</strong><br/>
+						Rut: '.$rowData['TrabajadorRut'].'<br/>
+						Cargo: '.$rowData['TrabajadorCargo'].'<br/>
+						Fono: '.formatPhone($rowData['TrabajadorFono']).'<br/>
 					</address>
 				</div>';
 				
@@ -216,24 +216,24 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					Datos del Movimiento
 					<address>
-						Caja: <strong>'.$row_data['CajaNombre'].'</strong><br/>
-						Sistema: '.$row_data['CajaSistema'].'<br/>
-						Usuario: '.$row_data['Usuario'].'<br/>
-						Estado Rendicion: '.$row_data['CajaEstado'].'<br/>
-						Fecha Real Rendicion: '.Fecha_estandar($row_data['fecha_auto']).'<br/>
-						Fecha Rendicion: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
+						Caja: <strong>'.$rowData['CajaNombre'].'</strong><br/>
+						Sistema: '.$rowData['CajaSistema'].'<br/>
+						Usuario: '.$rowData['Usuario'].'<br/>
+						Estado Rendicion: '.$rowData['CajaEstado'].'<br/>
+						Fecha Real Rendicion: '.Fecha_estandar($rowData['fecha_auto']).'<br/>
+						Fecha Rendicion: '.Fecha_estandar($rowData['Creacion_fecha']).'<br/>
 					</address>
 				</div>
 
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					Documento Relacionado
 					<address>
-						<strong>Doc N°'.$row_data['idFacturacionRelacionada'].'</strong><br/>
-						Valor: '.Valores($row_data['RelValor'], 0).'<br/>
-						Trabajador: '.$row_data['TrabRelNombre'].' '.$row_data['TrabRelApellidoPat'].' '.$row_data['TrabRelApellidoMat'].'<br/>
-						Rut: '.$row_data['TrabRelRut'].'<br/>
-						Cargo: '.$row_data['TrabRelCargo'].'<br/>
-						Fono: '.formatPhone($row_data['TrabRelFono']).'<br/>
+						<strong>Doc N°'.$rowData['idFacturacionRelacionada'].'</strong><br/>
+						Valor: '.Valores($rowData['RelValor'], 0).'<br/>
+						Trabajador: '.$rowData['TrabRelNombre'].' '.$rowData['TrabRelApellidoPat'].' '.$rowData['TrabRelApellidoMat'].'<br/>
+						Rut: '.$rowData['TrabRelRut'].'<br/>
+						Cargo: '.$rowData['TrabRelCargo'].'<br/>
+						Fono: '.formatPhone($rowData['TrabRelFono']).'<br/>
 					</address>
 				</div>';
 				
@@ -259,7 +259,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 							<tr>
 								<td><?php echo $prod['Item']; ?></td>
 								<?php 
-								if(isset($row_data['idTipo'])&&$row_data['idTipo']==1){
+								if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){
 									echo '<td align="right">'.Valores($prod['Valor'], 0).'</td>';
 									echo '<td align="right"></td>';
 								}else{
@@ -283,7 +283,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 									?>
 								</td>
 								<?php 
-								if(isset($row_data['idTipo'])&&$row_data['idTipo']==1){
+								if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){
 									echo '<td align="right">'.Valores($prod['Valor'], 0).'</td>';
 									echo '<td align="right"></td>';
 								}else{
@@ -294,16 +294,16 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 						<?php } ?>
 					<?php } ?>
 
-					<?php if(isset($row_data['Valor'])&&$row_data['Valor']!=0){ ?>
+					<?php if(isset($rowData['Valor'])&&$rowData['Valor']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td align="right"><strong>Total</strong></td>
 							<?php
-							if(isset($row_data['idTipo'])&&$row_data['idTipo']==1){
-								echo '<td align="right">'.Valores($row_data['Valor'], 0).'</td>';
+							if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){
+								echo '<td align="right">'.Valores($rowData['Valor'], 0).'</td>';
 								echo '<td align="right"></td>';
 							}else{
 								echo '<td align="right"></td>';
-								echo '<td align="right">'.Valores($row_data['Valor'], 0).'</td>';
+								echo '<td align="right">'.Valores($rowData['Valor'], 0).'</td>';
 							} ?>
 						</tr>
 					<?php } ?>
@@ -316,25 +316,25 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $rowData['Observaciones']; ?></p>
 		</div>
 	</div>
 
 	<?php
 	//Egreso
-	if($row_data['idTipo']==2){ ?>
+	if($rowData['idTipo']==2){ ?>
 		<div class="row firma">
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont"><p>Firma Emisor</p></div>
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont" style="left:50%;"><p>Firma Trabajador</p></div>
 		</div>
 	<?php }
 	//Si es una rendicion
-	if($row_data['idTipo']==3&&isset($row_data['idSolicitado'])&&$row_data['idSolicitado']!=''&&isset($row_data['idRevisado'])&&$row_data['idRevisado']!=''&&isset($row_data['idAprobado'])&&$row_data['idAprobado']!=''){ ?>
+	if($rowData['idTipo']==3&&isset($rowData['idSolicitado'])&&$rowData['idSolicitado']!=''&&isset($rowData['idRevisado'])&&$rowData['idRevisado']!=''&&isset($rowData['idAprobado'])&&$rowData['idAprobado']!=''){ ?>
 
 		<div class="row firma">
-			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 fcont"><p>Solicitado Por:<br/><?php echo $row_data['SolicitadoNombre'].' '.$row_data['SolicitadoApellidoPat']; ?><br/>Firma</p></div>
-			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 fcont"><p>Revisado Por:<br/><?php echo $row_data['RevisadoNombre'].' '.$row_data['RevisadoApellidoPat']; ?><br/>Firma</p></div>
-			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 fcont"><p>Aprobado Por:<br/><?php echo $row_data['AprobadoNombre'].' '.$row_data['AprobadoApellidoPat']; ?><br/>Firma</p></div> 
+			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 fcont"><p>Solicitado Por:<br/><?php echo $rowData['SolicitadoNombre'].' '.$rowData['SolicitadoApellidoPat']; ?><br/>Firma</p></div>
+			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 fcont"><p>Revisado Por:<br/><?php echo $rowData['RevisadoNombre'].' '.$rowData['RevisadoApellidoPat']; ?><br/>Firma</p></div>
+			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 fcont"><p>Aprobado Por:<br/><?php echo $rowData['AprobadoNombre'].' '.$rowData['AprobadoApellidoPat']; ?><br/>Firma</p></div> 
 		</div>
 	<?php } ?>
 

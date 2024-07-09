@@ -69,7 +69,7 @@ if(!empty($_GET['new'])){
 	$SIS_query = 'Semanas';
 	$SIS_join  = '';
 	$SIS_where = 'idCurso = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'cursos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'cursos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -90,7 +90,7 @@ if(!empty($_GET['new'])){
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_multiple_upload('Seleccionar archivo','File_Curso', 1, '"jpg", "png", "gif", "jpeg", "bmp", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "mp3", "wav", "pdf", "txt", "rtf", "mp2", "mpeg", "mpg", "mov", "avi", "gz", "gzip", "7Z", "zip", "rar"');
 
-					$Form_Inputs->form_select_n_auto('Semana','Semana', $x2, 2, 1, $rowdata['Semanas']);
+					$Form_Inputs->form_select_n_auto('Semana','Semana', $x2, 2, 1, $rowData['Semanas']);
 
 					$Form_Inputs->form_input_hidden('idCurso', $_GET['id'], 2);
 					?>
@@ -113,7 +113,7 @@ if(!empty($_GET['new'])){
 	$SIS_query = 'Nombre';
 	$SIS_join  = '';
 	$SIS_where = 'idCurso = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'cursos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'cursos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -127,7 +127,7 @@ if(!empty($_GET['new'])){
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Curso', $rowdata['Nombre'], 'Editar Documentacion'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Curso', $rowData['Nombre'], 'Editar Documentacion'); ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 			<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Subir Nuevo Archivo</a><?php } ?>
 		</div>

@@ -162,7 +162,7 @@ LEFT JOIN `centrocosto_listado_level_3`             ON centrocosto_listado_level
 LEFT JOIN `centrocosto_listado_level_4`             ON centrocosto_listado_level_4.idLevel_4        = bodegas_productos_facturacion.idLevel_4
 LEFT JOIN `centrocosto_listado_level_5`             ON centrocosto_listado_level_5.idLevel_5        = bodegas_productos_facturacion.idLevel_5';
 $SIS_where = 'bodegas_productos_facturacion.idFacturacion ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'bodegas_productos_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'bodegas_productos_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /*****************************************/
 // Se trae un listado con todos los productos utilizados
@@ -319,7 +319,7 @@ foreach ($arrImpuestos as $impto) {
 }
 
 //Si el documento esta pagado se muestran los datos relacionados al pago
-if($row_data['MontoPagado']!=0){ ?>
+if($rowData['MontoPagado']!=0){ ?>
 	<div class="" style="margin-top:10px;">
 		<div class="col-xs-12">
 			<div class="panel panel-success">
@@ -373,16 +373,16 @@ if($row_data['MontoPagado']!=0){ ?>
 								<tbody>
 									<tr>
 										<th>Monto Abonado:</th>
-										<td align="right"><?php echo Valores($row_data['MontoPagado'], 0) ?></td>
+										<td align="right"><?php echo Valores($rowData['MontoPagado'], 0) ?></td>
 									</tr>
 									<tr>
 										<th>Monto Facturado:</th>
-										<td align="right"><?php echo Valores($row_data['ValorTotal'], 0) ?></td>
+										<td align="right"><?php echo Valores($rowData['ValorTotal'], 0) ?></td>
 									</tr>
 									<tr>
 										<th>Diferencia:</th>
 										<?php
-										$diferencia = $row_data['MontoPagado'] - $row_data['ValorTotal'];
+										$diferencia = $rowData['MontoPagado'] - $rowData['ValorTotal'];
 										if($diferencia<0){
 											echo '<td align="right" class="text-danger"><h6><i class="fa fa-arrow-down" aria-hidden="true"></i> '.Valores($diferencia, 0).'</h6></td>';
 										}elseif($diferencia>0){
@@ -402,12 +402,12 @@ if($row_data['MontoPagado']!=0){ ?>
 		</div>
 	</div>
 <?php } ?>
-<?php if(isset($row_data['idOcompra'])&&$row_data['idOcompra']!=0){ ?>
+<?php if(isset($rowData['idOcompra'])&&$rowData['idOcompra']!=0){ ?>
 	<div class="" style="margin-top:10px;">
 		<div class="col-xs-12">
 			<div class="panel panel-success">
 				<div class="panel-heading">
-					<h6 class="panel-title"><i class="fa fa-usd" aria-hidden="true"></i> Documentos de Pago relacionados a la OC N° <?php echo N_doc($row_data['idOcompra'], 5); ?></h6>
+					<h6 class="panel-title"><i class="fa fa-usd" aria-hidden="true"></i> Documentos de Pago relacionados a la OC N° <?php echo N_doc($rowData['idOcompra'], 5); ?></h6>
 				</div>
 				<div class="panel-body">
 					<div class="row invoice-payment">
@@ -443,8 +443,8 @@ if($row_data['MontoPagado']!=0){ ?>
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
-				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $row_data['TipoDoc']?>.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['Creacion_fecha']); ?></small>
+				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $rowData['TipoDoc']?>.
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowData['Creacion_fecha']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -453,7 +453,7 @@ if($row_data['MontoPagado']!=0){ ?>
 
 		<?php
 		//se verifica el tipo de movimiento
-		switch ($row_data['idTipo']) {
+		switch ($rowData['idTipo']) {
 			//Ingreso de Productos a bodega
 			case 1:
 			case 10:
@@ -462,70 +462,70 @@ if($row_data['MontoPagado']!=0){ ?>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
-						<strong>'.$row_data['NombreProveedor'].'</strong><br/>
-						'.$row_data['CiudadProveedor'].', '.$row_data['ComunaProveedor'].'<br/>
-						'.$row_data['DireccionProveedor'].'<br/>
-						Fono Fijo: '.formatPhone($row_data['Fono1Proveedor']).'<br/>
-						Celular: '.formatPhone($row_data['Fono2Proveedor']).'<br/>
-						Fax: '.$row_data['FaxProveedor'].'<br/>
-						Rut: '.$row_data['RutProveedor'].'<br/>
-						Email: '.$row_data['EmailProveedor'].'<br/>
-						Contacto: '.$row_data['PersonaContactoProveedor'].'<br/>
-						Giro de la Empresa: '.$row_data['GiroProveedor'].'
+						<strong>'.$rowData['NombreProveedor'].'</strong><br/>
+						'.$rowData['CiudadProveedor'].', '.$rowData['ComunaProveedor'].'<br/>
+						'.$rowData['DireccionProveedor'].'<br/>
+						Fono Fijo: '.formatPhone($rowData['Fono1Proveedor']).'<br/>
+						Celular: '.formatPhone($rowData['Fono2Proveedor']).'<br/>
+						Fax: '.$rowData['FaxProveedor'].'<br/>
+						Rut: '.$rowData['RutProveedor'].'<br/>
+						Email: '.$rowData['EmailProveedor'].'<br/>
+						Contacto: '.$rowData['PersonaContactoProveedor'].'<br/>
+						Giro de la Empresa: '.$rowData['GiroProveedor'].'
 					</address>
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
-						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
-						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
-						'.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
-						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
-						Email: '.$row_data['SistemaOrigenEmail'].'
+						<strong>'.$rowData['SistemaOrigen'].'</strong><br/>
+						'.$rowData['SistemaOrigenCiudad'].', '.$rowData['SistemaOrigenComuna'].'<br/>
+						'.$rowData['SistemaOrigenDireccion'].'<br/>
+						Fono: '.formatPhone($rowData['SistemaOrigenFono']).'<br/>
+						Rut: '.$rowData['SistemaOrigenRut'].'<br/>
+						Email: '.$rowData['SistemaOrigenEmail'].'
 					</address>
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
-					<strong>'.$row_data['Documento'].' N°'.$row_data['N_Doc'].'</strong><br/>
-					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
-					<strong>Bodega Destino: </strong>'.$row_data['BodegaHacia'].'<br/>';
+					<strong>'.$rowData['Documento'].' N°'.$rowData['N_Doc'].'</strong><br/>
+					<strong>Doc N°'.N_doc($rowData['idFacturacion'], 5).'</strong><br/>
+					<strong>Bodega Destino: </strong>'.$rowData['BodegaHacia'].'<br/>';
 
-					if(isset($row_data['Estado'])&&$row_data['Estado']!=''){
-						echo '<strong>Estado: </strong>'.$row_data['Estado'].'<br/>';
+					if(isset($rowData['Estado'])&&$rowData['Estado']!=''){
+						echo '<strong>Estado: </strong>'.$rowData['Estado'].'<br/>';
 					}
-					if(isset($row_data['Pago_fecha'])&&$row_data['Pago_fecha']!=''&&$row_data['Pago_fecha']!='0000-00-00'){
-						echo '<strong>Vencimiento : </strong>'.Fecha_estandar($row_data['Pago_fecha']).'<br/>';
+					if(isset($rowData['Pago_fecha'])&&$rowData['Pago_fecha']!=''&&$rowData['Pago_fecha']!='0000-00-00'){
+						echo '<strong>Vencimiento : </strong>'.Fecha_estandar($rowData['Pago_fecha']).'<br/>';
 					}
-					/*if(isset($row_data['DocPago'])&&$row_data['DocPago']!=''){
-						echo '<strong>Dto de Pago : </strong>'.$row_data['DocPago'].' '.$row_data['N_DocPago'].'<br/>';
+					/*if(isset($rowData['DocPago'])&&$rowData['DocPago']!=''){
+						echo '<strong>Dto de Pago : </strong>'.$rowData['DocPago'].' '.$rowData['N_DocPago'].'<br/>';
 					}
-					if(isset($row_data['F_Pago'])&&$row_data['F_Pago']!=''&&$row_data['F_Pago']!='0000-00-00'){
-						echo '<strong>Fecha Pagado: </strong>'.Fecha_estandar($row_data['F_Pago']).'<br/>';
+					if(isset($rowData['F_Pago'])&&$rowData['F_Pago']!=''&&$rowData['F_Pago']!='0000-00-00'){
+						echo '<strong>Fecha Pagado: </strong>'.Fecha_estandar($rowData['F_Pago']).'<br/>';
 					}*/
-					if(isset($row_data['idOcompra'])&&$row_data['idOcompra']!=''&&$row_data['idOcompra']!=0){
-						echo '<strong>OC Relacionada N°: </strong>'.N_doc($row_data['idOcompra'], 5).'<br/>';
+					if(isset($rowData['idOcompra'])&&$rowData['idOcompra']!=''&&$rowData['idOcompra']!=0){
+						echo '<strong>OC Relacionada N°: </strong>'.N_doc($rowData['idOcompra'], 5).'<br/>';
 					} 
-					if(isset($row_data['OC_Ventas'])&&$row_data['OC_Ventas']!=''&&$row_data['OC_Ventas']!=0){
-						echo '<strong>OC Relacionada N°: </strong>'.N_doc($row_data['OC_Ventas'], 5).'<br/>';
+					if(isset($rowData['OC_Ventas'])&&$rowData['OC_Ventas']!=''&&$rowData['OC_Ventas']!=0){
+						echo '<strong>OC Relacionada N°: </strong>'.N_doc($rowData['OC_Ventas'], 5).'<br/>';
 					}
-					if(isset($row_data['CentroCosto_Nombre'])&&$row_data['CentroCosto_Nombre']!=''){
-						echo '<strong>Centro de Costo : </strong>'.$row_data['CentroCosto_Nombre'];
-						if(isset($row_data['CentroCosto_Level_1'])&&$row_data['CentroCosto_Level_1']!=''){echo ' - '.$row_data['CentroCosto_Level_1'];}
-						if(isset($row_data['CentroCosto_Level_2'])&&$row_data['CentroCosto_Level_2']!=''){echo ' - '.$row_data['CentroCosto_Level_2'];}
-						if(isset($row_data['CentroCosto_Level_3'])&&$row_data['CentroCosto_Level_3']!=''){echo ' - '.$row_data['CentroCosto_Level_3'];}
-						if(isset($row_data['CentroCosto_Level_4'])&&$row_data['CentroCosto_Level_4']!=''){echo ' - '.$row_data['CentroCosto_Level_4'];}
-						if(isset($row_data['CentroCosto_Level_5'])&&$row_data['CentroCosto_Level_5']!=''){echo ' - '.$row_data['CentroCosto_Level_5'];}
+					if(isset($rowData['CentroCosto_Nombre'])&&$rowData['CentroCosto_Nombre']!=''){
+						echo '<strong>Centro de Costo : </strong>'.$rowData['CentroCosto_Nombre'];
+						if(isset($rowData['CentroCosto_Level_1'])&&$rowData['CentroCosto_Level_1']!=''){echo ' - '.$rowData['CentroCosto_Level_1'];}
+						if(isset($rowData['CentroCosto_Level_2'])&&$rowData['CentroCosto_Level_2']!=''){echo ' - '.$rowData['CentroCosto_Level_2'];}
+						if(isset($rowData['CentroCosto_Level_3'])&&$rowData['CentroCosto_Level_3']!=''){echo ' - '.$rowData['CentroCosto_Level_3'];}
+						if(isset($rowData['CentroCosto_Level_4'])&&$rowData['CentroCosto_Level_4']!=''){echo ' - '.$rowData['CentroCosto_Level_4'];}
+						if(isset($rowData['CentroCosto_Level_5'])&&$rowData['CentroCosto_Level_5']!=''){echo ' - '.$rowData['CentroCosto_Level_5'];}
 						echo '<br/>';
 					}
-					if(isset($row_data['fecha_fact_desde'])&&$row_data['fecha_fact_desde']!=''&&$row_data['fecha_fact_desde']!='0000-00-00'){
-						echo '<strong>Facturacion Desde : </strong>'.Fecha_estandar($row_data['fecha_fact_desde']).'<br/>';
+					if(isset($rowData['fecha_fact_desde'])&&$rowData['fecha_fact_desde']!=''&&$rowData['fecha_fact_desde']!='0000-00-00'){
+						echo '<strong>Facturacion Desde : </strong>'.Fecha_estandar($rowData['fecha_fact_desde']).'<br/>';
 					}
-					if(isset($row_data['fecha_fact_hasta'])&&$row_data['fecha_fact_hasta']!=''&&$row_data['fecha_fact_hasta']!='0000-00-00'){
-						echo '<strong>Facturacion Hasta : </strong>'.Fecha_estandar($row_data['fecha_fact_hasta']).'<br/>';
+					if(isset($rowData['fecha_fact_hasta'])&&$rowData['fecha_fact_hasta']!=''&&$rowData['fecha_fact_hasta']!='0000-00-00'){
+						echo '<strong>Facturacion Hasta : </strong>'.Fecha_estandar($rowData['fecha_fact_hasta']).'<br/>';
 					}
-					if(isset($row_data['idUsoIVA'])&&$row_data['idUsoIVA']!=''&&$row_data['idUsoIVA']==1){
+					if(isset($rowData['idUsoIVA'])&&$rowData['idUsoIVA']!=''&&$rowData['idUsoIVA']==1){
 						echo '<strong>Exento de IVA : </strong>Factura exenta de IVA<br/>';
 					} 	
 					
@@ -540,71 +540,71 @@ if($row_data['MontoPagado']!=0){ ?>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
-						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
-						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
-						'.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
-						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
-						Email: '.$row_data['SistemaOrigenEmail'].'
+						<strong>'.$rowData['SistemaOrigen'].'</strong><br/>
+						'.$rowData['SistemaOrigenCiudad'].', '.$rowData['SistemaOrigenComuna'].'<br/>
+						'.$rowData['SistemaOrigenDireccion'].'<br/>
+						Fono: '.formatPhone($rowData['SistemaOrigenFono']).'<br/>
+						Rut: '.$rowData['SistemaOrigenRut'].'<br/>
+						Email: '.$rowData['SistemaOrigenEmail'].'
 					</address>
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
-						<strong>'.$row_data['NombreCliente'].'</strong><br/>
-						'.$row_data['CiudadCliente'].', '.$row_data['ComunaProveedor'].'<br/>
-						'.$row_data['DireccionCliente'].'<br/>
-						Fono Fijo: '.formatPhone($row_data['Fono1Cliente']).'<br/>
-						Celular: '.formatPhone($row_data['Fono2Cliente']).'<br/>
-						Fax: '.$row_data['FaxCliente'].'<br/>
-						Rut: '.$row_data['RutCliente'].'<br/>
-						Email: '.$row_data['EmailCliente'].'<br/>
-						Contacto: '.$row_data['PersonaContactoCliente'].'<br/>
-						Giro de la Empresa: '.$row_data['GiroCliente'].'
+						<strong>'.$rowData['NombreCliente'].'</strong><br/>
+						'.$rowData['CiudadCliente'].', '.$rowData['ComunaProveedor'].'<br/>
+						'.$rowData['DireccionCliente'].'<br/>
+						Fono Fijo: '.formatPhone($rowData['Fono1Cliente']).'<br/>
+						Celular: '.formatPhone($rowData['Fono2Cliente']).'<br/>
+						Fax: '.$rowData['FaxCliente'].'<br/>
+						Rut: '.$rowData['RutCliente'].'<br/>
+						Email: '.$rowData['EmailCliente'].'<br/>
+						Contacto: '.$rowData['PersonaContactoCliente'].'<br/>
+						Giro de la Empresa: '.$rowData['GiroCliente'].'
 					</address>
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
-					<strong>'.$row_data['Documento'].' N°'.$row_data['N_Doc'].'</strong><br/>
-					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
-					<strong>Bodega Origen: </strong>'.$row_data['BodegaDesde'].'<br/>
-					<strong>Vendedor: </strong>'.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellido'].'<br/>';
+					<strong>'.$rowData['Documento'].' N°'.$rowData['N_Doc'].'</strong><br/>
+					<strong>Doc N°'.N_doc($rowData['idFacturacion'], 5).'</strong><br/>
+					<strong>Bodega Origen: </strong>'.$rowData['BodegaDesde'].'<br/>
+					<strong>Vendedor: </strong>'.$rowData['TrabajadorNombre'].' '.$rowData['TrabajadorApellido'].'<br/>';
 
-					if(isset($row_data['Estado'])&&$row_data['Estado']!=''){
-						echo '<strong>Estado: </strong>'.$row_data['Estado'].'<br/>';
+					if(isset($rowData['Estado'])&&$rowData['Estado']!=''){
+						echo '<strong>Estado: </strong>'.$rowData['Estado'].'<br/>';
 					}
-					if(isset($row_data['Pago_fecha'])&&$row_data['Pago_fecha']!=''&&$row_data['Pago_fecha']!='0000-00-00'){
-						echo '<strong>Vencimiento : </strong>'.Fecha_estandar($row_data['Pago_fecha']).'<br/>';
+					if(isset($rowData['Pago_fecha'])&&$rowData['Pago_fecha']!=''&&$rowData['Pago_fecha']!='0000-00-00'){
+						echo '<strong>Vencimiento : </strong>'.Fecha_estandar($rowData['Pago_fecha']).'<br/>';
 					}
-					if(isset($row_data['DocPago'])&&$row_data['DocPago']!=''){
-						echo '<strong>Dto de Pago : </strong>'.$row_data['DocPago'].' '.$row_data['N_DocPago'].'<br/>';
+					if(isset($rowData['DocPago'])&&$rowData['DocPago']!=''){
+						echo '<strong>Dto de Pago : </strong>'.$rowData['DocPago'].' '.$rowData['N_DocPago'].'<br/>';
 					}
-					if(isset($row_data['F_Pago'])&&$row_data['F_Pago']!=''&&$row_data['F_Pago']!='0000-00-00'){
-						echo '<strong>Fecha Pagado: </strong>'.Fecha_estandar($row_data['F_Pago']).'<br/>';
+					if(isset($rowData['F_Pago'])&&$rowData['F_Pago']!=''&&$rowData['F_Pago']!='0000-00-00'){
+						echo '<strong>Fecha Pagado: </strong>'.Fecha_estandar($rowData['F_Pago']).'<br/>';
 					}
-					if(isset($row_data['idOcompra'])&&$row_data['idOcompra']!=''&&$row_data['idOcompra']!=0){
-						echo '<strong>OC Relacionada N°: </strong>'.N_doc($row_data['idOcompra'], 5).'<br/>';
+					if(isset($rowData['idOcompra'])&&$rowData['idOcompra']!=''&&$rowData['idOcompra']!=0){
+						echo '<strong>OC Relacionada N°: </strong>'.N_doc($rowData['idOcompra'], 5).'<br/>';
 					} 
-					if(isset($row_data['OC_Ventas'])&&$row_data['OC_Ventas']!=''&&$row_data['OC_Ventas']!=0){
-						echo '<strong>OC Relacionada N°: </strong>'.N_doc($row_data['OC_Ventas'], 5).'<br/>';
+					if(isset($rowData['OC_Ventas'])&&$rowData['OC_Ventas']!=''&&$rowData['OC_Ventas']!=0){
+						echo '<strong>OC Relacionada N°: </strong>'.N_doc($rowData['OC_Ventas'], 5).'<br/>';
 					}
-					if(isset($row_data['CentroCosto_Nombre'])&&$row_data['CentroCosto_Nombre']!=''){
-						echo '<strong>Centro de Costo : </strong>'.$row_data['CentroCosto_Nombre'];
-						if(isset($row_data['CentroCosto_Level_1'])&&$row_data['CentroCosto_Level_1']!=''){echo ' - '.$row_data['CentroCosto_Level_1'];}
-						if(isset($row_data['CentroCosto_Level_2'])&&$row_data['CentroCosto_Level_2']!=''){echo ' - '.$row_data['CentroCosto_Level_2'];}
-						if(isset($row_data['CentroCosto_Level_3'])&&$row_data['CentroCosto_Level_3']!=''){echo ' - '.$row_data['CentroCosto_Level_3'];}
-						if(isset($row_data['CentroCosto_Level_4'])&&$row_data['CentroCosto_Level_4']!=''){echo ' - '.$row_data['CentroCosto_Level_4'];}
-						if(isset($row_data['CentroCosto_Level_5'])&&$row_data['CentroCosto_Level_5']!=''){echo ' - '.$row_data['CentroCosto_Level_5'];}
+					if(isset($rowData['CentroCosto_Nombre'])&&$rowData['CentroCosto_Nombre']!=''){
+						echo '<strong>Centro de Costo : </strong>'.$rowData['CentroCosto_Nombre'];
+						if(isset($rowData['CentroCosto_Level_1'])&&$rowData['CentroCosto_Level_1']!=''){echo ' - '.$rowData['CentroCosto_Level_1'];}
+						if(isset($rowData['CentroCosto_Level_2'])&&$rowData['CentroCosto_Level_2']!=''){echo ' - '.$rowData['CentroCosto_Level_2'];}
+						if(isset($rowData['CentroCosto_Level_3'])&&$rowData['CentroCosto_Level_3']!=''){echo ' - '.$rowData['CentroCosto_Level_3'];}
+						if(isset($rowData['CentroCosto_Level_4'])&&$rowData['CentroCosto_Level_4']!=''){echo ' - '.$rowData['CentroCosto_Level_4'];}
+						if(isset($rowData['CentroCosto_Level_5'])&&$rowData['CentroCosto_Level_5']!=''){echo ' - '.$rowData['CentroCosto_Level_5'];}
 						echo '<br/>';
 					}
-					if(isset($row_data['fecha_fact_desde'])&&$row_data['fecha_fact_desde']!=''&&$row_data['fecha_fact_desde']!='0000-00-00'){
-						echo '<strong>Facturacion Desde : </strong>'.Fecha_estandar($row_data['fecha_fact_desde']).'<br/>';
+					if(isset($rowData['fecha_fact_desde'])&&$rowData['fecha_fact_desde']!=''&&$rowData['fecha_fact_desde']!='0000-00-00'){
+						echo '<strong>Facturacion Desde : </strong>'.Fecha_estandar($rowData['fecha_fact_desde']).'<br/>';
 					}
-					if(isset($row_data['fecha_fact_hasta'])&&$row_data['fecha_fact_hasta']!=''&&$row_data['fecha_fact_hasta']!='0000-00-00'){
-						echo '<strong>Facturacion Hasta : </strong>'.Fecha_estandar($row_data['fecha_fact_hasta']).'<br/>';
+					if(isset($rowData['fecha_fact_hasta'])&&$rowData['fecha_fact_hasta']!=''&&$rowData['fecha_fact_hasta']!='0000-00-00'){
+						echo '<strong>Facturacion Hasta : </strong>'.Fecha_estandar($rowData['fecha_fact_hasta']).'<br/>';
 					}
-					if(isset($row_data['idUsoIVA'])&&$row_data['idUsoIVA']!=''&&$row_data['idUsoIVA']==1){
+					if(isset($rowData['idUsoIVA'])&&$rowData['idUsoIVA']!=''&&$rowData['idUsoIVA']==1){
 						echo '<strong>Exento de IVA : </strong>Factura exenta de IVA<br/>';
 					}
 					
@@ -618,12 +618,12 @@ if($row_data['MontoPagado']!=0){ ?>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
-						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
-						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
-						'.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
-						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
-						Email: '.$row_data['SistemaOrigenEmail'].'
+						<strong>'.$rowData['SistemaOrigen'].'</strong><br/>
+						'.$rowData['SistemaOrigenCiudad'].', '.$rowData['SistemaOrigenComuna'].'<br/>
+						'.$rowData['SistemaOrigenDireccion'].'<br/>
+						Fono: '.formatPhone($rowData['SistemaOrigenFono']).'<br/>
+						Rut: '.$rowData['SistemaOrigenRut'].'<br/>
+						Email: '.$rowData['SistemaOrigenEmail'].'
 					</address>
 				</div>
 
@@ -632,15 +632,15 @@ if($row_data['MontoPagado']!=0){ ?>
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
-					<strong>Doc N°'.n_doc($row_data['idFacturacion'], 5).'</strong><br/>
-					<strong>Bodega Origen: </strong>'.$row_data['BodegaDesde'].'<br/>';
-					if(isset($row_data['CentroCosto_Nombre'])&&$row_data['CentroCosto_Nombre']!=''){
-						echo '<strong>Centro de Costo : </strong>'.$row_data['CentroCosto_Nombre'];
-						if(isset($row_data['CentroCosto_Level_1'])&&$row_data['CentroCosto_Level_1']!=''){echo ' - '.$row_data['CentroCosto_Level_1'];}
-						if(isset($row_data['CentroCosto_Level_2'])&&$row_data['CentroCosto_Level_2']!=''){echo ' - '.$row_data['CentroCosto_Level_2'];}
-						if(isset($row_data['CentroCosto_Level_3'])&&$row_data['CentroCosto_Level_3']!=''){echo ' - '.$row_data['CentroCosto_Level_3'];}
-						if(isset($row_data['CentroCosto_Level_4'])&&$row_data['CentroCosto_Level_4']!=''){echo ' - '.$row_data['CentroCosto_Level_4'];}
-						if(isset($row_data['CentroCosto_Level_5'])&&$row_data['CentroCosto_Level_5']!=''){echo ' - '.$row_data['CentroCosto_Level_5'];}
+					<strong>Doc N°'.n_doc($rowData['idFacturacion'], 5).'</strong><br/>
+					<strong>Bodega Origen: </strong>'.$rowData['BodegaDesde'].'<br/>';
+					if(isset($rowData['CentroCosto_Nombre'])&&$rowData['CentroCosto_Nombre']!=''){
+						echo '<strong>Centro de Costo : </strong>'.$rowData['CentroCosto_Nombre'];
+						if(isset($rowData['CentroCosto_Level_1'])&&$rowData['CentroCosto_Level_1']!=''){echo ' - '.$rowData['CentroCosto_Level_1'];}
+						if(isset($rowData['CentroCosto_Level_2'])&&$rowData['CentroCosto_Level_2']!=''){echo ' - '.$rowData['CentroCosto_Level_2'];}
+						if(isset($rowData['CentroCosto_Level_3'])&&$rowData['CentroCosto_Level_3']!=''){echo ' - '.$rowData['CentroCosto_Level_3'];}
+						if(isset($rowData['CentroCosto_Level_4'])&&$rowData['CentroCosto_Level_4']!=''){echo ' - '.$rowData['CentroCosto_Level_4'];}
+						if(isset($rowData['CentroCosto_Level_5'])&&$rowData['CentroCosto_Level_5']!=''){echo ' - '.$rowData['CentroCosto_Level_5'];}
 						echo '<br/>';
 					}
 				echo '</div>';
@@ -651,12 +651,12 @@ if($row_data['MontoPagado']!=0){ ?>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
-						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
-						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
-						'.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
-						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
-						Email: '.$row_data['SistemaOrigenEmail'].'
+						<strong>'.$rowData['SistemaOrigen'].'</strong><br/>
+						'.$rowData['SistemaOrigenCiudad'].', '.$rowData['SistemaOrigenComuna'].'<br/>
+						'.$rowData['SistemaOrigenDireccion'].'<br/>
+						Fono: '.formatPhone($rowData['SistemaOrigenFono']).'<br/>
+						Rut: '.$rowData['SistemaOrigenRut'].'<br/>
+						Email: '.$rowData['SistemaOrigenEmail'].'
 					</address>
 				</div>
 
@@ -665,16 +665,16 @@ if($row_data['MontoPagado']!=0){ ?>
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
-					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
-					<strong>Bodega Origen: </strong>'.$row_data['BodegaDesde'].'<br/>
-					<strong>Bodega Destino: </strong>'.$row_data['BodegaHacia'].'<br/>';
-					if(isset($row_data['CentroCosto_Nombre'])&&$row_data['CentroCosto_Nombre']!=''){
-						echo '<strong>Centro de Costo : </strong>'.$row_data['CentroCosto_Nombre'];
-						if(isset($row_data['CentroCosto_Level_1'])&&$row_data['CentroCosto_Level_1']!=''){echo ' - '.$row_data['CentroCosto_Level_1'];}
-						if(isset($row_data['CentroCosto_Level_2'])&&$row_data['CentroCosto_Level_2']!=''){echo ' - '.$row_data['CentroCosto_Level_2'];}
-						if(isset($row_data['CentroCosto_Level_3'])&&$row_data['CentroCosto_Level_3']!=''){echo ' - '.$row_data['CentroCosto_Level_3'];}
-						if(isset($row_data['CentroCosto_Level_4'])&&$row_data['CentroCosto_Level_4']!=''){echo ' - '.$row_data['CentroCosto_Level_4'];}
-						if(isset($row_data['CentroCosto_Level_5'])&&$row_data['CentroCosto_Level_5']!=''){echo ' - '.$row_data['CentroCosto_Level_5'];}
+					<strong>Doc N°'.N_doc($rowData['idFacturacion'], 5).'</strong><br/>
+					<strong>Bodega Origen: </strong>'.$rowData['BodegaDesde'].'<br/>
+					<strong>Bodega Destino: </strong>'.$rowData['BodegaHacia'].'<br/>';
+					if(isset($rowData['CentroCosto_Nombre'])&&$rowData['CentroCosto_Nombre']!=''){
+						echo '<strong>Centro de Costo : </strong>'.$rowData['CentroCosto_Nombre'];
+						if(isset($rowData['CentroCosto_Level_1'])&&$rowData['CentroCosto_Level_1']!=''){echo ' - '.$rowData['CentroCosto_Level_1'];}
+						if(isset($rowData['CentroCosto_Level_2'])&&$rowData['CentroCosto_Level_2']!=''){echo ' - '.$rowData['CentroCosto_Level_2'];}
+						if(isset($rowData['CentroCosto_Level_3'])&&$rowData['CentroCosto_Level_3']!=''){echo ' - '.$rowData['CentroCosto_Level_3'];}
+						if(isset($rowData['CentroCosto_Level_4'])&&$rowData['CentroCosto_Level_4']!=''){echo ' - '.$rowData['CentroCosto_Level_4'];}
+						if(isset($rowData['CentroCosto_Level_5'])&&$rowData['CentroCosto_Level_5']!=''){echo ' - '.$rowData['CentroCosto_Level_5'];}
 						echo '<br/>';
 					}
 				echo '</div>';
@@ -685,12 +685,12 @@ if($row_data['MontoPagado']!=0){ ?>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
-						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
-						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
-						'.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
-						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
-						Email: '.$row_data['SistemaOrigenEmail'].'
+						<strong>'.$rowData['SistemaOrigen'].'</strong><br/>
+						'.$rowData['SistemaOrigenCiudad'].', '.$rowData['SistemaOrigenComuna'].'<br/>
+						'.$rowData['SistemaOrigenDireccion'].'<br/>
+						Fono: '.formatPhone($rowData['SistemaOrigenFono']).'<br/>
+						Rut: '.$rowData['SistemaOrigenRut'].'<br/>
+						Email: '.$rowData['SistemaOrigenEmail'].'
 					</address>
 				</div>
 
@@ -699,16 +699,16 @@ if($row_data['MontoPagado']!=0){ ?>
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
-					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
-					<strong>Bodega Origen: </strong>'.$row_data['BodegaDesde'].'<br/>
-					<strong>Bodega Destino: </strong>'.$row_data['BodegaHacia'].'<br/>';
-					if(isset($row_data['CentroCosto_Nombre'])&&$row_data['CentroCosto_Nombre']!=''){
-						echo '<strong>Centro de Costo : </strong>'.$row_data['CentroCosto_Nombre'];
-						if(isset($row_data['CentroCosto_Level_1'])&&$row_data['CentroCosto_Level_1']!=''){echo ' - '.$row_data['CentroCosto_Level_1'];}
-						if(isset($row_data['CentroCosto_Level_2'])&&$row_data['CentroCosto_Level_2']!=''){echo ' - '.$row_data['CentroCosto_Level_2'];}
-						if(isset($row_data['CentroCosto_Level_3'])&&$row_data['CentroCosto_Level_3']!=''){echo ' - '.$row_data['CentroCosto_Level_3'];}
-						if(isset($row_data['CentroCosto_Level_4'])&&$row_data['CentroCosto_Level_4']!=''){echo ' - '.$row_data['CentroCosto_Level_4'];}
-						if(isset($row_data['CentroCosto_Level_5'])&&$row_data['CentroCosto_Level_5']!=''){echo ' - '.$row_data['CentroCosto_Level_5'];}
+					<strong>Doc N°'.N_doc($rowData['idFacturacion'], 5).'</strong><br/>
+					<strong>Bodega Origen: </strong>'.$rowData['BodegaDesde'].'<br/>
+					<strong>Bodega Destino: </strong>'.$rowData['BodegaHacia'].'<br/>';
+					if(isset($rowData['CentroCosto_Nombre'])&&$rowData['CentroCosto_Nombre']!=''){
+						echo '<strong>Centro de Costo : </strong>'.$rowData['CentroCosto_Nombre'];
+						if(isset($rowData['CentroCosto_Level_1'])&&$rowData['CentroCosto_Level_1']!=''){echo ' - '.$rowData['CentroCosto_Level_1'];}
+						if(isset($rowData['CentroCosto_Level_2'])&&$rowData['CentroCosto_Level_2']!=''){echo ' - '.$rowData['CentroCosto_Level_2'];}
+						if(isset($rowData['CentroCosto_Level_3'])&&$rowData['CentroCosto_Level_3']!=''){echo ' - '.$rowData['CentroCosto_Level_3'];}
+						if(isset($rowData['CentroCosto_Level_4'])&&$rowData['CentroCosto_Level_4']!=''){echo ' - '.$rowData['CentroCosto_Level_4'];}
+						if(isset($rowData['CentroCosto_Level_5'])&&$rowData['CentroCosto_Level_5']!=''){echo ' - '.$rowData['CentroCosto_Level_5'];}
 						echo '<br/>';
 					}
 				echo '</div>';
@@ -719,38 +719,38 @@ if($row_data['MontoPagado']!=0){ ?>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
-						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
-						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
-						'.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
-						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
-						Email: '.$row_data['SistemaOrigenEmail'].'
+						<strong>'.$rowData['SistemaOrigen'].'</strong><br/>
+						'.$rowData['SistemaOrigenCiudad'].', '.$rowData['SistemaOrigenComuna'].'<br/>
+						'.$rowData['SistemaOrigenDireccion'].'<br/>
+						Fono: '.formatPhone($rowData['SistemaOrigenFono']).'<br/>
+						Rut: '.$rowData['SistemaOrigenRut'].'<br/>
+						Email: '.$rowData['SistemaOrigenEmail'].'
 					</address>
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
-						<strong>'.$row_data['SistemaDestino'].'</strong><br/>
-						'.$row_data['SistemaDestinoCiudad'].' '.$row_data['SistemaDestinoComuna'].'<br/>
-						'.$row_data['SistemaDestinoDireccion'].'<br/>
-						Fono: '.formatPhone($row_data['SistemaDestinoFono']).'<br/>
-						Fax: '.$row_data['SistemaDestinoFax'].'<br/>
-						Rut: '.$row_data['SistemaDestinoRut'].'<br/>
-						Email: '.$row_data['SistemaDestinoEmail'].'
+						<strong>'.$rowData['SistemaDestino'].'</strong><br/>
+						'.$rowData['SistemaDestinoCiudad'].' '.$rowData['SistemaDestinoComuna'].'<br/>
+						'.$rowData['SistemaDestinoDireccion'].'<br/>
+						Fono: '.formatPhone($rowData['SistemaDestinoFono']).'<br/>
+						Fax: '.$rowData['SistemaDestinoFax'].'<br/>
+						Rut: '.$rowData['SistemaDestinoRut'].'<br/>
+						Email: '.$rowData['SistemaDestinoEmail'].'
 					</address>
 				</div>
 			 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
-					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
-					<strong>Bodega de destino:</strong> '.$row_data['BodegaHacia'].'<br/>';
-					if(isset($row_data['CentroCosto_Nombre'])&&$row_data['CentroCosto_Nombre']!=''){
-						echo '<strong>Centro de Costo : </strong>'.$row_data['CentroCosto_Nombre'];
-						if(isset($row_data['CentroCosto_Level_1'])&&$row_data['CentroCosto_Level_1']!=''){echo ' - '.$row_data['CentroCosto_Level_1'];}
-						if(isset($row_data['CentroCosto_Level_2'])&&$row_data['CentroCosto_Level_2']!=''){echo ' - '.$row_data['CentroCosto_Level_2'];}
-						if(isset($row_data['CentroCosto_Level_3'])&&$row_data['CentroCosto_Level_3']!=''){echo ' - '.$row_data['CentroCosto_Level_3'];}
-						if(isset($row_data['CentroCosto_Level_4'])&&$row_data['CentroCosto_Level_4']!=''){echo ' - '.$row_data['CentroCosto_Level_4'];}
-						if(isset($row_data['CentroCosto_Level_5'])&&$row_data['CentroCosto_Level_5']!=''){echo ' - '.$row_data['CentroCosto_Level_5'];}
+					<strong>Doc N°'.N_doc($rowData['idFacturacion'], 5).'</strong><br/>
+					<strong>Bodega de destino:</strong> '.$rowData['BodegaHacia'].'<br/>';
+					if(isset($rowData['CentroCosto_Nombre'])&&$rowData['CentroCosto_Nombre']!=''){
+						echo '<strong>Centro de Costo : </strong>'.$rowData['CentroCosto_Nombre'];
+						if(isset($rowData['CentroCosto_Level_1'])&&$rowData['CentroCosto_Level_1']!=''){echo ' - '.$rowData['CentroCosto_Level_1'];}
+						if(isset($rowData['CentroCosto_Level_2'])&&$rowData['CentroCosto_Level_2']!=''){echo ' - '.$rowData['CentroCosto_Level_2'];}
+						if(isset($rowData['CentroCosto_Level_3'])&&$rowData['CentroCosto_Level_3']!=''){echo ' - '.$rowData['CentroCosto_Level_3'];}
+						if(isset($rowData['CentroCosto_Level_4'])&&$rowData['CentroCosto_Level_4']!=''){echo ' - '.$rowData['CentroCosto_Level_4'];}
+						if(isset($rowData['CentroCosto_Level_5'])&&$rowData['CentroCosto_Level_5']!=''){echo ' - '.$rowData['CentroCosto_Level_5'];}
 						echo '<br/>';
 					}
 				echo '</div>';
@@ -761,12 +761,12 @@ if($row_data['MontoPagado']!=0){ ?>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
-						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
-						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
-						'.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
-						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
-						Email: '.$row_data['SistemaOrigenEmail'].'
+						<strong>'.$rowData['SistemaOrigen'].'</strong><br/>
+						'.$rowData['SistemaOrigenCiudad'].', '.$rowData['SistemaOrigenComuna'].'<br/>
+						'.$rowData['SistemaOrigenDireccion'].'<br/>
+						Fono: '.formatPhone($rowData['SistemaOrigenFono']).'<br/>
+						Rut: '.$rowData['SistemaOrigenRut'].'<br/>
+						Email: '.$rowData['SistemaOrigenEmail'].'
 					</address>
 				</div>
 
@@ -775,16 +775,16 @@ if($row_data['MontoPagado']!=0){ ?>
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
-					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
-					<strong>Bodega utilizada:</strong> '.$row_data['BodegaDesde'].'<br/>
-					<strong>Orden de Trabajo N°:</strong> '.N_doc($row_data['idOT'], 5).'<br/>';
-					if(isset($row_data['CentroCosto_Nombre'])&&$row_data['CentroCosto_Nombre']!=''){
-						echo '<strong>Centro de Costo : </strong>'.$row_data['CentroCosto_Nombre'];
-						if(isset($row_data['CentroCosto_Level_1'])&&$row_data['CentroCosto_Level_1']!=''){echo ' - '.$row_data['CentroCosto_Level_1'];}
-						if(isset($row_data['CentroCosto_Level_2'])&&$row_data['CentroCosto_Level_2']!=''){echo ' - '.$row_data['CentroCosto_Level_2'];}
-						if(isset($row_data['CentroCosto_Level_3'])&&$row_data['CentroCosto_Level_3']!=''){echo ' - '.$row_data['CentroCosto_Level_3'];}
-						if(isset($row_data['CentroCosto_Level_4'])&&$row_data['CentroCosto_Level_4']!=''){echo ' - '.$row_data['CentroCosto_Level_4'];}
-						if(isset($row_data['CentroCosto_Level_5'])&&$row_data['CentroCosto_Level_5']!=''){echo ' - '.$row_data['CentroCosto_Level_5'];}
+					<strong>Doc N°'.N_doc($rowData['idFacturacion'], 5).'</strong><br/>
+					<strong>Bodega utilizada:</strong> '.$rowData['BodegaDesde'].'<br/>
+					<strong>Orden de Trabajo N°:</strong> '.N_doc($rowData['idOT'], 5).'<br/>';
+					if(isset($rowData['CentroCosto_Nombre'])&&$rowData['CentroCosto_Nombre']!=''){
+						echo '<strong>Centro de Costo : </strong>'.$rowData['CentroCosto_Nombre'];
+						if(isset($rowData['CentroCosto_Level_1'])&&$rowData['CentroCosto_Level_1']!=''){echo ' - '.$rowData['CentroCosto_Level_1'];}
+						if(isset($rowData['CentroCosto_Level_2'])&&$rowData['CentroCosto_Level_2']!=''){echo ' - '.$rowData['CentroCosto_Level_2'];}
+						if(isset($rowData['CentroCosto_Level_3'])&&$rowData['CentroCosto_Level_3']!=''){echo ' - '.$rowData['CentroCosto_Level_3'];}
+						if(isset($rowData['CentroCosto_Level_4'])&&$rowData['CentroCosto_Level_4']!=''){echo ' - '.$rowData['CentroCosto_Level_4'];}
+						if(isset($rowData['CentroCosto_Level_5'])&&$rowData['CentroCosto_Level_5']!=''){echo ' - '.$rowData['CentroCosto_Level_5'];}
 						echo '<br/>';
 					}
 				echo '</div>';
@@ -795,37 +795,37 @@ if($row_data['MontoPagado']!=0){ ?>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
-						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
-						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
-						'.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
-						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
-						Email: '.$row_data['SistemaOrigenEmail'].'
+						<strong>'.$rowData['SistemaOrigen'].'</strong><br/>
+						'.$rowData['SistemaOrigenCiudad'].', '.$rowData['SistemaOrigenComuna'].'<br/>
+						'.$rowData['SistemaOrigenDireccion'].'<br/>
+						Fono: '.formatPhone($rowData['SistemaOrigenFono']).'<br/>
+						Rut: '.$rowData['SistemaOrigenRut'].'<br/>
+						Email: '.$rowData['SistemaOrigenEmail'].'
 					</address>
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
-						<strong>'.$row_data['SistemaDestino'].'</strong><br/>
-						'.$row_data['SistemaDestinoCiudad'].' '.$row_data['SistemaDestinoComuna'].'<br/>
-						'.$row_data['SistemaDestinoDireccion'].'<br/>
-						Fono: '.formatPhone($row_data['SistemaDestinoFono']).'<br/>
-						Fax: '.$row_data['SistemaDestinoFax'].'<br/>
-						Rut: '.$row_data['SistemaDestinoRut'].'<br/>
-						Email: '.$row_data['SistemaDestinoEmail'].'
+						<strong>'.$rowData['SistemaDestino'].'</strong><br/>
+						'.$rowData['SistemaDestinoCiudad'].' '.$rowData['SistemaDestinoComuna'].'<br/>
+						'.$rowData['SistemaDestinoDireccion'].'<br/>
+						Fono: '.formatPhone($rowData['SistemaDestinoFono']).'<br/>
+						Fax: '.$rowData['SistemaDestinoFax'].'<br/>
+						Rut: '.$rowData['SistemaDestinoRut'].'<br/>
+						Email: '.$rowData['SistemaDestinoEmail'].'
 					</address>
 				</div>
 			 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
-					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>';
-					if(isset($row_data['CentroCosto_Nombre'])&&$row_data['CentroCosto_Nombre']!=''){
-						echo '<strong>Centro de Costo : </strong>'.$row_data['CentroCosto_Nombre'];
-						if(isset($row_data['CentroCosto_Level_1'])&&$row_data['CentroCosto_Level_1']!=''){echo ' - '.$row_data['CentroCosto_Level_1'];}
-						if(isset($row_data['CentroCosto_Level_2'])&&$row_data['CentroCosto_Level_2']!=''){echo ' - '.$row_data['CentroCosto_Level_2'];}
-						if(isset($row_data['CentroCosto_Level_3'])&&$row_data['CentroCosto_Level_3']!=''){echo ' - '.$row_data['CentroCosto_Level_3'];}
-						if(isset($row_data['CentroCosto_Level_4'])&&$row_data['CentroCosto_Level_4']!=''){echo ' - '.$row_data['CentroCosto_Level_4'];}
-						if(isset($row_data['CentroCosto_Level_5'])&&$row_data['CentroCosto_Level_5']!=''){echo ' - '.$row_data['CentroCosto_Level_5'];}
+					<strong>Doc N°'.N_doc($rowData['idFacturacion'], 5).'</strong><br/>';
+					if(isset($rowData['CentroCosto_Nombre'])&&$rowData['CentroCosto_Nombre']!=''){
+						echo '<strong>Centro de Costo : </strong>'.$rowData['CentroCosto_Nombre'];
+						if(isset($rowData['CentroCosto_Level_1'])&&$rowData['CentroCosto_Level_1']!=''){echo ' - '.$rowData['CentroCosto_Level_1'];}
+						if(isset($rowData['CentroCosto_Level_2'])&&$rowData['CentroCosto_Level_2']!=''){echo ' - '.$rowData['CentroCosto_Level_2'];}
+						if(isset($rowData['CentroCosto_Level_3'])&&$rowData['CentroCosto_Level_3']!=''){echo ' - '.$rowData['CentroCosto_Level_3'];}
+						if(isset($rowData['CentroCosto_Level_4'])&&$rowData['CentroCosto_Level_4']!=''){echo ' - '.$rowData['CentroCosto_Level_4'];}
+						if(isset($rowData['CentroCosto_Level_5'])&&$rowData['CentroCosto_Level_5']!=''){echo ' - '.$rowData['CentroCosto_Level_5'];}
 						echo '<br/>';
 					}
 				echo '</div>';
@@ -836,41 +836,41 @@ if($row_data['MontoPagado']!=0){ ?>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
-						<strong>'.$row_data['NombreProveedor'].'</strong><br/>
-						'.$row_data['CiudadProveedor'].', '.$row_data['ComunaProveedor'].'<br/>
-						'.$row_data['DireccionProveedor'].'<br/>
-						Fono Fijo: '.formatPhone($row_data['Fono1Proveedor']).'<br/>
-						Celular: '.formatPhone($row_data['Fono2Proveedor']).'<br/>
-						Fax: '.$row_data['FaxProveedor'].'<br/>
-						Rut: '.$row_data['RutProveedor'].'<br/>
-						Email: '.$row_data['EmailProveedor'].'<br/>
-						Contacto: '.$row_data['PersonaContactoProveedor'].'<br/>
-						Giro de la Empresa: '.$row_data['GiroProveedor'].'
+						<strong>'.$rowData['NombreProveedor'].'</strong><br/>
+						'.$rowData['CiudadProveedor'].', '.$rowData['ComunaProveedor'].'<br/>
+						'.$rowData['DireccionProveedor'].'<br/>
+						Fono Fijo: '.formatPhone($rowData['Fono1Proveedor']).'<br/>
+						Celular: '.formatPhone($rowData['Fono2Proveedor']).'<br/>
+						Fax: '.$rowData['FaxProveedor'].'<br/>
+						Rut: '.$rowData['RutProveedor'].'<br/>
+						Email: '.$rowData['EmailProveedor'].'<br/>
+						Contacto: '.$rowData['PersonaContactoProveedor'].'<br/>
+						Giro de la Empresa: '.$rowData['GiroProveedor'].'
 					</address>
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
-						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
-						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
-						'.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
-						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
-						Email: '.$row_data['SistemaOrigenEmail'].'
+						<strong>'.$rowData['SistemaOrigen'].'</strong><br/>
+						'.$rowData['SistemaOrigenCiudad'].', '.$rowData['SistemaOrigenComuna'].'<br/>
+						'.$rowData['SistemaOrigenDireccion'].'<br/>
+						Fono: '.formatPhone($rowData['SistemaOrigenFono']).'<br/>
+						Rut: '.$rowData['SistemaOrigenRut'].'<br/>
+						Email: '.$rowData['SistemaOrigenEmail'].'
 					</address>
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
-					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
-					<strong>Bodega Destino: </strong>'.$row_data['BodegaHacia'].'<br/>';
-					if(isset($row_data['CentroCosto_Nombre'])&&$row_data['CentroCosto_Nombre']!=''){
-						echo '<strong>Centro de Costo : </strong>'.$row_data['CentroCosto_Nombre'];
-						if(isset($row_data['CentroCosto_Level_1'])&&$row_data['CentroCosto_Level_1']!=''){echo ' - '.$row_data['CentroCosto_Level_1'];}
-						if(isset($row_data['CentroCosto_Level_2'])&&$row_data['CentroCosto_Level_2']!=''){echo ' - '.$row_data['CentroCosto_Level_2'];}
-						if(isset($row_data['CentroCosto_Level_3'])&&$row_data['CentroCosto_Level_3']!=''){echo ' - '.$row_data['CentroCosto_Level_3'];}
-						if(isset($row_data['CentroCosto_Level_4'])&&$row_data['CentroCosto_Level_4']!=''){echo ' - '.$row_data['CentroCosto_Level_4'];}
-						if(isset($row_data['CentroCosto_Level_5'])&&$row_data['CentroCosto_Level_5']!=''){echo ' - '.$row_data['CentroCosto_Level_5'];}
+					<strong>Doc N°'.N_doc($rowData['idFacturacion'], 5).'</strong><br/>
+					<strong>Bodega Destino: </strong>'.$rowData['BodegaHacia'].'<br/>';
+					if(isset($rowData['CentroCosto_Nombre'])&&$rowData['CentroCosto_Nombre']!=''){
+						echo '<strong>Centro de Costo : </strong>'.$rowData['CentroCosto_Nombre'];
+						if(isset($rowData['CentroCosto_Level_1'])&&$rowData['CentroCosto_Level_1']!=''){echo ' - '.$rowData['CentroCosto_Level_1'];}
+						if(isset($rowData['CentroCosto_Level_2'])&&$rowData['CentroCosto_Level_2']!=''){echo ' - '.$rowData['CentroCosto_Level_2'];}
+						if(isset($rowData['CentroCosto_Level_3'])&&$rowData['CentroCosto_Level_3']!=''){echo ' - '.$rowData['CentroCosto_Level_3'];}
+						if(isset($rowData['CentroCosto_Level_4'])&&$rowData['CentroCosto_Level_4']!=''){echo ' - '.$rowData['CentroCosto_Level_4'];}
+						if(isset($rowData['CentroCosto_Level_5'])&&$rowData['CentroCosto_Level_5']!=''){echo ' - '.$rowData['CentroCosto_Level_5'];}
 						echo '<br/>';
 					}
 				echo '</div>';
@@ -940,10 +940,10 @@ if($row_data['MontoPagado']!=0){ ?>
 			</table>
 			<table class="table">
 				<tbody>
-					<?php if(isset($row_data['ValorNeto'])&&$row_data['ValorNeto']!=0){ ?>
+					<?php if(isset($rowData['ValorNeto'])&&$rowData['ValorNeto']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong>Subtotal</strong></td>
-							<td width="160" align="right"><?php echo Valores($row_data['ValorNeto'], 0); ?></td>
+							<td width="160" align="right"><?php echo Valores($rowData['ValorNeto'], 0); ?></td>
 						</tr>
 					<?php } ?>
 					<?php foreach ($arrDescuentos as $descuentos) { ?>
@@ -952,76 +952,76 @@ if($row_data['MontoPagado']!=0){ ?>
 							<td width="160" align="right"><?php echo Valores($descuentos['vTotal'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['ValorNetoImp'])&&$row_data['ValorNetoImp']!=0){ ?>
+					<?php if(isset($rowData['ValorNetoImp'])&&$rowData['ValorNetoImp']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong>Neto Imponible</strong></td>
-							<td width="160" align="right"><?php echo Valores($row_data['ValorNetoImp'], 0); ?></td>
+							<td width="160" align="right"><?php echo Valores($rowData['ValorNetoImp'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_01'])&&$row_data['Impuesto_01']!=0){ ?>
+					<?php if(isset($rowData['Impuesto_01'])&&$rowData['Impuesto_01']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[0]['nimp']; ?></strong></td>
-							<td align="right"><?php echo Valores($row_data['Impuesto_01'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['Impuesto_01'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_02'])&&$row_data['Impuesto_02']!=0){ ?>
+					<?php if(isset($rowData['Impuesto_02'])&&$rowData['Impuesto_02']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[1]['nimp']; ?></strong></td>
-							<td align="right"><?php echo Valores($row_data['Impuesto_02'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['Impuesto_02'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_03'])&&$row_data['Impuesto_03']!=0){ ?>
+					<?php if(isset($rowData['Impuesto_03'])&&$rowData['Impuesto_03']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[2]['nimp']; ?></strong></td>
-							<td align="right"><?php echo Valores($row_data['Impuesto_03'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['Impuesto_03'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_04'])&&$row_data['Impuesto_04']!=0){ ?>
+					<?php if(isset($rowData['Impuesto_04'])&&$rowData['Impuesto_04']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[3]['nimp']; ?></strong></td>
-							<td align="right"><?php echo Valores($row_data['Impuesto_04'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['Impuesto_04'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_05'])&&$row_data['Impuesto_05']!=0){ ?>
+					<?php if(isset($rowData['Impuesto_05'])&&$rowData['Impuesto_05']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[4]['nimp']; ?></strong></td>
-							<td align="right"><?php echo Valores($row_data['Impuesto_05'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['Impuesto_05'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_06'])&&$row_data['Impuesto_06']!=0){ ?>
+					<?php if(isset($rowData['Impuesto_06'])&&$rowData['Impuesto_06']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[5]['nimp']; ?></strong></td>
-							<td align="right"><?php echo Valores($row_data['Impuesto_06'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['Impuesto_06'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_07'])&&$row_data['Impuesto_07']!=0){ ?>
+					<?php if(isset($rowData['Impuesto_07'])&&$rowData['Impuesto_07']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[6]['nimp']; ?></strong></td>
-							<td align="right"><?php echo Valores($row_data['Impuesto_07'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['Impuesto_07'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_08'])&&$row_data['Impuesto_08']!=0){ ?>
+					<?php if(isset($rowData['Impuesto_08'])&&$rowData['Impuesto_08']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[7]['nimp']; ?></strong></td>
-							<td align="right"><?php echo Valores($row_data['Impuesto_08'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['Impuesto_08'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_09'])&&$row_data['Impuesto_09']!=0){ ?>
+					<?php if(isset($rowData['Impuesto_09'])&&$rowData['Impuesto_09']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[8]['nimp']; ?></strong></td>
-							<td align="right"><?php echo Valores($row_data['Impuesto_09'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['Impuesto_09'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_10'])&&$row_data['Impuesto_10']!=0){ ?>
+					<?php if(isset($rowData['Impuesto_10'])&&$rowData['Impuesto_10']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[9]['nimp']; ?></strong></td>
-							<td align="right"><?php echo Valores($row_data['Impuesto_10'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['Impuesto_10'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['ValorTotal'])&&$row_data['ValorTotal']!=0){ ?>
+					<?php if(isset($rowData['ValorTotal'])&&$rowData['ValorTotal']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong>Total</strong></td>
-							<td align="right"><?php echo Valores($row_data['ValorTotal'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['ValorTotal'], 0); ?></td>
 						</tr>
 					<?php } ?>
 
@@ -1033,13 +1033,13 @@ if($row_data['MontoPagado']!=0){ ?>
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $rowData['Observaciones']; ?></p>
 		</div>
 	</div>
 
 	<?php
 	//Traspaso de Productos a otra Empresa
-	if($row_data['idTipo']==6){ ?>
+	if($rowData['idTipo']==6){ ?>
 
 		<div class="row firma">
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont"><p>Firma Transportista</p></div>

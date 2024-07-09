@@ -321,7 +321,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre de la imagen
-			$rowdata = db_select_data (false, 'Direccion_img', 'caja_chica_listado', '', "idCajaChica = ".$_GET['del_img'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'Direccion_img', 'caja_chica_listado', '', "idCajaChica = ".$_GET['del_img'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -331,12 +331,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+				if(isset($rowData['Direccion_img'])&&$rowData['Direccion_img']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+						if(!is_writable('upload/'.$rowData['Direccion_img'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['Direccion_img']);
+							unlink('upload/'.$rowData['Direccion_img']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -357,7 +357,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'FichaTecnica', 'caja_chica_listado', '', "idCajaChica = ".$_GET['del_file'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'FichaTecnica', 'caja_chica_listado', '', "idCajaChica = ".$_GET['del_file'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -367,12 +367,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
+				if(isset($rowData['FichaTecnica'])&&$rowData['FichaTecnica']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['FichaTecnica'])){
+						if(!is_writable('upload/'.$rowData['FichaTecnica'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['FichaTecnica']);
+							unlink('upload/'.$rowData['FichaTecnica']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -418,7 +418,7 @@ require_once '0_validate_user_1.php';
 
 			if($errorn==0){
 				// Se obtiene el nombre del archivo
-				$rowdata = db_select_data (false, 'Direccion_img, FichaTecnica', 'caja_chica_listado', '', "idCajaChica = ".$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'Direccion_img, FichaTecnica', 'caja_chica_listado', '', "idCajaChica = ".$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//se borran los datos
 				$resultado = db_delete_data (false, 'caja_chica_listado', 'idCajaChica = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -426,24 +426,24 @@ require_once '0_validate_user_1.php';
 				if($resultado==true){
 
 					//Se elimina la imagen
-					if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+					if(isset($rowData['Direccion_img'])&&$rowData['Direccion_img']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+							if(!is_writable('upload/'.$rowData['Direccion_img'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['Direccion_img']);
+								unlink('upload/'.$rowData['Direccion_img']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
 					//Se elimina el archivo adjunto
-					if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
+					if(isset($rowData['FichaTecnica'])&&$rowData['FichaTecnica']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['FichaTecnica'])){
+							if(!is_writable('upload/'.$rowData['FichaTecnica'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['FichaTecnica']);
+								unlink('upload/'.$rowData['FichaTecnica']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log

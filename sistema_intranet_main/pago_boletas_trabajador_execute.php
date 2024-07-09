@@ -36,18 +36,18 @@ if(isset($_SESSION['pagos_boletas_trabajadores'][$_GET['idFacturacion']]['idFact
 	(SELECT SUM(MontoPagado) FROM `pagos_boletas_trabajadores` WHERE idFacturacion= boleta_honorarios_facturacion.idFacturacion LIMIT 1) AS MontoPagado';
 	$SIS_join  = 'LEFT JOIN `trabajadores_listado` ON trabajadores_listado.idTrabajador = boleta_honorarios_facturacion.idTrabajador';
 	$SIS_where = 'boleta_honorarios_facturacion.idFacturacion='.$_GET['idFacturacion'];
-	$row_data = db_select_data (false, $SIS_query, 'boleta_honorarios_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'boleta_honorarios_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/******************************************************************/
 	//Se traspasan los valores a variables de sesion
-	$_SESSION['pagos_boletas_trabajadores'][$row_data['idFacturacion']]['idFacturacion']      = $row_data['idFacturacion'];
-	$_SESSION['pagos_boletas_trabajadores'][$row_data['idFacturacion']]['N_Doc']              = $row_data['N_Doc'];
-	$_SESSION['pagos_boletas_trabajadores'][$row_data['idFacturacion']]['Trabajador']         = $row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].' '.$row_data['TrabajadorApellidoMat'];
-	$_SESSION['pagos_boletas_trabajadores'][$row_data['idFacturacion']]['ValorTotal']         = $row_data['ValorTotal'];
-	$_SESSION['pagos_boletas_trabajadores'][$row_data['idFacturacion']]['MontoPagado']        = $row_data['MontoPagado'];
-	$_SESSION['pagos_boletas_trabajadores'][$row_data['idFacturacion']]['idSistema']          = $row_data['idSistema'];
-	$_SESSION['pagos_boletas_trabajadores'][$row_data['idFacturacion']]['idTrabajador']       = $row_data['idTrabajador'];
-	$_SESSION['pagos_boletas_trabajadores'][$row_data['idFacturacion']]['ValorReal']          = '';
+	$_SESSION['pagos_boletas_trabajadores'][$rowData['idFacturacion']]['idFacturacion']      = $rowData['idFacturacion'];
+	$_SESSION['pagos_boletas_trabajadores'][$rowData['idFacturacion']]['N_Doc']              = $rowData['N_Doc'];
+	$_SESSION['pagos_boletas_trabajadores'][$rowData['idFacturacion']]['Trabajador']         = $rowData['TrabajadorNombre'].' '.$rowData['TrabajadorApellidoPat'].' '.$rowData['TrabajadorApellidoMat'];
+	$_SESSION['pagos_boletas_trabajadores'][$rowData['idFacturacion']]['ValorTotal']         = $rowData['ValorTotal'];
+	$_SESSION['pagos_boletas_trabajadores'][$rowData['idFacturacion']]['MontoPagado']        = $rowData['MontoPagado'];
+	$_SESSION['pagos_boletas_trabajadores'][$rowData['idFacturacion']]['idSistema']          = $rowData['idSistema'];
+	$_SESSION['pagos_boletas_trabajadores'][$rowData['idFacturacion']]['idTrabajador']       = $rowData['idTrabajador'];
+	$_SESSION['pagos_boletas_trabajadores'][$rowData['idFacturacion']]['ValorReal']          = '';
 
 }
 

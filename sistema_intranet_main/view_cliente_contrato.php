@@ -61,7 +61,7 @@ $SIS_join  = '
 LEFT JOIN `core_ubicacion_comunas` ON core_ubicacion_comunas.idComuna = clientes_listado.idComuna
 LEFT JOIN `core_cross_cliente`     ON core_cross_cliente.idPeriodo    = clientes_listado.Contrato_idPeriodo';
 $SIS_where = 'clientes_listado.idCliente ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /*******************************************/
 //Listado con los tabs
@@ -137,24 +137,24 @@ foreach ($arrTabs as $tab) {
 
 				<?php
 				//no son necesarios validar
-				$N_Documento    = N_doc($rowdata['idCliente'], 5).'-'.N_doc($X_idTab, 2);
+				$N_Documento    = N_doc($rowData['idCliente'], 5).'-'.N_doc($X_idTab, 2);
 				$UnidadNegocio  = $arrTabsSorter[$X_idTab];
 
 				//se deben validar
-				if(isset($rowdata['Contrato_Fecha_Ini'])&&$rowdata['Contrato_Fecha_Ini']!=''){               $FechaInicioContrato        = fecha_estandar($rowdata['Contrato_Fecha_Ini']);                               }else{$FechaInicioContrato        = 'Sin datos';}
-				if(isset($rowdata['Contrato_Representante_Legal'])&&$rowdata['Contrato_Representante_Legal']!=''){  $RepresentanteNombre        = $rowdata['Contrato_Representante_Legal'];                                     }else{$RepresentanteNombre        = 'Sin datos';}
-				if(isset($rowdata['Contrato_Representante_Rut'])&&$rowdata['Contrato_Representante_Rut']!=''){      $RepresentanteRut           = $rowdata['Contrato_Representante_Rut'];                                       }else{$RepresentanteRut           = 'Sin datos';}
-				if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){                                       $ClienteNombre              = $rowdata['Nombre'];                                                           }else{$ClienteNombre              = 'Sin datos';}
-				if(isset($rowdata['Giro'])&&$rowdata['Giro']!=''){                                           $ClienteGiro                = $rowdata['Giro'];                                                             }else{$ClienteGiro                = 'Sin datos';}
-				if(isset($rowdata['Rut'])&&$rowdata['Rut']!=''){                                             $ClienteRut                 = $rowdata['Rut'];                                                              }else{$ClienteRut                 = 'Sin datos';}
-				if(isset($rowdata['Direccion'])&&$rowdata['Direccion']!=''){                                 $ClienteDireccion           = $rowdata['Direccion'];                                                        }else{$ClienteDireccion           = 'Sin datos';}
-				if(isset($rowdata['Comuna'])&&$rowdata['Comuna']!=''){                                       $ClienteComuna              = $rowdata['Comuna'];                                                           }else{$ClienteComuna              = 'Sin datos';}
-				if(isset($rowdata['Contrato_UF_Instalacion'])&&$rowdata['Contrato_UF_Instalacion']!=''){     $ValorUFInstalacion         = Cantidades_decimales_justos($rowdata['Contrato_UF_Instalacion']);             }else{$ValorUFInstalacion         = 'Sin datos';}
-				if(isset($rowdata['Contrato_UF_Instalacion'])&&$rowdata['Contrato_UF_Instalacion']!=''){     $ValorUFInstalacionPalabra  = str_replace('PESOS', 'UF',numtoletras($rowdata['Contrato_UF_Instalacion']));  }else{$ValorUFInstalacionPalabra  = 'Sin datos';}
-				if(isset($rowdata['Contrato_UF_Mensual'])&&$rowdata['Contrato_UF_Mensual']!=''){             $ValorUFMensualidad         = Cantidades_decimales_justos($rowdata['Contrato_UF_Mensual']);                 }else{$ValorUFMensualidad         = 'Sin datos';}
-				if(isset($rowdata['Contrato_UF_Mensual'])&&$rowdata['Contrato_UF_Mensual']!=''){             $ValorUFMensualidadPalabra  = str_replace('PESOS', 'UF',numtoletras($rowdata['Contrato_UF_Mensual']));      }else{$ValorUFMensualidadPalabra  = 'Sin datos';}
-				if(isset($rowdata['Contrato_N_Meses'])&&$rowdata['Contrato_N_Meses']!=''){                   $NMeses                     = Cantidades_decimales_justos($rowdata['Contrato_N_Meses']);                    }else{$NMeses                     = 'Sin datos';}
-				if(isset($rowdata['Contrato_Periodo'])&&$rowdata['Contrato_Periodo']!=''){                   $Periodo                    = $rowdata['Contrato_Periodo'];                                                 }else{$Periodo                    = 'Sin datos';}
+				if(isset($rowData['Contrato_Fecha_Ini'])&&$rowData['Contrato_Fecha_Ini']!=''){               $FechaInicioContrato        = fecha_estandar($rowData['Contrato_Fecha_Ini']);                               }else{$FechaInicioContrato        = 'Sin datos';}
+				if(isset($rowData['Contrato_Representante_Legal'])&&$rowData['Contrato_Representante_Legal']!=''){  $RepresentanteNombre        = $rowData['Contrato_Representante_Legal'];                                     }else{$RepresentanteNombre        = 'Sin datos';}
+				if(isset($rowData['Contrato_Representante_Rut'])&&$rowData['Contrato_Representante_Rut']!=''){      $RepresentanteRut           = $rowData['Contrato_Representante_Rut'];                                       }else{$RepresentanteRut           = 'Sin datos';}
+				if(isset($rowData['Nombre'])&&$rowData['Nombre']!=''){                                       $ClienteNombre              = $rowData['Nombre'];                                                           }else{$ClienteNombre              = 'Sin datos';}
+				if(isset($rowData['Giro'])&&$rowData['Giro']!=''){                                           $ClienteGiro                = $rowData['Giro'];                                                             }else{$ClienteGiro                = 'Sin datos';}
+				if(isset($rowData['Rut'])&&$rowData['Rut']!=''){                                             $ClienteRut                 = $rowData['Rut'];                                                              }else{$ClienteRut                 = 'Sin datos';}
+				if(isset($rowData['Direccion'])&&$rowData['Direccion']!=''){                                 $ClienteDireccion           = $rowData['Direccion'];                                                        }else{$ClienteDireccion           = 'Sin datos';}
+				if(isset($rowData['Comuna'])&&$rowData['Comuna']!=''){                                       $ClienteComuna              = $rowData['Comuna'];                                                           }else{$ClienteComuna              = 'Sin datos';}
+				if(isset($rowData['Contrato_UF_Instalacion'])&&$rowData['Contrato_UF_Instalacion']!=''){     $ValorUFInstalacion         = Cantidades_decimales_justos($rowData['Contrato_UF_Instalacion']);             }else{$ValorUFInstalacion         = 'Sin datos';}
+				if(isset($rowData['Contrato_UF_Instalacion'])&&$rowData['Contrato_UF_Instalacion']!=''){     $ValorUFInstalacionPalabra  = str_replace('PESOS', 'UF',numtoletras($rowData['Contrato_UF_Instalacion']));  }else{$ValorUFInstalacionPalabra  = 'Sin datos';}
+				if(isset($rowData['Contrato_UF_Mensual'])&&$rowData['Contrato_UF_Mensual']!=''){             $ValorUFMensualidad         = Cantidades_decimales_justos($rowData['Contrato_UF_Mensual']);                 }else{$ValorUFMensualidad         = 'Sin datos';}
+				if(isset($rowData['Contrato_UF_Mensual'])&&$rowData['Contrato_UF_Mensual']!=''){             $ValorUFMensualidadPalabra  = str_replace('PESOS', 'UF',numtoletras($rowData['Contrato_UF_Mensual']));      }else{$ValorUFMensualidadPalabra  = 'Sin datos';}
+				if(isset($rowData['Contrato_N_Meses'])&&$rowData['Contrato_N_Meses']!=''){                   $NMeses                     = Cantidades_decimales_justos($rowData['Contrato_N_Meses']);                    }else{$NMeses                     = 'Sin datos';}
+				if(isset($rowData['Contrato_Periodo'])&&$rowData['Contrato_Periodo']!=''){                   $Periodo                    = $rowData['Contrato_Periodo'];                                                 }else{$Periodo                    = 'Sin datos';}
 
 				?>
 				
@@ -190,7 +190,7 @@ foreach ($arrTabs as $tab) {
 					type:"blob",
 					mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 				}) //Output the document using Data-URI
-				saveAs(out,"<?php echo 'Contrato '.$rowdata['Nombre'].' N°'.N_doc($rowdata['idCliente'], 5).'-'.N_doc($X_idTab, 2); ?>.docx")
+				saveAs(out,"<?php echo 'Contrato '.$rowData['Nombre'].' N°'.N_doc($rowData['idCliente'], 5).'-'.N_doc($X_idTab, 2); ?>.docx")
 			})
 		}
     </script>

@@ -474,7 +474,7 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 					/****************************************************************************************************/
 					//Se revisa si ya hay un pago anterior en el mismo id
-					$rowdataold = db_select_data (false, 'montoPago', 'vehiculos_facturacion_listado_detalle', '', 'idFacturacionDetalle = '.$idFacturacionDetalle, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$rowDataold = db_select_data (false, 'montoPago', 'vehiculos_facturacion_listado_detalle', '', 'idFacturacionDetalle = '.$idFacturacionDetalle, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 					//actualizo el estado de la ultima facturacion
 					$SIS_data = "idFacturacionDetalle = '".$idFacturacionDetalle."' ";
@@ -500,8 +500,8 @@ require_once '0_validate_user_1.php';
 					}
 					//se verifica si se tiene algun pago anterior, si es asi se suman los montos
 					if(isset($montoPago) && $montoPago!=''){
-						if(isset($rowdataold['montoPago']) && $rowdataold['montoPago']!=''){
-							$nuevoMonto = $rowdataold['montoPago'] + $montoPago;
+						if(isset($rowDataold['montoPago']) && $rowDataold['montoPago']!=''){
+							$nuevoMonto = $rowDataold['montoPago'] + $montoPago;
 						}else{
 							$nuevoMonto = $montoPago;
 						}

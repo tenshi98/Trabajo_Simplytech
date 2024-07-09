@@ -78,7 +78,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);	
+$rowData = mysqli_fetch_assoc ($resultado);	
 	
 	?>
 
@@ -93,7 +93,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Observaciones)){    $x1  = $Observaciones;    }else{$x1  = $rowdata['Observaciones'];}
+				if(isset($Observaciones)){    $x1  = $Observaciones;    }else{$x1  = $rowData['Observaciones'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

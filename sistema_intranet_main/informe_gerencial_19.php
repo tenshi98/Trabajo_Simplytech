@@ -69,8 +69,8 @@ $where_2 = " AND usuarios_bodegas_insumos.".$x2;
 $where_3 = " AND usuarios_bodegas_arriendos.".$x2;
 /**********************************************************/
 // Se trae un listado con los valores de las existencias actuales
-$año_pasado = ano_actual()-1;
-$z = "WHERE Creacion_ano >= ".$año_pasado;
+$ano_pasado = ano_actual()-1;
+$z = "WHERE Creacion_ano >= ".$ano_pasado;
 //se consulta
 $arrExistencias = array();
 $query = "SELECT idSistema, Creacion_ano,Creacion_mes,Cantidad_ing,Cantidad_eg,idTipo,SUM(ValorTotal) AS Valor
@@ -217,8 +217,8 @@ if($s_prod_Ingreso_Manual=='true'){    $s_prod_data .= ',tipo9';}
 /*******************************************************************************************************/
 /*******************************************************************************************************/
 // Se trae un listado con los valores de las existencias actuales
-$año_pasado = ano_actual()-1;
-$z = "WHERE Creacion_ano >= ".$año_pasado;
+$ano_pasado = ano_actual()-1;
+$z = "WHERE Creacion_ano >= ".$ano_pasado;
 //se consulta
 $arrExistencias = array();
 $query = "SELECT idSistema, Creacion_ano,Creacion_mes,Cantidad_ing,Cantidad_eg,idTipo,SUM(ValorTotal) AS Valor
@@ -366,8 +366,8 @@ if($s_ins_Ingreso_Manual=='true'){    $s_ins_data .= ',tipo9';}
 /*******************************************************************************************************/
 /*******************************************************************************************************/
 // Se trae un listado con los valores de las existencias actuales
-$año_pasado = ano_actual()-1;
-$z = "WHERE Creacion_ano >= ".$año_pasado;
+$ano_pasado = ano_actual()-1;
+$z = "WHERE Creacion_ano >= ".$ano_pasado;
 //se consulta
 $arrExistencias = array();
 $query = "SELECT idSistema, Creacion_ano,Creacion_mes,Cantidad_ing,Cantidad_eg,idTipo,SUM(ValorTotal) AS Valor

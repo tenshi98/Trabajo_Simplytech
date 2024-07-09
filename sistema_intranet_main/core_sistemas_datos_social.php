@@ -53,12 +53,12 @@ $SIS_query = 'Nombre,Social_idUso, Social_facebook, Social_twitter,
 Social_instagram, Social_linkedin, Social_rss, Social_youtube, Social_tumblr';
 $SIS_join  = '';
 $SIS_where = 'idSistema ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Datos Sociales'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowData['Nombre'], 'Editar Datos Sociales'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -107,14 +107,14 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Social_idUso)){         $x1 = $Social_idUso;         }else{$x1 = $rowdata['Social_idUso'];}
-					if(isset($Social_facebook)){      $x2 = $Social_facebook;      }else{$x2 = $rowdata['Social_facebook'];}
-					if(isset($Social_twitter)){       $x3 = $Social_twitter;       }else{$x3 = $rowdata['Social_twitter'];}
-					if(isset($Social_instagram)){     $x4 = $Social_instagram;     }else{$x4 = $rowdata['Social_instagram'];}
-					if(isset($Social_linkedin)){      $x5 = $Social_linkedin;      }else{$x5 = $rowdata['Social_linkedin'];}
-					if(isset($Social_rss)){           $x6 = $Social_rss;           }else{$x6 = $rowdata['Social_rss'];}
-					if(isset($Social_youtube)){       $x7 = $Social_youtube;       }else{$x7 = $rowdata['Social_youtube'];}
-					if(isset($Social_tumblr)){        $x8 = $Social_tumblr;        }else{$x8 = $rowdata['Social_tumblr'];}
+					if(isset($Social_idUso)){         $x1 = $Social_idUso;         }else{$x1 = $rowData['Social_idUso'];}
+					if(isset($Social_facebook)){      $x2 = $Social_facebook;      }else{$x2 = $rowData['Social_facebook'];}
+					if(isset($Social_twitter)){       $x3 = $Social_twitter;       }else{$x3 = $rowData['Social_twitter'];}
+					if(isset($Social_instagram)){     $x4 = $Social_instagram;     }else{$x4 = $rowData['Social_instagram'];}
+					if(isset($Social_linkedin)){      $x5 = $Social_linkedin;      }else{$x5 = $rowData['Social_linkedin'];}
+					if(isset($Social_rss)){           $x6 = $Social_rss;           }else{$x6 = $rowData['Social_rss'];}
+					if(isset($Social_youtube)){       $x7 = $Social_youtube;       }else{$x7 = $rowData['Social_youtube'];}
+					if(isset($Social_tumblr)){        $x8 = $Social_tumblr;        }else{$x8 = $rowData['Social_tumblr'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

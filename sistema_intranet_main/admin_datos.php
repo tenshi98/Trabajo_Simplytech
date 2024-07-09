@@ -75,7 +75,7 @@ LEFT JOIN `bodegas_productos_listado`          ON bodegas_productos_listado.idBo
 LEFT JOIN `bodegas_insumos_listado`            ON bodegas_insumos_listado.idBodega     = core_sistemas.OT_idBodegaIns
 LEFT JOIN `core_sistemas_opciones`  socialUso  ON socialUso.idOpciones                 = core_sistemas.Social_idUso';
 $SIS_where = 'core_sistemas.idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'];
-$rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /******************************************************/
 //Accesos a bodegas de productos
@@ -141,7 +141,7 @@ $SIS_query = '
 idUsuario';
 $SIS_join  = '';
 $SIS_where = 'usuarios_listado.idUsuario=1';
-$rowdata_x = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata_x');
+$rowData_x = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData_x');
 
 //verifico que sea un administrador
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
@@ -154,18 +154,18 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$Count_Shipping     = 1;
 }else{
 	//Totales de los permisos que se pueden acceder
-	$Count_productos    = $rowdata_x['tran_1'] + $rowdata_x['tran_2'] + $rowdata_x['tran_3'] + $rowdata_x['tran_4'] + $rowdata_x['tran_5'];
-	$Count_insumos      = $rowdata_x['tran_11'] + $rowdata_x['tran_12'] + $rowdata_x['tran_13'] + $rowdata_x['tran_14'] + $rowdata_x['tran_15'];
-	$Count_OT           = $rowdata_x['tran_21'] + $rowdata_x['tran_22'];
-	$Count_OC           = $rowdata_x['tran_26'] + $rowdata_x['tran_27'];
-	$Count_Variedades   = $rowdata_x['tran_31'] + $rowdata_x['tran_32'] + $rowdata_x['tran_33'] + $rowdata_x['tran_34'];
-	$Count_Shipping     = $rowdata_x['tran_35'] + $rowdata_x['tran_36'] + $rowdata_x['tran_37'];
+	$Count_productos    = $rowData_x['tran_1'] + $rowData_x['tran_2'] + $rowData_x['tran_3'] + $rowData_x['tran_4'] + $rowData_x['tran_5'];
+	$Count_insumos      = $rowData_x['tran_11'] + $rowData_x['tran_12'] + $rowData_x['tran_13'] + $rowData_x['tran_14'] + $rowData_x['tran_15'];
+	$Count_OT           = $rowData_x['tran_21'] + $rowData_x['tran_22'];
+	$Count_OC           = $rowData_x['tran_26'] + $rowData_x['tran_27'];
+	$Count_Variedades   = $rowData_x['tran_31'] + $rowData_x['tran_32'] + $rowData_x['tran_33'] + $rowData_x['tran_34'];
+	$Count_Shipping     = $rowData_x['tran_35'] + $rowData_x['tran_36'] + $rowData_x['tran_37'];
 }
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Resumen'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowData['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -217,55 +217,55 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<h2 class="text-primary">Datos Básicos</h2>
 							<p class="text-muted word_break">
-								<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
-								<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
-								<strong>Ciudad : </strong><?php echo $rowdata['Ciudad']; ?><br/>
-								<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-								<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
-								<strong>Rubro : </strong><?php echo $rowdata['Rubro']; ?>
+								<strong>Nombre : </strong><?php echo $rowData['Nombre']; ?><br/>
+								<strong>Rut : </strong><?php echo $rowData['Rut']; ?><br/>
+								<strong>Ciudad : </strong><?php echo $rowData['Ciudad']; ?><br/>
+								<strong>Comuna : </strong><?php echo $rowData['Comuna']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowData['Direccion']; ?><br/>
+								<strong>Rubro : </strong><?php echo $rowData['Rubro']; ?>
 							</p>
 
 							<h2 class="text-primary">Datos de contacto</h2>
 							<p class="text-muted word_break">
-								<strong>Nombre Contacto : </strong><?php echo $rowdata['Contacto_Nombre']; ?><br/>
-								<strong>Fono 1: </strong><?php echo formatPhone($rowdata['Contacto_Fono1']); ?><br/>
-								<strong>Fono 2: </strong><?php echo formatPhone($rowdata['Contacto_Fono2']); ?><br/>
-								<strong>Fax : </strong><?php echo $rowdata['Contacto_Fax']; ?><br/>
-								<strong>Web : </strong><?php echo $rowdata['Contacto_Web']; ?><br/>
-								<strong>Email : </strong><?php echo $rowdata['email_principal']; ?>
+								<strong>Nombre Contacto : </strong><?php echo $rowData['Contacto_Nombre']; ?><br/>
+								<strong>Fono 1: </strong><?php echo formatPhone($rowData['Contacto_Fono1']); ?><br/>
+								<strong>Fono 2: </strong><?php echo formatPhone($rowData['Contacto_Fono2']); ?><br/>
+								<strong>Fax : </strong><?php echo $rowData['Contacto_Fax']; ?><br/>
+								<strong>Web : </strong><?php echo $rowData['Contacto_Web']; ?><br/>
+								<strong>Email : </strong><?php echo $rowData['email_principal']; ?>
 							</p>
 
 							<h2 class="text-primary">Contrato</h2>
 							<p class="text-muted word_break">
-								<strong>Nombre Contrato : </strong><?php echo $rowdata['Contrato_Nombre']; ?><br/>
-								<strong>Numero de Contrato : </strong><?php echo $rowdata['Contrato_Numero']; ?><br/>
-								<strong>Fecha inicio Contrato : </strong><?php echo $rowdata['Contrato_Fecha']; ?><br/>
-								<strong>Duracion Contrato(Meses) : </strong><?php echo $rowdata['Contrato_Duracion']; ?>
+								<strong>Nombre Contrato : </strong><?php echo $rowData['Contrato_Nombre']; ?><br/>
+								<strong>Numero de Contrato : </strong><?php echo $rowData['Contrato_Numero']; ?><br/>
+								<strong>Fecha inicio Contrato : </strong><?php echo $rowData['Contrato_Fecha']; ?><br/>
+								<strong>Duracion Contrato(Meses) : </strong><?php echo $rowData['Contrato_Duracion']; ?>
 							</p>
 
 							<h2 class="text-primary">Configuracion</h2>
 							<p class="text-muted word_break">
-								<strong>Tema : </strong><?php echo $rowdata['Tema']; ?><br/>
-								<strong>ID Google : </strong><?php echo $rowdata['Config_IDGoogle']; ?><br/>
+								<strong>Tema : </strong><?php echo $rowData['Tema']; ?><br/>
+								<strong>ID Google : </strong><?php echo $rowData['Config_IDGoogle']; ?><br/>
 							</p>
 
 							<h2 class="text-primary">Bodegas OT</h2>
 							<p class="text-muted word_break">
-								<strong>Bodega Productos : </strong><?php echo $rowdata['BodegaProd']; ?><br/>
-								<strong>Bodega Insumos : </strong><?php echo $rowdata['BodegaIns']; ?><br/>
+								<strong>Bodega Productos : </strong><?php echo $rowData['BodegaProd']; ?><br/>
+								<strong>Bodega Insumos : </strong><?php echo $rowData['BodegaIns']; ?><br/>
 							</p>
 
 							<h2 class="text-primary">Social</h2>
 							<p class="text-muted word_break">
-								<strong>Uso de widget Sociales : </strong><?php echo $rowdata['SocialUso']; ?><br/>
-								<?php if(isset($rowdata['Social_idUso'])&&$rowdata['Social_idUso']==1){ ?>
-									<strong>Facebook : </strong><?php echo $rowdata['Social_facebook']; ?><br/>
-									<strong>Twitter : </strong><?php echo $rowdata['Social_twitter']; ?><br/>
-									<strong>Instagram : </strong><?php echo $rowdata['Social_instagram']; ?><br/>
-									<strong>Linkedin : </strong><?php echo $rowdata['Social_linkedin']; ?><br/>
-									<strong>Rss : </strong><?php echo $rowdata['Social_rss']; ?><br/>
-									<strong>Youtube : </strong><?php echo $rowdata['Social_youtube']; ?><br/>
-									<strong>Tumblr : </strong><?php echo $rowdata['Social_tumblr']; ?><br/>
+								<strong>Uso de widget Sociales : </strong><?php echo $rowData['SocialUso']; ?><br/>
+								<?php if(isset($rowData['Social_idUso'])&&$rowData['Social_idUso']==1){ ?>
+									<strong>Facebook : </strong><?php echo $rowData['Social_facebook']; ?><br/>
+									<strong>Twitter : </strong><?php echo $rowData['Social_twitter']; ?><br/>
+									<strong>Instagram : </strong><?php echo $rowData['Social_instagram']; ?><br/>
+									<strong>Linkedin : </strong><?php echo $rowData['Social_linkedin']; ?><br/>
+									<strong>Rss : </strong><?php echo $rowData['Social_rss']; ?><br/>
+									<strong>Youtube : </strong><?php echo $rowData['Social_youtube']; ?><br/>
+									<strong>Tumblr : </strong><?php echo $rowData['Social_tumblr']; ?><br/>
 								<?php } ?>
 							</p>
 						</div>
@@ -276,9 +276,9 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 						<?php
 							//se arma la dirección
 							$direccion = "";
-							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){  $direccion .= $rowdata["Direccion"];}
-							if(isset($rowdata["Comuna"])&&$rowdata["Comuna"]!=''){        $direccion .= ', '.$rowdata["Comuna"];}
-							if(isset($rowdata["Ciudad"])&&$rowdata["Ciudad"]!=''){        $direccion .= ', '.$rowdata["Ciudad"];}
+							if(isset($rowData["Direccion"])&&$rowData["Direccion"]!=''){  $direccion .= $rowData["Direccion"];}
+							if(isset($rowData["Comuna"])&&$rowData["Comuna"]!=''){        $direccion .= ', '.$rowData["Comuna"];}
+							if(isset($rowData["Ciudad"])&&$rowData["Ciudad"]!=''){        $direccion .= ', '.$rowData["Ciudad"];}
 							//se despliega mensaje en caso de no existir dirección
 							if($direccion!=''){
 								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);

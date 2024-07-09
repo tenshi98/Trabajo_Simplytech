@@ -85,7 +85,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 $SIS_query = 'Fecha, Observaciones';
 $SIS_join  = '';
 $SIS_where = 'idDatos ='.$_GET['modBase'];
-$rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_datos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'aguas_mediciones_datos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -99,8 +99,8 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_datos', $SIS_joi
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
-				if(isset($Fecha)){  $x1  = $Fecha;            }else{$x1  = $rowdata['Fecha'];}
-				if(isset($Observaciones)){    $x2  = $Observaciones;    }else{$x2  = $rowdata['Observaciones'];}
+				if(isset($Fecha)){  $x1  = $Fecha;            }else{$x1  = $rowData['Fecha'];}
+				if(isset($Observaciones)){    $x2  = $Observaciones;    }else{$x2  = $rowData['Observaciones'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -134,7 +134,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 $SIS_query = 'Consumo';
 $SIS_join  = '';
 $SIS_where = 'idDatosDetalle ='.$_GET['edit'];
-$rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_datos_detalle', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'aguas_mediciones_datos_detalle', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -149,7 +149,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_datos_detalle', 
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Consumo)){  $x1  = $Consumo;  }else{$x1  = cantidades_decimales_justos($rowdata['Consumo']);}
+				if(isset($Consumo)){  $x1  = $Consumo;  }else{$x1  = cantidades_decimales_justos($rowData['Consumo']);}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -187,7 +187,7 @@ $SIS_join  = '
 LEFT JOIN `core_sistemas`     ON core_sistemas.idSistema      = aguas_mediciones_datos.idSistema
 LEFT JOIN `usuarios_listado`  ON usuarios_listado.idUsuario   = aguas_mediciones_datos.idUsuario';
 $SIS_where = 'aguas_mediciones_datos.idDatos ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_datos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'aguas_mediciones_datos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 // Se trae un listado con todos los datos subidos correctamente
 $SIS_query = '
@@ -214,7 +214,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 	<div id="page-wrap">
-		<div id="header"> Modificacion Datos Medidores Ingreso N°<?php echo n_doc($rowdata['idDatos'], 7); ?> </div>
+		<div id="header"> Modificacion Datos Medidores Ingreso N°<?php echo n_doc($rowData['idDatos'], 7); ?> </div>
 		<div id="customer">
 			<table id="meta" class="pull-left otdata">
 				<tbody>
@@ -224,15 +224,15 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 					</tr>
 					<tr>
 						<td class="meta-head">Creador</td>
-						<td><?php echo $rowdata['NombreUsuario']?></td>
+						<td><?php echo $rowData['NombreUsuario']?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Nombre del Archivo</td>
-						<td><?php echo $rowdata['NombreArchivo']?></td>
+						<td><?php echo $rowData['NombreArchivo']?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Sistema</td>
-						<td><?php echo $rowdata['Sistema']?></td>
+						<td><?php echo $rowData['Sistema']?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -240,11 +240,11 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td><?php echo Fecha_estandar($rowdata['fCreacion']); ?></td>
+						<td><?php echo Fecha_estandar($rowData['fCreacion']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Fecha Facturacion</td>
-						<td><?php echo Fecha_estandar($rowdata['Fecha']); ?></td>
+						<td><?php echo Fecha_estandar($rowData['Fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -288,8 +288,8 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 					<td colspan="8" class="blank">
 						<p>
 							<?php
-							if(isset($rowdata['Observaciones'])&&$rowdata['Observaciones']!=''){
-								echo $rowdata['Observaciones'];
+							if(isset($rowData['Observaciones'])&&$rowData['Observaciones']!=''){
+								echo $rowData['Observaciones'];
 							}else{
 								echo 'Sin Observaciones';
 							} ?>

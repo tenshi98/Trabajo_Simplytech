@@ -338,7 +338,7 @@ if(!empty($_GET['addFile'])){ ?>
 $SIS_query = 'idDocPago, NDocPago, Fpago, vTotal, idSistema';
 $SIS_join  = '';
 $SIS_where = 'idDocumento ='.$_GET['editDoc'];
-$rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_documentos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'ocompra_listado_documentos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -353,10 +353,10 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_documentos', $SIS
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idDocPago)){   $x1  = $idDocPago;  }else{$x1  = $rowdata['idDocPago'];}
-				if(isset($NDocPago)){    $x2  = $NDocPago;   }else{$x2  = $rowdata['NDocPago'];}
-				if(isset($Fpago)){       $x3  = $Fpago;      }else{$x3  = $rowdata['Fpago'];}
-				if(isset($vTotal)){      $x4  = $vTotal;     }else{$x4  = Cantidades_decimales_justos($rowdata['vTotal']);}
+				if(isset($idDocPago)){   $x1  = $idDocPago;  }else{$x1  = $rowData['idDocPago'];}
+				if(isset($NDocPago)){    $x2  = $NDocPago;   }else{$x2  = $rowData['NDocPago'];}
+				if(isset($Fpago)){       $x3  = $Fpago;      }else{$x3  = $rowData['Fpago'];}
+				if(isset($vTotal)){      $x4  = $vTotal;     }else{$x4  = Cantidades_decimales_justos($rowData['vTotal']);}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -444,7 +444,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_documentos', $SIS
 $SIS_query = 'Descripcion, Valor';
 $SIS_join  = '';
 $SIS_where = 'idExistencia ='.$_GET['editBoletaEmp'];
-$rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_boletas_empresas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_boletas_empresas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -459,8 +459,8 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_bolet
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Descripcion)){    $x1  = $Descripcion;   }else{$x1  = $rowdata['Descripcion'];}
-				if(isset($Valor)){          $x2  = $Valor;        }else{$x2  = Cantidades_decimales_justos($rowdata['Valor']);}
+				if(isset($Descripcion)){    $x1  = $Descripcion;   }else{$x1  = $rowData['Descripcion'];}
+				if(isset($Valor)){          $x2  = $Valor;        }else{$x2  = Cantidades_decimales_justos($rowData['Valor']);}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -528,7 +528,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_bolet
 $SIS_query = 'idTrabajador, N_Doc, Descripcion, Valor';
 $SIS_join  = '';
 $SIS_where = 'idExistencia ='.$_GET['editBoleta'];
-$rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_boletas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_boletas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
@@ -546,10 +546,10 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idTrabajador)){   $x1  = $idTrabajador;  }else{$x1  = $rowdata['idTrabajador'];}
-				if(isset($N_Doc)){          $x2  = $N_Doc;         }else{$x2  = $rowdata['N_Doc'];}
-				if(isset($Descripcion)){    $x3  = $Descripcion;   }else{$x3  = $rowdata['Descripcion'];}
-				if(isset($Valor)){          $x4  = $Valor;        }else{$x4  = Cantidades_decimales_justos($rowdata['Valor']);}
+				if(isset($idTrabajador)){   $x1  = $idTrabajador;  }else{$x1  = $rowData['idTrabajador'];}
+				if(isset($N_Doc)){          $x2  = $N_Doc;         }else{$x2  = $rowData['N_Doc'];}
+				if(isset($Descripcion)){    $x3  = $Descripcion;   }else{$x3  = $rowData['Descripcion'];}
+				if(isset($Valor)){          $x4  = $Valor;        }else{$x4  = Cantidades_decimales_justos($rowData['Valor']);}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -626,7 +626,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 $SIS_query = 'Nombre,Cantidad, vUnitario, idSistema, vTotal, idFrecuencia';
 $SIS_join  = '';
 $SIS_where = 'idExistencia ='.$_GET['editOtros'];
-$rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_otros', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_otros', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -641,10 +641,10 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_otros
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)){         $x1  = $Nombre;        }else{$x1  = $rowdata['Nombre'];}
-				if(isset($Cantidad)){       $x2  = $Cantidad;      }else{$x2  = Cantidades_decimales_justos($rowdata['Cantidad']);}
-				if(isset($idFrecuencia)){   $x3  = $idFrecuencia;  }else{$x3  = $rowdata['idFrecuencia'];}
-				if(isset($vTotal)){         $x4  = $vTotal;        }else{$x4  = Cantidades_decimales_justos($rowdata['vTotal']);}
+				if(isset($Nombre)){         $x1  = $Nombre;        }else{$x1  = $rowData['Nombre'];}
+				if(isset($Cantidad)){       $x2  = $Cantidad;      }else{$x2  = Cantidades_decimales_justos($rowData['Cantidad']);}
+				if(isset($idFrecuencia)){   $x3  = $idFrecuencia;  }else{$x3  = $rowData['idFrecuencia'];}
+				if(isset($vTotal)){         $x4  = $vTotal;        }else{$x4  = Cantidades_decimales_justos($rowData['vTotal']);}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -656,11 +656,11 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_otros
 				/****************************/
 				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 
-				//if(isset($rowdata['Proveedor'])&&$rowdata['Proveedor']!=''){$prov=$rowdata['Proveedor'];}else{$prov='Sin proveedor';}
+				//if(isset($rowData['Proveedor'])&&$rowData['Proveedor']!=''){$prov=$rowData['Proveedor'];}else{$prov='Sin proveedor';}
 				//$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', $prov);
-				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario',Cantidades_decimales_justos($rowdata['vUnitario']));
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario',Cantidades_decimales_justos($rowData['vUnitario']));
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
-				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowdata['vUnitario']), 2);
+				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowData['vUnitario']), 2);
 
 				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn);
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
@@ -777,7 +777,7 @@ LEFT JOIN `core_tiempo_frecuencia`     ON core_tiempo_frecuencia.idFrecuencia   
 LEFT JOIN `servicios_listado`          ON servicios_listado.idServicio           = ocompra_listado_existencias_servicios.idServicio
 LEFT JOIN `proveedor_listado`          ON proveedor_listado.idProveedor          = servicios_listado.idProveedor';
 $SIS_where = 'ocompra_listado_existencias_servicios.idExistencia ='.$_GET['editServicios'];
-$rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_servicios', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_servicios', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -792,10 +792,10 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_servi
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idServicio)){     $x1  = $idServicio;    }else{$x1  = $rowdata['idServicio'];}
-				if(isset($Cantidad)){       $x2  = $Cantidad;      }else{$x2  = Cantidades_decimales_justos($rowdata['Cantidad']);}
-				if(isset($idFrecuencia)){   $x3  = $idFrecuencia;  }else{$x3  = $rowdata['idFrecuencia'];}
-				if(isset($vTotal)){         $x4  = $vTotal;        }else{$x4  = Cantidades_decimales_justos($rowdata['vTotal']);}
+				if(isset($idServicio)){     $x1  = $idServicio;    }else{$x1  = $rowData['idServicio'];}
+				if(isset($Cantidad)){       $x2  = $Cantidad;      }else{$x2  = Cantidades_decimales_justos($rowData['Cantidad']);}
+				if(isset($idFrecuencia)){   $x3  = $idFrecuencia;  }else{$x3  = $rowData['idFrecuencia'];}
+				if(isset($vTotal)){         $x4  = $vTotal;        }else{$x4  = Cantidades_decimales_justos($rowData['vTotal']);}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -807,11 +807,11 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_servi
 				/****************************/
 				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 
-				//if(isset($rowdata['Proveedor'])&&$rowdata['Proveedor']!=''){$prov=$rowdata['Proveedor'];}else{$prov='Sin proveedor';}
+				//if(isset($rowData['Proveedor'])&&$rowData['Proveedor']!=''){$prov=$rowData['Proveedor'];}else{$prov='Sin proveedor';}
 				//$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', $prov);
-				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario',Cantidades_decimales_justos($rowdata['vUnitario']));
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario',Cantidades_decimales_justos($rowData['vUnitario']));
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
-				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowdata['vUnitario']), 2);
+				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowData['vUnitario']), 2);
 
 				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn);
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
@@ -927,7 +927,7 @@ LEFT JOIN `core_tiempo_frecuencia`     ON core_tiempo_frecuencia.idFrecuencia   
 LEFT JOIN `equipos_arriendo_listado`   ON equipos_arriendo_listado.idEquipo      = ocompra_listado_existencias_arriendos.idEquipo
 LEFT JOIN `proveedor_listado`          ON proveedor_listado.idProveedor          = equipos_arriendo_listado.idProveedor';
 $SIS_where = 'ocompra_listado_existencias_arriendos.idExistencia ='.$_GET['editArriendo'];
-$rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_arriendos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_arriendos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -942,10 +942,10 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_arrie
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idEquipo)){       $x1  = $idEquipo;      }else{$x1  = $rowdata['idEquipo'];}
-				if(isset($Cantidad)){       $x2  = $Cantidad;      }else{$x2  = Cantidades_decimales_justos($rowdata['Cantidad']);}
-				if(isset($idFrecuencia)){   $x3  = $idFrecuencia;  }else{$x3  = $rowdata['idFrecuencia'];}
-				if(isset($vTotal)){         $x4  = $vTotal;        }else{$x4  = Cantidades_decimales_justos($rowdata['vTotal']);}
+				if(isset($idEquipo)){       $x1  = $idEquipo;      }else{$x1  = $rowData['idEquipo'];}
+				if(isset($Cantidad)){       $x2  = $Cantidad;      }else{$x2  = Cantidades_decimales_justos($rowData['Cantidad']);}
+				if(isset($idFrecuencia)){   $x3  = $idFrecuencia;  }else{$x3  = $rowData['idFrecuencia'];}
+				if(isset($vTotal)){         $x4  = $vTotal;        }else{$x4  = Cantidades_decimales_justos($rowData['vTotal']);}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -957,11 +957,11 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_arrie
 				/****************************/
 				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 
-				//if(isset($rowdata['Proveedor'])&&$rowdata['Proveedor']!=''){$prov=$rowdata['Proveedor'];}else{$prov='Sin proveedor';}
+				//if(isset($rowData['Proveedor'])&&$rowData['Proveedor']!=''){$prov=$rowData['Proveedor'];}else{$prov='Sin proveedor';}
 				//$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', $prov);
-				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario',Cantidades_decimales_justos($rowdata['vUnitario']));
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario',Cantidades_decimales_justos($rowData['vUnitario']));
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
-				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowdata['vUnitario']), 2);
+				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowData['vUnitario']), 2);
 
 				//echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn);
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
@@ -1076,7 +1076,7 @@ LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto       = ocompr
 LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml      = insumos_listado.idUml
 LEFT JOIN `proveedor_listado`       ON proveedor_listado.idProveedor    = insumos_listado.idProveedor';
 $SIS_where = 'ocompra_listado_existencias_insumos.idExistencia ='.$_GET['editIns'];
-$rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_insumos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_insumos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /*************************************/
 //Se revisan los permisos a los productos
@@ -1107,9 +1107,9 @@ foreach ($arrPermisos as $prod) {
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $rowdata['idProducto'];}
-				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = Cantidades_decimales_justos($rowdata['Cantidad']);}
-				if(isset($vTotal)){           $x3  = $vTotal;          }else{$x3  = Cantidades_decimales_justos($rowdata['vTotal']);}
+				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $rowData['idProducto'];}
+				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = Cantidades_decimales_justos($rowData['Cantidad']);}
+				if(isset($vTotal)){           $x3  = $vTotal;          }else{$x3  = Cantidades_decimales_justos($rowData['vTotal']);}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -1120,12 +1120,12 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_disabled('Cantidad','Cantidad_fake', $x2);
 				/****************************/
 				
-				if(isset($rowdata['Proveedor'])&&$rowdata['Proveedor']!=''){$prov=$rowdata['Proveedor'];}else{$prov='Sin proveedor';}
-				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $rowdata['Unimed']);
+				if(isset($rowData['Proveedor'])&&$rowData['Proveedor']!=''){$prov=$rowData['Proveedor'];}else{$prov='Sin proveedor';}
+				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $rowData['Unimed']);
 				$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', $prov);
-				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario',Cantidades_decimales_justos($rowdata['vUnitario']));
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario',Cantidades_decimales_justos($rowData['vUnitario']));
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
-				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowdata['vUnitario']), 2);
+				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowData['vUnitario']), 2);
 
 				echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn);
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
@@ -1255,7 +1255,7 @@ LEFT JOIN `productos_listado`       ON productos_listado.idProducto     = ocompr
 LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml      = productos_listado.idUml
 LEFT JOIN `proveedor_listado`       ON proveedor_listado.idProveedor    = productos_listado.idProveedor';
 $SIS_where = 'ocompra_listado_existencias_productos.idExistencia ='.$_GET['editProd'];
-$rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_productos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_productos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /*************************************/
 //Se revisan los permisos a los productos
@@ -1286,9 +1286,9 @@ foreach ($arrPermisos as $prod) {
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $rowdata['idProducto'];}
-				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = Cantidades_decimales_justos($rowdata['Cantidad']);}
-				if(isset($vTotal)){           $x3  = $vTotal;          }else{$x3  = Cantidades_decimales_justos($rowdata['vTotal']);}
+				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $rowData['idProducto'];}
+				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = Cantidades_decimales_justos($rowData['Cantidad']);}
+				if(isset($vTotal)){           $x3  = $vTotal;          }else{$x3  = Cantidades_decimales_justos($rowData['vTotal']);}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -1299,12 +1299,12 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_disabled('Cantidad','Cantidad_fake', $x2);
 				/****************************/
 				
-				if(isset($rowdata['Proveedor'])&&$rowdata['Proveedor']!=''){$prov=$rowdata['Proveedor'];}else{$prov='Sin proveedor';}
-				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $rowdata['Unimed']);
+				if(isset($rowData['Proveedor'])&&$rowData['Proveedor']!=''){$prov=$rowData['Proveedor'];}else{$prov='Sin proveedor';}
+				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $rowData['Unimed']);
 				$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', $prov);
-				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario',Cantidades_decimales_justos($rowdata['vUnitario']));
+				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario',Cantidades_decimales_justos($rowData['vUnitario']));
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
-				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowdata['vUnitario']), 2);
+				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowData['vUnitario']), 2);
 
 				echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn);
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
@@ -1425,7 +1425,7 @@ foreach ($arrPermisos as $prod) {
 $SIS_query = 'idProveedor, Creacion_fecha, Observaciones, idSistema';
 $SIS_join  = '';
 $SIS_where = 'idOcompra ='.$_GET['view'];
-$rowdata = db_select_data (false, $SIS_query, 'ocompra_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'ocompra_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /*************************************/
 //Verifico el tipo de usuario que esta ingresando
@@ -1444,9 +1444,9 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
-				if(isset($Creacion_fecha)){   $x2  = $Creacion_fecha; }else{$x2  = $rowdata['Creacion_fecha'];}
-				if(isset($Observaciones)){    $x3  = $Observaciones;  }else{$x3  = $rowdata['Observaciones'];}
+				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowData['idProveedor'];}
+				if(isset($Creacion_fecha)){   $x2  = $Creacion_fecha; }else{$x2  = $rowData['Creacion_fecha'];}
+				if(isset($Observaciones)){    $x3  = $Observaciones;  }else{$x3  = $rowData['Observaciones'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -1487,7 +1487,7 @@ LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario      = ocompra_list
 LEFT JOIN `core_oc_estado`     ON core_oc_estado.idEstado         = ocompra_listado.idEstado
 LEFT JOIN `proveedor_listado`  ON proveedor_listado.idProveedor   = ocompra_listado.idProveedor';
 $SIS_where = 'ocompra_listado.idOcompra ='.$_GET['view'];
-$rowdata = db_select_data (false, $SIS_query, 'ocompra_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'ocompra_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /*****************************************/
 //Insumos
@@ -1714,15 +1714,15 @@ $total = 0;
                 </tr>
                 <tr>
                     <td class="meta-head">Proveedor</td>
-                    <td><?php echo $rowdata['Proveedor']?></td>
+                    <td><?php echo $rowData['Proveedor']?></td>
                 </tr>
                 <tr>
                     <td class="meta-head">Usuario</td>
-                    <td><?php echo $rowdata['Usuario']?></td>
+                    <td><?php echo $rowData['Usuario']?></td>
                 </tr>
                 <tr>
                     <td class="meta-head">Estado</td>
-                    <td><?php echo $rowdata['Estado']?></td>
+                    <td><?php echo $rowData['Estado']?></td>
                 </tr>
             </tbody>
         </table>
@@ -1730,7 +1730,7 @@ $total = 0;
             <tbody>
                 <tr>
                     <td class="meta-head">Fecha Creacion</td>
-                    <td><?php echo Fecha_estandar($rowdata['Creacion_fecha']); ?></td>
+                    <td><?php echo Fecha_estandar($rowData['Creacion_fecha']); ?></td>
                 </tr>
             </tbody>
         </table>
@@ -1739,8 +1739,8 @@ $total = 0;
 
 	<?php
 	//Se envia proveedor por referencia
-	$new_location.='&idEstado='.$rowdata['idEstado'];
-	$new_location.='&idProveedor='.$rowdata['idProveedor'];
+	$new_location.='&idEstado='.$rowData['idEstado'];
+	$new_location.='&idProveedor='.$rowData['idProveedor'];
 
 	?>
 
@@ -2029,7 +2029,7 @@ $total = 0;
 			
             <tr>
 				<td colspan="6" class="blank word_break">
-					<?php echo $rowdata['Observaciones']; ?>
+					<?php echo $rowData['Observaciones']; ?>
 				</td>
             </tr>
             <tr>

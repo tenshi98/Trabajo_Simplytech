@@ -108,7 +108,7 @@ if(!empty($_GET['newPago'])){
 $Form_Inputs = new Inputs();
 
 // consulto los datos
-$row_data = db_select_data (false, 'AFP_MontoPago,SALUD_MontoPago,SEGURIDAD_MontoPago,TotalGeneral,TotalPagoGeneral', 'pagos_leyes_sociales', '', 'idFactSocial ='.$_GET['newPago'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+$rowData = db_select_data (false, 'AFP_MontoPago,SALUD_MontoPago,SEGURIDAD_MontoPago,TotalGeneral,TotalPagoGeneral', 'pagos_leyes_sociales', '', 'idFactSocial ='.$_GET['newPago'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 				
 $arrFormaPago = array();
 $arrFormaPago = db_select_array (false, 'sistema_documentos_pago.Nombre AS DocPago,pagos_leyes_sociales_formas_pago.Creacion_fecha,pagos_leyes_sociales_formas_pago.idTipo,pagos_leyes_sociales_formas_pago.N_DocPago,pagos_leyes_sociales_formas_pago.F_Pago,pagos_leyes_sociales_formas_pago.Monto,usuarios_listado.Nombre AS Usuario','pagos_leyes_sociales_formas_pago', 'LEFT JOIN `sistema_documentos_pago`     ON sistema_documentos_pago.idDocPago   = pagos_leyes_sociales_formas_pago.idDocPago LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario    = pagos_leyes_sociales_formas_pago.idUsuario', 'pagos_leyes_sociales_formas_pago.idFactSocial ='.$_GET['newPago'], 'pagos_leyes_sociales_formas_pago.idTipo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrFormaPago');
@@ -133,9 +133,9 @@ if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 }
 
 //obtengo los saldos
-$AFP_Total_deuda        = valores_comparables($row_data['AFP_MontoPago'] - $AFP_Pagado);
-$SALUD_Total_deuda      = valores_comparables($row_data['SALUD_MontoPago'] - $SALUD_Pagado);
-$SEGURIDAD_Total_deuda  = valores_comparables($row_data['SEGURIDAD_MontoPago'] - $SEGURIDAD_Pagado);
+$AFP_Total_deuda        = valores_comparables($rowData['AFP_MontoPago'] - $AFP_Pagado);
+$SALUD_Total_deuda      = valores_comparables($rowData['SALUD_MontoPago'] - $SALUD_Pagado);
+$SEGURIDAD_Total_deuda  = valores_comparables($rowData['SEGURIDAD_MontoPago'] - $SEGURIDAD_Pagado);
 
 ?>
 
@@ -233,7 +233,7 @@ input[type="date"].form-control{
 						</tr>
 						<tr>
 							<td class="meta-head">Administradora Fondos de Pensiones</td>
-							<td align="right"><?php echo valores($row_data['AFP_MontoPago'], 0); ?></td>
+							<td align="right"><?php echo valores($rowData['AFP_MontoPago'], 0); ?></td>
 							<td align="left">
 								<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 									foreach ($arrFormaPago as $pago) {
@@ -284,7 +284,7 @@ input[type="date"].form-control{
 						</tr>
 						<tr>
 							<td class="meta-head">Salud</td>
-							<td align="right"><?php echo valores($row_data['SALUD_MontoPago'], 0); ?></td>
+							<td align="right"><?php echo valores($rowData['SALUD_MontoPago'], 0); ?></td>
 							<td align="left">
 								<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 									foreach ($arrFormaPago as $pago) {
@@ -335,7 +335,7 @@ input[type="date"].form-control{
 						</tr>
 						<tr>
 							<td class="meta-head">Seguridad</td>
-							<td align="right"><?php echo valores($row_data['SEGURIDAD_MontoPago'], 0); ?></td>
+							<td align="right"><?php echo valores($rowData['SEGURIDAD_MontoPago'], 0); ?></td>
 							<td align="left">
 								<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 									foreach ($arrFormaPago as $pago) {
@@ -386,12 +386,12 @@ input[type="date"].form-control{
 						</tr>
 						<tr>
 							<td class="meta-head"><strong>Totales</strong></td>
-							<td align="right"><strong><?php echo valores($row_data['TotalGeneral'], 0); ?></strong></td>
+							<td align="right"><strong><?php echo valores($rowData['TotalGeneral'], 0); ?></strong></td>
 							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>
-							<td align="right"><strong><?php echo valores($row_data['TotalPagoGeneral'], 0); ?></strong></td>
+							<td align="right"><strong><?php echo valores($rowData['TotalPagoGeneral'], 0); ?></strong></td>
 						</tr>
 					</tbody>
 				</table>

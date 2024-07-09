@@ -69,7 +69,7 @@ if(!empty($_GET['edit'])){
 $SIS_query = 'idUsuario, idSistema';
 $SIS_join  = '';
 $SIS_where = 'idAprobador = '.$_GET['edit'];
-$rowdata   = db_select_data (false, $SIS_query, 'sistema_aprobador_cross', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData   = db_select_data (false, $SIS_query, 'sistema_aprobador_cross', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 //Verifico el tipo de usuario que esta ingresando
@@ -90,7 +90,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idUsuario)){     $x1  = $idUsuario;   }else{$x1  = $rowdata['idUsuario'];}
+				if(isset($idUsuario)){     $x1  = $idUsuario;   }else{$x1  = $rowData['idUsuario'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -171,7 +171,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 $SIS_query = 'Nombre';
 $SIS_join  = '';
 $SIS_where = 'core_sistemas.idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'];
-$rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 // consulto los datos
 $SIS_query = '
@@ -247,7 +247,7 @@ $SIS_query = '
 idUsuario';
 $SIS_join  = '';
 $SIS_where = 'usuarios_listado.idUsuario=1';
-$rowdata_x = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata_x');
+$rowData_x = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData_x');
 
 //verifico que sea un administrador
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
@@ -260,18 +260,18 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$Count_Shipping     = 1;
 }else{
 	//Totales de los permisos que se pueden acceder
-	$Count_productos    = $rowdata_x['tran_1'] + $rowdata_x['tran_2'] + $rowdata_x['tran_3'] + $rowdata_x['tran_4'] + $rowdata_x['tran_5'];
-	$Count_insumos      = $rowdata_x['tran_11'] + $rowdata_x['tran_12'] + $rowdata_x['tran_13'] + $rowdata_x['tran_14'] + $rowdata_x['tran_15'];
-	$Count_OT           = $rowdata_x['tran_21'] + $rowdata_x['tran_22'];
-	$Count_OC           = $rowdata_x['tran_26'] + $rowdata_x['tran_27'];
-	$Count_Variedades   = $rowdata_x['tran_31'] + $rowdata_x['tran_32'] + $rowdata_x['tran_33'] + $rowdata_x['tran_34'];
-	$Count_Shipping     = $rowdata_x['tran_35'] + $rowdata_x['tran_36'] + $rowdata_x['tran_37'];
+	$Count_productos    = $rowData_x['tran_1'] + $rowData_x['tran_2'] + $rowData_x['tran_3'] + $rowData_x['tran_4'] + $rowData_x['tran_5'];
+	$Count_insumos      = $rowData_x['tran_11'] + $rowData_x['tran_12'] + $rowData_x['tran_13'] + $rowData_x['tran_14'] + $rowData_x['tran_15'];
+	$Count_OT           = $rowData_x['tran_21'] + $rowData_x['tran_22'];
+	$Count_OC           = $rowData_x['tran_26'] + $rowData_x['tran_27'];
+	$Count_Variedades   = $rowData_x['tran_31'] + $rowData_x['tran_32'] + $rowData_x['tran_33'] + $rowData_x['tran_34'];
+	$Count_Shipping     = $rowData_x['tran_35'] + $rowData_x['tran_36'] + $rowData_x['tran_37'];
 }
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Aprobador Cross Shipping'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowData['Nombre'], 'Editar Aprobador Cross Shipping'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<a href="<?php echo $new_location.'?new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Aprobador</a>
 	</div>

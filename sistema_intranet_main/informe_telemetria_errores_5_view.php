@@ -41,7 +41,7 @@ $SIS_join  = '
 LEFT JOIN `telemetria_listado`               ON telemetria_listado.idTelemetria                 = telemetria_listado_errores.idTelemetria
 LEFT JOIN telemetria_listado_sensores_unimed ON telemetria_listado_sensores_unimed.idTelemetria = telemetria_listado_errores.idTelemetria ';
 $SIS_where = 'telemetria_listado_errores.idErrores = '.simpleDecode($_GET['view'], fecha_actual()).' AND telemetria_listado_errores.idTipo!=999 AND telemetria_listado_errores.Valor<99900';
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_errores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado_errores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 //Se traen todas las unidades de medida
 $arrUnimed = array();
@@ -65,19 +65,19 @@ require_once 'core/Web.Header.Views.php';
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Datos del Equipo <?php echo $rowdata['NombreEquipo']; ?></h5>
+			<h5>Datos del Equipo <?php echo $rowData['NombreEquipo']; ?></h5>
 		</header>
 		<div class="table-responsive">
 			<?php
 			//Guardo la unidad de medida
-			$unimed = ' '.$arrFinalUnimed[$rowdata['SensoresUniMed_'.$rowdata['Sensor']]];
-			$explanation  = '<strong>'.fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].'</strong><br/>';
-			$explanation .= $rowdata['Descripcion'].'<br/>';
-			$explanation .= '<strong>Medida: </strong>'.Cantidades_decimales_justos($rowdata['Valor']).$unimed.'<br/>';
-			$explanation .= '<strong>Min: </strong>'.Cantidades_decimales_justos($rowdata['Valor_min']).$unimed.'<br/>';
-			$explanation .= '<strong>Max: </strong>'.Cantidades_decimales_justos($rowdata['Valor_max']).$unimed.'<br/>';
+			$unimed = ' '.$arrFinalUnimed[$rowData['SensoresUniMed_'.$rowData['Sensor']]];
+			$explanation  = '<strong>'.fecha_estandar($rowData['Fecha']).' - '.$rowData['Hora'].'</strong><br/>';
+			$explanation .= $rowData['Descripcion'].'<br/>';
+			$explanation .= '<strong>Medida: </strong>'.Cantidades_decimales_justos($rowData['Valor']).$unimed.'<br/>';
+			$explanation .= '<strong>Min: </strong>'.Cantidades_decimales_justos($rowData['Valor_min']).$unimed.'<br/>';
+			$explanation .= '<strong>Max: </strong>'.Cantidades_decimales_justos($rowData['Valor_max']).$unimed.'<br/>';
 
-			echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); ?>
+			echo mapa_from_gps($rowData['GeoLatitud'], $rowData['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); ?>
 
 		</div>
 	</div>

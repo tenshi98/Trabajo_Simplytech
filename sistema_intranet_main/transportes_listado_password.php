@@ -52,12 +52,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre';
 $SIS_join  = '';
 $SIS_where = 'idTransporte = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'transportes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'transportes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Transportista', $rowdata['Nombre'], 'Editar Password'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Transportista', $rowData['Nombre'], 'Editar Password'); ?>
 </div>
 <div class="clearfix"></div>
 

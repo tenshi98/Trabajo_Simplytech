@@ -113,8 +113,7 @@ LEFT JOIN `trabajadores_listado`                         ON trabajadores_listado
 LEFT JOIN `cross_shipping_recibidores`                   ON cross_shipping_recibidores.idRecibidor                    = cross_shipping_consolidacion.idRecibidor';
 $SIS_where = 'cross_shipping_consolidacion.idConsolidacion ='.$X_Puntero;
 $rowConso = db_select_data (false, $SIS_query, 'cross_shipping_consolidacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowConso');
-				
-			
+
 /************************************************************/
 // Se traen las estibas
 $SIS_query = '
@@ -156,18 +155,17 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion
 //Se define el contenido del PDF
 $html = '
 <style>
-body {font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;font-size: 14px;line-height: 1.42857143;color: #333;}
-table {border-collapse: collapse;border-spacing: 0;}
-tr.oddrow td{display: line;border-bottom: 1px solid #EEE;}
-.tableline td, .tableline th{border-bottom: 1px solid #EEE;line-height: 1.42857143;}
+	body {font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;font-size: 14px;line-height: 1.42857143;color: #333;}
+	table {border-collapse: collapse;border-spacing: 0;}
+	tr.oddrow td{display: line;border-bottom: 1px solid #EEE;}
+	.tableline td, .tableline th{border-bottom: 1px solid #EEE;line-height: 1.42857143;}
 </style>';
- 
+
 $html .= '
 <table style="border: 1px solid #f4f4f4;margin: 1%; width: 98%;"   cellpadding="10" cellspacing="0">
 	<tbody>
 		<tr>
 			<td>
-	
 				<table style="text-align: left; width: 100%;border: 1px solid #f4f4f4;"  cellpadding="0" cellspacing="0">
 					<tbody>
 						<tr class="oddrow">
@@ -182,11 +180,6 @@ $html .= '
 						<tr class="oddrow">
 							<td colspan="4" rowspan="1" style="vertical-align: top;background-color:#DDD"><strong>DATOS MAESTROS</strong></td>
 						</tr>
-						
-						
-						
-						
-						
 						<tr><td colspan="4" rowspan="1" style="vertical-align: top;background-color:#DDD"><strong>Cuerpo Identificacion</strong></td></tr>
 						<tr>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Contenedor Nro.</td>
@@ -242,8 +235,6 @@ $html .= '
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Recibidor</td>
 							<td style="vertical-align: top; width:30%;">'.$rowConso['RecibidorCodigo'].' - '.$rowConso['RecibidorNombre'].'</td>
 						</tr>
-						
-							
 						<tr><td colspan="4" rowspan="1" style="vertical-align: top;background-color:#DDD"><strong>Cuerpo Identificacion Empresa Transportista</strong></td></tr>
 						<tr>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Empresa Transportista</td>
@@ -290,8 +281,7 @@ $html .= '
 				<table style="text-align: left; width: 100%;" cellpadding="0" cellspacing="0" >
 					<tbody>
 						<tr>';
-							
-							filtrar($arrEstibas, 'Estiba');  
+							filtrar($arrEstibas, 'Estiba');
 							foreach($arrEstibas as $categoria=>$estibas){
 								$html .= '
 								<td style="vertical-align: top; width:50%;">
@@ -327,10 +317,7 @@ $html .= '
 									</tbody>
 								</table>
 							</td>';
-							} 
-							
-								
-				
+							}
 						$html .= '
 						</tr>
 					</tbody>
@@ -358,8 +345,7 @@ $html .= '
 
 						<tr style="background-color: #f1f1f1;">
 							<td colspan="8">Archivos Adjuntos</td>
-						</tr>';		  
-		
+						</tr>';
 						filtrar($arrArchivos, 'Tipo');
 						foreach($arrArchivos as $categoria=>$archivos){
 							$html .= '<tr><td colspan="8"  style="background-color:#DDD"><strong>'.$categoria.'</strong></td></tr>';
@@ -374,22 +360,16 @@ $html .= '
 									$xn_col=1;
 								}
 							}
-						
 							$html .= '</tr>';
 						}
 					$html .= '
 					</tbody>
 				</table>';
-				
-				
-				
 
 			$html .= '</td>
 		</tr>
 	</tbody>
 </table>';
- 
-
 
 /**********************************************************************************************************************************/
 /*                                                          Impresion PDF                                                         */

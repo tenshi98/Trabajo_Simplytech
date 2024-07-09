@@ -66,7 +66,7 @@ if(!empty($_GET['editPersona'])){
 $SIS_query = 'Fecha, HoraEntrada, HoraSalida, idEstado, Nombre';
 $SIS_join  = '';
 $SIS_where = 'idNomina ='.$_GET['editPersona'];
-$row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -74,17 +74,17 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas_listad
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Editar Asistencia de <?php echo $row_data['Nombre']; ?></h5>
+			<h5>Editar Asistencia de <?php echo $rowData['Nombre']; ?></h5>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Fecha)){         $x1  = $Fecha;          }else{$x1  = $row_data['Fecha'];}
-				if(isset($HoraEntrada)){   $x2  = $HoraEntrada;    }elseif($row_data['HoraEntrada']!='00:00:00'){$x2  = $row_data['HoraEntrada'];  }else{$x2  = '';}
-				if(isset($HoraSalida)){    $x3  = $HoraSalida;     }elseif($row_data['HoraEntrada']!='00:00:00'){$x3  = $row_data['HoraSalida'];   }else{$x3  = '';}
-				if(isset($idEstado)){      $x4  = $idEstado;       }else{$x4  = $row_data['idEstado'];}
+				if(isset($Fecha)){         $x1  = $Fecha;          }else{$x1  = $rowData['Fecha'];}
+				if(isset($HoraEntrada)){   $x2  = $HoraEntrada;    }elseif($rowData['HoraEntrada']!='00:00:00'){$x2  = $rowData['HoraEntrada'];  }else{$x2  = '';}
+				if(isset($HoraSalida)){    $x3  = $HoraSalida;     }elseif($rowData['HoraEntrada']!='00:00:00'){$x3  = $rowData['HoraSalida'];   }else{$x3  = '';}
+				if(isset($idEstado)){      $x4  = $idEstado;       }else{$x4  = $rowData['idEstado'];}
 				  
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -114,7 +114,7 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas_listad
 $SIS_query = 'idEstado';
 $SIS_join  = '';
 $SIS_where = 'idAcceso ='.$_GET['id'];
-$row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -129,7 +129,7 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idEstado)){ $x1  = $idEstado;  }else{$x1  = $row_data['idEstado'];}
+				if(isset($idEstado)){ $x1  = $idEstado;  }else{$x1  = $rowData['idEstado'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -178,7 +178,7 @@ LEFT JOIN `ubicacion_listado_level_4`   ON ubicacion_listado_level_4.idLevel_4  
 LEFT JOIN `ubicacion_listado_level_5`   ON ubicacion_listado_level_5.idLevel_5   = seguridad_accesos_nominas.idUbicacion_lvl_5
 LEFT JOIN `core_estado_caja`            ON core_estado_caja.idEstado             = seguridad_accesos_nominas.idEstado';
 $SIS_where = 'seguridad_accesos_nominas.idAcceso ='.$_GET['id'];
-$row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /*****************************************/
 // Se trae un listado con todos los otros
@@ -223,33 +223,33 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 					</tr>
 					<tr>
 						<td class="meta-head">Usuario</td>
-						<td><?php echo $row_data['Usuario']; ?></td>
+						<td><?php echo $rowData['Usuario']; ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Sistema</td>
-						<td><?php echo $row_data['Sistema']; ?></td>
+						<td><?php echo $rowData['Sistema']; ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Ubicación</td>
 						<td>
 							<?php 
-								echo $row_data['Ubicacion'];
-								if(isset($row_data['UbicacionLVL_1'])&&$row_data['UbicacionLVL_1']!=''){echo ' - '.$row_data['UbicacionLVL_1'];}
-								if(isset($row_data['UbicacionLVL_2'])&&$row_data['UbicacionLVL_2']!=''){echo ' - '.$row_data['UbicacionLVL_2'];}
-								if(isset($row_data['UbicacionLVL_3'])&&$row_data['UbicacionLVL_3']!=''){echo ' - '.$row_data['UbicacionLVL_3'];}
-								if(isset($row_data['UbicacionLVL_4'])&&$row_data['UbicacionLVL_4']!=''){echo ' - '.$row_data['UbicacionLVL_4'];}
-								if(isset($row_data['UbicacionLVL_5'])&&$row_data['UbicacionLVL_5']!=''){echo ' - '.$row_data['UbicacionLVL_5'];}
+								echo $rowData['Ubicacion'];
+								if(isset($rowData['UbicacionLVL_1'])&&$rowData['UbicacionLVL_1']!=''){echo ' - '.$rowData['UbicacionLVL_1'];}
+								if(isset($rowData['UbicacionLVL_2'])&&$rowData['UbicacionLVL_2']!=''){echo ' - '.$rowData['UbicacionLVL_2'];}
+								if(isset($rowData['UbicacionLVL_3'])&&$rowData['UbicacionLVL_3']!=''){echo ' - '.$rowData['UbicacionLVL_3'];}
+								if(isset($rowData['UbicacionLVL_4'])&&$rowData['UbicacionLVL_4']!=''){echo ' - '.$rowData['UbicacionLVL_4'];}
+								if(isset($rowData['UbicacionLVL_5'])&&$rowData['UbicacionLVL_5']!=''){echo ' - '.$rowData['UbicacionLVL_5'];}
 								
 							?>
 						</td>
 					</tr>
 					<tr>
 						<td class="meta-head">Persona Reunion</td>
-						<td><?php echo $row_data['PersonaReunion']; ?></td>
+						<td><?php echo $rowData['PersonaReunion']; ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Estado</td>
-						<td><?php echo $row_data['Estado']; ?></td>
+						<td><?php echo $rowData['Estado']; ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -257,15 +257,15 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Programada</td>
-						<td colspan="2"><?php echo Fecha_estandar($row_data['FechaProgramada']); ?></td>
+						<td colspan="2"><?php echo Fecha_estandar($rowData['FechaProgramada']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Hora Inicio</td>
-						<td colspan="2"><?php echo $row_data['HoraInicioProgramada']; ?></td>
+						<td colspan="2"><?php echo $rowData['HoraInicioProgramada']; ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Hora Termino</td>
-						<td colspan="2"><?php echo $row_data['HoraTerminoProgramada']; ?></td>
+						<td colspan="2"><?php echo $rowData['HoraTerminoProgramada']; ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -385,7 +385,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != '')  {     
+if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){     
 	$SIS_where .= " AND seguridad_accesos_nominas.idUsuario = '".$_GET['idUsuario']."'";
 }
 if(isset($_GET['h_inicio'], $_GET['h_termino']) && $_GET['h_inicio'] != '' && $_GET['h_termino']!=''){

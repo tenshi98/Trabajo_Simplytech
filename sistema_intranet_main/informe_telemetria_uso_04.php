@@ -44,25 +44,25 @@ $arrGruposRev = array();
 $arrGruposRev = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos_uso', '', 'idSupervisado=1', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGruposRev');
 /**********************************************************/
 // consulto los datos
-$row_data = db_select_data (false, 'cantSensores', 'telemetria_listado', '', 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, 'cantSensores', 'telemetria_listado', '', 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //numero sensores equipo
 $SIS_query = '
 telemetria_listado.Nombre,
 telemetria_listado.cantSensores';
-for ($i = 1; $i <= $row_data['cantSensores']; $i++) {
+for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 	$SIS_query .= ',telemetria_listado_sensores_revision_grupo.SensoresRevisionGrupo_'.$i;
 }
 $SIS_join  = 'LEFT JOIN `telemetria_listado_sensores_revision_grupo`  ON telemetria_listado_sensores_revision_grupo.idTelemetria  = telemetria_listado.idTelemetria';
 // consulto los datos
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, 'telemetria_listado.idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, 'telemetria_listado.idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /**********************************************************/
 //Se crean las columnas
 $arrColumnas = array();
-for ($i = 1; $i <= $row_data['cantSensores']; $i++) {
-	if(isset($rowdata['SensoresRevisionGrupo_'.$i])&&$rowdata['SensoresRevisionGrupo_'.$i]!=0){
-		$arrColumnas[$rowdata['SensoresRevisionGrupo_'.$i]]['idGrupo'] = $rowdata['SensoresRevisionGrupo_'.$i];
+for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
+	if(isset($rowData['SensoresRevisionGrupo_'.$i])&&$rowData['SensoresRevisionGrupo_'.$i]!=0){
+		$arrColumnas[$rowData['SensoresRevisionGrupo_'.$i]]['idGrupo'] = $rowData['SensoresRevisionGrupo_'.$i];
 	}
 }
 foreach ($arrGruposRev as $sen) {
@@ -83,7 +83,7 @@ if(isset($_GET['f_inicio'], $_GET['f_termino']) && $_GET['f_inicio'] != '' && $_
 
 //numero sensores equipo
 $subquery = '';
-for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 	$subquery .= ',Horas_'.$i;
 }
 //se consulta
@@ -95,7 +95,7 @@ $arrConsulta = db_select_array (false, 'Fecha, Horas_Sensor_activo'.$subquery, '
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo $rowdata['Nombre']; ?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo $rowData['Nombre']; ?></h5>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">

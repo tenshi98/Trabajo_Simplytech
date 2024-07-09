@@ -10,7 +10,7 @@
 					<span class="panel-title" style="color: #1E90FF;font-weight: 700 !important;" id="update_text_HoraRefresco">Hora Refresco: '.hora_actual().'</span>';
 
 					echo widget_Gestion_Flota_CrossTech('Gestion de Flota',
-														$_SESSION['usuario']['basic_data']['idSistema'], 
+														$_SESSION['usuario']['basic_data']['idSistema'],
 														$_SESSION['usuario']['basic_data']['Config_IDGoogle'],
 														$_SESSION['usuario']['basic_data']['idTipoUsuario'],
 														$_SESSION['usuario']['basic_data']['idUsuario'],

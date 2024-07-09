@@ -54,17 +54,17 @@ core_sistemas.email_principal AS SistemaOrigenEmail,
 core_sistemas.Rut AS SistemaOrigenRut,
 core_sistemas.Contacto_Nombre AS SistemaContacto,
 usuarios_listado.Nombre AS NombreEncargado,
-telemetria_historial_mantencion.Fecha, 
-telemetria_historial_mantencion.h_Inicio, 
-telemetria_historial_mantencion.h_Termino, 
-telemetria_historial_mantencion.Duracion, 
-telemetria_historial_mantencion.Resumen, 
+telemetria_historial_mantencion.Fecha,
+telemetria_historial_mantencion.h_Inicio,
+telemetria_historial_mantencion.h_Termino,
+telemetria_historial_mantencion.Duracion,
+telemetria_historial_mantencion.Resumen,
 telemetria_historial_mantencion.Resolucion,
 telemetria_historial_mantencion.idOpciones_1,
 telemetria_historial_mantencion.idOpciones_2,
 telemetria_historial_mantencion.idOpciones_3,
 telemetria_historial_mantencion.Recepcion_Nombre,
-telemetria_historial_mantencion.Recepcion_Rut, 
+telemetria_historial_mantencion.Recepcion_Rut,
 telemetria_historial_mantencion.Recepcion_Email,
 telemetria_historial_mantencion.Path_Firma,
 core_telemetria_servicio_tecnico.Nombre AS Servicio';
@@ -75,7 +75,7 @@ LEFT JOIN `core_sistemas`                           ON core_sistemas.idSistema  
 LEFT JOIN `core_ubicacion_ciudad`   sis_or_ciudad   ON sis_or_ciudad.idCiudad                       = core_sistemas.idCiudad
 LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna   ON sis_or_comuna.idComuna                       = core_sistemas.idComuna';
 $SIS_where = 'telemetria_historial_mantencion.idMantencion ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'telemetria_historial_mantencion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_historial_mantencion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /**********************************/
 $arrOpciones = array();
@@ -111,18 +111,17 @@ $arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantenc
 //Se define el contenido del PDF
 $html = '
 <style>
-body {font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;font-size: 14px;line-height: 1.42857143;color: #333;}
-table {border-collapse: collapse;border-spacing: 0;}
-tr.oddrow td{display: line;border-bottom: 1px solid #EEE;}
-.tableline td, .tableline th{border-bottom: 1px solid #EEE;line-height: 1.42857143;}
+	body {font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;font-size: 14px;line-height: 1.42857143;color: #333;}
+	table {border-collapse: collapse;border-spacing: 0;}
+	tr.oddrow td{display: line;border-bottom: 1px solid #EEE;}
+	.tableline td, .tableline th{border-bottom: 1px solid #EEE;line-height: 1.42857143;}
 </style>';
- 
+
 $html .= '
 <table style="border: 1px solid #f4f4f4;margin: 1%; width: 98%;"   cellpadding="10" cellspacing="0">
 	<tbody>
 		<tr>
 			<td>
-	
 				<table style="text-align: left; width: 100%;border: 1px solid #f4f4f4;"  cellpadding="0" cellspacing="0">
 					<tbody>
 						<tr class="oddrow">
@@ -131,33 +130,33 @@ $html .= '
 
 						<tr>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Nombre</td>
-							<td style="vertical-align: top; width:80%;" colspan="3">'.$row_data['SistemaOrigen'].'</td>
+							<td style="vertical-align: top; width:80%;" colspan="3">'.$rowData['SistemaOrigen'].'</td>
 						</tr>
 						<tr>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Ubicación</td>
-							<td style="vertical-align: top; width:80%;" colspan="3">'.$row_data['SistemaOrigenDireccion'].', '.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'</td>
+							<td style="vertical-align: top; width:80%;" colspan="3">'.$rowData['SistemaOrigenDireccion'].', '.$rowData['SistemaOrigenCiudad'].', '.$rowData['SistemaOrigenComuna'].'</td>
 						</tr>
 						<tr>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Fono Fijo</td>
-							<td style="vertical-align: top; width:30%;">'.formatPhone($row_data['SistemaOrigenFono']).'</td>
+							<td style="vertical-align: top; width:30%;">'.formatPhone($rowData['SistemaOrigenFono']).'</td>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Rut</td>
-							<td style="vertical-align: top; width:30%;">'.$row_data['SistemaOrigenRut'].'</td>
+							<td style="vertical-align: top; width:30%;">'.$rowData['SistemaOrigenRut'].'</td>
 						</tr>
 						<tr>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Email</td>
-							<td style="vertical-align: top; width:30%;">'.$row_data['SistemaOrigenEmail'].'</td>
+							<td style="vertical-align: top; width:30%;">'.$rowData['SistemaOrigenEmail'].'</td>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Persona contacto</td>
-							<td style="vertical-align: top; width:30%;">'.$row_data['SistemaContacto'].'</td>
+							<td style="vertical-align: top; width:30%;">'.$rowData['SistemaContacto'].'</td>
 						</tr>
 						<tr>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Aprobador Nombre</td>
-							<td style="vertical-align: top; width:30%;">'.$row_data['Recepcion_Nombre'].'</td>
+							<td style="vertical-align: top; width:30%;">'.$rowData['Recepcion_Nombre'].'</td>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Aprobador Rut</td>
-							<td style="vertical-align: top; width:30%;">'.$row_data['Recepcion_Rut'].'</td>
+							<td style="vertical-align: top; width:30%;">'.$rowData['Recepcion_Rut'].'</td>
 						</tr>
 						<tr>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Aprobador Email</td>
-							<td style="vertical-align: top; width:30%;">'.$row_data['Recepcion_Email'].'</td>
+							<td style="vertical-align: top; width:30%;">'.$rowData['Recepcion_Email'].'</td>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;"></td>
 							<td style="vertical-align: top; width:30%;"></td>
 						</tr>
@@ -171,19 +170,19 @@ $html .= '
 						</tr>
 						<tr>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Nombre</td>
-							<td style="vertical-align: top; width:80%;" colspan="3">'.$row_data['NombreEncargado'].'</td>
+							<td style="vertical-align: top; width:80%;" colspan="3">'.$rowData['NombreEncargado'].'</td>
 						</tr>
 						<tr>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Fecha</td>
-							<td style="vertical-align: top; width:30%;">'.Fecha_estandar($row_data['Fecha']).'</td>
+							<td style="vertical-align: top; width:30%;">'.Fecha_estandar($rowData['Fecha']).'</td>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Hora Inicio</td>
-							<td style="vertical-align: top; width:30%;">'.$row_data['h_Inicio'].'</td>
+							<td style="vertical-align: top; width:30%;">'.$rowData['h_Inicio'].'</td>
 						</tr>
 						<tr>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Hora Termino</td>
-							<td style="vertical-align: top; width:30%;">'.$row_data['h_Termino'].'</td>
+							<td style="vertical-align: top; width:30%;">'.$rowData['h_Termino'].'</td>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Duracion</td>
-							<td style="vertical-align: top; width:30%;">'.$row_data['Duracion'].'</td>
+							<td style="vertical-align: top; width:30%;">'.$rowData['Duracion'].'</td>
 						</tr>
 					</tbody>
 				</table>
@@ -195,15 +194,15 @@ $html .= '
 						</tr>
 						<tr>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Servicio</td>
-							<td style="vertical-align: top; width:80%;">'.$row_data['Servicio'].'</td>
+							<td style="vertical-align: top; width:80%;">'.$rowData['Servicio'].'</td>
 						</tr>
 						<tr>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Opciones</td>
 							<td style="vertical-align: top; width:80%;">';
 								$ntot = 0;
-								if(isset($row_data['idOpciones_1'])&&$row_data['idOpciones_1']==2){if($ntot!=0){$html .= ' - '.$arrOpcionesDisplay[1]['Nombre'];$ntot++;}else{$html .= $arrOpcionesDisplay[1]['Nombre'];$ntot++;}}
-								if(isset($row_data['idOpciones_2'])&&$row_data['idOpciones_2']==2){if($ntot!=0){$html .= ' - '.$arrOpcionesDisplay[2]['Nombre'];$ntot++;}else{$html .= $arrOpcionesDisplay[2]['Nombre'];$ntot++;}}
-								if(isset($row_data['idOpciones_3'])&&$row_data['idOpciones_3']==2){if($ntot!=0){$html .= ' - '.$arrOpcionesDisplay[3]['Nombre'];$ntot++;}else{$html .= $arrOpcionesDisplay[3]['Nombre'];$ntot++;}}
+								if(isset($rowData['idOpciones_1'])&&$rowData['idOpciones_1']==2){if($ntot!=0){$html .= ' - '.$arrOpcionesDisplay[1]['Nombre'];$ntot++;}else{$html .= $arrOpcionesDisplay[1]['Nombre'];$ntot++;}}
+								if(isset($rowData['idOpciones_2'])&&$rowData['idOpciones_2']==2){if($ntot!=0){$html .= ' - '.$arrOpcionesDisplay[2]['Nombre'];$ntot++;}else{$html .= $arrOpcionesDisplay[2]['Nombre'];$ntot++;}}
+								if(isset($rowData['idOpciones_3'])&&$rowData['idOpciones_3']==2){if($ntot!=0){$html .= ' - '.$arrOpcionesDisplay[3]['Nombre'];$ntot++;}else{$html .= $arrOpcionesDisplay[3]['Nombre'];$ntot++;}}
 								$html .= '
 							</td>
 						</tr>
@@ -236,7 +235,7 @@ $html .= '
 				<table style="text-align: left; width: 100%;margin-top:20px;" cellpadding="5" cellspacing="0">
 					<tbody>
 						<tr>
-							<td style="vertical-align: top;text-align: left;background-color: #f9f9f9;border: 1px solid #EEE;">'.$row_data['Resumen'].'</td>
+							<td style="vertical-align: top;text-align: left;background-color: #f9f9f9;border: 1px solid #EEE;">'.$rowData['Resumen'].'</td>
 						</tr>
 					</tbody>
 				</table>
@@ -249,14 +248,10 @@ $html .= '
 				<table style="text-align: left; width: 100%;margin-top:20px;" cellpadding="5" cellspacing="0">
 					<tbody>
 						<tr>
-							<td style="vertical-align: top;text-align: left;background-color: #f9f9f9;border: 1px solid #EEE;">'.$row_data['Resolucion'].'</td>
+							<td style="vertical-align: top;text-align: left;background-color: #f9f9f9;border: 1px solid #EEE;">'.$rowData['Resolucion'].'</td>
 						</tr>
 					</tbody>
 				</table>
-				
-				
-				
-			
 				<br/>
 				<br/>
 				<table style="text-align: left; width: 100%; margin-top:20px;" cellpadding="0" cellspacing="0">
@@ -266,7 +261,6 @@ $html .= '
 							<td colspan="8">Archivos Adjuntos</td>
 						</tr>
 						<tr>';
-							
 						$xn_col = 1;
 						foreach ($arrArchivos as $arch) {
 							$html .= '<td style="vertical-align: top; width:20%;"><img src="upload/'.$arch['Nombre'].'"></td>';
@@ -288,8 +282,8 @@ $html .= '
 						<tbody>
 							<tr>
 								<td style="vertical-align: top;text-align:center;width:50%;">';
-								if(isset($row_data['Path_Firma'])&&$row_data['Path_Firma']!=''){
-									$html .= '<img style="" alt="Imagen Referencia" src="upload/'.$row_data['Path_Firma'].'">';
+								if(isset($rowData['Path_Firma'])&&$rowData['Path_Firma']!=''){
+									$html .= '<img style="" alt="Imagen Referencia" src="upload/'.$rowData['Path_Firma'].'">';
 								}
 								$html .= '
 								</td>
@@ -303,7 +297,6 @@ $html .= '
 							</tr>
 						</tbody>
 					</table>';
-				
 
 			$html .= '</td>
 		</tr>
@@ -315,7 +308,7 @@ $html .= '
 /**********************************************************************************************************************************/
 //Config
 $pdf_titulo     = 'Visita Tecnica N° '.n_doc($X_Puntero, 7).'.';
-$pdf_subtitulo  = 'Mantencion '.$row_data['Servicio'];
+$pdf_subtitulo  = 'Mantencion '.$rowData['Servicio'];
 $pdf_file       = 'Mantencion N° '.n_doc($X_Puntero, 7).'.pdf';
 $OpcDom         = "'A4', 'landscape'";
 $OpcTcpOrt      = "P";  //P->PORTRAIT - L->LANDSCAPE

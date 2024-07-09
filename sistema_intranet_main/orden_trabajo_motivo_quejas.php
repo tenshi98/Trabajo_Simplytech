@@ -77,7 +77,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'idOT, idUsuarioQueja, idTipoQueja, Observaciones, idTrabajadorQueja, NombreQueja';
 	$SIS_join  = '';
 	$SIS_where = 'idQueja = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_quejas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_quejas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 	/*******************************************************/
 	//Verifico el tipo de usuario que esta ingresando
 	$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
@@ -100,12 +100,12 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idOT)){              $x1  = $idOT;               }else{$x1  = $rowdata['idOT'];}
-					if(isset($idUsuarioQueja)){    $x2  = $idUsuarioQueja;     }else{$x2  = $rowdata['idUsuarioQueja'];}
-					if(isset($idTrabajadorQueja)){ $x3  = $idTrabajadorQueja;  }else{$x3  = $rowdata['idTrabajadorQueja'];}
-					if(isset($NombreQueja)){       $x4  = $NombreQueja;        }else{$x4  = $rowdata['NombreQueja'];}
-					if(isset($idTipoQueja)){       $x5  = $idTipoQueja;        }else{$x5  = $rowdata['idTipoQueja'];}
-					if(isset($Observaciones)){     $x6  = $Observaciones;      }else{$x6  = $rowdata['Observaciones'];}
+					if(isset($idOT)){              $x1  = $idOT;               }else{$x1  = $rowData['idOT'];}
+					if(isset($idUsuarioQueja)){    $x2  = $idUsuarioQueja;     }else{$x2  = $rowData['idUsuarioQueja'];}
+					if(isset($idTrabajadorQueja)){ $x3  = $idTrabajadorQueja;  }else{$x3  = $rowData['idTrabajadorQueja'];}
+					if(isset($NombreQueja)){       $x4  = $NombreQueja;        }else{$x4  = $rowData['NombreQueja'];}
+					if(isset($idTipoQueja)){       $x5  = $idTipoQueja;        }else{$x5  = $rowData['idTipoQueja'];}
+					if(isset($Observaciones)){     $x6  = $Observaciones;      }else{$x6  = $rowData['Observaciones'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

@@ -65,7 +65,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'Nombre,idFont, IconColor';
 	$SIS_join  = '';
 	$SIS_where = 'id_pmcat = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'core_permisos_categorias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'core_permisos_categorias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -84,9 +84,9 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){              $x1  = $Nombre;             }else{$x1  = $rowdata['Nombre'];}
-					if(isset($idFont)){              $x2  = $idFont;             }else{$x2  = $rowdata['idFont'];}
-					if(isset($IconColor)){           $x3  = $IconColor;          }else{$x3  = $rowdata['IconColor'];}
+					if(isset($Nombre)){              $x1  = $Nombre;             }else{$x1  = $rowData['Nombre'];}
+					if(isset($idFont)){              $x2  = $idFont;             }else{$x2  = $rowData['idFont'];}
+					if(isset($IconColor)){           $x3  = $IconColor;          }else{$x3  = $rowData['IconColor'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

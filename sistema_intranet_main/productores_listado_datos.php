@@ -51,12 +51,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'idTipo, Nombre,fNacimiento, idCiudad, idComuna, Direccion, idSistema, Codigo';
 $SIS_join  = '';
 $SIS_where = 'idProductor = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'productores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'productores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productor', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productor', $rowData['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -84,13 +84,13 @@ $rowdata = db_select_data (false, $SIS_query, 'productores_listado', $SIS_join, 
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idTipo)){           $x1  = $idTipo;            }else{$x1  = $rowdata['idTipo'];}
-					if(isset($Codigo)){           $x2  = $Codigo;            }else{$x2  = $rowdata['Codigo'];}
-					if(isset($Nombre)){           $x3  = $Nombre;            }else{$x3  = $rowdata['Nombre'];}
-					if(isset($fNacimiento)){      $x4  = $fNacimiento;       }else{$x4  = $rowdata['fNacimiento'];}
-					if(isset($idCiudad)){         $x5  = $idCiudad;          }else{$x5  = $rowdata['idCiudad'];}
-					if(isset($idComuna)){         $x6  = $idComuna;          }else{$x6  = $rowdata['idComuna'];}
-					if(isset($Direccion)){        $x7  = $Direccion;         }else{$x7  = $rowdata['Direccion'];}
+					if(isset($idTipo)){           $x1  = $idTipo;            }else{$x1  = $rowData['idTipo'];}
+					if(isset($Codigo)){           $x2  = $Codigo;            }else{$x2  = $rowData['Codigo'];}
+					if(isset($Nombre)){           $x3  = $Nombre;            }else{$x3  = $rowData['Nombre'];}
+					if(isset($fNacimiento)){      $x4  = $fNacimiento;       }else{$x4  = $rowData['fNacimiento'];}
+					if(isset($idCiudad)){         $x5  = $idCiudad;          }else{$x5  = $rowData['idCiudad'];}
+					if(isset($idComuna)){         $x6  = $idComuna;          }else{$x6  = $rowData['idComuna'];}
+					if(isset($Direccion)){        $x7  = $Direccion;         }else{$x7  = $rowData['Direccion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

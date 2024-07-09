@@ -118,7 +118,7 @@ LEFT JOIN `centrocosto_listado_level_3`  SEGURIDAD_Centro_lv_3    ON SEGURIDAD_C
 LEFT JOIN `centrocosto_listado_level_4`  SEGURIDAD_Centro_lv_4    ON SEGURIDAD_Centro_lv_4.idLevel_4     = pagos_leyes_sociales.SEGURIDAD_idLevel_4
 LEFT JOIN `centrocosto_listado_level_5`  SEGURIDAD_Centro_lv_5    ON SEGURIDAD_Centro_lv_5.idLevel_5     = pagos_leyes_sociales.SEGURIDAD_idLevel_5';
 $SIS_where = 'pagos_leyes_sociales.idFactSocial ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'pagos_leyes_sociales', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'pagos_leyes_sociales', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 $arrTrabajo = array();
 $arrTrabajo = db_select_array (false, 'idFactTrab,TrabajadorNombre,TrabajadorRut,Sueldo,AFP_Nombre,AFP_Porcentaje,AFP_Cotizacion,AFP_SeguroInvalidez,AFP_APV,AFP_Cuenta2,AFP_TrabajoPesado,AFC_Empleador,AFC_Trabajador,Salud_Nombre,Salud_Porcentaje,Salud_Cotizacion,Salud_Extra_Salud_id,Salud_Extra_Porcentaje,Salud_Extra_Valor,MutualNombre,MutualPorcentaje,MutualValor,Total_AFP,Total_SALUD,Total_SEGURIDAD','pagos_leyes_sociales_trabajadores', '', 'pagos_leyes_sociales_trabajadores.idFactSocial ='.$X_Puntero, 'pagos_leyes_sociales_trabajadores.TrabajadorNombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTrabajo');
@@ -132,33 +132,33 @@ $arrHistorial = db_select_array (false, 'pagos_leyes_sociales_historial.Creacion
 $arrArchivo = array();
 $arrArchivo = db_select_array (false, 'Nombre', 'pagos_leyes_sociales_archivos', '', 'idFactSocial='.$X_Puntero, 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivo');
 
-if(isset($row_data['AFP_CC_Nombre'])&&$row_data['AFP_CC_Nombre']!=''){
-	$AFP_CC = $row_data['AFP_CC_Nombre'];
-	if(isset($row_data['AFP_CC_Level_1'])&&$row_data['AFP_CC_Level_1']!=''){$AFP_CC .= ' - '.$row_data['AFP_CC_Level_1'];}
-	if(isset($row_data['AFP_CC_Level_2'])&&$row_data['AFP_CC_Level_2']!=''){$AFP_CC .= ' - '.$row_data['AFP_CC_Level_2'];}
-	if(isset($row_data['AFP_CC_Level_3'])&&$row_data['AFP_CC_Level_3']!=''){$AFP_CC .= ' - '.$row_data['AFP_CC_Level_3'];}
-	if(isset($row_data['AFP_CC_Level_4'])&&$row_data['AFP_CC_Level_4']!=''){$AFP_CC .= ' - '.$row_data['AFP_CC_Level_4'];}
-	if(isset($row_data['AFP_CC_Level_5'])&&$row_data['AFP_CC_Level_5']!=''){$AFP_CC .= ' - '.$row_data['AFP_CC_Level_5'];}
+if(isset($rowData['AFP_CC_Nombre'])&&$rowData['AFP_CC_Nombre']!=''){
+	$AFP_CC = $rowData['AFP_CC_Nombre'];
+	if(isset($rowData['AFP_CC_Level_1'])&&$rowData['AFP_CC_Level_1']!=''){$AFP_CC .= ' - '.$rowData['AFP_CC_Level_1'];}
+	if(isset($rowData['AFP_CC_Level_2'])&&$rowData['AFP_CC_Level_2']!=''){$AFP_CC .= ' - '.$rowData['AFP_CC_Level_2'];}
+	if(isset($rowData['AFP_CC_Level_3'])&&$rowData['AFP_CC_Level_3']!=''){$AFP_CC .= ' - '.$rowData['AFP_CC_Level_3'];}
+	if(isset($rowData['AFP_CC_Level_4'])&&$rowData['AFP_CC_Level_4']!=''){$AFP_CC .= ' - '.$rowData['AFP_CC_Level_4'];}
+	if(isset($rowData['AFP_CC_Level_5'])&&$rowData['AFP_CC_Level_5']!=''){$AFP_CC .= ' - '.$rowData['AFP_CC_Level_5'];}
 }else{
 	$AFP_CC = '';
 }
-if(isset($row_data['SALUD_CC_Nombre'])&&$row_data['SALUD_CC_Nombre']!=''){
-	$SALUD_CC = $row_data['SALUD_CC_Nombre'];
-	if(isset($row_data['SALUD_CC_Level_1'])&&$row_data['SALUD_CC_Level_1']!=''){$SALUD_CC .= ' - '.$row_data['SALUD_CC_Level_1'];}
-	if(isset($row_data['SALUD_CC_Level_2'])&&$row_data['SALUD_CC_Level_2']!=''){$SALUD_CC .= ' - '.$row_data['SALUD_CC_Level_2'];}
-	if(isset($row_data['SALUD_CC_Level_3'])&&$row_data['SALUD_CC_Level_3']!=''){$SALUD_CC .= ' - '.$row_data['SALUD_CC_Level_3'];}
-	if(isset($row_data['SALUD_CC_Level_4'])&&$row_data['SALUD_CC_Level_4']!=''){$SALUD_CC .= ' - '.$row_data['SALUD_CC_Level_4'];}
-	if(isset($row_data['SALUD_CC_Level_5'])&&$row_data['SALUD_CC_Level_5']!=''){$SALUD_CC .= ' - '.$row_data['SALUD_CC_Level_5'];}
+if(isset($rowData['SALUD_CC_Nombre'])&&$rowData['SALUD_CC_Nombre']!=''){
+	$SALUD_CC = $rowData['SALUD_CC_Nombre'];
+	if(isset($rowData['SALUD_CC_Level_1'])&&$rowData['SALUD_CC_Level_1']!=''){$SALUD_CC .= ' - '.$rowData['SALUD_CC_Level_1'];}
+	if(isset($rowData['SALUD_CC_Level_2'])&&$rowData['SALUD_CC_Level_2']!=''){$SALUD_CC .= ' - '.$rowData['SALUD_CC_Level_2'];}
+	if(isset($rowData['SALUD_CC_Level_3'])&&$rowData['SALUD_CC_Level_3']!=''){$SALUD_CC .= ' - '.$rowData['SALUD_CC_Level_3'];}
+	if(isset($rowData['SALUD_CC_Level_4'])&&$rowData['SALUD_CC_Level_4']!=''){$SALUD_CC .= ' - '.$rowData['SALUD_CC_Level_4'];}
+	if(isset($rowData['SALUD_CC_Level_5'])&&$rowData['SALUD_CC_Level_5']!=''){$SALUD_CC .= ' - '.$rowData['SALUD_CC_Level_5'];}
 }else{
 	$SALUD_CC = '';
 }
-if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''){
-	$SEGURIDAD_CC = $row_data['SEGURIDAD_CC_Nombre'];
-	if(isset($row_data['SEGURIDAD_CC_Level_1'])&&$row_data['SEGURIDAD_CC_Level_1']!=''){$SEGURIDAD_CC .= ' - '.$row_data['SEGURIDAD_CC_Level_1'];}
-	if(isset($row_data['SEGURIDAD_CC_Level_2'])&&$row_data['SEGURIDAD_CC_Level_2']!=''){$SEGURIDAD_CC .= ' - '.$row_data['SEGURIDAD_CC_Level_2'];}
-	if(isset($row_data['SEGURIDAD_CC_Level_3'])&&$row_data['SEGURIDAD_CC_Level_3']!=''){$SEGURIDAD_CC .= ' - '.$row_data['SEGURIDAD_CC_Level_3'];}
-	if(isset($row_data['SEGURIDAD_CC_Level_4'])&&$row_data['SEGURIDAD_CC_Level_4']!=''){$SEGURIDAD_CC .= ' - '.$row_data['SEGURIDAD_CC_Level_4'];}
-	if(isset($row_data['SEGURIDAD_CC_Level_5'])&&$row_data['SEGURIDAD_CC_Level_5']!=''){$SEGURIDAD_CC .= ' - '.$row_data['SEGURIDAD_CC_Level_5'];}
+if(isset($rowData['SEGURIDAD_CC_Nombre'])&&$rowData['SEGURIDAD_CC_Nombre']!=''){
+	$SEGURIDAD_CC = $rowData['SEGURIDAD_CC_Nombre'];
+	if(isset($rowData['SEGURIDAD_CC_Level_1'])&&$rowData['SEGURIDAD_CC_Level_1']!=''){$SEGURIDAD_CC .= ' - '.$rowData['SEGURIDAD_CC_Level_1'];}
+	if(isset($rowData['SEGURIDAD_CC_Level_2'])&&$rowData['SEGURIDAD_CC_Level_2']!=''){$SEGURIDAD_CC .= ' - '.$rowData['SEGURIDAD_CC_Level_2'];}
+	if(isset($rowData['SEGURIDAD_CC_Level_3'])&&$rowData['SEGURIDAD_CC_Level_3']!=''){$SEGURIDAD_CC .= ' - '.$rowData['SEGURIDAD_CC_Level_3'];}
+	if(isset($rowData['SEGURIDAD_CC_Level_4'])&&$rowData['SEGURIDAD_CC_Level_4']!=''){$SEGURIDAD_CC .= ' - '.$rowData['SEGURIDAD_CC_Level_4'];}
+	if(isset($rowData['SEGURIDAD_CC_Level_5'])&&$rowData['SEGURIDAD_CC_Level_5']!=''){$SEGURIDAD_CC .= ' - '.$rowData['SEGURIDAD_CC_Level_5'];}
 }else{
 	$SEGURIDAD_CC = '';
 }
@@ -171,7 +171,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Pago Previred.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['fecha_auto']); ?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowData['fecha_auto']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -181,10 +181,10 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Datos Básicos
 			<address>
-				<strong>Usuario: </strong><?php echo $row_data['Usuario']; ?><br/>
-				<strong>Periodo: </strong><?php echo numero_a_mes($row_data['Periodo_Mes']).' de '.$row_data['Periodo_Ano']; ?><br/>
-				<strong>Fecha Pago: </strong><?php echo Fecha_estandar($row_data['Pago_fecha']); ?><br/>
-				<strong>Estado de Pago: </strong><?php echo $row_data['EstadoPago']; ?><br/>
+				<strong>Usuario: </strong><?php echo $rowData['Usuario']; ?><br/>
+				<strong>Periodo: </strong><?php echo numero_a_mes($rowData['Periodo_Mes']).' de '.$rowData['Periodo_Ano']; ?><br/>
+				<strong>Fecha Pago: </strong><?php echo Fecha_estandar($rowData['Pago_fecha']); ?><br/>
+				<strong>Estado de Pago: </strong><?php echo $rowData['EstadoPago']; ?><br/>
 				<strong>Centro de Costo AFP: </strong><?php echo $AFP_CC; ?><br/>
 				<strong>Centro de Costo Salud: </strong><?php echo $SALUD_CC; ?><br/>
 				<strong>Centro de Costo Seguridad: </strong><?php echo $SEGURIDAD_CC; ?><br/>
@@ -194,12 +194,12 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Empresa Relacionada
 			<address>
-				<strong>Nombre: </strong><?php echo $row_data['SistemaOrigen']; ?><br/>
-				<strong>Ubicación: </strong><?php echo $row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna']; ?><br/>
-				<strong>Dirección: </strong><?php echo $row_data['SistemaOrigenDireccion']; ?><br/>
-				<strong>Fono: </strong><?php echo formatPhone($row_data['SistemaOrigenFono']); ?><br/>
-				<strong>Rut: </strong><?php echo $row_data['SistemaOrigenRut']; ?><br/>
-				<strong>Email: </strong><?php echo $row_data['SistemaOrigenEmail']; ?><br/>
+				<strong>Nombre: </strong><?php echo $rowData['SistemaOrigen']; ?><br/>
+				<strong>Ubicación: </strong><?php echo $rowData['SistemaOrigenCiudad'].', '.$rowData['SistemaOrigenComuna']; ?><br/>
+				<strong>Dirección: </strong><?php echo $rowData['SistemaOrigenDireccion']; ?><br/>
+				<strong>Fono: </strong><?php echo formatPhone($rowData['SistemaOrigenFono']); ?><br/>
+				<strong>Rut: </strong><?php echo $rowData['SistemaOrigenRut']; ?><br/>
+				<strong>Email: </strong><?php echo $rowData['SistemaOrigenEmail']; ?><br/>
 			</address>
 		</div>
 	</div>
@@ -247,14 +247,14 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 					 
 					<tr class="invoice-total" bgcolor="#f1f1f1">
 						<td colspan="4" align="right"><strong>Total</strong></td>
-						<td align="right"><strong><?php echo valores($row_data['AFP_Total_CotizacionOblig'], 0); ?></strong></td>
-						<td align="right"><strong><?php echo valores($row_data['AFP_Total_SeguroInvalidez'], 0); ?></strong></td>
-						<td align="right"><strong><?php echo valores($row_data['AFP_Total_APV'], 0); ?></strong></td>
-						<td align="right"><strong><?php echo valores($row_data['AFP_Total_Cuenta_2'], 0); ?></strong></td>
-						<td align="right"><strong><?php echo valores($row_data['AFP_Total_CotTrabajoPesado'], 0); ?></strong></td>
-						<td align="right"><strong><?php echo valores($row_data['AFP_Total_AFCTrabajador'], 0); ?></strong></td>
-						<td align="right"><strong><?php echo valores($row_data['AFP_Total_AFCEmpleador'], 0); ?></strong></td>
-						<td align="right"><strong><?php echo valores($row_data['AFP_MontoPago'], 0); ?></strong></td>
+						<td align="right"><strong><?php echo valores($rowData['AFP_Total_CotizacionOblig'], 0); ?></strong></td>
+						<td align="right"><strong><?php echo valores($rowData['AFP_Total_SeguroInvalidez'], 0); ?></strong></td>
+						<td align="right"><strong><?php echo valores($rowData['AFP_Total_APV'], 0); ?></strong></td>
+						<td align="right"><strong><?php echo valores($rowData['AFP_Total_Cuenta_2'], 0); ?></strong></td>
+						<td align="right"><strong><?php echo valores($rowData['AFP_Total_CotTrabajoPesado'], 0); ?></strong></td>
+						<td align="right"><strong><?php echo valores($rowData['AFP_Total_AFCTrabajador'], 0); ?></strong></td>
+						<td align="right"><strong><?php echo valores($rowData['AFP_Total_AFCEmpleador'], 0); ?></strong></td>
+						<td align="right"><strong><?php echo valores($rowData['AFP_MontoPago'], 0); ?></strong></td>
 					</tr>
 
 				</tbody>
@@ -295,9 +295,9 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 					 
 					<tr class="invoice-total" bgcolor="#f1f1f1">
 						<td colspan="4" align="right"><strong>Total</strong></td>
-						<td align="right"><strong><?php echo valores($row_data['SALUD_Total_CotizacionLegal'], 0); ?></strong></td>
-						<td align="right"><strong><?php echo valores($row_data['SALUD_Total_CotizacionAdicional'], 0); ?></strong></td>
-						<td align="right"><strong><?php echo valores($row_data['SALUD_MontoPago'], 0); ?></strong></td>
+						<td align="right"><strong><?php echo valores($rowData['SALUD_Total_CotizacionLegal'], 0); ?></strong></td>
+						<td align="right"><strong><?php echo valores($rowData['SALUD_Total_CotizacionAdicional'], 0); ?></strong></td>
+						<td align="right"><strong><?php echo valores($rowData['SALUD_MontoPago'], 0); ?></strong></td>
 					</tr>
 
 				</tbody>
@@ -336,8 +336,8 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 					 
 					<tr class="invoice-total" bgcolor="#f1f1f1">
 						<td colspan="4" align="right"><strong>Total</strong></td>
-						<td align="right"><strong><?php echo valores($row_data['SEGURIDAD_Total_CotizacionLegal'], 0); ?></strong></td>
-						<td align="right"><strong><?php echo valores($row_data['SEGURIDAD_MontoPago'], 0); ?></strong></td>
+						<td align="right"><strong><?php echo valores($rowData['SEGURIDAD_Total_CotizacionLegal'], 0); ?></strong></td>
+						<td align="right"><strong><?php echo valores($rowData['SEGURIDAD_MontoPago'], 0); ?></strong></td>
 					</tr>
 
 				</tbody>
@@ -366,7 +366,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 					</tr>
 					<tr>
 						<td class="meta-head">Administradora Fondos de Pensiones</td>
-						<td align="right"><?php echo valores($row_data['AFP_MontoPago'], 0); ?></td>
+						<td align="right"><?php echo valores($rowData['AFP_MontoPago'], 0); ?></td>
 						<td align="left">
 							<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 								foreach ($arrFormaPago as $pago) {
@@ -417,7 +417,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 					</tr>
 					<tr>
 						<td class="meta-head">Salud</td>
-						<td align="right"><?php echo valores($row_data['SALUD_MontoPago'], 0); ?></td>
+						<td align="right"><?php echo valores($rowData['SALUD_MontoPago'], 0); ?></td>
 						<td align="left">
 							<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 								foreach ($arrFormaPago as $pago) {
@@ -468,7 +468,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 					</tr>
 					<tr>
 						<td class="meta-head">Seguridad</td>
-						<td align="right"><?php echo valores($row_data['SEGURIDAD_MontoPago'], 0); ?></td>
+						<td align="right"><?php echo valores($rowData['SEGURIDAD_MontoPago'], 0); ?></td>
 						<td align="left">
 							<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 								foreach ($arrFormaPago as $pago) {
@@ -520,12 +520,12 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 
 					<tr>
 						<td class="meta-head"><strong>Totales</strong></td>
-						<td align="right"><strong><?php echo valores($row_data['TotalGeneral'], 0); ?></strong></td>
+						<td align="right"><strong><?php echo valores($rowData['TotalGeneral'], 0); ?></strong></td>
 						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td align="right"><strong><?php echo valores($row_data['TotalPagoGeneral'], 0); ?></strong></td>
+						<td align="right"><strong><?php echo valores($rowData['TotalPagoGeneral'], 0); ?></strong></td>
 					</tr>
 				</tbody>
 			</table>
@@ -535,7 +535,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $rowData['Observaciones']; ?></p>
 		</div>
 	</div>
 

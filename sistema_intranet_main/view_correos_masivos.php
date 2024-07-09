@@ -63,7 +63,7 @@ require_once 'core/Web.Header.Views.php';
 $SIS_query = 'Fecha, Asunto, Cuerpo';
 $SIS_join  = '';
 $SIS_where = 'idEmail ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'comunicaciones_internas_email', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'comunicaciones_internas_email', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /*****************************************/
 // consulto los datos
@@ -93,9 +93,9 @@ foreach ($arrNotificaciones as $noti) {
 		</header>
 		<div class="body">
 			<p class="text-muted word_break">
-				<strong>Fecha : </strong><?php echo $rowdata['Fecha']; ?><br/>
-				<strong>Asunto : </strong><?php echo $rowdata['Asunto']; ?><br/>
-				<strong>Cuerpo : </strong><?php echo $rowdata['Cuerpo']; ?><br/>
+				<strong>Fecha : </strong><?php echo $rowData['Fecha']; ?><br/>
+				<strong>Asunto : </strong><?php echo $rowData['Asunto']; ?><br/>
+				<strong>Cuerpo : </strong><?php echo $rowData['Cuerpo']; ?><br/>
 			</p>     
 		</div>
 	</div>

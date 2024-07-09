@@ -60,7 +60,7 @@ LEFT JOIN `core_sistemas`        ON core_sistemas.idSistema              = conta
 LEFT JOIN `usuarios_listado`     ON usuarios_listado.idUsuario           = contab_caja_gastos.idUsuario
 LEFT JOIN `trabajadores_listado` ON trabajadores_listado.idTrabajador    = contab_caja_gastos.idTrabajador';
 $SIS_where = 'contab_caja_gastos.idFacturacion ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'contab_caja_gastos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'contab_caja_gastos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /*****************************************/	
 // Se trae un listado con todos los productos utilizados
@@ -117,10 +117,10 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Datos basicos
 			<address>
-				<strong>Trabajador: </strong><?php echo $row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].' '.$row_data['TrabajadorApellidoMat']; ?><br/>
-				<strong>Rut: </strong><?php echo $row_data['TrabajadorRut']; ?><br/>
-				<strong>Cargo: </strong><?php echo $row_data['TrabajadorCargo']; ?><br/>
-				<strong>Fono: </strong><?php echo formatPhone($row_data['TrabajadorFono']); ?><br/>
+				<strong>Trabajador: </strong><?php echo $rowData['TrabajadorNombre'].' '.$rowData['TrabajadorApellidoPat'].' '.$rowData['TrabajadorApellidoMat']; ?><br/>
+				<strong>Rut: </strong><?php echo $rowData['TrabajadorRut']; ?><br/>
+				<strong>Cargo: </strong><?php echo $rowData['TrabajadorCargo']; ?><br/>
+				<strong>Fono: </strong><?php echo formatPhone($rowData['TrabajadorFono']); ?><br/>
 
 			</address>
 		</div>
@@ -128,10 +128,10 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Detalle
 			<address>
-				<strong>Fecha Creacion: </strong><?php echo fecha_estandar($row_data['Creacion_fecha']); ?><br/>
-				<strong>Fecha Ingreso: </strong><?php echo fecha_estandar($row_data['fecha_auto']); ?><br/>
-				<strong>Usuario: </strong><?php echo $row_data['Usuario']; ?><br/>
-				<strong>Sistema: </strong><?php echo $row_data['CajaSistema']; ?><br/>
+				<strong>Fecha Creacion: </strong><?php echo fecha_estandar($rowData['Creacion_fecha']); ?><br/>
+				<strong>Fecha Ingreso: </strong><?php echo fecha_estandar($rowData['fecha_auto']); ?><br/>
+				<strong>Usuario: </strong><?php echo $rowData['Usuario']; ?><br/>
+				<strong>Sistema: </strong><?php echo $rowData['CajaSistema']; ?><br/>
 			</address>			
 		</div>
 	</div>
@@ -163,10 +163,10 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 						<?php } ?>
 					<?php } ?>
 
-					<?php if(isset($row_data['Valor'])&&$row_data['Valor']!=0){ ?>
+					<?php if(isset($rowData['Valor'])&&$rowData['Valor']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td align="right" colspan="3"><strong>Total</strong></td>
-							<td align="right"><?php echo Valores($row_data['Valor'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['Valor'], 0); ?></td>
 						</tr>
 					<?php } ?>
 				</tbody>
@@ -178,7 +178,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $rowData['Observaciones']; ?></p>
 		</div>
 	</div>
 

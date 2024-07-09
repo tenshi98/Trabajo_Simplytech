@@ -416,7 +416,7 @@ if(!empty($_GET['test_function'])){
 	$SIS_query = 'Nombre';
 	$SIS_join  = '';
 	$SIS_where = 'idPredio = '.$idPredio;
-	$rowdata = db_select_data (false, $SIS_query, 'cross_predios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'test_logo');
+	$rowData = db_select_data (false, $SIS_query, 'cross_predios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'test_logo');
 
 	/*******************************************************/
 	// consulto los datos
@@ -436,7 +436,7 @@ if(!empty($_GET['test_function'])){
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Puntos del Cuartel <?php echo $rowdata['Nombre']; ?></h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Puntos del Cuartel <?php echo $rowData['Nombre']; ?></h5>
 			</header>
 			<div class="table-responsive">
 

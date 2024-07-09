@@ -96,19 +96,19 @@ if(!empty($_GET['id'])){
 	maquinas_listado_matriz.cantPuntos';
 	$SIS_join  = 'LEFT JOIN `maquinas_listado_matriz` ON maquinas_listado_matriz.idMatriz = analisis_listado.idMatriz';
 	$SIS_where = 'idAnalisis = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'analisis_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'analisis_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
 	$SIS_query = 'Nombre';
-	for ($i = 1; $i <= $rowdata['cantPuntos']; $i++) {
+	for ($i = 1; $i <= $rowData['cantPuntos']; $i++) {
 		$SIS_query .= ',PuntoNombre_'.$i;
 		$SIS_query .= ',PuntoidTipo_'.$i;
 		$SIS_query .= ',PuntoidGrupo_'.$i;
 	}
 	$SIS_join  = '';
-	$SIS_where = 'idMatriz = '.$rowdata['idMatriz'];
-	$rowdata2 = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata2');
+	$SIS_where = 'idMatriz = '.$rowData['idMatriz'];
+	$rowData2 = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData2');
 
 	/*******************************************************/
 	// consulto los datos
@@ -148,15 +148,15 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($f_muestreo)){         $x1  = $f_muestreo;        }else{$x1  = $rowdata['f_muestreo'];}
-					if(isset($f_recibida)){         $x2  = $f_recibida;        }else{$x2  = $rowdata['f_recibida'];}
-					if(isset($f_reporte)){          $x3  = $f_reporte;         }else{$x3  = $rowdata['f_reporte'];}
-					if(isset($idTipo)){             $x4  = $idTipo;            }else{$x4  = $rowdata['idTipo'];}
-					if(isset($idLaboratorio)){      $x5  = $idLaboratorio;     }else{$x5  = $rowdata['idLaboratorio'];}
-					if(isset($n_muestra)){          $x6  = $n_muestra;         }else{$x6  = $rowdata['n_muestra'];}
-					if(isset($obs_Diagnostico)){    $x7  = $obs_Diagnostico;   }else{$x7  = $rowdata['obs_Diagnostico'];}
-					if(isset($obs_Accion)){         $x8  = $obs_Accion;        }else{$x8  = $rowdata['obs_Accion'];}
-					if(isset($idEstado)){           $x9  = $idEstado;          }else{$x9  = $rowdata['idEstado'];}
+					if(isset($f_muestreo)){         $x1  = $f_muestreo;        }else{$x1  = $rowData['f_muestreo'];}
+					if(isset($f_recibida)){         $x2  = $f_recibida;        }else{$x2  = $rowData['f_recibida'];}
+					if(isset($f_reporte)){          $x3  = $f_reporte;         }else{$x3  = $rowData['f_reporte'];}
+					if(isset($idTipo)){             $x4  = $idTipo;            }else{$x4  = $rowData['idTipo'];}
+					if(isset($idLaboratorio)){      $x5  = $idLaboratorio;     }else{$x5  = $rowData['idLaboratorio'];}
+					if(isset($n_muestra)){          $x6  = $n_muestra;         }else{$x6  = $rowData['n_muestra'];}
+					if(isset($obs_Diagnostico)){    $x7  = $obs_Diagnostico;   }else{$x7  = $rowData['obs_Diagnostico'];}
+					if(isset($obs_Accion)){         $x8  = $obs_Accion;        }else{$x8  = $rowData['obs_Accion'];}
+					if(isset($idEstado)){           $x9  = $idEstado;          }else{$x9  = $rowData['idEstado'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -175,25 +175,25 @@ if(!empty($_GET['id'])){
 					foreach ($arrGrupo as $grupo) {
 						$Form_Inputs->form_tittle(3, $grupo['Nombre']);
 
-						for ($i = 1; $i <= $rowdata['cantPuntos']; $i++) {
-							if($grupo['idGrupo']==$rowdata2['PuntoidGrupo_'.$i]){
+						for ($i = 1; $i <= $rowData['cantPuntos']; $i++) {
+							if($grupo['idGrupo']==$rowData2['PuntoidGrupo_'.$i]){
 								//Verifico el tipo de dato
-								switch ($rowdata2['PuntoidTipo_'.$i]) {
+								switch ($rowData2['PuntoidTipo_'.$i]) {
 									//Medidas
 									case 1:
-										$Form_Inputs->form_input_number($rowdata2['PuntoNombre_'.$i], 'Medida_'.$i, $rowdata['Medida_'.$i], 2);
+										$Form_Inputs->form_input_number($rowData2['PuntoNombre_'.$i], 'Medida_'.$i, $rowData['Medida_'.$i], 2);
 										break;
 									//Producto
 									case 2:
-										$Form_Inputs->form_select_filter($rowdata2['PuntoNombre_'.$i],'Medida_'.$i, $rowdata['Medida_'.$i], 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+										$Form_Inputs->form_select_filter($rowData2['PuntoNombre_'.$i],'Medida_'.$i, $rowData['Medida_'.$i], 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 										break;
 									//Dispersancia
 									case 3:
-										$Form_Inputs->form_select($rowdata2['PuntoNombre_'.$i],'Medida_'.$i, $rowdata['Medida_'.$i], 2, 'idDispersancia', 'Nombre', 'core_analisis_dispersancia', 0, '', $dbConn);
+										$Form_Inputs->form_select($rowData2['PuntoNombre_'.$i],'Medida_'.$i, $rowData['Medida_'.$i], 2, 'idDispersancia', 'Nombre', 'core_analisis_dispersancia', 0, '', $dbConn);
 										break;
 									//Flashpoint
 									case 4:
-										$Form_Inputs->form_select($rowdata2['PuntoNombre_'.$i],'Medida_'.$i, $rowdata['Medida_'.$i], 2, 'idFlashPoint', 'Nombre', 'core_analisis_flashpoint', 0, '', $dbConn);
+										$Form_Inputs->form_select($rowData2['PuntoNombre_'.$i],'Medida_'.$i, $rowData['Medida_'.$i], 2, 'idFlashPoint', 'Nombre', 'core_analisis_flashpoint', 0, '', $dbConn);
 										break;
 								}
 							}
@@ -260,19 +260,19 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'cantPuntos';
 	$SIS_join  = '';
 	$SIS_where = 'idMatriz = '.$_GET['idMatriz'];
-	$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
 	$SIS_query = 'Nombre';
-	for ($i = 1; $i <= $rowdata['cantPuntos']; $i++) {
+	for ($i = 1; $i <= $rowData['cantPuntos']; $i++) {
 		$SIS_query .= ',PuntoNombre_'.$i;
 		$SIS_query .= ',PuntoidTipo_'.$i;
 		$SIS_query .= ',PuntoidGrupo_'.$i;
 	}
 	$SIS_join  = '';
 	$SIS_where = 'idMatriz = '.$_GET['idMatriz'];
-	$rowdata2 = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata2');
+	$rowData2 = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData2');
 
 	/*******************************************************/
 	// consulto los datos
@@ -305,7 +305,7 @@ if(!empty($_GET['id'])){
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-				<h5>Ingreso datos de <?php echo $rowdata2['Nombre']; ?></h5>
+				<h5>Ingreso datos de <?php echo $rowData2['Nombre']; ?></h5>
 			</header>
 			<div class="body">
 				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
@@ -327,8 +327,8 @@ if(!empty($_GET['id'])){
 					foreach ($arrGrupo as $grupo) {
 						//Cuento si hay items dentro de la categoria
 						$x_con = 0;
-						for ($i = 1; $i <= $rowdata['cantPuntos']; $i++) {
-							if($grupo['idGrupo']==$rowdata2['PuntoidGrupo_'.$i]){
+						for ($i = 1; $i <= $rowData['cantPuntos']; $i++) {
+							if($grupo['idGrupo']==$rowData2['PuntoidGrupo_'.$i]){
 								$x_con++;
 							}
 						}
@@ -338,25 +338,25 @@ if(!empty($_GET['id'])){
 
 							$Form_Inputs->form_tittle(3, $grupo['Nombre']);
 
-							for ($i = 1; $i <= $rowdata['cantPuntos']; $i++) {
-								if($grupo['idGrupo']==$rowdata2['PuntoidGrupo_'.$i]){
+							for ($i = 1; $i <= $rowData['cantPuntos']; $i++) {
+								if($grupo['idGrupo']==$rowData2['PuntoidGrupo_'.$i]){
 									//Verifico el tipo de dato
-									switch ($rowdata2['PuntoidTipo_'.$i]) {
+									switch ($rowData2['PuntoidTipo_'.$i]) {
 										//Medidas
 										case 1:
-											$Form_Inputs->form_input_number($rowdata2['PuntoNombre_'.$i], 'Medida_'.$i, '', 2);
+											$Form_Inputs->form_input_number($rowData2['PuntoNombre_'.$i], 'Medida_'.$i, '', 2);
 											break;
 										//Producto
 										case 2:
-											$Form_Inputs->form_select_filter($rowdata2['PuntoNombre_'.$i],'Medida_'.$i, '', 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+											$Form_Inputs->form_select_filter($rowData2['PuntoNombre_'.$i],'Medida_'.$i, '', 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 											break;
 										//Dispersancia
 										case 3:
-											$Form_Inputs->form_select($rowdata2['PuntoNombre_'.$i],'Medida_'.$i, '', 2, 'idDispersancia', 'Nombre', 'core_analisis_dispersancia', 0, '', $dbConn);
+											$Form_Inputs->form_select($rowData2['PuntoNombre_'.$i],'Medida_'.$i, '', 2, 'idDispersancia', 'Nombre', 'core_analisis_dispersancia', 0, '', $dbConn);
 											break;
 										//Flashpoint
 										case 4:
-											$Form_Inputs->form_select($rowdata2['PuntoNombre_'.$i],'Medida_'.$i, '', 2, 'idFlashPoint', 'Nombre', 'core_analisis_flashpoint', 0, '', $dbConn);
+											$Form_Inputs->form_select($rowData2['PuntoNombre_'.$i],'Medida_'.$i, '', 2, 'idFlashPoint', 'Nombre', 'core_analisis_flashpoint', 0, '', $dbConn);
 											break;
 									}
 								}

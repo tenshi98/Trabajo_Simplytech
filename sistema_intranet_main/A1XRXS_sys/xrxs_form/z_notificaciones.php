@@ -279,11 +279,11 @@ require_once '0_validate_user_1.php';
 					//busco a todos los usuarios del sistema
 					$z = 'usuarios_listado.idEstado = 1';
 					if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario']!=''){    $z .= " AND usuarios_listado.idTipoUsuario = '".$_GET['idTipoUsuario']."'";}
-					if(isset($_GET['Nombre']) && $_GET['Nombre'] != '')  {              $z .= " AND usuarios_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
-					if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != '')  {          $z .= " AND usuarios_listado.idCiudad = '".$_GET['idCiudad']."'";}
-					if(isset($_GET['idComuna']) && $_GET['idComuna'] != '')  {          $z .= " AND usuarios_listado.idComuna = '".$_GET['idComuna']."'";}
-					if(isset($_GET['Direccion']) && $_GET['Direccion'] != '')  {        $z .= " AND usuarios_listado.Direccion LIKE '%".EstandarizarInput($_GET['Direccion'])."%'";}
-					if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {        $z .= " AND usuarios_sistemas.idSistema = '".$_GET['idSistema']."'";}
+					if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){              $z .= " AND usuarios_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
+					if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != ''){          $z .= " AND usuarios_listado.idCiudad = '".$_GET['idCiudad']."'";}
+					if(isset($_GET['idComuna']) && $_GET['idComuna'] != ''){          $z .= " AND usuarios_listado.idComuna = '".$_GET['idComuna']."'";}
+					if(isset($_GET['Direccion']) && $_GET['Direccion'] != ''){        $z .= " AND usuarios_listado.Direccion LIKE '%".EstandarizarInput($_GET['Direccion'])."%'";}
+					if(isset($_GET['idSistema']) && $_GET['idSistema'] != ''){        $z .= " AND usuarios_sistemas.idSistema = '".$_GET['idSistema']."'";}
 					if(isset($_GET['rango_a']) && $_GET['rango_a'] != ''&&isset($_GET['rango_b']) && $_GET['rango_b']!=''){
 						$z .= " AND usuarios_listado.fNacimiento BETWEEN '".$_GET['rango_a']."' AND '".$_GET['rango_b']."'";
 					}

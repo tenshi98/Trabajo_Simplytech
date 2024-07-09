@@ -46,9 +46,9 @@ $where_2 = " AND bodegas_insumos_facturacion_existencias.".$x1." AND usuarios_bo
 $where_3 = " AND bodegas_arriendos_facturacion_existencias.".$x1." AND usuarios_bodegas_arriendos.".$x2;
 /**********************************************************/
 // Se trae un listado con los valores de las existencias actuales
-$año_pasado = ano_actual()-1;
+$ano_pasado = ano_actual()-1;
 $z = "WHERE idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."'";
-$z.= " AND Creacion_ano >= ".$año_pasado;
+$z.= " AND Creacion_ano >= ".$ano_pasado;
 //se consulta
 $arrExistencias = array();
 $query = "SELECT Creacion_ano,Creacion_mes,Cantidad_ing,Cantidad_eg,idTipo,SUM(ValorTotal) AS Valor
@@ -730,9 +730,9 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 /*******************************************************************************************************/
 /*******************************************************************************************************/
 // Se trae un listado con los valores de las existencias actuales
-$año_pasado = ano_actual()-1;
+$ano_pasado = ano_actual()-1;
 $z = "WHERE idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."'";
-$z.= " AND Creacion_ano >= ".$año_pasado;
+$z.= " AND Creacion_ano >= ".$ano_pasado;
 //se consulta
 $arrExistencias = array();
 $query = "SELECT Creacion_ano,Creacion_mes,Cantidad_ing,Cantidad_eg,idTipo,SUM(ValorTotal) AS Valor
@@ -1415,9 +1415,9 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 /*******************************************************************************************************/
 /*******************************************************************************************************/
 // Se trae un listado con los valores de las existencias actuales
-$año_pasado = ano_actual()-1;
+$ano_pasado = ano_actual()-1;
 $z = "WHERE idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."'";
-$z.= " AND Creacion_ano >= ".$año_pasado;
+$z.= " AND Creacion_ano >= ".$ano_pasado;
 //se consulta
 $arrExistencias = array();
 $query = "SELECT Creacion_ano,Creacion_mes,Cantidad_ing,Cantidad_eg,idTipo,SUM(ValorTotal) AS Valor

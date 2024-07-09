@@ -185,7 +185,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 // Se trae un listado con todos los comentarios
 $arrComentarios = array();
@@ -264,7 +264,7 @@ array_push( $arrReportes,$row );
 			$ubicacion  = $location.'&validate=true';
 			$ubicacion .= '&idTipofil='.$_GET['idTipofil'];
 			$ubicacion .= '&idEventoPeligro='.$_GET['idEventoPeligro'];
-			$ubicacion .= '&idCreador='.$rowdata['idCreador'];
+			$ubicacion .= '&idCreador='.$rowData['idCreador'];
 			$dialogo    = '¿Va a validar Post?'; ?>
 			<li><a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')"><i class="fa fa-check-square-o" aria-hidden="true"></i> Validar Post</a></li>
 
@@ -272,7 +272,7 @@ array_push( $arrReportes,$row );
 			$ubicacion  = $location.'&disabled=true';
 			$ubicacion .= '&idTipofil='.$_GET['idTipofil'];
 			$ubicacion .= '&idEventoPeligro='.$_GET['idEventoPeligro'];
-			$ubicacion .= '&idCreador='.$rowdata['idCreador'];
+			$ubicacion .= '&idCreador='.$rowData['idCreador'];
 			$dialogo    = '¿Va a banear al usuario creador del Post?'; ?>
 			<li><a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')"><i class="fa fa-check-square-o" aria-hidden="true"></i> Desactivar Creador Post</a></li>
 
@@ -280,7 +280,7 @@ array_push( $arrReportes,$row );
 			$ubicacion  = $location.'&banned=true';
 			$ubicacion .= '&idTipofil='.$_GET['idTipofil'];
 			$ubicacion .= '&idEventoPeligro='.$_GET['idEventoPeligro'];
-			$ubicacion .= '&idCreador='.$rowdata['idCreador'];
+			$ubicacion .= '&idCreador='.$rowData['idCreador'];
 			$dialogo    = '¿Va a banear al usuario creador del Post?'; ?>
 			<li><a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')"><i class="fa fa-check-square-o" aria-hidden="true"></i> Banear Creador Post</a></li>
 
@@ -288,7 +288,7 @@ array_push( $arrReportes,$row );
 			$ubicacion  = $location.'&infract_post=true';
 			$ubicacion .= '&idTipofil='.$_GET['idTipofil'];
 			$ubicacion .= '&idEventoPeligro='.$_GET['idEventoPeligro'];
-			$ubicacion .= '&idCreador='.$rowdata['idCreador']; ?>
+			$ubicacion .= '&idCreador='.$rowData['idCreador']; ?>
 			<li><a href="<?php echo $ubicacion; ?>"><i class="fa fa-rss" aria-hidden="true"></i> Notificar Infraccion Creador Post</a></li>
 
 			<?php
@@ -309,7 +309,7 @@ array_push( $arrReportes,$row );
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5><?php echo $rowdata['Tipo']; ?></h5>
+			<h5><?php echo $rowData['Tipo']; ?></h5>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-flag" aria-hidden="true"></i> Datos</a></li>
 				<li class=""><a href="#reportes" data-toggle="tab"><i class="fa fa-flag" aria-hidden="true"></i> Reportes</a></li>
@@ -323,34 +323,34 @@ array_push( $arrReportes,$row );
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Principales</h2>
 							<p class="text-muted" style="white-space: initial;">
-								<strong>Vecino : </strong><?php echo $rowdata['Vecino']; ?><br/>
+								<strong>Vecino : </strong><?php echo $rowData['Vecino']; ?><br/>
 								<?php if(isset($_GET['idTipofil'])&&$_GET['idTipofil']==1){ ?>
-									<strong>Tipo de Peligro : </strong><?php echo $rowdata['Tipo']; ?><br/>
-									<strong>Ciudad : </strong><?php echo $rowdata['Ciudad']; ?><br/>
-									<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-									<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
-									<strong>Descripcion : </strong><?php echo $rowdata['Descripcion']; ?><br/>
+									<strong>Tipo de Peligro : </strong><?php echo $rowData['Tipo']; ?><br/>
+									<strong>Ciudad : </strong><?php echo $rowData['Ciudad']; ?><br/>
+									<strong>Comuna : </strong><?php echo $rowData['Comuna']; ?><br/>
+									<strong>Dirección : </strong><?php echo $rowData['Direccion']; ?><br/>
+									<strong>Descripcion : </strong><?php echo $rowData['Descripcion']; ?><br/>
 								<?php }elseif(isset($_GET['idTipofil'])&&$_GET['idTipofil']==2){ ?>
-									<strong>Tipo de Evento : </strong><?php echo $rowdata['Tipo']; ?><br/>
-									<strong>Caracteristicas Agresor : </strong><?php echo $rowdata['DescripcionTipo']; ?><br/>
-									<strong>Ciudad : </strong><?php echo $rowdata['Ciudad']; ?><br/>
-									<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-									<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
-									<strong>Fecha : </strong><?php echo fecha_estandar($rowdata['Fecha']); ?><br/>
-									<strong>Hora : </strong><?php echo $rowdata['Hora']; ?><br/>
-									<strong>Descripcion Situacion : </strong><?php echo $rowdata['DescripcionSituacion']; ?><br/>
+									<strong>Tipo de Evento : </strong><?php echo $rowData['Tipo']; ?><br/>
+									<strong>Caracteristicas Agresor : </strong><?php echo $rowData['DescripcionTipo']; ?><br/>
+									<strong>Ciudad : </strong><?php echo $rowData['Ciudad']; ?><br/>
+									<strong>Comuna : </strong><?php echo $rowData['Comuna']; ?><br/>
+									<strong>Dirección : </strong><?php echo $rowData['Direccion']; ?><br/>
+									<strong>Fecha : </strong><?php echo fecha_estandar($rowData['Fecha']); ?><br/>
+									<strong>Hora : </strong><?php echo $rowData['Hora']; ?><br/>
+									<strong>Descripcion Situacion : </strong><?php echo $rowData['DescripcionSituacion']; ?><br/>
 								<?php } ?>
 							</p>
 						</div>
 						<?php
 						//Se arma la dirección
 						$direccion = "";
-						if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){   $direccion .= $rowdata["Direccion"];}
-						if(isset($rowdata["Comuna"])&&$rowdata["Comuna"]!=''){         $direccion .= ', '.$rowdata["Comuna"];}
-						if(isset($rowdata["Ciudad"])&&$rowdata["Ciudad"]!=''){         $direccion .= ', '.$rowdata["Ciudad"];}
+						if(isset($rowData["Direccion"])&&$rowData["Direccion"]!=''){   $direccion .= $rowData["Direccion"];}
+						if(isset($rowData["Comuna"])&&$rowData["Comuna"]!=''){         $direccion .= ', '.$rowData["Comuna"];}
+						if(isset($rowData["Ciudad"])&&$rowData["Ciudad"]!=''){         $direccion .= ', '.$rowData["Ciudad"];}
 						//se despliega mensaje en caso de no existir dirección
 						if($direccion!=''){
-							echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Evento', 'Calle', $direccion, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 19, 2);
+							echo mapa_from_gps($rowData['GeoLatitud'], $rowData['GeoLongitud'], 'Evento', 'Calle', $direccion, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 19, 2);
 						}else{
 							$Alert_Text = 'No tiene una dirección definida';
 							alert_post_data(4,2,2,0, $Alert_Text);

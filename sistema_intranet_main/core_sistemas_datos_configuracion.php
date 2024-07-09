@@ -56,12 +56,12 @@ idOpcionesGen_5, idOpcionesGen_6, idOpcionesGen_7, idOpcionesGen_8, idOpcionesGe
 Config_Gmail_Usuario, Config_Gmail_Password';
 $SIS_join  = '';
 $SIS_where = 'idSistema ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Configuracion'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowData['Nombre'], 'Editar Configuracion'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -97,24 +97,24 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Config_idTheme)){            $x1  = $Config_idTheme;             }else{$x1  = $rowdata['Config_idTheme'];}
-					if(isset($Config_CorreoRespaldo)){     $x2  = $Config_CorreoRespaldo;      }else{$x2  = $rowdata['Config_CorreoRespaldo'];}
-					if(isset($email_principal)){           $x3  = $email_principal;            }else{$x3  = $rowdata['email_principal'];}
-					if(isset($idOpcionesTel)){             $x4  = $idOpcionesTel;              }else{$x4  = $rowdata['idOpcionesTel'];}
-					if(isset($idConfigRam)){               $x5  = $idConfigRam;                }else{$x5  = $rowdata['idConfigRam'];}
-					if(isset($idConfigTime)){              $x6  = $idConfigTime;               }else{$x6  = $rowdata['idConfigTime'];}
-					if(isset($idOpcionesGen_1)){           $x7  = $idOpcionesGen_1;            }else{$x7  = $rowdata['idOpcionesGen_1'];}
-					if(isset($idOpcionesGen_2)){           $x8  = $idOpcionesGen_2;            }else{$x8  = $rowdata['idOpcionesGen_2'];}
-					if(isset($idOpcionesGen_3)){           $x9  = $idOpcionesGen_3;            }else{$x9  = $rowdata['idOpcionesGen_3'];}
-					if(isset($idOpcionesGen_4)){           $x10 = $idOpcionesGen_4;            }else{$x10 = $rowdata['idOpcionesGen_4'];}
-					if(isset($idOpcionesGen_5)){           $x11 = $idOpcionesGen_5;            }else{$x11 = $rowdata['idOpcionesGen_5'];}
-					if(isset($idOpcionesGen_6)){           $x12 = $idOpcionesGen_6;            }else{$x12 = $rowdata['idOpcionesGen_6'];}
-					if(isset($idOpcionesGen_7)){           $x13 = $idOpcionesGen_7;            }else{$x13 = $rowdata['idOpcionesGen_7'];}
-					if(isset($idOpcionesGen_8)){           $x14 = $idOpcionesGen_8;            }else{$x14 = $rowdata['idOpcionesGen_8'];}
-					if(isset($idOpcionesGen_9)){           $x15 = $idOpcionesGen_9;            }else{$x15 = $rowdata['idOpcionesGen_9'];}
-					if(isset($Config_Gmail_Usuario)){      $x16 = $Config_Gmail_Usuario;       }else{$x16 = $rowdata['Config_Gmail_Usuario'];}
-					if(isset($Config_Gmail_Password)){     $x17 = $Config_Gmail_Password;      }else{$x17 = $rowdata['Config_Gmail_Password'];}
-					if(isset($idOpcionesGen_10)){          $x18 = $idOpcionesGen_10;           }else{$x18 = $rowdata['idOpcionesGen_10'];}
+					if(isset($Config_idTheme)){            $x1  = $Config_idTheme;             }else{$x1  = $rowData['Config_idTheme'];}
+					if(isset($Config_CorreoRespaldo)){     $x2  = $Config_CorreoRespaldo;      }else{$x2  = $rowData['Config_CorreoRespaldo'];}
+					if(isset($email_principal)){           $x3  = $email_principal;            }else{$x3  = $rowData['email_principal'];}
+					if(isset($idOpcionesTel)){             $x4  = $idOpcionesTel;              }else{$x4  = $rowData['idOpcionesTel'];}
+					if(isset($idConfigRam)){               $x5  = $idConfigRam;                }else{$x5  = $rowData['idConfigRam'];}
+					if(isset($idConfigTime)){              $x6  = $idConfigTime;               }else{$x6  = $rowData['idConfigTime'];}
+					if(isset($idOpcionesGen_1)){           $x7  = $idOpcionesGen_1;            }else{$x7  = $rowData['idOpcionesGen_1'];}
+					if(isset($idOpcionesGen_2)){           $x8  = $idOpcionesGen_2;            }else{$x8  = $rowData['idOpcionesGen_2'];}
+					if(isset($idOpcionesGen_3)){           $x9  = $idOpcionesGen_3;            }else{$x9  = $rowData['idOpcionesGen_3'];}
+					if(isset($idOpcionesGen_4)){           $x10 = $idOpcionesGen_4;            }else{$x10 = $rowData['idOpcionesGen_4'];}
+					if(isset($idOpcionesGen_5)){           $x11 = $idOpcionesGen_5;            }else{$x11 = $rowData['idOpcionesGen_5'];}
+					if(isset($idOpcionesGen_6)){           $x12 = $idOpcionesGen_6;            }else{$x12 = $rowData['idOpcionesGen_6'];}
+					if(isset($idOpcionesGen_7)){           $x13 = $idOpcionesGen_7;            }else{$x13 = $rowData['idOpcionesGen_7'];}
+					if(isset($idOpcionesGen_8)){           $x14 = $idOpcionesGen_8;            }else{$x14 = $rowData['idOpcionesGen_8'];}
+					if(isset($idOpcionesGen_9)){           $x15 = $idOpcionesGen_9;            }else{$x15 = $rowData['idOpcionesGen_9'];}
+					if(isset($Config_Gmail_Usuario)){      $x16 = $Config_Gmail_Usuario;       }else{$x16 = $rowData['Config_Gmail_Usuario'];}
+					if(isset($Config_Gmail_Password)){     $x17 = $Config_Gmail_Password;      }else{$x17 = $rowData['Config_Gmail_Password'];}
+					if(isset($idOpcionesGen_10)){          $x18 = $idOpcionesGen_10;           }else{$x18 = $rowData['idOpcionesGen_10'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

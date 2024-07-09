@@ -75,7 +75,7 @@ telemetria_listado.SensorActivacionValor,
 telemetria_listado.cantSensores'.$subquery;
 $SIS_join  = 'LEFT JOIN `telemetria_listado_sensores_nombre`  ON telemetria_listado_sensores_nombre.idTelemetria = telemetria_listado.idTelemetria';
 $SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -83,7 +83,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Editar Sensor Activacion de <?php echo $rowdata['Equipo']; ?></h5>
+			<h5>Editar Sensor Activacion de <?php echo $rowData['Equipo']; ?></h5>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
@@ -96,12 +96,12 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 						<select name="SensorActivacionID" id="SensorActivacionID" class="form-control" required >
 							<option value="" selected>Seleccione una Opción</option>';
-							for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+							for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 								$selected = '';
-								if($i==$rowdata['SensorActivacionID']){
+								if($i==$rowData['SensorActivacionID']){
 									$selected = 'selected="selected"';
 								}
-								$input .= '<option value="'.$i.'" '.$selected.' >Sensor : '.$rowdata['SensoresNombre_'.$i].'</option>';
+								$input .= '<option value="'.$i.'" '.$selected.' >Sensor : '.$rowData['SensoresNombre_'.$i].'</option>';
 							}
 							$input .= '
 						</select>
@@ -110,7 +110,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 				echo $input;
 
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_text('Valor Activacion', 'SensorActivacionValor', $rowdata['SensorActivacionValor'], 1);
+				$Form_Inputs->form_input_text('Valor Activacion', 'SensorActivacionValor', $rowData['SensorActivacionValor'], 1);
 
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 				?>
@@ -158,7 +158,7 @@ LEFT JOIN `telemetria_listado_sensores_accion_alerta`   ON telemetria_listado_se
 LEFT JOIN `telemetria_listado_sensores_revision`        ON telemetria_listado_sensores_revision.idTelemetria       = telemetria_listado.idTelemetria
 LEFT JOIN `telemetria_listado_sensores_revision_grupo`  ON telemetria_listado_sensores_revision_grupo.idTelemetria = telemetria_listado.idTelemetria';
 $SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -166,7 +166,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Editar Parametros de <?php echo $rowdata['Equipo']; ?></h5>
+			<h5>Editar Parametros de <?php echo $rowData['Equipo']; ?></h5>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
@@ -175,29 +175,29 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Basicos');
-				$Form_Inputs->form_input_text('Nombre', 'SensoresNombre_'.$_GET['mod'], $rowdata['Nombre'], 1);
+				$Form_Inputs->form_input_text('Nombre', 'SensoresNombre_'.$_GET['mod'], $rowData['Nombre'], 1);
 
 				$Form_Inputs->form_tittle(3, 'Configuracion');
-				$Form_Inputs->form_select_filter('Tipo de Sensor','SensoresTipo_'.$_GET['mod'], $rowdata['Sensor'], 1, 'idSensores', 'Nombre', 'telemetria_listado_sensores', 0, '', $dbConn);
-				$Form_Inputs->form_select_filter('Grupo','SensoresGrupo_'.$_GET['mod'], $rowdata['Grupo'], 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);
-				$Form_Inputs->form_select_filter('Unidad de Medida','SensoresUniMed_'.$_GET['mod'], $rowdata['UniMed'], 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);
-				$Form_Inputs->form_select('Estado Sensor','SensoresActivo_'.$_GET['mod'], $rowdata['Activo'], 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Tipo de Sensor','SensoresTipo_'.$_GET['mod'], $rowData['Sensor'], 1, 'idSensores', 'Nombre', 'telemetria_listado_sensores', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Grupo','SensoresGrupo_'.$_GET['mod'], $rowData['Grupo'], 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Unidad de Medida','SensoresUniMed_'.$_GET['mod'], $rowData['UniMed'], 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);
+				$Form_Inputs->form_select('Estado Sensor','SensoresActivo_'.$_GET['mod'], $rowData['Activo'], 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 
 				$Form_Inputs->form_tittle(3, 'Uso Sensor(Ciclos, Tiempo, Cumplimiento)');
 				$Form_Inputs->form_post_data(2,1,1, '<strong>Opcional:</strong> Se mide el uso del sensor y alerta bajo criterios ingresados si llega a fecha limite o a un numero de usos.' );
-				$Form_Inputs->form_select('Utilizacion','SensoresUso_'.$_GET['mod'], $rowdata['Uso'], 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-				$Form_Inputs->form_date('Fecha Cambio','SensoresFechaUso_'.$_GET['mod'], $rowdata['FechaUso'], 1);
-				$Form_Inputs->form_input_number('Ciclos Limite(Cantidad)','SensoresAccionC_'.$_GET['mod'], Cantidades_decimales_justos($rowdata['AccionC']), 1);
-				$Form_Inputs->form_input_number('Tiempo Limite (Horas)','SensoresAccionT_'.$_GET['mod'], Cantidades_decimales_justos($rowdata['AccionT']/3600), 1);
-				$Form_Inputs->form_select_n_auto('% Cumplimiento (1 a 100)','SensoresAccionAlerta_'.$_GET['mod'], Cantidades_decimales_justos($rowdata['AccionAlerta']), 1, 1, 100);
+				$Form_Inputs->form_select('Utilizacion','SensoresUso_'.$_GET['mod'], $rowData['Uso'], 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+				$Form_Inputs->form_date('Fecha Cambio','SensoresFechaUso_'.$_GET['mod'], $rowData['FechaUso'], 1);
+				$Form_Inputs->form_input_number('Ciclos Limite(Cantidad)','SensoresAccionC_'.$_GET['mod'], Cantidades_decimales_justos($rowData['AccionC']), 1);
+				$Form_Inputs->form_input_number('Tiempo Limite (Horas)','SensoresAccionT_'.$_GET['mod'], Cantidades_decimales_justos($rowData['AccionT']/3600), 1);
+				$Form_Inputs->form_select_n_auto('% Cumplimiento (1 a 100)','SensoresAccionAlerta_'.$_GET['mod'], Cantidades_decimales_justos($rowData['AccionAlerta']), 1, 1, 100);
 
 				$Form_Inputs->form_tittle(3, 'Revision Trabajo');
 				$Form_Inputs->form_post_data(2,1,1, '<strong>Opcional:</strong> Utilizacion en los mantenimientos.' );
-				$Form_Inputs->form_select('Utilizar','SensoresRevision_'.$_GET['mod'], $rowdata['Revision'], 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-				$Form_Inputs->form_select_filter('Grupo','SensoresRevisionGrupo_'.$_GET['mod'], $rowdata['RevisionGrupo'], 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos_uso', 'idSupervisado=1', '', $dbConn);
+				$Form_Inputs->form_select('Utilizar','SensoresRevision_'.$_GET['mod'], $rowData['Revision'], 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Grupo','SensoresRevisionGrupo_'.$_GET['mod'], $rowData['RevisionGrupo'], 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos_uso', 'idSupervisado=1', '', $dbConn);
 
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
-				$Form_Inputs->form_input_hidden('SensoresFechaUso_Fake', $rowdata['FechaUso'], 2);
+				$Form_Inputs->form_input_hidden('SensoresFechaUso_Fake', $rowData['FechaUso'], 2);
 				?>
 
 				<script>
@@ -353,7 +353,7 @@ LEFT JOIN `telemetria_listado_sensores_unimed`          ON telemetria_listado_se
 LEFT JOIN `telemetria_listado_sensores_activo`          ON telemetria_listado_sensores_activo.idTelemetria         = telemetria_listado.idTelemetria
 LEFT JOIN `telemetria_listado_sensores_revision_grupo`  ON telemetria_listado_sensores_revision_grupo.idTelemetria = telemetria_listado.idTelemetria';
 $SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 $arrSensores = array();
 $arrSensores = db_select_array (false, 'idSensores,Nombre', 'telemetria_listado_sensores', '', '', 'idSensores ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsers');
@@ -387,7 +387,7 @@ $arrFinalGruposRev[0] = 'S/C';
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Datos Sensores'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowData['Nombre'], 'Editar Datos Sensores'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -402,15 +402,15 @@ $arrFinalGruposRev[0] = 'S/C';
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'telemetria_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-						<?php if($rowdata['id_Sensores']==1){ ?>
+						<?php if($rowData['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
 						<?php } ?>
-						<?php if($rowdata['id_Geo']==1){ ?>
+						<?php if($rowData['id_Geo']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
-						<?php }elseif($rowdata['id_Geo']==2){ ?>
+						<?php }elseif($rowData['id_Geo']==2){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
-						<?php if($rowdata['id_Sensores']==1){ ?>
+						<?php if($rowData['id_Sensores']==1){ ?>
 							<li class="active"><a href="<?php echo 'telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
 							<li class=""><a href="<?php echo 'telemetria_listado_sensor_operaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Definicion Operacional</a></li>
 						<?php } ?>
@@ -433,8 +433,8 @@ $arrFinalGruposRev[0] = 'S/C';
 					<td width="210"><strong>Sensor de Activacion</strong></td>
 					<td>
 						<?php
-						if(isset($rowdata['SensoresNombre_'.$rowdata['SensorActivacionID']])&&$rowdata['SensoresNombre_'.$rowdata['SensorActivacionID']]!=''){
-							echo $rowdata['SensoresNombre_'.$rowdata['SensorActivacionID']];
+						if(isset($rowData['SensoresNombre_'.$rowData['SensorActivacionID']])&&$rowData['SensoresNombre_'.$rowData['SensorActivacionID']]!=''){
+							echo $rowData['SensoresNombre_'.$rowData['SensorActivacionID']];
 						}else{
 							echo 'No configurado';
 						} ?>
@@ -454,8 +454,8 @@ $arrFinalGruposRev[0] = 'S/C';
 				<tr class="odd">
 					<td width="210"><strong>Valor Sensor Activo</strong></td>
 					<td colspan="2">
-						<?php if(isset($rowdata['SensorActivacionValor'])&&$rowdata['SensorActivacionValor']!=''){
-							echo $rowdata['SensorActivacionValor'];
+						<?php if(isset($rowData['SensorActivacionValor'])&&$rowData['SensorActivacionValor']!=''){
+							echo $rowData['SensorActivacionValor'];
 						} ?>
 					</td>
 				</tr>
@@ -477,13 +477,13 @@ $arrFinalGruposRev[0] = 'S/C';
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php
 					//bucle con la cantidad de sensores
-					for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+					for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 						//Datos
-						if(isset($arrFinalSensores[$rowdata['SensoresTipo_'.$i]])){           $Sensores  = $arrFinalSensores[$rowdata['SensoresTipo_'.$i]];           }else{$Sensores   = '';}
-						if(isset($arrFinalGrupos[$rowdata['SensoresGrupo_'.$i]])){            $Grupos    = $arrFinalGrupos[$rowdata['SensoresGrupo_'.$i]];            }else{$Grupos     = '';}
-						if(isset($arrFinalEstado[$rowdata['SensoresActivo_'.$i]])){           $Estado    = $arrFinalEstado[$rowdata['SensoresActivo_'.$i]];           }else{$Estado     = '';}
-						if(isset($arrFinalGruposRev[$rowdata['SensoresRevisionGrupo_'.$i]])){ $GruposRev = $arrFinalGruposRev[$rowdata['SensoresRevisionGrupo_'.$i]]; }else{$GruposRev  = '';}
-						if(isset($rowdata['SensoresActivo_'.$i])&&$rowdata['SensoresActivo_'.$i]==2){
+						if(isset($arrFinalSensores[$rowData['SensoresTipo_'.$i]])){           $Sensores  = $arrFinalSensores[$rowData['SensoresTipo_'.$i]];           }else{$Sensores   = '';}
+						if(isset($arrFinalGrupos[$rowData['SensoresGrupo_'.$i]])){            $Grupos    = $arrFinalGrupos[$rowData['SensoresGrupo_'.$i]];            }else{$Grupos     = '';}
+						if(isset($arrFinalEstado[$rowData['SensoresActivo_'.$i]])){           $Estado    = $arrFinalEstado[$rowData['SensoresActivo_'.$i]];           }else{$Estado     = '';}
+						if(isset($arrFinalGruposRev[$rowData['SensoresRevisionGrupo_'.$i]])){ $GruposRev = $arrFinalGruposRev[$rowData['SensoresRevisionGrupo_'.$i]]; }else{$GruposRev  = '';}
+						if(isset($rowData['SensoresActivo_'.$i])&&$rowData['SensoresActivo_'.$i]==2){
 							$Color = 'FF3A00';
 						}else{
 							$Color = '55BD55';
@@ -492,7 +492,7 @@ $arrFinalGruposRev[0] = 'S/C';
 						?>
 						<tr class="odd">
 							<td><?php echo 's'.$i ?></td>
-							<td><?php echo $rowdata['SensoresNombre_'.$i]; ?></td>
+							<td><?php echo $rowData['SensoresNombre_'.$i]; ?></td>
 							<td><?php echo $Sensores; ?></td>
 							<td><?php echo $Grupos; ?></td>
 							<td><?php echo $GruposRev; ?></td>

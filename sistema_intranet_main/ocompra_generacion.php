@@ -139,7 +139,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);	 
+$rowData = mysqli_fetch_assoc ($resultado);	 
 	 
 ?>
 
@@ -154,7 +154,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
+				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowData['idProveedor'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -195,7 +195,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);	 
+$rowData = mysqli_fetch_assoc ($resultado);	 
 	 
 ?>
 
@@ -210,13 +210,13 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
+				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowData['idProveedor'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
 
-				$Form_Inputs->form_input_hidden('idProducto', $rowdata['idProducto'], 2);
+				$Form_Inputs->form_input_hidden('idProducto', $rowData['idProducto'], 2);
 				?>
 
 				<div class="form-group">
@@ -251,7 +251,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);	 
+$rowData = mysqli_fetch_assoc ($resultado);	 
 	 
 ?>
 
@@ -266,13 +266,13 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
+				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowData['idProveedor'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
 
-				$Form_Inputs->form_input_hidden('idProducto', $rowdata['idProducto'], 2);
+				$Form_Inputs->form_input_hidden('idProducto', $rowData['idProducto'], 2);
 				?>
 
 				<div class="form-group">
@@ -307,7 +307,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);	 
+$rowData = mysqli_fetch_assoc ($resultado);	 
 	 
 ?>
 
@@ -322,13 +322,13 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
+				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowData['idProveedor'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
 
-				$Form_Inputs->form_input_hidden('idEquipo', $rowdata['idEquipo'], 2);
+				$Form_Inputs->form_input_hidden('idEquipo', $rowData['idEquipo'], 2);
 				?>
 
 				<div class="form-group">
@@ -363,7 +363,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);	 
+$rowData = mysqli_fetch_assoc ($resultado);	 
 	 
 ?>
 
@@ -378,13 +378,13 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
+				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowData['idProveedor'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
 
-				$Form_Inputs->form_input_hidden('idServicio', $rowdata['idServicio'], 2);
+				$Form_Inputs->form_input_hidden('idServicio', $rowData['idServicio'], 2);
 				?>
 
 				<div class="form-group">

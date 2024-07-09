@@ -66,7 +66,7 @@ if(!empty($_GET['id'])){
 	NdiasPago, Fac_nEmergencia, Fac_nConsultas';
 	$SIS_join  = '';
 	$SIS_where = 'idDato ='.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'aguas_datos_valores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'aguas_datos_valores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -81,17 +81,17 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($valorCargoFijo)){      $x1  = $valorCargoFijo;      }else{$x1  = $rowdata['valorCargoFijo'];}
-					if(isset($valorAgua)){           $x2  = $valorAgua;           }else{$x2  = $rowdata['valorAgua'];}
-					if(isset($valorRecoleccion)){    $x3  = $valorRecoleccion;    }else{$x3  = $rowdata['valorRecoleccion'];}
-					if(isset($valorVisitaCorte)){    $x4  = $valorVisitaCorte;    }else{$x4  = $rowdata['valorVisitaCorte'];}
-					if(isset($valorCorte1)){         $x5  = $valorCorte1;         }else{$x5  = $rowdata['valorCorte1'];}
-					if(isset($valorCorte2)){         $x6  = $valorCorte2;         }else{$x6  = $rowdata['valorCorte2'];}
-					if(isset($valorReposicion1)){    $x7  = $valorReposicion1;    }else{$x7  = $rowdata['valorReposicion1'];}
-					if(isset($valorReposicion2)){    $x8  = $valorReposicion2;    }else{$x8  = $rowdata['valorReposicion2'];}
-					if(isset($NdiasPago)){           $x9  = $NdiasPago;           }else{$x9  = $rowdata['NdiasPago'];}
-					if(isset($Fac_nEmergencia)){     $x10 = $Fac_nEmergencia;     }else{$x10 = $rowdata['Fac_nEmergencia'];}
-					if(isset($Fac_nConsultas)){      $x11 = $Fac_nConsultas;      }else{$x11 = $rowdata['Fac_nConsultas'];}
+					if(isset($valorCargoFijo)){      $x1  = $valorCargoFijo;      }else{$x1  = $rowData['valorCargoFijo'];}
+					if(isset($valorAgua)){           $x2  = $valorAgua;           }else{$x2  = $rowData['valorAgua'];}
+					if(isset($valorRecoleccion)){    $x3  = $valorRecoleccion;    }else{$x3  = $rowData['valorRecoleccion'];}
+					if(isset($valorVisitaCorte)){    $x4  = $valorVisitaCorte;    }else{$x4  = $rowData['valorVisitaCorte'];}
+					if(isset($valorCorte1)){         $x5  = $valorCorte1;         }else{$x5  = $rowData['valorCorte1'];}
+					if(isset($valorCorte2)){         $x6  = $valorCorte2;         }else{$x6  = $rowData['valorCorte2'];}
+					if(isset($valorReposicion1)){    $x7  = $valorReposicion1;    }else{$x7  = $rowData['valorReposicion1'];}
+					if(isset($valorReposicion2)){    $x8  = $valorReposicion2;    }else{$x8  = $rowData['valorReposicion2'];}
+					if(isset($NdiasPago)){           $x9  = $NdiasPago;           }else{$x9  = $rowData['NdiasPago'];}
+					if(isset($Fac_nEmergencia)){     $x10 = $Fac_nEmergencia;     }else{$x10 = $rowData['Fac_nEmergencia'];}
+					if(isset($Fac_nConsultas)){      $x11 = $Fac_nConsultas;      }else{$x11 = $rowData['Fac_nConsultas'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

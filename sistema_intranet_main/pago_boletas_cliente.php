@@ -81,7 +81,7 @@ if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){
 		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 						
 	}
-	$row_data = mysqli_fetch_assoc ($resultado);
+	$rowData = mysqli_fetch_assoc ($resultado);
 }
 /******************************************************************/
 //Se crea el select con todas las Boletas que se estan pagando
@@ -101,7 +101,7 @@ if(isset($_SESSION['pagos_boletas_clientes'])){
 <div class="row inbox">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h3>
-			<strong>Cliente : </strong><?php echo $row_data['Nombre']; ?><br/>
+			<strong>Cliente : </strong><?php echo $rowData['Nombre']; ?><br/>
 		</h3>
 		<hr>
 	</div>

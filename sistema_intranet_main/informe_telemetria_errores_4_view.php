@@ -29,7 +29,7 @@ telemetria_listado_errores_999.GeoLongitud,
 telemetria_listado.Nombre AS NombreEquipo';
 $SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores_999.idTelemetria';
 $SIS_where = 'telemetria_listado_errores_999.idErrores = '.simpleDecode($_GET['view'], fecha_actual());
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_errores_999', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado_errores_999', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -45,17 +45,17 @@ require_once 'core/Web.Header.Views.php';
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Datos del Equipo <?php echo $rowdata['NombreEquipo']; ?></h5>
+			<h5>Datos del Equipo <?php echo $rowData['NombreEquipo']; ?></h5>
 
 		</header>
 		<div class="table-responsive">
 
 			<?php
-			$explanation  = '<strong>'.fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].'</strong><br/>';
-			$explanation .= $rowdata['Descripcion'].'<br/>';
-			$explanation .= '<strong>Valor: </strong>'.Cantidades_decimales_justos($rowdata['Valor']).'<br/>';
+			$explanation  = '<strong>'.fecha_estandar($rowData['Fecha']).' - '.$rowData['Hora'].'</strong><br/>';
+			$explanation .= $rowData['Descripcion'].'<br/>';
+			$explanation .= '<strong>Valor: </strong>'.Cantidades_decimales_justos($rowData['Valor']).'<br/>';
 
-			echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); ?>
+			echo mapa_from_gps($rowData['GeoLatitud'], $rowData['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); ?>
 		</div>
 	</div>
 </div>

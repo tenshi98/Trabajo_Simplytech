@@ -76,12 +76,12 @@ if(!empty($_GET['id'])){
 	LEFT JOIN `core_card_type`          ON core_card_type.idCardType           = card_listado.idCardType
 	LEFT JOIN `core_card_position`      ON core_card_position.idPosition       = card_listado.idPosition';
 	$SIS_where = 'card_listado.idCard = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'card_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'card_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Tarjetas', $rowdata['CardNombre'], 'Resumen'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Tarjetas', $rowData['CardNombre'], 'Resumen'); ?>
 	</div>
 	<div class="clearfix"></div>
 
@@ -100,19 +100,19 @@ if(!empty($_GET['id'])){
 					<div class="wmd-panel">
 
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-							<?php if ($rowdata['Direccion_img']=='') { ?>
+							<?php if ($rowData['Direccion_img']=='') { ?>
 								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/card.jpg">
 							<?php }else{
-								echo '<img src="upload/'.$rowdata['Direccion_img'].'" style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia"  >';
+								echo '<img src="upload/'.$rowData['Direccion_img'].'" style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia"  >';
 							} ?>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de la tarjeta</h2>
 							<p class="text-muted">
-								<strong>Nombre : </strong><?php echo $rowdata['CardNombre']; ?><br/>
-								<strong>Tipo Tarjeta : </strong><?php echo $rowdata['Tipo']; ?><br/>
-								<strong>Posicion Texto : </strong><?php echo $rowdata['Posicion']; ?><br/>
-								<strong>Uso Avatar : </strong><?php echo $rowdata['Imagen']; ?>
+								<strong>Nombre : </strong><?php echo $rowData['CardNombre']; ?><br/>
+								<strong>Tipo Tarjeta : </strong><?php echo $rowData['Tipo']; ?><br/>
+								<strong>Posicion Texto : </strong><?php echo $rowData['Posicion']; ?><br/>
+								<strong>Uso Avatar : </strong><?php echo $rowData['Imagen']; ?>
 							</p>
 						</div>
 						<div class="clearfix"></div>

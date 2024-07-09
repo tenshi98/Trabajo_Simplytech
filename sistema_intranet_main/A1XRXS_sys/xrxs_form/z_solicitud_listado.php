@@ -1063,9 +1063,9 @@ require_once '0_validate_user_1.php';
 				/********************************************************************************/
 				if(isset($idUsuario) && $idUsuario!=''){
 					// consulto los datos
-					$rowdata = db_select_data (false, 'Nombre', 'usuarios_listado', '', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$rowData = db_select_data (false, 'Nombre', 'usuarios_listado', '', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
-					$_SESSION['ocompra_basicos']['Usuario'] = $rowdata['Nombre'];
+					$_SESSION['ocompra_basicos']['Usuario'] = $rowData['Nombre'];
 				}else{
 					$_SESSION['ocompra_basicos']['Usuario'] = '';
 				}

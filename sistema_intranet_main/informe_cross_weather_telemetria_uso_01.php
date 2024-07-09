@@ -36,11 +36,11 @@ require_once 'core/Web.Header.Main.php';
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['submit_filter'])){
 // consulto los datos
-$rowdata = db_select_data (false, 'Nombre,cantSensores, Direccion_img', 'telemetria_listado', '', 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, 'Nombre,cantSensores, Direccion_img', 'telemetria_listado', '', 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //Se arma la consulta
 $cadena = '';
-for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 	$cadena .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
 	$cadena .= ',telemetria_listado_sensores_uso.SensoresUso_'.$i;
 	$cadena .= ',telemetria_listado_sensores_uso_fecha.SensoresFechaUso_'.$i;
@@ -66,7 +66,7 @@ $rowMed = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $S
 
 //Cuento si hay sensores activos
 $rowcount = 0;
-for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 	if(isset($rowMed['SensoresUso_'.$i])&&$rowMed['SensoresUso_'.$i]==1){
 		$rowcount++;
 	}
@@ -75,7 +75,7 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Uso del Equipo'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowData['Nombre'], 'Uso del Equipo'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -102,7 +102,7 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php
 					if(isset($rowcount)&&$rowcount!=0){
-						for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+						for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 							//Se verifica si el sensor esta habilitado para la supervision
 							if(isset($rowMed['SensoresUso_'.$i])&&$rowMed['SensoresUso_'.$i]==1){ ?>
 								<tr class="odd">

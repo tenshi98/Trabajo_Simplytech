@@ -88,7 +88,7 @@ telemetria_ciclo_enfriado.CantidadPallet,
 telemetria_listado_grupos.Nombre AS Grupo';
 $SIS_join  = 'LEFT JOIN `telemetria_listado_grupos` ON telemetria_listado_grupos.idGrupo = telemetria_ciclo_enfriado.idGrupo';
 $SIS_where = 'idCiclo ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_ciclo_enfriado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_ciclo_enfriado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //se crea filtro
 $z = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
@@ -114,14 +114,14 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 
 				<?php  
 				//Se verifican si existen los datos
-				if(isset($idTelemetria)){    $x1 = $idTelemetria;   }else{$x1 = $rowdata['idTelemetria'];}
-				if(isset($f_inicio)){        $x2 = $f_inicio;       }else{$x2 = $rowdata['f_inicio'];}
-				if(isset($h_inicio)){        $x3 = $h_inicio;       }else{$x3 = $rowdata['h_inicio'];}
-				if(isset($f_termino)){       $x4 = $f_termino;      }else{$x4 = $rowdata['f_termino'];}
-				if(isset($h_termino)){       $x5 = $h_termino;      }else{$x5 = $rowdata['h_termino'];}
-				if(isset($idCategoria)){     $x6 = $idCategoria;    }else{$x6 = $rowdata['idCategoria'];}
-				if(isset($idProducto)){      $x7 = $idProducto;     }else{$x7 = $rowdata['idProducto'];}
-				if(isset($CantidadPallet)){  $x8 = $CantidadPallet; }else{$x8 = $rowdata['CantidadPallet'];}
+				if(isset($idTelemetria)){    $x1 = $idTelemetria;   }else{$x1 = $rowData['idTelemetria'];}
+				if(isset($f_inicio)){        $x2 = $f_inicio;       }else{$x2 = $rowData['f_inicio'];}
+				if(isset($h_inicio)){        $x3 = $h_inicio;       }else{$x3 = $rowData['h_inicio'];}
+				if(isset($f_termino)){       $x4 = $f_termino;      }else{$x4 = $rowData['f_termino'];}
+				if(isset($h_termino)){       $x5 = $h_termino;      }else{$x5 = $rowData['h_termino'];}
+				if(isset($idCategoria)){     $x6 = $idCategoria;    }else{$x6 = $rowData['idCategoria'];}
+				if(isset($idProducto)){      $x7 = $idProducto;     }else{$x7 = $rowData['idProducto'];}
+				if(isset($CantidadPallet)){  $x8 = $CantidadPallet; }else{$x8 = $rowData['CantidadPallet'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -131,7 +131,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
-				$Form_Inputs->form_input_disabled('Grupos','fake_emp', $rowdata['Grupo']);
+				$Form_Inputs->form_input_disabled('Grupos','fake_emp', $rowData['Grupo']);
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x2, 2);
 				$Form_Inputs->form_time('Hora Inicio','h_inicio', $x3, 2, 2);
 				$Form_Inputs->form_date('Fecha Termino','f_termino', $x4, 2);

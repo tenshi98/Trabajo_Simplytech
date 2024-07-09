@@ -84,7 +84,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 $SIS_query = 'idCliente, FechaEjecucion, Fecha, ValorCargo, Observacion, Archivo';
 $SIS_join  = '';
 $SIS_where = 'idOtrosCargos = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_otros_cargos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'aguas_clientes_otros_cargos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //Indico el sistema
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_clientes_listado.idEstado=1';
@@ -102,11 +102,11 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idCliente)){        $x1  = $idCliente;         }else{$x1  = $rowdata['idCliente'];}
-				if(isset($FechaEjecucion)){   $x2  = $FechaEjecucion;    }else{$x2  = $rowdata['FechaEjecucion'];}
-				if(isset($Fecha)){            $x3  = $Fecha;             }else{$x3  = $rowdata['Fecha'];}
-				if(isset($ValorCargo)){       $x4  = $ValorCargo;        }else{$x4  = cantidades_decimales_justos($rowdata['ValorCargo']);}
-				if(isset($Observacion)){      $x5  = $Observacion;       }else{$x5  = $rowdata['Observacion'];}
+				if(isset($idCliente)){        $x1  = $idCliente;         }else{$x1  = $rowData['idCliente'];}
+				if(isset($FechaEjecucion)){   $x2  = $FechaEjecucion;    }else{$x2  = $rowData['FechaEjecucion'];}
+				if(isset($Fecha)){            $x3  = $Fecha;             }else{$x3  = $rowData['Fecha'];}
+				if(isset($ValorCargo)){       $x4  = $ValorCargo;        }else{$x4  = cantidades_decimales_justos($rowData['ValorCargo']);}
+				if(isset($Observacion)){      $x5  = $Observacion;       }else{$x5  = $rowData['Observacion'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -116,11 +116,11 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 				$Form_Inputs->form_values('Valor','ValorCargo', $x4, 2 );
 				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x5, 1);
 				//si existe archivo se mustra previsualizador
-				if(isset($rowdata['Archivo'])&&$rowdata['Archivo']!=''){ ?>
+				if(isset($rowData['Archivo'])&&$rowData['Archivo']!=''){ ?>
 
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 						<h3>Archivo</h3>
-						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['Archivo'], ''); ?>
+						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowData['Archivo'], ''); ?>
 					</div>
 					<a href="<?php echo $location.'&id='.$_GET['id'].'&del_Archivo='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 					<div class="clearfix"></div>

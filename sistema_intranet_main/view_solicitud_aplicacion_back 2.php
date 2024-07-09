@@ -119,7 +119,7 @@ if(!$resultado){
 	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
 			
 }
-$row_data = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 /*****************************************/
 //Insumos
@@ -357,7 +357,7 @@ array_push( $arrHistorial,$row );
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Solicitud de Aplicacion.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['f_creacion']); ?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowData['f_creacion']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -368,39 +368,39 @@ array_push( $arrHistorial,$row );
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Datos Empresa</strong>
 					<address>
-						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
-						Empresa: '.$row_data['SistemaOrigen'].'<br/>
-						Ciudad-Comuna: '.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
-						Dirección: '.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
-						Email: '.$row_data['SistemaOrigenEmail'].'
+						Rut: '.$rowData['SistemaOrigenRut'].'<br/>
+						Empresa: '.$rowData['SistemaOrigen'].'<br/>
+						Ciudad-Comuna: '.$rowData['SistemaOrigenCiudad'].', '.$rowData['SistemaOrigenComuna'].'<br/>
+						Dirección: '.$rowData['SistemaOrigenDireccion'].'<br/>
+						Fono: '.formatPhone($rowData['SistemaOrigenFono']).'<br/>
+						Email: '.$rowData['SistemaOrigenEmail'].'
 					</address>
 				</div>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Identificación</strong>
 					<address>
-						Predio: '.$row_data['NombrePredio'].'<br/>
-						Estado: '.$row_data['Estado'].'<br/>
-						Temporada: '.$row_data['TemporadaCodigo'].' '.$row_data['TemporadaNombre'].'<br/>
-						Estado Fenologico: '.$row_data['EstadoFenCodigo'].' '.$row_data['EstadoFenNombre'].'<br/>';
-						if(isset($row_data['VariedadCat'])&&$row_data['VariedadCat']!=''){echo 'Especie: '.$row_data['VariedadCat'].'<br/>';     }else{echo 'Especie: Todas las Especies<br/>';}
-						if(isset($row_data['VariedadNombre'])&&$row_data['VariedadNombre']!=''){ echo 'Variedad: '.$row_data['VariedadNombre'].'<br/>';}else{echo 'Variedad: Todas las Variedades<br/>';}
+						Predio: '.$rowData['NombrePredio'].'<br/>
+						Estado: '.$rowData['Estado'].'<br/>
+						Temporada: '.$rowData['TemporadaCodigo'].' '.$rowData['TemporadaNombre'].'<br/>
+						Estado Fenologico: '.$rowData['EstadoFenCodigo'].' '.$rowData['EstadoFenNombre'].'<br/>';
+						if(isset($rowData['VariedadCat'])&&$rowData['VariedadCat']!=''){echo 'Especie: '.$rowData['VariedadCat'].'<br/>';     }else{echo 'Especie: Todas las Especies<br/>';}
+						if(isset($rowData['VariedadNombre'])&&$rowData['VariedadNombre']!=''){ echo 'Variedad: '.$rowData['VariedadNombre'].'<br/>';}else{echo 'Variedad: Todas las Variedades<br/>';}
 						echo '
 					</address>
 				</div>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Datos de Solicitud</strong>
 					<address>
-						Prioridad: '.$row_data['NombrePrioridad'].'<br/>
-						N° Solicitud: '.n_doc($row_data['NSolicitud'], 5).'<br/>
-						Fecha inicio requerido: '.fecha_estandar($row_data['f_programacion']).' '.$row_data['horaProg'].'<br/>
-						Fecha termino requerido: '.fecha_estandar($row_data['f_programacion_fin']).' '.$row_data['horaProg_fin'].'<br/>';
-						if(isset($row_data['f_ejecucion'])&&$row_data['f_ejecucion']!='0000-00-00'){echo 'Fecha inicio programación: '.fecha_estandar($row_data['f_ejecucion']).' '.$row_data['horaEjecucion'].'<br/>';}
-						if(isset($row_data['f_ejecucion_fin'])&&$row_data['f_ejecucion_fin']!='0000-00-00'){echo 'Fecha termino programación: '.fecha_estandar($row_data['f_ejecucion_fin']).' '.$row_data['horaEjecucion_fin'].'<br/>';}
-						if(isset($row_data['f_termino'])&&$row_data['f_termino']!='0000-00-00'){echo 'Fecha inicio ejecución: '.fecha_estandar($row_data['f_termino']).' '.$row_data['horaTermino'].'<br/>';}
-						if(isset($row_data['f_termino_fin'])&&$row_data['f_termino_fin']!='0000-00-00'){echo 'Terminado: '.fecha_estandar($row_data['f_termino_fin']).' '.$row_data['horaTermino_fin'].'<br/>';}
-						echo 'Agrónomo: '.$row_data['NombreUsuario'];
-						if(isset($row_data['idDosificador'])&&$row_data['idDosificador']!=0){echo 'Dosificador: '.$row_data['TrabajadorRut'].' '.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].'<br/>';}
+						Prioridad: '.$rowData['NombrePrioridad'].'<br/>
+						N° Solicitud: '.n_doc($rowData['NSolicitud'], 5).'<br/>
+						Fecha inicio requerido: '.fecha_estandar($rowData['f_programacion']).' '.$rowData['horaProg'].'<br/>
+						Fecha termino requerido: '.fecha_estandar($rowData['f_programacion_fin']).' '.$rowData['horaProg_fin'].'<br/>';
+						if(isset($rowData['f_ejecucion'])&&$rowData['f_ejecucion']!='0000-00-00'){echo 'Fecha inicio programación: '.fecha_estandar($rowData['f_ejecucion']).' '.$rowData['horaEjecucion'].'<br/>';}
+						if(isset($rowData['f_ejecucion_fin'])&&$rowData['f_ejecucion_fin']!='0000-00-00'){echo 'Fecha termino programación: '.fecha_estandar($rowData['f_ejecucion_fin']).' '.$rowData['horaEjecucion_fin'].'<br/>';}
+						if(isset($rowData['f_termino'])&&$rowData['f_termino']!='0000-00-00'){echo 'Fecha inicio ejecución: '.fecha_estandar($rowData['f_termino']).' '.$rowData['horaTermino'].'<br/>';}
+						if(isset($rowData['f_termino_fin'])&&$rowData['f_termino_fin']!='0000-00-00'){echo 'Terminado: '.fecha_estandar($rowData['f_termino_fin']).' '.$rowData['horaTermino_fin'].'<br/>';}
+						echo 'Agrónomo: '.$rowData['NombreUsuario'];
+						if(isset($rowData['idDosificador'])&&$rowData['idDosificador']!=0){echo 'Dosificador: '.$rowData['TrabajadorRut'].' '.$rowData['TrabajadorNombre'].' '.$rowData['TrabajadorApellidoPat'].'<br/>';}
 
 						echo '
 					</address>
@@ -409,12 +409,12 @@ array_push( $arrHistorial,$row );
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Parámetros de Aplicación</strong>
 					<address>
-						Mojamiento: '.Cantidades_decimales_justos($row_data['Mojamiento']).' L/ha<br/>
-						Velocidad Tractor: '.Cantidades_decimales_justos($row_data['VelTractor']).' Km/hr<br/>
-						Velocidad Viento: '.Cantidades_decimales_justos($row_data['VelViento']).' Km/hr<br/>
-						Temperatura Min: '.Cantidades_decimales_justos($row_data['TempMin']).' °<br/>
-						Temperatura Max: '.Cantidades_decimales_justos($row_data['TempMax']).' °<br/>
-						Humedad: '.Cantidades_decimales_justos($row_data['HumTempMax']).' %<br/>
+						Mojamiento: '.Cantidades_decimales_justos($rowData['Mojamiento']).' L/ha<br/>
+						Velocidad Tractor: '.Cantidades_decimales_justos($rowData['VelTractor']).' Km/hr<br/>
+						Velocidad Viento: '.Cantidades_decimales_justos($rowData['VelViento']).' Km/hr<br/>
+						Temperatura Min: '.Cantidades_decimales_justos($rowData['TempMin']).' °<br/>
+						Temperatura Max: '.Cantidades_decimales_justos($rowData['TempMax']).' °<br/>
+						Humedad: '.Cantidades_decimales_justos($rowData['HumTempMax']).' %<br/>
 
 					</address>
 				</div>';
@@ -485,7 +485,7 @@ array_push( $arrHistorial,$row );
 							$TotalCuartelHileras       = $TotalCuartelHileras + $cuartel['CuartelHileras'];
 							$TotalPlantasAplicadas     = $TotalPlantasAplicadas + $aplicadas;
 							$TotalLitrosAplicados      = $TotalLitrosAplicados + $S_LitrosAplicados;
-							$TotalMojamiento           = $TotalMojamiento + $row_data['Mojamiento'];
+							$TotalMojamiento           = $TotalMojamiento + $rowData['Mojamiento'];
 
 							//calculo
 							if(isset($cuartel['CuartelHectareas'])&&$cuartel['CuartelHectareas']!=0){
@@ -529,10 +529,10 @@ array_push( $arrHistorial,$row );
 									<strong>Veloc. Promedio: </strong><?php echo Cantidades($S_VelPromedio, 1); ?><br/>
 									<strong>lts. Aplicados: </strong><?php echo Cantidades($S_LitrosAplicados, 0); ?><br/>
 									<strong>lts. Aplicados x Hectareas: </strong><?php echo Cantidades($LitrosApliXhect, 0); ?><br/>
-									<strong>Mojamiento: </strong><?php echo Cantidades_decimales_justos($row_data['Mojamiento']).' L/ha'; ?>
+									<strong>Mojamiento: </strong><?php echo Cantidades_decimales_justos($rowData['Mojamiento']).' L/ha'; ?>
 								</td>
 
-								<td class="item-name"><?php echo porcentaje($LitrosApliXhect/$row_data['Mojamiento']); ?></td>
+								<td class="item-name"><?php echo porcentaje($LitrosApliXhect/$rowData['Mojamiento']); ?></td>
 								<td class="item-name">
 									<?php
 										if ($arrTracxCuartel) {
@@ -582,7 +582,7 @@ array_push( $arrHistorial,$row );
 								<strong>Total lts. Aplicados x Hectareas: </strong><?php echo Cantidades($TotLitrosApliXhect, 0); ?><br/>
 							</td>
 
-							<td class="item-name"><?php echo porcentaje($TotLitrosApliXhect/$row_data['Mojamiento']); ?></td>
+							<td class="item-name"><?php echo porcentaje($TotLitrosApliXhect/$rowData['Mojamiento']); ?></td>
 							<td class="item-name"><strong></strong></td>
 							<td class="item-name"><strong></strong></td>
 
@@ -715,10 +715,10 @@ array_push( $arrHistorial,$row );
 							<tr class="item-row linea_punteada">
 								<?php if($nmb==0){ ?><td class="item-name"  rowspan="<?php echo $NProd; ?>"><?php echo Cantidades_decimales_justos($Capacidad); ?></td><?php } ?>
 								<?php if($nmb==0){ ?><td class="item-name"  rowspan="<?php echo $NProd; ?>"><?php echo Cantidades_decimales_justos($PromedioCapacidad); ?></td><?php } ?>
-								<?php if($nmb==0){ ?><td class="item-name"  rowspan="<?php echo $NProd; ?>"><?php if($PromedioCapacidad!=0){echo Cantidades(($row_data['Mojamiento']*$TotalCuartelHectareas)/$PromedioCapacidad, 2);}else{echo '0';} ?></td><?php } ?>
+								<?php if($nmb==0){ ?><td class="item-name"  rowspan="<?php echo $NProd; ?>"><?php if($PromedioCapacidad!=0){echo Cantidades(($rowData['Mojamiento']*$TotalCuartelHectareas)/$PromedioCapacidad, 2);}else{echo '0';} ?></td><?php } ?>
 
 								<td class="item-name"><i class="fa fa-flask" aria-hidden="true"></i> <?php echo $prod['ProductoNombre']; ?></td>
-								<td class="item-name"><?php echo Cantidades((($row_data['Mojamiento']*$TotalCuartelHectareas)/100)*$prod['DosisAplicar'], 2).' '.$prod['Unimed']; ?></td>
+								<td class="item-name"><?php echo Cantidades((($rowData['Mojamiento']*$TotalCuartelHectareas)/100)*$prod['DosisAplicar'], 2).' '.$prod['Unimed']; ?></td>
 
 							</tr>
 

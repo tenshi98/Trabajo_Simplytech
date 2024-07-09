@@ -75,7 +75,7 @@ if(!empty($_GET['edit'])){
 $SIS_query = 'idUsuario, idSistema';
 $SIS_join  = '';
 $SIS_where = 'idAprobador ='.$_GET['edit'];
-$rowdata = db_select_data (false, $SIS_query, 'sistema_aprobador_oc', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'sistema_aprobador_oc', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
  ?>
 
@@ -90,7 +90,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sistema_aprobador_oc', $SIS_join,
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idUsuario)){     $x1  = $idUsuario;   }else{$x1  = $rowdata['idUsuario'];}
+				if(isset($idUsuario)){     $x1  = $idUsuario;   }else{$x1  = $rowData['idUsuario'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -152,7 +152,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sistema_aprobador_oc', $SIS_join,
 $SIS_query = 'Nombre';
 $SIS_join  = '';
 $SIS_where = 'idSistema ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 // consulto los datos
 $SIS_query = '
@@ -167,7 +167,7 @@ $arrAprobador = db_select_array (false, $SIS_query, 'sistema_aprobador_oc', $SIS
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Aprobador OC'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowData['Nombre'], 'Editar Aprobador OC'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Aprobador</a>
 	</div>

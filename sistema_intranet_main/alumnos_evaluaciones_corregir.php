@@ -64,7 +64,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'idEstadoAprobacion';
 	$SIS_join  = '';
 	$SIS_where = 'idQuizRealizadas = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'quiz_realizadas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'quiz_realizadas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -79,7 +79,7 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idEstadoAprobacion)){  $x1  = $idEstadoAprobacion; }else{$x1  = $rowdata['idEstadoAprobacion'];}
+					if(isset($idEstadoAprobacion)){  $x1  = $idEstadoAprobacion; }else{$x1  = $rowData['idEstadoAprobacion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

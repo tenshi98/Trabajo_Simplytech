@@ -98,7 +98,7 @@ $arrCheques = db_select_array (false, $SIS_query, 'pagos_facturas_proveedores', 
 				$Ano_a  = date("Y");
 				$Ano_b  = date("Y");
 			}
-			if (($Mes-1)==0)  {$mes_atras=12;   $Ano_a=$Ano_a-1;}else{$mes_atras=$Mes-1; }
+			if (($Mes-1)==0){$mes_atras=12;   $Ano_a=$Ano_a-1;}else{$mes_atras=$Mes-1; }
 			if (($Mes+1)==13) {$mes_adelante=1; $Ano_b=$Ano_b+1;}else{$mes_adelante=$Mes+1; }
 			?>
 			<div class="btn-group pull-left" style="width: 35px;" >

@@ -63,7 +63,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 /******************************************************/
 //Accesos a bodegas de productos
@@ -145,7 +145,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata_x = mysqli_fetch_assoc ($resultado);
+$rowData_x = mysqli_fetch_assoc ($resultado);
 
 //verifico que sea un administrador
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
@@ -158,18 +158,18 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$Count_Shipping     = 1;
 }else{
 	//Totales de los permisos que se pueden acceder
-	$Count_productos    = $rowdata_x['tran_1'] + $rowdata_x['tran_2'] + $rowdata_x['tran_3'] + $rowdata_x['tran_4'] + $rowdata_x['tran_5'];
-	$Count_insumos      = $rowdata_x['tran_11'] + $rowdata_x['tran_12'] + $rowdata_x['tran_13'] + $rowdata_x['tran_14'] + $rowdata_x['tran_15'];
-	$Count_OT           = $rowdata_x['tran_21'] + $rowdata_x['tran_22'];
-	$Count_OC           = $rowdata_x['tran_26'] + $rowdata_x['tran_27'];
-	$Count_Variedades   = $rowdata_x['tran_31'] + $rowdata_x['tran_32'] + $rowdata_x['tran_33'] + $rowdata_x['tran_34'];
-	$Count_Shipping     = $rowdata_x['tran_35'] + $rowdata_x['tran_36'] + $rowdata_x['tran_37'];
+	$Count_productos    = $rowData_x['tran_1'] + $rowData_x['tran_2'] + $rowData_x['tran_3'] + $rowData_x['tran_4'] + $rowData_x['tran_5'];
+	$Count_insumos      = $rowData_x['tran_11'] + $rowData_x['tran_12'] + $rowData_x['tran_13'] + $rowData_x['tran_14'] + $rowData_x['tran_15'];
+	$Count_OT           = $rowData_x['tran_21'] + $rowData_x['tran_22'];
+	$Count_OC           = $rowData_x['tran_26'] + $rowData_x['tran_27'];
+	$Count_Variedades   = $rowData_x['tran_31'] + $rowData_x['tran_32'] + $rowData_x['tran_33'] + $rowData_x['tran_34'];
+	$Count_Shipping     = $rowData_x['tran_35'] + $rowData_x['tran_36'] + $rowData_x['tran_37'];
 }
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Datos de Contacto'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowData['Nombre'], 'Editar Datos de Contacto'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -217,12 +217,12 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Contacto_Nombre)){    $x1 = $Contacto_Nombre;   }else{$x1 = $rowdata['Contacto_Nombre'];}
-					if(isset($Contacto_Fono1)){     $x2 = $Contacto_Fono1;    }else{$x2 = $rowdata['Contacto_Fono1'];}
-					if(isset($Contacto_Fono2)){     $x3 = $Contacto_Fono2;    }else{$x3 = $rowdata['Contacto_Fono2'];}
-					if(isset($Contacto_Fax)){       $x4 = $Contacto_Fax;      }else{$x4 = $rowdata['Contacto_Fax'];}
-					if(isset($Contacto_Web)){       $x5 = $Contacto_Web;      }else{$x5 = $rowdata['Contacto_Web'];}
-					if(isset($Contacto_Email)){     $x6 = $Contacto_Email;    }else{$x6 = $rowdata['Contacto_Email'];}
+					if(isset($Contacto_Nombre)){    $x1 = $Contacto_Nombre;   }else{$x1 = $rowData['Contacto_Nombre'];}
+					if(isset($Contacto_Fono1)){     $x2 = $Contacto_Fono1;    }else{$x2 = $rowData['Contacto_Fono1'];}
+					if(isset($Contacto_Fono2)){     $x3 = $Contacto_Fono2;    }else{$x3 = $rowData['Contacto_Fono2'];}
+					if(isset($Contacto_Fax)){       $x4 = $Contacto_Fax;      }else{$x4 = $rowData['Contacto_Fax'];}
+					if(isset($Contacto_Web)){       $x5 = $Contacto_Web;      }else{$x5 = $rowData['Contacto_Web'];}
+					if(isset($Contacto_Email)){     $x6 = $Contacto_Email;    }else{$x6 = $rowData['Contacto_Email'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

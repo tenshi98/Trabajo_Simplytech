@@ -50,10 +50,10 @@ cross_solicitud_aplicacion_listado.Mojamiento,
 cross_predios_listado.Nombre AS PredioNombre';
 $SIS_join  = 'LEFT JOIN `cross_predios_listado` ON cross_predios_listado.idPredio = cross_solicitud_aplicacion_listado.idPredio';
 $SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud = '.$X_Puntero.' AND cross_solicitud_aplicacion_listado.idSistema ='.$_SESSION['usuario']['basic_data']['idSistema'].' GROUP BY idSolicitud';
-$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 //Verifico si existe
-if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
+if(isset($rowData['idSolicitud'])&&$rowData['idSolicitud']!=''){
 
 	/*****************************************/
 	// Se trae un listado con todos los elementos
@@ -87,7 +87,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 	$SIS_join  = '
 	LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idSolicitud   = cross_solicitud_aplicacion_listado.idSolicitud
 	LEFT JOIN `cross_solicitud_aplicacion_listado_tractores`   ON cross_solicitud_aplicacion_listado_tractores.idCuarteles   = cross_solicitud_aplicacion_listado_cuarteles.idCuarteles';
-	$SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud = '.$row_data['idSolicitud'].' AND cross_solicitud_aplicacion_listado_cuarteles.idZona = '.$X_idZona.' GROUP BY cross_solicitud_aplicacion_listado.idSolicitud ORDER BY cross_solicitud_aplicacion_listado.idSolicitud DESC';
+	$SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud = '.$rowData['idSolicitud'].' AND cross_solicitud_aplicacion_listado_cuarteles.idZona = '.$X_idZona.' GROUP BY cross_solicitud_aplicacion_listado.idSolicitud ORDER BY cross_solicitud_aplicacion_listado.idSolicitud DESC';
 	$rowSolicitud = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowSolicitud');
 
 	/*****************************************/
@@ -100,7 +100,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 	$SIS_join  = '
 	LEFT JOIN `telemetria_listado`   ON telemetria_listado.idTelemetria    = cross_solicitud_aplicacion_listado_tractores.idTelemetria
 	LEFT JOIN `vehiculos_listado`    ON vehiculos_listado.idVehiculo       = cross_solicitud_aplicacion_listado_tractores.idVehiculo';
-	$SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idSolicitud = '.$row_data['idSolicitud'].' GROUP BY cross_solicitud_aplicacion_listado_tractores.idTelemetria';
+	$SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idSolicitud = '.$rowData['idSolicitud'].' GROUP BY cross_solicitud_aplicacion_listado_tractores.idTelemetria';
 	$SIS_order = 'telemetria_listado.Nombre ASC';
 	$arrTractores = array();
 	$arrTractores = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTractores');
@@ -135,7 +135,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 		//consulta
 		$SIS_query = 'idTabla, idTelemetria'.$subquery;
 		$SIS_join  = '';
-		$SIS_where = 'idSolicitud = '.$row_data['idSolicitud'].' AND idZona = '.$X_idZona;
+		$SIS_where = 'idSolicitud = '.$rowData['idSolicitud'].' AND idZona = '.$X_idZona;
 		$SIS_order = 'FechaSistema ASC, HoraSistema ASC';
 		$arrMediciones = array();
 		$arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$trac['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMediciones');
@@ -196,7 +196,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 	$SIS_join  = '
 	LEFT JOIN `cross_predios_listado_zonas`               ON cross_predios_listado_zonas.idPredio             = cross_solicitud_aplicacion_listado.idPredio
 	LEFT JOIN `cross_predios_listado_zonas_ubicaciones`   ON cross_predios_listado_zonas_ubicaciones.idZona   = cross_predios_listado_zonas.idZona';
-	$SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud = '.$row_data['idSolicitud'].' AND cross_predios_listado_zonas.idZona = '.$X_idZona;
+	$SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud = '.$rowData['idSolicitud'].' AND cross_predios_listado_zonas.idZona = '.$X_idZona;
 	$SIS_order = 'cross_predios_listado_zonas.idZona ASC, cross_predios_listado_zonas_ubicaciones.idUbicaciones ASC';
 	$arrZonas = array();
 	$arrZonas = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrZonas');
@@ -218,7 +218,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 	$SIS_join  = '
 	LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idCuarteles   = cross_solicitud_aplicacion_listado_tractores.idCuarteles
 	LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_listado_zonas.idZona                         = cross_solicitud_aplicacion_listado_cuarteles.idZona';
-	$SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idSolicitud = '.$row_data['idSolicitud'].' AND cross_solicitud_aplicacion_listado_cuarteles.idZona = '.$X_idZona;
+	$SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idSolicitud = '.$rowData['idSolicitud'].' AND cross_solicitud_aplicacion_listado_cuarteles.idZona = '.$X_idZona;
 	$SIS_order = 'cross_predios_listado_zonas.Nombre asc';
 	$arrTractoresData = array();
 	$arrTractoresData = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTractoresData');
@@ -252,10 +252,10 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 	}
 			
 	/*******************************************************/
-	$LitrosProgramados      = $row_data['Mojamiento']*$rowSolicitud['CuartelHectareas'];
+	$LitrosProgramados      = $rowData['Mojamiento']*$rowSolicitud['CuartelHectareas'];
 	$LitrosTotales          = $rowSolicitud['Litros'];
 	$MojamientoHectarea     = $LitrosTotales/$rowSolicitud['CuartelHectareas'];
-	$Porcen_Mojamiento      = ($MojamientoHectarea /$row_data['Mojamiento'])*100;
+	$Porcen_Mojamiento      = ($MojamientoHectarea /$rowData['Mojamiento'])*100;
 	$TotalPlantasAplicadas  = $rowSolicitud['CuartelCantPlantas'] - $PPendientes;
 	$TotalPlantasPendientes = $PPendientes;
 	$TractorVelocidadProm   = $rowSolicitud['GeoVelocidadProm'];
@@ -964,8 +964,8 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 
 															<td>
 																<div class="btn-group" style="width: 70px;" >
-																	<a href="<?php echo 'view_solicitud_aplicacion_detenciones.php?view='.simpleEncode($row_data['idSolicitud'], fecha_actual()).'&idTelemetria='.simpleEncode($trac['idTelemetria'], fecha_actual()).'&idZona='.simpleEncode($tractda['idZona'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Detenciones" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
-																	<a href="<?php echo 'view_solicitud_aplicacion_fuera_linea.php?view='.simpleEncode($row_data['idSolicitud'], fecha_actual()).'&idTelemetria='.simpleEncode($trac['idTelemetria'], fecha_actual()).'&idZona='.simpleEncode($tractda['idZona'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Fuera de Linea" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+																	<a href="<?php echo 'view_solicitud_aplicacion_detenciones.php?view='.simpleEncode($rowData['idSolicitud'], fecha_actual()).'&idTelemetria='.simpleEncode($trac['idTelemetria'], fecha_actual()).'&idZona='.simpleEncode($tractda['idZona'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Detenciones" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+																	<a href="<?php echo 'view_solicitud_aplicacion_fuera_linea.php?view='.simpleEncode($rowData['idSolicitud'], fecha_actual()).'&idTelemetria='.simpleEncode($trac['idTelemetria'], fecha_actual()).'&idZona='.simpleEncode($tractda['idZona'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Fuera de Linea" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 																</div>
 															</td>
 

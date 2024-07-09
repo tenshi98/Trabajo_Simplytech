@@ -52,12 +52,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,CrossEnergy_PeriodoInicio, CrossEnergy_PeriodoTermino, CrossEnergy_HorarioInicio, CrossEnergy_HorarioTermino';
 $SIS_join  = '';
 $SIS_where = 'idSistema ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowData['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -93,10 +93,10 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($CrossEnergy_PeriodoInicio)){     $x1  = $CrossEnergy_PeriodoInicio;     }else{$x1  = $rowdata['CrossEnergy_PeriodoInicio'];}
-					if(isset($CrossEnergy_PeriodoTermino)){    $x2  = $CrossEnergy_PeriodoTermino;    }else{$x2  = $rowdata['CrossEnergy_PeriodoTermino'];}
-					if(isset($CrossEnergy_HorarioInicio)){     $x3  = $CrossEnergy_HorarioInicio;     }else{$x3  = $rowdata['CrossEnergy_HorarioInicio'];}
-					if(isset($CrossEnergy_HorarioTermino)){    $x4  = $CrossEnergy_HorarioTermino;    }else{$x4  = $rowdata['CrossEnergy_HorarioTermino'];}
+					if(isset($CrossEnergy_PeriodoInicio)){     $x1  = $CrossEnergy_PeriodoInicio;     }else{$x1  = $rowData['CrossEnergy_PeriodoInicio'];}
+					if(isset($CrossEnergy_PeriodoTermino)){    $x2  = $CrossEnergy_PeriodoTermino;    }else{$x2  = $rowData['CrossEnergy_PeriodoTermino'];}
+					if(isset($CrossEnergy_HorarioInicio)){     $x3  = $CrossEnergy_HorarioInicio;     }else{$x3  = $rowData['CrossEnergy_HorarioInicio'];}
+					if(isset($CrossEnergy_HorarioTermino)){    $x4  = $CrossEnergy_HorarioTermino;    }else{$x4  = $rowData['CrossEnergy_HorarioTermino'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -107,10 +107,10 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 					$Form_Inputs->form_time('Horario Termino','CrossEnergy_HorarioTermino', $x4, 2, 1);
 
 					$Form_Inputs->form_input_hidden('idSistema', $_GET['id'], 2);
-					$Form_Inputs->form_input_hidden('CrossEnergy_PeriodoInicioOld', $rowdata['CrossEnergy_PeriodoInicio'], 2);
-					$Form_Inputs->form_input_hidden('CrossEnergy_PeriodoTerminoOld', $rowdata['CrossEnergy_PeriodoTermino'], 2);
-					$Form_Inputs->form_input_hidden('CrossEnergy_HorarioInicioOld', $rowdata['CrossEnergy_HorarioInicio'], 2);
-					$Form_Inputs->form_input_hidden('CrossEnergy_HorarioTerminoOld', $rowdata['CrossEnergy_HorarioTermino'], 2);
+					$Form_Inputs->form_input_hidden('CrossEnergy_PeriodoInicioOld', $rowData['CrossEnergy_PeriodoInicio'], 2);
+					$Form_Inputs->form_input_hidden('CrossEnergy_PeriodoTerminoOld', $rowData['CrossEnergy_PeriodoTermino'], 2);
+					$Form_Inputs->form_input_hidden('CrossEnergy_HorarioInicioOld', $rowData['CrossEnergy_HorarioInicio'], 2);
+					$Form_Inputs->form_input_hidden('CrossEnergy_HorarioTerminoOld', $rowData['CrossEnergy_HorarioTermino'], 2);
 					?>
 
 					<div class="form-group">

@@ -60,12 +60,12 @@ Codigo, Nombre,FechaInicio, FechaTermino, Presupuesto, idBodegaProd, idBodegaIns
 idSistema, idAprobado, idCliente, idTipoLicitacion, ValorMensual, idOpcionItem';
 $SIS_join  = '';
 $SIS_where = 'idLicitacion = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'licitacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'licitacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Contrato', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Contrato', $rowData['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -79,7 +79,7 @@ $rowdata = db_select_data (false, $SIS_query, 'licitacion_listado', $SIS_join, $
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<?php if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){ ?>
+						<?php if(isset($rowData['idOpcionItem'])&&$rowData['idOpcionItem']==1){ ?>
 							<li class=""><a href="<?php echo 'licitacion_listado_itemizado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sitemap" aria-hidden="true"></i> Itemizado</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'licitacion_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
@@ -94,18 +94,18 @@ $rowdata = db_select_data (false, $SIS_query, 'licitacion_listado', $SIS_join, $
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idCliente)){             $x1  = $idCliente;           }else{$x1  = $rowdata['idCliente'];}
-					if(isset($Codigo)){                $x2  = $Codigo;              }else{$x2  = $rowdata['Codigo'];}
-					if(isset($Nombre)){                $x3  = $Nombre;              }else{$x3  = $rowdata['Nombre'];}
-					if(isset($FechaInicio)){           $x4  = $FechaInicio;         }else{$x4  = $rowdata['FechaInicio'];}
-					if(isset($FechaTermino)){          $x5  = $FechaTermino;        }else{$x5  = $rowdata['FechaTermino'];}
-					if(isset($idTipoLicitacion)){      $x6  = $idTipoLicitacion;    }else{$x6  = $rowdata['idTipoLicitacion'];}
-					if(isset($ValorMensual)){          $x7  = $ValorMensual;        }else{$x7  = $rowdata['ValorMensual'];}
-					if(isset($Presupuesto)){           $x8  = $Presupuesto;         }else{$x8  = $rowdata['Presupuesto'];}
-					if(isset($idBodegaProd)){          $x9  = $idBodegaProd;        }else{$x9  = $rowdata['idBodegaProd'];}
-					if(isset($idBodegaIns)){           $x10 = $idBodegaIns;         }else{$x10 = $rowdata['idBodegaIns'];}
-					if(isset($idOpcionItem)){          $x11 = $idOpcionItem;        }else{$x11 = $rowdata['idOpcionItem'];}
-					if(isset($idAprobado)){            $x12 = $idAprobado;          }else{$x12 = $rowdata['idAprobado'];}
+					if(isset($idCliente)){             $x1  = $idCliente;           }else{$x1  = $rowData['idCliente'];}
+					if(isset($Codigo)){                $x2  = $Codigo;              }else{$x2  = $rowData['Codigo'];}
+					if(isset($Nombre)){                $x3  = $Nombre;              }else{$x3  = $rowData['Nombre'];}
+					if(isset($FechaInicio)){           $x4  = $FechaInicio;         }else{$x4  = $rowData['FechaInicio'];}
+					if(isset($FechaTermino)){          $x5  = $FechaTermino;        }else{$x5  = $rowData['FechaTermino'];}
+					if(isset($idTipoLicitacion)){      $x6  = $idTipoLicitacion;    }else{$x6  = $rowData['idTipoLicitacion'];}
+					if(isset($ValorMensual)){          $x7  = $ValorMensual;        }else{$x7  = $rowData['ValorMensual'];}
+					if(isset($Presupuesto)){           $x8  = $Presupuesto;         }else{$x8  = $rowData['Presupuesto'];}
+					if(isset($idBodegaProd)){          $x9  = $idBodegaProd;        }else{$x9  = $rowData['idBodegaProd'];}
+					if(isset($idBodegaIns)){           $x10 = $idBodegaIns;         }else{$x10 = $rowData['idBodegaIns'];}
+					if(isset($idOpcionItem)){          $x11 = $idOpcionItem;        }else{$x11 = $rowData['idOpcionItem'];}
+					if(isset($idAprobado)){            $x12 = $idAprobado;          }else{$x12 = $rowData['idAprobado'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

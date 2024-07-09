@@ -118,19 +118,16 @@ $html .= '
 	<tbody>';
 
 		foreach ($arrErrores as $error) {
-
-				$html .='
-				<tr>
-					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.DeSanitizar($error['NombreEquipo']).'</td>
-					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.DeSanitizar($error['Descripcion']).'</td>
-					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.fecha_estandar($error['Fecha']).'</td>
-					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$error['Hora'].'</td>
-					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($error['Valor']).$arrUnimedX[$error['SensoresUniMed_'.$error['Sensor']]].'</td>
-					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($error['Valor_min']).$arrUnimedX[$error['SensoresUniMed_'.$error['Sensor']]].'</td>
-					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($error['Valor_max']).$arrUnimedX[$error['SensoresUniMed_'.$error['Sensor']]].'</td>
-				</tr>
-				';
-
+			$html .='
+			<tr>
+				<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.DeSanitizar($error['NombreEquipo']).'</td>
+				<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.DeSanitizar($error['Descripcion']).'</td>
+				<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.fecha_estandar($error['Fecha']).'</td>
+				<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$error['Hora'].'</td>
+				<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($error['Valor']).$arrUnimedX[$error['SensoresUniMed_'.$error['Sensor']]].'</td>
+				<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($error['Valor_min']).$arrUnimedX[$error['SensoresUniMed_'.$error['Sensor']]].'</td>
+				<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($error['Valor_max']).$arrUnimedX[$error['SensoresUniMed_'.$error['Sensor']]].'</td>
+			</tr>';
 		}
 
 $html .='</tbody>

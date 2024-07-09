@@ -65,7 +65,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'DescripcionCancelacion';
 	$SIS_join  = '';
 	$SIS_where = 'idTicket = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'gestion_tickets', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'gestion_tickets', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -80,7 +80,7 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($DescripcionCancelacion)){    $x1  = $DescripcionCancelacion;    }else{$x1  = $rowdata['DescripcionCancelacion'];}
+					if(isset($DescripcionCancelacion)){    $x1  = $DescripcionCancelacion;    }else{$x1  = $rowData['DescripcionCancelacion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

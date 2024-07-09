@@ -122,7 +122,7 @@ LEFT JOIN `telemetria_listado_sensores_med_actual`  ON telemetria_listado_sensor
 LEFT JOIN `telemetria_listado_sensores_activo`      ON telemetria_listado_sensores_activo.idTelemetria      = telemetria_listado.idTelemetria';
 
 //Obtengo los datos
-$rowdata            = db_select_data (false, $subquery_1, 'telemetria_listado', $SIS_join, 'telemetria_listado.idTelemetria ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData            = db_select_data (false, $subquery_1, 'telemetria_listado', $SIS_join, 'telemetria_listado.idTelemetria ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 $rowConsumoMesHabil = db_select_data (false, $subquery_2, 'telemetria_listado_crossenergy_dia', '', 'idTelemetria='.$X_Puntero.' AND (TimeStamp BETWEEN "'.$Habil_FechaInicio.' '.$Habil_HoraInicio .'" AND "'.$Habil_FechaTermino.' '.$Habil_HoraTermino.'")', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowConsumoMesHabil');
 $rowConsumoMesCurso = db_select_data (false, $subquery_2, 'telemetria_listado_crossenergy_dia', '', 'idTelemetria='.$X_Puntero.' AND (TimeStamp BETWEEN "'.$Curso_FechaInicio.' '.$Curso_HoraInicio .'" AND "'.$Curso_FechaTermino.' '.$Curso_HoraTermino.'")', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowConsumoMesCurso');
 $n_permisos         = db_select_data (false, 'idOpcionesGen_6', 'core_sistemas','', 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_permisos');
@@ -133,12 +133,12 @@ $SIS_where = 'idSistema ='.$_SESSION['usuario']['basic_data']['idSistema'];
 $rowSistema = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowSistema');
 
 //Grupo Sensores
-if(isset($rowdata['idGrupoDespliegue'])&&$rowdata['idGrupoDespliegue']!=''){           $idGrupoDespliegue       = $rowdata['idGrupoDespliegue'];       }else{$idGrupoDespliegue      = 106;}
-if(isset($rowdata['idGrupoVmonofasico'])&&$rowdata['idGrupoVmonofasico']!=''){         $idGrupoVmonofasico      = $rowdata['idGrupoVmonofasico'];      }else{$idGrupoVmonofasico     = 87;}
-if(isset($rowdata['idGrupoVTrifasico'])&&$rowdata['idGrupoVTrifasico']!=''){           $idGrupoVTrifasico       = $rowdata['idGrupoVTrifasico'];       }else{$idGrupoVTrifasico      = 106;}
-if(isset($rowdata['idGrupoPotencia'])&&$rowdata['idGrupoPotencia']!=''){               $idGrupoPotencia         = $rowdata['idGrupoPotencia'];         }else{$idGrupoPotencia        = 99;}
-if(isset($rowdata['idGrupoConsumoMesHabil'])&&$rowdata['idGrupoConsumoMesHabil']!=''){ $idGrupoConsumoMesHabil  = $rowdata['idGrupoConsumoMesHabil'];  }else{$idGrupoConsumoMesHabil = 99;}
-if(isset($rowdata['idGrupoConsumoMesCurso'])&&$rowdata['idGrupoConsumoMesCurso']!=''){ $idGrupoConsumoMesCurso  = $rowdata['idGrupoConsumoMesCurso'];  }else{$idGrupoConsumoMesCurso = 99;}
+if(isset($rowData['idGrupoDespliegue'])&&$rowData['idGrupoDespliegue']!=''){           $idGrupoDespliegue       = $rowData['idGrupoDespliegue'];       }else{$idGrupoDespliegue      = 106;}
+if(isset($rowData['idGrupoVmonofasico'])&&$rowData['idGrupoVmonofasico']!=''){         $idGrupoVmonofasico      = $rowData['idGrupoVmonofasico'];      }else{$idGrupoVmonofasico     = 87;}
+if(isset($rowData['idGrupoVTrifasico'])&&$rowData['idGrupoVTrifasico']!=''){           $idGrupoVTrifasico       = $rowData['idGrupoVTrifasico'];       }else{$idGrupoVTrifasico      = 106;}
+if(isset($rowData['idGrupoPotencia'])&&$rowData['idGrupoPotencia']!=''){               $idGrupoPotencia         = $rowData['idGrupoPotencia'];         }else{$idGrupoPotencia        = 99;}
+if(isset($rowData['idGrupoConsumoMesHabil'])&&$rowData['idGrupoConsumoMesHabil']!=''){ $idGrupoConsumoMesHabil  = $rowData['idGrupoConsumoMesHabil'];  }else{$idGrupoConsumoMesHabil = 99;}
+if(isset($rowData['idGrupoConsumoMesCurso'])&&$rowData['idGrupoConsumoMesCurso']!=''){ $idGrupoConsumoMesCurso  = $rowData['idGrupoConsumoMesCurso'];  }else{$idGrupoConsumoMesCurso = 99;}
 
 //Temporales
 $TempValue_1 = 0;
@@ -156,39 +156,39 @@ $CountSub    = 1;
 $Subquery_2  = '';
 $arrSensores = array();
 //recorro los sensores
-for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 	//Si el sensor esta activo
-	if(isset($rowdata['SensoresActivo_'.$i])&&$rowdata['SensoresActivo_'.$i]==1){
+	if(isset($rowData['SensoresActivo_'.$i])&&$rowData['SensoresActivo_'.$i]==1){
 		//Si pertenece al grupo
-		if($rowdata['SensoresGrupo_'.$i]==$idGrupoVmonofasico){
-			$TempValue_1 = $TempValue_1 + $rowdata['SensoresMedActual_'.$i];
+		if($rowData['SensoresGrupo_'.$i]==$idGrupoVmonofasico){
+			$TempValue_1 = $TempValue_1 + $rowData['SensoresMedActual_'.$i];
 			$TempCount_1++;
 		}
-		if($rowdata['SensoresGrupo_'.$i]==$idGrupoVTrifasico){
-			$TempValue_2 = $TempValue_2 + $rowdata['SensoresMedActual_'.$i];
+		if($rowData['SensoresGrupo_'.$i]==$idGrupoVTrifasico){
+			$TempValue_2 = $TempValue_2 + $rowData['SensoresMedActual_'.$i];
 			$TempCount_2++;
 		}
-		if($rowdata['SensoresGrupo_'.$i]==$idGrupoPotencia){
-			$TempValue_3 = $TempValue_3 + $rowdata['SensoresMedActual_'.$i];
+		if($rowData['SensoresGrupo_'.$i]==$idGrupoPotencia){
+			$TempValue_3 = $TempValue_3 + $rowData['SensoresMedActual_'.$i];
 			$TempCount_3++;
 		}
-		if($rowdata['SensoresGrupo_'.$i]==$idGrupoConsumoMesHabil){
+		if($rowData['SensoresGrupo_'.$i]==$idGrupoConsumoMesHabil){
 			$TempValue_4 = $TempValue_4 + $rowConsumoMesHabil['Med_'.$i];
 			$TempCount_4++;
 		}
-		if($rowdata['SensoresGrupo_'.$i]==$idGrupoConsumoMesCurso){
+		if($rowData['SensoresGrupo_'.$i]==$idGrupoConsumoMesCurso){
 			$TempValue_5 = $TempValue_5 + $rowConsumoMesCurso['Med_'.$i];
 			$TempCount_5++;
 		}
 		//para la subconsulta
-		if($rowdata['SensoresGrupo_'.$i]==$idGrupoDespliegue){
+		if($rowData['SensoresGrupo_'.$i]==$idGrupoDespliegue){
 			$Subquery .= ',Sensor_'.$i.' AS SSens_'.$CountSub;
-			$arrSensores[$CountSub]['Nombre'] = $rowdata['SensoresNombre_'.$i];
-			$arrSensores[$CountSub]['UniMed'] = $rowdata['SensoresUniMed_'.$i];
+			$arrSensores[$CountSub]['Nombre'] = $rowData['SensoresNombre_'.$i];
+			$arrSensores[$CountSub]['UniMed'] = $rowData['SensoresUniMed_'.$i];
 			$CountSub++;
 		}
 		//para la subconsulta
-		if($rowdata['SensoresGrupo_'.$i]==$idGrupoPotencia){
+		if($rowData['SensoresGrupo_'.$i]==$idGrupoPotencia){
 			//si viene vacio
 			if(isset($Subquery_2)&&$Subquery_2!=''){
 				$Subquery_2 .= ' + Sensor_'.$i;
@@ -218,11 +218,11 @@ asort($arrGraficos);
 $Subquery    = '';
 $Subquery_2  = '';
 //recorro los sensores
-for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 	//Si el sensor esta activo
-	if(isset($rowdata['SensoresActivo_'.$i])&&$rowdata['SensoresActivo_'.$i]==1){
+	if(isset($rowData['SensoresActivo_'.$i])&&$rowData['SensoresActivo_'.$i]==1){
 		//para la subconsulta
-		if($rowdata['SensoresGrupo_'.$i]==$idGrupoPotencia){
+		if($rowData['SensoresGrupo_'.$i]==$idGrupoPotencia){
 			$Subquery .= ',Sensor_'.$i;
 			//si viene vacio
 			if(isset($Subquery_2)&&$Subquery_2!=''){
@@ -382,7 +382,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Estado del Equipo <?php echo $rowdata['Nombre'].' (Hora Refresco: '.hora_actual().')'; ?></h5>
+			<h5>Estado del Equipo <?php echo $rowData['Nombre'].' (Hora Refresco: '.hora_actual().')'; ?></h5>
 		</header>
         <div class="tab-content">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

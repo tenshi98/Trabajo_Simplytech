@@ -65,12 +65,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,Direccion_img, idConfig_1, idConfig_2, idConfig_3, idConfig_4';
 $SIS_join  = '';
 $SIS_where = 'idMaquina = '.simpleDecode($_GET['id'], fecha_actual());
-$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquinas', $rowdata['Nombre'], 'Editar Imagen'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquinas', $rowData['Nombre'], 'Editar Imagen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -86,12 +86,12 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SI
 					<ul class="dropdown-menu" role="menu">
 						<?php
 						//Dependencia Clientes
-						if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
+						if(isset($rowData['idConfig_3'])&&$rowData['idConfig_3']==1){ ?>
 							<li class=""><a href="<?php echo 'maquinas_listado_datos_clientes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-users" aria-hidden="true"></i> Clientes</a></li>
 						<?php } ?>
 						<?php
 						//Uso Ubicación
-						if(isset($rowdata['idConfig_4'])&&$rowdata['idConfig_4']==1){ ?>
+						if(isset($rowData['idConfig_4'])&&$rowData['idConfig_4']==1){ ?>
 							<li class=""><a href="<?php echo 'maquinas_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ubicación</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'maquinas_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Ficha Tecnica</a></li>
@@ -101,12 +101,12 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SI
 						<li class=""><a href="<?php echo 'maquinas_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Descripcion</a></li>
 						<?php
 						//Uso de componentes
-						if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
+						if(isset($rowData['idConfig_1'])&&$rowData['idConfig_1']==1){ ?>
 							<li class=""><a href="<?php echo 'maquinas_listado_componentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Componentes</a></li>
 						<?php } ?>
 						<?php
 						//uso de matriz de analisis
-						if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
+						if(isset($rowData['idConfig_2'])&&$rowData['idConfig_2']==1){ ?>
 							<li class=""><a href="<?php echo 'maquinas_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-microchip" aria-hidden="true"></i> Matriz Analisis</a></li>
 						<?php } ?>
 
@@ -117,10 +117,10 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SI
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
 
-				<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){ ?>
+				<?php if(isset($rowData['Direccion_img'])&&$rowData['Direccion_img']!=''){ ?>
 
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
-						<img src="upload/<?php echo $rowdata['Direccion_img'] ?>" width="100%" class="img-thumbnail" >
+						<img src="upload/<?php echo $rowData['Direccion_img'] ?>" width="100%" class="img-thumbnail" >
 						<br/>
 						<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_img='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
 					</div>

@@ -19,7 +19,7 @@ if($temp!=0) {
 	sistema_variedades_categorias.Temp_optima_max,
 	sistema_variedades_categorias.Temp_optima_margen_critico';
 	$SIS_join  = '
-	LEFT JOIN cross_shipping_consolidacion    ON cross_shipping_consolidacion.idConsolidacion   = cross_shipping_consolidacion_estibas.idConsolidacion 
+	LEFT JOIN cross_shipping_consolidacion    ON cross_shipping_consolidacion.idConsolidacion   = cross_shipping_consolidacion_estibas.idConsolidacion
 	LEFT JOIN sistema_variedades_categorias   ON sistema_variedades_categorias.idCategoria      = cross_shipping_consolidacion.idCategoria';
 	$SIS_where = "cross_shipping_consolidacion.Creacion_fecha>'".$FechaDesde."'";
 	$SIS_where.=" AND cross_shipping_consolidacion.idEstado=2";//solo las aprobadas

@@ -50,7 +50,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,Contrato_Nombre,Contrato_Numero,Contrato_Fecha,Contrato_Duracion';
 $SIS_join  = '';
 $SIS_where = 'core_sistemas.idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'];
-$rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /******************************************************/
 //Accesos a bodegas de productos
@@ -116,7 +116,7 @@ $SIS_query = '
 idUsuario';
 $SIS_join  = '';
 $SIS_where = 'usuarios_listado.idUsuario=1';
-$rowdata_x = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata_x');
+$rowData_x = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData_x');
 
 //verifico que sea un administrador
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
@@ -129,18 +129,18 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$Count_Shipping     = 1;
 }else{
 	//Totales de los permisos que se pueden acceder
-	$Count_productos    = $rowdata_x['tran_1'] + $rowdata_x['tran_2'] + $rowdata_x['tran_3'] + $rowdata_x['tran_4'] + $rowdata_x['tran_5'];
-	$Count_insumos      = $rowdata_x['tran_11'] + $rowdata_x['tran_12'] + $rowdata_x['tran_13'] + $rowdata_x['tran_14'] + $rowdata_x['tran_15'];
-	$Count_OT           = $rowdata_x['tran_21'] + $rowdata_x['tran_22'];
-	$Count_OC           = $rowdata_x['tran_26'] + $rowdata_x['tran_27'];
-	$Count_Variedades   = $rowdata_x['tran_31'] + $rowdata_x['tran_32'] + $rowdata_x['tran_33'] + $rowdata_x['tran_34'];
-	$Count_Shipping     = $rowdata_x['tran_35'] + $rowdata_x['tran_36'] + $rowdata_x['tran_37'];
+	$Count_productos    = $rowData_x['tran_1'] + $rowData_x['tran_2'] + $rowData_x['tran_3'] + $rowData_x['tran_4'] + $rowData_x['tran_5'];
+	$Count_insumos      = $rowData_x['tran_11'] + $rowData_x['tran_12'] + $rowData_x['tran_13'] + $rowData_x['tran_14'] + $rowData_x['tran_15'];
+	$Count_OT           = $rowData_x['tran_21'] + $rowData_x['tran_22'];
+	$Count_OC           = $rowData_x['tran_26'] + $rowData_x['tran_27'];
+	$Count_Variedades   = $rowData_x['tran_31'] + $rowData_x['tran_32'] + $rowData_x['tran_33'] + $rowData_x['tran_34'];
+	$Count_Shipping     = $rowData_x['tran_35'] + $rowData_x['tran_36'] + $rowData_x['tran_37'];
 }
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Datos de Contrato'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowData['Nombre'], 'Editar Datos de Contrato'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -189,10 +189,10 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Contrato_Nombre)){    $x1 = $Contrato_Nombre;     }else{$x1 = $rowdata['Contrato_Nombre'];}
-					if(isset($Contrato_Numero)){    $x2 = $Contrato_Numero;     }else{$x2 = $rowdata['Contrato_Numero'];}
-					if(isset($Contrato_Fecha)){     $x3 = $Contrato_Fecha;      }else{$x3 = $rowdata['Contrato_Fecha'];}
-					if(isset($Contrato_Duracion)){  $x4 = $Contrato_Duracion;   }else{$x4 = $rowdata['Contrato_Duracion'];}
+					if(isset($Contrato_Nombre)){    $x1 = $Contrato_Nombre;     }else{$x1 = $rowData['Contrato_Nombre'];}
+					if(isset($Contrato_Numero)){    $x2 = $Contrato_Numero;     }else{$x2 = $rowData['Contrato_Numero'];}
+					if(isset($Contrato_Fecha)){     $x3 = $Contrato_Fecha;      }else{$x3 = $rowData['Contrato_Fecha'];}
+					if(isset($Contrato_Duracion)){  $x4 = $Contrato_Duracion;   }else{$x4 = $rowData['Contrato_Duracion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

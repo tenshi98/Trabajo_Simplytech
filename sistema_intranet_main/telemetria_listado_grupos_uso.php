@@ -68,7 +68,7 @@ if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
-$rowdata = db_select_data (false, 'Nombre,Valor, idSupervisado', 'telemetria_listado_grupos_uso', '', 'idGrupo ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, 'Nombre,Valor, idSupervisado', 'telemetria_listado_grupos_uso', '', 'idGrupo ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -83,9 +83,9 @@ $rowdata = db_select_data (false, 'Nombre,Valor, idSupervisado', 'telemetria_lis
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)){        $x1  = $Nombre;         }else{$x1  = $rowdata['Nombre'];}
-				if(isset($Valor)){         $x2  = $Valor;         }else{$x2  = $rowdata['Valor'];}
-				if(isset($idSupervisado)){ $x3  = $idSupervisado;  }else{$x3  = $rowdata['idSupervisado'];}
+				if(isset($Nombre)){        $x1  = $Nombre;         }else{$x1  = $rowData['Nombre'];}
+				if(isset($Valor)){         $x2  = $Valor;         }else{$x2  = $rowData['Valor'];}
+				if(isset($idSupervisado)){ $x3  = $idSupervisado;  }else{$x3  = $rowData['idSupervisado'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

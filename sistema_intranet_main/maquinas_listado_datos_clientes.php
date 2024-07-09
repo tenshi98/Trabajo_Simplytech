@@ -52,12 +52,12 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 $SIS_query = 'Nombre,idConfig_1, idConfig_2, idConfig_3, idConfig_4, idCliente';
 $SIS_join  = '';
 $SIS_where = 'idMaquina = '.simpleDecode($_GET['id'], fecha_actual());
-$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquinas', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquinas', $rowData['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -73,12 +73,12 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SI
 					<ul class="dropdown-menu" role="menu">
 						<?php
 						//Dependencia Clientes
-						if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
+						if(isset($rowData['idConfig_3'])&&$rowData['idConfig_3']==1){ ?>
 							<li class="active"><a href="<?php echo 'maquinas_listado_datos_clientes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-users" aria-hidden="true"></i> Clientes</a></li>
 						<?php } ?>
 						<?php
 						//Uso Ubicación
-						if(isset($rowdata['idConfig_4'])&&$rowdata['idConfig_4']==1){ ?>
+						if(isset($rowData['idConfig_4'])&&$rowData['idConfig_4']==1){ ?>
 							<li class=""><a href="<?php echo 'maquinas_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ubicación</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'maquinas_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Ficha Tecnica</a></li>
@@ -88,12 +88,12 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SI
 						<li class=""><a href="<?php echo 'maquinas_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Descripcion</a></li>
 						<?php
 						//Uso de componentes
-						if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
+						if(isset($rowData['idConfig_1'])&&$rowData['idConfig_1']==1){ ?>
 							<li class=""><a href="<?php echo 'maquinas_listado_componentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Componentes</a></li>
 						<?php } ?>
 						<?php
 						//uso de matriz de analisis
-						if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
+						if(isset($rowData['idConfig_2'])&&$rowData['idConfig_2']==1){ ?>
 							<li class=""><a href="<?php echo 'maquinas_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-microchip" aria-hidden="true"></i> Matriz Analisis</a></li>
 						<?php } ?>
 
@@ -107,14 +107,14 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SI
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idCliente)){        $x1  = $idCliente;       }else{$x1  = $rowdata['idCliente'];}
+					if(isset($idCliente)){        $x1  = $idCliente;       }else{$x1  = $rowData['idCliente'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
 
 					$Form_Inputs->form_input_hidden('idMaquina', simpleDecode($_GET['id'], fecha_actual()), 2);
-					$Form_Inputs->form_input_hidden('FakeidCliente', $rowdata['idCliente'], 2);
+					$Form_Inputs->form_input_hidden('FakeidCliente', $rowData['idCliente'], 2);
 
 					?>
 

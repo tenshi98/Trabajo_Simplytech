@@ -51,7 +51,7 @@ $SIS_join  = '
 LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria     = telemetria_listado_observaciones.idTelemetria
 LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario          = telemetria_listado_observaciones.idUsuario';
 $SIS_where = 'telemetria_listado_observaciones.idObservacion ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_observaciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado_observaciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 
 ?>
@@ -64,15 +64,15 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_observaciones'
         <div class="body">
             <h2 class="text-primary">Datos Básicos</h2>
             <p class="text-muted">
-				<strong>Equipo : </strong><?php echo $rowdata['nombre_equipo']; ?><br/>
-				<strong>Usuario : </strong><?php echo $rowdata['nombre_usuario']; ?><br/>
-				<strong>Fecha : </strong><?php echo Fecha_completa_alt($rowdata['Fecha']); ?>
+				<strong>Equipo : </strong><?php echo $rowData['nombre_equipo']; ?><br/>
+				<strong>Usuario : </strong><?php echo $rowData['nombre_usuario']; ?><br/>
+				<strong>Fecha : </strong><?php echo Fecha_completa_alt($rowData['Fecha']); ?>
             </p>
 
             <h2 class="text-primary">Observacion</h2>
             <p class="text-muted word_break">
 				<div class="text-muted well well-sm no-shadow">
-					<?php if(isset($rowdata['Observacion'])&&$rowdata['Observacion']!=''){echo $rowdata['Observacion'];}else{echo 'Sin Observaciones';} ?>
+					<?php if(isset($rowData['Observacion'])&&$rowData['Observacion']!=''){echo $rowData['Observacion'];}else{echo 'Sin Observaciones';} ?>
 					<div class="clearfix"></div>
 				</div>
 			</p>

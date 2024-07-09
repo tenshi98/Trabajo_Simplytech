@@ -73,7 +73,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'Nombre,Totales';
 	$SIS_join  = '';
 	$SIS_where = 'idGrupo = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz_grupos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz_grupos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -88,8 +88,8 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){   $x1  = $Nombre;  }else{$x1  = $rowdata['Nombre'];}
-					if(isset($Totales)){  $x2  = $Totales; }else{$x2  = $rowdata['Totales'];}
+					if(isset($Nombre)){   $x1  = $Nombre;  }else{$x1  = $rowData['Nombre'];}
+					if(isset($Totales)){  $x2  = $Totales; }else{$x2  = $rowData['Totales'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

@@ -101,7 +101,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);	
+$rowData = mysqli_fetch_assoc ($resultado);	
 
 //Listado de archivos
 $arrArchivos = array();
@@ -128,7 +128,7 @@ array_push( $arrArchivos,$row );
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Evento', fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].' hrs', 'Resumen'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Evento', fecha_estandar($rowData['Fecha']).' - '.$rowData['Hora'].' hrs', 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -152,19 +152,19 @@ array_push( $arrArchivos,$row );
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Evento</h2>
 						<p class="text-muted">
-							<strong>Usuario Ingreso : </strong><?php echo $rowdata['Usuario']; ?><br/>
-							<strong>Trabajador : </strong><?php echo $rowdata['TrabApellidoPat'].' '.$rowdata['TrabApellidoMat'].' '.$rowdata['TrabNombre']; ?><br/>
-							<strong>Maquina : </strong><?php if(isset($rowdata['NombreCliente'])&&$rowdata['NombreCliente']!=''){echo $rowdata['NombreCliente'].' - '.$rowdata['NombreMaquina'];}else{echo $rowdata['NombreMaquina'];} ?><br/>
-							<strong>Fecha : </strong><?php echo $rowdata['Fecha']; ?><br/>
-							<strong>Hora : </strong><?php echo $rowdata['Hora']; ?><br/>
-							<strong>Sistema : </strong><?php echo $rowdata['Sistema']; ?><br/>
+							<strong>Usuario Ingreso : </strong><?php echo $rowData['Usuario']; ?><br/>
+							<strong>Trabajador : </strong><?php echo $rowData['TrabApellidoPat'].' '.$rowData['TrabApellidoMat'].' '.$rowData['TrabNombre']; ?><br/>
+							<strong>Maquina : </strong><?php if(isset($rowData['NombreCliente'])&&$rowData['NombreCliente']!=''){echo $rowData['NombreCliente'].' - '.$rowData['NombreMaquina'];}else{echo $rowData['NombreMaquina'];} ?><br/>
+							<strong>Fecha : </strong><?php echo $rowData['Fecha']; ?><br/>
+							<strong>Hora : </strong><?php echo $rowData['Hora']; ?><br/>
+							<strong>Sistema : </strong><?php echo $rowData['Sistema']; ?><br/>
 
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Observacion</h2>
 						<p class="text-muted word_break">
 							<div class="text-muted well well-sm no-shadow">
-								<?php if(isset($rowdata['Observacion'])&&$rowdata['Observacion']!=''){echo $rowdata['Observacion'];}else{echo 'Sin Observaciones';} ?>
+								<?php if(isset($rowData['Observacion'])&&$rowData['Observacion']!=''){echo $rowData['Observacion'];}else{echo 'Sin Observaciones';} ?>
 								<div class="clearfix"></div>
 							</div>
 						</p>
@@ -309,9 +309,9 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != '')  {        $SIS_where .= " AND orden_trabajo_eventos_listado.idUsuario = '".$_GET['idUsuario']."'";}
-if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != '')  {  $SIS_where .= " AND orden_trabajo_eventos_listado.idTrabajador = '".$_GET['idTrabajador']."'";}
-if(isset($_GET['idMaquina']) && $_GET['idMaquina'] != '')  {        $SIS_where .= " AND orden_trabajo_eventos_listado.idMaquina = '".$_GET['idMaquina']."'";}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){        $SIS_where .= " AND orden_trabajo_eventos_listado.idUsuario = '".$_GET['idUsuario']."'";}
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){  $SIS_where .= " AND orden_trabajo_eventos_listado.idTrabajador = '".$_GET['idTrabajador']."'";}
+if(isset($_GET['idMaquina']) && $_GET['idMaquina'] != ''){        $SIS_where .= " AND orden_trabajo_eventos_listado.idMaquina = '".$_GET['idMaquina']."'";}
 if(isset($_GET['h_inicio'], $_GET['h_termino']) && $_GET['h_inicio'] != '' && $_GET['h_termino']!=''){
 	$SIS_where .= " AND orden_trabajo_eventos_listado.Hora BETWEEN '".$_GET['h_inicio']."' AND '".$_GET['h_termino']."'";
 }

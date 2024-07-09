@@ -74,7 +74,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'Nombre,Valor, idTransporte';
 	$SIS_join  = '';
 	$SIS_where = 'idPlan = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'sistema_planes', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'sistema_planes', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 	/*******************************************************/
 	//Verifico el tipo de usuario que esta ingresando
 	$y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
@@ -92,9 +92,9 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){        $x1  = $Nombre;        }else{$x1  = $rowdata['Nombre'];}
-					if(isset($Valor)){         $x2  = $Valor;        }else{$x2  = $rowdata['Valor'];}
-					if(isset($idTransporte)){  $x3  = $idTransporte;  }else{$x3  = $rowdata['idTransporte'];}
+					if(isset($Nombre)){        $x1  = $Nombre;        }else{$x1  = $rowData['Nombre'];}
+					if(isset($Valor)){         $x2  = $Valor;        }else{$x2  = $rowData['Valor'];}
+					if(isset($idTransporte)){  $x3  = $idTransporte;  }else{$x3  = $rowData['idTransporte'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

@@ -70,7 +70,7 @@ usuarios_listado.Nombre,
 usuarios_listado.Direccion_img';
 $SIS_join  = 'LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = principal_notificaciones_listado.idUsuario';
 $SIS_where = 'principal_notificaciones_listado.idNotificaciones ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'principal_notificaciones_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'principal_notificaciones_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 ?>
 
@@ -86,22 +86,22 @@ $row_data = db_select_data (false, $SIS_query, 'principal_notificaciones_listado
 				<div class="wmd-panel">
 
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="margin-bottom:5px;">
-						<?php if ($row_data['Direccion_img']=='') { ?>
+						<?php if ($rowData['Direccion_img']=='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $row_data['Direccion_img']; ?>">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowData['Direccion_img']; ?>">
 						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 						<p class="text-muted">
-							<strong>Autor: </strong><?php echo $row_data['Nombre']; ?><br/>
-							<strong>Titulo: </strong><?php echo $row_data['Titulo']; ?><br/>
-							<strong>Fecha: </strong><?php echo fecha_estandar($row_data['Fecha']); ?>
+							<strong>Autor: </strong><?php echo $rowData['Nombre']; ?><br/>
+							<strong>Titulo: </strong><?php echo $rowData['Titulo']; ?><br/>
+							<strong>Fecha: </strong><?php echo fecha_estandar($rowData['Fecha']); ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Mensaje</h2>
-						<p class="text-muted" style="white-space: normal;"><?php echo $row_data['Notificacion']; ?></p>
+						<p class="text-muted" style="white-space: normal;"><?php echo $rowData['Notificacion']; ?></p>
 
 						<?php
 						//Si esta activo el nomolestar
@@ -112,8 +112,8 @@ $row_data = db_select_data (false, $SIS_query, 'principal_notificaciones_listado
 						}
 
 						//verifico que exista el no molestar
-						if(isset($row_data['NoMolestar'])&&$row_data['NoMolestar']!=''&&$row_data['NoMolestar']!=0){
-							switch ($row_data['NoMolestar']) {
+						if(isset($rowData['NoMolestar'])&&$rowData['NoMolestar']!=''&&$rowData['NoMolestar']!=0){
+							switch ($rowData['NoMolestar']) {
 								//No molestar de crosstech
 								case 1:
 									echo '

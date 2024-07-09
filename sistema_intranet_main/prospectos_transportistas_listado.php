@@ -81,12 +81,12 @@ if(!empty($_GET['id'])){
 	LEFT JOIN `prospectos_estado_fidelizacion`    ON prospectos_estado_fidelizacion.idEstadoFidelizacion  = prospectos_transportistas_listado.idEstadoFidelizacion
 	LEFT JOIN `prospectos_transportistas_etapa`   ON prospectos_transportistas_etapa.idEtapa              = prospectos_transportistas_listado.idEtapa';
 	$SIS_where = 'prospectos_transportistas_listado.idProspecto = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'prospectos_transportistas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'prospectos_transportistas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowdata['Nombre'], 'Resumen'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowData['Nombre'], 'Resumen'); ?>
 	</div>
 	<div class="clearfix"></div>
 
@@ -111,14 +111,14 @@ if(!empty($_GET['id'])){
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Prospecto</h2>
 							<p class="text-muted">
-								<strong>Nombre Prospecto: </strong><?php echo $rowdata['Nombre']; ?><br/>
-								<strong>Telefono : </strong><?php echo formatPhone($rowdata['Fono']); ?><br/>
-								<strong>Email Prospecto: </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
-								<strong>Email Respuesta: </strong><a href="mailto:<?php echo $rowdata['email_noti']; ?>"><?php echo $rowdata['email_noti']; ?></a><br/>
-								<strong>Fecha de Registro : </strong><?php echo Fecha_estandar($rowdata['F_Ingreso']); ?><br/>
-								<strong>Sistema Relacionado : </strong><?php echo $rowdata['Sistema']; ?><br/>
-								<strong>Estado Fidelizacion: </strong><?php echo $rowdata['Fidelizacion']; ?><br/>
-								<strong>Etapa Fidelizacion: </strong><?php echo $rowdata['Etapa']; ?>
+								<strong>Nombre Prospecto: </strong><?php echo $rowData['Nombre']; ?><br/>
+								<strong>Telefono : </strong><?php echo formatPhone($rowData['Fono']); ?><br/>
+								<strong>Email Prospecto: </strong><a href="mailto:<?php echo $rowData['email']; ?>"><?php echo $rowData['email']; ?></a><br/>
+								<strong>Email Respuesta: </strong><a href="mailto:<?php echo $rowData['email_noti']; ?>"><?php echo $rowData['email_noti']; ?></a><br/>
+								<strong>Fecha de Registro : </strong><?php echo Fecha_estandar($rowData['F_Ingreso']); ?><br/>
+								<strong>Sistema Relacionado : </strong><?php echo $rowData['Sistema']; ?><br/>
+								<strong>Estado Fidelizacion: </strong><?php echo $rowData['Fidelizacion']; ?><br/>
+								<strong>Etapa Fidelizacion: </strong><?php echo $rowData['Etapa']; ?>
 							</p>
 						</div>
 

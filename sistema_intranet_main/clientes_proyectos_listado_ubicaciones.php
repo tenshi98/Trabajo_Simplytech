@@ -113,7 +113,7 @@ if(!empty($_GET['edit_itemizado'])){
 	$SIS_query = 'Nombre';
 	$SIS_join  = '';
 	$SIS_where = 'idLevel_'.$_GET['lvl'].' = '.$_GET['edit_itemizado'];
-	$rowdata = db_select_data (false, $SIS_query, 'ubicacion_listado_level_'.$_GET['lvl'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'ubicacion_listado_level_'.$_GET['lvl'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -128,7 +128,7 @@ if(!empty($_GET['edit_itemizado'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){            $x1  = $Nombre;             }else{$x1  = $rowdata['Nombre'];}
+					if(isset($Nombre)){            $x1  = $Nombre;             }else{$x1  = $rowData['Nombre'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -208,7 +208,7 @@ if(!empty($_GET['edit_itemizado'])){
 	$SIS_query = 'Nombre,idSistema';
 	$SIS_join  = '';
 	$SIS_where = 'idUbicacion = '.$_GET['itemizado'];
-	$rowdata = db_select_data (false, $SIS_query, 'ubicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'ubicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	//Se crean las variables
 	$nmax = 5;
@@ -332,7 +332,7 @@ if(!empty($_GET['edit_itemizado'])){
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
-		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'].'&idSistema='.$rowdata['idSistema'].'&new_itemizado=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php } ?>
+		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'].'&idSistema='.$rowData['idSistema'].'&new_itemizado=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php } ?>
 
 	</div>
 	<div class="clearfix"></div>
@@ -340,12 +340,12 @@ if(!empty($_GET['edit_itemizado'])){
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Itemizado Ubicación <?php echo $rowdata['Nombre']; ?></h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Itemizado Ubicación <?php echo $rowData['Nombre']; ?></h5>
 			</header>
 			<div class="table-responsive">
 
 				<?php //Se imprime el arbol
-				echo arrayToUL($array3d, 0, $rowlevel['level'],$new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'].'&idSistema='.$rowdata['idSistema'], $nmax);
+				echo arrayToUL($array3d, 0, $rowlevel['level'],$new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'].'&idSistema='.$rowData['idSistema'], $nmax);
 				?>
 
 			</div>
@@ -368,7 +368,7 @@ if(!empty($_GET['edit_itemizado'])){
 	core_estados.Nombre AS estado';
 	$SIS_join  = 'LEFT JOIN `core_estados`   ON core_estados.idEstado = ubicacion_listado.idEstado';
 	$SIS_where = 'idUbicacion = '.$_GET['status'];
-	$rowdata = db_select_data (false, $SIS_query, 'ubicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'ubicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -387,11 +387,11 @@ if(!empty($_GET['edit_itemizado'])){
 					</thead>
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<tr class="odd">
-							<td><?php echo 'Ubicación '.$rowdata['Nombre'].' '.$rowdata['estado']; ?></td>
+							<td><?php echo 'Ubicación '.$rowData['Nombre'].' '.$rowData['estado']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
 									<?php if ($rowlevel['level']>=2){ ?>
-									<?php if ( $rowdata['estado']=='Activo' ){ ?>
+									<?php if ( $rowData['estado']=='Activo' ){ ?>
 											<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$_GET['id'].'&status='.$_GET['status'].'&estado='.simpleEncode(2, fecha_actual()) ; ?>">OFF</a>
 											<a class="btn btn-sm btn-info locked_active" href="#">ON</a>
 									<?php } else { ?>
@@ -421,7 +421,7 @@ if(!empty($_GET['edit_itemizado'])){
 	$SIS_query = 'Nombre,idSistema';
 	$SIS_join  = '';
 	$SIS_where = 'idUbicacion = '.$_GET['edit'];
-	$rowdata = db_select_data (false, $SIS_query, 'ubicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'ubicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -436,7 +436,7 @@ if(!empty($_GET['edit_itemizado'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){     $x1  = $Nombre;      }else{$x1  = $rowdata['Nombre'];}
+					if(isset($Nombre)){     $x1  = $Nombre;      }else{$x1  = $rowData['Nombre'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -507,7 +507,7 @@ if(!empty($_GET['edit_itemizado'])){
 	$SIS_query = 'Nombre,idTipo';
 	$SIS_join  = '';
 	$SIS_where = 'idCliente = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -529,7 +529,7 @@ if(!empty($_GET['edit_itemizado'])){
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Proyecto', $rowdata['Nombre'], 'Ubicaciones'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Proyecto', $rowData['Nombre'], 'Ubicaciones'); ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 			<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Ubicación</a><?php } ?>
 		</div>
@@ -547,7 +547,7 @@ if(!empty($_GET['edit_itemizado'])){
 						<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 						<ul class="dropdown-menu" role="menu">
 							<li class=""><a href="<?php echo 'clientes_proyectos_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-volume-control-phone" aria-hidden="true"></i> Persona Contacto</a></li>
-							<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
+							<?php if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){ ?>
 								<li class=""><a href="<?php echo 'clientes_proyectos_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
 							<?php } ?>
 							<li class=""><a href="<?php echo 'clientes_proyectos_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>

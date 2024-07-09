@@ -53,12 +53,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,Semanas, F_inicio, F_termino, idSistema';
 $SIS_join  = '';
 $SIS_where = 'idCurso = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'alumnos_cursos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'alumnos_cursos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Asignatura', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Asignatura', $rowData['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -84,10 +84,10 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_cursos', $SIS_join, $SIS_
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){      $x2  = $Nombre;      }else{$x2  = $rowdata['Nombre'];}
-					/*if(isset($Semanas)){     $x3  = $Semanas;     }else{$x3  = $rowdata['Semanas'];}
-					if(isset($F_inicio)){    $x4  = $F_inicio;    }else{$x4  = $rowdata['F_inicio'];}
-					if(isset($F_termino)){   $x5  = $F_termino;   }else{$x5  = $rowdata['F_termino'];}*/
+					if(isset($Nombre)){      $x2  = $Nombre;      }else{$x2  = $rowData['Nombre'];}
+					/*if(isset($Semanas)){     $x3  = $Semanas;     }else{$x3  = $rowData['Semanas'];}
+					if(isset($F_inicio)){    $x4  = $F_inicio;    }else{$x4  = $rowData['F_inicio'];}
+					if(isset($F_termino)){   $x5  = $F_termino;   }else{$x5  = $rowData['F_termino'];}*/
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

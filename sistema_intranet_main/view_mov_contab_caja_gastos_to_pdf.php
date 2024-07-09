@@ -62,7 +62,7 @@ LEFT JOIN `core_sistemas`         ON core_sistemas.idSistema              = cont
 LEFT JOIN `usuarios_listado`      ON usuarios_listado.idUsuario           = contab_caja_gastos.idUsuario
 LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador    = contab_caja_gastos.idTrabajador';
 $SIS_where = 'contab_caja_gastos.idFacturacion ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'contab_caja_gastos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'contab_caja_gastos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /*****************************************/
 // Se trae un listado con todos los productos utilizados
@@ -93,7 +93,6 @@ $html .= '
 	<tbody>
 		<tr>
 			<td>
-	
 				<table style="text-align: left; width: 100%;"  cellpadding="0" cellspacing="0">
 					<tbody>
 						<tr class="oddrow">
@@ -103,17 +102,17 @@ $html .= '
 						<tr>
 							<td style="vertical-align: top; width:50%;">
 								Datos basicos
-								<strong>Trabajador: </strong>'.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].' '.$row_data['TrabajadorApellidoMat'].'<br/>
-								<strong>Rut: </strong>'.$row_data['TrabajadorRut'].'<br/>
-								<strong>Cargo: </strong>'.$row_data['TrabajadorCargo'].'<br/>
-								<strong>Fono: </strong>'.formatPhone($row_data['TrabajadorFono']).'<br/>
+								<strong>Trabajador: </strong>'.$rowData['TrabajadorNombre'].' '.$rowData['TrabajadorApellidoPat'].' '.$rowData['TrabajadorApellidoMat'].'<br/>
+								<strong>Rut: </strong>'.$rowData['TrabajadorRut'].'<br/>
+								<strong>Cargo: </strong>'.$rowData['TrabajadorCargo'].'<br/>
+								<strong>Fono: </strong>'.formatPhone($rowData['TrabajadorFono']).'<br/>
 							</td>
 							<td style="vertical-align: top;width:50%;">
 								Detalle
-								<strong>Fecha Creacion: </strong>'.fecha_estandar($row_data['Creacion_fecha']).'<br/>
-								<strong>Fecha Ingreso: </strong>'.fecha_estandar($row_data['fecha_auto']).'<br/>
-								<strong>Usuario: </strong>'.$row_data['Usuario'].'<br/>	
-								<strong>Sistema: </strong>'.$row_data['CajaSistema'].'<br/>
+								<strong>Fecha Creacion: </strong>'.fecha_estandar($rowData['Creacion_fecha']).'<br/>
+								<strong>Fecha Ingreso: </strong>'.fecha_estandar($rowData['fecha_auto']).'<br/>
+								<strong>Usuario: </strong>'.$rowData['Usuario'].'<br/>
+								<strong>Sistema: </strong>'.$rowData['CajaSistema'].'<br/>
 							</td>
 						</tr>
 					</tbody>
@@ -147,11 +146,11 @@ $html .= '
 						}
 					}
 
-					if(isset($row_data['Valor'])&&$row_data['Valor']!=0){
+					if(isset($rowData['Valor'])&&$rowData['Valor']!=0){
 						$html .= '
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td align="right" colspan="3"><strong>Total</strong></td>
-							<td align="right" style="vertical-align: top;">'.Valores($row_data['Valor'], 0).'</td>
+							<td align="right" style="vertical-align: top;">'.Valores($rowData['Valor'], 0).'</td>
 						</tr>';
 					}
 
@@ -167,7 +166,7 @@ $html .= '
 				<table style="text-align: left; width: 100%;margin-top:20px;" cellpadding="5" cellspacing="0">
 					<tbody>
 						<tr>
-							<td style="vertical-align: top;text-align: left;background-color: #f9f9f9;border: 1px solid #EEE;">'.$row_data['Observaciones'].'</td>
+							<td style="vertical-align: top;text-align: left;background-color: #f9f9f9;border: 1px solid #EEE;">'.$rowData['Observaciones'].'</td>
 						</tr>
 					</tbody>
 				</table>';
@@ -176,7 +175,7 @@ $html .= '
 		</tr>
 	</tbody>
 </table>';
- 
+
 /**********************************************************************************************************************************/
 /*                                                          Impresion PDF                                                         */
 /**********************************************************************************************************************************/

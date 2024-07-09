@@ -68,7 +68,7 @@ LEFT JOIN `core_sistemas`           ON core_sistemas.idSistema          = apoder
 LEFT JOIN `core_ubicacion_ciudad`   ON core_ubicacion_ciudad.idCiudad   = apoderados_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`  ON core_ubicacion_comunas.idComuna  = apoderados_listado.idComuna';
 $SIS_where = 'apoderados_listado.idApoderado ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /**********************************************************************/
 //Se consultan datos
@@ -103,44 +103,41 @@ $arrCargas = db_select_array (false, $SIS_query, 'apoderados_listado_hijos', $SI
 				<div class="wmd-panel">
 
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<?php if ($rowdata['Direccion_img']=='') { ?>
+						<?php if ($rowData['Direccion_img']=='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowData['Direccion_img']; ?>">
 						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 						<p class="text-muted">
-							<strong>Nombre : </strong><?php echo $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat']; ?><br/>
-							<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
-							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_estandar($rowdata['FNacimiento']); ?><br/>
-							<strong>Fono : </strong><?php echo formatPhone($rowdata['Fono1']); ?><br/>
-							<strong>Fono : </strong><?php echo formatPhone($rowdata['Fono2']); ?><br/>
-							<strong>Dirección : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['nombre_comuna'].', '.$rowdata['nombre_region']; ?><br/>
-							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
-							<strong>Sistema : </strong><?php echo $rowdata['Sistema']; ?><br/>
-							<strong>Fecha de Inicio Contrato : </strong><?php if(isset($rowdata['F_Inicio_Contrato'])&&$rowdata['F_Inicio_Contrato']!='0000-00-00'){echo Fecha_estandar($rowdata['F_Inicio_Contrato']);}else{echo 'Sin fecha de inicio';} ?><br/>
-							<strong>Fecha de Termino Contrato : </strong><?php if(isset($rowdata['F_Termino_Contrato'])&&$rowdata['F_Termino_Contrato']!='0000-00-00'){echo Fecha_estandar($rowdata['F_Termino_Contrato']);}else{echo 'Sin fecha de termino';} ?><br/>
+							<strong>Nombre : </strong><?php echo $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat']; ?><br/>
+							<strong>Rut : </strong><?php echo $rowData['Rut']; ?><br/>
+							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_estandar($rowData['FNacimiento']); ?><br/>
+							<strong>Fono : </strong><?php echo formatPhone($rowData['Fono1']); ?><br/>
+							<strong>Fono : </strong><?php echo formatPhone($rowData['Fono2']); ?><br/>
+							<strong>Dirección : </strong><?php echo $rowData['Direccion'].', '.$rowData['nombre_comuna'].', '.$rowData['nombre_region']; ?><br/>
+							<strong>Estado : </strong><?php echo $rowData['Estado']; ?><br/>
+							<strong>Sistema : </strong><?php echo $rowData['Sistema']; ?><br/>
+							<strong>Fecha de Inicio Contrato : </strong><?php if(isset($rowData['F_Inicio_Contrato'])&&$rowData['F_Inicio_Contrato']!='0000-00-00'){echo Fecha_estandar($rowData['F_Inicio_Contrato']);}else{echo 'Sin fecha de inicio';} ?><br/>
+							<strong>Fecha de Termino Contrato : </strong><?php if(isset($rowData['F_Termino_Contrato'])&&$rowData['F_Termino_Contrato']!='0000-00-00'){echo Fecha_estandar($rowData['F_Termino_Contrato']);}else{echo 'Sin fecha de termino';} ?><br/>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Acceso APP</h2>
 						<p class="text-muted">
-							<strong>Usuario : </strong><?php echo $rowdata['Rut']; ?><br/>
-							<strong>Password : </strong><?php echo $rowdata['Password']; ?><br/>
+							<strong>Usuario : </strong><?php echo $rowData['Rut']; ?><br/>
+							<strong>Password : </strong><?php echo $rowData['Password']; ?><br/>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Hijos</h2>
 						<div class="row">
 							<?php
-							//Verifico el total de cargas
-							$nn = 0;
-							$n_carga = 1;
-							foreach ($arrCargas as $carga) {
-								$nn++;
-							}
 							//Se existen cargas estas se despliegan
-							if($nn!=0){
+							if($arrCargas!=false){
+								//variable
+								$n_carga = 1;
+								//recorro
 								foreach ($arrCargas as $carga) { ?>
 									<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 pull-left">
 										<div class="info-box" style="box-shadow:none; color:#999 !important;">
@@ -169,13 +166,13 @@ $arrCargas = db_select_array (false, $SIS_query, 'apoderados_listado_hijos', $SI
 						<p class="text-muted">
 							<?php
 							//Contrato
-							if(isset($rowdata['File_Contrato'])&&$rowdata['File_Contrato']!=''){
-								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Contrato'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Contrato</a>';
+							if(isset($rowData['File_Contrato'])&&$rowData['File_Contrato']!=''){
+								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['File_Contrato'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Contrato</a>';
 							} ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Ubicación</h2>
-						<?php echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Dirección', 'Calle', $rowdata['Direccion'], $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); ?>
+						<?php echo mapa_from_gps($rowData['GeoLatitud'], $rowData['GeoLongitud'], 'Dirección', 'Calle', $rowData['Direccion'], $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); ?>
 											
 					</div>
 					<div class="clearfix"></div>

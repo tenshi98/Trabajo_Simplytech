@@ -302,7 +302,7 @@ require_once '0_validate_user_1.php';
 
 			if($errorn==0){
 				// Se obtiene el nombre del archivo
-				$rowdata = db_select_data (false, 'Nombre', 'orden_trabajo_eventos_listado_archivos', '', 'idArchivo = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'Nombre', 'orden_trabajo_eventos_listado_archivos', '', 'idArchivo = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//se borran los datos
 				$resultado = db_delete_data (false, 'orden_trabajo_eventos_listado_archivos', 'idArchivo = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -310,12 +310,12 @@ require_once '0_validate_user_1.php';
 				if($resultado==true){
 
 					//se elimina el archivo
-					if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){
+					if(isset($rowData['Nombre'])&&$rowData['Nombre']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['Nombre'])){
+							if(!is_writable('upload/'.$rowData['Nombre'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['Nombre']);
+								unlink('upload/'.$rowData['Nombre']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log

@@ -76,7 +76,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'idTipo,idVehiculo,Creacion_fecha,Valor,Observaciones';
 	$SIS_join  = '';
 	$SIS_where = 'idCosto = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'vehiculos_costos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'vehiculos_costos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 	/*******************************************************/
 	//Verifico el tipo de usuario que esta ingresando
 	$w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
@@ -94,11 +94,11 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idTipo)){             $x1  = $idTipo;            }else{$x1  = $rowdata['idTipo'];}
-					if(isset($idVehiculo)){         $x2  = $idVehiculo;        }else{$x2  = $rowdata['idVehiculo'];}
-					if(isset($Creacion_fecha)){     $x3  = $Creacion_fecha;    }else{$x3  = $rowdata['Creacion_fecha'];}
-					if(isset($Valor)){              $x4  = $Valor;            }else{$x4  = $rowdata['Valor'];}
-					if(isset($Observaciones)){      $x5  = $Observaciones;     }else{$x5  = $rowdata['Observaciones'];}
+					if(isset($idTipo)){             $x1  = $idTipo;            }else{$x1  = $rowData['idTipo'];}
+					if(isset($idVehiculo)){         $x2  = $idVehiculo;        }else{$x2  = $rowData['idVehiculo'];}
+					if(isset($Creacion_fecha)){     $x3  = $Creacion_fecha;    }else{$x3  = $rowData['Creacion_fecha'];}
+					if(isset($Valor)){              $x4  = $Valor;            }else{$x4  = $rowData['Valor'];}
+					if(isset($Observaciones)){      $x5  = $Observaciones;     }else{$x5  = $rowData['Observaciones'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

@@ -45,16 +45,16 @@ if (validarNumero($_GET['view'])){
 $SIS_query = 'AguasInfFechaEmision, ClienteIdentificador, ClienteDireccion, DetalleTotalAPagar, DetalleSaldoAnterior';
 $SIS_join  = '';
 $SIS_where = 'idFacturacionDetalle ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'aguas_facturacion_listado_detalle', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'aguas_facturacion_listado_detalle', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 //Operaciones
-$dia = fecha2NdiaMes($rowdata['AguasInfFechaEmision']);
+$dia = fecha2NdiaMes($rowData['AguasInfFechaEmision']);
 $dia = $dia + 17;
-$output = 'Carta de Corte cliente '.$rowdata['ClienteIdentificador'].' fecha '.Fecha_estandar($rowdata['AguasInfFechaEmision']);
+$output = 'Carta de Corte cliente '.$rowData['ClienteIdentificador'].' fecha '.Fecha_estandar($rowData['AguasInfFechaEmision']);
 
 //se crea una fecha
-$mes_ant = numero_mes((fecha2NMes($rowdata['AguasInfFechaEmision']))- 1);
-$ano     = fecha2Ano($rowdata['AguasInfFechaEmision']);
+$mes_ant = numero_mes((fecha2NMes($rowData['AguasInfFechaEmision']))- 1);
+$ano     = fecha2Ano($rowData['AguasInfFechaEmision']);
 //se realizan correcciones
 if($mes_ant==0){
 	$mes_ant = 12;
@@ -125,12 +125,12 @@ $fecha_mesanterior = $ano.'-'.$mes_ant.'-10';
 				}
 
 				doc.setData({
-					fecha_aviso: '<?php echo Fecha_completa_alt($rowdata['AguasInfFechaEmision']); ?>',
+					fecha_aviso: '<?php echo Fecha_completa_alt($rowData['AguasInfFechaEmision']); ?>',
 					mes_anterior: '<?php echo Fecha_completa_alt($fecha_mesanterior); ?>',
-					id_cliente: '<?php echo $rowdata['ClienteIdentificador']; ?>',
-					dirección: '<?php echo $rowdata['ClienteDireccion']; ?>',
-					monto: '<?php echo Valores($rowdata['DetalleSaldoAnterior'], 0); ?>',
-					fecha_corte: '<?php echo $dia." de ".fecha2NombreMes($rowdata['AguasInfFechaEmision']); ?>'
+					id_cliente: '<?php echo $rowData['ClienteIdentificador']; ?>',
+					dirección: '<?php echo $rowData['ClienteDireccion']; ?>',
+					monto: '<?php echo Valores($rowData['DetalleSaldoAnterior'], 0); ?>',
+					fecha_corte: '<?php echo $dia." de ".fecha2NombreMes($rowData['AguasInfFechaEmision']); ?>'
 				});
 
 				try {

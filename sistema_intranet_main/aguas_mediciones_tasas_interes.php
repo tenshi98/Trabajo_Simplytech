@@ -76,7 +76,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 $SIS_query = 'Fecha, TasaCorriente, TasaDia, MC';
 $SIS_join  = '';
 $SIS_where = 'idTasasInteres = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_tasas_interes', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'aguas_mediciones_tasas_interes', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -91,10 +91,10 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_tasas_interes', 
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Fecha)){          $x1  = $Fecha;          }else{$x1  = $rowdata['Fecha'];}
-				if(isset($TasaCorriente)){  $x2  = $TasaCorriente;  }else{$x2  = Cantidades_decimales_justos($rowdata['TasaCorriente']);}
-				if(isset($TasaDia)){        $x3  = $TasaDia;        }else{$x3  = Cantidades_decimales_justos($rowdata['TasaDia']);}
-				if(isset($MC)){             $x4  = $MC;             }else{$x4  = Cantidades_decimales_justos($rowdata['MC']);}
+				if(isset($Fecha)){          $x1  = $Fecha;          }else{$x1  = $rowData['Fecha'];}
+				if(isset($TasaCorriente)){  $x2  = $TasaCorriente;  }else{$x2  = Cantidades_decimales_justos($rowData['TasaCorriente']);}
+				if(isset($TasaDia)){        $x3  = $TasaDia;        }else{$x3  = Cantidades_decimales_justos($rowData['TasaDia']);}
+				if(isset($MC)){             $x4  = $MC;             }else{$x4  = Cantidades_decimales_justos($rowData['MC']);}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

@@ -69,7 +69,7 @@ LEFT JOIN `core_ubicacion_comunas`     ON core_ubicacion_comunas.idComuna     = 
 LEFT JOIN `core_sistemas_opciones`     ON core_sistemas_opciones.idOpciones   = seguridad_camaras_listado.idSubconfiguracion
 LEFT JOIN `core_tipos_camara`          ON core_tipos_camara.idTipoCamara      = seguridad_camaras_listado.idTipoCamara';
 $SIS_where = 'seguridad_camaras_listado.idCamara ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'seguridad_camaras_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'seguridad_camaras_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
  
 ?>
@@ -87,25 +87,25 @@ $rowdata = db_select_data (false, $SIS_query, 'seguridad_camaras_listado', $SIS_
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 							<p class="text-muted word_break">
-								<strong>Nombre del Grupo : </strong><?php echo $rowdata['Nombre']; ?><br/>
-								<strong>Numero de Camaras: </strong><?php echo $rowdata['N_Camaras']; ?><br/>
-								<strong>Pais : </strong><?php echo $rowdata['Pais']; ?><br/>
-								<strong>Región : </strong><?php echo $rowdata['Ciudad']; ?><br/>
-								<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-								<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
-								<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
-								<strong>Estado : </strong><?php echo $rowdata['estado']; ?><br/>
-								<strong>Subconfiguracion : </strong><?php echo $rowdata['Subconfiguracion']; ?>
+								<strong>Nombre del Grupo : </strong><?php echo $rowData['Nombre']; ?><br/>
+								<strong>Numero de Camaras: </strong><?php echo $rowData['N_Camaras']; ?><br/>
+								<strong>Pais : </strong><?php echo $rowData['Pais']; ?><br/>
+								<strong>Región : </strong><?php echo $rowData['Ciudad']; ?><br/>
+								<strong>Comuna : </strong><?php echo $rowData['Comuna']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowData['Direccion']; ?><br/>
+								<strong>Sistema Relacionado : </strong><?php echo $rowData['sistema']; ?><br/>
+								<strong>Estado : </strong><?php echo $rowData['estado']; ?><br/>
+								<strong>Subconfiguracion : </strong><?php echo $rowData['Subconfiguracion']; ?>
 							</p>
 
-							<?php if(isset($rowdata['idSubconfiguracion'])&&$rowdata['idSubconfiguracion']==2){ ?>
+							<?php if(isset($rowData['idSubconfiguracion'])&&$rowData['idSubconfiguracion']==2){ ?>
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Subconfiguracion</h2>
 								<p class="text-muted word_break">
-									<strong>Tipo de Camara : </strong><?php echo $rowdata['TipoCamara']; ?><br/>
-									<strong>Usuario : </strong><?php echo $rowdata['Config_usuario']; ?><br/>
-									<strong>Password: </strong><?php echo $rowdata['Config_Password']; ?><br/>
-									<strong>IP : </strong><?php echo $rowdata['Config_IP']; ?><br/>
-									<strong>Puerto : </strong><?php echo $rowdata['Config_Puerto']; ?><br/>
+									<strong>Tipo de Camara : </strong><?php echo $rowData['TipoCamara']; ?><br/>
+									<strong>Usuario : </strong><?php echo $rowData['Config_usuario']; ?><br/>
+									<strong>Password: </strong><?php echo $rowData['Config_Password']; ?><br/>
+									<strong>IP : </strong><?php echo $rowData['Config_IP']; ?><br/>
+									<strong>Puerto : </strong><?php echo $rowData['Config_Puerto']; ?><br/>
 								</p>
 							<?php } ?>
 						</div>
@@ -116,9 +116,9 @@ $rowdata = db_select_data (false, $SIS_query, 'seguridad_camaras_listado', $SIS_
 						<?php
 							//se arma la dirección
 							$direccion = "";
-							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){  $direccion .= $rowdata["Direccion"];}
-							if(isset($rowdata["Ciudad"])&&$rowdata["Ciudad"]!=''){        $direccion .= ', '.$rowdata["Ciudad"];}
-							if(isset($rowdata["Comuna"])&&$rowdata["Comuna"]!=''){        $direccion .= ', '.$rowdata["Comuna"];}
+							if(isset($rowData["Direccion"])&&$rowData["Direccion"]!=''){  $direccion .= $rowData["Direccion"];}
+							if(isset($rowData["Ciudad"])&&$rowData["Ciudad"]!=''){        $direccion .= ', '.$rowData["Ciudad"];}
+							if(isset($rowData["Comuna"])&&$rowData["Comuna"]!=''){        $direccion .= ', '.$rowData["Comuna"];}
 							//se despliega mensaje en caso de no existir dirección
 							if($direccion!=''){
 								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);

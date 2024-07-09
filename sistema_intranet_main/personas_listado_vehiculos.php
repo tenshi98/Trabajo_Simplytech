@@ -75,7 +75,7 @@ if(!empty($_GET['edit'])){
 $SIS_query = 'Marca,Modelo';
 $SIS_join  = '';
 $SIS_where = 'idVehiculos = '.$_GET['edit'];
-$rowdata = db_select_data (false, $SIS_query, 'personas_listado_vehiculos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'personas_listado_vehiculos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -90,8 +90,8 @@ $rowdata = db_select_data (false, $SIS_query, 'personas_listado_vehiculos', $SIS
 
 				<?php  
 				//Se verifican si existen los datos
-				if(isset($Marca)){          $x1 = $Marca;         }else{$x1 = $rowdata['Marca'];}
-				if(isset($Modelo)){    $x2 = $Modelo;   }else{$x2 = $rowdata['Modelo'];}
+				if(isset($Marca)){          $x1 = $Marca;         }else{$x1 = $rowData['Marca'];}
+				if(isset($Modelo)){    $x2 = $Modelo;   }else{$x2 = $rowData['Modelo'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -156,7 +156,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 $SIS_query = 'Nombre,ApellidoPaterno, ApellidoMaterno';
 $SIS_join  = '';
 $SIS_where = 'idPersona = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 // consulto los datos
 $SIS_query = 'idVehiculos,Marca,Modelo,Patente';
@@ -169,7 +169,7 @@ $arrMarca = db_select_array (false, $SIS_query, 'personas_listado_vehiculos', $S
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Personas', $rowdata['Nombre'].' '.$rowdata['ApellidoPaterno'].' '.$rowdata['ApellidoMaterno'], 'Marcas'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Personas', $rowData['Nombre'].' '.$rowData['ApellidoPaterno'].' '.$rowData['ApellidoMaterno'], 'Marcas'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Vehiculo</a><?php } ?>
 	</div>

@@ -71,7 +71,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 $SIS_query = 'Nombre';
 $SIS_join  = '';
 $SIS_where = 'idTipoCarga = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'vehiculos_tipo_carga', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'vehiculos_tipo_carga', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -86,7 +86,7 @@ $rowdata = db_select_data (false, $SIS_query, 'vehiculos_tipo_carga', $SIS_join,
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)){      $x1  = $Nombre;     }else{$x1  = $rowdata['Nombre'];}
+				if(isset($Nombre)){      $x1  = $Nombre;     }else{$x1  = $rowData['Nombre'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

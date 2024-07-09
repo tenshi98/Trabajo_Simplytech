@@ -80,7 +80,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 $SIS_query = 'idCorreosCat, idUsuario';
 $SIS_join  = '';
 $SIS_where = 'idCorreos = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_mnt_correos_list', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_mnt_correos_list', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -95,8 +95,8 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_mnt_correos_list', $SI
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idCorreosCat)){    $x1 = $idCorreosCat;    }else{$x1 = $rowdata['idCorreosCat'];}
-				if(isset($idUsuario)){       $x2 = $idUsuario;       }else{$x2 = $rowdata['idUsuario'];}
+				if(isset($idCorreosCat)){    $x1 = $idCorreosCat;    }else{$x1 = $rowData['idCorreosCat'];}
+				if(isset($idUsuario)){       $x2 = $idUsuario;       }else{$x2 = $rowData['idUsuario'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

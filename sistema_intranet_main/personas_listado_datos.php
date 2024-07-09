@@ -52,12 +52,12 @@ $SIS_query = 'Rut, Nombre,ApellidoPaterno, ApellidoMaterno, fNacimiento, idSexo,
 idCiudad, idComuna, Direccion, Sueldo, idAFP';
 $SIS_join  = '';
 $SIS_where = 'idPersona = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Personas', $rowdata['Nombre'].' '.$rowdata['ApellidoPaterno'].' '.$rowdata['ApellidoMaterno'], 'Editar Datos Personales'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Personas', $rowData['Nombre'].' '.$rowData['ApellidoPaterno'].' '.$rowData['ApellidoMaterno'], 'Editar Datos Personales'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -85,17 +85,17 @@ $rowdata = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SI
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Rut)){               $x1  = $Rut;               }else{$x1  = $rowdata['Rut'];}
-					if(isset($Nombre)){            $x2  = $Nombre;            }else{$x2  = $rowdata['Nombre'];}
-					if(isset($ApellidoPaterno)){   $x3  = $ApellidoPaterno;   }else{$x3  = $rowdata['ApellidoPaterno'];}
-					if(isset($ApellidoMaterno)){   $x4  = $ApellidoMaterno;   }else{$x4  = $rowdata['ApellidoMaterno'];}
-					if(isset($fNacimiento)){       $x5  = $fNacimiento;       }else{$x5  = $rowdata['fNacimiento'];}
-					if(isset($idSexo)){            $x6  = $idSexo;            }else{$x6  = $rowdata['idSexo'];}
-					if(isset($idCiudad)){          $x7  = $idCiudad;          }else{$x7  = $rowdata['idCiudad'];}
-					if(isset($idComuna)){          $x8  = $idComuna;          }else{$x8  = $rowdata['idComuna'];}
-					if(isset($Direccion)){         $x9  = $Direccion;         }else{$x9  = $rowdata['Direccion'];}
-					if(isset($Sueldo)){            $x10 = $Sueldo;            }else{$x10 = $rowdata['Sueldo'];}
-					if(isset($idAFP)){             $x11 = $idAFP;             }else{$x11 = $rowdata['idAFP'];}
+					if(isset($Rut)){               $x1  = $Rut;               }else{$x1  = $rowData['Rut'];}
+					if(isset($Nombre)){            $x2  = $Nombre;            }else{$x2  = $rowData['Nombre'];}
+					if(isset($ApellidoPaterno)){   $x3  = $ApellidoPaterno;   }else{$x3  = $rowData['ApellidoPaterno'];}
+					if(isset($ApellidoMaterno)){   $x4  = $ApellidoMaterno;   }else{$x4  = $rowData['ApellidoMaterno'];}
+					if(isset($fNacimiento)){       $x5  = $fNacimiento;       }else{$x5  = $rowData['fNacimiento'];}
+					if(isset($idSexo)){            $x6  = $idSexo;            }else{$x6  = $rowData['idSexo'];}
+					if(isset($idCiudad)){          $x7  = $idCiudad;          }else{$x7  = $rowData['idCiudad'];}
+					if(isset($idComuna)){          $x8  = $idComuna;          }else{$x8  = $rowData['idComuna'];}
+					if(isset($Direccion)){         $x9  = $Direccion;         }else{$x9  = $rowData['Direccion'];}
+					if(isset($Sueldo)){            $x10 = $Sueldo;            }else{$x10 = $rowData['Sueldo'];}
+					if(isset($idAFP)){             $x11 = $idAFP;             }else{$x11 = $rowData['idAFP'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

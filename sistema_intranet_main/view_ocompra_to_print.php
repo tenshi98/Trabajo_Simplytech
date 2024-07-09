@@ -80,7 +80,7 @@ LEFT JOIN `core_ubicacion_ciudad`    provciudad     ON provciudad.idCiudad      
 LEFT JOIN `core_ubicacion_comunas`   provcomuna     ON provcomuna.idComuna              = proveedor_listado.idComuna
 LEFT JOIN `core_oc_estado`                          ON core_oc_estado.idEstado          = ocompra_listado.idEstado';
 $SIS_where = 'ocompra_listado.idOcompra ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'ocompra_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'ocompra_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
  
 /*****************************************/
 //Insumos
@@ -212,8 +212,8 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 					<table style="text-align: left; width: 100%;"  cellpadding="0" cellspacing="0">
 						<tr>
 							<td width="33%">';
-							if(isset($row_data['SistemaLogo'])&&$row_data['SistemaLogo']!=''){
-								$html .= '<img src="upload/'.$row_data['SistemaLogo'].'" alt="" style="width:100%">';
+							if(isset($rowData['SistemaLogo'])&&$rowData['SistemaLogo']!=''){
+								$html .= '<img src="upload/'.$rowData['SistemaLogo'].'" alt="" style="width:100%">';
 							}else{
 								$html .= '<img src="../LIB_assets/img/logo_empresa.jpg" alt="" style="width:100%">';
 							}
@@ -223,7 +223,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 								Orden de Compra';
 
 								//se verifica si la orden de comora esta rechazada
-								if($row_data['idEstado']==3){
+								if($rowData['idEstado']==3){
 									$html .= '<br/>Rechazada';
 								}
 								
@@ -231,7 +231,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 							<td width="33%">&nbsp;</td>
 						</tr>
 						<tr>
-							<td>Fecha : '.Fecha_estandar($row_data['Creacion_fecha']).'</td>
+							<td>Fecha : '.Fecha_estandar($rowData['Creacion_fecha']).'</td>
 							<td>&nbsp;</td>
 							<td>Nº '.n_doc($_GET['view'], 5).'</td>
 						</tr>
@@ -240,15 +240,15 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 						</tr>
 						<tr>
 							<td colspan="3" style="padding: 10px;">
-								<strong>Razón Social : </strong>'.$row_data['NombreProveedor'].'<br/>
-								<strong>RUT : </strong>'.$row_data['RutProveedor'].'<br/>
-								<strong>Dirección : </strong>'.$row_data['DireccionProveedor'].', '.$row_data['ComunaProveedor'].' - '.$row_data['CiudadProveedor'].'<br/>
-								<strong>Email : </strong>'.$row_data['EmailProveedor'].'<br/>
-								<strong>Teléfono : </strong>'.formatPhone($row_data['Fono1Proveedor']).' - '.formatPhone($row_data['Fono2Proveedor']).'<br/>
-								<strong>Giro : </strong>'.$row_data['GiroProveedor'].'<br/>
-								<strong>Contacto : </strong>'.$row_data['PersonaContactoProveedor'].'<br/>
-								<strong>Forma de Pago : </strong>'.$row_data['FormaPagoProveedor'].'<br/>
-								<strong>Despacho a : </strong> '.$row_data['SistemaOrigenDireccion'].', '.$row_data['SistemaOrigenComuna'].', '.$row_data['SistemaOrigenCiudad'].'<br/>
+								<strong>Razón Social : </strong>'.$rowData['NombreProveedor'].'<br/>
+								<strong>RUT : </strong>'.$rowData['RutProveedor'].'<br/>
+								<strong>Dirección : </strong>'.$rowData['DireccionProveedor'].', '.$rowData['ComunaProveedor'].' - '.$rowData['CiudadProveedor'].'<br/>
+								<strong>Email : </strong>'.$rowData['EmailProveedor'].'<br/>
+								<strong>Teléfono : </strong>'.formatPhone($rowData['Fono1Proveedor']).' - '.formatPhone($rowData['Fono2Proveedor']).'<br/>
+								<strong>Giro : </strong>'.$rowData['GiroProveedor'].'<br/>
+								<strong>Contacto : </strong>'.$rowData['PersonaContactoProveedor'].'<br/>
+								<strong>Forma de Pago : </strong>'.$rowData['FormaPagoProveedor'].'<br/>
+								<strong>Despacho a : </strong> '.$rowData['SistemaOrigenDireccion'].', '.$rowData['SistemaOrigenComuna'].', '.$rowData['SistemaOrigenCiudad'].'<br/>
 							</td>
 						</tr>
 					</table>
@@ -400,12 +400,12 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 						</tr>
 						<tr>
 							<td style="padding: 10px;">
-								<strong>Razón Social : </strong>'.$row_data['SistemaOrigen'].'<br/>
-								<strong>Rut : </strong>'.$row_data['SistemaOrigenRut'].'<br/>
-								<strong>Giro : </strong>'.$row_data['SistemaOrigenRubro'].'<br/>
-								<strong>Dirección Comercial : </strong>'.$row_data['SistemaOrigenDireccion'].', '.$row_data['SistemaOrigenComuna'].', '.$row_data['SistemaOrigenCiudad'].'<br/>
-								<strong>Teléfono : </strong>'.formatPhone($row_data['SistemaOrigenFono']).'<br/>
-								<strong>E-mail : </strong>'.$row_data['SistemaOrigenEmail'].'<br/>
+								<strong>Razón Social : </strong>'.$rowData['SistemaOrigen'].'<br/>
+								<strong>Rut : </strong>'.$rowData['SistemaOrigenRut'].'<br/>
+								<strong>Giro : </strong>'.$rowData['SistemaOrigenRubro'].'<br/>
+								<strong>Dirección Comercial : </strong>'.$rowData['SistemaOrigenDireccion'].', '.$rowData['SistemaOrigenComuna'].', '.$rowData['SistemaOrigenCiudad'].'<br/>
+								<strong>Teléfono : </strong>'.formatPhone($rowData['SistemaOrigenFono']).'<br/>
+								<strong>E-mail : </strong>'.$rowData['SistemaOrigenEmail'].'<br/>
 							</td>
 						</tr>
 					</table>
@@ -416,7 +416,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 							<td class="title">OBSERVACIONES</td>
 						</tr>
 						<tr>
-							<td style="padding: 10px;">'.$row_data['Observaciones'].'</td>
+							<td style="padding: 10px;">'.$rowData['Observaciones'].'</td>
 						</tr>
 					</table>';
 
@@ -426,8 +426,8 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 					<table style="text-align: right; width: 100%; padding: 10px;"  cellspacing="0">
 						<tr>
 							<td style="padding: 10px;">
-								Autorizado por '.$row_data['SistemaOrigen'].'<br/>
-								Nombre: '.$row_data['NombreUsuario'].'<br/>
+								Autorizado por '.$rowData['SistemaOrigen'].'<br/>
+								Nombre: '.$rowData['NombreUsuario'].'<br/>
 								<br/>
 								<br/>
 								<br/>

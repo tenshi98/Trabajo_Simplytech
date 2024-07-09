@@ -84,7 +84,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'idTrabajador,Fecha, idAmonestaciones,File_Amonestacion,Observacion, idSistema';
 	$SIS_join  = '';
 	$SIS_where = 'idCartaAmo = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'trabajadores_cartas_amonestacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'trabajadores_cartas_amonestacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 	/*******************************************************/
 	//Verifico el tipo de usuario que esta ingresando
 	$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
@@ -102,10 +102,10 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idTrabajador)){     $x1  = $idTrabajador;      }else{$x1  = $rowdata['idTrabajador'];}
-					if(isset($Fecha)){            $x2  = $Fecha;             }else{$x2  = $rowdata['Fecha'];}
-					if(isset($idAmonestaciones)){ $x3  = $idAmonestaciones;  }else{$x3  = $rowdata['idAmonestaciones'];}
-					if(isset($Observacion)){      $x4  = $Observacion;       }else{$x4  = $rowdata['Observacion'];}
+					if(isset($idTrabajador)){     $x1  = $idTrabajador;      }else{$x1  = $rowData['idTrabajador'];}
+					if(isset($Fecha)){            $x2  = $Fecha;             }else{$x2  = $rowData['Fecha'];}
+					if(isset($idAmonestaciones)){ $x3  = $idAmonestaciones;  }else{$x3  = $rowData['idAmonestaciones'];}
+					if(isset($Observacion)){      $x4  = $Observacion;       }else{$x4  = $rowData['Observacion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -114,11 +114,11 @@ if(!empty($_GET['id'])){
 					$Form_Inputs->form_select_filter('Tipo Amonestacion','idAmonestaciones', $x3, 2, 'idAmonestaciones', 'Nombre', 'sistema_rrhh_amonestaciones', 0, '', $dbConn);
 					$Form_Inputs->form_textarea('Observaciones','Observacion', $x4, 1);
 
-					if(isset($rowdata['File_Amonestacion'])&&$rowdata['File_Amonestacion']!=''){ ?>
+					if(isset($rowData['File_Amonestacion'])&&$rowData['File_Amonestacion']!=''){ ?>
 
 						<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 							<h3>Archivo</h3>
-							<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['File_Amonestacion'], ''); ?>
+							<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowData['File_Amonestacion'], ''); ?>
 						</div>
 						<a href="<?php echo $location.'&id='.$_GET['id'].'&del_file='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 						<div class="clearfix"></div>

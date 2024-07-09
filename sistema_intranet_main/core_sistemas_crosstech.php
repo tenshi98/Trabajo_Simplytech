@@ -56,12 +56,12 @@ CrossTech_DiasTempMin, CrossTech_FechaDiasTempMin, CrossTech_TempMin, CrossTech_
 CrossTech_HeladaMailHoraIni, CrossTech_HeladaMailHoraTerm';
 $SIS_join  = '';
 $SIS_where = 'idSistema ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowData['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -97,19 +97,19 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($CrossTech_HoraPrevRev)){        $x1  = $CrossTech_HoraPrevRev;        }else{$x1  = $rowdata['CrossTech_HoraPrevRev'];}
-					if(isset($CrossTech_HoraPrevision)){      $x2  = $CrossTech_HoraPrevision;      }else{$x2  = $rowdata['CrossTech_HoraPrevision'];}
-					if(isset($CrossTech_HoraPrevCuenta)){     $x3  = $CrossTech_HoraPrevCuenta;     }else{$x3  = $rowdata['CrossTech_HoraPrevCuenta'];}
-					if(isset($CrossTech_HeladaTemp)){         $x4  = $CrossTech_HeladaTemp;         }else{$x4  = $rowdata['CrossTech_HeladaTemp'];}
-					if(isset($CrossTech_HeladaMailHoraIni)){  $x5  = $CrossTech_HeladaMailHoraIni;  }else{$x5  = $rowdata['CrossTech_HeladaMailHoraIni'];}
-					if(isset($CrossTech_HeladaMailHoraTerm)){ $x6  = $CrossTech_HeladaMailHoraTerm; }else{$x6  = $rowdata['CrossTech_HeladaMailHoraTerm'];}
-					if(isset($CrossTech_FechaUnidadFrio)){    $x7  = $CrossTech_FechaUnidadFrio;    }else{$x7  = $rowdata['CrossTech_FechaUnidadFrio'];}
-					if(isset($CrossTech_TempMin)){            $x8  = $CrossTech_TempMin;            }else{$x8  = $rowdata['CrossTech_TempMin'];}
-					if(isset($CrossTech_FechaTempMin)){       $x9  = $CrossTech_FechaTempMin;       }else{$x9  = $rowdata['CrossTech_FechaTempMin'];}
-					if(isset($CrossTech_TempMax)){            $x10 = $CrossTech_TempMax;            }else{$x10 = $rowdata['CrossTech_TempMax'];}
-					if(isset($CrossTech_FechaTempMax)){       $x11 = $CrossTech_FechaTempMax;       }else{$x11 = $rowdata['CrossTech_FechaTempMax'];}
-					if(isset($CrossTech_DiasTempMin)){        $x12 = $CrossTech_DiasTempMin;        }else{$x12 = $rowdata['CrossTech_DiasTempMin'];}
-					if(isset($CrossTech_FechaDiasTempMin)){   $x13 = $CrossTech_FechaDiasTempMin;   }else{$x13 = $rowdata['CrossTech_FechaDiasTempMin'];}
+					if(isset($CrossTech_HoraPrevRev)){        $x1  = $CrossTech_HoraPrevRev;        }else{$x1  = $rowData['CrossTech_HoraPrevRev'];}
+					if(isset($CrossTech_HoraPrevision)){      $x2  = $CrossTech_HoraPrevision;      }else{$x2  = $rowData['CrossTech_HoraPrevision'];}
+					if(isset($CrossTech_HoraPrevCuenta)){     $x3  = $CrossTech_HoraPrevCuenta;     }else{$x3  = $rowData['CrossTech_HoraPrevCuenta'];}
+					if(isset($CrossTech_HeladaTemp)){         $x4  = $CrossTech_HeladaTemp;         }else{$x4  = $rowData['CrossTech_HeladaTemp'];}
+					if(isset($CrossTech_HeladaMailHoraIni)){  $x5  = $CrossTech_HeladaMailHoraIni;  }else{$x5  = $rowData['CrossTech_HeladaMailHoraIni'];}
+					if(isset($CrossTech_HeladaMailHoraTerm)){ $x6  = $CrossTech_HeladaMailHoraTerm; }else{$x6  = $rowData['CrossTech_HeladaMailHoraTerm'];}
+					if(isset($CrossTech_FechaUnidadFrio)){    $x7  = $CrossTech_FechaUnidadFrio;    }else{$x7  = $rowData['CrossTech_FechaUnidadFrio'];}
+					if(isset($CrossTech_TempMin)){            $x8  = $CrossTech_TempMin;            }else{$x8  = $rowData['CrossTech_TempMin'];}
+					if(isset($CrossTech_FechaTempMin)){       $x9  = $CrossTech_FechaTempMin;       }else{$x9  = $rowData['CrossTech_FechaTempMin'];}
+					if(isset($CrossTech_TempMax)){            $x10 = $CrossTech_TempMax;            }else{$x10 = $rowData['CrossTech_TempMax'];}
+					if(isset($CrossTech_FechaTempMax)){       $x11 = $CrossTech_FechaTempMax;       }else{$x11 = $rowData['CrossTech_FechaTempMax'];}
+					if(isset($CrossTech_DiasTempMin)){        $x12 = $CrossTech_DiasTempMin;        }else{$x12 = $rowData['CrossTech_DiasTempMin'];}
+					if(isset($CrossTech_FechaDiasTempMin)){   $x13 = $CrossTech_FechaDiasTempMin;   }else{$x13 = $rowData['CrossTech_FechaDiasTempMin'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -139,10 +139,10 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 	
 	
 					$Form_Inputs->form_input_hidden('idSistema', $_GET['id'], 2);
-					$Form_Inputs->form_input_hidden('CrossTech_FechaDiasTempMinOld', $rowdata['CrossTech_FechaDiasTempMin'], 2);
-					$Form_Inputs->form_input_hidden('CrossTech_FechaTempMinOld', $rowdata['CrossTech_FechaTempMin'], 2);
-					$Form_Inputs->form_input_hidden('CrossTech_FechaTempMaxOld', $rowdata['CrossTech_FechaTempMax'], 2);
-					$Form_Inputs->form_input_hidden('CrossTech_FechaUnidadFrioOld', $rowdata['CrossTech_FechaUnidadFrio'], 2);
+					$Form_Inputs->form_input_hidden('CrossTech_FechaDiasTempMinOld', $rowData['CrossTech_FechaDiasTempMin'], 2);
+					$Form_Inputs->form_input_hidden('CrossTech_FechaTempMinOld', $rowData['CrossTech_FechaTempMin'], 2);
+					$Form_Inputs->form_input_hidden('CrossTech_FechaTempMaxOld', $rowData['CrossTech_FechaTempMax'], 2);
+					$Form_Inputs->form_input_hidden('CrossTech_FechaUnidadFrioOld', $rowData['CrossTech_FechaUnidadFrio'], 2);
 					?>
 
 					<div class="form-group">

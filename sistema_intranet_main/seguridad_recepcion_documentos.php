@@ -80,7 +80,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'Fecha,Hora,idTipo, De, Para, Observaciones';
 	$SIS_join  = '';
 	$SIS_where = 'idRecepcion = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'seguridad_recepcion_documentos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'seguridad_recepcion_documentos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -95,12 +95,12 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Fecha)){            $x1  = $Fecha;           }else{$x1  = $rowdata['Fecha'];}
-					if(isset($Hora)){             $x2  = $Hora;            }else{$x2  = $rowdata['Hora'];}
-					if(isset($idTipo)){           $x3  = $idTipo;          }else{$x3  = $rowdata['idTipo'];}
-					if(isset($De)){               $x4  = $De;              }else{$x4  = $rowdata['De'];}
-					if(isset($Para)){             $x5  = $Para;            }else{$x5  = $rowdata['Para'];}
-					if(isset($Observaciones)){    $x6  = $Observaciones;   }else{$x6  = $rowdata['Observaciones'];}
+					if(isset($Fecha)){            $x1  = $Fecha;           }else{$x1  = $rowData['Fecha'];}
+					if(isset($Hora)){             $x2  = $Hora;            }else{$x2  = $rowData['Hora'];}
+					if(isset($idTipo)){           $x3  = $idTipo;          }else{$x3  = $rowData['idTipo'];}
+					if(isset($De)){               $x4  = $De;              }else{$x4  = $rowData['De'];}
+					if(isset($Para)){             $x5  = $Para;            }else{$x5  = $rowData['Para'];}
+					if(isset($Observaciones)){    $x6  = $Observaciones;   }else{$x6  = $rowData['Observaciones'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -220,7 +220,7 @@ if(!empty($_GET['id'])){
 	}
 	/**********************************************************/
 	//Se aplican los filtros
-	if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != '')  {
+	if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){
 		$SIS_where .= " AND seguridad_recepcion_documentos.idUsuario = '".$_GET['idUsuario']."'";
 	}
 	if(isset($_GET['h_inicio'], $_GET['h_termino']) && $_GET['h_inicio'] != '' && $_GET['h_termino']!=''){

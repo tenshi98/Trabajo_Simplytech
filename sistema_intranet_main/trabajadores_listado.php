@@ -216,7 +216,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 // Se trae un listado con todas las cargas familiares
 $arrCargas = array();
@@ -244,7 +244,7 @@ array_push( $arrCargas,$row );
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Resumen'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -280,38 +280,35 @@ array_push( $arrCargas,$row );
 				<div class="wmd-panel">
 
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<?php if ($rowdata['Direccion_img']=='') { ?>
+						<?php if ($rowData['Direccion_img']=='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowData['Direccion_img']; ?>">
 						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 						<p class="text-muted">
-							<strong>Nombre : </strong><?php echo $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat']; ?><br/>
-							<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
-							<strong>Sexo : </strong><?php echo $rowdata['Sexo']; ?><br/>
-							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_estandar($rowdata['FNacimiento']); ?><br/>
-							<strong>Fono : </strong><?php echo formatPhone($rowdata['Fono']); ?><br/>
-							<strong>Email : </strong><?php echo $rowdata['email']; ?><br/>
-							<strong>Dirección : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['nombre_comuna'].', '.$rowdata['nombre_region']; ?><br/>
-							<strong>Estado Civil: </strong><?php echo $rowdata['EstadoCivil']; ?><br/>
-							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
-							<strong>Sistema : </strong><?php echo $rowdata['Sistema']; ?>
+							<strong>Nombre : </strong><?php echo $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat']; ?><br/>
+							<strong>Rut : </strong><?php echo $rowData['Rut']; ?><br/>
+							<strong>Sexo : </strong><?php echo $rowData['Sexo']; ?><br/>
+							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_estandar($rowData['FNacimiento']); ?><br/>
+							<strong>Fono : </strong><?php echo formatPhone($rowData['Fono']); ?><br/>
+							<strong>Email : </strong><?php echo $rowData['email']; ?><br/>
+							<strong>Dirección : </strong><?php echo $rowData['Direccion'].', '.$rowData['nombre_comuna'].', '.$rowData['nombre_region']; ?><br/>
+							<strong>Estado Civil: </strong><?php echo $rowData['EstadoCivil']; ?><br/>
+							<strong>Estado : </strong><?php echo $rowData['Estado']; ?><br/>
+							<strong>Sistema : </strong><?php echo $rowData['Sistema']; ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Cargas Familiares</h2>
 						<p class="text-muted">
 							<?php
-							//Verifico el total de cargas
-							$nn = 0;
-							$n_carga = 1;
-							foreach ($arrCargas as $carga) {
-								$nn++;
-							}
 							//Se existen cargas estas se despliegan
-							if($nn!=0){
+							if($arrCargas!=false){
+								//variable
+								$n_carga = 1;
+								//recorro
 								foreach ($arrCargas as $carga) {
 									echo '<strong>Carga #'.$n_carga.' : </strong>'.$carga['Nombre'].' '.$carga['ApellidoPat'].' '.$carga['ApellidoMat'].'<br/>';
 									$n_carga++;
@@ -325,54 +322,54 @@ array_push( $arrCargas,$row );
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
 						<p class="text-muted">
-							<strong>Persona de Contacto : </strong><?php echo $rowdata['ContactoPersona']; ?><br/>
-							<strong>Fono de Persona de Contacto : </strong><?php echo formatPhone($rowdata['ContactoFono']); ?><br/>
+							<strong>Persona de Contacto : </strong><?php echo $rowData['ContactoPersona']; ?><br/>
+							<strong>Fono de Persona de Contacto : </strong><?php echo formatPhone($rowData['ContactoFono']); ?><br/>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Laborales</h2>
 						<p class="text-muted word_break">
-							<?php if(isset($rowdata['Contratista'])&&$rowdata['Contratista']!=''){ ?><strong>Contratista : </strong><?php echo $rowdata['Contratista']; ?><br/><?php } ?>
-							<strong>Tipo Trabajador : </strong><?php echo $rowdata['TipoTrabajador']; ?><br/>
-							<strong>Cargo : </strong><?php echo $rowdata['Cargo']; ?><br/>
-							<strong>AFP : </strong><?php echo $rowdata['nombre_afp']; ?><br/>
-							<strong>Salud : </strong><?php echo $rowdata['nombre_salud']; ?><br/>
-							<strong>Tipo de Contrato : </strong><?php echo $rowdata['TipoContrato']; ?><br/>
-							<strong>Fecha de Contrato : </strong><?php if(isset($rowdata['FechaContrato'])&&$rowdata['FechaContrato']!='0000-00-00'){echo Fecha_estandar($rowdata['FechaContrato']);}else{echo 'Sin fecha de Contrato';} ?><br/>
-							<strong>Fecha de Inicio Contrato : </strong><?php if(isset($rowdata['F_Inicio_Contrato'])&&$rowdata['F_Inicio_Contrato']!='0000-00-00'){echo Fecha_estandar($rowdata['F_Inicio_Contrato']);}else{echo 'Sin fecha de inicio';} ?><br/>
-							<strong>Fecha de Termino Contrato : </strong><?php if(isset($rowdata['F_Termino_Contrato'])&&$rowdata['F_Termino_Contrato']!='0000-00-00'){echo Fecha_estandar($rowdata['F_Termino_Contrato']);}else{echo 'Sin fecha de termino';} ?><br/>
-							<strong>Sueldo Liquido a Pago : </strong><?php echo valores($rowdata['SueldoLiquido'], 0); ?><br/>
-							<strong>Ubicación Trabajo : </strong><?php echo $rowdata['UbicacionTrabajo']; ?><br/>
+							<?php if(isset($rowData['Contratista'])&&$rowData['Contratista']!=''){ ?><strong>Contratista : </strong><?php echo $rowData['Contratista']; ?><br/><?php } ?>
+							<strong>Tipo Trabajador : </strong><?php echo $rowData['TipoTrabajador']; ?><br/>
+							<strong>Cargo : </strong><?php echo $rowData['Cargo']; ?><br/>
+							<strong>AFP : </strong><?php echo $rowData['nombre_afp']; ?><br/>
+							<strong>Salud : </strong><?php echo $rowData['nombre_salud']; ?><br/>
+							<strong>Tipo de Contrato : </strong><?php echo $rowData['TipoContrato']; ?><br/>
+							<strong>Fecha de Contrato : </strong><?php if(isset($rowData['FechaContrato'])&&$rowData['FechaContrato']!='0000-00-00'){echo Fecha_estandar($rowData['FechaContrato']);}else{echo 'Sin fecha de Contrato';} ?><br/>
+							<strong>Fecha de Inicio Contrato : </strong><?php if(isset($rowData['F_Inicio_Contrato'])&&$rowData['F_Inicio_Contrato']!='0000-00-00'){echo Fecha_estandar($rowData['F_Inicio_Contrato']);}else{echo 'Sin fecha de inicio';} ?><br/>
+							<strong>Fecha de Termino Contrato : </strong><?php if(isset($rowData['F_Termino_Contrato'])&&$rowData['F_Termino_Contrato']!='0000-00-00'){echo Fecha_estandar($rowData['F_Termino_Contrato']);}else{echo 'Sin fecha de termino';} ?><br/>
+							<strong>Sueldo Liquido a Pago : </strong><?php echo valores($rowData['SueldoLiquido'], 0); ?><br/>
+							<strong>Ubicación Trabajo : </strong><?php echo $rowData['UbicacionTrabajo']; ?><br/>
 							<?php
-							if(isset($rowdata['CentroCosto_Nombre'])&&$rowdata['CentroCosto_Nombre']!=''){
-								echo '<strong>Centro de Costo : </strong>'.$rowdata['CentroCosto_Nombre'];
-								if(isset($rowdata['CentroCosto_Level_1'])&&$rowdata['CentroCosto_Level_1']!=''){echo ' - '.$rowdata['CentroCosto_Level_1'];}
-								if(isset($rowdata['CentroCosto_Level_2'])&&$rowdata['CentroCosto_Level_2']!=''){echo ' - '.$rowdata['CentroCosto_Level_2'];}
-								if(isset($rowdata['CentroCosto_Level_3'])&&$rowdata['CentroCosto_Level_3']!=''){echo ' - '.$rowdata['CentroCosto_Level_3'];}
-								if(isset($rowdata['CentroCosto_Level_4'])&&$rowdata['CentroCosto_Level_4']!=''){echo ' - '.$rowdata['CentroCosto_Level_4'];}
-								if(isset($rowdata['CentroCosto_Level_5'])&&$rowdata['CentroCosto_Level_5']!=''){echo ' - '.$rowdata['CentroCosto_Level_5'];}
+							if(isset($rowData['CentroCosto_Nombre'])&&$rowData['CentroCosto_Nombre']!=''){
+								echo '<strong>Centro de Costo : </strong>'.$rowData['CentroCosto_Nombre'];
+								if(isset($rowData['CentroCosto_Level_1'])&&$rowData['CentroCosto_Level_1']!=''){echo ' - '.$rowData['CentroCosto_Level_1'];}
+								if(isset($rowData['CentroCosto_Level_2'])&&$rowData['CentroCosto_Level_2']!=''){echo ' - '.$rowData['CentroCosto_Level_2'];}
+								if(isset($rowData['CentroCosto_Level_3'])&&$rowData['CentroCosto_Level_3']!=''){echo ' - '.$rowData['CentroCosto_Level_3'];}
+								if(isset($rowData['CentroCosto_Level_4'])&&$rowData['CentroCosto_Level_4']!=''){echo ' - '.$rowData['CentroCosto_Level_4'];}
+								if(isset($rowData['CentroCosto_Level_5'])&&$rowData['CentroCosto_Level_5']!=''){echo ' - '.$rowData['CentroCosto_Level_5'];}
 								echo '<br/>';
 							}
 							?>
 							<strong>Observaciones : </strong><br/>
 								<div class="text-muted well well-sm no-shadow">
-									<?php if(isset($rowdata['Observaciones'])&&$rowdata['Observaciones']!=''){echo $rowdata['Observaciones'];}else{echo 'Sin Observaciones';} ?>
+									<?php if(isset($rowData['Observaciones'])&&$rowData['Observaciones']!=''){echo $rowData['Observaciones'];}else{echo 'Sin Observaciones';} ?>
 									<div class="clearfix"></div>
 								</div>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Forma de Pago</h2>
 						<p class="text-muted">
-							<strong>Banco : </strong><?php echo $rowdata['Pago_Banco']; ?><br/>
-							<strong>Tipo de cuenta deposito : </strong><?php echo $rowdata['Pago_TipoCuenta']; ?><br/>
-							<strong>Nro. Cta. Deposito : </strong><?php echo $rowdata['Pago_N_Cuenta']; ?><br/>
+							<strong>Banco : </strong><?php echo $rowData['Pago_Banco']; ?><br/>
+							<strong>Tipo de cuenta deposito : </strong><?php echo $rowData['Pago_TipoCuenta']; ?><br/>
+							<strong>Nro. Cta. Deposito : </strong><?php echo $rowData['Pago_N_Cuenta']; ?><br/>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Licencia de Conducir</h2>
 						<p class="text-muted">
-							<strong>Tipo de Licencia : </strong><?php echo $rowdata['LicenciaTipo']; ?><br/>
-							<strong>Numero CA : </strong><?php echo $rowdata['LicenciaCA']; ?><br/>
-							<strong>Fecha Ultimo Control : </strong><?php if(isset($rowdata['LicenciaControlUlt'])&&$rowdata['LicenciaControlUlt']!='0000-00-00'){echo Fecha_estandar($rowdata['LicenciaControlUlt']);}else{echo 'Sin fecha de ultimo control';} ?><br/>
-							<strong>Fecha Control : </strong><?php if(isset($rowdata['LicenciaControl'])&&$rowdata['LicenciaControl']!='0000-00-00'){echo Fecha_estandar($rowdata['LicenciaControl']);}else{echo 'Sin fecha de control';} ?>
+							<strong>Tipo de Licencia : </strong><?php echo $rowData['LicenciaTipo']; ?><br/>
+							<strong>Numero CA : </strong><?php echo $rowData['LicenciaCA']; ?><br/>
+							<strong>Fecha Ultimo Control : </strong><?php if(isset($rowData['LicenciaControlUlt'])&&$rowData['LicenciaControlUlt']!='0000-00-00'){echo Fecha_estandar($rowData['LicenciaControlUlt']);}else{echo 'Sin fecha de ultimo control';} ?><br/>
+							<strong>Fecha Control : </strong><?php if(isset($rowData['LicenciaControl'])&&$rowData['LicenciaControl']!='0000-00-00'){echo Fecha_estandar($rowData['LicenciaControl']);}else{echo 'Sin fecha de control';} ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
@@ -380,84 +377,84 @@ array_push( $arrCargas,$row );
 							<tbody>
 								<?php
 								//Contrato
-								if(isset($rowdata['File_Contrato'])&&$rowdata['File_Contrato']!=''){
+								if(isset($rowData['File_Contrato'])&&$rowData['File_Contrato']!=''){
 									echo '
 										<tr class="item-row">
 											<td>Contrato de Trabajo</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Contrato'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Contrato'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['File_Contrato'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['File_Contrato'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
 									';
 								}
 								//Curriculum
-								if(isset($rowdata['File_Curriculum'])&&$rowdata['File_Curriculum']!=''){
+								if(isset($rowData['File_Curriculum'])&&$rowData['File_Curriculum']!=''){
 									echo '
 										<tr class="item-row">
 											<td>Curriculum</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Curriculum'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Curriculum'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['File_Curriculum'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['File_Curriculum'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
 									';
 								}
 								//Antecedentes
-								if(isset($rowdata['File_Antecedentes'])&&$rowdata['File_Antecedentes']!=''){
+								if(isset($rowData['File_Antecedentes'])&&$rowData['File_Antecedentes']!=''){
 									echo '
 										<tr class="item-row">
 											<td>Papel de Antecedentes</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Antecedentes'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Antecedentes'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['File_Antecedentes'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['File_Antecedentes'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
 									';
 								}
 								//Carnet
-								if(isset($rowdata['File_Carnet'])&&$rowdata['File_Carnet']!=''){
+								if(isset($rowData['File_Carnet'])&&$rowData['File_Carnet']!=''){
 									echo '
 										<tr class="item-row">
 											<td>Carnet de Identidad</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Carnet'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Carnet'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['File_Carnet'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['File_Carnet'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
 									';
 								}
 								//Licencia
-								if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){
+								if(isset($rowData['File_Licencia'])&&$rowData['File_Licencia']!=''){
 									echo '
 										<tr class="item-row">
 											<td>Licencia de Conducir</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Licencia'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Licencia'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['File_Licencia'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['File_Licencia'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
 									';
 								}
 								//RHTM
-								if(isset($rowdata['File_RHTM'])&&$rowdata['File_RHTM']!=''){
+								if(isset($rowData['File_RHTM'])&&$rowData['File_RHTM']!=''){
 									echo '
 										<tr class="item-row">
-											<td>RHTM Revisado el '.fecha_estandar($rowdata['File_RHTM_Fecha']).'</td>
+											<td>RHTM Revisado el '.fecha_estandar($rowData['File_RHTM_Fecha']).'</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_RHTM'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_RHTM'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['File_RHTM'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['File_RHTM'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>

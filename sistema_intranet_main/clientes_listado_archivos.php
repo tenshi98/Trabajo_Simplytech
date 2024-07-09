@@ -41,12 +41,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,idTipo, Rut';
 $SIS_join  = '';
 $SIS_where = 'idCliente = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowdata['Nombre'], 'Agregar Archivos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowData['Nombre'], 'Agregar Archivos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -61,7 +61,7 @@ $rowdata = db_select_data (false, $SIS_query, 'clientes_listado', $SIS_join, $SI
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'clientes_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-volume-control-phone" aria-hidden="true"></i> Persona Contacto</a></li>
-						<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
+						<?php if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){ ?>
 							<li class=""><a href="<?php echo 'clientes_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'clientes_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
@@ -76,7 +76,7 @@ $rowdata = db_select_data (false, $SIS_query, 'clientes_listado', $SIS_join, $SI
         <div class="table-responsive">
 
 			<?php
-			$Rut = $rowdata['Rut'];
+			$Rut = $rowData['Rut'];
 			$Rut = str_replace(' ', '', $Rut);//elimino espacios
 			$Rut = str_replace('-', '', $Rut);//elimino los guiones
 			$Rut = str_replace('.', '', $Rut);//elimino los puntos

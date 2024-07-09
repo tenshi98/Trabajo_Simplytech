@@ -55,12 +55,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,ApellidoPat,ApellidoMat,idAFP,idSalud,idMutual,idCotizacionSaludExtra,PorcCotSaludExtra, MontoCotSaludExtra';
 $SIS_join  = '';
 $SIS_where = 'idTrabajador = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Datos Previsionales'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat'], 'Editar Datos Previsionales'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -100,12 +100,12 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idAFP)){                   $x1 = $idAFP;                    }else{$x1 = $rowdata['idAFP'];}
-					if(isset($idMutual)){                $x2 = $idMutual;                 }else{$x2 = $rowdata['idMutual'];}
-					if(isset($idSalud)){                 $x3 = $idSalud;                  }else{$x3 = $rowdata['idSalud'];}
-					if(isset($idCotizacionSaludExtra)){  $x4 = $idCotizacionSaludExtra;   }else{$x4 = $rowdata['idCotizacionSaludExtra'];}
-					if(isset($PorcCotSaludExtra)){       $x5 = $PorcCotSaludExtra;        }else{$x5 = $rowdata['PorcCotSaludExtra'];}
-					if(isset($MontoCotSaludExtra)){      $x6 = $MontoCotSaludExtra;       }else{$x6 = $rowdata['MontoCotSaludExtra'];}
+					if(isset($idAFP)){                   $x1 = $idAFP;                    }else{$x1 = $rowData['idAFP'];}
+					if(isset($idMutual)){                $x2 = $idMutual;                 }else{$x2 = $rowData['idMutual'];}
+					if(isset($idSalud)){                 $x3 = $idSalud;                  }else{$x3 = $rowData['idSalud'];}
+					if(isset($idCotizacionSaludExtra)){  $x4 = $idCotizacionSaludExtra;   }else{$x4 = $rowData['idCotizacionSaludExtra'];}
+					if(isset($PorcCotSaludExtra)){       $x5 = $PorcCotSaludExtra;        }else{$x5 = $rowData['PorcCotSaludExtra'];}
+					if(isset($MontoCotSaludExtra)){      $x6 = $MontoCotSaludExtra;       }else{$x6 = $rowData['MontoCotSaludExtra'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

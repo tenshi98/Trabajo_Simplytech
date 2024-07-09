@@ -376,7 +376,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			//busco los archivos relacionados
-			$rowdata = db_select_data (false, 'Archivo', 'prospectos_etapa_fidelizacion', '', 'idEtapaFide = "'.$_GET['del_archivo'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'Archivo', 'prospectos_etapa_fidelizacion', '', 'idEtapaFide = "'.$_GET['del_archivo'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -384,12 +384,12 @@ require_once '0_validate_user_1.php';
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				//se elimina el archivo
-				if(isset($rowdata['Archivo'])&&$rowdata['Archivo']!=''){
+				if(isset($rowData['Archivo'])&&$rowData['Archivo']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['Archivo'])){
+						if(!is_writable('upload/'.$rowData['Archivo'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['Archivo']);
+							unlink('upload/'.$rowData['Archivo']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log

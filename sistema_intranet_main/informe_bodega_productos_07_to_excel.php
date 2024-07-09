@@ -43,10 +43,10 @@ $arrCategoria = db_select_array (false, 'idCategoria, Nombre', 'sistema_producto
 $arrBodega = array();
 $arrBodega = db_select_array (false, 'idBodega, Nombre', 'bodegas_productos_listado', '', '', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrBodega');
 
-// Se trae un listado con los valores de las existencias actuales	
-$año_pasado = ano_actual()-1;
+// Se trae un listado con los valores de las existencias actuales
+$ano_pasado = ano_actual()-1;
 $SIS_where = "bodegas_productos_facturacion_existencias.idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."'";
-$SIS_where.= " AND bodegas_productos_facturacion_existencias.Creacion_ano >= ".$año_pasado;
+$SIS_where.= " AND bodegas_productos_facturacion_existencias.Creacion_ano >= ".$ano_pasado;
 $SIS_where.= " AND bodegas_productos_facturacion_existencias.idTipo = 6";
 $SIS_where.= " AND bodegas_productos_facturacion_existencias.idBodega = ".$_GET['idBodegaOrigen'];
 //Verificar si es por concepto de ingreso o egreso de bodega
@@ -70,41 +70,39 @@ $arrExistenciasMain = db_select_array (false, $SIS_query, 'bodegas_productos_fac
 $mes = array();
 foreach ($arrExistenciasMain as $existencias) {
 	if(!isset($mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']])){ $mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']] = 0;}
-	
 	$mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']] = $mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']] + $existencias['Valor'];									
 }
-								
+
 /****************************************************/
 $xmes = mes_actual();
 $xaño = ano_actual();
 $graficoMain = array();
 for ($xcontador = 12; $xcontador > 0; $xcontador--) {
-									
+
 	if($xmes>0){
 		$graficoMain[$xcontador]['mes'] = $xmes;
 		$graficoMain[$xcontador]['año'] = $xaño;
-		
+		//recorro
 		foreach ($arrCategoria as $cat) {
 			if(isset($mes[$xaño][$xmes][$cat['idCategoria']])){ $graficoMain[$xcontador][$cat['idCategoria']] = $mes[$xaño][$xmes][$cat['idCategoria']];}else{$graficoMain[$xcontador][$cat['idCategoria']] = 0;};
 		}
-									
 	}else{
 		$xmes = 12;
 		$xaño = $xaño-1;
 		$graficoMain[$xcontador]['mes'] = $xmes;
 		$graficoMain[$xcontador]['año'] = $xaño;
-		
+		//recorro
 		foreach ($arrCategoria as $cat) {
 			if(isset($mes[$xaño][$xmes][$cat['idCategoria']])){ $graficoMain[$xcontador][$cat['idCategoria']] = $mes[$xaño][$xmes][$cat['idCategoria']];}else{$graficoMain[$xcontador][$cat['idCategoria']] = 0;};
 		}
 	}
-	$xmes = $xmes-1;								
+	$xmes = $xmes-1;
 }
 
 /****************************************************************************************/
-// Se trae un listado con los valores de las existencias actuales	
+// Se trae un listado con los valores de las existencias actuales
 $SIS_where = "bodegas_productos_facturacion_existencias.idTipo = 6";
-$SIS_where.= " AND bodegas_productos_facturacion_existencias.Creacion_ano >= ".$año_pasado;
+$SIS_where.= " AND bodegas_productos_facturacion_existencias.Creacion_ano >= ".$ano_pasado;
 $SIS_where.= " AND bodegas_productos_facturacion.idBodegaOrigen = ".$_GET['idBodegaOrigen'];
 $SIS_where.= " AND bodegas_productos_facturacion.idBodegaDestino != ".$_GET['idBodegaOrigen'];
 //Verificar si es por concepto de ingreso o egreso de bodega

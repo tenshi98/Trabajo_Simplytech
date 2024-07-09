@@ -63,7 +63,7 @@ LEFT JOIN `trabajadores_listado`           ON trabajadores_listado.idTrabajador 
 LEFT JOIN `cross_predios_listado_zonas`    ON cross_predios_listado_zonas.idZona           = trabajadores_asistencias_predios.idZona
 LEFT JOIN `cross_predios_listado`          ON cross_predios_listado.idPredio               = cross_predios_listado_zonas.idPredio
 LEFT JOIN `core_estado_asistencia_predio`  ON core_estado_asistencia_predio.idEstado       = trabajadores_asistencias_predios.idEstado';
-$rowdata = db_select_data (false, $SIS_query, 'trabajadores_asistencias_predios', $SIS_join, 'trabajadores_asistencias_predios.idAsistencia ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'trabajadores_asistencias_predios', $SIS_join, 'trabajadores_asistencias_predios.idAsistencia ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /**************************************************************/
 //Se traen las rutas
@@ -75,7 +75,7 @@ cross_predios_listado_zonas_ubicaciones.Longitud';
 $SIS_join  = '
 LEFT JOIN `cross_predios_listado_zonas_ubicaciones`  ON cross_predios_listado_zonas_ubicaciones.idZona  = cross_predios_listado_zonas.idZona
 LEFT JOIN `cross_predios_listado`                    ON cross_predios_listado.idPredio                  = cross_predios_listado_zonas.idPredio';
-$SIS_where = 'cross_predios_listado.idSistema ='.$rowdata['TrabajadoridSistema'];
+$SIS_where = 'cross_predios_listado.idSistema ='.$rowData['TrabajadoridSistema'];
 $SIS_order = 'cross_predios_listado_zonas.idZona ASC, cross_predios_listado_zonas_ubicaciones.idUbicaciones ASC';
 $arrZonas = array();
 $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrZonas');
@@ -85,7 +85,7 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Zonas del Predio <?php echo $rowdata['PredioNombre']; ?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Zonas del Predio <?php echo $rowData['PredioNombre']; ?></h5>
 		</header>
 		<div class="tab-content">
 			<div class="table-responsive">
@@ -112,7 +112,7 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 							async function initMap() {
 								const { Map } = await google.maps.importLibrary("maps");
 
-								var myLatlng = new google.maps.LatLng(<?php echo $rowdata['PredioLatitud']; ?>, <?php echo $rowdata['PredioLongitud']; ?>);
+								var myLatlng = new google.maps.LatLng(<?php echo $rowData['PredioLatitud']; ?>, <?php echo $rowData['PredioLongitud']; ?>);
 
 								var myOptions = {
 									zoom: 15,
@@ -128,14 +128,14 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 												'<div class="iw-title">Ingreso-Egreso</div>' +
 												'<div class="iw-content">' +
 												'<p>'+
-												'<strong>Trabajador: </strong><?php echo $rowdata['TrabajadorNombre'].' '.$rowdata['TrabajadorApellidoPat'].' '.$rowdata['TrabajadorApellidoMat']; ?><br/>' +
-												'<strong>Rut: </strong><?php echo $rowdata['TrabajadorRut']; ?><br/>' +
-												'<strong>Fecha: </strong><?php echo fecha_estandar($rowdata['PredioFecha']); ?><br/>' +
-												'<strong>Hora: </strong><?php echo $rowdata['PredioHora']; ?><br/>' +
-												'<strong>IP: </strong><?php echo $rowdata['PredioIP']; ?><br/>' +
-												'<strong>Predio: </strong><?php echo $rowdata['PredioNombre']; ?><br/>' +
-												'<strong>Cuartel: </strong><?php echo $rowdata['PredioCuartel']; ?><br/>' +
-												'<strong>Estado: </strong><?php echo $rowdata['Estado']; ?><br/>' +
+												'<strong>Trabajador: </strong><?php echo $rowData['TrabajadorNombre'].' '.$rowData['TrabajadorApellidoPat'].' '.$rowData['TrabajadorApellidoMat']; ?><br/>' +
+												'<strong>Rut: </strong><?php echo $rowData['TrabajadorRut']; ?><br/>' +
+												'<strong>Fecha: </strong><?php echo fecha_estandar($rowData['PredioFecha']); ?><br/>' +
+												'<strong>Hora: </strong><?php echo $rowData['PredioHora']; ?><br/>' +
+												'<strong>IP: </strong><?php echo $rowData['PredioIP']; ?><br/>' +
+												'<strong>Predio: </strong><?php echo $rowData['PredioNombre']; ?><br/>' +
+												'<strong>Cuartel: </strong><?php echo $rowData['PredioCuartel']; ?><br/>' +
+												'<strong>Estado: </strong><?php echo $rowData['Estado']; ?><br/>' +
 												'</p>' +
 												'</div>' +
 												'<div class="iw-bottom-gradient"></div>' +
@@ -353,7 +353,7 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 
 								}
 
-								echo 'myLatlng = new google.maps.LatLng('.$rowdata['PredioLatitud'].', '.$rowdata['PredioLongitud'].');
+								echo 'myLatlng = new google.maps.LatLng('.$rowData['PredioLatitud'].', '.$rowData['PredioLongitud'].');
 													map.setCenter(myLatlng);';
 								?>
 							}

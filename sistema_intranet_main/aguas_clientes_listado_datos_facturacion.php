@@ -56,12 +56,12 @@ UnidadHabitacional, Arranque, idFacturable, idCiudadFact, idComunaFact, Direccio
 Giro, idRubro, latitud, longitud';
 $SIS_join  = '';
 $SIS_where = 'idCliente = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente '.$rowdata['Identificador'], $rowdata['Nombre'], 'Editar Datos Facturacion'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente '.$rowData['Identificador'], $rowData['Nombre'], 'Editar Datos Facturacion'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -90,19 +90,19 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_joi
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($RazonSocial)){         $x1  = $RazonSocial;          }else{$x1  = $rowdata['RazonSocial'];}
-					if(isset($idMarcadores)){        $x2  = $idMarcadores;         }else{$x2  = $rowdata['idMarcadores'];}
-					if(isset($idRemarcadores)){      $x3  = $idRemarcadores;       }else{$x3  = $rowdata['idRemarcadores'];}
-					if(isset($UnidadHabitacional)){  $x4  = $UnidadHabitacional;   }else{$x4  = $rowdata['UnidadHabitacional'];}
-					if(isset($Arranque)){            $x5  = $Arranque;             }else{$x5  = $rowdata['Arranque'];}
-					if(isset($idFacturable)){        $x6  = $idFacturable;         }else{$x6  = $rowdata['idFacturable'];}
-					if(isset($idCiudadFact)){        $x7  = $idCiudadFact;         }else{$x7  = $rowdata['idCiudadFact'];}
-					if(isset($idComunaFact)){        $x8  = $idComunaFact;         }else{$x8  = $rowdata['idComunaFact'];}
-					if(isset($DireccionFact)){       $x9  = $DireccionFact;        }else{$x9  = $rowdata['DireccionFact'];}
-					if(isset($Giro)){                $x10 = $Giro;                 }else{$x10 = $rowdata['Giro'];}
-					if(isset($idRubro)){             $x11 = $idRubro;              }else{$x11 = $rowdata['idRubro'];}
-					if(isset($latitud)){             $x12 = $latitud;              }else{$x12 = $rowdata['latitud'];}
-					if(isset($longitud)){            $x13 = $longitud;             }else{$x13 = $rowdata['longitud'];}
+					if(isset($RazonSocial)){         $x1  = $RazonSocial;          }else{$x1  = $rowData['RazonSocial'];}
+					if(isset($idMarcadores)){        $x2  = $idMarcadores;         }else{$x2  = $rowData['idMarcadores'];}
+					if(isset($idRemarcadores)){      $x3  = $idRemarcadores;       }else{$x3  = $rowData['idRemarcadores'];}
+					if(isset($UnidadHabitacional)){  $x4  = $UnidadHabitacional;   }else{$x4  = $rowData['UnidadHabitacional'];}
+					if(isset($Arranque)){            $x5  = $Arranque;             }else{$x5  = $rowData['Arranque'];}
+					if(isset($idFacturable)){        $x6  = $idFacturable;         }else{$x6  = $rowData['idFacturable'];}
+					if(isset($idCiudadFact)){        $x7  = $idCiudadFact;         }else{$x7  = $rowData['idCiudadFact'];}
+					if(isset($idComunaFact)){        $x8  = $idComunaFact;         }else{$x8  = $rowData['idComunaFact'];}
+					if(isset($DireccionFact)){       $x9  = $DireccionFact;        }else{$x9  = $rowData['DireccionFact'];}
+					if(isset($Giro)){                $x10 = $Giro;                 }else{$x10 = $rowData['Giro'];}
+					if(isset($idRubro)){             $x11 = $idRubro;              }else{$x11 = $rowData['idRubro'];}
+					if(isset($latitud)){             $x12 = $latitud;              }else{$x12 = $rowData['latitud'];}
+					if(isset($longitud)){            $x13 = $longitud;             }else{$x13 = $rowData['longitud'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

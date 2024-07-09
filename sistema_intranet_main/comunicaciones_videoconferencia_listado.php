@@ -84,7 +84,7 @@ if(!empty($_GET['id'])){
 	LEFT JOIN `core_tipo_videoconferencia`  ON core_tipo_videoconferencia.idTipo  = comunicaciones_videoconferencia_listado.idTipo
 	LEFT JOIN `usuarios_listado`            ON usuarios_listado.idUsuario         = comunicaciones_videoconferencia_listado.idUsuario';
 	$SIS_where = 'comunicaciones_videoconferencia_listado.idVideoConferencia = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'comunicaciones_videoconferencia_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'comunicaciones_videoconferencia_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -98,7 +98,7 @@ if(!empty($_GET['id'])){
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'VideoConferencia', $rowdata['Nombre'], 'Resumen'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'VideoConferencia', $rowData['Nombre'], 'Resumen'); ?>
 	</div>
 	<div class="clearfix"></div>
 
@@ -122,25 +122,20 @@ if(!empty($_GET['id'])){
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 							<p class="text-muted">
-								<strong>Tipo : </strong><?php echo $rowdata['Tipo']; ?><br/>
-								<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
-								<strong>Fecha : </strong><?php echo fecha_estandar($rowdata['Fecha']); ?><br/>
-								<strong>Duracion : </strong><?php echo $rowdata['HoraInicio'].' - '.$rowdata['HoraTermino']; ?><br/>
-								<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
-								<strong>Sistema : </strong><?php echo $rowdata['RazonSocial']; ?><br/>
-								<strong>Usuario Creador : </strong><?php echo $rowdata['Usuario']; ?><br/>
+								<strong>Tipo : </strong><?php echo $rowData['Tipo']; ?><br/>
+								<strong>Nombre : </strong><?php echo $rowData['Nombre']; ?><br/>
+								<strong>Fecha : </strong><?php echo fecha_estandar($rowData['Fecha']); ?><br/>
+								<strong>Duracion : </strong><?php echo $rowData['HoraInicio'].' - '.$rowData['HoraTermino']; ?><br/>
+								<strong>Estado : </strong><?php echo $rowData['Estado']; ?><br/>
+								<strong>Sistema : </strong><?php echo $rowData['RazonSocial']; ?><br/>
+								<strong>Usuario Creador : </strong><?php echo $rowData['Usuario']; ?><br/>
 							</p>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Usuarios Participantes</h2>
 							<p class="text-muted">
 								<?php
-								//Verifico el total de cargas
-								$nn = 0;
-								foreach ($arrUsuarios as $carga) {
-									$nn++;
-								}
 								//Se existen cargas estas se despliegan
-								if($nn!=0){
+								if($arrUsuarios!=false){
 									foreach ($arrUsuarios as $carga) {
 										echo '<i class="fa fa-user" aria-hidden="true"></i> '.$carga['Usuario'].'<br/>';
 									}

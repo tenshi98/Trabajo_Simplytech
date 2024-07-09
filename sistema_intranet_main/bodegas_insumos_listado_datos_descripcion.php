@@ -55,12 +55,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,Descripcion';
 $SIS_join  = '';
 $SIS_where = 'idBodega = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'bodegas_insumos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'bodegas_insumos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Bodega', $rowdata['Nombre'], 'Editar Descripcion'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Bodega', $rowData['Nombre'], 'Editar Descripcion'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -86,7 +86,7 @@ $rowdata = db_select_data (false, $SIS_query, 'bodegas_insumos_listado', $SIS_jo
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Descripcion)){     $x1  = $Descripcion;    }else{$x1  = $rowdata['Descripcion'];}
+					if(isset($Descripcion)){     $x1  = $Descripcion;    }else{$x1  = $rowData['Descripcion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

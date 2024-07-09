@@ -62,12 +62,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,HDS';
 $SIS_join  = '';
 $SIS_where = 'idProducto = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'variedades_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'variedades_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Variedades', $rowdata['Nombre'], 'Editar Hoja de Seguridad'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Variedades', $rowData['Nombre'], 'Editar Hoja de Seguridad'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -93,11 +93,11 @@ $rowdata = db_select_data (false, $SIS_query, 'variedades_listado', $SIS_join, $
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
 
-				<?php if(isset($rowdata['HDS'])&&$rowdata['HDS']!=''){ ?>
+				<?php if(isset($rowData['HDS'])&&$rowData['HDS']!=''){ ?>
 
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 						<h3>Archivo</h3>
-						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['HDS'], ''); ?>
+						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowData['HDS'], ''); ?>
 						<br/>
 						<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_hds='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 					</div>

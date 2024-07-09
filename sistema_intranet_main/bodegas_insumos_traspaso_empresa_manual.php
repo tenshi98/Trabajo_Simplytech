@@ -112,7 +112,7 @@ if(!empty($_GET['editProd'])){
 	$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml';
 	$SIS_where = 'insumos_listado.idProducto='.$_SESSION['insumos_traspasomanualempresa_productos'][$_GET['editProd']]['idProducto'];
 	$SIS_where.= ' AND insumos_listado.idEstado=1';
-	$row_data = db_select_data (false, $SIS_query, 'insumos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'insumos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -124,7 +124,7 @@ if(!empty($_GET['editProd'])){
 	$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_insumos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
 
 	/*******************************************************/
-	$Total_existencias = $row_data['ingreso'] - $row_data['egreso'];
+	$Total_existencias = $rowData['ingreso'] - $rowData['egreso'];
 	/*******************************************************/
 	//filtro
 	$zx2 = "idProducto=0";
@@ -153,10 +153,10 @@ if(!empty($_GET['editProd'])){
 					$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
 					$Form_Inputs->form_input_number('Cantidad', 'Number', $x2, 2);
 
-					$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $row_data['Unimed']);
-					$Form_Inputs->form_input_disabled('Valor Unitario','Unitario', Cantidades_decimales_justos($row_data['ValorIngreso']));
+					$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $rowData['Unimed']);
+					$Form_Inputs->form_input_disabled('Valor Unitario','Unitario', Cantidades_decimales_justos($rowData['ValorIngreso']));
 					$Form_Inputs->form_input_disabled('Existencias','Existencias', Cantidades_decimales_justos($Total_existencias));
-					$Form_Inputs->form_input_hidden('ValorIngreso', Cantidades_decimales_justos($row_data['ValorIngreso']), 2);
+					$Form_Inputs->form_input_hidden('ValorIngreso', Cantidades_decimales_justos($rowData['ValorIngreso']), 2);
 
 					echo prod_print_venta($bodega, 'ValorIngreso', 'insumos_listado','bodegas_insumos_facturacion_existencias', 
 										'idProducto', 'unimed', 'Unitario', 'Existencias', 'ValorIngreso', $dbConn); 

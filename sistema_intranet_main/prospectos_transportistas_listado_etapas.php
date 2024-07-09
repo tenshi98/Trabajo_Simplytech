@@ -88,7 +88,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado); 
+$rowData = mysqli_fetch_assoc ($resultado); 
  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -102,8 +102,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idEtapa)){      $x1  = $idEtapa;        }else{$x1  = $rowdata['idEtapa'];}
-				if(isset($Observacion)){  $x2  = $Observacion;    }else{$x2  = $rowdata['Observacion'];}
+				if(isset($idEtapa)){      $x1  = $idEtapa;        }else{$x1  = $rowData['idEtapa'];}
+				if(isset($Observacion)){  $x2  = $Observacion;    }else{$x2  = $rowData['Observacion'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -181,7 +181,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 // Se trae un listado con todas las etapa el Prospecto
 $arrEtapa = array();
@@ -219,7 +219,7 @@ array_push( $arrEtapa,$row );
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowdata['Nombre'], 'Etapa Fidelizacion'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowData['Nombre'], 'Etapa Fidelizacion'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Modificar Etapa Fidelizacion</a><?php } ?>
 	</div>

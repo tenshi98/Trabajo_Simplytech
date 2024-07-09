@@ -188,7 +188,7 @@ if(!empty($_GET['addFile'])){ ?>
 	LEFT JOIN `proveedor_listado`       ON proveedor_listado.idProveedor    = insumos_listado.idProveedor';
 	$SIS_where = 'insumos_listado.idProducto='.$_SESSION['insumos_ing_nd_productos'][$_GET['editProd']]['idProducto'];
 	$SIS_where.= ' AND insumos_listado.idEstado=1';
-	$row_data = db_select_data (false, $SIS_query, 'insumos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'insumos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -228,8 +228,8 @@ if(!empty($_GET['addFile'])){ ?>
 					$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
 					$Form_Inputs->form_input_number('Cantidad', 'Cantidad_ing', $x2, 2);
 
-					if(isset($row_data['Proveedor'])&&$row_data['Proveedor']!=''){$prov=$row_data['Proveedor'];}else{$prov='Sin proveedor';}
-					$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $row_data['Unimed']);
+					if(isset($rowData['Proveedor'])&&$rowData['Proveedor']!=''){$prov=$rowData['Proveedor'];}else{$prov='Sin proveedor';}
+					$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $rowData['Unimed']);
 					$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', $prov);
 					$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['insumos_ing_nd_productos'][$_GET['editProd']]['ValorIngreso']));
 					$Form_Inputs->form_input_number('Valor Total Neto', 'ValorTotal', $x3, 2);

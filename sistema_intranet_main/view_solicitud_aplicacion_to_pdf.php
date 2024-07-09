@@ -45,7 +45,7 @@ if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&simpleDecode($_GET['idSist
 /**************************************************************/
 // consulto los datos
 $SIS_query = '
-cross_solicitud_aplicacion_listado.idSolicitud, 
+cross_solicitud_aplicacion_listado.idSolicitud,
 cross_solicitud_aplicacion_listado.NSolicitud,
 cross_solicitud_aplicacion_listado.idEstado,
 cross_solicitud_aplicacion_listado.f_creacion,
@@ -61,10 +61,10 @@ cross_solicitud_aplicacion_listado.horaTermino,
 cross_solicitud_aplicacion_listado.horaProg_fin,
 cross_solicitud_aplicacion_listado.horaEjecucion_fin,
 cross_solicitud_aplicacion_listado.horaTermino_fin,
-cross_solicitud_aplicacion_listado.Mojamiento, 
-cross_solicitud_aplicacion_listado.VelTractor, 
-cross_solicitud_aplicacion_listado.VelViento, 
-cross_solicitud_aplicacion_listado.TempMin, 
+cross_solicitud_aplicacion_listado.Mojamiento,
+cross_solicitud_aplicacion_listado.VelTractor,
+cross_solicitud_aplicacion_listado.VelViento,
+cross_solicitud_aplicacion_listado.TempMin,
 cross_solicitud_aplicacion_listado.TempMax,
 cross_solicitud_aplicacion_listado.HumTempMax,
 
@@ -106,7 +106,7 @@ LEFT JOIN `variedades_listado`                      ON variedades_listado.idProd
 LEFT JOIN `core_cross_prioridad`                    ON core_cross_prioridad.idPrioridad               = cross_solicitud_aplicacion_listado.idPrioridad
 LEFT JOIN `trabajadores_listado`                    ON trabajadores_listado.idTrabajador              = cross_solicitud_aplicacion_listado.idDosificador';
 $SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /*****************************************/
 //Cuarteles
@@ -119,7 +119,7 @@ cross_predios_listado_zonas.Nombre AS CuartelNombre,
 cross_solicitud_aplicacion_listado_cuarteles.idEstado,
 cross_solicitud_aplicacion_listado_cuarteles.f_cierre,
 cross_solicitud_aplicacion_listado_cuarteles.idZona,
-cross_solicitud_aplicacion_listado.Mojamiento, 
+cross_solicitud_aplicacion_listado.Mojamiento,
 cross_predios_listado_zonas.Hectareas AS CuartelHectareas,
 cross_solicitud_aplicacion_listado_cuarteles.idEjecucion AS CuartelidEjecucion,
 cross_solicitud_aplicacion_listado_cuarteles.LitrosAplicados AS CuartelLitrosAplicados,
@@ -178,7 +178,7 @@ $arrTracxCuartel = array();
 $arrTracxCuartel = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTracxCuartel');
 
 /*****************************************/
-//Se trae un listado con los productos	
+//Se trae un listado con los productos
 $SIS_query = '
 cross_solicitud_aplicacion_listado_productos.idProdQuim,
 cross_solicitud_aplicacion_listado_productos.idCuarteles,
@@ -186,9 +186,9 @@ cross_solicitud_aplicacion_listado_productos.DosisRecomendada,
 cross_solicitud_aplicacion_listado_productos.DosisAplicar,
 cross_solicitud_aplicacion_listado_productos.Objetivo,
 productos_listado.Nombre AS ProductoNombre,
-productos_listado.IngredienteActivo AS ProductoIngrediente, 
-productos_listado.Carencia AS ProductoCarencia, 
-productos_listado.EfectoResidual AS ProductoResidual, 
+productos_listado.IngredienteActivo AS ProductoIngrediente,
+productos_listado.Carencia AS ProductoCarencia,
+productos_listado.EfectoResidual AS ProductoResidual,
 productos_listado.EfectoRetroactivo AS ProductoRetroactivo,
 productos_listado.CarenciaExportador AS ProductoExportador,
 sistema_productos_uml.Nombre AS Unimed';
@@ -226,57 +226,56 @@ $html .= '
 	<tbody>
 		<tr>
 			<td>
-	
 				<table style="text-align: left; width: 100%;"  cellpadding="0" cellspacing="0">
 					<tbody>
 						<tr class="oddrow">
 							<td colspan="2" rowspan="1" style="vertical-align: top;">Solicitud de Aplicacion</td>
-							<td style="vertical-align: top;">Fecha Creacion: '.Fecha_estandar($row_data['f_creacion']).'</td>
+							<td style="vertical-align: top;">Fecha Creacion: '.Fecha_estandar($rowData['f_creacion']).'</td>
 						</tr>
 						<tr>
 							<td style="vertical-align: top; width:33%;">
 								<strong>Datos Empresa</strong><br/>
-								Rut: '.$row_data['SistemaOrigenRut'].'<br/>
-								Empresa: '.$row_data['SistemaOrigen'].'<br/>
-								Ciudad-Comuna: '.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
-								Dirección: '.$row_data['SistemaOrigenDireccion'].'<br/>
-								Fono: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
-								Email: '.$row_data['SistemaOrigenEmail'].'
+								Rut: '.$rowData['SistemaOrigenRut'].'<br/>
+								Empresa: '.$rowData['SistemaOrigen'].'<br/>
+								Ciudad-Comuna: '.$rowData['SistemaOrigenCiudad'].', '.$rowData['SistemaOrigenComuna'].'<br/>
+								Dirección: '.$rowData['SistemaOrigenDireccion'].'<br/>
+								Fono: '.formatPhone($rowData['SistemaOrigenFono']).'<br/>
+								Email: '.$rowData['SistemaOrigenEmail'].'
 							</td>
 							<td style="vertical-align: top;width:33%;">
 								<strong>Identificación</strong><br/>
-								Predio: '.$row_data['NombrePredio'].'<br/>
-								Estado: '.$row_data['Estado'].'<br/>
-								Temporada: '.$row_data['TemporadaCodigo'].' '.$row_data['TemporadaNombre'].'<br/>
-								Estado Fenologico: '.$row_data['EstadoFenCodigo'].' '.$row_data['EstadoFenNombre'].'<br/>';
-								if(isset($row_data['VariedadCat'])&&$row_data['VariedadCat']!=''){      $html .= 'Especie: '.$row_data['VariedadCat'].'<br/>';     }else{$html .= 'Especie: Todas las Especies<br/>';}
-								if(isset($row_data['VariedadNombre'])&&$row_data['VariedadNombre']!=''){$html .= 'Variedad: '.$row_data['VariedadNombre'].'<br/>';}else{$html .= 'Variedad: Todas las Variedades<br/>';}
+								Predio: '.$rowData['NombrePredio'].'<br/>
+								Estado: '.$rowData['Estado'].'<br/>
+								Temporada: '.$rowData['TemporadaCodigo'].' '.$rowData['TemporadaNombre'].'<br/>
+								Estado Fenologico: '.$rowData['EstadoFenCodigo'].' '.$rowData['EstadoFenNombre'].'<br/>';
+								if(isset($rowData['VariedadCat'])&&$rowData['VariedadCat']!=''){      $html .= 'Especie: '.$rowData['VariedadCat'].'<br/>';     }else{$html .= 'Especie: Todas las Especies<br/>';}
+								if(isset($rowData['VariedadNombre'])&&$rowData['VariedadNombre']!=''){$html .= 'Variedad: '.$rowData['VariedadNombre'].'<br/>';}else{$html .= 'Variedad: Todas las Variedades<br/>';}
 							$html .= '
 							</td>
 							<td style="vertical-align: top;width:33%;">
 								<strong>Datos de Solicitud</strong><br/>
-								Prioridad: '.$row_data['NombrePrioridad'].'<br/>
-								N° Solicitud: '.n_doc($row_data['NSolicitud'], 5).'<br/>
-								Fecha inicio requerido: '.fecha_estandar($row_data['f_programacion']).' '.$row_data['horaProg'].'<br/>
-								Fecha termino requerido: '.fecha_estandar($row_data['f_programacion_fin']).' '.$row_data['horaProg_fin'].'<br/>';
-								if(isset($row_data['f_ejecucion'])&&$row_data['f_ejecucion']!='0000-00-00'){         $html .= 'Fecha inicio programación: '.fecha_estandar($row_data['f_ejecucion']).' '.$row_data['horaEjecucion'].'<br/>';}
-								if(isset($row_data['f_ejecucion_fin'])&&$row_data['f_ejecucion_fin']!='0000-00-00'){ $html .= 'Fecha termino programación: '.fecha_estandar($row_data['f_ejecucion_fin']).' '.$row_data['horaEjecucion_fin'].'<br/>';}
-								if(isset($row_data['f_termino'])&&$row_data['f_termino']!='0000-00-00'){             $html .= 'Fecha inicio ejecución: '.fecha_estandar($row_data['f_termino']).' '.$row_data['horaTermino'].'<br/>';}
-								if(isset($row_data['f_termino_fin'])&&$row_data['f_termino_fin']!='0000-00-00'){     $html .= 'Terminado: '.fecha_estandar($row_data['f_termino_fin']).' '.$row_data['horaTermino_fin'].'<br/>';}
-								$html .= 'Agrónomo: '.$row_data['NombreUsuario'];
-								if(isset($row_data['idDosificador'])&&$row_data['idDosificador']!=0){$html .= 'Dosificador: '.$row_data['TrabajadorRut'].' '.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].'<br/>';}
+								Prioridad: '.$rowData['NombrePrioridad'].'<br/>
+								N° Solicitud: '.n_doc($rowData['NSolicitud'], 5).'<br/>
+								Fecha inicio requerido: '.fecha_estandar($rowData['f_programacion']).' '.$rowData['horaProg'].'<br/>
+								Fecha termino requerido: '.fecha_estandar($rowData['f_programacion_fin']).' '.$rowData['horaProg_fin'].'<br/>';
+								if(isset($rowData['f_ejecucion'])&&$rowData['f_ejecucion']!='0000-00-00'){         $html .= 'Fecha inicio programación: '.fecha_estandar($rowData['f_ejecucion']).' '.$rowData['horaEjecucion'].'<br/>';}
+								if(isset($rowData['f_ejecucion_fin'])&&$rowData['f_ejecucion_fin']!='0000-00-00'){ $html .= 'Fecha termino programación: '.fecha_estandar($rowData['f_ejecucion_fin']).' '.$rowData['horaEjecucion_fin'].'<br/>';}
+								if(isset($rowData['f_termino'])&&$rowData['f_termino']!='0000-00-00'){             $html .= 'Fecha inicio ejecución: '.fecha_estandar($rowData['f_termino']).' '.$rowData['horaTermino'].'<br/>';}
+								if(isset($rowData['f_termino_fin'])&&$rowData['f_termino_fin']!='0000-00-00'){     $html .= 'Terminado: '.fecha_estandar($rowData['f_termino_fin']).' '.$rowData['horaTermino_fin'].'<br/>';}
+								$html .= 'Agrónomo: '.$rowData['NombreUsuario'];
+								if(isset($rowData['idDosificador'])&&$rowData['idDosificador']!=0){$html .= 'Dosificador: '.$rowData['TrabajadorRut'].' '.$rowData['TrabajadorNombre'].' '.$rowData['TrabajadorApellidoPat'].'<br/>';}
 								$html .= '
 							</td>
 						</tr>
 						<tr>
 							<td style="vertical-align: top; width:33%;">
 								<strong>Parámetros de Aplicación</strong><br/>
-								Mojamiento: '.Cantidades_decimales_justos($row_data['Mojamiento']).' L/ha<br/>
-								Velocidad Tractor: '.Cantidades_decimales_justos($row_data['VelTractor']).' Km/hr<br/>
-								Velocidad Viento: '.Cantidades_decimales_justos($row_data['VelViento']).' Km/hr<br/>
-								Temperatura Min: '.Cantidades_decimales_justos($row_data['TempMin']).' °<br/>
-								Temperatura Max: '.Cantidades_decimales_justos($row_data['TempMax']).' °<br/>
-								Humedad: '.Cantidades_decimales_justos($row_data['HumTempMax']).' %<br/>
+								Mojamiento: '.Cantidades_decimales_justos($rowData['Mojamiento']).' L/ha<br/>
+								Velocidad Tractor: '.Cantidades_decimales_justos($rowData['VelTractor']).' Km/hr<br/>
+								Velocidad Viento: '.Cantidades_decimales_justos($rowData['VelViento']).' Km/hr<br/>
+								Temperatura Min: '.Cantidades_decimales_justos($rowData['TempMin']).' °<br/>
+								Temperatura Max: '.Cantidades_decimales_justos($rowData['TempMax']).' °<br/>
+								Humedad: '.Cantidades_decimales_justos($rowData['HumTempMax']).' %<br/>
 							</td>
 							<td style="vertical-align: top;width:33%;"></td>
 							<td style="vertical-align: top;width:33%;"></td>
@@ -312,7 +311,7 @@ $html .= '
                     $TotalLitrosAplicados   = 0;
                     $TotalMojamiento        = 0;
                     $TotLitrosApliXhect     = 0;
-                    
+
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrCuarteles!=false && !empty($arrCuarteles) && $arrCuarteles!='') {
 						foreach ($arrCuarteles as $cuartel) {
@@ -352,7 +351,7 @@ $html .= '
 							$TotalMojamiento       = $TotalMojamiento + $cuartel['Mojamiento'];
 							$TotalLitrosAplicados  = $TotalLitrosAplicados + $S_LitrosAplicados;
 							$TotLitrosApliXhect    = $TotLitrosApliXhect + $LitrosApliXhect;
-							
+
 							if($LitrosApliXhect!=0){$ndatax1 = porcentaje($LitrosApliXhect/$cuartel['Mojamiento']);}else{ $ndatax1 = '0 %';}
 
 							$html .= '<tr>';
@@ -373,8 +372,7 @@ $html .= '
 										}
 									}
 								$html .= '</td>';
-								 
-								 
+
 							$html .= '</tr>';
 						}
 
@@ -390,8 +388,8 @@ $html .= '
 							$html .= '<td>'.Cantidades($TotLitrosApliXhect, 1).'</td>';
 							$html .= '<td>'.$ndatax1.'</td>';
 							$html .= '<td></td>';
-						$html .= '</tr>'; 
-						
+						$html .= '</tr>';
+
 					}else{
 						$html .= '<tr><td colspan="10">No hay cuarteles asignados</td></tr>';
 					}
@@ -505,17 +503,16 @@ $html .= '
 					if ($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') {
 						foreach ($arrProductos as $prod) {
 							$PromedioCapacidad = $Capacidad/$NTract;
-							if($PromedioCapacidad!=0){$s_valor = Cantidades(($row_data['Mojamiento']*$TotalCuartelHectareas)/$PromedioCapacidad, 2);}else{$s_valor = 0;}
+							if($PromedioCapacidad!=0){$s_valor = Cantidades(($rowData['Mojamiento']*$TotalCuartelHectareas)/$PromedioCapacidad, 2);}else{$s_valor = 0;}
 
 							$html .= '<tr>';
 							if($nmb==0){$html .= '<td rowspan="'.$NProd.'">'.Cantidades_decimales_justos($Capacidad).'</td>';}
 							if($nmb==0){$html .= '<td rowspan="'.$NProd.'">'.Cantidades_decimales_justos($PromedioCapacidad).'</td>';}
 							if($nmb==0){$html .= '<td rowspan="'.$NProd.'">'.$s_valor.'</td>';}
-							
-							
+
 							$html .= '
 								<td><i class="fa fa-flask" aria-hidden="true"></i> '.$prod['ProductoNombre'].'</td>
-								<td>'.Cantidades((($row_data['Mojamiento']*$TotalCuartelHectareas)/100)*$prod['DosisAplicar'], 2).' '.$prod['Unimed'].'</td>
+								<td>'.Cantidades((($rowData['Mojamiento']*$TotalCuartelHectareas)/100)*$prod['DosisAplicar'], 2).' '.$prod['Unimed'].'</td>
 							</tr>';
 							//se suma 1
 							$nmb++;
@@ -557,14 +554,14 @@ $html .= '
 		</tr>
 	</tbody>
 </table>';
- 
+
 /**********************************************************************************************************************************/
 /*                                                          Impresion PDF                                                         */
 /**********************************************************************************************************************************/
 //Config
-$pdf_titulo     = 'Solicitud Aplicacion N°'.n_doc($row_data['NSolicitud'], 5);
+$pdf_titulo     = 'Solicitud Aplicacion N°'.n_doc($rowData['NSolicitud'], 5);
 $pdf_subtitulo  = '';
-$pdf_file       = 'Solicitud Aplicacion '.n_doc($row_data['NSolicitud'], 5).'.pdf';
+$pdf_file       = 'Solicitud Aplicacion '.n_doc($rowData['NSolicitud'], 5).'.pdf';
 $OpcDom         = "'A4', 'landscape'";
 $OpcTcpOrt      = "L";  //P->PORTRAIT - L->LANDSCAPE
 $OpcTcpPg       = "A4"; //Tipo de Hoja

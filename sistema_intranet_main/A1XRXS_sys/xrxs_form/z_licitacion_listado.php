@@ -232,7 +232,7 @@ require_once '0_validate_user_1.php';
 
 				/*****************************************************/
 				// Se traen todos los datos de la licitacion
-				$rowdata = db_select_data (false, 'Codigo, Nombre,FechaInicio, FechaTermino, Presupuesto, idBodegaProd, idBodegaIns, idSistema, idAprobado, idCliente, idEstado, idTipoLicitacion, ValorMensual, idOpcionItem', 'licitacion_listado', '', 'idLicitacion = '.$idLicitacion, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'Codigo, Nombre,FechaInicio, FechaTermino, Presupuesto, idBodegaProd, idBodegaIns, idSistema, idAprobado, idCliente, idEstado, idTipoLicitacion, ValorMensual, idOpcionItem', 'licitacion_listado', '', 'idLicitacion = '.$idLicitacion, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*****************************************************/
 				// Se traen todos los datos de la licitacion
@@ -262,20 +262,20 @@ require_once '0_validate_user_1.php';
 					//se crean el mensaje
 					$hist_Observacion = '<strong>Modificaciones:</strong><br/>';
 
-					if(isset($idSistema) && $idSistema != $rowdata['idSistema']){                      $hist_Observacion .= '-Se cambia el sistema<br/>';}
-					if(isset($Codigo) && $Codigo != $rowdata['Codigo']){                               $hist_Observacion .= '-Se cambia el Codigo, de <strong>'.$rowdata['Codigo'].'</strong> a <strong>'.$Codigo.'</strong><br/>';}
-					if(isset($Nombre) && $Nombre != $rowdata['Nombre']){                               $hist_Observacion .= '-Se cambia el Nombre,de <strong>'.$rowdata['Nombre'].'</strong> a <strong>'.$Nombre.'</strong><br/>';}
-					if(isset($FechaInicio) && $FechaInicio != $rowdata['FechaInicio']){                $hist_Observacion .= '-Se cambia la Fecha de Inicio, de <strong>'.fecha_estandar($rowdata['FechaInicio']).'</strong> a <strong>'.fecha_estandar($FechaInicio).'</strong><br/>';}
-					if(isset($FechaTermino) && $FechaTermino != $rowdata['FechaTermino']){             $hist_Observacion .= '-Se cambia la Fecha de Termino, de <strong>'.fecha_estandar($rowdata['FechaTermino']).'</strong> a <strong>'.fecha_estandar($FechaTermino).'</strong><br/>';}
-					if(isset($Presupuesto) && $Presupuesto != $rowdata['Presupuesto']){                $hist_Observacion .= '-Se cambia el Presupuesto, de <strong>'.valores($rowdata['Presupuesto'], 0).'</strong> a <strong>'.valores($Presupuesto, 0).'</strong><br/>';}
-					if(isset($idEstado) && $idEstado != $rowdata['idEstado']){                         $hist_Observacion .= '-Se cambia el Estado<br/>';}
-					if(isset($idBodegaProd) && $idBodegaProd != $rowdata['idBodegaProd']){             $hist_Observacion .= '-Se cambia la Bodega de Productos<br/>';}
-					if(isset($idBodegaIns) && $idBodegaIns != $rowdata['idBodegaIns']){                $hist_Observacion .= '-Se cambia la Bodega de Insumos<br/>';}
-					if(isset($idAprobado) && $idAprobado != $rowdata['idAprobado']){                   $hist_Observacion .= '-Se cambia el estado de aprobacion<br/>';}
-					if(isset($idCliente) && $idCliente != $rowdata['idCliente']){                      $hist_Observacion .= '-Se cambia el cliente<br/>';}
-					if(isset($idTipoLicitacion) && $idTipoLicitacion != $rowdata['idTipoLicitacion']){ $hist_Observacion .= '-Se cambia el Tipo de Contrato<br/>';}
-					if(isset($ValorMensual) && $ValorMensual != $rowdata['ValorMensual']){             $hist_Observacion .= '-Se cambia el valor mensual del contrato<br/>';}
-					if(isset($idOpcionItem) && $idOpcionItem != $rowdata['idOpcionItem']){             $hist_Observacion .= '-Se cambia la opción de telemetria<br/>';}
+					if(isset($idSistema) && $idSistema != $rowData['idSistema']){                      $hist_Observacion .= '-Se cambia el sistema<br/>';}
+					if(isset($Codigo) && $Codigo != $rowData['Codigo']){                               $hist_Observacion .= '-Se cambia el Codigo, de <strong>'.$rowData['Codigo'].'</strong> a <strong>'.$Codigo.'</strong><br/>';}
+					if(isset($Nombre) && $Nombre != $rowData['Nombre']){                               $hist_Observacion .= '-Se cambia el Nombre,de <strong>'.$rowData['Nombre'].'</strong> a <strong>'.$Nombre.'</strong><br/>';}
+					if(isset($FechaInicio) && $FechaInicio != $rowData['FechaInicio']){                $hist_Observacion .= '-Se cambia la Fecha de Inicio, de <strong>'.fecha_estandar($rowData['FechaInicio']).'</strong> a <strong>'.fecha_estandar($FechaInicio).'</strong><br/>';}
+					if(isset($FechaTermino) && $FechaTermino != $rowData['FechaTermino']){             $hist_Observacion .= '-Se cambia la Fecha de Termino, de <strong>'.fecha_estandar($rowData['FechaTermino']).'</strong> a <strong>'.fecha_estandar($FechaTermino).'</strong><br/>';}
+					if(isset($Presupuesto) && $Presupuesto != $rowData['Presupuesto']){                $hist_Observacion .= '-Se cambia el Presupuesto, de <strong>'.valores($rowData['Presupuesto'], 0).'</strong> a <strong>'.valores($Presupuesto, 0).'</strong><br/>';}
+					if(isset($idEstado) && $idEstado != $rowData['idEstado']){                         $hist_Observacion .= '-Se cambia el Estado<br/>';}
+					if(isset($idBodegaProd) && $idBodegaProd != $rowData['idBodegaProd']){             $hist_Observacion .= '-Se cambia la Bodega de Productos<br/>';}
+					if(isset($idBodegaIns) && $idBodegaIns != $rowData['idBodegaIns']){                $hist_Observacion .= '-Se cambia la Bodega de Insumos<br/>';}
+					if(isset($idAprobado) && $idAprobado != $rowData['idAprobado']){                   $hist_Observacion .= '-Se cambia el estado de aprobacion<br/>';}
+					if(isset($idCliente) && $idCliente != $rowData['idCliente']){                      $hist_Observacion .= '-Se cambia el cliente<br/>';}
+					if(isset($idTipoLicitacion) && $idTipoLicitacion != $rowData['idTipoLicitacion']){ $hist_Observacion .= '-Se cambia el Tipo de Contrato<br/>';}
+					if(isset($ValorMensual) && $ValorMensual != $rowData['ValorMensual']){             $hist_Observacion .= '-Se cambia el valor mensual del contrato<br/>';}
+					if(isset($idOpcionItem) && $idOpcionItem != $rowData['idOpcionItem']){             $hist_Observacion .= '-Se cambia la opción de telemetria<br/>';}
 
 					/*****************************************************/
 					//se guarda el registro
@@ -441,7 +441,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				/*****************************************************/
 				// Se traen todos los datos de la licitacion
-				$rowdata = db_select_data (false, 'idSistema, idLicitacion, idUtilizable, Nombre,Codigo, idFrecuencia, Cantidad, Valor, ValorTotal, TiempoProgramado, idTrabajo', 'licitacion_listado_level_'.$lvl, '', 'idLevel_'.$lvl.' = "'.$idLevel[$lvl].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'idSistema, idLicitacion, idUtilizable, Nombre,Codigo, idFrecuencia, Cantidad, Valor, ValorTotal, TiempoProgramado, idTrabajo', 'licitacion_listado_level_'.$lvl, '', 'idLevel_'.$lvl.' = "'.$idLevel[$lvl].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*****************************************************/
 				//Filtros
@@ -468,17 +468,17 @@ require_once '0_validate_user_1.php';
 					//se crean el mensaje
 					$hist_Observacion = '<strong>Modificaciones:</strong><br/>';
 
-					if(isset($idSistema) && $idSistema != $rowdata['idSistema']){                       $hist_Observacion .= '-Se cambia el sistema del item '.$rowdata['Nombre'].'<br/>';}
-					if(isset($idLicitacion) && $idLicitacion != $rowdata['idLicitacion']){              $hist_Observacion .= '-Se cambia la licitacion del item '.$rowdata['Nombre'].'<br/>';}
-					if(isset($idUtilizable) && $idUtilizable != $rowdata['idUtilizable']){              $hist_Observacion .= '-Se cambia el estado de utilizacion del item '.$rowdata['Nombre'].'<br/>';}
-					if(isset($Nombre) && $Nombre != $rowdata['Nombre']){                                $hist_Observacion .= '-Se cambia el nombre del item '.$rowdata['Nombre'].', de <strong>'.$rowdata['Nombre'].'</strong> a <strong>'.$Nombre.'</strong><br/>';}
-					if(isset($Codigo) && $Codigo != $rowdata['Codigo']){                                $hist_Observacion .= '-Se cambia el codigo del item '.$rowdata['Nombre'].', de <strong>'.$rowdata['Codigo'].'</strong> a <strong>'.$Codigo.'</strong><br/>';}
-					if(isset($idFrecuencia) && $idFrecuencia != $rowdata['idFrecuencia']){              $hist_Observacion .= '-Se cambia la fecuencia del item '.$rowdata['Nombre'].'<br/>';}
-					if(isset($Cantidad) && $Cantidad != $rowdata['Cantidad']){                          $hist_Observacion .= '-Se cambia la cantidad del item '.$rowdata['Nombre'].', de <strong>'.cantidades($rowdata['Cantidad'], 0).'</strong> a <strong>'.cantidades($Cantidad, 0).'</strong><br/>';}
-					if(isset($Valor) && $Valor != $rowdata['Valor']){                                   $hist_Observacion .= '-Se cambia el valor unitario del item '.$rowdata['Nombre'].', de <strong>'.valores($rowdata['Valor'], 0).'</strong> a <strong>'.valores($Valor, 0).'</strong><br/>';}
-					if(isset($ValorTotal) && $ValorTotal != $rowdata['ValorTotal']){                    $hist_Observacion .= '-Se cambia el valor total del item '.$rowdata['Nombre'].', de <strong>'.valores($rowdata['ValorTotal'], 0).'</strong> a <strong>'.valores($ValorTotal, 0).'</strong><br/>';}
-					if(isset($TiempoProgramado) && $TiempoProgramado != $rowdata['TiempoProgramado']){  $hist_Observacion .= '-Se cambia el tiempo programado del item '.$rowdata['Nombre'].', de <strong>'.$rowdata['TiempoProgramado'].'</strong> a <strong>'.$TiempoProgramado.'</strong><br/>';}
-					if(isset($idTrabajo) && $idTrabajo != $rowdata['idTrabajo']){                       $hist_Observacion .= '-Se cambia el tipo de trabajo del item '.$rowdata['Nombre'].'<br/>';}
+					if(isset($idSistema) && $idSistema != $rowData['idSistema']){                       $hist_Observacion .= '-Se cambia el sistema del item '.$rowData['Nombre'].'<br/>';}
+					if(isset($idLicitacion) && $idLicitacion != $rowData['idLicitacion']){              $hist_Observacion .= '-Se cambia la licitacion del item '.$rowData['Nombre'].'<br/>';}
+					if(isset($idUtilizable) && $idUtilizable != $rowData['idUtilizable']){              $hist_Observacion .= '-Se cambia el estado de utilizacion del item '.$rowData['Nombre'].'<br/>';}
+					if(isset($Nombre) && $Nombre != $rowData['Nombre']){                                $hist_Observacion .= '-Se cambia el nombre del item '.$rowData['Nombre'].', de <strong>'.$rowData['Nombre'].'</strong> a <strong>'.$Nombre.'</strong><br/>';}
+					if(isset($Codigo) && $Codigo != $rowData['Codigo']){                                $hist_Observacion .= '-Se cambia el codigo del item '.$rowData['Nombre'].', de <strong>'.$rowData['Codigo'].'</strong> a <strong>'.$Codigo.'</strong><br/>';}
+					if(isset($idFrecuencia) && $idFrecuencia != $rowData['idFrecuencia']){              $hist_Observacion .= '-Se cambia la fecuencia del item '.$rowData['Nombre'].'<br/>';}
+					if(isset($Cantidad) && $Cantidad != $rowData['Cantidad']){                          $hist_Observacion .= '-Se cambia la cantidad del item '.$rowData['Nombre'].', de <strong>'.cantidades($rowData['Cantidad'], 0).'</strong> a <strong>'.cantidades($Cantidad, 0).'</strong><br/>';}
+					if(isset($Valor) && $Valor != $rowData['Valor']){                                   $hist_Observacion .= '-Se cambia el valor unitario del item '.$rowData['Nombre'].', de <strong>'.valores($rowData['Valor'], 0).'</strong> a <strong>'.valores($Valor, 0).'</strong><br/>';}
+					if(isset($ValorTotal) && $ValorTotal != $rowData['ValorTotal']){                    $hist_Observacion .= '-Se cambia el valor total del item '.$rowData['Nombre'].', de <strong>'.valores($rowData['ValorTotal'], 0).'</strong> a <strong>'.valores($ValorTotal, 0).'</strong><br/>';}
+					if(isset($TiempoProgramado) && $TiempoProgramado != $rowData['TiempoProgramado']){  $hist_Observacion .= '-Se cambia el tiempo programado del item '.$rowData['Nombre'].', de <strong>'.$rowData['TiempoProgramado'].'</strong> a <strong>'.$TiempoProgramado.'</strong><br/>';}
+					if(isset($idTrabajo) && $idTrabajo != $rowData['idTrabajo']){                       $hist_Observacion .= '-Se cambia el tipo de trabajo del item '.$rowData['Nombre'].'<br/>';}
 
 					/*****************************************************/
 					//se guarda el registro
@@ -541,7 +541,7 @@ require_once '0_validate_user_1.php';
 
 					/*****************************************************/
 					// Se traen todos los datos de la licitacion
-					$rowdata = db_select_data (false, 'Nombre', 'licitacion_listado_level_'.$i, '', 'idLevel_'.$_GET['lvl'].' = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$rowData = db_select_data (false, 'Nombre', 'licitacion_listado_level_'.$i, '', 'idLevel_'.$_GET['lvl'].' = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 					/*****************************************************/
 					//se borran los datos
@@ -550,7 +550,7 @@ require_once '0_validate_user_1.php';
 					/*****************************************************/
 					//se crean el mensaje
 					$hist_Observacion = '<strong>Modificaciones:</strong><br/>';
-					$hist_Observacion .= '-Se elimina el item '.$rowdata['Nombre'].'<br/>';
+					$hist_Observacion .= '-Se elimina el item '.$rowData['Nombre'].'<br/>';
 
 					/*****************************************************/
 					//se guarda el registro
@@ -589,7 +589,7 @@ require_once '0_validate_user_1.php';
 
 			/*****************************************************/
 			// Se traen todos los datos de la licitacion
-			$rowdata = db_select_data (false, 'idEstado', 'licitacion_listado', '', 'idLicitacion = '.$idLicitacion, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'idEstado', 'licitacion_listado', '', 'idLicitacion = '.$idLicitacion, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -602,7 +602,7 @@ require_once '0_validate_user_1.php';
 				//se crean el mensaje
 				$hist_Observacion = '<strong>Modificaciones:</strong><br/>';
 
-				if(isset($idEstado) && $idEstado != $rowdata['idEstado']){   $hist_Observacion .= '-Se cambia el Estado<br/>';}
+				if(isset($idEstado) && $idEstado != $rowData['idEstado']){   $hist_Observacion .= '-Se cambia el Estado<br/>';}
 
 				/*****************************************************/
 				//se guarda el registro

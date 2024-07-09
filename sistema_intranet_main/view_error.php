@@ -50,7 +50,7 @@ error_log.Mensaje,
 error_log.Consulta';
 $SIS_join  = 'LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = error_log.idUsuario';
 $SIS_where = 'error_log.idErrorLog ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'error_log', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'error_log', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 ?>
 
@@ -66,10 +66,10 @@ $rowdata = db_select_data (false, $SIS_query, 'error_log', $SIS_join, $SIS_where
 					<?php
 
 					//Se muestra el error
-					echo '<p><strong>Usuario : </strong>'.$rowdata['Usuario'].'</p>';
-					echo '<p><strong>Fecha : </strong>'.$rowdata['Fecha'].'</p>';
-					echo '<p><strong>Mensaje : </strong>'.$rowdata['Mensaje'].'</p>';
-					echo '<pre>'.$rowdata['Consulta'].'</pre>';
+					echo '<p><strong>Usuario : </strong>'.$rowData['Usuario'].'</p>';
+					echo '<p><strong>Fecha : </strong>'.$rowData['Fecha'].'</p>';
+					echo '<p><strong>Mensaje : </strong>'.$rowData['Mensaje'].'</p>';
+					echo '<pre>'.$rowData['Consulta'].'</pre>';
 					
 					?>
 				</div>

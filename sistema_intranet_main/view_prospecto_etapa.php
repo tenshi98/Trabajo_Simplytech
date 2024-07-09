@@ -54,7 +54,7 @@ LEFT JOIN `prospectos_listado`   ON prospectos_listado.idProspecto     = prospec
 LEFT JOIN `usuarios_listado`     ON usuarios_listado.idUsuario         = prospectos_etapa_fidelizacion.idUsuario
 LEFT JOIN `prospectos_etapa`     ON prospectos_etapa.idEtapa           = prospectos_etapa_fidelizacion.idEtapa';
 $SIS_where = 'prospectos_etapa_fidelizacion.idEtapaFide ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'prospectos_etapa_fidelizacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'prospectos_etapa_fidelizacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 ?>
 
@@ -67,24 +67,24 @@ $rowdata = db_select_data (false, $SIS_query, 'prospectos_etapa_fidelizacion', $
         <div class="body">
             <h2 class="text-primary">Datos Básicos</h2>
             <p class="text-muted">
-				<strong>Prospecto : </strong><?php echo $rowdata['nombre_prospecto']; ?><br/>
-				<strong>Etapa : </strong><?php echo $rowdata['Etapa']; ?><br/>
-				<strong>Usuario : </strong><?php echo $rowdata['nombre_usuario']; ?><br/>
-				<strong>Fecha : </strong><?php echo Fecha_completa_alt($rowdata['Fecha']); ?>
+				<strong>Prospecto : </strong><?php echo $rowData['nombre_prospecto']; ?><br/>
+				<strong>Etapa : </strong><?php echo $rowData['Etapa']; ?><br/>
+				<strong>Usuario : </strong><?php echo $rowData['nombre_usuario']; ?><br/>
+				<strong>Fecha : </strong><?php echo Fecha_completa_alt($rowData['Fecha']); ?>
             </p>
 
             <h2 class="text-primary">Observacion</h2>
             <p class="text-muted word_break">
 				<div class="text-muted well well-sm no-shadow">
-					<?php if(isset($rowdata['Observacion'])&&$rowdata['Observacion']!=''){echo $rowdata['Observacion'];}else{echo 'Sin Observaciones';} ?>
+					<?php if(isset($rowData['Observacion'])&&$rowData['Observacion']!=''){echo $rowData['Observacion'];}else{echo 'Sin Observaciones';} ?>
 					<div class="clearfix"></div>
 				</div>
 			</p>
             
-            <?php if(isset($rowdata['Archivo'])&&$rowdata['Archivo']!=''){ ?>
+            <?php if(isset($rowData['Archivo'])&&$rowData['Archivo']!=''){ ?>
 				<h2 class="text-primary">Archivo</h2>
 				<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
-					<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['Archivo'], ''); ?>
+					<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowData['Archivo'], ''); ?>
 				</div>
 				<div class="clearfix"></div>
 			<?php } ?>

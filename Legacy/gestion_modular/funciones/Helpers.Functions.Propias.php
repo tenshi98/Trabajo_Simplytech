@@ -618,23 +618,23 @@ function polz_contrato_01($idUnidadNegocio, $color, $dbConn){
 	LEFT JOIN `core_ubicacion_comunas`  obra_comunas     ON obra_comunas.idComuna                  = unidad_negocio_listado.idComuna
 	';
 	$SIS_where = 'unidad_negocio_listado.idUnidadNegocio = '.$idUnidadNegocio;
-	$rowdata = db_select_data (false, $SIS_query, 'unidad_negocio_listado', $SIS_join, $SIS_where, $dbConn, 'rowdata', basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'unidad_negocio_listado', $SIS_join, $SIS_where, $dbConn, 'rowData', basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 	/**************************************************************/
 	//variables
-	if(isset($rowdata['ObraDireccion'])&&$rowdata['ObraDireccion']){        $ObraDireccion     = $rowdata['ObraDireccion'];     }else{$ObraDireccion     = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['ClienteNombre'])&&$rowdata['ClienteNombre']){        $ClienteNombre     = $rowdata['ClienteNombre'];     }else{$ClienteNombre     = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['ClienteRut'])&&$rowdata['ClienteRut']){              $ClienteRut        = $rowdata['ClienteRut'];        }else{$ClienteRut        = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['ClienteNombreRL'])&&$rowdata['ClienteNombreRL']){    $ClienteNombreRL   = $rowdata['ClienteNombreRL'];   }else{$ClienteNombreRL   = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['ClienteRutRL'])&&$rowdata['ClienteRutRL']){          $ClienteRutRL      = $rowdata['ClienteRutRL'];      }else{$ClienteRutRL      = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['ClienteDireccion'])&&$rowdata['ClienteDireccion']){  $ClienteDireccion  = $rowdata['ClienteDireccion'];  }else{$ClienteDireccion  = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['ClienteCiudad'])&&$rowdata['ClienteCiudad']){        $ClienteCiudad     = $rowdata['ClienteCiudad'];     }else{$ClienteCiudad     = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['ClienteComuna'])&&$rowdata['ClienteComuna']){        $ClienteComuna     = $rowdata['ClienteComuna'];     }else{$ClienteComuna     = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['ObraNombre'])&&$rowdata['ObraNombre']){              $ObraNombre        = $rowdata['ObraNombre'];        }else{$ObraNombre        = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['ObraValor'])&&$rowdata['ObraValor']){                $ObraValor         = $rowdata['ObraValor'];         }else{$ObraValor         = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['FechaReservada'])&&$rowdata['FechaReservada']){      $FechaReservada    = $rowdata['FechaReservada'];    }else{$FechaReservada    = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['ObraCiudad'])&&$rowdata['ObraCiudad']){              $ObraCiudad        = $rowdata['ObraCiudad'];        }else{$ObraCiudad        = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['ObraComuna'])&&$rowdata['ObraComuna']){              $ObraComuna        = $rowdata['ObraComuna'];        }else{$ObraComuna        = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['ObraDireccion'])&&$rowData['ObraDireccion']){        $ObraDireccion     = $rowData['ObraDireccion'];     }else{$ObraDireccion     = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['ClienteNombre'])&&$rowData['ClienteNombre']){        $ClienteNombre     = $rowData['ClienteNombre'];     }else{$ClienteNombre     = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['ClienteRut'])&&$rowData['ClienteRut']){              $ClienteRut        = $rowData['ClienteRut'];        }else{$ClienteRut        = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['ClienteNombreRL'])&&$rowData['ClienteNombreRL']){    $ClienteNombreRL   = $rowData['ClienteNombreRL'];   }else{$ClienteNombreRL   = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['ClienteRutRL'])&&$rowData['ClienteRutRL']){          $ClienteRutRL      = $rowData['ClienteRutRL'];      }else{$ClienteRutRL      = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['ClienteDireccion'])&&$rowData['ClienteDireccion']){  $ClienteDireccion  = $rowData['ClienteDireccion'];  }else{$ClienteDireccion  = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['ClienteCiudad'])&&$rowData['ClienteCiudad']){        $ClienteCiudad     = $rowData['ClienteCiudad'];     }else{$ClienteCiudad     = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['ClienteComuna'])&&$rowData['ClienteComuna']){        $ClienteComuna     = $rowData['ClienteComuna'];     }else{$ClienteComuna     = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['ObraNombre'])&&$rowData['ObraNombre']){              $ObraNombre        = $rowData['ObraNombre'];        }else{$ObraNombre        = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['ObraValor'])&&$rowData['ObraValor']){                $ObraValor         = $rowData['ObraValor'];         }else{$ObraValor         = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['FechaReservada'])&&$rowData['FechaReservada']){      $FechaReservada    = $rowData['FechaReservada'];    }else{$FechaReservada    = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['ObraCiudad'])&&$rowData['ObraCiudad']){              $ObraCiudad        = $rowData['ObraCiudad'];        }else{$ObraCiudad        = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['ObraComuna'])&&$rowData['ObraComuna']){              $ObraComuna        = $rowData['ObraComuna'];        }else{$ObraComuna        = '<strong style="color:red;">SIN DATOS</strong>';}
 
 	/**************************************************************/
 	$Contrato = '
@@ -842,23 +842,23 @@ function polz_contrato_02($idUnidadNegocio, $color, $dbConn){
 	LEFT JOIN `core_ubicacion_comunas`  obra_comunas     ON obra_comunas.idComuna                  = unidad_negocio_listado.idComuna
 	';
 	$SIS_where = 'unidad_negocio_listado.idUnidadNegocio = '.$idUnidadNegocio;
-	$rowdata = db_select_data (false, $SIS_query, 'unidad_negocio_listado', $SIS_join, $SIS_where, $dbConn, 'rowdata', basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'unidad_negocio_listado', $SIS_join, $SIS_where, $dbConn, 'rowData', basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 	/**************************************************************/
 	//variables
-	if(isset($rowdata['CompaniaNombre'])&&$rowdata['CompaniaNombre']){        $CompaniaNombre     = $rowdata['CompaniaNombre'];    }else{$CompaniaNombre    = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['CompaniaRut'])&&$rowdata['CompaniaRut']){              $CompaniaRut        = $rowdata['CompaniaRut'];       }else{$CompaniaRut       = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['CompaniaNombreRL'])&&$rowdata['CompaniaNombreRL']){    $CompaniaNombreRL   = $rowdata['CompaniaNombreRL'];  }else{$CompaniaNombreRL  = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['CompaniaRutRL'])&&$rowdata['CompaniaRutRL']){          $CompaniaRutRL      = $rowdata['CompaniaRutRL'];     }else{$CompaniaRutRL     = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['CompaniaCiudad'])&&$rowdata['CompaniaCiudad']){        $CompaniaCiudad     = $rowdata['CompaniaCiudad'];    }else{$CompaniaCiudad    = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['CompaniaComuna'])&&$rowdata['CompaniaComuna']){        $CompaniaComuna     = $rowdata['CompaniaComuna'];    }else{$CompaniaComuna    = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['CompaniaDireccion'])&&$rowdata['CompaniaDireccion']){  $CompaniaDireccion  = $rowdata['CompaniaDireccion']; }else{$CompaniaDireccion = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['ObraNombre'])&&$rowdata['ObraNombre']){                $ObraNombre         = $rowdata['ObraNombre'];        }else{$ObraNombre        = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['ObraValor'])&&$rowdata['ObraValor']){                  $ObraValor          = $rowdata['ObraValor'];         }else{$ObraValor         = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['FechaReservada'])&&$rowdata['FechaReservada']){        $FechaReservada     = $rowdata['FechaReservada'];    }else{$FechaReservada    = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['ObraCiudad'])&&$rowdata['ObraCiudad']){                $ObraCiudad         = $rowdata['ObraCiudad'];        }else{$ObraCiudad        = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['ObraComuna'])&&$rowdata['ObraComuna']){                $ObraComuna         = $rowdata['ObraComuna'];        }else{$ObraComuna        = '<strong style="color:red;">SIN DATOS</strong>';}
-	if(isset($rowdata['ObraDireccion'])&&$rowdata['ObraDireccion']){          $ObraDireccion      = $rowdata['ObraDireccion'];     }else{$ObraDireccion     = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['CompaniaNombre'])&&$rowData['CompaniaNombre']){        $CompaniaNombre     = $rowData['CompaniaNombre'];    }else{$CompaniaNombre    = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['CompaniaRut'])&&$rowData['CompaniaRut']){              $CompaniaRut        = $rowData['CompaniaRut'];       }else{$CompaniaRut       = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['CompaniaNombreRL'])&&$rowData['CompaniaNombreRL']){    $CompaniaNombreRL   = $rowData['CompaniaNombreRL'];  }else{$CompaniaNombreRL  = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['CompaniaRutRL'])&&$rowData['CompaniaRutRL']){          $CompaniaRutRL      = $rowData['CompaniaRutRL'];     }else{$CompaniaRutRL     = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['CompaniaCiudad'])&&$rowData['CompaniaCiudad']){        $CompaniaCiudad     = $rowData['CompaniaCiudad'];    }else{$CompaniaCiudad    = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['CompaniaComuna'])&&$rowData['CompaniaComuna']){        $CompaniaComuna     = $rowData['CompaniaComuna'];    }else{$CompaniaComuna    = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['CompaniaDireccion'])&&$rowData['CompaniaDireccion']){  $CompaniaDireccion  = $rowData['CompaniaDireccion']; }else{$CompaniaDireccion = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['ObraNombre'])&&$rowData['ObraNombre']){                $ObraNombre         = $rowData['ObraNombre'];        }else{$ObraNombre        = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['ObraValor'])&&$rowData['ObraValor']){                  $ObraValor          = $rowData['ObraValor'];         }else{$ObraValor         = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['FechaReservada'])&&$rowData['FechaReservada']){        $FechaReservada     = $rowData['FechaReservada'];    }else{$FechaReservada    = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['ObraCiudad'])&&$rowData['ObraCiudad']){                $ObraCiudad         = $rowData['ObraCiudad'];        }else{$ObraCiudad        = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['ObraComuna'])&&$rowData['ObraComuna']){                $ObraComuna         = $rowData['ObraComuna'];        }else{$ObraComuna        = '<strong style="color:red;">SIN DATOS</strong>';}
+	if(isset($rowData['ObraDireccion'])&&$rowData['ObraDireccion']){          $ObraDireccion      = $rowData['ObraDireccion'];     }else{$ObraDireccion     = '<strong style="color:red;">SIN DATOS</strong>';}
 
 	/**************************************************************/
 	$Contrato = '

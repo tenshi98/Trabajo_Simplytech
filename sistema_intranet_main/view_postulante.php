@@ -71,7 +71,7 @@ LEFT JOIN `core_tipos_licencia_conducir`     ON core_tipos_licencia_conducir.idT
 LEFT JOIN `core_sexo`                        ON core_sexo.idSexo                              = postulantes_listado.idSexo
 LEFT JOIN `core_estado_civil`                ON core_estado_civil.idEstadoCivil               = postulantes_listado.idEstadoCivil';
 $SIS_where = 'postulantes_listado.idPostulante ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 ?>
 
@@ -86,28 +86,28 @@ $rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, 
 				<div class="wmd-panel">
 
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<?php if ($rowdata['Direccion_img']=='') { ?>
+						<?php if ($rowData['Direccion_img']=='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowData['Direccion_img']; ?>">
 						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 						<p class="text-muted">
-							<strong>Nombre : </strong><?php echo $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat']; ?><br/>
-							<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
-							<strong>Sexo : </strong><?php echo $rowdata['Sexo']; ?><br/>
-							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_estandar($rowdata['FNacimiento']); ?><br/>
-							<strong>Fono1 : </strong><?php echo formatPhone($rowdata['Fono1']); ?><br/>
-							<strong>Fono2 : </strong><?php echo formatPhone($rowdata['Fono2']); ?><br/>
-							<strong>Dirección : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['nombre_comuna'].', '.$rowdata['nombre_region']; ?><br/>
-							<strong>Estado Civil: </strong><?php echo $rowdata['EstadoCivil']; ?><br/>
-							<strong>Tipo de Licencia : </strong><?php echo $rowdata['LicenciaTipo']; ?><br/>
-							<strong>Pretenciones : </strong><?php echo valores($rowdata['SueldoLiquido'], 0); ?><br/>
+							<strong>Nombre : </strong><?php echo $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat']; ?><br/>
+							<strong>Rut : </strong><?php echo $rowData['Rut']; ?><br/>
+							<strong>Sexo : </strong><?php echo $rowData['Sexo']; ?><br/>
+							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_estandar($rowData['FNacimiento']); ?><br/>
+							<strong>Fono1 : </strong><?php echo formatPhone($rowData['Fono1']); ?><br/>
+							<strong>Fono2 : </strong><?php echo formatPhone($rowData['Fono2']); ?><br/>
+							<strong>Dirección : </strong><?php echo $rowData['Direccion'].', '.$rowData['nombre_comuna'].', '.$rowData['nombre_region']; ?><br/>
+							<strong>Estado Civil: </strong><?php echo $rowData['EstadoCivil']; ?><br/>
+							<strong>Tipo de Licencia : </strong><?php echo $rowData['LicenciaTipo']; ?><br/>
+							<strong>Pretenciones : </strong><?php echo valores($rowData['SueldoLiquido'], 0); ?><br/>
 
-							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
-							<strong>Sistema : </strong><?php echo $rowdata['Sistema']; ?>
+							<strong>Estado : </strong><?php echo $rowData['Estado']; ?><br/>
+							<strong>Sistema : </strong><?php echo $rowData['Sistema']; ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Estudios</h2>
@@ -122,7 +122,7 @@ $rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, 
 						<p class="text-muted word_break">
 							<strong>Observaciones : </strong><br/>
 							<div class="text-muted well well-sm no-shadow">
-								<?php if(isset($rowdata['Observaciones'])&&$rowdata['Observaciones']!=''){echo $rowdata['Observaciones'];}else{echo 'Sin Observaciones';} ?>
+								<?php if(isset($rowData['Observaciones'])&&$rowData['Observaciones']!=''){echo $rowData['Observaciones'];}else{echo 'Sin Observaciones';} ?>
 								<div class="clearfix"></div>
 							</div>
 						</p>
@@ -133,8 +133,8 @@ $rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, 
 						<p class="text-muted">
 							<?php
 							//Curriculum
-							if(isset($rowdata['File_Curriculum'])&&$rowdata['File_Curriculum']!=''){
-								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Curriculum'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Curriculum</a>';
+							if(isset($rowData['File_Curriculum'])&&$rowData['File_Curriculum']!=''){
+								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['File_Curriculum'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Curriculum</a>';
 							}
 							?>
 						</p>

@@ -68,7 +68,7 @@ if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
-$rowdata = db_select_data (false, 'Nombre,nColumnas', 'telemetria_listado_grupos', '', 'idGrupo ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, 'Nombre,nColumnas', 'telemetria_listado_grupos', '', 'idGrupo ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -83,8 +83,8 @@ $rowdata = db_select_data (false, 'Nombre,nColumnas', 'telemetria_listado_grupos
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)){      $x1  = $Nombre;     }else{$x1  = $rowdata['Nombre'];}
-				if(isset($nColumnas)){   $x2  = $nColumnas;  }else{$x2  = $rowdata['nColumnas'];}
+				if(isset($Nombre)){      $x1  = $Nombre;     }else{$x1  = $rowData['Nombre'];}
+				if(isset($nColumnas)){   $x2  = $nColumnas;  }else{$x2  = $rowData['nColumnas'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

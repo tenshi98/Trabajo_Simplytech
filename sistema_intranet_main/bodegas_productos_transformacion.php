@@ -246,7 +246,7 @@ productos_listado.Nombre AS Producto,
 sistema_productos_uml.Nombre AS Medida';
 $SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
 $SIS_where = 'productos_listado.idProducto ='.$_GET['trans2'];
-$rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //variable con el maximo a transformar
 $max = 1000000 ;
@@ -256,7 +256,7 @@ $max = 1000000 ;
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 <form class="facturacion" name="doc1" method="post" novalidate>
 <div id="page-wrap">
-    <div id="header">Transformar <?php echo $rowdata['Medida'].' de '.$rowdata['Producto']; ?></div>
+    <div id="header">Transformar <?php echo $rowData['Medida'].' de '.$rowData['Producto']; ?></div>
 
     <div style="clear:both"></div>
 
@@ -298,7 +298,7 @@ $max = 1000000 ;
 							<?php
 							//se dibujan los inputs
 							$Form_Inputs = new Inputs();
-							$Form_Inputs->input_values_val('text',$rowdata['Medida'],'Cantidad',2,'','display:inline-block; width:200px;', '');
+							$Form_Inputs->input_values_val('text',$rowData['Medida'],'Cantidad',2,'','display:inline-block; width:200px;', '');
 							$Form_Inputs->input_hidden('maximo', $max, 2);
 							$Form_Inputs->input_hidden('idProducto', $_GET['trans2'], 2);
 							?>

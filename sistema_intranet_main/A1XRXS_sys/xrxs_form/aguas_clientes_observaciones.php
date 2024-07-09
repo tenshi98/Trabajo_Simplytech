@@ -145,7 +145,7 @@ require_once '0_validate_user_1.php';
 
 			if($errorn==0){
 				//busco los archivos relacionados
-				$rowdata = db_select_data (false, 'Formulario, Foto', 'aguas_clientes_observaciones', '', 'idObservacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'Formulario, Foto', 'aguas_clientes_observaciones', '', 'idObservacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//se borran los datos
 				$resultado = db_delete_data (false, 'aguas_clientes_observaciones', 'idObservacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -153,24 +153,24 @@ require_once '0_validate_user_1.php';
 				if($resultado==true){
 
 					//Se elimina el Formulario
-					if(isset($rowdata['Formulario'])&&$rowdata['Formulario']!=''){
+					if(isset($rowData['Formulario'])&&$rowData['Formulario']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['Formulario'])){
+							if(!is_writable('upload/'.$rowData['Formulario'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['Formulario']);
+								unlink('upload/'.$rowData['Formulario']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
 					//Se elimina la Foto
-					if(isset($rowdata['Foto'])&&$rowdata['Foto']!=''){
+					if(isset($rowData['Foto'])&&$rowData['Foto']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['Foto'])){
+							if(!is_writable('upload/'.$rowData['Foto'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['Foto']);
+								unlink('upload/'.$rowData['Foto']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log

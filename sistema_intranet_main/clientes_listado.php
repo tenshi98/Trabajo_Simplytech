@@ -146,7 +146,7 @@ if(!empty($_GET['id'])){
 	LEFT JOIN `core_rubros`               ON core_rubros.idRubro                      = clientes_listado.idRubro
 	LEFT JOIN `core_cross_cliente`        ON core_cross_cliente.idPeriodo             = clientes_listado.Contrato_idPeriodo';
 	$SIS_where = 'clientes_listado.idCliente = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************/
 	//Listado con los tabs
@@ -162,7 +162,7 @@ if(!empty($_GET['id'])){
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowdata['Nombre'], 'Resumen'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowData['Nombre'], 'Resumen'); ?>
 	</div>
 	<div class="clearfix"></div>
 
@@ -177,7 +177,7 @@ if(!empty($_GET['id'])){
 						<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 						<ul class="dropdown-menu" role="menu">
 							<li class=""><a href="<?php echo 'clientes_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-volume-control-phone" aria-hidden="true"></i> Persona Contacto</a></li>
-							<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
+							<?php if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){ ?>
 								<li class=""><a href="<?php echo 'clientes_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
 							<?php } ?>
 							<li class=""><a href="<?php echo 'clientes_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
@@ -197,72 +197,72 @@ if(!empty($_GET['id'])){
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 								<p class="text-muted word_break">
-									<strong>Tipo de Cliente : </strong><?php echo $rowdata['tipoCliente']; ?><br/>
+									<strong>Tipo de Cliente : </strong><?php echo $rowData['tipoCliente']; ?><br/>
 									<?php
 									//Si el cliente es una empresa
-									if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
-										<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
+									if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){ ?>
+										<strong>Nombre Fantasia: </strong><?php echo $rowData['Nombre']; ?><br/>
 									<?php
 									//si es una persona
 									}else{ ?>
-										<strong>Nombre: </strong><?php echo $rowdata['Nombre']; ?><br/>
-										<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
+										<strong>Nombre: </strong><?php echo $rowData['Nombre']; ?><br/>
+										<strong>Rut : </strong><?php echo $rowData['Rut']; ?><br/>
 									<?php } ?>
-									<strong>Fecha de Ingreso Sistema : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
-									<strong>Región : </strong><?php echo $rowdata['nombre_region']; ?><br/>
-									<strong>Comuna : </strong><?php echo $rowdata['nombre_comuna']; ?><br/>
-									<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
-									<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
-									<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
+									<strong>Fecha de Ingreso Sistema : </strong><?php echo Fecha_completa($rowData['fNacimiento']); ?><br/>
+									<strong>Región : </strong><?php echo $rowData['nombre_region']; ?><br/>
+									<strong>Comuna : </strong><?php echo $rowData['nombre_comuna']; ?><br/>
+									<strong>Dirección : </strong><?php echo $rowData['Direccion']; ?><br/>
+									<strong>Sistema Relacionado : </strong><?php echo $rowData['sistema']; ?><br/>
+									<strong>Estado : </strong><?php echo $rowData['estado']; ?>
 								</p>
 
 								<?php
 								//Si el cliente es una empresa
-								if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
+								if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){ ?>
 									<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
 									<p class="text-muted word_break">
-										<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
-										<strong>Razón Social : </strong><?php echo $rowdata['RazonSocial']; ?><br/>
-										<strong>Giro de la empresa: </strong><?php echo $rowdata['Giro']; ?><br/>
-										<strong>Rubro : </strong><?php echo $rowdata['Rubro']; ?><br/>
+										<strong>Rut : </strong><?php echo $rowData['Rut']; ?><br/>
+										<strong>Razón Social : </strong><?php echo $rowData['RazonSocial']; ?><br/>
+										<strong>Giro de la empresa: </strong><?php echo $rowData['Giro']; ?><br/>
+										<strong>Rubro : </strong><?php echo $rowData['Rubro']; ?><br/>
 									</p>
 								<?php } ?>
 
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
 								<p class="text-muted word_break">
-									<strong>Telefono Fijo : </strong><?php echo formatPhone($rowdata['Fono1']); ?><br/>
-									<strong>Telefono Movil : </strong><?php echo formatPhone($rowdata['Fono2']); ?><br/>
-									<strong>Fax : </strong><?php echo $rowdata['Fax']; ?><br/>
-									<strong>Email : </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
-									<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowdata['Web']; ?>"><?php echo $rowdata['Web']; ?></a>
+									<strong>Telefono Fijo : </strong><?php echo formatPhone($rowData['Fono1']); ?><br/>
+									<strong>Telefono Movil : </strong><?php echo formatPhone($rowData['Fono2']); ?><br/>
+									<strong>Fax : </strong><?php echo $rowData['Fax']; ?><br/>
+									<strong>Email : </strong><a href="mailto:<?php echo $rowData['email']; ?>"><?php echo $rowData['email']; ?></a><br/>
+									<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowData['Web']; ?>"><?php echo $rowData['Web']; ?></a>
 								</p>
 
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Persona de Contacto</h2>
 								<p class="text-muted word_break">
-									<strong>Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto']; ?><br/>
-									<strong>Cargo Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto_Cargo']; ?><br/>
-									<strong>Telefono : </strong><?php echo formatPhone($rowdata['PersonaContacto_Fono']); ?><br/>
-									<strong>Email : </strong><a href="mailto:<?php echo $rowdata['PersonaContacto_email']; ?>"><?php echo $rowdata['PersonaContacto_email']; ?></a><br/>
+									<strong>Persona de Contacto : </strong><?php echo $rowData['PersonaContacto']; ?><br/>
+									<strong>Cargo Persona de Contacto : </strong><?php echo $rowData['PersonaContacto_Cargo']; ?><br/>
+									<strong>Telefono : </strong><?php echo formatPhone($rowData['PersonaContacto_Fono']); ?><br/>
+									<strong>Email : </strong><a href="mailto:<?php echo $rowData['PersonaContacto_email']; ?>"><?php echo $rowData['PersonaContacto_email']; ?></a><br/>
 								</p>
 
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Contrato</h2>
 								<p class="text-muted word_break">
-									<strong>Nombre : </strong><?php echo $rowdata['Contrato_Nombre']; ?><br/>
-									<strong>Numero o Codigo : </strong><?php echo $rowdata['Contrato_Numero']; ?><br/>
-									<strong>Periodo : </strong><?php echo $rowdata['Contrato_Periodo']; ?><br/>
-									<strong>Fecha inicio : </strong><?php echo fecha_estandar($rowdata['Contrato_Fecha_Ini']); ?><br/>
-									<strong>Fecha termino : </strong><?php echo fecha_estandar($rowdata['Contrato_Fecha_Term']); ?><br/>
-									<strong>Duracion N° Meses : </strong><?php echo Cantidades_decimales_justos($rowdata['Contrato_N_Meses']); ?><br/>
-									<strong>Representante Legal Nombre : </strong><?php echo $rowdata['Contrato_Representante_Legal']; ?><br/>
-									<strong>Representante Legal Rut : </strong><?php echo $rowdata['Contrato_Representante_Rut']; ?><br/>
-									<strong>Representante Legal Fono : </strong><?php echo formatPhone($rowdata['Contrato_Representante_Fono']); ?><br/>
-									<strong>Valor Mensual : </strong><?php echo valores($rowdata['Contrato_Valor_Mensual'], 0); ?><br/>
-									<strong>Valor Anual : </strong><?php echo valores($rowdata['Contrato_Valor_Anual'], 0); ?><br/>
-									<strong>Valor UF instalacion : </strong><?php echo Cantidades_decimales_justos($rowdata['Contrato_UF_Instalacion']); ?><br/>
-									<strong>Valor UF mensual : </strong><?php echo Cantidades_decimales_justos($rowdata['Contrato_UF_Mensual']); ?><br/>
+									<strong>Nombre : </strong><?php echo $rowData['Contrato_Nombre']; ?><br/>
+									<strong>Numero o Codigo : </strong><?php echo $rowData['Contrato_Numero']; ?><br/>
+									<strong>Periodo : </strong><?php echo $rowData['Contrato_Periodo']; ?><br/>
+									<strong>Fecha inicio : </strong><?php echo fecha_estandar($rowData['Contrato_Fecha_Ini']); ?><br/>
+									<strong>Fecha termino : </strong><?php echo fecha_estandar($rowData['Contrato_Fecha_Term']); ?><br/>
+									<strong>Duracion N° Meses : </strong><?php echo Cantidades_decimales_justos($rowData['Contrato_N_Meses']); ?><br/>
+									<strong>Representante Legal Nombre : </strong><?php echo $rowData['Contrato_Representante_Legal']; ?><br/>
+									<strong>Representante Legal Rut : </strong><?php echo $rowData['Contrato_Representante_Rut']; ?><br/>
+									<strong>Representante Legal Fono : </strong><?php echo formatPhone($rowData['Contrato_Representante_Fono']); ?><br/>
+									<strong>Valor Mensual : </strong><?php echo valores($rowData['Contrato_Valor_Mensual'], 0); ?><br/>
+									<strong>Valor Anual : </strong><?php echo valores($rowData['Contrato_Valor_Anual'], 0); ?><br/>
+									<strong>Valor UF instalacion : </strong><?php echo Cantidades_decimales_justos($rowData['Contrato_UF_Instalacion']); ?><br/>
+									<strong>Valor UF mensual : </strong><?php echo Cantidades_decimales_justos($rowData['Contrato_UF_Mensual']); ?><br/>
 									<strong>Observaciones : </strong><br/>
 									<div class="text-muted well well-sm no-shadow">
-										<?php if(isset($rowdata['Contrato_Obs'])&&$rowdata['Contrato_Obs']!=''){echo $rowdata['Contrato_Obs'];}else{echo 'Sin Observaciones';} ?>
+										<?php if(isset($rowData['Contrato_Obs'])&&$rowData['Contrato_Obs']!=''){echo $rowData['Contrato_Obs'];}else{echo 'Sin Observaciones';} ?>
 										<div class="clearfix"></div>
 									</div>
 								</p>
@@ -271,21 +271,21 @@ if(!empty($_GET['id'])){
 									<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Unidades de Negocio</h2>
 									<p class="text-muted word_break">
 										<?php
-											if(isset($rowdata['idTab_1'])&&$rowdata['idTab_1']==2&&isset($arrTabsSorter[1])){    echo ' - '.$arrTabsSorter[1].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 1, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';}
-											if(isset($rowdata['idTab_2'])&&$rowdata['idTab_2']==2&&isset($arrTabsSorter[2])){    echo ' - '.$arrTabsSorter[2].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 2, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';}
-											if(isset($rowdata['idTab_3'])&&$rowdata['idTab_3']==2&&isset($arrTabsSorter[3])){    echo ' - '.$arrTabsSorter[3].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 3, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';}
-											if(isset($rowdata['idTab_4'])&&$rowdata['idTab_4']==2&&isset($arrTabsSorter[4])){    echo ' - '.$arrTabsSorter[4].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 4, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';}
-											if(isset($rowdata['idTab_5'])&&$rowdata['idTab_5']==2&&isset($arrTabsSorter[5])){    echo ' - '.$arrTabsSorter[5].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 5, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';}
-											if(isset($rowdata['idTab_6'])&&$rowdata['idTab_6']==2&&isset($arrTabsSorter[6])){    echo ' - '.$arrTabsSorter[6].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 6, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';}
-											if(isset($rowdata['idTab_7'])&&$rowdata['idTab_7']==2&&isset($arrTabsSorter[7])){    echo ' - '.$arrTabsSorter[7].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 7, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';}
-											if(isset($rowdata['idTab_8'])&&$rowdata['idTab_8']==2&&isset($arrTabsSorter[8])){    echo ' - '.$arrTabsSorter[8].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 8, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';} 
-											if(isset($rowdata['idTab_9'])&&$rowdata['idTab_9']==2&&isset($arrTabsSorter[9])){    echo ' - '.$arrTabsSorter[9].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 9, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';} 
-											if(isset($rowdata['idTab_10'])&&$rowdata['idTab_10']==2&&isset($arrTabsSorter[10])){ echo ' - '.$arrTabsSorter[10].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 10, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';} 
-											if(isset($rowdata['idTab_11'])&&$rowdata['idTab_11']==2&&isset($arrTabsSorter[11])){ echo ' - '.$arrTabsSorter[11].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 11, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';} 
-											if(isset($rowdata['idTab_12'])&&$rowdata['idTab_12']==2&&isset($arrTabsSorter[12])){ echo ' - '.$arrTabsSorter[12].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 12, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';} 
-											if(isset($rowdata['idTab_13'])&&$rowdata['idTab_13']==2&&isset($arrTabsSorter[13])){ echo ' - '.$arrTabsSorter[13].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 13, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';} 
-											if(isset($rowdata['idTab_14'])&&$rowdata['idTab_14']==2&&isset($arrTabsSorter[14])){ echo ' - '.$arrTabsSorter[14].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 14, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';} 
-											if(isset($rowdata['idTab_15'])&&$rowdata['idTab_15']==2&&isset($arrTabsSorter[15])){ echo ' - '.$arrTabsSorter[15].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 15, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';} 
+											if(isset($rowData['idTab_1'])&&$rowData['idTab_1']==2&&isset($arrTabsSorter[1])){    echo ' - '.$arrTabsSorter[1].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 1, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';}
+											if(isset($rowData['idTab_2'])&&$rowData['idTab_2']==2&&isset($arrTabsSorter[2])){    echo ' - '.$arrTabsSorter[2].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 2, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';}
+											if(isset($rowData['idTab_3'])&&$rowData['idTab_3']==2&&isset($arrTabsSorter[3])){    echo ' - '.$arrTabsSorter[3].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 3, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';}
+											if(isset($rowData['idTab_4'])&&$rowData['idTab_4']==2&&isset($arrTabsSorter[4])){    echo ' - '.$arrTabsSorter[4].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 4, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';}
+											if(isset($rowData['idTab_5'])&&$rowData['idTab_5']==2&&isset($arrTabsSorter[5])){    echo ' - '.$arrTabsSorter[5].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 5, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';}
+											if(isset($rowData['idTab_6'])&&$rowData['idTab_6']==2&&isset($arrTabsSorter[6])){    echo ' - '.$arrTabsSorter[6].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 6, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';}
+											if(isset($rowData['idTab_7'])&&$rowData['idTab_7']==2&&isset($arrTabsSorter[7])){    echo ' - '.$arrTabsSorter[7].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 7, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';}
+											if(isset($rowData['idTab_8'])&&$rowData['idTab_8']==2&&isset($arrTabsSorter[8])){    echo ' - '.$arrTabsSorter[8].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 8, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';} 
+											if(isset($rowData['idTab_9'])&&$rowData['idTab_9']==2&&isset($arrTabsSorter[9])){    echo ' - '.$arrTabsSorter[9].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 9, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';} 
+											if(isset($rowData['idTab_10'])&&$rowData['idTab_10']==2&&isset($arrTabsSorter[10])){ echo ' - '.$arrTabsSorter[10].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 10, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';} 
+											if(isset($rowData['idTab_11'])&&$rowData['idTab_11']==2&&isset($arrTabsSorter[11])){ echo ' - '.$arrTabsSorter[11].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 11, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';} 
+											if(isset($rowData['idTab_12'])&&$rowData['idTab_12']==2&&isset($arrTabsSorter[12])){ echo ' - '.$arrTabsSorter[12].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 12, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';} 
+											if(isset($rowData['idTab_13'])&&$rowData['idTab_13']==2&&isset($arrTabsSorter[13])){ echo ' - '.$arrTabsSorter[13].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 13, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';} 
+											if(isset($rowData['idTab_14'])&&$rowData['idTab_14']==2&&isset($arrTabsSorter[14])){ echo ' - '.$arrTabsSorter[14].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 14, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';} 
+											if(isset($rowData['idTab_15'])&&$rowData['idTab_15']==2&&isset($arrTabsSorter[15])){ echo ' - '.$arrTabsSorter[15].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 15, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';} 
 										?>
 									</p>
 								<?php } ?>
@@ -298,9 +298,9 @@ if(!empty($_GET['id'])){
 							<?php
 								//se arma la dirección
 								$direccion = "";
-								if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){           $direccion .= $rowdata["Direccion"];}
-								if(isset($rowdata["nombre_comuna"])&&$rowdata["nombre_comuna"]!=''){   $direccion .= ', '.$rowdata["nombre_comuna"];}
-								if(isset($rowdata["nombre_region"])&&$rowdata["nombre_region"]!=''){   $direccion .= ', '.$rowdata["nombre_region"];}
+								if(isset($rowData["Direccion"])&&$rowData["Direccion"]!=''){           $direccion .= $rowData["Direccion"];}
+								if(isset($rowData["nombre_comuna"])&&$rowData["nombre_comuna"]!=''){   $direccion .= ', '.$rowData["nombre_comuna"];}
+								if(isset($rowData["nombre_region"])&&$rowData["nombre_region"]!=''){   $direccion .= ', '.$rowData["nombre_region"];}
 								//se despliega mensaje en caso de no existir dirección
 								if($direccion!=''){
 									echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);

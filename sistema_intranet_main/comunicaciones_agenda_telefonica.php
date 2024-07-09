@@ -73,7 +73,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'Nombre,Fono, idSistema';
 	$SIS_join  = '';
 	$SIS_where = 'idAgenda = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'principal_agenda_telefonica', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'principal_agenda_telefonica', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -88,8 +88,8 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){      $x1  = $Nombre;     }else{$x1  = $rowdata['Nombre'];}
-					if(isset($Fono)){        $x2  = $Fono;       }else{$x2  = $rowdata['Fono'];}
+					if(isset($Nombre)){      $x1  = $Nombre;     }else{$x1  = $rowData['Nombre'];}
+					if(isset($Fono)){        $x2  = $Fono;       }else{$x2  = $rowData['Fono'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

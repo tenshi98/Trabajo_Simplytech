@@ -1582,15 +1582,15 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata_1 = db_select_data (false, 'proveedor_listado.Nombre AS Proveedor, ocompra_listado.idProveedor, ocompra_listado.Creacion_fecha, ocompra_listado.Observaciones', 'ocompra_listado', 'LEFT JOIN `proveedor_listado` ON proveedor_listado.idProveedor = ocompra_listado.idProveedor', 'ocompra_listado.idOcompra ='.$idOcompra, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				$rowdata_2 = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor ='.$idProveedor, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_1 = db_select_data (false, 'proveedor_listado.Nombre AS Proveedor, ocompra_listado.idProveedor, ocompra_listado.Creacion_fecha, ocompra_listado.Observaciones', 'ocompra_listado', 'LEFT JOIN `proveedor_listado` ON proveedor_listado.idProveedor = ocompra_listado.idProveedor', 'ocompra_listado.idOcompra ='.$idOcompra, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_2 = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor ='.$idProveedor, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = 'Se realizan cambios en los datos basicos de la OC ';
-				if(isset($idProveedor)&&isset($rowdata_1['idProveedor'])&&$idProveedor!=$rowdata_1['idProveedor']){               $cambios .= ",se cambia proveedor de ".$rowdata_1['Proveedor']." a ".$rowdata_2['Nombre'];}
-				if(isset($Creacion_fecha)&&isset($rowdata_1['Creacion_fecha'])&&$Creacion_fecha!=$rowdata_1['Creacion_fecha']){   $cambios .= ",se cambia fecha de ".$rowdata_1['Creacion_fecha']." a ".$Creacion_fecha;}
-				if(isset($Observaciones)&&isset($rowdata_1['Observaciones'])&&$Observaciones!=$rowdata_1['Observaciones']){       $cambios .= ",se cambia observacion ";}
+				if(isset($idProveedor)&&isset($rowData_1['idProveedor'])&&$idProveedor!=$rowData_1['idProveedor']){               $cambios .= ",se cambia proveedor de ".$rowData_1['Proveedor']." a ".$rowData_2['Nombre'];}
+				if(isset($Creacion_fecha)&&isset($rowData_1['Creacion_fecha'])&&$Creacion_fecha!=$rowData_1['Creacion_fecha']){   $cambios .= ",se cambia fecha de ".$rowData_1['Creacion_fecha']." a ".$Creacion_fecha;}
+				if(isset($Observaciones)&&isset($rowData_1['Observaciones'])&&$Observaciones!=$rowData_1['Observaciones']){       $cambios .= ",se cambia observacion ";}
 
 				/******************************************/
 				//Se guarda en historial la accion
@@ -1682,13 +1682,13 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata = db_select_data (false, 'Nombre', 'productos_listado', '', 'idProducto ='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'Nombre', 'productos_listado', '', 'idProducto ='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = '';
-				if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){
-					$cambios .= "Se agrega producto ".$rowdata['Nombre']." por una cantidad de ".$Cantidad." con valor total de ".Valores($vTotal, 0)."." ;
+				if(isset($rowData['Nombre'])&&$rowData['Nombre']!=''){
+					$cambios .= "Se agrega producto ".$rowData['Nombre']." por una cantidad de ".$Cantidad." con valor total de ".Valores($vTotal, 0)."." ;
 				}
 
 				/******************************************/
@@ -1735,13 +1735,13 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata_1 = db_select_data (false, 'Nombre', 'productos_listado', '', 'idProducto ='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				$rowdata_2 = db_select_data (false, 'ocompra_listado_existencias_productos.Cantidad, ocompra_listado_existencias_productos.vTotal, productos_listado.Nombre AS Producto', 'ocompra_listado_existencias_productos', 'LEFT JOIN `productos_listado` ON productos_listado.idProducto = ocompra_listado_existencias_productos.idProducto', 'ocompra_listado_existencias_productos.idExistencia ='.$idExistencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_1 = db_select_data (false, 'Nombre', 'productos_listado', '', 'idProducto ='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_2 = db_select_data (false, 'ocompra_listado_existencias_productos.Cantidad, ocompra_listado_existencias_productos.vTotal, productos_listado.Nombre AS Producto', 'ocompra_listado_existencias_productos', 'LEFT JOIN `productos_listado` ON productos_listado.idProducto = ocompra_listado_existencias_productos.idProducto', 'ocompra_listado_existencias_productos.idExistencia ='.$idExistencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
-				$cambios = 'Se cambia de '.$rowdata_2['Producto'].' por una cantidad de '.Cantidades_decimales_justos($rowdata_2['Cantidad']).' con un valor total de '.Valores($rowdata_2['vTotal'], 0).'';
-				$cambios.= '<br/>a '.$rowdata_1['Nombre'].' por una cantidad de '.$Cantidad.' con un valor total de '.Valores($vTotal, 0).'';
+				$cambios = 'Se cambia de '.$rowData_2['Producto'].' por una cantidad de '.Cantidades_decimales_justos($rowData_2['Cantidad']).' con un valor total de '.Valores($rowData_2['vTotal'], 0).'';
+				$cambios.= '<br/>a '.$rowData_1['Nombre'].' por una cantidad de '.$Cantidad.' con un valor total de '.Valores($vTotal, 0).'';
 
 				/******************************************/
 				//Se guarda en historial la accion
@@ -1822,16 +1822,16 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata_2 = db_select_data (false, 'ocompra_listado_existencias_productos.idOcompra, ocompra_listado_existencias_productos.Cantidad, ocompra_listado_existencias_productos.vTotal, productos_listado.Nombre AS Producto', 'ocompra_listado_existencias_productos', 'LEFT JOIN `productos_listado` ON productos_listado.idProducto = ocompra_listado_existencias_productos.idProducto', 'ocompra_listado_existencias_productos.idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_2 = db_select_data (false, 'ocompra_listado_existencias_productos.idOcompra, ocompra_listado_existencias_productos.Cantidad, ocompra_listado_existencias_productos.vTotal, productos_listado.Nombre AS Producto', 'ocompra_listado_existencias_productos', 'LEFT JOIN `productos_listado` ON productos_listado.idProducto = ocompra_listado_existencias_productos.idProducto', 'ocompra_listado_existencias_productos.idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
-				$cambios = 'Se elimina '.$rowdata_2['Producto'].' por una cantidad de '.Cantidades_decimales_justos($rowdata_2['Cantidad']).' con un valor total de '.Valores($rowdata_2['vTotal'], 0).'';
+				$cambios = 'Se elimina '.$rowData_2['Producto'].' por una cantidad de '.Cantidades_decimales_justos($rowData_2['Cantidad']).' con un valor total de '.Valores($rowData_2['vTotal'], 0).'';
 
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha     = fecha_actual();
-				$idOcompra = $rowdata_2['idOcompra'];
+				$idOcompra = $rowData_2['idOcompra'];
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
 				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
@@ -1909,13 +1909,13 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata = db_select_data (false, 'Nombre', 'insumos_listado', '', 'idProducto ='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'Nombre', 'insumos_listado', '', 'idProducto ='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = '';
-				if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){
-					$cambios .= "Se agrega insumo ".$rowdata['Nombre']." por una cantidad de ".$Cantidad." con valor total de ".Valores($vTotal, 0)."." ;
+				if(isset($rowData['Nombre'])&&$rowData['Nombre']!=''){
+					$cambios .= "Se agrega insumo ".$rowData['Nombre']." por una cantidad de ".$Cantidad." con valor total de ".Valores($vTotal, 0)."." ;
 				}
 
 				/******************************************/
@@ -1963,13 +1963,13 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata_1 = db_select_data (false, 'Nombre', 'insumos_listado', '', 'idProducto ='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				$rowdata_2 = db_select_data (false, 'ocompra_listado_existencias_insumos.Cantidad, ocompra_listado_existencias_insumos.vTotal, insumos_listado.Nombre AS Producto', 'ocompra_listado_existencias_insumos', 'LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = ocompra_listado_existencias_insumos.idProducto', 'ocompra_listado_existencias_insumos.idExistencia ='.$idExistencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_1 = db_select_data (false, 'Nombre', 'insumos_listado', '', 'idProducto ='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_2 = db_select_data (false, 'ocompra_listado_existencias_insumos.Cantidad, ocompra_listado_existencias_insumos.vTotal, insumos_listado.Nombre AS Producto', 'ocompra_listado_existencias_insumos', 'LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = ocompra_listado_existencias_insumos.idProducto', 'ocompra_listado_existencias_insumos.idExistencia ='.$idExistencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
-				$cambios = 'Se cambia de '.$rowdata_2['Producto'].' por una cantidad de '.Cantidades_decimales_justos($rowdata_2['Cantidad']).' con un valor total de '.Valores($rowdata_2['vTotal'], 0).'';
-				$cambios.= '<br/>a '.$rowdata_1['Nombre'].' por una cantidad de '.$Cantidad.' con un valor total de '.Valores($vTotal, 0).'';
+				$cambios = 'Se cambia de '.$rowData_2['Producto'].' por una cantidad de '.Cantidades_decimales_justos($rowData_2['Cantidad']).' con un valor total de '.Valores($rowData_2['vTotal'], 0).'';
+				$cambios.= '<br/>a '.$rowData_1['Nombre'].' por una cantidad de '.$Cantidad.' con un valor total de '.Valores($vTotal, 0).'';
 
 				/******************************************/
 				//Se guarda en historial la accion
@@ -2050,16 +2050,16 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata_2 = db_select_data (false, 'ocompra_listado_existencias_insumos.idOcompra, ocompra_listado_existencias_insumos.Cantidad, ocompra_listado_existencias_insumos.vTotal, insumos_listado.Nombre AS Producto', 'ocompra_listado_existencias_insumos', 'LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = ocompra_listado_existencias_insumos.idProducto', 'ocompra_listado_existencias_insumos.idExistencia = '.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_2 = db_select_data (false, 'ocompra_listado_existencias_insumos.idOcompra, ocompra_listado_existencias_insumos.Cantidad, ocompra_listado_existencias_insumos.vTotal, insumos_listado.Nombre AS Producto', 'ocompra_listado_existencias_insumos', 'LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = ocompra_listado_existencias_insumos.idProducto', 'ocompra_listado_existencias_insumos.idExistencia = '.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
-				$cambios = 'Se elimina '.$rowdata_2['Producto'].' por una cantidad de '.Cantidades_decimales_justos($rowdata_2['Cantidad']).' con un valor total de '.Valores($rowdata_2['vTotal'], 0).'';
+				$cambios = 'Se elimina '.$rowData_2['Producto'].' por una cantidad de '.Cantidades_decimales_justos($rowData_2['Cantidad']).' con un valor total de '.Valores($rowData_2['vTotal'], 0).'';
 
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha     = fecha_actual();
-				$idOcompra = $rowdata_2['idOcompra'];
+				$idOcompra = $rowData_2['idOcompra'];
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
 				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
@@ -2138,14 +2138,14 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata_1 = db_select_data (false, 'Nombre', 'equipos_arriendo_listado', '', 'idEquipo ='.$idEquipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				$rowdata_2 = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia ='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_1 = db_select_data (false, 'Nombre', 'equipos_arriendo_listado', '', 'idEquipo ='.$idEquipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_2 = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia ='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = '';
-				if(isset($rowdata_1['Nombre'])&&$rowdata_1['Nombre']!=''&&isset($rowdata_2['Nombre'])&&$rowdata_2['Nombre']!=''){
-					$cambios .= "Se agrega arriendo ".$rowdata_1['Nombre']." por ".$Cantidad." ".$rowdata_2['Nombre']." con valor total de ".Valores($vTotal, 0)."." ;
+				if(isset($rowData_1['Nombre'])&&$rowData_1['Nombre']!=''&&isset($rowData_2['Nombre'])&&$rowData_2['Nombre']!=''){
+					$cambios .= "Se agrega arriendo ".$rowData_1['Nombre']." por ".$Cantidad." ".$rowData_2['Nombre']." con valor total de ".Valores($vTotal, 0)."." ;
 				}
 
 				/******************************************/
@@ -2192,14 +2192,14 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata_1 = db_select_data (false, 'Nombre', 'equipos_arriendo_listado', '', 'idEquipo ='.$idEquipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				$rowdata_2 = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia ='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				$rowdata_3 = db_select_data (false, 'ocompra_listado_existencias_arriendos.Cantidad, ocompra_listado_existencias_arriendos.vTotal, equipos_arriendo_listado.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Frecuencia', 'ocompra_listado_existencias_arriendos', 'LEFT JOIN `equipos_arriendo_listado` ON equipos_arriendo_listado.idEquipo = ocompra_listado_existencias_arriendos.idEquipo LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_arriendos.idFrecuencia', 'ocompra_listado_existencias_arriendos.idExistencia ='.$idExistencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_1 = db_select_data (false, 'Nombre', 'equipos_arriendo_listado', '', 'idEquipo ='.$idEquipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_2 = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia ='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_3 = db_select_data (false, 'ocompra_listado_existencias_arriendos.Cantidad, ocompra_listado_existencias_arriendos.vTotal, equipos_arriendo_listado.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Frecuencia', 'ocompra_listado_existencias_arriendos', 'LEFT JOIN `equipos_arriendo_listado` ON equipos_arriendo_listado.idEquipo = ocompra_listado_existencias_arriendos.idEquipo LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_arriendos.idFrecuencia', 'ocompra_listado_existencias_arriendos.idExistencia ='.$idExistencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
-				$cambios = 'Se cambia de '.$rowdata_3['Producto'].' por '.Cantidades_decimales_justos($rowdata_3['Cantidad']).' '.$rowdata_3['Frecuencia'].' con un valor total de '.Valores($rowdata_3['vTotal'], 0).'';
-				$cambios.= '<br/>a '.$rowdata_1['Nombre'].' por '.$Cantidad.' '.$rowdata_2['Nombre'].' con un valor total de '.Valores($vTotal, 0).'';
+				$cambios = 'Se cambia de '.$rowData_3['Producto'].' por '.Cantidades_decimales_justos($rowData_3['Cantidad']).' '.$rowData_3['Frecuencia'].' con un valor total de '.Valores($rowData_3['vTotal'], 0).'';
+				$cambios.= '<br/>a '.$rowData_1['Nombre'].' por '.$Cantidad.' '.$rowData_2['Nombre'].' con un valor total de '.Valores($vTotal, 0).'';
 
 				/******************************************/
 				//Se guarda en historial la accion
@@ -2281,16 +2281,16 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata_3 = db_select_data (false, 'ocompra_listado_existencias_arriendos.idOcompra, ocompra_listado_existencias_arriendos.Cantidad, ocompra_listado_existencias_arriendos.vTotal, equipos_arriendo_listado.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Frecuencia', 'ocompra_listado_existencias_arriendos', 'LEFT JOIN `equipos_arriendo_listado` ON equipos_arriendo_listado.idEquipo = ocompra_listado_existencias_arriendos.idEquipo LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_arriendos.idFrecuencia', 'ocompra_listado_existencias_arriendos.idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_3 = db_select_data (false, 'ocompra_listado_existencias_arriendos.idOcompra, ocompra_listado_existencias_arriendos.Cantidad, ocompra_listado_existencias_arriendos.vTotal, equipos_arriendo_listado.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Frecuencia', 'ocompra_listado_existencias_arriendos', 'LEFT JOIN `equipos_arriendo_listado` ON equipos_arriendo_listado.idEquipo = ocompra_listado_existencias_arriendos.idEquipo LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_arriendos.idFrecuencia', 'ocompra_listado_existencias_arriendos.idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
-				$cambios = 'Se elimina '.$rowdata_3['Producto'].' por '.Cantidades_decimales_justos($rowdata_3['Cantidad']).' '.$rowdata_3['Frecuencia'].' con un valor total de '.Valores($rowdata_3['vTotal'], 0).'';
+				$cambios = 'Se elimina '.$rowData_3['Producto'].' por '.Cantidades_decimales_justos($rowData_3['Cantidad']).' '.$rowData_3['Frecuencia'].' con un valor total de '.Valores($rowData_3['vTotal'], 0).'';
 
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha     = fecha_actual();
-				$idOcompra = $rowdata_3['idOcompra'];
+				$idOcompra = $rowData_3['idOcompra'];
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
 				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
@@ -2369,14 +2369,14 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata_1 = db_select_data (false, 'Nombre', 'servicios_listado', '', 'idServicio ='.$idServicio, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				$rowdata_2 = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia ='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_1 = db_select_data (false, 'Nombre', 'servicios_listado', '', 'idServicio ='.$idServicio, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_2 = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia ='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = '';
-				if(isset($rowdata_1['Nombre'])&&$rowdata_1['Nombre']!=''&&isset($rowdata_2['Nombre'])&&$rowdata_2['Nombre']!=''){
-					$cambios .= "Se agrega servicio ".$rowdata_1['Nombre']." por ".$Cantidad." ".$rowdata_2['Nombre']." con valor total de ".Valores($vTotal, 0)."." ;
+				if(isset($rowData_1['Nombre'])&&$rowData_1['Nombre']!=''&&isset($rowData_2['Nombre'])&&$rowData_2['Nombre']!=''){
+					$cambios .= "Se agrega servicio ".$rowData_1['Nombre']." por ".$Cantidad." ".$rowData_2['Nombre']." con valor total de ".Valores($vTotal, 0)."." ;
 				}
 
 				/******************************************/
@@ -2424,14 +2424,14 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata_1 = db_select_data (false, 'Nombre', 'servicios_listado', '', 'idServicio ='.$idServicio, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				$rowdata_2 = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia ='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				$rowdata_3 = db_select_data (false, 'ocompra_listado_existencias_servicios.idServicio, ocompra_listado_existencias_servicios.idFrecuencia, ocompra_listado_existencias_servicios.Cantidad, ocompra_listado_existencias_servicios.vTotal, servicios_listado.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Frecuencia', 'ocompra_listado_existencias_servicios', 'LEFT JOIN `servicios_listado` ON servicios_listado.idServicio = ocompra_listado_existencias_servicios.idServicio LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_servicios.idFrecuencia', 'ocompra_listado_existencias_servicios.idExistencia ='.$idExistencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_1 = db_select_data (false, 'Nombre', 'servicios_listado', '', 'idServicio ='.$idServicio, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_2 = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia ='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_3 = db_select_data (false, 'ocompra_listado_existencias_servicios.idServicio, ocompra_listado_existencias_servicios.idFrecuencia, ocompra_listado_existencias_servicios.Cantidad, ocompra_listado_existencias_servicios.vTotal, servicios_listado.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Frecuencia', 'ocompra_listado_existencias_servicios', 'LEFT JOIN `servicios_listado` ON servicios_listado.idServicio = ocompra_listado_existencias_servicios.idServicio LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_servicios.idFrecuencia', 'ocompra_listado_existencias_servicios.idExistencia ='.$idExistencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
-				$cambios = 'Se cambia de '.$rowdata_3['Producto'].' por '.Cantidades_decimales_justos($rowdata_3['Cantidad']).' '.$rowdata_3['Frecuencia'].' con un valor total de '.Valores($rowdata_3['vTotal'], 0).'';
-				$cambios.= '<br/>a '.$rowdata_1['Nombre'].' por '.$Cantidad.' '.$rowdata_2['Nombre'].' con un valor total de '.Valores($vTotal, 0).'';
+				$cambios = 'Se cambia de '.$rowData_3['Producto'].' por '.Cantidades_decimales_justos($rowData_3['Cantidad']).' '.$rowData_3['Frecuencia'].' con un valor total de '.Valores($rowData_3['vTotal'], 0).'';
+				$cambios.= '<br/>a '.$rowData_1['Nombre'].' por '.$Cantidad.' '.$rowData_2['Nombre'].' con un valor total de '.Valores($vTotal, 0).'';
 
 				/******************************************/
 				//Se guarda en historial la accion
@@ -2513,16 +2513,16 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata_3 = db_select_data (false, 'ocompra_listado_existencias_servicios.idOcompra, ocompra_listado_existencias_servicios.Cantidad, ocompra_listado_existencias_servicios.vTotal, servicios_listado.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Frecuencia', 'ocompra_listado_existencias_servicios', 'LEFT JOIN `servicios_listado` ON servicios_listado.idServicio = ocompra_listado_existencias_servicios.idServicio LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_servicios.idFrecuencia', 'ocompra_listado_existencias_servicios.idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_3 = db_select_data (false, 'ocompra_listado_existencias_servicios.idOcompra, ocompra_listado_existencias_servicios.Cantidad, ocompra_listado_existencias_servicios.vTotal, servicios_listado.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Frecuencia', 'ocompra_listado_existencias_servicios', 'LEFT JOIN `servicios_listado` ON servicios_listado.idServicio = ocompra_listado_existencias_servicios.idServicio LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_servicios.idFrecuencia', 'ocompra_listado_existencias_servicios.idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
-				$cambios = 'Se elimina '.$rowdata_3['Producto'].' por '.Cantidades_decimales_justos($rowdata_3['Cantidad']).' '.$rowdata_3['Frecuencia'].' con un valor total de '.Valores($rowdata_3['vTotal'], 0).'';
+				$cambios = 'Se elimina '.$rowData_3['Producto'].' por '.Cantidades_decimales_justos($rowData_3['Cantidad']).' '.$rowData_3['Frecuencia'].' con un valor total de '.Valores($rowData_3['vTotal'], 0).'';
 
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha      = fecha_actual();
-				$idOcompra  = $rowdata_3['idOcompra'];
+				$idOcompra  = $rowData_3['idOcompra'];
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
 				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
@@ -2590,13 +2590,13 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata_2 = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia ='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_2 = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia ='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = '';
-				if(isset($rowdata_2['Nombre'])&&$rowdata_2['Nombre']!=''){
-					$cambios .= "Se agrega otro ".$Nombre." por ".$Cantidad." ".$rowdata_2['Nombre']." con valor total de ".Valores($vTotal, 0)."." ;
+				if(isset($rowData_2['Nombre'])&&$rowData_2['Nombre']!=''){
+					$cambios .= "Se agrega otro ".$Nombre." por ".$Cantidad." ".$rowData_2['Nombre']." con valor total de ".Valores($vTotal, 0)."." ;
 				}
 
 				/******************************************/
@@ -2633,13 +2633,13 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata_2 = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia ='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				$rowdata_3 = db_select_data (false, 'ocompra_listado_existencias_otros.Cantidad, ocompra_listado_existencias_otros.vTotal, ocompra_listado_existencias_otros.Nombre,core_tiempo_frecuencia.Nombre AS Frecuencia', 'ocompra_listado_existencias_otros', 'LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_otros.idFrecuencia', 'ocompra_listado_existencias_otros.idExistencia ='.$idExistencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_2 = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia ='.$idFrecuencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_3 = db_select_data (false, 'ocompra_listado_existencias_otros.Cantidad, ocompra_listado_existencias_otros.vTotal, ocompra_listado_existencias_otros.Nombre,core_tiempo_frecuencia.Nombre AS Frecuencia', 'ocompra_listado_existencias_otros', 'LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_otros.idFrecuencia', 'ocompra_listado_existencias_otros.idExistencia ='.$idExistencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
-				$cambios = 'Se cambia de '.$rowdata_3['Nombre'].' por '.Cantidades_decimales_justos($rowdata_3['Cantidad']).' '.$rowdata_3['Frecuencia'].' con un valor total de '.Valores($rowdata_3['vTotal'], 0).'';
-				$cambios.= '<br/>a '.$Nombre.' por '.$Cantidad.' '.$rowdata_2['Nombre'].' con un valor total de '.Valores($vTotal, 0).'';
+				$cambios = 'Se cambia de '.$rowData_3['Nombre'].' por '.Cantidades_decimales_justos($rowData_3['Cantidad']).' '.$rowData_3['Frecuencia'].' con un valor total de '.Valores($rowData_3['vTotal'], 0).'';
+				$cambios.= '<br/>a '.$Nombre.' por '.$Cantidad.' '.$rowData_2['Nombre'].' con un valor total de '.Valores($vTotal, 0).'';
 
 				/******************************************/
 				//Se guarda en historial la accion
@@ -2722,16 +2722,16 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata_3 = db_select_data (false, 'ocompra_listado_existencias_otros.idOcompra, ocompra_listado_existencias_otros.Cantidad, ocompra_listado_existencias_otros.vTotal, ocompra_listado_existencias_otros.Nombre,core_tiempo_frecuencia.Nombre AS Frecuencia', 'ocompra_listado_existencias_otros', 'LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia  = ocompra_listado_existencias_otros.idFrecuencia', 'ocompra_listado_existencias_otros.idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_3 = db_select_data (false, 'ocompra_listado_existencias_otros.idOcompra, ocompra_listado_existencias_otros.Cantidad, ocompra_listado_existencias_otros.vTotal, ocompra_listado_existencias_otros.Nombre,core_tiempo_frecuencia.Nombre AS Frecuencia', 'ocompra_listado_existencias_otros', 'LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia  = ocompra_listado_existencias_otros.idFrecuencia', 'ocompra_listado_existencias_otros.idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
-				$cambios = 'Se elimina '.$rowdata_3['Nombre'].' por '.Cantidades_decimales_justos($rowdata_3['Cantidad']).' '.$rowdata_3['Frecuencia'].' con un valor total de '.Valores($rowdata_3['vTotal'], 0).'';
+				$cambios = 'Se elimina '.$rowData_3['Nombre'].' por '.Cantidades_decimales_justos($rowData_3['Cantidad']).' '.$rowData_3['Frecuencia'].' con un valor total de '.Valores($rowData_3['vTotal'], 0).'';
 
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha     = fecha_actual();
-				$idOcompra = $rowdata_3['idOcompra'];
+				$idOcompra = $rowData_3['idOcompra'];
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
 				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
@@ -2798,13 +2798,13 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata_2 = db_select_data (false, 'Nombre,ApellidoPat', 'trabajadores_listado', '', 'idTrabajador = '.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_2 = db_select_data (false, 'Nombre,ApellidoPat', 'trabajadores_listado', '', 'idTrabajador = '.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = '';
-				if(isset($rowdata_2['Nombre'])&&$rowdata_2['Nombre']!=''&&isset($rowdata_2['ApellidoPat'])&&$rowdata_2['ApellidoPat']!=''){
-					$cambios .= "Se agrega boleta honorarios N° ".$N_Doc." del trabajador ".$rowdata_2['Nombre']." ".$rowdata_2['ApellidoPat']." con valor total de ".Valores($Valor, 0)."." ;
+				if(isset($rowData_2['Nombre'])&&$rowData_2['Nombre']!=''&&isset($rowData_2['ApellidoPat'])&&$rowData_2['ApellidoPat']!=''){
+					$cambios .= "Se agrega boleta honorarios N° ".$N_Doc." del trabajador ".$rowData_2['Nombre']." ".$rowData_2['ApellidoPat']." con valor total de ".Valores($Valor, 0)."." ;
 				}
 
 				/******************************************/
@@ -2841,13 +2841,13 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata_2 = db_select_data (false, 'Nombre,ApellidoPat', 'trabajadores_listado', '', 'idTrabajador = '.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				$rowdata_3 = db_select_data (false, 'ocompra_listado_existencias_boletas.N_Doc, ocompra_listado_existencias_boletas.Valor, trabajadores_listado.Nombre AS TrabNombre,trabajadores_listado.ApellidoPat AS TrabApellidoPat', 'ocompra_listado_existencias_boletas', 'LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador   = ocompra_listado_existencias_boletas.idTrabajador', 'ocompra_listado_existencias_boletas.idExistencia ='.$idExistencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_2 = db_select_data (false, 'Nombre,ApellidoPat', 'trabajadores_listado', '', 'idTrabajador = '.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_3 = db_select_data (false, 'ocompra_listado_existencias_boletas.N_Doc, ocompra_listado_existencias_boletas.Valor, trabajadores_listado.Nombre AS TrabNombre,trabajadores_listado.ApellidoPat AS TrabApellidoPat', 'ocompra_listado_existencias_boletas', 'LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador   = ocompra_listado_existencias_boletas.idTrabajador', 'ocompra_listado_existencias_boletas.idExistencia ='.$idExistencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
-				$cambios = 'Se cambia la boleta de honorarios N° '.$rowdata_3['N_Doc'].' del trabajador '.$rowdata_3['TrabNombre'].' '.$rowdata_3['TrabApellidoPat'].' con un valor total de '.Valores($rowdata_3['Valor'], 0).'';
-				$cambios.= '<br/>a boleta de honorarios N° '.$N_Doc.' del trabajador '.$rowdata_2['Nombre'].' '.$rowdata_2['ApellidoPat'].' con un valor total de '.Valores($Valor, 0).'.';
+				$cambios = 'Se cambia la boleta de honorarios N° '.$rowData_3['N_Doc'].' del trabajador '.$rowData_3['TrabNombre'].' '.$rowData_3['TrabApellidoPat'].' con un valor total de '.Valores($rowData_3['Valor'], 0).'';
+				$cambios.= '<br/>a boleta de honorarios N° '.$N_Doc.' del trabajador '.$rowData_2['Nombre'].' '.$rowData_2['ApellidoPat'].' con un valor total de '.Valores($Valor, 0).'.';
 
 				/******************************************/
 				//Se guarda en historial la accion
@@ -2926,16 +2926,16 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata_3 = db_select_data (false, 'ocompra_listado_existencias_boletas.N_Doc, ocompra_listado_existencias_boletas.Valor, trabajadores_listado.Nombre AS TrabNombre,trabajadores_listado.ApellidoPat AS TrabApellidoPat', 'ocompra_listado_existencias_boletas', 'LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador   = ocompra_listado_existencias_boletas.idTrabajador', 'ocompra_listado_existencias_boletas.idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_3 = db_select_data (false, 'ocompra_listado_existencias_boletas.N_Doc, ocompra_listado_existencias_boletas.Valor, trabajadores_listado.Nombre AS TrabNombre,trabajadores_listado.ApellidoPat AS TrabApellidoPat', 'ocompra_listado_existencias_boletas', 'LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador   = ocompra_listado_existencias_boletas.idTrabajador', 'ocompra_listado_existencias_boletas.idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
-				$cambios = 'Se elimina la boleta de honorarios N° '.$rowdata_3['N_Doc'].' del trabajador '.$rowdata_3['TrabNombre'].' '.$rowdata_3['TrabApellidoPat'].' con un valor total de '.Valores($rowdata_3['Valor'], 0).'.';
+				$cambios = 'Se elimina la boleta de honorarios N° '.$rowData_3['N_Doc'].' del trabajador '.$rowData_3['TrabNombre'].' '.$rowData_3['TrabApellidoPat'].' con un valor total de '.Valores($rowData_3['Valor'], 0).'.';
 
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha     = fecha_actual();
-				$idOcompra = $rowdata_3['idOcompra'];
+				$idOcompra = $rowData_3['idOcompra'];
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
 				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
@@ -3035,11 +3035,11 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata_3 = db_select_data (false, 'Valor,Descripcion', 'ocompra_listado_existencias_boletas_empresas', '', 'idExistencia ='.$idExistencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_3 = db_select_data (false, 'Valor,Descripcion', 'ocompra_listado_existencias_boletas_empresas', '', 'idExistencia ='.$idExistencia, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
-				$cambios = 'Se cambia la boleta de honorarios de la empresa con la descripcion '.$rowdata_3['Descripcion'].' con un valor total de '.Valores($rowdata_3['Valor'], 0).'';
+				$cambios = 'Se cambia la boleta de honorarios de la empresa con la descripcion '.$rowData_3['Descripcion'].' con un valor total de '.Valores($rowData_3['Valor'], 0).'';
 				$cambios.= '<br/>a boleta de honorarios con la descripcion '.$Descripcion.' con un valor total de '.Valores($Valor, 0).'.';
 
 				/******************************************/
@@ -3117,16 +3117,16 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata_3 = db_select_data (false, 'Valor,Descripcion', 'ocompra_listado_existencias_boletas_empresas', '', 'idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_3 = db_select_data (false, 'Valor,Descripcion', 'ocompra_listado_existencias_boletas_empresas', '', 'idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
-				$cambios = 'Se elimina la boleta de honorarios con la descripcion '.$rowdata_3['Descripcion'].' con un valor total de '.Valores($rowdata_3['Valor'], 0).'.';
+				$cambios = 'Se elimina la boleta de honorarios con la descripcion '.$rowData_3['Descripcion'].' con un valor total de '.Valores($rowData_3['Valor'], 0).'.';
 
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha     = fecha_actual();
-				$idOcompra = $rowdata_3['idOcompra'];
+				$idOcompra = $rowData_3['idOcompra'];
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
 				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
@@ -3195,13 +3195,13 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata_2 = db_select_data (false, 'Nombre', 'sistema_documentos_pago', '', 'idDocPago = '.$idDocPago, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_2 = db_select_data (false, 'Nombre', 'sistema_documentos_pago', '', 'idDocPago = '.$idDocPago, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = '';
-				if(isset($rowdata_2['Nombre'])&&$rowdata_2['Nombre']!=''){
-					$cambios .= "Se agrega documento de pago ".$rowdata_2['Nombre']." N°".$NDocPago." con fecha de pago ".$Fpago." por valor total de ".Valores($vTotal, 0)."." ;
+				if(isset($rowData_2['Nombre'])&&$rowData_2['Nombre']!=''){
+					$cambios .= "Se agrega documento de pago ".$rowData_2['Nombre']." N°".$NDocPago." con fecha de pago ".$Fpago." por valor total de ".Valores($vTotal, 0)."." ;
 				}
 
 				/******************************************/
@@ -3238,13 +3238,13 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata_2 = db_select_data (false, 'Nombre', 'sistema_documentos_pago', '', 'idDocPago = '.$idDocPago, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				$rowdata_3 = db_select_data (false, 'sistema_documentos_pago.Nombre,ocompra_listado_documentos.NDocPago, ocompra_listado_documentos.Fpago, ocompra_listado_documentos.vTotal', 'ocompra_listado_documentos', 'LEFT JOIN `sistema_documentos_pago`   ON sistema_documentos_pago.idDocPago  = ocompra_listado_documentos.idDocPago', 'ocompra_listado_documentos.idDocumento'.$idDocumento, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_2 = db_select_data (false, 'Nombre', 'sistema_documentos_pago', '', 'idDocPago = '.$idDocPago, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_3 = db_select_data (false, 'sistema_documentos_pago.Nombre,ocompra_listado_documentos.NDocPago, ocompra_listado_documentos.Fpago, ocompra_listado_documentos.vTotal', 'ocompra_listado_documentos', 'LEFT JOIN `sistema_documentos_pago`   ON sistema_documentos_pago.idDocPago  = ocompra_listado_documentos.idDocPago', 'ocompra_listado_documentos.idDocumento'.$idDocumento, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
-				$cambios = 'Se cambia de '.$rowdata_3['Nombre'].' N°'.$rowdata_3['NDocPago'].' con fecha de pago '.$rowdata_3['Fpago'].' por un valor total de '.Valores($rowdata_3['vTotal'], 0).'';
-				$cambios.= '<br/>a '.$rowdata_2['Nombre'].' N°'.$NDocPago.' con fecha de pago '.$Fpago.' por valor total de '.Valores($vTotal, 0).'.' ;
+				$cambios = 'Se cambia de '.$rowData_3['Nombre'].' N°'.$rowData_3['NDocPago'].' con fecha de pago '.$rowData_3['Fpago'].' por un valor total de '.Valores($rowData_3['vTotal'], 0).'';
+				$cambios.= '<br/>a '.$rowData_2['Nombre'].' N°'.$NDocPago.' con fecha de pago '.$Fpago.' por valor total de '.Valores($vTotal, 0).'.' ;
 
 				/******************************************/
 				//Se guarda en historial la accion
@@ -3326,11 +3326,11 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se toman los datos
-				$rowdata_3 = db_select_data (false, 'sistema_documentos_pago.Nombre,ocompra_listado_documentos.NDocPago, ocompra_listado_documentos.Fpago, ocompra_listado_documentos.vTotal', 'ocompra_listado_documentos', 'LEFT JOIN `sistema_documentos_pago`   ON sistema_documentos_pago.idDocPago  = ocompra_listado_documentos.idDocPago', 'ocompra_listado_documentos.idDocumento'.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData_3 = db_select_data (false, 'sistema_documentos_pago.Nombre,ocompra_listado_documentos.NDocPago, ocompra_listado_documentos.Fpago, ocompra_listado_documentos.vTotal', 'ocompra_listado_documentos', 'LEFT JOIN `sistema_documentos_pago`   ON sistema_documentos_pago.idDocPago  = ocompra_listado_documentos.idDocPago', 'ocompra_listado_documentos.idDocumento'.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Se realizan comparacion
-				$cambios = 'Se elimina '.$rowdata_3['Nombre'].' N°'.$rowdata_3['NDocPago'].' con fecha de pago '.$rowdata_3['Fpago'].' por un valor total de '.Valores($rowdata_3['vTotal'], 0).'';
+				$cambios = 'Se elimina '.$rowData_3['Nombre'].' N°'.$rowData_3['NDocPago'].' con fecha de pago '.$rowData_3['Fpago'].' por un valor total de '.Valores($rowData_3['vTotal'], 0).'';
 
 				/******************************************/
 				//Se guarda en historial la accion
@@ -3513,12 +3513,12 @@ require_once '0_validate_user_1.php';
 
 			if($errorn==0){
 				// Se obtiene el nombre del archivo
-				$rowdata = db_select_data (false, 'Nombre', 'ocompra_listado_archivos', '', 'idFile = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'Nombre', 'ocompra_listado_archivos', '', 'idFile = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*********************************************************************/
 				/*********************************************************************/
 				//Se realizan comparacion
-				$cambios = 'Se elimina archivo '.$rowdata['Nombre'];
+				$cambios = 'Se elimina archivo '.$rowData['Nombre'];
 
 				/******************************************/
 				//Se guarda en historial la accion
@@ -3541,12 +3541,12 @@ require_once '0_validate_user_1.php';
 				if($resultado==true){
 
 					//se elimina el archivo
-					if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){
+					if(isset($rowData['Nombre'])&&$rowData['Nombre']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['Nombre'])){
+							if(!is_writable('upload/'.$rowData['Nombre'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['Nombre']);
+								unlink('upload/'.$rowData['Nombre']);
 								unset($_SESSION['ocompra_archivos'][$indice]);
 							}
 						}catch(Exception $e) {
@@ -3586,12 +3586,12 @@ require_once '0_validate_user_1.php';
 						//Productos
 						case 1:
 							//Se trae los datos
-							$rowdata = db_select_data (false, 'ocompra_listado_existencias_productos.idExistencia, ocompra_listado_existencias_productos.Cantidad, ocompra_listado_existencias_productos.vUnitario, productos_listado.Nombre AS Producto, sistema_productos_uml.Nombre AS Medida', 'ocompra_listado_existencias_productos', 'LEFT JOIN `productos_listado` ON productos_listado.idProducto = ocompra_listado_existencias_productos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'ocompra_listado_existencias_productos.idOcompra = '.$_GET['view'].' AND ocompra_listado_existencias_productos.idProducto= '.$_GET['del_sol_prod'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$rowData = db_select_data (false, 'ocompra_listado_existencias_productos.idExistencia, ocompra_listado_existencias_productos.Cantidad, ocompra_listado_existencias_productos.vUnitario, productos_listado.Nombre AS Producto, sistema_productos_uml.Nombre AS Medida', 'ocompra_listado_existencias_productos', 'LEFT JOIN `productos_listado` ON productos_listado.idProducto = ocompra_listado_existencias_productos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'ocompra_listado_existencias_productos.idOcompra = '.$_GET['view'].' AND ocompra_listado_existencias_productos.idProducto= '.$_GET['del_sol_prod'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 							/*********************************************************************/
 							/*********************************************************************/
 							//Se realizan comparacion
-							$cambios = 'Se eliminan '.$rowdata['Cantidad'].' '.$rowdata['Medida'].' de '.$rowdata['Producto'].' de la solicitud';
+							$cambios = 'Se eliminan '.$rowData['Cantidad'].' '.$rowData['Medida'].' de '.$rowData['Producto'].' de la solicitud';
 							/******************************************/
 							//Se guarda en historial la accion
 							$fecha = fecha_actual();
@@ -3608,20 +3608,20 @@ require_once '0_validate_user_1.php';
 							/*********************************************************************/
 							/*********************************************************************/
 							//Verifico cantidades
-							$Resta = $rowdata['Cantidad'] - $_GET['del_sol_cant'];
+							$Resta = $rowData['Cantidad'] - $_GET['del_sol_cant'];
 							//Elimino en caso de que quede en 0
 							if($Resta==0){
 								//se borran los datos
-								$resultado = db_delete_data (false, 'ocompra_listado_existencias_productos', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$resultado = db_delete_data (false, 'ocompra_listado_existencias_productos', 'idExistencia = "'.$rowData['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//se actualizan los datos
 								$SIS_data = "idOcompra=0" ;
 								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_productos', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Sino Actualizo valores
 							}else{
-								$nuevo = $Resta * $rowdata['vUnitario'];
+								$nuevo = $Resta * $rowData['vUnitario'];
 								//se actualizan los datos
 								$SIS_data = "Cantidad=".$Resta.", vTotal=".$nuevo ;
-								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_productos', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_productos', 'idExistencia = "'.$rowData['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//se actualizan los datos
 								$SIS_data = "idOcompra=0" ;
 								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_productos', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -3632,12 +3632,12 @@ require_once '0_validate_user_1.php';
 						//Insumos
 						case 2:
 							//Se trae los datos
-							$rowdata = db_select_data (false, 'ocompra_listado_existencias_insumos.idExistencia, ocompra_listado_existencias_insumos.Cantidad, ocompra_listado_existencias_insumos.vUnitario, insumos_listado.Nombre AS Producto, sistema_productos_uml.Nombre AS Medida', 'ocompra_listado_existencias_insumos', 'LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = ocompra_listado_existencias_insumos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'ocompra_listado_existencias_insumos.idOcompra = '.$_GET['view'].' AND ocompra_listado_existencias_insumos.idProducto= '.$_GET['del_sol_prod'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$rowData = db_select_data (false, 'ocompra_listado_existencias_insumos.idExistencia, ocompra_listado_existencias_insumos.Cantidad, ocompra_listado_existencias_insumos.vUnitario, insumos_listado.Nombre AS Producto, sistema_productos_uml.Nombre AS Medida', 'ocompra_listado_existencias_insumos', 'LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = ocompra_listado_existencias_insumos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'ocompra_listado_existencias_insumos.idOcompra = '.$_GET['view'].' AND ocompra_listado_existencias_insumos.idProducto= '.$_GET['del_sol_prod'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 							/*********************************************************************/
 							/*********************************************************************/
 							//Se realizan comparacion
-							$cambios = 'Se eliminan '.$rowdata['Cantidad'].' '.$rowdata['Medida'].' de '.$rowdata['Producto'].' de la solicitud';
+							$cambios = 'Se eliminan '.$rowData['Cantidad'].' '.$rowData['Medida'].' de '.$rowData['Producto'].' de la solicitud';
 							/******************************************/
 							//Se guarda en historial la accion
 							$fecha = fecha_actual();
@@ -3654,20 +3654,20 @@ require_once '0_validate_user_1.php';
 							/*********************************************************************/
 							/*********************************************************************/
 							//Verifico cantidades
-							$Resta = $rowdata['Cantidad'] - $_GET['del_sol_cant'];
+							$Resta = $rowData['Cantidad'] - $_GET['del_sol_cant'];
 							//Elimino en caso de que quede en 0
 							if($Resta==0){
 								//se borran los datos
-								$resultado = db_delete_data (false, 'ocompra_listado_existencias_insumos', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$resultado = db_delete_data (false, 'ocompra_listado_existencias_insumos', 'idExistencia = "'.$rowData['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//se actualizan los datos
 								$SIS_data = "idOcompra=0" ;
 								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_insumos', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Sino Actualizo valores
 							}else{
-								$nuevo = $Resta * $rowdata['vUnitario'];
+								$nuevo = $Resta * $rowData['vUnitario'];
 								//se actualizan los datos
 								$SIS_data = "Cantidad=".$Resta.", vTotal=".$nuevo ;
-								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_insumos', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_insumos', 'idExistencia = "'.$rowData['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//se actualizan los datos
 								$SIS_data = "idOcompra=0" ;
 								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_insumos', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -3678,12 +3678,12 @@ require_once '0_validate_user_1.php';
 						//Arriendos
 						case 3:
 							//Se trae los datos
-							$rowdata = db_select_data (false, 'ocompra_listado_existencias_arriendos.idExistencia, ocompra_listado_existencias_arriendos.Cantidad, ocompra_listado_existencias_arriendos.vUnitario, equipos_arriendo_listado.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Medida', 'ocompra_listado_existencias_arriendos', 'LEFT JOIN `equipos_arriendo_listado` ON equipos_arriendo_listado.idEquipo = ocompra_listado_existencias_arriendos.idEquipo LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_arriendos.idFrecuencia', 'ocompra_listado_existencias_arriendos.idOcompra = '.$_GET['view'].' AND ocompra_listado_existencias_arriendos.idEquipo= '.$_GET['del_sol_prod'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$rowData = db_select_data (false, 'ocompra_listado_existencias_arriendos.idExistencia, ocompra_listado_existencias_arriendos.Cantidad, ocompra_listado_existencias_arriendos.vUnitario, equipos_arriendo_listado.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Medida', 'ocompra_listado_existencias_arriendos', 'LEFT JOIN `equipos_arriendo_listado` ON equipos_arriendo_listado.idEquipo = ocompra_listado_existencias_arriendos.idEquipo LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_arriendos.idFrecuencia', 'ocompra_listado_existencias_arriendos.idOcompra = '.$_GET['view'].' AND ocompra_listado_existencias_arriendos.idEquipo= '.$_GET['del_sol_prod'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 							/*********************************************************************/
 							/*********************************************************************/
 							//Se realizan comparacion
-							$cambios = 'Se eliminan '.$rowdata['Cantidad'].' '.$rowdata['Medida'].' de '.$rowdata['Producto'].' de la solicitud';
+							$cambios = 'Se eliminan '.$rowData['Cantidad'].' '.$rowData['Medida'].' de '.$rowData['Producto'].' de la solicitud';
 							/******************************************/
 							//Se guarda en historial la accion
 							$fecha = fecha_actual();
@@ -3700,21 +3700,21 @@ require_once '0_validate_user_1.php';
 							/*********************************************************************/
 							/*********************************************************************/
 							//Verifico cantidades
-							$Resta = $rowdata['Cantidad'] - $_GET['del_sol_cant'];
+							$Resta = $rowData['Cantidad'] - $_GET['del_sol_cant'];
 							//Elimino en caso de que quede en 0
 							if($Resta==0){
 								//se borran los datos
-								$resultado = db_delete_data (false, 'ocompra_listado_existencias_arriendos', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$resultado = db_delete_data (false, 'ocompra_listado_existencias_arriendos', 'idExistencia = "'.$rowData['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//se actualizan los datos
 								$SIS_data = "idOcompra=0" ;
 								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_arriendos', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 							//Sino Actualizo valores
 							}else{
-								$nuevo = $Resta * $rowdata['vUnitario'];
+								$nuevo = $Resta * $rowData['vUnitario'];
 								//se actualizan los datos
 								$SIS_data = "Cantidad=".$Resta.", vTotal=".$nuevo ;
-								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_arriendos', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_arriendos', 'idExistencia = "'.$rowData['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//se actualizan los datos
 								$SIS_data = "idOcompra=0" ;
 								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_arriendos', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -3725,12 +3725,12 @@ require_once '0_validate_user_1.php';
 						//Servicios
 						case 4:
 							//Se trae los datos
-							$rowdata = db_select_data (false, 'ocompra_listado_existencias_servicios.idExistencia, ocompra_listado_existencias_servicios.Cantidad, ocompra_listado_existencias_servicios.vUnitario, servicios_listado.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Medida', 'ocompra_listado_existencias_servicios', 'LEFT JOIN `servicios_listado` ON servicios_listado.idServicio  = ocompra_listado_existencias_servicios.idServicio LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_servicios.idFrecuencia', 'ocompra_listado_existencias_servicios.idOcompra = '.$_GET['view'].' AND ocompra_listado_existencias_servicios.idServicio= '.$_GET['del_sol_prod'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$rowData = db_select_data (false, 'ocompra_listado_existencias_servicios.idExistencia, ocompra_listado_existencias_servicios.Cantidad, ocompra_listado_existencias_servicios.vUnitario, servicios_listado.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Medida', 'ocompra_listado_existencias_servicios', 'LEFT JOIN `servicios_listado` ON servicios_listado.idServicio  = ocompra_listado_existencias_servicios.idServicio LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_servicios.idFrecuencia', 'ocompra_listado_existencias_servicios.idOcompra = '.$_GET['view'].' AND ocompra_listado_existencias_servicios.idServicio= '.$_GET['del_sol_prod'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 							/*********************************************************************/
 							/*********************************************************************/
 							//Se realizan comparacion
-							$cambios = 'Se eliminan '.$rowdata['Cantidad'].' '.$rowdata['Medida'].' de '.$rowdata['Producto'].' de la solicitud';
+							$cambios = 'Se eliminan '.$rowData['Cantidad'].' '.$rowData['Medida'].' de '.$rowData['Producto'].' de la solicitud';
 							/******************************************/
 							//Se guarda en historial la accion
 							$fecha = fecha_actual();
@@ -3747,21 +3747,21 @@ require_once '0_validate_user_1.php';
 							/*********************************************************************/
 							/*********************************************************************/
 							//Verifico cantidades
-							$Resta = $rowdata['Cantidad'] - $_GET['del_sol_cant'];
+							$Resta = $rowData['Cantidad'] - $_GET['del_sol_cant'];
 							//Elimino en caso de que quede en 0
 							if($Resta==0){
 								//se borran los datos
-								$resultado = db_delete_data (false, 'ocompra_listado_existencias_servicios', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$resultado = db_delete_data (false, 'ocompra_listado_existencias_servicios', 'idExistencia = "'.$rowData['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//se actualizan los datos
 								$SIS_data = "idOcompra=0" ;
 								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_servicios', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 							//Sino Actualizo valores
 							}else{
-								$nuevo = $Resta * $rowdata['vUnitario'];
+								$nuevo = $Resta * $rowData['vUnitario'];
 								//se actualizan los datos
 								$SIS_data = "Cantidad=".$Resta.", vTotal=".$nuevo ;
-								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_servicios', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_servicios', 'idExistencia = "'.$rowData['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//se actualizan los datos
 								$SIS_data = "idOcompra=0" ;
 								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_servicios', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -3772,12 +3772,12 @@ require_once '0_validate_user_1.php';
 						//Otros
 						case 5:
 							//Se trae los datos
-							$rowdata = db_select_data (false, 'ocompra_listado_existencias_otros.idExistencia, ocompra_listado_existencias_otros.Cantidad, ocompra_listado_existencias_otros.vUnitario, ocompra_listado_existencias_otros.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Medida', 'ocompra_listado_existencias_otros', 'LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_otros.idFrecuencia', 'ocompra_listado_existencias_otros.idOcompra = '.$_GET['view'].' AND ocompra_listado_existencias_otros.Nombre= '.$_GET['del_sol_prod'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$rowData = db_select_data (false, 'ocompra_listado_existencias_otros.idExistencia, ocompra_listado_existencias_otros.Cantidad, ocompra_listado_existencias_otros.vUnitario, ocompra_listado_existencias_otros.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Medida', 'ocompra_listado_existencias_otros', 'LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_otros.idFrecuencia', 'ocompra_listado_existencias_otros.idOcompra = '.$_GET['view'].' AND ocompra_listado_existencias_otros.Nombre= '.$_GET['del_sol_prod'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 							/*********************************************************************/
 							/*********************************************************************/
 							//Se realizan comparacion
-							$cambios = 'Se eliminan '.$rowdata['Cantidad'].' '.$rowdata['Medida'].' de '.$rowdata['Producto'].' de la solicitud';
+							$cambios = 'Se eliminan '.$rowData['Cantidad'].' '.$rowData['Medida'].' de '.$rowData['Producto'].' de la solicitud';
 							/******************************************/
 							//Se guarda en historial la accion
 							$fecha = fecha_actual();
@@ -3794,21 +3794,21 @@ require_once '0_validate_user_1.php';
 							/*********************************************************************/
 							/*********************************************************************/
 							//Verifico cantidades
-							$Resta = $rowdata['Cantidad'] - $_GET['del_sol_cant'];
+							$Resta = $rowData['Cantidad'] - $_GET['del_sol_cant'];
 							//Elimino en caso de que quede en 0
 							if($Resta==0){
 								//se borran los datos
-								$resultado = db_delete_data (false, 'ocompra_listado_existencias_otros', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$resultado = db_delete_data (false, 'ocompra_listado_existencias_otros', 'idExistencia = "'.$rowData['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//se actualizan los datos
 								$SIS_data = "idOcompra=0" ;
 								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_otros', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 							//Sino Actualizo valores
 							}else{
-								$nuevo = $Resta * $rowdata['vUnitario'];
+								$nuevo = $Resta * $rowData['vUnitario'];
 								//se actualizan los datos
 								$SIS_data = "Cantidad=".$Resta.", vTotal=".$nuevo ;
-								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_otros', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_otros', 'idExistencia = "'.$rowData['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//se actualizan los datos
 								$SIS_data = "idOcompra=0" ;
 								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_otros', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);

@@ -88,7 +88,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado); 
+$rowData = mysqli_fetch_assoc ($resultado); 
  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -102,7 +102,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Observacion)){     $x1  = $Observacion;    }else{$x1  = $rowdata['Observacion'];}
+				if(isset($Observacion)){     $x1  = $Observacion;    }else{$x1  = $rowData['Observacion'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -184,7 +184,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 ?>
 
@@ -196,15 +196,15 @@ $rowdata = mysqli_fetch_assoc ($resultado);
         <div class="body">
             <h2 class="text-primary">Datos Básicos</h2>
             <p class="text-muted">
-				<strong>Cliente : </strong><?php echo $rowdata['nombre_cliente']; ?><br/>
-				<strong>Usuario : </strong><?php echo $rowdata['nombre_usuario']; ?><br/>
-				<strong>Fecha : </strong><?php echo Fecha_completa_alt($rowdata['Fecha']); ?>
+				<strong>Cliente : </strong><?php echo $rowData['nombre_cliente']; ?><br/>
+				<strong>Usuario : </strong><?php echo $rowData['nombre_usuario']; ?><br/>
+				<strong>Fecha : </strong><?php echo Fecha_completa_alt($rowData['Fecha']); ?>
             </p>
 
             <h2 class="text-primary">Observacion</h2>
             <p class="text-muted word_break">
 				<div class="text-muted well well-sm no-shadow">
-					<?php if(isset($rowdata['Observacion'])&&$rowdata['Observacion']!=''){echo $rowdata['Observacion'];}else{echo 'Sin Observaciones';} ?>
+					<?php if(isset($rowData['Observacion'])&&$rowData['Observacion']!=''){echo $rowData['Observacion'];}else{echo 'Sin Observaciones';} ?>
 					<div class="clearfix"></div>
 				</div>
 			</p>
@@ -237,7 +237,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 // consulto los datos
 $arrObservaciones = array();
@@ -272,7 +272,7 @@ array_push( $arrObservaciones,$row );
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Proveedor', $rowdata['Nombre'], 'Observaciones'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Proveedor', $rowData['Nombre'], 'Observaciones'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Observacion</a><?php } ?>
 	</div>
@@ -290,7 +290,7 @@ array_push( $arrObservaciones,$row );
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'proveedor_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-volume-control-phone" aria-hidden="true"></i> Persona Contacto</a></li>
-						<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
+						<?php if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){ ?>
 							<li class=""><a href="<?php echo 'proveedor_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'proveedor_listado_datos_facturacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Facturacion</a></li>

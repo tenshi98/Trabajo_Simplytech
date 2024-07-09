@@ -62,12 +62,12 @@ apoderados_listado.idOpciones_1,
 apoderados_listado.idOpciones_2';
 $SIS_join  = 'LEFT JOIN `core_estados` ON core_estados.idEstado = apoderados_listado.idEstado';
 $SIS_where = 'idApoderado ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apoderado', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Estado'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apoderado', $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat'], 'Editar Estado'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -84,12 +84,12 @@ $rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $
 						<li class=""><a href="<?php echo 'apoderados_listado_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
 						<?php
 						//Si se utiliza la APP 
-						if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>
+						if(isset($rowData['idOpciones_1'])&&$rowData['idOpciones_1']==1){ ?>
 							<li class=""><a href="<?php echo 'apoderados_listado_subcuentas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sitemap" aria-hidden="true"></i> Subcuentas</a></li>
 						<?php } ?>
 						<?php
 						//Si se utiliza subcuentas
-						if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
+						if(isset($rowData['idOpciones_2'])&&$rowData['idOpciones_2']==1){ ?>
 							<li class=""><a href="<?php echo 'apoderados_listado_password.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-key" aria-hidden="true"></i> Password</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'apoderados_listado_hijos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-child" aria-hidden="true"></i> Hijos</a></li>
@@ -112,16 +112,16 @@ $rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<tr class="odd">
-						<td><?php echo 'Apoderado '.$rowdata['Estado']; ?></td>
+						<td><?php echo 'Apoderado '.$rowData['Estado']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
 								<?php if ($rowlevel['level']>=2){ ?>
-									<?php if ( $rowdata['idEstado']==1 ){ ?>
-										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowdata['idApoderado'].'&estado='.simpleEncode(2, fecha_actual()) ; ?>">OFF</a>
+									<?php if ( $rowData['idEstado']==1 ){ ?>
+										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowData['idApoderado'].'&estado='.simpleEncode(2, fecha_actual()) ; ?>">OFF</a>
 										<a class="btn btn-sm btn-info locked_active" href="#">ON</a>
 									<?php } else { ?>
 										<a class="btn btn-sm btn-info locked_active" href="#">OFF</a>
-										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowdata['idApoderado'].'&estado='.simpleEncode(1, fecha_actual()) ; ?>">ON</a>
+										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowData['idApoderado'].'&estado='.simpleEncode(1, fecha_actual()) ; ?>">ON</a>
 									<?php } ?>
 								<?php } ?>
 							</div>

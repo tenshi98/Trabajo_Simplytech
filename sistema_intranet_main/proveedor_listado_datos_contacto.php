@@ -51,12 +51,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Fono1,Fono2, Fax, email, Web, Nombre,idTipo';
 $SIS_join  = '';
 $SIS_where = 'idProveedor = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'proveedor_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'proveedor_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Proveedor', $rowdata['Nombre'], 'Editar Datos de contacto'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Proveedor', $rowData['Nombre'], 'Editar Datos de contacto'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -71,7 +71,7 @@ $rowdata = db_select_data (false, $SIS_query, 'proveedor_listado', $SIS_join, $S
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'proveedor_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-volume-control-phone" aria-hidden="true"></i> Persona Contacto</a></li>
-						<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
+						<?php if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){ ?>
 							<li class=""><a href="<?php echo 'proveedor_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'proveedor_listado_datos_facturacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Facturacion</a></li>
@@ -87,11 +87,11 @@ $rowdata = db_select_data (false, $SIS_query, 'proveedor_listado', $SIS_join, $S
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Fono1)){            $x12 = $Fono1;             }else{$x12 = $rowdata['Fono1'];}
-					if(isset($Fono2)){            $x13 = $Fono2;             }else{$x13 = $rowdata['Fono2'];}
-					if(isset($Fax)){              $x14 = $Fax;               }else{$x14 = $rowdata['Fax'];}
-					if(isset($email)){            $x15 = $email;             }else{$x15 = $rowdata['email'];}
-					if(isset($Web)){              $x16 = $Web;               }else{$x16 = $rowdata['Web'];}
+					if(isset($Fono1)){            $x12 = $Fono1;             }else{$x12 = $rowData['Fono1'];}
+					if(isset($Fono2)){            $x13 = $Fono2;             }else{$x13 = $rowData['Fono2'];}
+					if(isset($Fax)){              $x14 = $Fax;               }else{$x14 = $rowData['Fax'];}
+					if(isset($email)){            $x15 = $email;             }else{$x15 = $rowData['email'];}
+					if(isset($Web)){              $x16 = $Web;               }else{$x16 = $rowData['Web'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

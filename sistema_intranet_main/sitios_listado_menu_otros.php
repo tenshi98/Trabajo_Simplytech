@@ -75,7 +75,7 @@ if(!empty($_GET['edit'])){
 $SIS_query = 'idPosicion,Nombre,Link,idNewTab,idPopup,idEstado';
 $SIS_join  = '';
 $SIS_where = 'idMenuOtros ='.$_GET['edit'];
-$rowdata = db_select_data (false, $SIS_query, 'sitios_listado_menu_otros', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'sitios_listado_menu_otros', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -90,12 +90,12 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado_menu_otros', $SIS_
 
 				<?php
 				//Se dibujan los inputs
-				if(isset($idPosicion)){  $x1 = $idPosicion;  }else{$x1 = $rowdata['idPosicion'];}
-				if(isset($Nombre)){      $x2 = $Nombre;      }else{$x2 = $rowdata['Nombre'];}
-				if(isset($Link)){        $x3 = $Link;        }else{$x3 = $rowdata['Link'];}
-				if(isset($idNewTab)){    $x4 = $idNewTab;    }else{$x4 = $rowdata['idNewTab'];}
-				if(isset($idPopup)){     $x5 = $idPopup;     }else{$x5 = $rowdata['idPopup'];}
-				if(isset($idEstado)){    $x6 = $idEstado;    }else{$x6 = $rowdata['idEstado'];}
+				if(isset($idPosicion)){  $x1 = $idPosicion;  }else{$x1 = $rowData['idPosicion'];}
+				if(isset($Nombre)){      $x2 = $Nombre;      }else{$x2 = $rowData['Nombre'];}
+				if(isset($Link)){        $x3 = $Link;        }else{$x3 = $rowData['Link'];}
+				if(isset($idNewTab)){    $x4 = $idNewTab;    }else{$x4 = $rowData['idNewTab'];}
+				if(isset($idPopup)){     $x5 = $idPopup;     }else{$x5 = $rowData['idPopup'];}
+				if(isset($idEstado)){    $x6 = $idEstado;    }else{$x6 = $rowData['idEstado'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -188,7 +188,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 $SIS_query = 'Nombre,Config_Menu,Config_MenuOtros,Config_Carousel,Config_Links_Rel';
 $SIS_join  = '';
 $SIS_where = 'idSitio = '.simpleDecode($_GET['id'], fecha_actual());
-$rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /**********************************/
 //Permisos a sistemas
@@ -213,7 +213,7 @@ $arrMenuDesplegable = db_select_array (false, $SIS_query, 'sitios_listado_menu_o
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sitio', $rowdata['Nombre'], 'Elementos Menu Desplegable'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sitio', $rowData['Nombre'], 'Elementos Menu Desplegable'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Menu</a><?php } ?>
 	</div>
@@ -230,10 +230,10 @@ $arrMenuDesplegable = db_select_array (false, $SIS_query, 'sitios_listado_menu_o
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<?php if(isset($rowdata['Config_Menu'])&&$rowdata['Config_Menu']==1){ ?>            <li class=""><a href="<?php echo 'sitios_listado_menu.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list" aria-hidden="true"></i> Menu</a></li><?php } ?>
-						<?php if(isset($rowdata['Config_MenuOtros'])&&$rowdata['Config_MenuOtros']==1){ ?>  <li class="active"><a href="<?php echo 'sitios_listado_menu_otros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list" aria-hidden="true"></i> Menu Otros</a></li><?php } ?>
-						<?php if(isset($rowdata['Config_Carousel'])&&$rowdata['Config_Carousel']==1){ ?>    <li class=""><a href="<?php echo 'sitios_listado_carousel.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Carousel</a></li><?php } ?>
-						<?php if(isset($rowdata['Config_Links_Rel'])&&$rowdata['Config_Links_Rel']==1){ ?>  <li class=""><a href="<?php echo 'sitios_listado_links.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-link" aria-hidden="true"></i> Links Relacionados</a></li><?php } ?>
+						<?php if(isset($rowData['Config_Menu'])&&$rowData['Config_Menu']==1){ ?>            <li class=""><a href="<?php echo 'sitios_listado_menu.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list" aria-hidden="true"></i> Menu</a></li><?php } ?>
+						<?php if(isset($rowData['Config_MenuOtros'])&&$rowData['Config_MenuOtros']==1){ ?>  <li class="active"><a href="<?php echo 'sitios_listado_menu_otros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list" aria-hidden="true"></i> Menu Otros</a></li><?php } ?>
+						<?php if(isset($rowData['Config_Carousel'])&&$rowData['Config_Carousel']==1){ ?>    <li class=""><a href="<?php echo 'sitios_listado_carousel.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Carousel</a></li><?php } ?>
+						<?php if(isset($rowData['Config_Links_Rel'])&&$rowData['Config_Links_Rel']==1){ ?>  <li class=""><a href="<?php echo 'sitios_listado_links.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-link" aria-hidden="true"></i> Links Relacionados</a></li><?php } ?>
 
 						<li class=""><a href="<?php echo 'sitios_listado_body.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Body</a></li>
 					</ul>

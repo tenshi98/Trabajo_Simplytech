@@ -52,12 +52,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,Contrato_Nombre,Contrato_Numero,Contrato_Fecha,Contrato_Duracion';
 $SIS_join  = '';
 $SIS_where = 'idSistema ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Datos de Contrato'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowData['Nombre'], 'Editar Datos de Contrato'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -93,10 +93,10 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Contrato_Nombre)){    $x1 = $Contrato_Nombre;     }else{$x1 = $rowdata['Contrato_Nombre'];}
-					if(isset($Contrato_Numero)){    $x2 = $Contrato_Numero;     }else{$x2 = $rowdata['Contrato_Numero'];}
-					if(isset($Contrato_Fecha)){     $x3 = $Contrato_Fecha;      }else{$x3 = $rowdata['Contrato_Fecha'];}
-					if(isset($Contrato_Duracion)){  $x4 = $Contrato_Duracion;   }else{$x4 = $rowdata['Contrato_Duracion'];}
+					if(isset($Contrato_Nombre)){    $x1 = $Contrato_Nombre;     }else{$x1 = $rowData['Contrato_Nombre'];}
+					if(isset($Contrato_Numero)){    $x2 = $Contrato_Numero;     }else{$x2 = $rowData['Contrato_Numero'];}
+					if(isset($Contrato_Fecha)){     $x3 = $Contrato_Fecha;      }else{$x3 = $rowData['Contrato_Fecha'];}
+					if(isset($Contrato_Duracion)){  $x4 = $Contrato_Duracion;   }else{$x4 = $rowData['Contrato_Duracion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

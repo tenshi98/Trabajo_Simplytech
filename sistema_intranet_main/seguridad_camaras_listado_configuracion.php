@@ -105,7 +105,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 ?>
 
@@ -121,15 +121,15 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				<?php
 				
 				//Se verifican si existen los datos
-				if(isset($Nombre)){           $x1  = $Nombre;           }else{$x1  = $rowdata['Nombre'];}
-				if(isset($idTipoCamara)){     $x2  = $idTipoCamara;     }else{$x2  = $rowdata['idTipoCamara'];}
-				if(isset($Config_usuario)){   $x3  = $Config_usuario;   }else{$x3  = $rowdata['Config_usuario'];}
-				if(isset($Config_Password)){  $x4  = $Config_Password;  }else{$x4  = $rowdata['Config_Password'];}
-				if(isset($Config_IP)){        $x5  = $Config_IP;        }else{$x5  = $rowdata['Config_IP'];}
-				if(isset($Config_Puerto)){    $x6  = $Config_Puerto;    }else{$x6  = $rowdata['Config_Puerto'];}
-				if(isset($Config_Web)){       $x7  = $Config_Web;       }else{$x7  = $rowdata['Config_Web'];}
-				if(isset($Chanel)){           $x8  = $Chanel;           }else{$x8  = $rowdata['Chanel'];}
-				if(isset($idEstado)){         $x9  = $idEstado;         }else{$x9  = $rowdata['idEstado'];}
+				if(isset($Nombre)){           $x1  = $Nombre;           }else{$x1  = $rowData['Nombre'];}
+				if(isset($idTipoCamara)){     $x2  = $idTipoCamara;     }else{$x2  = $rowData['idTipoCamara'];}
+				if(isset($Config_usuario)){   $x3  = $Config_usuario;   }else{$x3  = $rowData['Config_usuario'];}
+				if(isset($Config_Password)){  $x4  = $Config_Password;  }else{$x4  = $rowData['Config_Password'];}
+				if(isset($Config_IP)){        $x5  = $Config_IP;        }else{$x5  = $rowData['Config_IP'];}
+				if(isset($Config_Puerto)){    $x6  = $Config_Puerto;    }else{$x6  = $rowData['Config_Puerto'];}
+				if(isset($Config_Web)){       $x7  = $Config_Web;       }else{$x7  = $rowData['Config_Web'];}
+				if(isset($Chanel)){           $x8  = $Chanel;           }else{$x8  = $rowData['Chanel'];}
+				if(isset($idEstado)){         $x9  = $idEstado;         }else{$x9  = $rowData['idEstado'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -254,7 +254,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 //Se traen las rutas
 $arrCamaras = array();
@@ -299,9 +299,9 @@ foreach ($arrCamaras as $zona) {
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Grupo Camaras', $rowdata['Nombre'], 'Editar Camaras'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Grupo Camaras', $rowData['Nombre'], 'Editar Camaras'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3&&$rowdata['N_Camaras']>$total_cam){ ?><a href="<?php echo $new_location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Camara</a><?php } ?>
+		<?php if ($rowlevel['level']>=3&&$rowData['N_Camaras']>$total_cam){ ?><a href="<?php echo $new_location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Camara</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -321,7 +321,7 @@ foreach ($arrCamaras as $zona) {
 				<thead>
 					<tr role="row">
 						<th>Nombre</th>
-						<?php if(isset($rowdata['idSubconfiguracion'])&&$rowdata['idSubconfiguracion']==1){ ?>
+						<?php if(isset($rowData['idSubconfiguracion'])&&$rowData['idSubconfiguracion']==1){ ?>
 							<th>Usuario</th>
 							<th>Password</th>
 							<th>IP</th>
@@ -335,7 +335,7 @@ foreach ($arrCamaras as $zona) {
 					<?php foreach ($arrCamaras as $zona) { ?>
 						<tr class="odd">
 							<td><?php echo $zona['Nombre']; ?></td>
-							<?php if(isset($rowdata['idSubconfiguracion'])&&$rowdata['idSubconfiguracion']==1){ ?>
+							<?php if(isset($rowData['idSubconfiguracion'])&&$rowData['idSubconfiguracion']==1){ ?>
 								<td><?php echo $zona['Config_usuario']; ?></td>
 								<td><?php echo $zona['Config_Password']; ?></td>
 								<td><?php echo $zona['Config_IP']; ?></td>

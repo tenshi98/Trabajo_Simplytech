@@ -15,18 +15,18 @@ $SIS_where.= ' AND pagos_facturas_proveedores.F_Pago_mes='.$Mes;
 $SIS_where.= ' AND pagos_facturas_proveedores.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $SIS_join  = 'LEFT JOIN `sistema_documentos_pago`  ON sistema_documentos_pago.idDocPago   = pagos_facturas_proveedores.idDocPago';
 //verifico el tipo de usuario
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){	
-	
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
+	//nada
 }else{
 	$SIS_where.= ' AND usuarios_documentos_pago.idUsuario = '.$_SESSION['usuario']['basic_data']['idUsuario'];
 	$SIS_join .= ' INNER JOIN usuarios_documentos_pago  ON usuarios_documentos_pago.idDocPago  = pagos_facturas_proveedores.idDocPago';
 }
 //Traigo los eventos guardados en la base de datos
 $SIS_query = '
-pagos_facturas_proveedores.idTipo, 
-pagos_facturas_proveedores.idFacturacion, 
-sistema_documentos_pago.Nombre AS Documento, 
-pagos_facturas_proveedores.N_DocPago, 
+pagos_facturas_proveedores.idTipo,
+pagos_facturas_proveedores.idFacturacion,
+sistema_documentos_pago.Nombre AS Documento,
+pagos_facturas_proveedores.N_DocPago,
 pagos_facturas_proveedores.F_Pago_dia';
 $SIS_order = 'pagos_facturas_proveedores.F_Pago ASC';
 $arrEventos = array();
@@ -62,7 +62,7 @@ $arrEventos = db_select_array (false, $SIS_query, 'pagos_facturas_proveedores', 
 								$Ano_a  = date("Y");
 								$Ano_b  = date("Y");
 							}
-							if (($Mes-1)==0)  {$mes_atras=12;   $Ano_a=$Ano_a-1;}else{$mes_atras=$Mes-1; }
+							if (($Mes-1)==0){$mes_atras=12;   $Ano_a=$Ano_a-1;}else{$mes_atras=$Mes-1; }
 							if (($Mes+1)==13) {$mes_adelante=1; $Ano_b=$Ano_b+1;}else{$mes_adelante=$Mes+1; }
 							?>
 							<td class="fc-header-left"><a href="<?php echo $original.'?Mes='.$mes_atras.'&Ano='.$Ano_a ?>" class="btn btn-default"><i class="fa fa-angle-left faa-horizontal animated" aria-hidden="true"></i></a></td>
@@ -115,8 +115,7 @@ $arrEventos = db_select_array (false, $SIS_query, 'pagos_facturas_proveedores', 
 														$calcolor4 = 'evcal_color4';
 														/***************************************/
 														//Arriendos
-														foreach ($arrEventos as $evento) { 
-															
+														foreach ($arrEventos as $evento) {
 															if ($evento['F_Pago_dia']==$Dia) {
 																$trabajo   = $evento['Documento'];
 																if(isset($evento['N_DocPago'])&&$evento['N_DocPago']!=0){$trabajo  .= ' N°'.$evento['N_DocPago'];}
@@ -158,18 +157,13 @@ $arrEventos = db_select_array (false, $SIS_query, 'pagos_facturas_proveedores', 
 																		}
 																		break;
 																}
-																	
 															}
 														}
-														
-														
-														
-														
-														 ?>    
+														?>
 													</div>
 												</div>
 											</td>
-											<?php  
+											<?php
 											$Dia++;
 										}
 										// cuando llega al final de la semana, iniciamos una columna nueva
@@ -188,7 +182,3 @@ $arrEventos = db_select_array (false, $SIS_query, 'pagos_facturas_proveedores', 
 		</div>
 	</div>
 </div>
-
-
-
-

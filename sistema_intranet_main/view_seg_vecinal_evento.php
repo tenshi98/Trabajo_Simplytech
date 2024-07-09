@@ -65,7 +65,7 @@ LEFT JOIN `core_ubicacion_comunas`        ON core_ubicacion_comunas.idComuna    
 LEFT JOIN `seg_vecinal_clientes_listado`  ON seg_vecinal_clientes_listado.idCliente = seg_vecinal_eventos_listado.idCliente
 LEFT JOIN `core_seguridad_validacion`     ON core_seguridad_validacion.idValidado   = seg_vecinal_eventos_listado.idValidado';
 $SIS_where = 'seg_vecinal_eventos_listado.idEvento ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_eventos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'seg_vecinal_eventos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /**************************************************************/
 //Se traen las rutas
@@ -122,20 +122,20 @@ foreach ($arrArchivos as $zona) {
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Evento</h2>
 							<p class="text-muted word_break">
-								<strong>Vecino : </strong><?php echo $rowdata['Vecino']; ?><br/>
-								<strong>Tipo de Evento : </strong><?php echo $rowdata['Tipo']; ?><br/>
-								<strong>Caracteristicas Agresor : </strong><?php echo $rowdata['DescripcionTipo']; ?><br/>
-								<strong>Ciudad : </strong><?php echo $rowdata['Ciudad']; ?><br/>
-								<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-								<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
-								<strong>Fecha : </strong><?php echo fecha_estandar($rowdata['Fecha']); ?><br/>
-								<strong>Hora : </strong><?php echo $rowdata['Hora']; ?><br/>
-								<strong>Descripcion Situacion : </strong><?php echo $rowdata['DescripcionSituacion']; ?><br/>
+								<strong>Vecino : </strong><?php echo $rowData['Vecino']; ?><br/>
+								<strong>Tipo de Evento : </strong><?php echo $rowData['Tipo']; ?><br/>
+								<strong>Caracteristicas Agresor : </strong><?php echo $rowData['DescripcionTipo']; ?><br/>
+								<strong>Ciudad : </strong><?php echo $rowData['Ciudad']; ?><br/>
+								<strong>Comuna : </strong><?php echo $rowData['Comuna']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowData['Direccion']; ?><br/>
+								<strong>Fecha : </strong><?php echo fecha_estandar($rowData['Fecha']); ?><br/>
+								<strong>Hora : </strong><?php echo $rowData['Hora']; ?><br/>
+								<strong>Descripcion Situacion : </strong><?php echo $rowData['DescripcionSituacion']; ?><br/>
 							</p>
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Ocultos</h2>
 							<p class="text-muted word_break">
-								<strong>Fecha Creacion: </strong><?php echo fecha_estandar($rowdata['Fecha']); ?><br/>
-								<strong>Validacion : </strong><label class="label <?php if(isset($rowdata['idValidado'])&&$rowdata['idValidado']==2){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $rowdata['Validacion']; ?></label><br/>
+								<strong>Fecha Creacion: </strong><?php echo fecha_estandar($rowData['Fecha']); ?><br/>
+								<strong>Validacion : </strong><label class="label <?php if(isset($rowData['idValidado'])&&$rowData['idValidado']==2){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $rowData['Validacion']; ?></label><br/>
 							</p>
 						</div>
 					</div>
@@ -145,12 +145,12 @@ foreach ($arrArchivos as $zona) {
 						<?php
 							//se arma la dirección
 							$direccion = "";
-							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){   $direccion .= $rowdata["Direccion"];}
-							if(isset($rowdata["Comuna"])&&$rowdata["Comuna"]!=''){         $direccion .= ', '.$rowdata["Comuna"];}
-							if(isset($rowdata["Ciudad"])&&$rowdata["Ciudad"]!=''){         $direccion .= ', '.$rowdata["Ciudad"];}
+							if(isset($rowData["Direccion"])&&$rowData["Direccion"]!=''){   $direccion .= $rowData["Direccion"];}
+							if(isset($rowData["Comuna"])&&$rowData["Comuna"]!=''){         $direccion .= ', '.$rowData["Comuna"];}
+							if(isset($rowData["Ciudad"])&&$rowData["Ciudad"]!=''){         $direccion .= ', '.$rowData["Ciudad"];}
 							//se despliega mensaje en caso de no existir dirección
 							if($direccion!=''){
-								echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Evento', 'Calle', $direccion, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 19, 2);
+								echo mapa_from_gps($rowData['GeoLatitud'], $rowData['GeoLongitud'], 'Evento', 'Calle', $direccion, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 19, 2);
 							}else{
 								$Alert_Text = 'No tiene una dirección definida';
 								alert_post_data(4,2,2,0, $Alert_Text);

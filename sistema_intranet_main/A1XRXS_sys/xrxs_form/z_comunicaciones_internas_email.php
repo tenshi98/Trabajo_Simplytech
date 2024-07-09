@@ -91,11 +91,11 @@ require_once '0_validate_user_1.php';
 				//Selecciono a quienes les envio el correo
 				$w = "usuarios_listado.idEstado = 1 AND usuarios_listado.email!= ''";
 				if(isset($idTipoUsuario) && $idTipoUsuario!=''){    $w .= " AND usuarios_listado.idTipoUsuario = '".$idTipoUsuario."'";}
-				if(isset($Nombre) && $Nombre != '')  {              $w .= " AND usuarios_listado.Nombre LIKE '%".$Nombre."%' ";}
-				if(isset($idCiudad) && $idCiudad != '')  {          $w .= " AND usuarios_listado.idCiudad = '".$idCiudad."'";}
-				if(isset($idComuna) && $idComuna != '')  {          $w .= " AND usuarios_listado.idComuna = '".$idComuna."'";}
-				if(isset($Direccion) && $Direccion != '')  {        $w .= " AND usuarios_listado.Direccion LIKE '%".$Direccion."%'";}
-				if(isset($idSistema) && $idSistema != '')  {        $w .= " AND usuarios_sistemas.idSistema = '".$idSistema."'";}
+				if(isset($Nombre) && $Nombre != ''){              $w .= " AND usuarios_listado.Nombre LIKE '%".$Nombre."%' ";}
+				if(isset($idCiudad) && $idCiudad != ''){          $w .= " AND usuarios_listado.idCiudad = '".$idCiudad."'";}
+				if(isset($idComuna) && $idComuna != ''){          $w .= " AND usuarios_listado.idComuna = '".$idComuna."'";}
+				if(isset($Direccion) && $Direccion != ''){        $w .= " AND usuarios_listado.Direccion LIKE '%".$Direccion."%'";}
+				if(isset($idSistema) && $idSistema != ''){        $w .= " AND usuarios_sistemas.idSistema = '".$idSistema."'";}
 				if(isset($rango_a) && $rango_a != ''&&isset($rango_b) && $rango_b!=''){
 					$w .= " AND usuarios_listado.fNacimiento BETWEEN '".$rango_a."' AND '".$rango_b."'";
 				}

@@ -90,7 +90,7 @@ LEFT JOIN `prospectos_listado`                      ON prospectos_listado.idPros
 LEFT JOIN `core_ubicacion_ciudad`    clientciudad   ON clientciudad.idCiudad            = prospectos_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`   clientcomuna   ON clientcomuna.idComuna            = prospectos_listado.idComuna';
 $SIS_where = 'cotizacion_prospectos_listado.idCotizacion ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'cotizacion_prospectos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'cotizacion_prospectos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /*****************************************/
 //Insumos
@@ -191,7 +191,7 @@ foreach ($arrImpuestos as $impto) {
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Cotizacion <?php echo n_doc($X_Puntero, 5); ?>.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['Creacion_fecha']); ?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowData['Creacion_fecha']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -201,33 +201,33 @@ foreach ($arrImpuestos as $impto) {
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Empresa Emisora
 			<address>
-				<strong><?php echo $row_data['SistemaOrigen']; ?></strong><br/>
-				<?php echo $row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna']; ?><br/>
-				<?php echo $row_data['SistemaOrigenDireccion']; ?><br/>
-				Fono: <?php echo formatPhone($row_data['SistemaOrigenFono']); ?><br/>
-				Rut: <?php echo $row_data['SistemaOrigenRut']; ?><br/>
-				Email: <?php echo $row_data['SistemaOrigenEmail']; ?>
+				<strong><?php echo $rowData['SistemaOrigen']; ?></strong><br/>
+				<?php echo $rowData['SistemaOrigenCiudad'].', '.$rowData['SistemaOrigenComuna']; ?><br/>
+				<?php echo $rowData['SistemaOrigenDireccion']; ?><br/>
+				Fono: <?php echo formatPhone($rowData['SistemaOrigenFono']); ?><br/>
+				Rut: <?php echo $rowData['SistemaOrigenRut']; ?><br/>
+				Email: <?php echo $rowData['SistemaOrigenEmail']; ?>
 			</address>
 		</div>
 
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Empresa Receptora
 			<address>
-				<strong><?php echo $row_data['NombreProveedor']; ?></strong><br/>
-				<?php echo $row_data['CiudadProveedor'].', '.$row_data['ComunaProveedor']; ?><br/>
-				<?php echo $row_data['DireccionProveedor']; ?><br/>
-				Fono Fijo: <?php echo formatPhone($row_data['Fono1Proveedor']); ?><br/>
-				Celular: <?php echo formatPhone($row_data['Fono2Proveedor']); ?><br/>
-				Fax: <?php echo $row_data['FaxProveedor']; ?><br/>
-				Rut: <?php echo $row_data['RutProveedor']; ?><br/>
-				Email: <?php echo $row_data['EmailProveedor']; ?><br/>
-				Contacto: <?php echo $row_data['PersonaContactoProveedor']; ?><br/>
-				Giro de la Empresa: <?php echo $row_data['GiroProveedor']; ?>
+				<strong><?php echo $rowData['NombreProveedor']; ?></strong><br/>
+				<?php echo $rowData['CiudadProveedor'].', '.$rowData['ComunaProveedor']; ?><br/>
+				<?php echo $rowData['DireccionProveedor']; ?><br/>
+				Fono Fijo: <?php echo formatPhone($rowData['Fono1Proveedor']); ?><br/>
+				Celular: <?php echo formatPhone($rowData['Fono2Proveedor']); ?><br/>
+				Fax: <?php echo $rowData['FaxProveedor']; ?><br/>
+				Rut: <?php echo $rowData['RutProveedor']; ?><br/>
+				Email: <?php echo $rowData['EmailProveedor']; ?><br/>
+				Contacto: <?php echo $rowData['PersonaContactoProveedor']; ?><br/>
+				Giro de la Empresa: <?php echo $rowData['GiroProveedor']; ?>
 			</address>
 		</div>
 			   
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
-			Vendedor: <?php echo $row_data['NombreUsuario']; ?><br/>
+			Vendedor: <?php echo $rowData['NombreUsuario']; ?><br/>
 		</div>
 
 	</div>
@@ -292,76 +292,76 @@ foreach ($arrImpuestos as $impto) {
 			</table>
 			<table class="table">
 				<tbody>
-					<?php if(isset($row_data['ValorNetoImp'])&&$row_data['ValorNetoImp']!=0){ ?>
+					<?php if(isset($rowData['ValorNetoImp'])&&$rowData['ValorNetoImp']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong>Neto Imponible</strong></td>
-							<td width="160" align="right"><?php echo Valores($row_data['ValorNetoImp'], 0); ?></td>
+							<td width="160" align="right"><?php echo Valores($rowData['ValorNetoImp'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_01'])&&$row_data['Impuesto_01']!=0){ ?>
+					<?php if(isset($rowData['Impuesto_01'])&&$rowData['Impuesto_01']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[0]['nimp']; ?></strong></td>
-							<td align="right"><?php echo Valores($row_data['Impuesto_01'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['Impuesto_01'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_02'])&&$row_data['Impuesto_02']!=0){ ?>
+					<?php if(isset($rowData['Impuesto_02'])&&$rowData['Impuesto_02']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[1]['nimp']; ?></strong></td>
-							<td align="right"><?php echo Valores($row_data['Impuesto_02'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['Impuesto_02'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_03'])&&$row_data['Impuesto_03']!=0){ ?>
+					<?php if(isset($rowData['Impuesto_03'])&&$rowData['Impuesto_03']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[2]['nimp']; ?></strong></td>
-							<td align="right"><?php echo Valores($row_data['Impuesto_03'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['Impuesto_03'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_04'])&&$row_data['Impuesto_04']!=0){ ?>
+					<?php if(isset($rowData['Impuesto_04'])&&$rowData['Impuesto_04']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[3]['nimp']; ?></strong></td>
-							<td align="right"><?php echo Valores($row_data['Impuesto_04'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['Impuesto_04'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_05'])&&$row_data['Impuesto_05']!=0){ ?>
+					<?php if(isset($rowData['Impuesto_05'])&&$rowData['Impuesto_05']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[4]['nimp']; ?></strong></td>
-							<td align="right"><?php echo Valores($row_data['Impuesto_05'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['Impuesto_05'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_06'])&&$row_data['Impuesto_06']!=0){ ?>
+					<?php if(isset($rowData['Impuesto_06'])&&$rowData['Impuesto_06']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[5]['nimp']; ?></strong></td>
-							<td align="right"><?php echo Valores($row_data['Impuesto_06'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['Impuesto_06'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_07'])&&$row_data['Impuesto_07']!=0){ ?>
+					<?php if(isset($rowData['Impuesto_07'])&&$rowData['Impuesto_07']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[6]['nimp']; ?></strong></td>
-							<td align="right"><?php echo Valores($row_data['Impuesto_07'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['Impuesto_07'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_08'])&&$row_data['Impuesto_08']!=0){ ?>
+					<?php if(isset($rowData['Impuesto_08'])&&$rowData['Impuesto_08']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[7]['nimp']; ?></strong></td>
-							<td align="right"><?php echo Valores($row_data['Impuesto_08'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['Impuesto_08'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_09'])&&$row_data['Impuesto_09']!=0){ ?>
+					<?php if(isset($rowData['Impuesto_09'])&&$rowData['Impuesto_09']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[8]['nimp']; ?></strong></td>
-							<td align="right"><?php echo Valores($row_data['Impuesto_09'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['Impuesto_09'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_10'])&&$row_data['Impuesto_10']!=0){ ?>
+					<?php if(isset($rowData['Impuesto_10'])&&$rowData['Impuesto_10']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[9]['nimp']; ?></strong></td>
-							<td align="right"><?php echo Valores($row_data['Impuesto_10'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['Impuesto_10'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['ValorTotal'])&&$row_data['ValorTotal']!=0){ ?>
+					<?php if(isset($rowData['ValorTotal'])&&$rowData['ValorTotal']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong>Total</strong></td>
-							<td align="right"><?php echo Valores($row_data['ValorTotal'], 0); ?></td>
+							<td align="right"><?php echo Valores($rowData['ValorTotal'], 0); ?></td>
 						</tr>
 					<?php } ?>
 
@@ -373,7 +373,7 @@ foreach ($arrImpuestos as $impto) {
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Condiciones Comerciales:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $rowData['Observaciones']; ?></p>
 		</div>
 	</div>
 

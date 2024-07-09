@@ -60,12 +60,12 @@ core_seguridad_verificacion.Nombre AS verificacion,
 seg_vecinal_clientes_listado.idTipo';
 $SIS_join  = 'LEFT JOIN `core_seguridad_verificacion`   ON core_seguridad_verificacion.idVerificado  = seg_vecinal_clientes_listado.idVerificado';
 $SIS_where = 'idCliente = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'seg_vecinal_clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Vecino', $rowdata['Nombre'], 'Editar Verificacion'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Vecino', $rowData['Nombre'], 'Editar Verificacion'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -80,7 +80,7 @@ $rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_clientes_listado', $S
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'seg_vecinal_clientes_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-volume-control-phone" aria-hidden="true"></i> Persona Contacto</a></li>
-						<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
+						<?php if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){ ?>
 							<li class=""><a href="<?php echo 'seg_vecinal_clientes_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'seg_vecinal_clientes_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
@@ -101,16 +101,16 @@ $rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_clientes_listado', $S
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<tr class="odd">
-						<td><?php echo 'Vecino '.$rowdata['verificacion']; ?></td>
+						<td><?php echo 'Vecino '.$rowData['verificacion']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
 								<?php if ($rowlevel['level']>=2){ ?>
-								   <?php if ( $rowdata['idVerificado']==2){ ?>
-										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowdata['idCliente'].'&verificacion='.simpleEncode(2, fecha_actual()) ; ?>">OFF</a>
+								   <?php if ( $rowData['idVerificado']==2){ ?>
+										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowData['idCliente'].'&verificacion='.simpleEncode(2, fecha_actual()) ; ?>">OFF</a>
 										<a class="btn btn-sm btn-info locked_active" href="#">ON</a>
 								   <?php } else { ?>
 										<a class="btn btn-sm btn-info locked_active" href="#">OFF</a>
-										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowdata['idCliente'].'&verificacion='.simpleEncode(1, fecha_actual()) ; ?>" >ON</a>
+										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowData['idCliente'].'&verificacion='.simpleEncode(1, fecha_actual()) ; ?>" >ON</a>
 									<?php } ?>
 								<?php } ?>
 							</div>

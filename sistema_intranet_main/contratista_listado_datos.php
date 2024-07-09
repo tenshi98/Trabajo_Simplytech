@@ -55,12 +55,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'idTipo, Nombre , Rut, fNacimiento, idPais, idCiudad, idComuna, Direccion, idSistema, Giro';
 $SIS_join  = '';
 $SIS_where = 'idContratista = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'contratista_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'contratista_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Contratista', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Contratista', $rowData['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -87,15 +87,15 @@ $rowdata = db_select_data (false, $SIS_query, 'contratista_listado', $SIS_join, 
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idTipo)){           $x1  = $idTipo;            }else{$x1  = $rowdata['idTipo'];}
-					if(isset($Nombre)){           $x2  = $Nombre;            }else{$x2  = $rowdata['Nombre'];}
-					if(isset($Rut)){              $x3  = $Rut;               }else{$x3  = $rowdata['Rut'];}
-					if(isset($fNacimiento)){      $x4  = $fNacimiento;       }else{$x4  = $rowdata['fNacimiento'];}
-					if(isset($idPais)){           $x5  = $idPais;            }else{$x5  = $rowdata['idPais'];}
-					if(isset($idCiudad)){         $x6  = $idCiudad;          }else{$x6  = $rowdata['idCiudad'];}
-					if(isset($idComuna)){         $x7  = $idComuna;          }else{$x7  = $rowdata['idComuna'];}
-					if(isset($Direccion)){        $x8  = $Direccion;         }else{$x8  = $rowdata['Direccion'];}
-					if(isset($Giro)){             $x9  = $Giro;              }else{$x9  = $rowdata['Giro'];}
+					if(isset($idTipo)){           $x1  = $idTipo;            }else{$x1  = $rowData['idTipo'];}
+					if(isset($Nombre)){           $x2  = $Nombre;            }else{$x2  = $rowData['Nombre'];}
+					if(isset($Rut)){              $x3  = $Rut;               }else{$x3  = $rowData['Rut'];}
+					if(isset($fNacimiento)){      $x4  = $fNacimiento;       }else{$x4  = $rowData['fNacimiento'];}
+					if(isset($idPais)){           $x5  = $idPais;            }else{$x5  = $rowData['idPais'];}
+					if(isset($idCiudad)){         $x6  = $idCiudad;          }else{$x6  = $rowData['idCiudad'];}
+					if(isset($idComuna)){         $x7  = $idComuna;          }else{$x7  = $rowData['idComuna'];}
+					if(isset($Direccion)){        $x8  = $Direccion;         }else{$x8  = $rowData['Direccion'];}
+					if(isset($Giro)){             $x9  = $Giro;              }else{$x9  = $rowData['Giro'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

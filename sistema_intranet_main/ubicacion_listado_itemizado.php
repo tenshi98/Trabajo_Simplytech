@@ -88,7 +88,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);	 
+$rowData = mysqli_fetch_assoc ($resultado);	 
  
  ?>
 
@@ -103,7 +103,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)){            $x1  = $Nombre;             }else{$x1  = $rowdata['Nombre'];}
+				if(isset($Nombre)){            $x1  = $Nombre;             }else{$x1  = $rowData['Nombre'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -195,7 +195,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 //Se crean las variables
 $nmax = 5;
@@ -342,9 +342,9 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ubicación', $rowdata['Nombre'], 'Itemizado'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ubicación', $rowData['Nombre'], 'Itemizado'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
-		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php } ?>
+		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowData['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -367,7 +367,7 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
         <div class="table-responsive">
 
 			<?php //Se imprime el arbol
-			echo arrayToUL($array3d, 0, $rowlevel['level'],$new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'], $nmax);
+			echo arrayToUL($array3d, 0, $rowlevel['level'],$new_location.'&id='.$_GET['id'].'&idSistema='.$rowData['idSistema'], $nmax);
 			?>
 
 		</div>

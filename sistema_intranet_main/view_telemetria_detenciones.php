@@ -54,23 +54,23 @@ telemetria_listado.Nombre AS NombreEquipo,
 telemetria_listado.cantSensores';
 $SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_error_detenciones.idTelemetria';
 $SIS_where = 'telemetria_listado_error_detenciones.idDetencion ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_error_detenciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado_error_detenciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 //Se crea cadena dependiendo de la cantidad de sensores existentes
 $subquery = '';
-for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
-	$subquery .= ',telemetria_listado_tablarelacionada_'.$rowdata['idTelemetria'].'.Sensor_'.$i;
+for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
+	$subquery .= ',telemetria_listado_tablarelacionada_'.$rowData['idTelemetria'].'.Sensor_'.$i;
 	$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
 	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
 }
 // Se traen todos los datos de las mediciones
-$SIS_query = 'telemetria_listado_tablarelacionada_'.$rowdata['idTelemetria'].'.idTabla'.$subquery;
+$SIS_query = 'telemetria_listado_tablarelacionada_'.$rowData['idTelemetria'].'.idTabla'.$subquery;
 $SIS_join  = '
-LEFT JOIN `telemetria_listado`                  ON telemetria_listado.idTelemetria                  = telemetria_listado_tablarelacionada_'.$rowdata['idTelemetria'].'.idTelemetria
-LEFT JOIN `telemetria_listado_sensores_nombre`  ON telemetria_listado_sensores_nombre.idTelemetria  = telemetria_listado_tablarelacionada_'.$rowdata['idTelemetria'].'.idTelemetria
-LEFT JOIN `telemetria_listado_sensores_unimed`  ON telemetria_listado_sensores_unimed.idTelemetria  = telemetria_listado_tablarelacionada_'.$rowdata['idTelemetria'].'.idTelemetria';
-$SIS_where = 'telemetria_listado_tablarelacionada_'.$rowdata['idTelemetria'].'.idTabla ='.$rowdata['idTabla'];
-$rowMedicion = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$rowdata['idTelemetria'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowMedicion');
+LEFT JOIN `telemetria_listado`                  ON telemetria_listado.idTelemetria                  = telemetria_listado_tablarelacionada_'.$rowData['idTelemetria'].'.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_nombre`  ON telemetria_listado_sensores_nombre.idTelemetria  = telemetria_listado_tablarelacionada_'.$rowData['idTelemetria'].'.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_unimed`  ON telemetria_listado_sensores_unimed.idTelemetria  = telemetria_listado_tablarelacionada_'.$rowData['idTelemetria'].'.idTelemetria';
+$SIS_where = 'telemetria_listado_tablarelacionada_'.$rowData['idTelemetria'].'.idTabla ='.$rowData['idTabla'];
+$rowMedicion = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$rowData['idTelemetria'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowMedicion');
 
 //Se traen todas las unidades de medida
 $arrUnimed = array();
@@ -85,29 +85,29 @@ foreach ($arrUnimed as $sen) { $arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre'
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Datos del Equipo <?php echo $rowdata['NombreEquipo']; ?></h5>
+			<h5>Datos del Equipo <?php echo $rowData['NombreEquipo']; ?></h5>
 		</header>
 		<div class="tab-content">
 			<div class="table-responsive">
 				<?php
-				$explanation  = '<strong>'.fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].'</strong><br/>';
-				$explanation .= '<strong>Tiempo de detencion: </strong>'.$rowdata['Tiempo'].'<br/>';
+				$explanation  = '<strong>'.fecha_estandar($rowData['Fecha']).' - '.$rowData['Hora'].'</strong><br/>';
+				$explanation .= '<strong>Tiempo de detencion: </strong>'.$rowData['Tiempo'].'<br/>';
 				//Reviso si tiene sensores activos
 				$ndata = 0;
-				for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+				for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 					$ndata++;
 				}
 				//si hay datos se imprime
 				if($ndata!=0){
 					$explanation .= '<strong>Medicion Sensores: </strong><br/>';
-					for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+					for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 						if(isset($rowMedicion['Sensor_'.$i])&&$rowMedicion['Sensor_'.$i]<99900){$xdata=Cantidades_decimales_justos($rowMedicion['Sensor_'.$i]);}else{$xdata='Sin Datos';}
 						$explanation .= '<strong>'.$rowMedicion['SensoresNombre_'.$i].': </strong>';
 						$explanation .= ' '.$arrFinalUnimed[$rowMedicion['SensoresUniMed_'.$i]];
 						$explanation .= '<br/>';
 					}
 				}
-				echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 2); ?>
+				echo mapa_from_gps($rowData['GeoLatitud'], $rowData['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 2); ?>
 
 			</div>
 		</div>

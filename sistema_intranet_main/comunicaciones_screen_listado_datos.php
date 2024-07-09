@@ -55,12 +55,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,idEstado, idTipo, Fecha, HoraInicio, HoraTermino';
 $SIS_join  = '';
 $SIS_where = 'idScreen = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'comunicaciones_screen_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'comunicaciones_screen_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Screen Sharing', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Screen Sharing', $rowData['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -79,12 +79,12 @@ $rowdata = db_select_data (false, $SIS_query, 'comunicaciones_screen_listado', $
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idTipo)){        $x1  = $idTipo;        }else{$x1  = $rowdata['idTipo'];}
-					if(isset($Nombre)){        $x2  = $Nombre;        }else{$x2  = $rowdata['Nombre'];}
-					if(isset($Fecha)){         $x3  = $Fecha;         }else{$x3  = $rowdata['Fecha'];}
-					if(isset($HoraInicio)){    $x4  = $HoraInicio;    }else{$x4  = $rowdata['HoraInicio'];}
-					if(isset($HoraTermino)){   $x5  = $HoraTermino;   }else{$x5  = $rowdata['HoraTermino'];}
-					if(isset($idEstado)){      $x6  = $idEstado;      }else{$x6  = $rowdata['idEstado'];}
+					if(isset($idTipo)){        $x1  = $idTipo;        }else{$x1  = $rowData['idTipo'];}
+					if(isset($Nombre)){        $x2  = $Nombre;        }else{$x2  = $rowData['Nombre'];}
+					if(isset($Fecha)){         $x3  = $Fecha;         }else{$x3  = $rowData['Fecha'];}
+					if(isset($HoraInicio)){    $x4  = $HoraInicio;    }else{$x4  = $rowData['HoraInicio'];}
+					if(isset($HoraTermino)){   $x5  = $HoraTermino;   }else{$x5  = $rowData['HoraTermino'];}
+					if(isset($idEstado)){      $x6  = $idEstado;      }else{$x6  = $rowData['idEstado'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

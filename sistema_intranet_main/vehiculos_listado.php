@@ -150,9 +150,9 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 	
-if(isset($rowdata['idOpciones_5'])&&$rowdata['idOpciones_5']==1){
+if(isset($rowData['idOpciones_5'])&&$rowData['idOpciones_5']==1){
 	// Se trae un listado con todos los pasajeros
 	$arrCargas = array();
 	$query = "SELECT  
@@ -186,7 +186,7 @@ if(isset($rowdata['idOpciones_5'])&&$rowdata['idOpciones_5']==1){
 	array_push( $arrCargas,$row );
 	}
 }
-if(isset($rowdata['idOpciones_7'])&&$rowdata['idOpciones_7']==1){
+if(isset($rowData['idOpciones_7'])&&$rowData['idOpciones_7']==1){
 	// consulto los datos
 	$arrPeonetas = array();
 	$query = "SELECT idPeoneta, Nombre,ApellidoPat, ApellidoMat, Rut, Fecha
@@ -212,7 +212,7 @@ if(isset($rowdata['idOpciones_7'])&&$rowdata['idOpciones_7']==1){
 }
 
 
-if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
+if(isset($rowData['idOpciones_8'])&&$rowData['idOpciones_8']==1){
 	// Se trae un listado con todos los colegios
 	$arrColegios = array();
 	$query = "SELECT 
@@ -298,16 +298,16 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdatax = mysqli_fetch_assoc ($resultado);
+$rowDatax = mysqli_fetch_assoc ($resultado);
 
 
-$telemetria  = $rowdatax['tran_1'] + $rowdatax['tran_2'];
-$bodega      = $rowdatax['tran_3'] + $rowdatax['tran_4'] + $rowdatax['tran_5'] + $rowdatax['tran_6'];
-$ruta        = $rowdatax['tran_7'] + $rowdatax['tran_8'];
-$trabajador  = $rowdatax['tran_9'];
-$pasajeros   = $rowdatax['tran_10'];
-$peonetas    = $rowdatax['tran_11'];
-$colegios    = $rowdatax['tran_12'];
+$telemetria  = $rowDatax['tran_1'] + $rowDatax['tran_2'];
+$bodega      = $rowDatax['tran_3'] + $rowDatax['tran_4'] + $rowDatax['tran_5'] + $rowDatax['tran_6'];
+$ruta        = $rowDatax['tran_7'] + $rowDatax['tran_8'];
+$trabajador  = $rowDatax['tran_9'];
+$pasajeros   = $rowDatax['tran_10'];
+$peonetas    = $rowDatax['tran_11'];
+$colegios    = $rowDatax['tran_12'];
 
 $todos = $telemetria + $bodega + $ruta + $trabajador + $pasajeros + $peonetas + $colegios;
 
@@ -318,9 +318,9 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php 
-	$vehiculo = $rowdata['Nombre'];
-	if(isset($rowdata['Patente'])&&$rowdata['Patente']!=''){
-		$vehiculo .= ' Patente '.$rowdata['Patente'];
+	$vehiculo = $rowData['Nombre'];
+	if(isset($rowData['Patente'])&&$rowData['Patente']!=''){
+		$vehiculo .= ' Patente '.$rowData['Patente'];
 	}
 	echo widget_title('bg-aqua', 'fa-cog', 100, 'Vehiculo', $vehiculo, 'Resumen'); ?>
 </div>
@@ -338,30 +338,30 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<?php if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>		
+						<?php if(isset($rowData['idOpciones_1'])&&$rowData['idOpciones_1']==1){ ?>		
 							<li class=""><a href="<?php echo 'vehiculos_listado_opc_1.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Telemetria</a></li>
 						<?php }
-						if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
+						if(isset($rowData['idOpciones_2'])&&$rowData['idOpciones_2']==1){ ?>
 							<li class=""><a href="<?php echo 'vehiculos_listado_opc_2.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-database" aria-hidden="true"></i> Bodega</a></li>
 						<?php }
-						if(isset($rowdata['idOpciones_3'])&&$rowdata['idOpciones_3']==1){ ?>
+						if(isset($rowData['idOpciones_3'])&&$rowData['idOpciones_3']==1){ ?>
 							<li class=""><a href="<?php echo 'vehiculos_listado_opc_3.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ruta</a></li>
 						<?php }
-						if(isset($rowdata['idOpciones_4'])&&$rowdata['idOpciones_4']==1){ ?>
+						if(isset($rowData['idOpciones_4'])&&$rowData['idOpciones_4']==1){ ?>
 							<li class=""><a href="<?php echo 'vehiculos_listado_opc_4.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-car" aria-hidden="true"></i> Conductor</a></li>
 						<?php }
-						if(isset($rowdata['idOpciones_5'])&&$rowdata['idOpciones_5']==1){ ?>
+						if(isset($rowData['idOpciones_5'])&&$rowData['idOpciones_5']==1){ ?>
 							<li class=""><a href="<?php echo 'vehiculos_listado_opc_5.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-users" aria-hidden="true"></i> Pasajeros</a></li>
 						<?php }
-						if(isset($rowdata['idOpciones_6'])&&$rowdata['idOpciones_6']==1){ ?>
+						if(isset($rowData['idOpciones_6'])&&$rowData['idOpciones_6']==1){ ?>
 							<li class=""><a href="<?php echo 'vehiculos_listado_password.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-key" aria-hidden="true"></i> Password APP</a></li>
 						<?php }
 						//Si se utilizan peonetas 
-						if(isset($rowdata['idOpciones_7'])&&$rowdata['idOpciones_7']==1){ ?>
+						if(isset($rowData['idOpciones_7'])&&$rowData['idOpciones_7']==1){ ?>
 							<li class=""><a href="<?php echo 'vehiculos_listado_peonetas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-users" aria-hidden="true"></i> Peonetas</a></li>
 						<?php }
 						//Si se utilizan colegios 
-						if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){ ?>
+						if(isset($rowData['idOpciones_8'])&&$rowData['idOpciones_8']==1){ ?>
 							<li class=""><a href="<?php echo 'vehiculos_listado_colegios.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-graduation-cap" aria-hidden="true"></i> Colegios</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'vehiculos_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
@@ -388,86 +388,83 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 				<div class="wmd-panel">
 
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<?php if ($rowdata['Direccion_img']=='') { ?>
+						<?php if ($rowData['Direccion_img']=='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/car_siluete.png">
 						<?php }else{  ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowData['Direccion_img']; ?>">
 						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 						<p class="text-muted">
-							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
-							<strong>Tipo : </strong><?php echo $rowdata['Tipo']; ?><br/>
-							<strong>Marca : </strong><?php echo $rowdata['Marca']; ?><br/>
-							<strong>Modelo : </strong><?php echo $rowdata['Modelo']; ?><br/>
-							<strong>Numero de serie : </strong><?php echo $rowdata['Num_serie']; ?><br/>
-							<strong>Año de Fabricacion : </strong><?php echo $rowdata['AnoFab']; ?><br/>
-							<strong>Patente : </strong><?php echo $rowdata['Patente']; ?><br/>
-							<strong>Sistema : </strong><?php echo $rowdata['Sistema']; ?><br/>
-							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?>
+							<strong>Nombre : </strong><?php echo $rowData['Nombre']; ?><br/>
+							<strong>Tipo : </strong><?php echo $rowData['Tipo']; ?><br/>
+							<strong>Marca : </strong><?php echo $rowData['Marca']; ?><br/>
+							<strong>Modelo : </strong><?php echo $rowData['Modelo']; ?><br/>
+							<strong>Numero de serie : </strong><?php echo $rowData['Num_serie']; ?><br/>
+							<strong>Año de Fabricacion : </strong><?php echo $rowData['AnoFab']; ?><br/>
+							<strong>Patente : </strong><?php echo $rowData['Patente']; ?><br/>
+							<strong>Sistema : </strong><?php echo $rowData['Sistema']; ?><br/>
+							<strong>Estado : </strong><?php echo $rowData['Estado']; ?>
 							<?php
 							//se verifica si telemetria esta activo y se muestra
-							if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){
-								echo '<br/><strong>Sensor Telemetrico : </strong>'.$rowdata['Sensor'];
+							if(isset($rowData['idOpciones_1'])&&$rowData['idOpciones_1']==1){
+								echo '<br/><strong>Sensor Telemetrico : </strong>'.$rowData['Sensor'];
 							}
 							//se verifica si bodega esta activo y se muestra
-							if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){
-								echo '<br/><strong>Bodega : </strong>'.$rowdata['Bodega'];
+							if(isset($rowData['idOpciones_2'])&&$rowData['idOpciones_2']==1){
+								echo '<br/><strong>Bodega : </strong>'.$rowData['Bodega'];
 							}
 							//se verifica si ruta esta activo y se muestra
-							if(isset($rowdata['idOpciones_3'])&&$rowdata['idOpciones_3']==1){
-								echo '<br/><strong>Ruta : </strong>'.$rowdata['Ruta'];
+							if(isset($rowData['idOpciones_3'])&&$rowData['idOpciones_3']==1){
+								echo '<br/><strong>Ruta : </strong>'.$rowData['Ruta'];
 							}
 							//se verifica si trabajador esta activo y se muestra
-							if(isset($rowdata['idOpciones_4'])&&$rowdata['idOpciones_4']==1){
-								echo '<br/><strong>Trabajador asignado: </strong>'.$rowdata['TrabajadorNombre'].' '.$rowdata['TrabajadorApellidoPat'].' '.$rowdata['TrabajadorApellidoMat'];
+							if(isset($rowData['idOpciones_4'])&&$rowData['idOpciones_4']==1){
+								echo '<br/><strong>Trabajador asignado: </strong>'.$rowData['TrabajadorNombre'].' '.$rowData['TrabajadorApellidoPat'].' '.$rowData['TrabajadorApellidoMat'];
 							}
 							//se verifica el estado de aprobacion
-							if(isset($rowdata['AprobacionEstado'])&&$rowdata['AprobacionEstado']!=''){
-								echo '<br/><strong>Proceso Aprobacion: </strong>'.$rowdata['AprobacionEstado'];
-								if(isset($rowdata['idProceso'])&&$rowdata['idProceso']==3){echo ' ('.$rowdata['AprobacionMotivo'].')';}
+							if(isset($rowData['AprobacionEstado'])&&$rowData['AprobacionEstado']!=''){
+								echo '<br/><strong>Proceso Aprobacion: </strong>'.$rowData['AprobacionEstado'];
+								if(isset($rowData['idProceso'])&&$rowData['idProceso']==3){echo ' ('.$rowData['AprobacionMotivo'].')';}
 							} ?>
 
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Caracteristicos</h2>
 						<p class="text-muted">
-							<strong>Zona de Trabajo : </strong><?php echo $rowdata['Zona']; ?><br/>
-							<strong>Capacidad Pasajeros : </strong><?php echo $rowdata['CapacidadPersonas']; ?><br/>
-							<strong>Capacidad (Kilos) : </strong><?php echo Cantidades_decimales_justos($rowdata['Capacidad']); ?><br/>
-							<strong>Metros Cubicos (M3) : </strong><?php echo Cantidades_decimales_justos($rowdata['MCubicos']); ?><br/>
-							<strong>Tipo de Carga : </strong><?php echo $rowdata['VehiculoTipoCarga']; ?><br/>
+							<strong>Zona de Trabajo : </strong><?php echo $rowData['Zona']; ?><br/>
+							<strong>Capacidad Pasajeros : </strong><?php echo $rowData['CapacidadPersonas']; ?><br/>
+							<strong>Capacidad (Kilos) : </strong><?php echo Cantidades_decimales_justos($rowData['Capacidad']); ?><br/>
+							<strong>Metros Cubicos (M3) : </strong><?php echo Cantidades_decimales_justos($rowData['MCubicos']); ?><br/>
+							<strong>Tipo de Carga : </strong><?php echo $rowData['VehiculoTipoCarga']; ?><br/>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Movilizacion</h2>
 						<p class="text-muted">
-							<strong>Velocidad Maxima : </strong><?php echo Cantidades_decimales_justos($rowdata['LimiteVelocidad']); ?><br/>
-							<strong>N° Maximo Alertas de Velocidad : </strong><?php echo $rowdata['AlertLimiteVelocidad']; ?><br/>
+							<strong>Velocidad Maxima : </strong><?php echo Cantidades_decimales_justos($rowData['LimiteVelocidad']); ?><br/>
+							<strong>N° Maximo Alertas de Velocidad : </strong><?php echo $rowData['AlertLimiteVelocidad']; ?><br/>
 						</p>
 
-						<?php if(isset($rowdata['idOpciones_6'])&&$rowdata['idOpciones_6']==1){ ?>
+						<?php if(isset($rowData['idOpciones_6'])&&$rowData['idOpciones_6']==1){ ?>
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de acceso a la APP</h2>
 							<p class="text-muted">
-								<strong>Usuario : </strong><?php echo $rowdata['Patente']; ?><br/>
-								<strong>Password : </strong><?php echo $rowdata['Password']; ?><br/>
+								<strong>Usuario : </strong><?php echo $rowData['Patente']; ?><br/>
+								<strong>Password : </strong><?php echo $rowData['Password']; ?><br/>
 							</p>
 						<?php } ?>
 
 						<?php
 						//Se verifica si se transportan personas
-						if(isset($rowdata['idOpciones_5'])&&$rowdata['idOpciones_5']==1){ ?>
+						if(isset($rowData['idOpciones_5'])&&$rowData['idOpciones_5']==1){ ?>
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Personas Transportadas</h2>
 							<div class="row">
 								<?php
-								//Verifico el total de cargas
-								$nn = 0;
-								$n_carga = 1;
-								foreach ($arrCargas as $carga) {
-									$nn++;
-								}
 								//Se existen cargas estas se despliegan
-								if($nn!=0){
+								if($arrCargas!=false){
+									//variable
+									$n_carga = 1;
+									//recorro
 									foreach ($arrCargas as $carga) { ?>
 										<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 pull-left">
 											<div class="info-box" style="box-shadow:none; color:#999 !important;">
@@ -495,7 +492,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 
 						<?php
 						//Se verifica si se tiene peonetas
-						if(isset($rowdata['idOpciones_7'])&&$rowdata['idOpciones_7']==1){ ?>
+						if(isset($rowData['idOpciones_7'])&&$rowData['idOpciones_7']==1){ ?>
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Peonetas Asignados</h2>
 							<p class="text-muted">
 								<?php
@@ -519,7 +516,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 							</p>
 						<?php } ?>
 
-						<?php if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){ ?>
+						<?php if(isset($rowData['idOpciones_8'])&&$rowData['idOpciones_8']==1){ ?>
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Colegios Asignados</h2>
 							<table id="items" style="margin-bottom: 20px;">
 								<tbody>
@@ -537,126 +534,126 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 							<tbody>
 								<?php
 								//Fecha ultima mantencion
-								if(isset($rowdata['doc_mantencion'])&&$rowdata['doc_mantencion']!=''){
+								if(isset($rowData['doc_mantencion'])&&$rowData['doc_mantencion']!=''){
 									echo '
 										<tr class="item-row">
-											<td>Fecha ultima mantencion (vence el '.fecha_estandar($rowdata['doc_fecha_mantencion']).')</td>
+											<td>Fecha ultima mantencion (vence el '.fecha_estandar($rowData['doc_fecha_mantencion']).')</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['doc_mantencion'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['doc_mantencion'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['doc_mantencion'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['doc_mantencion'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
 									';
 								}
 								//Padron del Vehiculo
-								if(isset($rowdata['doc_padron'])&&$rowdata['doc_padron']!=''){
+								if(isset($rowData['doc_padron'])&&$rowData['doc_padron']!=''){
 									echo '
 										<tr class="item-row">
 											<td>Padron del Vehiculo</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['doc_padron'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['doc_padron'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['doc_padron'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['doc_padron'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
 									';
 								}
 								//Permiso de Circulacion
-								if(isset($rowdata['doc_permiso_circulacion'])&&$rowdata['doc_permiso_circulacion']!=''){
+								if(isset($rowData['doc_permiso_circulacion'])&&$rowData['doc_permiso_circulacion']!=''){
 									echo '
 										<tr class="item-row">
-											<td>Permiso de Circulacion (vence el '.fecha_estandar($rowdata['doc_fecha_permiso_circulacion']).')</td>
+											<td>Permiso de Circulacion (vence el '.fecha_estandar($rowData['doc_fecha_permiso_circulacion']).')</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['doc_permiso_circulacion'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['doc_permiso_circulacion'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['doc_permiso_circulacion'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['doc_permiso_circulacion'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
 									';
 								}
 								//Resolucion Sanitaria 
-								if(isset($rowdata['doc_resolucion_sanitaria'])&&$rowdata['doc_resolucion_sanitaria']!=''){
+								if(isset($rowData['doc_resolucion_sanitaria'])&&$rowData['doc_resolucion_sanitaria']!=''){
 									echo '
 										<tr class="item-row">
-											<td>Resolucion Sanitaria (vence el '.fecha_estandar($rowdata['doc_fecha_resolucion_sanitaria']).')</td>
+											<td>Resolucion Sanitaria (vence el '.fecha_estandar($rowData['doc_fecha_resolucion_sanitaria']).')</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['doc_resolucion_sanitaria'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['doc_resolucion_sanitaria'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['doc_resolucion_sanitaria'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['doc_resolucion_sanitaria'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
 									';
 								}
 								//Revision tecnica
-								if(isset($rowdata['doc_revision_tecnica'])&&$rowdata['doc_revision_tecnica']!=''){
+								if(isset($rowData['doc_revision_tecnica'])&&$rowData['doc_revision_tecnica']!=''){
 									echo '
 										<tr class="item-row">
-											<td>Revision tecnica (vence el '.fecha_estandar($rowdata['doc_fecha_revision_tecnica']).')</td>
+											<td>Revision tecnica (vence el '.fecha_estandar($rowData['doc_fecha_revision_tecnica']).')</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['doc_revision_tecnica'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['doc_revision_tecnica'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['doc_revision_tecnica'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['doc_revision_tecnica'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
 									';
 								}
 								//Seguro de Carga
-								if(isset($rowdata['doc_seguro_carga'])&&$rowdata['doc_seguro_carga']!=''){
+								if(isset($rowData['doc_seguro_carga'])&&$rowData['doc_seguro_carga']!=''){
 									echo '
 										<tr class="item-row">
-											<td>Seguro de Carga (vence el '.fecha_estandar($rowdata['doc_fecha_seguro_carga']).')</td>
+											<td>Seguro de Carga (vence el '.fecha_estandar($rowData['doc_fecha_seguro_carga']).')</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['doc_seguro_carga'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['doc_seguro_carga'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['doc_seguro_carga'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['doc_seguro_carga'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
 									';
 								}
 								//Seguro SOAP 
-								if(isset($rowdata['doc_soap'])&&$rowdata['doc_soap']!=''){
+								if(isset($rowData['doc_soap'])&&$rowData['doc_soap']!=''){
 									echo '
 										<tr class="item-row">
-											<td>Seguro SOAP (vence el '.fecha_estandar($rowdata['doc_fecha_soap']).')</td>
+											<td>Seguro SOAP (vence el '.fecha_estandar($rowData['doc_fecha_soap']).')</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['doc_soap'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['doc_soap'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['doc_soap'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['doc_soap'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
 									';
 								}
 								//Certificado Transporte Personas 
-								if(isset($rowdata['doc_cert_trans_personas'])&&$rowdata['doc_cert_trans_personas']!=''){
+								if(isset($rowData['doc_cert_trans_personas'])&&$rowData['doc_cert_trans_personas']!=''){
 									echo '
 										<tr class="item-row">
-											<td>Certificado Transporte Personas (vence el '.fecha_estandar($rowdata['doc_fecha_cert_trans_personas']).')</td>
+											<td>Certificado Transporte Personas (vence el '.fecha_estandar($rowData['doc_fecha_cert_trans_personas']).')</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['doc_cert_trans_personas'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['doc_cert_trans_personas'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['doc_cert_trans_personas'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['doc_cert_trans_personas'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
 									';
 								}
 								//Ficha Tecnica
-								if(isset($rowdata['doc_ficha_tecnica'])&&$rowdata['doc_ficha_tecnica']!=''){
+								if(isset($rowData['doc_ficha_tecnica'])&&$rowData['doc_ficha_tecnica']!=''){
 									echo '
 										<tr class="item-row">
 											<td>Ficha Tecnica</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['doc_ficha_tecnica'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['doc_ficha_tecnica'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['doc_ficha_tecnica'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['doc_ficha_tecnica'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>

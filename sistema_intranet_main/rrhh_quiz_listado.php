@@ -107,7 +107,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 ?>
 
@@ -122,16 +122,16 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)){            $x1  = $Nombre;             }else{$x1  = $rowdata['Nombre'];}
-				if(isset($idTipoEvaluacion)){  $x2  = $idTipoEvaluacion;   }else{$x2  = $rowdata['idTipoEvaluacion'];}
-				if(isset($idEscala)){          $x3  = $idEscala;           }else{$x3  = $rowdata['idEscala'];}
-				if(isset($Porcentaje_apro)){   $x4  = $Porcentaje_apro;    }else{$x4  = $rowdata['Porcentaje_apro'];}
-				if(isset($idTipoQuiz)){        $x7  = $idTipoQuiz;         }else{$x7  = $rowdata['idTipoQuiz'];}
-				if(isset($Header_texto)){      $x8  = $Header_texto;       }else{$x8  = $rowdata['Header_texto'];}
-				if(isset($Header_fecha)){      $x9  = $Header_fecha;       }else{$x9  = $rowdata['Header_fecha'];}
-				if(isset($Texto_Inicio)){      $x10 = $Texto_Inicio;       }else{$x10 = $rowdata['Texto_Inicio'];}
-				if(isset($Footer_texto)){      $x11 = $Footer_texto;       }else{$x11 = $rowdata['Footer_texto'];}
-				if(isset($idEstado)){          $x12 = $idEstado;           }else{$x12 = $rowdata['idEstado'];}
+				if(isset($Nombre)){            $x1  = $Nombre;             }else{$x1  = $rowData['Nombre'];}
+				if(isset($idTipoEvaluacion)){  $x2  = $idTipoEvaluacion;   }else{$x2  = $rowData['idTipoEvaluacion'];}
+				if(isset($idEscala)){          $x3  = $idEscala;           }else{$x3  = $rowData['idEscala'];}
+				if(isset($Porcentaje_apro)){   $x4  = $Porcentaje_apro;    }else{$x4  = $rowData['Porcentaje_apro'];}
+				if(isset($idTipoQuiz)){        $x7  = $idTipoQuiz;         }else{$x7  = $rowData['idTipoQuiz'];}
+				if(isset($Header_texto)){      $x8  = $Header_texto;       }else{$x8  = $rowData['Header_texto'];}
+				if(isset($Header_fecha)){      $x9  = $Header_fecha;       }else{$x9  = $rowData['Header_fecha'];}
+				if(isset($Texto_Inicio)){      $x10 = $Texto_Inicio;       }else{$x10 = $rowData['Texto_Inicio'];}
+				if(isset($Footer_texto)){      $x11 = $Footer_texto;       }else{$x11 = $rowData['Footer_texto'];}
+				if(isset($idEstado)){          $x12 = $idEstado;           }else{$x12 = $rowData['idEstado'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -239,7 +239,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- }elseif(!empty($_GET['addPreg'])){ ?>
+}elseif(!empty($_GET['addPreg'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -389,7 +389,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- }elseif(!empty($_GET['editPreg'])){ 
+}elseif(!empty($_GET['editPreg'])){ 
 $query = "SELECT Nombre,idTipo, Opcion_1, Opcion_2, Opcion_3, Opcion_4, Opcion_5, Opcion_6,
 OpcionCorrecta, idCategoria
 FROM `rrhh_quiz_listado_preguntas`
@@ -407,7 +407,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 ?>
 
@@ -422,16 +422,16 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idCategoria)){       $x1  = $idCategoria;     }else{$x1  = $rowdata['idCategoria'];}
-				if(isset($Nombre)){            $x2  = $Nombre;          }else{$x2  = $rowdata['Nombre'];}
-				if(isset($idTipo)){            $x3  = $idTipo;          }else{$x3  = $rowdata['idTipo'];}
-				if(isset($Opcion_1)){          $x4  = $Opcion_1;        }else{$x4  = $rowdata['Opcion_1'];}
-				if(isset($Opcion_2)){          $x5  = $Opcion_2;        }else{$x5  = $rowdata['Opcion_2'];}
-				if(isset($Opcion_3)){          $x6  = $Opcion_3;        }else{$x6  = $rowdata['Opcion_3'];}
-				if(isset($Opcion_4)){          $x7  = $Opcion_4;        }else{$x7  = $rowdata['Opcion_4'];}
-				if(isset($Opcion_5)){          $x8  = $Opcion_5;        }else{$x8  = $rowdata['Opcion_5'];}
-				if(isset($Opcion_6)){          $x9  = $Opcion_6;        }else{$x9  = $rowdata['Opcion_6'];}
-				if(isset($OpcionCorrecta)){    $x10 = $OpcionCorrecta;  }else{$x10 = $rowdata['OpcionCorrecta'];}
+				if(isset($idCategoria)){       $x1  = $idCategoria;     }else{$x1  = $rowData['idCategoria'];}
+				if(isset($Nombre)){            $x2  = $Nombre;          }else{$x2  = $rowData['Nombre'];}
+				if(isset($idTipo)){            $x3  = $idTipo;          }else{$x3  = $rowData['idTipo'];}
+				if(isset($Opcion_1)){          $x4  = $Opcion_1;        }else{$x4  = $rowData['Opcion_1'];}
+				if(isset($Opcion_2)){          $x5  = $Opcion_2;        }else{$x5  = $rowData['Opcion_2'];}
+				if(isset($Opcion_3)){          $x6  = $Opcion_3;        }else{$x6  = $rowData['Opcion_3'];}
+				if(isset($Opcion_4)){          $x7  = $Opcion_4;        }else{$x7  = $rowData['Opcion_4'];}
+				if(isset($Opcion_5)){          $x8  = $Opcion_5;        }else{$x8  = $rowData['Opcion_5'];}
+				if(isset($Opcion_6)){          $x9  = $Opcion_6;        }else{$x9  = $rowData['Opcion_6'];}
+				if(isset($OpcionCorrecta)){    $x10 = $OpcionCorrecta;  }else{$x10 = $rowData['OpcionCorrecta'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -617,7 +617,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 		 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- }elseif(!empty($_GET['id_quiz'])){
+}elseif(!empty($_GET['id_quiz'])){
 // Se traen todos los datos de la pregunta
 $query = "SELECT
 rrhh_quiz_listado.Nombre,
@@ -656,7 +656,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);	 
+$rowData = mysqli_fetch_assoc ($resultado);	 
 
 // Se trae un listado con todas las preguntas
 $arrPreguntas = array();
@@ -737,41 +737,41 @@ foreach ($arrPreguntas as $preg) {
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<tr>
 							<td class="meta-head">Nombre</td>
-							<td><?php echo $rowdata['Nombre']?></td>
+							<td><?php echo $rowData['Nombre']?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Texto Cabecera</td>
-							<td><?php echo $rowdata['Header_texto']; ?></td>
+							<td><?php echo $rowData['Header_texto']; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Fecha Cabecera</td>
-							<td><?php echo fecha_estandar($rowdata['Header_fecha']); ?></td>
+							<td><?php echo fecha_estandar($rowData['Header_fecha']); ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Texto Contenido</td>
-							<td><span style="word-wrap: break-word;white-space: initial;"><?php echo $rowdata['Texto_Inicio']; ?></span></td>
+							<td><span style="word-wrap: break-word;white-space: initial;"><?php echo $rowData['Texto_Inicio']; ?></span></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Texto Pie Pagina</td>
-							<td><?php echo $rowdata['Footer_texto']; ?></td>
+							<td><?php echo $rowData['Footer_texto']; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Sistema</td>
-							<td><?php echo $rowdata['sistema']; ?></td>
+							<td><?php echo $rowData['sistema']; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Estado</td>
-							<td><?php echo $rowdata['Estado']; ?></td>
+							<td><?php echo $rowData['Estado']; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Tipo Puntuacion</td>
 							<?php
 							//Escala
-							if(isset($rowdata['idTipoEvaluacion'])&&$rowdata['idTipoEvaluacion']==1){
-								echo '<td>'.$rowdata['TipoEvaluacion'].' : '.$rowdata['Escala'].'</td>';
+							if(isset($rowData['idTipoEvaluacion'])&&$rowData['idTipoEvaluacion']==1){
+								echo '<td>'.$rowData['TipoEvaluacion'].' : '.$rowData['Escala'].'</td>';
 							//Porcentaje	
 							}else{
-								echo '<td>'.$rowdata['TipoEvaluacion'].' : '.$rowdata['Aprobado'].'</td>';
+								echo '<td>'.$rowData['TipoEvaluacion'].' : '.$rowData['Aprobado'].'</td>';
 							}
 							?>
 						</tr>
@@ -779,11 +779,11 @@ foreach ($arrPreguntas as $preg) {
 							<td class="meta-head">Tipo Evaluacion</td>
 							<?php
 							//Cerrada
-							if(isset($rowdata['idTipoQuiz'])&&$rowdata['idTipoQuiz']==1){
-								echo '<td>'.$rowdata['TipoQuiz'].'</td>';
+							if(isset($rowData['idTipoQuiz'])&&$rowData['idTipoQuiz']==1){
+								echo '<td>'.$rowData['TipoQuiz'].'</td>';
 							//Abierta 	
 							}else{
-								echo '<td>'.$rowdata['TipoQuiz'].'</td>';
+								echo '<td>'.$rowData['TipoQuiz'].'</td>';
 							}
 							?>
 						</tr>

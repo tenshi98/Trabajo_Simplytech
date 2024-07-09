@@ -75,7 +75,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 $SIS_query = 'Nombre,Codigo, Rut';
 $SIS_join  = '';
 $SIS_where = 'idLaboratorio ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'aguas_analisis_laboratorios', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'aguas_analisis_laboratorios', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -90,9 +90,9 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_analisis_laboratorios', $SI
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)){   $x1  = $Nombre;   }else{$x1  = $rowdata['Nombre'];}
-				if(isset($Codigo)){   $x2  = $Codigo;   }else{$x2  = $rowdata['Codigo'];}
-				if(isset($Rut)){      $x3  = $Rut;      }else{$x3  = $rowdata['Rut'];}
+				if(isset($Nombre)){   $x1  = $Nombre;   }else{$x1  = $rowData['Nombre'];}
+				if(isset($Codigo)){   $x2  = $Codigo;   }else{$x2  = $rowData['Codigo'];}
+				if(isset($Rut)){      $x3  = $Rut;      }else{$x3  = $rowData['Rut'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

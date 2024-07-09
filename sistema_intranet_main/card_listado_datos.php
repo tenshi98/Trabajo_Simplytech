@@ -51,12 +51,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,idCardType,idPosition,idCardImage';
 $SIS_join  = '';
 $SIS_where = 'idCard = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'card_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'card_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Tarjetas', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Tarjetas', $rowData['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -75,10 +75,10 @@ $rowdata = db_select_data (false, $SIS_query, 'card_listado', $SIS_join, $SIS_wh
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){       $x1  = $Nombre;       }else{$x1  = $rowdata['Nombre'];}
-					if(isset($idCardType)){   $x2  = $idCardType;   }else{$x2  = $rowdata['idCardType'];}
-					if(isset($idPosition)){   $x3  = $idPosition;   }else{$x3  = $rowdata['idPosition'];}
-					if(isset($idCardImage)){  $x4  = $idCardImage;  }else{$x4  = $rowdata['idCardImage'];}
+					if(isset($Nombre)){       $x1  = $Nombre;       }else{$x1  = $rowData['Nombre'];}
+					if(isset($idCardType)){   $x2  = $idCardType;   }else{$x2  = $rowData['idCardType'];}
+					if(isset($idPosition)){   $x3  = $idPosition;   }else{$x3  = $rowData['idPosition'];}
+					if(isset($idCardImage)){  $x4  = $idCardImage;  }else{$x4  = $rowData['idCardImage'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

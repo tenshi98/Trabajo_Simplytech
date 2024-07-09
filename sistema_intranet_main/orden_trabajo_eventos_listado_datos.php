@@ -65,12 +65,12 @@ orden_trabajo_eventos_listado.idCliente,
 orden_trabajo_eventos_listado.idMaquina';
 $SIS_join  = 'orden_trabajo_eventos_listado.idEvento = '.$_GET['id'];
 $SIS_where = '';
-$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_eventos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_eventos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Evento', fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].' hrs', 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Evento', fecha_estandar($rowData['Fecha']).' - '.$rowData['Hora'].' hrs', 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -89,12 +89,12 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_eventos_listado', $
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idTrabajador)){  $x1  = $idTrabajador; }else{$x1  = $rowdata['idTrabajador'];}
-					if(isset($idCliente)){     $x2  = $idCliente;    }else{$x2  = $rowdata['idCliente'];}
-					if(isset($idMaquina)){     $x3  = $idMaquina;    }else{$x3  = $rowdata['idMaquina'];}
-					if(isset($Fecha)){         $x4  = $Fecha;        }else{$x4  = $rowdata['Fecha'];}
-					if(isset($Hora)){          $x5  = $Hora;         }else{$x5  = $rowdata['Hora'];}
-					if(isset($Observacion)){   $x6  = $Observacion;  }else{$x6  = $rowdata['Observacion'];}
+					if(isset($idTrabajador)){  $x1  = $idTrabajador; }else{$x1  = $rowData['idTrabajador'];}
+					if(isset($idCliente)){     $x2  = $idCliente;    }else{$x2  = $rowData['idCliente'];}
+					if(isset($idMaquina)){     $x3  = $idMaquina;    }else{$x3  = $rowData['idMaquina'];}
+					if(isset($Fecha)){         $x4  = $Fecha;        }else{$x4  = $rowData['Fecha'];}
+					if(isset($Hora)){          $x5  = $Hora;         }else{$x5  = $rowData['Hora'];}
+					if(isset($Observacion)){   $x6  = $Observacion;  }else{$x6  = $rowData['Observacion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

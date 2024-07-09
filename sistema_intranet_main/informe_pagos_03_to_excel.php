@@ -42,11 +42,11 @@ $SIS_where_3.=" AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario
 $SIS_where_4.=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Verifico que sean solo compras
 $SIS_where_1.=" AND (bodegas_arriendos_facturacion.idTipo=2 OR bodegas_arriendos_facturacion.idTipo=12)";
-$SIS_where_2.=" AND (bodegas_insumos_facturacion.idTipo=2 OR bodegas_insumos_facturacion.idTipo=12)";
+$SIS_where_2.=" AND (bodegas_insumos_facturacion.idTipo=2   OR bodegas_insumos_facturacion.idTipo=12)";
 $SIS_where_3.=" AND (bodegas_productos_facturacion.idTipo=2 OR bodegas_productos_facturacion.idTipo=12)";
 $SIS_where_4.=" AND (bodegas_servicios_facturacion.idTipo=2 OR bodegas_servicios_facturacion.idTipo=12)";
 
-if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){  
+if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){
 	$SIS_where_1.=" AND bodegas_arriendos_facturacion.idCliente=".$_GET['idCliente'];
 	$SIS_where_2.=" AND bodegas_insumos_facturacion.idCliente=".$_GET['idCliente'];
 	$SIS_where_3.=" AND bodegas_productos_facturacion.idCliente=".$_GET['idCliente'];
@@ -58,7 +58,7 @@ if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){
 	$SIS_where_3.=" AND bodegas_productos_facturacion.idDocumentos=".$_GET['idDocumentos'];
 	$SIS_where_4.=" AND bodegas_servicios_facturacion.idDocumentos=".$_GET['idDocumentos'];
 }
-if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){       
+if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){
 	$SIS_where_1.=" AND bodegas_arriendos_facturacion.N_Doc=".$_GET['N_Doc'];
 	$SIS_where_2.=" AND bodegas_insumos_facturacion.N_Doc=".$_GET['N_Doc'];
 	$SIS_where_3.=" AND bodegas_productos_facturacion.N_Doc=".$_GET['N_Doc'];
@@ -66,7 +66,7 @@ if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){
 }
 if(isset($_GET['f_creacion_inicio'], $_GET['f_creacion_termino'])&&$_GET['f_creacion_inicio']!=''&&$_GET['f_creacion_termino']!=''){
 	$SIS_where_1.=" AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_creacion_inicio']."' AND '".$_GET['f_creacion_termino']."'";
-	$SIS_where_2.=" AND bodegas_insumos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_creacion_inicio']."' AND '".$_GET['f_creacion_termino']."'";
+	$SIS_where_2.=" AND bodegas_insumos_facturacion.Creacion_fecha   BETWEEN '".$_GET['f_creacion_inicio']."' AND '".$_GET['f_creacion_termino']."'";
 	$SIS_where_3.=" AND bodegas_productos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_creacion_inicio']."' AND '".$_GET['f_creacion_termino']."'";
 	$SIS_where_4.=" AND bodegas_servicios_facturacion.Creacion_fecha BETWEEN '".$_GET['f_creacion_inicio']."' AND '".$_GET['f_creacion_termino']."'";
 }
@@ -100,7 +100,7 @@ $spreadsheet->getProperties()->setCreator("Office 2007")
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-        
+
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A1', 'Cliente')
@@ -110,13 +110,13 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('E1', 'Fecha de Pago')
             ->setCellValue('F1', 'Valor Total')
             ->setCellValue('G1', 'Monto Pagado');
-          
+
 $nn=2;
 /********************************************************/
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A'.$nn, 'Arriendos');
 $nn++;
-foreach ($arrTipo1 as $tipo) { 
+foreach ($arrTipo1 as $tipo) {
 
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, DeSanitizar($tipo['Cliente']))
@@ -133,7 +133,7 @@ foreach ($arrTipo1 as $tipo) {
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A'.$nn, 'Insumos');
 $nn++;
-foreach ($arrTipo2 as $tipo) { 
+foreach ($arrTipo2 as $tipo) {
 
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, DeSanitizar($tipo['Cliente']))
@@ -150,7 +150,7 @@ foreach ($arrTipo2 as $tipo) {
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A'.$nn, 'Productos');
 $nn++;
-foreach ($arrTipo3 as $tipo) { 
+foreach ($arrTipo3 as $tipo) {
 
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, DeSanitizar($tipo['Cliente']))
@@ -167,7 +167,7 @@ foreach ($arrTipo3 as $tipo) {
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A'.$nn, 'Servicios');
 $nn++;
-foreach ($arrTipo4 as $tipo) { 
+foreach ($arrTipo4 as $tipo) {
 
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, DeSanitizar($tipo['Cliente']))

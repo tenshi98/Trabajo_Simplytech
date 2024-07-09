@@ -53,7 +53,7 @@ $SIS_join  = '
 LEFT JOIN `vehiculos_costos_tipo`   ON vehiculos_costos_tipo.idTipo   = vehiculos_costos.idTipo
 LEFT JOIN `vehiculos_listado`       ON vehiculos_listado.idVehiculo   = vehiculos_costos.idVehiculo';
 $SIS_where = 'vehiculos_costos.idCosto ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'vehiculos_costos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'vehiculos_costos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 ?>
 
@@ -74,14 +74,14 @@ $row_data = db_select_data (false, $SIS_query, 'vehiculos_costos', $SIS_join, $S
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 						<p class="text-muted">
-							<strong>Tipo: </strong><?php echo $row_data['Tipo']; ?><br/>
-							<strong>Vehiculo: </strong><?php echo $row_data['VehiculoNombre'].' Patente '.$row_data['VehiculoPatente']; ?><br/>
-							<strong>Fecha: </strong><?php echo fecha_estandar($row_data['Creacion_fecha']); ?><br/>
-							<strong>Valor: </strong><?php echo valores($row_data['Valor'],0); ?>
+							<strong>Tipo: </strong><?php echo $rowData['Tipo']; ?><br/>
+							<strong>Vehiculo: </strong><?php echo $rowData['VehiculoNombre'].' Patente '.$rowData['VehiculoPatente']; ?><br/>
+							<strong>Fecha: </strong><?php echo fecha_estandar($rowData['Creacion_fecha']); ?><br/>
+							<strong>Valor: </strong><?php echo valores($rowData['Valor'],0); ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Observaciones</h2>
-						<p class="text-muted" style="white-space: normal;"><?php echo $row_data['Observaciones']; ?></p>
+						<p class="text-muted" style="white-space: normal;"><?php echo $rowData['Observaciones']; ?></p>
 
 					</div>
 					<div class="clearfix"></div>

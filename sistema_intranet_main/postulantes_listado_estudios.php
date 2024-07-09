@@ -88,7 +88,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 // consulto los datos
 $query = "SELECT AnoInicio,AnoTermino,idEstado,idEstudioCat,idEstudio,Nombre,Descripcion
@@ -107,7 +107,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdatax = mysqli_fetch_assoc ($resultado);
+$rowDatax = mysqli_fetch_assoc ($resultado);
 
  ?>
 
@@ -122,13 +122,13 @@ $rowdatax = mysqli_fetch_assoc ($resultado);
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($AnoInicio)){        $x1  = $AnoInicio;         }else{$x1  = $rowdatax['AnoInicio'];}
-				if(isset($AnoTermino)){       $x2  = $AnoTermino;        }else{$x2  = $rowdatax['AnoTermino'];}
-				if(isset($idEstado)){         $x3  = $idEstado;          }else{$x3  = $rowdatax['idEstado'];}
-				if(isset($idEstudioCat)){     $x4  = $idEstudioCat;      }else{$x4  = $rowdatax['idEstudioCat'];}
-				if(isset($idEstudio)){        $x5  = $idEstudio;         }else{$x5  = $rowdatax['idEstudio'];}
-				if(isset($Nombre)){           $x6  = $Nombre;            }else{$x6  = $rowdatax['Nombre'];}
-				if(isset($Descripcion)){      $x7  = $Descripcion;       }else{$x7  = $rowdatax['Descripcion'];}
+				if(isset($AnoInicio)){        $x1  = $AnoInicio;         }else{$x1  = $rowDatax['AnoInicio'];}
+				if(isset($AnoTermino)){       $x2  = $AnoTermino;        }else{$x2  = $rowDatax['AnoTermino'];}
+				if(isset($idEstado)){         $x3  = $idEstado;          }else{$x3  = $rowDatax['idEstado'];}
+				if(isset($idEstudioCat)){     $x4  = $idEstudioCat;      }else{$x4  = $rowDatax['idEstudioCat'];}
+				if(isset($idEstudio)){        $x5  = $idEstudio;         }else{$x5  = $rowDatax['idEstudio'];}
+				if(isset($Nombre)){           $x6  = $Nombre;            }else{$x6  = $rowDatax['Nombre'];}
+				if(isset($Descripcion)){      $x7  = $Descripcion;       }else{$x7  = $rowDatax['Descripcion'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -221,7 +221,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 // consulto los datos
 $arrEstudios = array();
@@ -263,7 +263,7 @@ array_push( $arrEstudios,$row );
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Postulante', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Estudios'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Postulante', $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat'], 'Estudios'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Estudio</a><?php } ?>
 	</div>

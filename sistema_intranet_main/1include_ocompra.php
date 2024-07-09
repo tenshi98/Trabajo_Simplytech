@@ -35,7 +35,7 @@ LEFT JOIN `core_ubicacion_ciudad`    provciudad     ON provciudad.idCiudad      
 LEFT JOIN `core_ubicacion_comunas`   provcomuna     ON provcomuna.idComuna              = proveedor_listado.idComuna
 LEFT JOIN `core_oc_estado`                          ON core_oc_estado.idEstado          = ocompra_listado.idEstado';
 $SIS_where = 'ocompra_listado.idOcompra ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'ocompra_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'ocompra_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /*****************************************/
 //Insumos
@@ -266,7 +266,7 @@ foreach ($arrHistorial as $doc){
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Orden de Compra <?php echo n_doc($X_Puntero , 5); ?>.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['Creacion_fecha']); ?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowData['Creacion_fecha']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -278,33 +278,33 @@ foreach ($arrHistorial as $doc){
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Solicitante
 					<address>
-						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
-						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
-						'.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
-						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
-						Email: '.$row_data['SistemaOrigenEmail'].'
+						<strong>'.$rowData['SistemaOrigen'].'</strong><br/>
+						'.$rowData['SistemaOrigenCiudad'].', '.$rowData['SistemaOrigenComuna'].'<br/>
+						'.$rowData['SistemaOrigenDireccion'].'<br/>
+						Fono: '.formatPhone($rowData['SistemaOrigenFono']).'<br/>
+						Rut: '.$rowData['SistemaOrigenRut'].'<br/>
+						Email: '.$rowData['SistemaOrigenEmail'].'
 					</address>
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Receptora
 					<address>
-						<strong>'.$row_data['NombreProveedor'].'</strong><br/>
-						'.$row_data['CiudadProveedor'].', '.$row_data['ComunaProveedor'].'<br/>
-						'.$row_data['DireccionProveedor'].'<br/>
-						Fono Fijo: '.formatPhone($row_data['Fono1Proveedor']).'<br/>
-						Celular: '.formatPhone($row_data['Fono2Proveedor']).'<br/>
-						Fax: '.$row_data['FaxProveedor'].'<br/>
-						Rut: '.$row_data['RutProveedor'].'<br/>
-						Email: '.$row_data['EmailProveedor'].'<br/>
-						Contacto: '.$row_data['PersonaContactoProveedor'].'<br/>
-						Giro de la Empresa: '.$row_data['GiroProveedor'].'
+						<strong>'.$rowData['NombreProveedor'].'</strong><br/>
+						'.$rowData['CiudadProveedor'].', '.$rowData['ComunaProveedor'].'<br/>
+						'.$rowData['DireccionProveedor'].'<br/>
+						Fono Fijo: '.formatPhone($rowData['Fono1Proveedor']).'<br/>
+						Celular: '.formatPhone($rowData['Fono2Proveedor']).'<br/>
+						Fax: '.$rowData['FaxProveedor'].'<br/>
+						Rut: '.$rowData['RutProveedor'].'<br/>
+						Email: '.$rowData['EmailProveedor'].'<br/>
+						Contacto: '.$rowData['PersonaContactoProveedor'].'<br/>
+						Giro de la Empresa: '.$rowData['GiroProveedor'].'
 					</address>
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
-					<b>Estado: </b>'.$row_data['Estado'].'<br/>
+					<b>Estado: </b>'.$rowData['Estado'].'<br/>
 				</div>';
 		?>
 
@@ -407,7 +407,7 @@ foreach ($arrHistorial as $doc){
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $rowData['Observaciones']; ?></p>
 		</div>
 	</div>
 	

@@ -62,10 +62,10 @@ LEFT JOIN `core_estados`                  ON core_estados.idEstado  = maquinas_l
 LEFT JOIN `core_sistemas_opciones` ops1   ON ops1.idOpciones        = maquinas_listado.idConfig_1
 LEFT JOIN `core_sistemas_opciones` ops2   ON ops2.idOpciones        = maquinas_listado.idConfig_2';
 $SIS_where = 'maquinas_listado.idMaquina='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 
-if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
+if(isset($rowData['idConfig_1'])&&$rowData['idConfig_1']==1){
 	//Se crean las variables
 	$nmax = 10;
 	$SIS_query = 'maquinas_listado_level_1.idLevel_1 AS bla';
@@ -264,43 +264,43 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<?php if ($rowdata['Direccion_img']=='') { ?>
+						<?php if ($rowData['Direccion_img']=='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 						<?php }else{  ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowData['Direccion_img']; ?>">
 						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 						<p class="text-muted">
-							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
-							<strong>Codigo : </strong><?php echo $rowdata['Codigo']; ?><br/>
-							<strong>Modelo : </strong><?php echo $rowdata['Modelo']; ?><br/>
-							<strong>Serie : </strong><?php echo $rowdata['Serie']; ?><br/>
-							<strong>Fabricante : </strong><?php echo $rowdata['Fabricante']; ?><br/>
-							<strong>Fecha incorporacion : </strong><?php echo fecha_estandar($rowdata['fincorporacion']); ?><br/>
-							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
+							<strong>Nombre : </strong><?php echo $rowData['Nombre']; ?><br/>
+							<strong>Codigo : </strong><?php echo $rowData['Codigo']; ?><br/>
+							<strong>Modelo : </strong><?php echo $rowData['Modelo']; ?><br/>
+							<strong>Serie : </strong><?php echo $rowData['Serie']; ?><br/>
+							<strong>Fabricante : </strong><?php echo $rowData['Fabricante']; ?><br/>
+							<strong>Fecha incorporacion : </strong><?php echo fecha_estandar($rowData['fincorporacion']); ?><br/>
+							<strong>Estado : </strong><?php echo $rowData['Estado']; ?><br/>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Configuracion</h2>
 						<p class="text-muted">
-							<strong>Componentes : </strong><?php echo $rowdata['Componentes']; ?><br/>
-							<strong>Matriz de Analisis: </strong><?php echo $rowdata['Matriz']; ?>
+							<strong>Componentes : </strong><?php echo $rowData['Componentes']; ?><br/>
+							<strong>Matriz de Analisis: </strong><?php echo $rowData['Matriz']; ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripción</h2>
-						<p class="text-muted"><?php echo $rowdata['Descripcion']; ?></p>
+						<p class="text-muted"><?php echo $rowData['Descripcion']; ?></p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<p class="text-muted">
 							<?php
 							//Ficha Tecnica
-							if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
-								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['FichaTecnica'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Ficha Tecnica</a>';
+							if(isset($rowData['FichaTecnica'])&&$rowData['FichaTecnica']!=''){
+								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['FichaTecnica'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Ficha Tecnica</a>';
 							}
 							//Hoja de seguridad
-							if(isset($rowdata['HDS'])&&$rowdata['HDS']!=''){
-								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['HDS'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Hoja de Seguridad</a>';
+							if(isset($rowData['HDS'])&&$rowData['HDS']!=''){
+								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['HDS'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Hoja de Seguridad</a>';
 							}
 							?>
 
@@ -311,7 +311,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 
 					<?php
 						//Uso de componentes
-						if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
+						if(isset($rowData['idConfig_1'])&&$rowData['idConfig_1']==1){ ?>
 						<table id="dataTable" class="table table-bordered table-condensed dataTable">
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<tr>

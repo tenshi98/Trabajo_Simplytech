@@ -81,7 +81,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'Fecha, Hora_Inicio, Hora_Termino, Solicitante, idServicioCafeteria, CantidadAsistentes, idOficina, Observaciones, idEstado';
 	$SIS_join  = '';
 	$SIS_where = 'idReserva = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'gestion_reserva_oficinas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'gestion_reserva_oficinas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -96,15 +96,15 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Fecha)){                $x1  = $Fecha;                }else{$x1  = $rowdata['Fecha'];}
-					if(isset($Hora_Inicio)){          $x2  = $Hora_Inicio;          }else{$x2  = $rowdata['Hora_Inicio'];}
-					if(isset($Hora_Termino)){         $x3  = $Hora_Termino;         }else{$x3  = $rowdata['Hora_Termino'];}
-					if(isset($Solicitante)){          $x4  = $Solicitante;          }else{$x4  = $rowdata['Solicitante'];}
-					if(isset($idServicioCafeteria)){  $x5  = $idServicioCafeteria;  }else{$x5  = $rowdata['idServicioCafeteria'];}
-					if(isset($CantidadAsistentes)){   $x6  = $CantidadAsistentes;   }else{$x6  = $rowdata['CantidadAsistentes'];}
-					if(isset($idOficina)){            $x7  = $idOficina;            }else{$x7  = $rowdata['idOficina'];}
-					if(isset($Observaciones)){        $x8  = $Observaciones;        }else{$x8  = $rowdata['Observaciones'];}
-					if(isset($idEstado)){             $x9  = $idEstado;             }else{$x9  = $rowdata['idEstado'];}
+					if(isset($Fecha)){                $x1  = $Fecha;                }else{$x1  = $rowData['Fecha'];}
+					if(isset($Hora_Inicio)){          $x2  = $Hora_Inicio;          }else{$x2  = $rowData['Hora_Inicio'];}
+					if(isset($Hora_Termino)){         $x3  = $Hora_Termino;         }else{$x3  = $rowData['Hora_Termino'];}
+					if(isset($Solicitante)){          $x4  = $Solicitante;          }else{$x4  = $rowData['Solicitante'];}
+					if(isset($idServicioCafeteria)){  $x5  = $idServicioCafeteria;  }else{$x5  = $rowData['idServicioCafeteria'];}
+					if(isset($CantidadAsistentes)){   $x6  = $CantidadAsistentes;   }else{$x6  = $rowData['CantidadAsistentes'];}
+					if(isset($idOficina)){            $x7  = $idOficina;            }else{$x7  = $rowData['idOficina'];}
+					if(isset($Observaciones)){        $x8  = $Observaciones;        }else{$x8  = $rowData['Observaciones'];}
+					if(isset($idEstado)){             $x9  = $idEstado;             }else{$x9  = $rowData['idEstado'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

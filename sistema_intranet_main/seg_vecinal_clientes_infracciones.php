@@ -74,7 +74,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'Fecha, Descripcion, idCliente';
 	$SIS_join  = '';
 	$SIS_where = 'idInfraccion = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_clientes_infracciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'seg_vecinal_clientes_infracciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/******************************************************************************/
 	//Verifico el tipo de usuario que esta ingresando
@@ -93,9 +93,9 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Fecha)){       $x1 = $Fecha;       }else{$x1 = $rowdata['Fecha'];}
-					if(isset($idCliente)){   $x2 = $idCliente;   }else{$x2 = $rowdata['idCliente'];}
-					if(isset($Descripcion)){ $x3 = $Descripcion; }else{$x3 = $rowdata['Descripcion'];}
+					if(isset($Fecha)){       $x1 = $Fecha;       }else{$x1 = $rowData['Fecha'];}
+					if(isset($idCliente)){   $x2 = $idCliente;   }else{$x2 = $rowData['idCliente'];}
+					if(isset($Descripcion)){ $x3 = $Descripcion; }else{$x3 = $rowData['Descripcion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

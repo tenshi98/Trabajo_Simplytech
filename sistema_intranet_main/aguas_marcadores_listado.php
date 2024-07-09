@@ -73,7 +73,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 $SIS_query = 'Nombre';
 $SIS_join  = '';
 $SIS_where = 'idMarcadores = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'aguas_marcadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'aguas_marcadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -88,7 +88,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_marcadores_listado', $SIS_j
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)){      $x1  = $Nombre;      }else{$x1  = $rowdata['Nombre'];}
+				if(isset($Nombre)){      $x1  = $Nombre;      }else{$x1  = $rowData['Nombre'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

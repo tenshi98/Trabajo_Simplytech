@@ -37,14 +37,14 @@ $rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema='.
 $SIS_where_1 = "maquinas_listado_matriz.idMatriz>=0";
 $SIS_where_2 = "maquinas_listado.idMaquina>=0";
 $SIS_where_3 = "analisis_listado.idAnalisis>=0";
-if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {     
+if(isset($_GET['idSistema']) && $_GET['idSistema'] != ''){
 	$SIS_where_3 .= " AND analisis_listado.idSistema = '".$_GET['idSistema']."'";
 }
-if(isset($_GET['idMaquina']) && $_GET['idMaquina'] != '')  {     
+if(isset($_GET['idMaquina']) && $_GET['idMaquina'] != ''){
 	$SIS_where_2 .= " AND maquinas_listado.idMaquina = '".$_GET['idMaquina']."'";
 	$SIS_where_3 .= " AND analisis_listado.idMaquina = '".$_GET['idMaquina']."'";
 }
-if(isset($_GET['idMatriz']) && $_GET['idMatriz'] != '')  {       
+if(isset($_GET['idMatriz']) && $_GET['idMatriz'] != ''){
 	$SIS_where_1 .= " AND idMatriz = '".$_GET['idMatriz']."'";
 	$SIS_where_2 .= " AND maquinas_listado_matriz.idMatriz = '".$_GET['idMaquina']."'";
 	$SIS_where_3 .= " AND analisis_listado.idMatriz = '".$_GET['idMatriz']."'";
@@ -185,7 +185,7 @@ if(isset($rowMaquina['MaquinaUbicacion_lvl_5'])&&$rowMaquina['MaquinaUbicacion_l
 
 $spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('A9', $Ubicacion)
-            ->setCellValue('B9', 'Email: '.DeSanitizar($rowMaquina['SistemaOrigenEmail'])); 
+            ->setCellValue('B9', 'Email: '.DeSanitizar($rowMaquina['SistemaOrigenEmail']));
 
 //variables
 $nn=11;
@@ -213,9 +213,8 @@ foreach ($arrGrupo as $grupo) {
 								->setCellValue('C'.$nn, 'Aceptable')
 								->setCellValue('D'.$nn, 'Alerta')
 								->setCellValue('E'.$nn, 'Condenatorio')
-								->setCellValue('F'.$nn, 'Unidad Medida'); 
-						
-							
+								->setCellValue('F'.$nn, 'Unidad Medida');
+
 					//recorro los resultados
 					foreach ($arrResultados as $result) {
 						$spreadsheet->setActiveSheetIndex(0)
@@ -235,13 +234,11 @@ foreach ($arrGrupo as $grupo) {
 				break;
 				//Producto
 				case 2:
-							
 					//Suma de 1
 					$nn++;
 				break;
 				//Dispersancia
 				case 3:
-								
 					//Suma de 1
 					$nn++;
 				break;
@@ -253,9 +250,8 @@ foreach ($arrGrupo as $grupo) {
 			}
 		}
 	}
-}	
-				
-				                       
+}
+
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Analisis');
 

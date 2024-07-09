@@ -980,7 +980,7 @@ if(!empty($_GET['addOC'])){ ?>
 	$SIS_query = 'Creacion_fecha';
 	$SIS_join  = '';
 	$SIS_where = 'idFacturacion = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'bodegas_servicios_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'bodegas_servicios_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -995,7 +995,7 @@ if(!empty($_GET['addOC'])){ ?>
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Creacion_fecha)){   $x1  = $Creacion_fecha; }else{$x1  = $rowdata['Creacion_fecha'];}
+					if(isset($Creacion_fecha)){   $x1  = $Creacion_fecha; }else{$x1  = $rowData['Creacion_fecha'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

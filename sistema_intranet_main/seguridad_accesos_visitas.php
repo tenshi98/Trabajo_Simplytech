@@ -96,7 +96,7 @@ if(!empty($_GET['id'])){
 	idUbicacion_lvl_5, PersonaReunion, Direccion_img, HoraSalida';
 	$SIS_join  = '';
 	$SIS_where = 'idAcceso = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'seguridad_accesos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'seguridad_accesos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -111,19 +111,19 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Fecha)){               $x1  = $Fecha;               }else{$x1  = $rowdata['Fecha'];}
-					if(isset($Hora)){                $x2  = $Hora;                }else{$x2  = $rowdata['Hora'];}
-					if(isset($HoraSalida)){          $x3  = $HoraSalida;          }else{$x3  = $rowdata['HoraSalida'];}
-					if(isset($Nombre)){              $x4  = $Nombre;              }else{$x4  = $rowdata['Nombre'];}
-					if(isset($Rut)){                 $x5  = $Rut;                 }else{$x5  = $rowdata['Rut'];}
-					if(isset($NDocCedula)){          $x6  = $NDocCedula;          }else{$x6  = $rowdata['NDocCedula'];}
-					if(isset($idUbicacion)){         $x7  = $idUbicacion;         }else{$x7  = $rowdata['idUbicacion'];}
-					if(isset($idUbicacion_lvl_1)){   $x8  = $idUbicacion_lvl_1;   }else{$x8  = $rowdata['idUbicacion_lvl_1'];}
-					if(isset($idUbicacion_lvl_2)){   $x9  = $idUbicacion_lvl_2;   }else{$x9  = $rowdata['idUbicacion_lvl_2'];}
-					if(isset($idUbicacion_lvl_3)){   $x10 = $idUbicacion_lvl_3;   }else{$x10 = $rowdata['idUbicacion_lvl_3'];}
-					if(isset($idUbicacion_lvl_4)){   $x11 = $idUbicacion_lvl_4;   }else{$x11 = $rowdata['idUbicacion_lvl_4'];}
-					if(isset($idUbicacion_lvl_5)){   $x12 = $idUbicacion_lvl_5;   }else{$x12 = $rowdata['idUbicacion_lvl_5'];}
-					if(isset($PersonaReunion)){      $x13 = $PersonaReunion;      }else{$x13 = $rowdata['PersonaReunion'];}
+					if(isset($Fecha)){               $x1  = $Fecha;               }else{$x1  = $rowData['Fecha'];}
+					if(isset($Hora)){                $x2  = $Hora;                }else{$x2  = $rowData['Hora'];}
+					if(isset($HoraSalida)){          $x3  = $HoraSalida;          }else{$x3  = $rowData['HoraSalida'];}
+					if(isset($Nombre)){              $x4  = $Nombre;              }else{$x4  = $rowData['Nombre'];}
+					if(isset($Rut)){                 $x5  = $Rut;                 }else{$x5  = $rowData['Rut'];}
+					if(isset($NDocCedula)){          $x6  = $NDocCedula;          }else{$x6  = $rowData['NDocCedula'];}
+					if(isset($idUbicacion)){         $x7  = $idUbicacion;         }else{$x7  = $rowData['idUbicacion'];}
+					if(isset($idUbicacion_lvl_1)){   $x8  = $idUbicacion_lvl_1;   }else{$x8  = $rowData['idUbicacion_lvl_1'];}
+					if(isset($idUbicacion_lvl_2)){   $x9  = $idUbicacion_lvl_2;   }else{$x9  = $rowData['idUbicacion_lvl_2'];}
+					if(isset($idUbicacion_lvl_3)){   $x10 = $idUbicacion_lvl_3;   }else{$x10 = $rowData['idUbicacion_lvl_3'];}
+					if(isset($idUbicacion_lvl_4)){   $x11 = $idUbicacion_lvl_4;   }else{$x11 = $rowData['idUbicacion_lvl_4'];}
+					if(isset($idUbicacion_lvl_5)){   $x12 = $idUbicacion_lvl_5;   }else{$x12 = $rowData['idUbicacion_lvl_5'];}
+					if(isset($PersonaReunion)){      $x13 = $PersonaReunion;      }else{$x13 = $rowData['PersonaReunion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -141,10 +141,10 @@ if(!empty($_GET['id'])){
 													'Nivel 5', 'idUbicacion_lvl_5',  $x12,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
 													$dbConn, 'form1');
 					$Form_Inputs->form_input_text('Persona Reunion', 'PersonaReunion', $x13, 2);
-					if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){ ?>
+					if(isset($rowData['Direccion_img'])&&$rowData['Direccion_img']!=''){ ?>
 
 						<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
-						<img src="upload/<?php echo $rowdata['Direccion_img'] ?>" width="100%" >
+						<img src="upload/<?php echo $rowData['Direccion_img'] ?>" width="100%" >
 						</div>
 						<a href="<?php echo $location.'&id='.$_GET['id'].'&del_img='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
 						<div class="clearfix"></div>
@@ -288,7 +288,7 @@ if(!empty($_GET['id'])){
 	}
 	/**********************************************************/
 	//Se aplican los filtros
-	if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != '')  {
+	if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){
 		$SIS_where .= " AND seguridad_accesos.idUsuario = '".$_GET['idUsuario']."'";
 	}
 	if(isset($_GET['h_inicio'], $_GET['h_termino']) && $_GET['h_inicio'] != '' && $_GET['h_termino']!=''){

@@ -47,7 +47,7 @@ $SIS_join  = '
 LEFT JOIN `core_ubicacion_ciudad`   ON core_ubicacion_ciudad.idCiudad   = cross_predios_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`  ON core_ubicacion_comunas.idComuna  = cross_predios_listado.idComuna';
 $SIS_where = 'cross_predios_listado.idPredio ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'cross_predios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'cross_predios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /**************************************************************/
 //Se traen las rutas
@@ -77,9 +77,9 @@ if(isset($arrZonas[0]['Comuna'])&&$arrZonas[0]['Comuna']!=''){      $Ubicacion.=
 if(isset($arrZonas[0]['Ciudad'])&&$arrZonas[0]['Ciudad']!=''){      $Ubicacion.=', '.$arrZonas[0]['Ciudad'];}
 //Si los puntos no existen
 if(isset($Ubicacion)&&$Ubicacion==''){
-	if(isset($rowdata['Direccion'])&&$rowdata['Direccion']!=''){$Ubicacion.=' '.$rowdata['Direccion'];}
-	if(isset($rowdata['Comuna'])&&$rowdata['Comuna']!=''){      $Ubicacion.=', '.$rowdata['Comuna'];}
-	if(isset($rowdata['Ciudad'])&&$rowdata['Ciudad']!=''){      $Ubicacion.=', '.$rowdata['Ciudad'];}
+	if(isset($rowData['Direccion'])&&$rowData['Direccion']!=''){$Ubicacion.=' '.$rowData['Direccion'];}
+	if(isset($rowData['Comuna'])&&$rowData['Comuna']!=''){      $Ubicacion.=', '.$rowData['Comuna'];}
+	if(isset($rowData['Ciudad'])&&$rowData['Ciudad']!=''){      $Ubicacion.=', '.$rowData['Ciudad'];}
 
 }
 

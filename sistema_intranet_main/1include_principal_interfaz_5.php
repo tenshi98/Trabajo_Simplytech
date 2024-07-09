@@ -29,7 +29,7 @@ $n_permisos = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS
 
 <!-- Tab panes -->
 <div class="tab-content">
-	  
+
 	<?php
 		//si los segundos no estan configurados
 		if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
@@ -37,16 +37,11 @@ $n_permisos = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS
 		}else{
 			$x_seg = 60000;
 		}
-				
+
 		//contenido en tabs
 		include '1include_principal_interfaz_5_tab_1.php';
 		include '1include_principal_interfaz_5_tab_2.php';
 		include '1include_principal_interfaz_5_tab_3.php';
 	?>
-    
+
 </div>
-
-
-
-
-

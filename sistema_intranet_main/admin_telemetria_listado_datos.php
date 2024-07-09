@@ -55,12 +55,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,IdentificadorEmpresa,id_Sensores, id_Geo';
 $SIS_join  = '';
 $SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowData['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -75,13 +75,13 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-						<?php if($rowdata['id_Sensores']==1){ ?>
+						<?php if($rowData['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'admin_telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
 						<?php } ?>
-						<?php if($rowdata['id_Geo']==2){ ?>
+						<?php if($rowData['id_Geo']==2){ ?>
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
-						<?php if($rowdata['id_Sensores']==1){ ?>
+						<?php if($rowData['id_Sensores']==1){ ?>
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
@@ -98,8 +98,8 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){                 $x1 = $Nombre;                  }else{$x1 = $rowdata['Nombre'];}
-					if(isset($IdentificadorEmpresa)){   $x2 = $IdentificadorEmpresa;    }else{$x2 = $rowdata['IdentificadorEmpresa'];}
+					if(isset($Nombre)){                 $x1 = $Nombre;                  }else{$x1 = $rowData['Nombre'];}
+					if(isset($IdentificadorEmpresa)){   $x2 = $IdentificadorEmpresa;    }else{$x2 = $rowData['IdentificadorEmpresa'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

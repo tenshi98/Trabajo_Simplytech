@@ -108,7 +108,7 @@ LEFT JOIN `core_sistemas_opciones`        opc2   ON opc2.idOpciones             
 LEFT JOIN `core_sistemas_opciones`        opc3   ON opc3.idOpciones                                    = telemetria_listado_script.id_Sensores';
 $SIS_where = 'telemetria_listado_script.idScript ='.$_GET['edit'];
 // consulto los datos
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_script', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado_script', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -116,27 +116,27 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_script', $SIS_
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Editar Script Equipo <?php echo $rowdata['Nombre']; ?></h5>
+			<h5>Editar Script Equipo <?php echo $rowData['Nombre']; ?></h5>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" enctype="multipart/form-data" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idAPNListado)){      $x1 = $idAPNListado;     }else{$x1 = $rowdata['idAPNListado'];}
-				if(isset($idPuertoSerial)){    $x2 = $idPuertoSerial;   }else{$x2 = $rowdata['idPuertoSerial'];}
-				if(isset($pinMode)){           $x3 = $pinMode;          }else{$x3 = $rowdata['pinMode'];}
-				if(isset($Observacion)){       $x4 = $Observacion;      }else{$x4 = $rowdata['Observacion'];}
-				if(isset($idModificado)){      $x5 = $idModificado;     }else{$x5 = $rowdata['idModificado'];}
+				if(isset($idAPNListado)){      $x1 = $idAPNListado;     }else{$x1 = $rowData['idAPNListado'];}
+				if(isset($idPuertoSerial)){    $x2 = $idPuertoSerial;   }else{$x2 = $rowData['idPuertoSerial'];}
+				if(isset($pinMode)){           $x3 = $pinMode;          }else{$x3 = $rowData['pinMode'];}
+				if(isset($Observacion)){       $x4 = $Observacion;      }else{$x4 = $rowData['Observacion'];}
+				if(isset($idModificado)){      $x5 = $idModificado;     }else{$x5 = $rowData['idModificado'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_disabled('Hardware','fake_emp', $rowdata['Dispositivo']);
-				$Form_Inputs->form_input_disabled('SHIELD','fake_emp', $rowdata['Shield']);
-				$Form_Inputs->form_input_disabled('Tab','fake_emp', $rowdata['Tab']);
-				$Form_Inputs->form_input_disabled('Geolocalizacion','fake_emp', $rowdata['Geo']);
-				$Form_Inputs->form_input_disabled('Sensores','fake_emp', $rowdata['Sensores']);
-				$Form_Inputs->form_input_disabled('Cantidad Sensores','fake_emp', $rowdata['cantSensores']);
+				$Form_Inputs->form_input_disabled('Hardware','fake_emp', $rowData['Dispositivo']);
+				$Form_Inputs->form_input_disabled('SHIELD','fake_emp', $rowData['Shield']);
+				$Form_Inputs->form_input_disabled('Tab','fake_emp', $rowData['Tab']);
+				$Form_Inputs->form_input_disabled('Geolocalizacion','fake_emp', $rowData['Geo']);
+				$Form_Inputs->form_input_disabled('Sensores','fake_emp', $rowData['Sensores']);
+				$Form_Inputs->form_input_disabled('Cantidad Sensores','fake_emp', $rowData['cantSensores']);
 				//INPUTS
 				$Form_Inputs->form_select('Dirección APN','idAPNListado', $x1, 2, 'idAPNListado', 'Nombre', 'telemetria_listado_script_apn_listado', 0, '', $dbConn);
 				$Form_Inputs->form_select('Puerto Serial','idPuertoSerial', $x2, 2, 'idPuertoSerial', 'Nombre', 'telemetria_listado_script_puerto_serial', 0, '', $dbConn);
@@ -144,11 +144,11 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_script', $SIS_
 				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x4, 2);
 				$Form_Inputs->form_select('Modificado','idModificado', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 
-				if(isset($rowdata['ScriptFile'])&&$rowdata['ScriptFile']!=''){ ?>
+				if(isset($rowData['ScriptFile'])&&$rowData['ScriptFile']!=''){ ?>
 
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 						<h3>Archivo</h3>
-						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['ScriptFile'], ''); ?>
+						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowData['ScriptFile'], ''); ?>
 						<br/>
 						<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_file='.$_GET['edit']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 					</div>
@@ -209,7 +209,7 @@ LEFT JOIN `core_sistemas_opciones`        opc2   ON opc2.idOpciones             
 LEFT JOIN `core_sistemas_opciones`        opc3   ON opc3.idOpciones                                    = telemetria_listado.id_Sensores
 LEFT JOIN `telemetria_listado_sensores_tipo`     ON telemetria_listado_sensores_tipo.idTelemetria      = telemetria_listado.idTelemetria';
 $SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query , 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query , 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -217,7 +217,7 @@ $rowdata = db_select_data (false, $SIS_query , 'telemetria_listado', $SIS_join, 
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Crear Script Equipo <?php echo $rowdata['Nombre']; ?></h5>
+			<h5>Crear Script Equipo <?php echo $rowData['Nombre']; ?></h5>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
@@ -231,13 +231,13 @@ $rowdata = db_select_data (false, $SIS_query , 'telemetria_listado', $SIS_join, 
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_disabled('Hardware','fake_emp', $rowdata['Dispositivo']);
-				$Form_Inputs->form_input_disabled('SHIELD','fake_emp', $rowdata['Shield']);
-				$Form_Inputs->form_input_disabled('Forma de Envio','fake_emp', $rowdata['FormaEnvio']);
-				$Form_Inputs->form_input_disabled('Tab','fake_emp', $rowdata['Tab']);
-				$Form_Inputs->form_input_disabled('Geolocalizacion','fake_emp', $rowdata['Geo']);
-				$Form_Inputs->form_input_disabled('Sensores','fake_emp', $rowdata['Sensores']);
-				$Form_Inputs->form_input_disabled('Cantidad Sensores','fake_emp', $rowdata['cantSensores']);
+				$Form_Inputs->form_input_disabled('Hardware','fake_emp', $rowData['Dispositivo']);
+				$Form_Inputs->form_input_disabled('SHIELD','fake_emp', $rowData['Shield']);
+				$Form_Inputs->form_input_disabled('Forma de Envio','fake_emp', $rowData['FormaEnvio']);
+				$Form_Inputs->form_input_disabled('Tab','fake_emp', $rowData['Tab']);
+				$Form_Inputs->form_input_disabled('Geolocalizacion','fake_emp', $rowData['Geo']);
+				$Form_Inputs->form_input_disabled('Sensores','fake_emp', $rowData['Sensores']);
+				$Form_Inputs->form_input_disabled('Cantidad Sensores','fake_emp', $rowData['cantSensores']);
 				//INPUTS
 				$Form_Inputs->form_select('Dirección APN','idAPNListado', $x1, 2, 'idAPNListado', 'Nombre', 'telemetria_listado_script_apn_listado', 0, '', $dbConn);
 				$Form_Inputs->form_select('Puerto Serial','idPuertoSerial', $x2, 2, 'idPuertoSerial', 'Nombre', 'telemetria_listado_script_puerto_serial', 0, '', $dbConn);
@@ -250,15 +250,15 @@ $rowdata = db_select_data (false, $SIS_query , 'telemetria_listado', $SIS_join, 
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('Fecha', fecha_actual(), 2);
 
-				$Form_Inputs->form_input_hidden('idDispositivo', $rowdata['idDispositivo'], 2);
-				$Form_Inputs->form_input_hidden('idShield', $rowdata['idShield'], 2);
-				$Form_Inputs->form_input_hidden('idFormaEnvio', $rowdata['idFormaEnvio'], 2);
-				$Form_Inputs->form_input_hidden('idTab', $rowdata['idTab'], 2);
-				$Form_Inputs->form_input_hidden('id_Geo', $rowdata['id_Geo'], 2);
-				$Form_Inputs->form_input_hidden('id_Sensores', $rowdata['id_Sensores'], 2);
-				$Form_Inputs->form_input_hidden('cantSensores', $rowdata['cantSensores'], 2);
-				for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
-					$Form_Inputs->form_input_hidden('SensoresTipo_'.$i, $rowdata['SensoresTipo_'.$i], 2);
+				$Form_Inputs->form_input_hidden('idDispositivo', $rowData['idDispositivo'], 2);
+				$Form_Inputs->form_input_hidden('idShield', $rowData['idShield'], 2);
+				$Form_Inputs->form_input_hidden('idFormaEnvio', $rowData['idFormaEnvio'], 2);
+				$Form_Inputs->form_input_hidden('idTab', $rowData['idTab'], 2);
+				$Form_Inputs->form_input_hidden('id_Geo', $rowData['id_Geo'], 2);
+				$Form_Inputs->form_input_hidden('id_Sensores', $rowData['id_Sensores'], 2);
+				$Form_Inputs->form_input_hidden('cantSensores', $rowData['cantSensores'], 2);
+				for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
+					$Form_Inputs->form_input_hidden('SensoresTipo_'.$i, $rowData['SensoresTipo_'.$i], 2);
 				}
 				$Form_Inputs->form_input_hidden('idModificado', 1, 2);
 
@@ -277,7 +277,7 @@ $rowdata = db_select_data (false, $SIS_query , 'telemetria_listado', $SIS_join, 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 // consulto los datos
-$rowdata = db_select_data (false, 'Nombre,id_Geo, id_Sensores', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, 'Nombre,id_Geo, id_Sensores', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 // consulto los datos
 $SIS_query = '
@@ -298,7 +298,7 @@ $arrScripts = db_select_array (false, $SIS_query, 'telemetria_listado_script', $
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Scripts'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowData['Nombre'], 'Editar Scripts'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Script</a><?php } ?>
 	</div>
@@ -316,15 +316,15 @@ $arrScripts = db_select_array (false, $SIS_query, 'telemetria_listado_script', $
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'telemetria_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-						<?php if($rowdata['id_Sensores']==1){ ?>
+						<?php if($rowData['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
 						<?php } ?>
-						<?php if($rowdata['id_Geo']==1){ ?>
+						<?php if($rowData['id_Geo']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
-						<?php }elseif($rowdata['id_Geo']==2){ ?>
+						<?php }elseif($rowData['id_Geo']==2){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
-						<?php if($rowdata['id_Sensores']==1){ ?>
+						<?php if($rowData['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
 							<li class=""><a href="<?php echo 'telemetria_listado_sensor_operaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Definicion Operacional</a></li>
 						<?php } ?>

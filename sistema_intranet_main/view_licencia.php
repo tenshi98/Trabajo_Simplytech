@@ -60,7 +60,7 @@ LEFT JOIN `trabajadores_listado` ON trabajadores_listado.idTrabajador  = trabaja
 LEFT JOIN `usuarios_listado`     ON usuarios_listado.idUsuario         = trabajadores_licencias.idUsuario
 LEFT JOIN `core_sistemas`        ON core_sistemas.idSistema            = trabajadores_licencias.idSistema';
 $SIS_where = 'trabajadores_licencias.idLicencia ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'trabajadores_licencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'trabajadores_licencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 ?>
 
@@ -82,18 +82,18 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_licencias', $SIS_joi
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 						<p class="text-muted">
-							<strong>Trabajador : </strong><?php echo $rowdata['TrabNombre'].' '.$rowdata['TrabApellidoPat'].' '.$rowdata['TrabApellidoMat']; ?><br/>
-							<strong>Usuario : </strong><?php echo $rowdata['UserNombre']; ?><br/>
-							<strong>Fecha de Creacion : </strong><?php echo Fecha_completa($rowdata['Fecha_ingreso']); ?><br/>
-							<strong>Fecha de Inicio : </strong><?php echo Fecha_completa($rowdata['Fecha_inicio']); ?><br/>
-							<strong>Fecha de Termino : </strong><?php echo Fecha_completa($rowdata['Fecha_termino']); ?><br/>
-							<strong>N° Dias duracion : </strong><?php echo $rowdata['N_Dias'].' dias'; ?><br/>
-							<strong>Sistema Relacionado : </strong><?php echo $rowdata['Sistema']; ?>
+							<strong>Trabajador : </strong><?php echo $rowData['TrabNombre'].' '.$rowData['TrabApellidoPat'].' '.$rowData['TrabApellidoMat']; ?><br/>
+							<strong>Usuario : </strong><?php echo $rowData['UserNombre']; ?><br/>
+							<strong>Fecha de Creacion : </strong><?php echo Fecha_completa($rowData['Fecha_ingreso']); ?><br/>
+							<strong>Fecha de Inicio : </strong><?php echo Fecha_completa($rowData['Fecha_inicio']); ?><br/>
+							<strong>Fecha de Termino : </strong><?php echo Fecha_completa($rowData['Fecha_termino']); ?><br/>
+							<strong>N° Dias duracion : </strong><?php echo $rowData['N_Dias'].' dias'; ?><br/>
+							<strong>Sistema Relacionado : </strong><?php echo $rowData['Sistema']; ?>
 						</p>
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Observaciones</h2>
 						<p class="text-muted word_break">
 							<div class="text-muted well well-sm no-shadow">
-								<?php if(isset($rowdata['Observacion'])&&$rowdata['Observacion']!=''){echo $rowdata['Observacion'];}else{echo 'Sin Observaciones';} ?>
+								<?php if(isset($rowData['Observacion'])&&$rowData['Observacion']!=''){echo $rowData['Observacion'];}else{echo 'Sin Observaciones';} ?>
 								<div class="clearfix"></div>
 							</div>
 						</p>
@@ -101,12 +101,12 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_licencias', $SIS_joi
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos Relacionados</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>
-								<?php if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){ ?>
+								<?php if(isset($rowData['File_Licencia'])&&$rowData['File_Licencia']!=''){ ?>
 									<tr class="odd">
 										<td>Copia de la Licencia</td>
 										<td width="10">
 											<div class="btn-group" style="width: 70px;" >
-												<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Licencia'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Documento" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+												<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['File_Licencia'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Documento" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
 											</div>
 										</td>
 									</tr>

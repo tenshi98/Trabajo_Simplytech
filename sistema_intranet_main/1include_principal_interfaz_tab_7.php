@@ -3,8 +3,8 @@
 //Cross
 $temp = $prm_x[38] + $prm_x[39] + $prm_x[40] + $prm_x[41];
 if($temp!=0) {
-	
-//Se traen todas las solicitudes	
+
+//Se traen todas las solicitudes
 $SIS_query = '
 cross_solicitud_aplicacion_listado.idSolicitud,
 cross_solicitud_aplicacion_listado.NSolicitud,
@@ -33,7 +33,7 @@ foreach ($arrSolicitud as $sol) {
 		$arrProgramadas[$i]['idSolicitud']  = $sol['idSolicitud'];
 		$i++;
 		if($max_counter<$i){$max_counter=$i;}
-	} 
+	}
 }
 
 $i = 0;
@@ -45,7 +45,7 @@ foreach ($arrSolicitud as $sol) {
 		$arrEnEjecucion[$i]['idSolicitud']  = $sol['idSolicitud'];
 		$i++;
 		if($max_counter<$i){$max_counter=$i;}
-	} 
+	}
 }
 
 $i = 0;
@@ -57,8 +57,8 @@ foreach ($arrSolicitud as $sol) {
 		$arrTerminadas[$i]['idSolicitud']  = $sol['idSolicitud'];
 		$i++;
 		if($max_counter<$i){$max_counter=$i;}
-	} 
-}				
+	}
+}
 ?>
 
 	<div class="tab-pane fade" id="Menu_tab_7">
@@ -92,7 +92,7 @@ foreach ($arrSolicitud as $sol) {
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
 							<?php for ($i = 0; $i < $max_counter; $i++) { ?>
 								<tr class="odd">
-												
+
 									<td><?php if(isset($arrProgramadas[$i]['idSolicitud'])&&$arrProgramadas[$i]['idSolicitud']!=''){echo $arrProgramadas[$i]['NSolicitud'];} ?></td>
 									<td><?php if(isset($arrProgramadas[$i]['idSolicitud'])&&$arrProgramadas[$i]['idSolicitud']!=''){echo $arrProgramadas[$i]['Fecha'];} ?></td>
 									<td><?php if(isset($arrProgramadas[$i]['idSolicitud'])&&$arrProgramadas[$i]['idSolicitud']!=''){echo $arrProgramadas[$i]['Predio'];} ?></td>
@@ -101,11 +101,11 @@ foreach ($arrSolicitud as $sol) {
 											<div class="btn-group" style="width: 105px;" >
 												<a href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($arrProgramadas[$i]['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 												<a target="_blank" rel="noopener noreferrer" href="<?php echo 'cross_solicitud_aplicacion_editar.php?view='.$arrProgramadas[$i]['idSolicitud']; ?>" title="Editar Solicitud" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-												<a href="<?php echo 'cross_solicitud_aplicacion_ejecutar.php?pagina=1&submit_filter=Filtrar&ejecution='.$arrProgramadas[$i]['idSolicitud']; ?>" title="Ejecutar Solicitud" class="btn btn-success btn-sm tooltip"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>							
+												<a href="<?php echo 'cross_solicitud_aplicacion_ejecutar.php?pagina=1&submit_filter=Filtrar&ejecution='.$arrProgramadas[$i]['idSolicitud']; ?>" title="Ejecutar Solicitud" class="btn btn-success btn-sm tooltip"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
 											</div>
 										<?php } ?>
 									</td>
-											
+
 									<td><?php if(isset($arrEnEjecucion[$i]['idSolicitud'])&&$arrEnEjecucion[$i]['idSolicitud']!=''){echo $arrEnEjecucion[$i]['NSolicitud'];} ?></td>
 									<td><?php if(isset($arrEnEjecucion[$i]['idSolicitud'])&&$arrEnEjecucion[$i]['idSolicitud']!=''){echo $arrEnEjecucion[$i]['Fecha'];} ?></td>
 									<td><?php if(isset($arrEnEjecucion[$i]['idSolicitud'])&&$arrEnEjecucion[$i]['idSolicitud']!=''){echo $arrEnEjecucion[$i]['Predio'];} ?></td>
@@ -114,11 +114,11 @@ foreach ($arrSolicitud as $sol) {
 											<div class="btn-group" style="width: 105px;" >
 												<a href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($arrEnEjecucion[$i]['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 												<a target="_blank" rel="noopener noreferrer" href="<?php echo 'cross_solicitud_aplicacion_editar.php?view='.$arrEnEjecucion[$i]['idSolicitud']; ?>" title="Editar Solicitud" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-												<a href="<?php echo 'cross_solicitud_aplicacion_ejecucion.php?pagina=1&submit_filter=Filtrar&termino='.$arrEnEjecucion[$i]['idSolicitud']; ?>" title="Terminar Solicitud" class="btn btn-success btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>							
+												<a href="<?php echo 'cross_solicitud_aplicacion_ejecucion.php?pagina=1&submit_filter=Filtrar&termino='.$arrEnEjecucion[$i]['idSolicitud']; ?>" title="Terminar Solicitud" class="btn btn-success btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 											</div>
 										<?php } ?>
 									</td>
-											
+
 									<td><?php if(isset($arrTerminadas[$i]['idSolicitud'])&&$arrTerminadas[$i]['idSolicitud']!=''){echo $arrTerminadas[$i]['NSolicitud'];} ?></td>
 									<td><?php if(isset($arrTerminadas[$i]['idSolicitud'])&&$arrTerminadas[$i]['idSolicitud']!=''){echo $arrTerminadas[$i]['Fecha'];} ?></td>
 									<td><?php if(isset($arrTerminadas[$i]['idSolicitud'])&&$arrTerminadas[$i]['idSolicitud']!=''){echo $arrTerminadas[$i]['Predio'];} ?></td>
@@ -130,9 +130,7 @@ foreach ($arrSolicitud as $sol) {
 											</div>
 										<?php } ?>
 									</td>
-										
-									
-										
+
 								</tr>
 							<?php } ?>
 						</tbody>
@@ -145,9 +143,4 @@ foreach ($arrSolicitud as $sol) {
 	</div>
 
 <?php } ?>
-
-
-
-
-
 

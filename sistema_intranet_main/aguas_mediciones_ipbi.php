@@ -75,7 +75,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 $SIS_query = 'Ano, idMes, Valor';
 $SIS_join  = '';
 $SIS_where = 'idIPBI = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_ipbi', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'aguas_mediciones_ipbi', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -90,9 +90,9 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_ipbi', $SIS_join
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Ano)){      $x1 = $Ano;      }else{$x1 = $rowdata['Ano'];}
-				if(isset($idMes)){    $x2 = $idMes;    }else{$x2 = $rowdata['idMes'];}
-				if(isset($Valor)){    $x3 = $Valor;    }else{$x3 = Cantidades_decimales_justos($rowdata['Valor']);}
+				if(isset($Ano)){      $x1 = $Ano;      }else{$x1 = $rowData['Ano'];}
+				if(isset($idMes)){    $x2 = $idMes;    }else{$x2 = $rowData['idMes'];}
+				if(isset($Valor)){    $x3 = $Valor;    }else{$x3 = Cantidades_decimales_justos($rowData['Valor']);}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

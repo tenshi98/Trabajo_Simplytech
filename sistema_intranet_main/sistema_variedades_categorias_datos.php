@@ -52,12 +52,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,Temp_optima_min, Temp_optima_max, Temp_optima_margen_critico';
 $SIS_join  = '';
 $SIS_where = 'idCategoria = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'sistema_variedades_categorias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'sistema_variedades_categorias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Especie', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Especie', $rowData['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -83,10 +83,10 @@ $rowdata = db_select_data (false, $SIS_query, 'sistema_variedades_categorias', $
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){                      $x1  = $Nombre;                      }else{$x1  = $rowdata['Nombre'];}
-					if(isset($Temp_optima_min)){             $x2  = $Temp_optima_min;             }else{$x2  = Cantidades_decimales_justos($rowdata['Temp_optima_min']);}
-					if(isset($Temp_optima_max)){             $x3  = $Temp_optima_max;             }else{$x3  = Cantidades_decimales_justos($rowdata['Temp_optima_max']);}
-					if(isset($Temp_optima_margen_critico)){  $x4  = $Temp_optima_margen_critico;  }else{$x4  = Cantidades_decimales_justos($rowdata['Temp_optima_margen_critico']);}
+					if(isset($Nombre)){                      $x1  = $Nombre;                      }else{$x1  = $rowData['Nombre'];}
+					if(isset($Temp_optima_min)){             $x2  = $Temp_optima_min;             }else{$x2  = Cantidades_decimales_justos($rowData['Temp_optima_min']);}
+					if(isset($Temp_optima_max)){             $x3  = $Temp_optima_max;             }else{$x3  = Cantidades_decimales_justos($rowData['Temp_optima_max']);}
+					if(isset($Temp_optima_margen_critico)){  $x4  = $Temp_optima_margen_critico;  }else{$x4  = Cantidades_decimales_justos($rowData['Temp_optima_margen_critico']);}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

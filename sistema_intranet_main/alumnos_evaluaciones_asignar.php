@@ -101,7 +101,7 @@ if(!empty($_GET['editFecha'])){
 	$SIS_query = 'Programada_fecha';
 	$SIS_join  = '';
 	$SIS_where = 'idAsignadas = '.$_GET['editFecha'];
-	$rowdata = db_select_data (false, $SIS_query, 'alumnos_evaluaciones_asignadas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'alumnos_evaluaciones_asignadas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -116,7 +116,7 @@ if(!empty($_GET['editFecha'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Programada_fecha)){   $x1  = $Programada_fecha;  }else{$x1  = $rowdata['Programada_fecha'];}
+					if(isset($Programada_fecha)){   $x1  = $Programada_fecha;  }else{$x1  = $rowData['Programada_fecha'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

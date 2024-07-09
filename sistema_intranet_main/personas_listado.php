@@ -85,12 +85,12 @@ LEFT JOIN `core_ubicacion_ciudad`   ON core_ubicacion_ciudad.idCiudad   = person
 LEFT JOIN `core_ubicacion_comunas`  ON core_ubicacion_comunas.idComuna  = personas_listado.idComuna
 LEFT JOIN `sistema_afp`             ON sistema_afp.idAFP                = personas_listado.idAFP';
 $SIS_where = 'personas_listado.idPersona = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Personas', $rowdata['Nombre'].' '.$rowdata['ApellidoPaterno'].' '.$rowdata['ApellidoMaterno'], 'Resumen'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Personas', $rowData['Nombre'].' '.$rowData['ApellidoPaterno'].' '.$rowData['ApellidoMaterno'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -120,15 +120,15 @@ $rowdata = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SI
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 							<p class="text-muted word_break">
-								<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
-								<strong>Nombre: </strong><?php echo $rowdata['Nombre'].' '.$rowdata['ApellidoPaterno'].' '.$rowdata['ApellidoMaterno']; ?><br/>
-								<strong>Fecha de Nacimiento : </strong><?php echo Fecha_estandar($rowdata['fNacimiento']); ?><br/>
-								<strong>Región : </strong><?php echo $rowdata['Ciudad']; ?><br/>
-								<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-								<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
-								<strong>Sexo : </strong><?php echo $rowdata['Sexo']; ?><br/>
-								<strong>Sueldo : </strong><?php echo $rowdata['Sueldo']; ?><br/>
-								<strong>AFP : </strong><?php echo $rowdata['AFP']; ?><br/>
+								<strong>Rut : </strong><?php echo $rowData['Rut']; ?><br/>
+								<strong>Nombre: </strong><?php echo $rowData['Nombre'].' '.$rowData['ApellidoPaterno'].' '.$rowData['ApellidoMaterno']; ?><br/>
+								<strong>Fecha de Nacimiento : </strong><?php echo Fecha_estandar($rowData['fNacimiento']); ?><br/>
+								<strong>Región : </strong><?php echo $rowData['Ciudad']; ?><br/>
+								<strong>Comuna : </strong><?php echo $rowData['Comuna']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowData['Direccion']; ?><br/>
+								<strong>Sexo : </strong><?php echo $rowData['Sexo']; ?><br/>
+								<strong>Sueldo : </strong><?php echo $rowData['Sueldo']; ?><br/>
+								<strong>AFP : </strong><?php echo $rowData['AFP']; ?><br/>
 							</p>
 
 						</div>
@@ -139,9 +139,9 @@ $rowdata = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SI
 						<?php
 							//se arma la dirección
 							$direccion = '';
-							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){  $direccion .= $rowdata["Direccion"];}
-							if(isset($rowdata["Comuna"])&&$rowdata["Comuna"]!=''){        $direccion .= ', '.$rowdata["Comuna"];}
-							if(isset($rowdata["Ciudad"])&&$rowdata["Ciudad"]!=''){        $direccion .= ', '.$rowdata["Ciudad"];}
+							if(isset($rowData["Direccion"])&&$rowData["Direccion"]!=''){  $direccion .= $rowData["Direccion"];}
+							if(isset($rowData["Comuna"])&&$rowData["Comuna"]!=''){        $direccion .= ', '.$rowData["Comuna"];}
+							if(isset($rowData["Ciudad"])&&$rowData["Ciudad"]!=''){        $direccion .= ', '.$rowData["Ciudad"];}
 							//se despliega mensaje en caso de no existir dirección
 							if($direccion!=''){
 								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);

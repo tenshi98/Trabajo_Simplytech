@@ -116,7 +116,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado); 
+$rowData = mysqli_fetch_assoc ($resultado); 
 
 /**********************************/
 $arrOpciones = array();
@@ -196,7 +196,7 @@ array_push( $arrArchivos,$row );
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Servicio'], 'Resumen'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowData['Servicio'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -227,36 +227,36 @@ array_push( $arrArchivos,$row );
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Empresa Visitada</h2>
 						<p class="text-muted">
-							<strong>Nombre : </strong><?php echo $rowdata['SistemaOrigen']; ?><br/>
-							<strong>Ubicación : </strong><?php echo $rowdata['SistemaOrigenCiudad'].', '.$rowdata['SistemaOrigenComuna']; ?><br/>
-							<strong>Dirección : </strong><?php echo $rowdata['SistemaOrigenDireccion']; ?><br/>
-							<strong>Fono Fijo : </strong><?php echo formatPhone($rowdata['SistemaOrigenFono']); ?><br/>
-							<strong>Rut : </strong><?php echo $rowdata['SistemaOrigenRut']; ?><br/>
-							<strong>Email : </strong><?php echo $rowdata['SistemaOrigenEmail']; ?><br/>
-							<strong>Persona contacto : </strong><?php echo $rowdata['SistemaContacto']; ?><br/>
-							<strong>Persona Recepcion Nombre : </strong><?php echo $rowdata['Recepcion_Nombre']; ?><br/>
-							<strong>Persona Recepcion Rut : </strong><?php echo $rowdata['Recepcion_Rut']; ?><br/>
-							<strong>Persona Recepcion Email : </strong><?php echo $rowdata['Recepcion_Email']; ?><br/>
+							<strong>Nombre : </strong><?php echo $rowData['SistemaOrigen']; ?><br/>
+							<strong>Ubicación : </strong><?php echo $rowData['SistemaOrigenCiudad'].', '.$rowData['SistemaOrigenComuna']; ?><br/>
+							<strong>Dirección : </strong><?php echo $rowData['SistemaOrigenDireccion']; ?><br/>
+							<strong>Fono Fijo : </strong><?php echo formatPhone($rowData['SistemaOrigenFono']); ?><br/>
+							<strong>Rut : </strong><?php echo $rowData['SistemaOrigenRut']; ?><br/>
+							<strong>Email : </strong><?php echo $rowData['SistemaOrigenEmail']; ?><br/>
+							<strong>Persona contacto : </strong><?php echo $rowData['SistemaContacto']; ?><br/>
+							<strong>Persona Recepcion Nombre : </strong><?php echo $rowData['Recepcion_Nombre']; ?><br/>
+							<strong>Persona Recepcion Rut : </strong><?php echo $rowData['Recepcion_Rut']; ?><br/>
+							<strong>Persona Recepcion Email : </strong><?php echo $rowData['Recepcion_Email']; ?><br/>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Tecnico a Cargo</h2>
 						<p class="text-muted">
-							<strong>Tecnico Encargado : </strong><?php echo $rowdata['NombreEncargado']; ?><br/>
-							<strong>Fecha : </strong><?php echo Fecha_estandar($rowdata['Fecha']); ?><br/>
-							<strong>Hora Inicio : </strong><?php echo $rowdata['h_Inicio']; ?><br/>
-							<strong>Hora Termino : </strong><?php echo $rowdata['h_Termino']; ?><br/>
-							<strong>Duracion : </strong><?php echo $rowdata['Duracion']; ?><br/>
+							<strong>Tecnico Encargado : </strong><?php echo $rowData['NombreEncargado']; ?><br/>
+							<strong>Fecha : </strong><?php echo Fecha_estandar($rowData['Fecha']); ?><br/>
+							<strong>Hora Inicio : </strong><?php echo $rowData['h_Inicio']; ?><br/>
+							<strong>Hora Termino : </strong><?php echo $rowData['h_Termino']; ?><br/>
+							<strong>Duracion : </strong><?php echo $rowData['Duracion']; ?><br/>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Trabajo</h2>
 						<p class="text-muted">
-							<strong>Servicio : </strong><?php echo $rowdata['Servicio']; ?><br/>
+							<strong>Servicio : </strong><?php echo $rowData['Servicio']; ?><br/>
 							<strong>Opciones : </strong>
 								<?php
 								$ntot = 0;
-								if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==2){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[1]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[1]['Nombre'];$ntot++;}}
-								if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==2){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[2]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[2]['Nombre'];$ntot++;}}
-								if(isset($rowdata['idOpciones_3'])&&$rowdata['idOpciones_3']==2){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[3]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[3]['Nombre'];$ntot++;}}
+								if(isset($rowData['idOpciones_1'])&&$rowData['idOpciones_1']==2){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[1]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[1]['Nombre'];$ntot++;}}
+								if(isset($rowData['idOpciones_2'])&&$rowData['idOpciones_2']==2){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[2]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[2]['Nombre'];$ntot++;}}
+								if(isset($rowData['idOpciones_3'])&&$rowData['idOpciones_3']==2){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[3]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[3]['Nombre'];$ntot++;}}
 								?>
 							<br/>
 						</p>
@@ -273,10 +273,10 @@ array_push( $arrArchivos,$row );
 						</table>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Diagnostico tecnico y acciones realizadas</h2>
-						<div class="text-muted well well-sm no-shadow" ><?php echo $rowdata['Resumen']; ?></div>
+						<div class="text-muted well well-sm no-shadow" ><?php echo $rowData['Resumen']; ?></div>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Resumen de Visita</h2>
-						<div class="text-muted well well-sm no-shadow" ><?php echo $rowdata['Resolucion']; ?></div>
+						<div class="text-muted well well-sm no-shadow" ><?php echo $rowData['Resolucion']; ?></div>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos Adjuntos</h2>
 						<table id="items" style="margin-bottom: 20px;">

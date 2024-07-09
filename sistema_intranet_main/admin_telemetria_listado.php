@@ -83,7 +83,7 @@ LEFT JOIN `core_ubicacion_ciudad`            ON core_ubicacion_ciudad.idCiudad  
 LEFT JOIN `core_ubicacion_comunas`           ON core_ubicacion_comunas.idComuna  = telemetria_listado.idComuna
 LEFT JOIN `telemetria_zonas`                 ON telemetria_zonas.idZona          = telemetria_listado.idZona';
 $SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //Se consulta
 $arrOpciones = array();
@@ -99,7 +99,7 @@ $arrFinalOpciones[0]  = 'No Asignado';
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Resumen'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowData['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -114,13 +114,13 @@ $arrFinalOpciones[0]  = 'No Asignado';
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-						<?php if($rowdata['id_Sensores']==1){ ?>
+						<?php if($rowData['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'admin_telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
 						<?php } ?>
-						<?php if($rowdata['id_Geo']==2){ ?>
+						<?php if($rowData['id_Geo']==2){ ?>
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
-						<?php if($rowdata['id_Sensores']==1){ ?>
+						<?php if($rowData['id_Sensores']==1){ ?>
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
@@ -137,38 +137,38 @@ $arrFinalOpciones[0]  = 'No Asignado';
 				<div class="wmd-panel">
 
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<?php if ($rowdata['Direccion_img']=='') { ?>
+						<?php if ($rowData['Direccion_img']=='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 						<?php }else{  ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowData['Direccion_img']; ?>">
 						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary">Datos del Equipo</h2>
 						<p class="text-muted">
-							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
-							<strong>Identificador Empresa : </strong><?php echo $rowdata['IdentificadorEmpresa']; ?><br/>
+							<strong>Nombre : </strong><?php echo $rowData['Nombre']; ?><br/>
+							<strong>Identificador Empresa : </strong><?php echo $rowData['IdentificadorEmpresa']; ?><br/>
 						</p>
 
 						<h2 class="text-primary">Datos de Configuracion</h2>
 						<p class="text-muted">
-							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
+							<strong>Estado : </strong><?php echo $rowData['Estado']; ?><br/>
 
-							<strong>Geolocalizacion : </strong><?php echo $rowdata['Geo']; ?><br/>
-							<?php if($rowdata['id_Geo']==1){ ?>
-								<strong>Limite Velocidad : </strong><?php echo Cantidades_decimales_justos($rowdata['LimiteVelocidad']).' KM/h'; ?><br/>
+							<strong>Geolocalizacion : </strong><?php echo $rowData['Geo']; ?><br/>
+							<?php if($rowData['id_Geo']==1){ ?>
+								<strong>Limite Velocidad : </strong><?php echo Cantidades_decimales_justos($rowData['LimiteVelocidad']).' KM/h'; ?><br/>
 							<?php }
-							if($rowdata['id_Geo']==2){ ?>
-								<strong>Zona : </strong><?php echo $rowdata['Zona']; ?><br/>
-								<strong>Dirección : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['Comuna'].', '.$rowdata['Ciudad']; ?><br/>
+							if($rowData['id_Geo']==2){ ?>
+								<strong>Zona : </strong><?php echo $rowData['Zona']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowData['Direccion'].', '.$rowData['Comuna'].', '.$rowData['Ciudad']; ?><br/>
 							<?php } ?>
 
-							<strong>Sensores : </strong><?php echo $rowdata['Sensores'].' ';if($rowdata['id_Sensores']==1){echo '('.$rowdata['cantSensores'].' Sensores)';} ?><br/>
+							<strong>Sensores : </strong><?php echo $rowData['Sensores'].' ';if($rowData['id_Sensores']==1){echo '('.$rowData['cantSensores'].' Sensores)';} ?><br/>
 
-							<strong>Tiempo Fuera Linea Maximo : </strong><?php echo $rowdata['TiempoFueraLinea']; ?> Horas<br/>
+							<strong>Tiempo Fuera Linea Maximo : </strong><?php echo $rowData['TiempoFueraLinea']; ?> Horas<br/>
 
-							<?php if($rowdata['id_Geo']==1){ ?>
-								<strong>Tiempo Maximo Detencion : </strong><?php echo $rowdata['TiempoDetencion']; ?> Horas<br/>
+							<?php if($rowData['id_Geo']==1){ ?>
+								<strong>Tiempo Maximo Detencion : </strong><?php echo $rowData['TiempoDetencion']; ?> Horas<br/>
 							<?php } ?>
 							
 							
@@ -176,11 +176,11 @@ $arrFinalOpciones[0]  = 'No Asignado';
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Jornada Laboral</h2>
 						<p class="text-muted">
-							<strong>Hora Inicio Jornada : </strong><?php echo $rowdata['Jornada_inicio'].' hrs'; ?><br/>
-							<strong>Hora Termino Jornada : </strong><?php echo $rowdata['Jornada_termino'].' hrs'; ?><br/>
-							<strong>Hora Inicio Colacion : </strong><?php echo $rowdata['Colacion_inicio'].' hrs'; ?><br/>
-							<strong>Hora Termino Colacion : </strong><?php echo $rowdata['Colacion_termino'].' hrs'; ?><br/>
-							<strong>Tiempo Microparadas : </strong><?php echo $rowdata['Microparada'].' hrs'; ?><br/>
+							<strong>Hora Inicio Jornada : </strong><?php echo $rowData['Jornada_inicio'].' hrs'; ?><br/>
+							<strong>Hora Termino Jornada : </strong><?php echo $rowData['Jornada_termino'].' hrs'; ?><br/>
+							<strong>Hora Inicio Colacion : </strong><?php echo $rowData['Colacion_inicio'].' hrs'; ?><br/>
+							<strong>Hora Termino Colacion : </strong><?php echo $rowData['Colacion_termino'].' hrs'; ?><br/>
+							<strong>Tiempo Microparadas : </strong><?php echo $rowData['Microparada'].' hrs'; ?><br/>
 						</p>
 						
 

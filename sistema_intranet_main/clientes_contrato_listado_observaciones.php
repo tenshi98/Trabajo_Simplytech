@@ -76,7 +76,7 @@ if(!empty($_GET['edit'])){
 	$SIS_query = 'Observacion';
 	$SIS_join  = '';
 	$SIS_where = 'idObservacion = '.$_GET['edit'];
-	$rowdata = db_select_data (false, $SIS_query, 'clientes_observaciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'clientes_observaciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -91,7 +91,7 @@ if(!empty($_GET['edit'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Observacion)){     $x1  = $Observacion;    }else{$x1  = $rowdata['Observacion'];}
+					if(isset($Observacion)){     $x1  = $Observacion;    }else{$x1  = $rowData['Observacion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -161,7 +161,7 @@ if(!empty($_GET['edit'])){
 	LEFT JOIN `clientes_listado`   ON clientes_listado.idCliente     = clientes_observaciones.idCliente
 	LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario     = clientes_observaciones.idUsuario';
 	$SIS_where = 'clientes_observaciones.idObservacion = '.$_GET['view'];
-	$rowdata = db_select_data (false, $SIS_query, 'clientes_observaciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'clientes_observaciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -173,15 +173,15 @@ if(!empty($_GET['edit'])){
 			<div class="body">
 				<h2 class="text-primary">Datos Básicos</h2>
 				<p class="text-muted">
-					<strong>Cliente : </strong><?php echo $rowdata['nombre_cliente']; ?><br/>
-					<strong>Usuario : </strong><?php echo $rowdata['nombre_usuario']; ?><br/>
-					<strong>Fecha : </strong><?php echo Fecha_completa_alt($rowdata['Fecha']); ?>
+					<strong>Cliente : </strong><?php echo $rowData['nombre_cliente']; ?><br/>
+					<strong>Usuario : </strong><?php echo $rowData['nombre_usuario']; ?><br/>
+					<strong>Fecha : </strong><?php echo Fecha_completa_alt($rowData['Fecha']); ?>
 				</p>
 
 				<h2 class="text-primary">Observacion</h2>
 				<p class="text-muted word_break">
 					<div class="text-muted well well-sm no-shadow">
-						<?php if(isset($rowdata['Observacion'])&&$rowdata['Observacion']!=''){echo $rowdata['Observacion'];}else{echo 'Sin Observaciones';} ?>
+						<?php if(isset($rowData['Observacion'])&&$rowData['Observacion']!=''){echo $rowData['Observacion'];}else{echo 'Sin Observaciones';} ?>
 						<div class="clearfix"></div>
 					</div>
 				</p>
@@ -202,7 +202,7 @@ if(!empty($_GET['edit'])){
 	$SIS_query = 'Nombre,idTipo';
 	$SIS_join  = '';
 	$SIS_where = 'idCliente = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -223,7 +223,7 @@ if(!empty($_GET['edit'])){
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowdata['Nombre'], 'Observaciones'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowData['Nombre'], 'Observaciones'); ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 			<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Observacion</a><?php } ?>
 		</div>
@@ -241,7 +241,7 @@ if(!empty($_GET['edit'])){
 						<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 						<ul class="dropdown-menu" role="menu">
 							<li class=""><a href="<?php echo 'clientes_contrato_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-volume-control-phone" aria-hidden="true"></i> Persona Contacto</a></li>
-							<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
+							<?php if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){ ?>
 								<li class=""><a href="<?php echo 'clientes_contrato_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
 							<?php } ?>
 							<li class=""><a href="<?php echo 'clientes_contrato_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>

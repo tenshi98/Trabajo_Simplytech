@@ -52,12 +52,12 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Dirección Borrado cor
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
-$rowdata = db_select_data (false, 'Nombre,idCiudad,idComuna,Direccion,GeoLatitud,GeoLongitud,id_Geo, id_Sensores, idZona', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, 'Nombre,idCiudad,idComuna,Direccion,GeoLatitud,GeoLongitud,id_Geo, id_Sensores, idZona', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Datos Dirección'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowData['Nombre'], 'Editar Datos Dirección'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -72,15 +72,15 @@ $rowdata = db_select_data (false, 'Nombre,idCiudad,idComuna,Direccion,GeoLatitud
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'telemetria_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-						<?php if($rowdata['id_Sensores']==1){ ?>
+						<?php if($rowData['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
 						<?php } ?>
-						<?php if($rowdata['id_Geo']==1){ ?>
+						<?php if($rowData['id_Geo']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
-						<?php }elseif($rowdata['id_Geo']==2){ ?>
+						<?php }elseif($rowData['id_Geo']==2){ ?>
 							<li class="active"><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
-						<?php if($rowdata['id_Sensores']==1){ ?>
+						<?php if($rowData['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
 							<li class=""><a href="<?php echo 'telemetria_listado_sensor_operaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Definicion Operacional</a></li>
 						<?php } ?>
@@ -107,14 +107,14 @@ $rowdata = db_select_data (false, 'Nombre,idCiudad,idComuna,Direccion,GeoLatitud
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle'];
 
-						if(isset($rowdata['GeoLatitud']) && $rowdata['GeoLatitud']!='' && $rowdata['GeoLatitud']!=0){
-							$nlat = $rowdata['GeoLatitud'];
+						if(isset($rowData['GeoLatitud']) && $rowData['GeoLatitud']!='' && $rowData['GeoLatitud']!=0){
+							$nlat = $rowData['GeoLatitud'];
 						}else{
 							$nlat = '-33.4372';
 						}
 
-						if(isset($rowdata['GeoLongitud']) && $rowdata['GeoLongitud']!='' && $rowdata['GeoLongitud']!=0){
-							$nlong = $rowdata['GeoLongitud'];
+						if(isset($rowData['GeoLongitud']) && $rowData['GeoLongitud']!='' && $rowData['GeoLongitud']!=0){
+							$nlong = $rowData['GeoLongitud'];
 						}else{
 							$nlong = '-70.6506';
 						} ?>
@@ -223,9 +223,9 @@ $rowdata = db_select_data (false, 'Nombre,idCiudad,idComuna,Direccion,GeoLatitud
 					<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 						<?php
-						if(isset($idZona)){      $x0  = $idZona;      }else{$x0  = $rowdata['idZona'];}
-						if(isset($idCiudad)){    $x1  = $idCiudad;    }else{$x1  = $rowdata['idCiudad'];}
-						if(isset($idComuna)){    $x2  = $idComuna;    }else{$x2  = $rowdata['idComuna'];}
+						if(isset($idZona)){      $x0  = $idZona;      }else{$x0  = $rowData['idZona'];}
+						if(isset($idCiudad)){    $x1  = $idCiudad;    }else{$x1  = $rowData['idCiudad'];}
+						if(isset($idComuna)){    $x2  = $idComuna;    }else{$x2  = $rowData['idComuna'];}
 
 						//se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
@@ -234,12 +234,12 @@ $rowdata = db_select_data (false, 'Nombre,idCiudad,idComuna,Direccion,GeoLatitud
 												'Comuna','idComuna', $x2, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 												 $dbConn, 'form1');
 
-						$Form_Inputs->form_input_icon('Dirección', 'Direccion', $rowdata['Direccion'], 1,'fa fa-map');
-						$Form_Inputs->form_input_disabled('Latitud', 'Latitud_fake', $rowdata['GeoLatitud']);
-						$Form_Inputs->form_input_disabled('Longitud', 'Longitud_fake', $rowdata['GeoLongitud']);
+						$Form_Inputs->form_input_icon('Dirección', 'Direccion', $rowData['Direccion'], 1,'fa fa-map');
+						$Form_Inputs->form_input_disabled('Latitud', 'Latitud_fake', $rowData['GeoLatitud']);
+						$Form_Inputs->form_input_disabled('Longitud', 'Longitud_fake', $rowData['GeoLongitud']);
 
-						$Form_Inputs->form_input_hidden('GeoLatitud', $rowdata['GeoLatitud'], 2);
-						$Form_Inputs->form_input_hidden('GeoLongitud', $rowdata['GeoLongitud'], 2);
+						$Form_Inputs->form_input_hidden('GeoLatitud', $rowData['GeoLatitud'], 2);
+						$Form_Inputs->form_input_hidden('GeoLongitud', $rowData['GeoLongitud'], 2);
 						$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 						?>
 

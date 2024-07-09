@@ -67,12 +67,12 @@ telemetria_historial_mantencion.h_Termino,
 core_telemetria_servicio_tecnico.Nombre AS Servicio';
 $SIS_join  = 'LEFT JOIN `core_telemetria_servicio_tecnico` ON core_telemetria_servicio_tecnico.idServicio  = telemetria_historial_mantencion.idServicio';
 $SIS_where = 'telemetria_historial_mantencion.idMantencion = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_historial_mantencion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_historial_mantencion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Mantencion', $rowdata['Servicio'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Mantencion', $rowData['Servicio'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -98,19 +98,19 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_historial_mantencion',
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idSistema)){         $x0  = $idSistema;          }else{$x0  = $rowdata['idSistema'];}
-					if(isset($idServicio)){        $x1  = $idServicio;         }else{$x1  = $rowdata['idServicio'];}
-					if(isset($idOpciones_1)){      $x2  = $idOpciones_1;       }else{$x2  = $rowdata['idOpciones_1'];}
-					if(isset($idOpciones_2)){      $x2 .= ','.$idOpciones_2;   }else{$x2 .= ','.$rowdata['idOpciones_2'];}
-					if(isset($idOpciones_3)){      $x2 .= ','.$idOpciones_3;   }else{$x2 .= ','.$rowdata['idOpciones_3'];}
-					if(isset($Fecha)){             $x3  = $Fecha;              }else{$x3  = $rowdata['Fecha'];}
-					if(isset($h_Inicio)){          $x4  = $h_Inicio;           }else{$x4  = $rowdata['h_Inicio'];}
-					if(isset($h_Termino)){         $x5  = $h_Termino;          }else{$x5  = $rowdata['h_Termino'];}
-					if(isset($Resumen)){           $x7  = $Resumen;            }else{$x7  = $rowdata['Resumen'];}
-					if(isset($Resolucion)){        $x8  = $Resolucion;         }else{$x8  = $rowdata['Resolucion'];}
-					if(isset($Recepcion_Nombre)){  $x9  = $Recepcion_Nombre;   }else{$x9  = $rowdata['Recepcion_Nombre'];}
-					if(isset($Recepcion_Rut)){     $x10 = $Recepcion_Rut;      }else{$x10 = $rowdata['Recepcion_Rut'];}
-					if(isset($Recepcion_Email)){   $x11 = $Recepcion_Email;    }else{$x11 = $rowdata['Recepcion_Email'];}
+					if(isset($idSistema)){         $x0  = $idSistema;          }else{$x0  = $rowData['idSistema'];}
+					if(isset($idServicio)){        $x1  = $idServicio;         }else{$x1  = $rowData['idServicio'];}
+					if(isset($idOpciones_1)){      $x2  = $idOpciones_1;       }else{$x2  = $rowData['idOpciones_1'];}
+					if(isset($idOpciones_2)){      $x2 .= ','.$idOpciones_2;   }else{$x2 .= ','.$rowData['idOpciones_2'];}
+					if(isset($idOpciones_3)){      $x2 .= ','.$idOpciones_3;   }else{$x2 .= ','.$rowData['idOpciones_3'];}
+					if(isset($Fecha)){             $x3  = $Fecha;              }else{$x3  = $rowData['Fecha'];}
+					if(isset($h_Inicio)){          $x4  = $h_Inicio;           }else{$x4  = $rowData['h_Inicio'];}
+					if(isset($h_Termino)){         $x5  = $h_Termino;          }else{$x5  = $rowData['h_Termino'];}
+					if(isset($Resumen)){           $x7  = $Resumen;            }else{$x7  = $rowData['Resumen'];}
+					if(isset($Resolucion)){        $x8  = $Resolucion;         }else{$x8  = $rowData['Resolucion'];}
+					if(isset($Recepcion_Nombre)){  $x9  = $Recepcion_Nombre;   }else{$x9  = $rowData['Recepcion_Nombre'];}
+					if(isset($Recepcion_Rut)){     $x10 = $Recepcion_Rut;      }else{$x10 = $rowData['Recepcion_Rut'];}
+					if(isset($Recepcion_Email)){   $x11 = $Recepcion_Email;    }else{$x11 = $rowData['Recepcion_Email'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

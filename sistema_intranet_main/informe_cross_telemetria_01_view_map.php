@@ -48,7 +48,7 @@ LEFT JOIN `cross_predios_listado_zonas`   ON cross_predios_listado_zonas.idZona 
 LEFT JOIN `cross_predios_listado`         ON cross_predios_listado.idPredio         = cross_predios_listado_zonas.idPredio
 LEFT JOIN `telemetria_listado`            ON telemetria_listado.idTelemetria        = telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria';
 $SIS_where = 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTabla='.$_GET['idTabla'];
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 ?>
 
@@ -56,7 +56,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelaciona
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Datos del Equipo <?php echo $rowdata['EquipoNombre']; ?></h5>
+			<h5>Datos del Equipo <?php echo $rowData['EquipoNombre']; ?></h5>
 
 		</header>
 		<div class="table-responsive">
@@ -74,9 +74,9 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelaciona
 					async function initMap() {
 						const { Map } = await google.maps.importLibrary("maps");
 
-						var myLatlng = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud'] ?>, <?php echo $rowdata['GeoLongitud'] ?>);
+						var myLatlng = new google.maps.LatLng(<?php echo $rowData['GeoLatitud'] ?>, <?php echo $rowData['GeoLongitud'] ?>);
 						// marker position
-						var factory = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud'] ?>, <?php echo $rowdata['GeoLongitud'] ?>);
+						var factory = new google.maps.LatLng(<?php echo $rowData['GeoLatitud'] ?>, <?php echo $rowData['GeoLongitud'] ?>);
 
 						var myOptions = {
 							zoom: 15,
@@ -90,13 +90,13 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelaciona
 						var content = '<div id="iw-container">' +
 										'<div class="iw-title">Mediciones</div>' +
 										'<div class="iw-content">'+
-											'<img src="upload/bayas_<?php echo $rowdata['EquipoIdentificador'].'_'.$rowdata['idTabla'].'.jpg'; ?>" alt="foto"> '+
+											'<img src="upload/bayas_<?php echo $rowData['EquipoIdentificador'].'_'.$rowData['idTabla'].'.jpg'; ?>" alt="foto"> '+
 											'<p>'+
-												'<strong>Equipo: </strong><?php echo $rowdata['EquipoNombre']; ?><br/>' +
-												'<strong>Predio: </strong><?php echo $rowdata['PredioNombre']; ?><br/>' +
-												'<strong>Cuartel: </strong><?php echo $rowdata['CuartelNombre']; ?><br/>' +
-												'<strong>Fecha: </strong><?php echo fecha_estandar($rowdata['FechaSistema']).' - '.$rowdata['HoraSistema']; ?><br/>' +
-												'<strong>Cantidad: </strong><?php echo $rowdata['CantidadMuestra']; ?><br/>' +
+												'<strong>Equipo: </strong><?php echo $rowData['EquipoNombre']; ?><br/>' +
+												'<strong>Predio: </strong><?php echo $rowData['PredioNombre']; ?><br/>' +
+												'<strong>Cuartel: </strong><?php echo $rowData['CuartelNombre']; ?><br/>' +
+												'<strong>Fecha: </strong><?php echo fecha_estandar($rowData['FechaSistema']).' - '.$rowData['HoraSistema']; ?><br/>' +
+												'<strong>Cantidad: </strong><?php echo $rowData['CantidadMuestra']; ?><br/>' +
 											'</p>' +
 										'</div>' +
 										'<div class="iw-bottom-gradient"></div>' +

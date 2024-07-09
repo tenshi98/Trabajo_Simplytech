@@ -61,7 +61,7 @@ LEFT JOIN `trabajadores_listado`            ON trabajadores_listado.idTrabajador
 LEFT JOIN `usuarios_listado` usuario_queja  ON usuario_queja.idUsuario              = orden_trabajo_tareas_quejas.idUsuarioQueja
 LEFT JOIN `core_tipo_queja`                 ON core_tipo_queja.idTipoQueja          = orden_trabajo_tareas_quejas.idTipoQueja';
 $SIS_where = 'orden_trabajo_tareas_quejas.idQueja ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_quejas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_quejas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 ?>
 
@@ -71,7 +71,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_quejas', $SI
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Quejas de Ordenes de Trabajo.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowdata['FechaQueja']); ?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowData['FechaQueja']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -83,24 +83,24 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_quejas', $SI
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 invoice-col">
 			Datos de la queja
 			<address>
-				<strong>Usuario: </strong>'.$rowdata['Usuario'].'<br/>
-				<strong>Orden Trabajo Relacionada: </strong>'.n_doc($rowdata['idOT'], 8).'<br/>
-				<strong>Fecha Queja: </strong>'.fecha_estandar($rowdata['FechaQueja']).'<br/>
-				<strong>Usuario Queja: </strong>'.$rowdata['UsuarioQueja'].'<br/>
-				<strong>Trabajador Queja: </strong>'.$rowdata['TrabajadorNombre'].' '.$rowdata['TrabajadorApellidoPat'].' '.$rowdata['TrabajadorApellidoMat'].'<br/>
-				<strong>Persona Queja: </strong>'.$rowdata['NombreQueja'].'<br/>
-				<strong>Tipo Queja: </strong>'.$rowdata['TipoQueja'].'<br/>
+				<strong>Usuario: </strong>'.$rowData['Usuario'].'<br/>
+				<strong>Orden Trabajo Relacionada: </strong>'.n_doc($rowData['idOT'], 8).'<br/>
+				<strong>Fecha Queja: </strong>'.fecha_estandar($rowData['FechaQueja']).'<br/>
+				<strong>Usuario Queja: </strong>'.$rowData['UsuarioQueja'].'<br/>
+				<strong>Trabajador Queja: </strong>'.$rowData['TrabajadorNombre'].' '.$rowData['TrabajadorApellidoPat'].' '.$rowData['TrabajadorApellidoMat'].'<br/>
+				<strong>Persona Queja: </strong>'.$rowData['NombreQueja'].'<br/>
+				<strong>Tipo Queja: </strong>'.$rowData['TipoQueja'].'<br/>
 			</address>
 		</div>';
 		?>
 
 	</div>
 
-	<?php if(isset($rowdata['Observaciones'])&&$rowdata['Observaciones']!=''){ ?>
+	<?php if(isset($rowData['Observaciones'])&&$rowData['Observaciones']!=''){ ?>
 		<div class="col-xs-12">
 			<div class="row">
 				<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-				<p class="text-muted well well-sm no-shadow" ><?php echo $rowdata['Observaciones']; ?></p>
+				<p class="text-muted well well-sm no-shadow" ><?php echo $rowData['Observaciones']; ?></p>
 			</div>
 		</div>
 	<?php } ?>

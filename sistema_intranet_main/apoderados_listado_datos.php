@@ -56,12 +56,12 @@ $SIS_query = 'Nombre,ApellidoPat,ApellidoMat,Rut,FNacimiento,Fono1,Fono2,idCiuda
 F_Inicio_Contrato, F_Termino_Contrato, idOpciones_1,idOpciones_2';
 $SIS_join  = '';
 $SIS_where = 'idApoderado = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apoderado', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Datos Personales'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apoderado', $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat'], 'Editar Datos Personales'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -78,12 +78,12 @@ $rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $
 						<li class=""><a href="<?php echo 'apoderados_listado_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
 						<?php
 						//Si se utiliza la APP
-						if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>
+						if(isset($rowData['idOpciones_1'])&&$rowData['idOpciones_1']==1){ ?>
 							<li class=""><a href="<?php echo 'apoderados_listado_subcuentas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sitemap" aria-hidden="true"></i> Subcuentas</a></li>
 						<?php } ?>
 						<?php
 						//Si se utiliza subcuentas
-						if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
+						if(isset($rowData['idOpciones_2'])&&$rowData['idOpciones_2']==1){ ?>
 							<li class=""><a href="<?php echo 'apoderados_listado_password.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-key" aria-hidden="true"></i> Password</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'apoderados_listado_hijos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-child" aria-hidden="true"></i> Hijos</a></li>
@@ -102,18 +102,18 @@ $rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){              $x1  = $Nombre;               }else{$x1  = $rowdata['Nombre'];}
-					if(isset($ApellidoPat)){         $x2  = $ApellidoPat;          }else{$x2  = $rowdata['ApellidoPat'];}
-					if(isset($ApellidoMat)){         $x3  = $ApellidoMat;          }else{$x3  = $rowdata['ApellidoMat'];}
-					if(isset($Rut)){                 $x4  = $Rut;                  }else{$x4  = $rowdata['Rut'];}
-					if(isset($FNacimiento)){         $x5  = $FNacimiento;          }else{$x5  = $rowdata['FNacimiento'];}
-					if(isset($Fono1)){               $x6  = $Fono1;                }else{$x6  = $rowdata['Fono1'];}
-					if(isset($Fono2)){               $x7  = $Fono2;                }else{$x7  = $rowdata['Fono2'];}
-					if(isset($idCiudad)){            $x8  = $idCiudad;             }else{$x8  = $rowdata['idCiudad'];}
-					if(isset($idComuna)){            $x9  = $idComuna;             }else{$x9  = $rowdata['idComuna'];}
-					if(isset($Direccion)){           $x10 = $Direccion;            }else{$x10 = $rowdata['Direccion'];}
-					if(isset($F_Inicio_Contrato)){   $x11 = $F_Inicio_Contrato;    }else{$x11 = $rowdata['F_Inicio_Contrato'];}
-					if(isset($F_Termino_Contrato)){  $x12 = $F_Termino_Contrato;   }else{$x12 = $rowdata['F_Termino_Contrato'];}
+					if(isset($Nombre)){              $x1  = $Nombre;               }else{$x1  = $rowData['Nombre'];}
+					if(isset($ApellidoPat)){         $x2  = $ApellidoPat;          }else{$x2  = $rowData['ApellidoPat'];}
+					if(isset($ApellidoMat)){         $x3  = $ApellidoMat;          }else{$x3  = $rowData['ApellidoMat'];}
+					if(isset($Rut)){                 $x4  = $Rut;                  }else{$x4  = $rowData['Rut'];}
+					if(isset($FNacimiento)){         $x5  = $FNacimiento;          }else{$x5  = $rowData['FNacimiento'];}
+					if(isset($Fono1)){               $x6  = $Fono1;                }else{$x6  = $rowData['Fono1'];}
+					if(isset($Fono2)){               $x7  = $Fono2;                }else{$x7  = $rowData['Fono2'];}
+					if(isset($idCiudad)){            $x8  = $idCiudad;             }else{$x8  = $rowData['idCiudad'];}
+					if(isset($idComuna)){            $x9  = $idComuna;             }else{$x9  = $rowData['idComuna'];}
+					if(isset($Direccion)){           $x10 = $Direccion;            }else{$x10 = $rowData['Direccion'];}
+					if(isset($F_Inicio_Contrato)){   $x11 = $F_Inicio_Contrato;    }else{$x11 = $rowData['F_Inicio_Contrato'];}
+					if(isset($F_Termino_Contrato)){  $x12 = $F_Termino_Contrato;   }else{$x12 = $rowData['F_Termino_Contrato'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

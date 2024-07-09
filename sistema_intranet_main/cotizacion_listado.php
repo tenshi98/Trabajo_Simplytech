@@ -393,7 +393,7 @@ if(!empty($_GET['addFile'])){ ?>
 	sistema_productos_uml.Nombre AS Unimed';
 	$SIS_join  = 'LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml = insumos_listado.idUml';
 	$SIS_where = 'insumos_listado.idProducto='.$_SESSION['cotizacion_insumos'][$_GET['editIns']]['idProducto'];
-	$row_data = db_select_data (false, $SIS_query, 'insumos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'insumos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -434,8 +434,8 @@ if(!empty($_GET['addFile'])){ ?>
 					$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 					$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['cotizacion_insumos'][$_GET['editIns']]['idProducto'], 2);
 
-					if(isset($row_data['Cliente'])&&$row_data['Cliente']!=''){$prov=$row_data['Cliente'];}else{$prov='Sin Cliente';}
-					$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $row_data['Unimed']);
+					if(isset($rowData['Cliente'])&&$rowData['Cliente']!=''){$prov=$rowData['Cliente'];}else{$prov='Sin Cliente';}
+					$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $rowData['Unimed']);
 					$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['cotizacion_insumos'][$_GET['editIns']]['vUnitario']));
 					$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
 					$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($_SESSION['cotizacion_insumos'][$_GET['editIns']]['vUnitario']), 2);
@@ -526,7 +526,7 @@ if(!empty($_GET['addFile'])){ ?>
 	sistema_productos_uml.Nombre AS Unimed';
 	$SIS_join  = 'LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml = productos_listado.idUml';
 	$SIS_where = 'productos_listado.idProducto='.$_SESSION['cotizacion_productos'][$_GET['editProd']]['idProducto'];
-	$row_data = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -567,8 +567,8 @@ if(!empty($_GET['addFile'])){ ?>
 					$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 					$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['cotizacion_productos'][$_GET['editProd']]['idProducto'], 2);
 
-					if(isset($row_data['Cliente'])&&$row_data['Cliente']!=''){$prov=$row_data['Cliente'];}else{$prov='Sin Cliente';}
-					$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $row_data['Unimed']);
+					if(isset($rowData['Cliente'])&&$rowData['Cliente']!=''){$prov=$rowData['Cliente'];}else{$prov='Sin Cliente';}
+					$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $rowData['Unimed']);
 					$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['cotizacion_productos'][$_GET['editProd']]['vUnitario']));
 					$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
 					$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($_SESSION['cotizacion_productos'][$_GET['editProd']]['vUnitario']), 2);

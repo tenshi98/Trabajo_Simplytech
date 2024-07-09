@@ -117,7 +117,7 @@ if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){
 		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 						
 	}
-	$row_data = mysqli_fetch_assoc ($resultado);
+	$rowData = mysqli_fetch_assoc ($resultado);
 }
 /******************************************************************/
 //Se crea el select con todas las facturas que se estan pagando
@@ -211,11 +211,11 @@ if(isset($_SESSION['pago_clientes_servicio'])){
 $Form_Inputs = new Inputs();							
 ?>
 
-<?php if(isset($row_data['Cliente'])&&$row_data['Cliente']!=''){ ?>
+<?php if(isset($rowData['Cliente'])&&$rowData['Cliente']!=''){ ?>
 	<div class="row inbox"> 
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<h3>
-				<strong>Cliente : </strong><?php echo $row_data['Cliente']; ?><br/>
+				<strong>Cliente : </strong><?php echo $rowData['Cliente']; ?><br/>
 			</h3>
 			<hr>
 		</div>

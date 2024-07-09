@@ -53,7 +53,7 @@ alumnos_elearning_listado.Descripcion,
 core_estados.Nombre AS Estado';
 $SIS_join  = 'LEFT JOIN `core_estados` ON core_estados.idEstado = alumnos_elearning_listado.idEstado';
 $SIS_where = 'alumnos_elearning_listado.idElearning ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'alumnos_elearning_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /*****************************************************/
 // Se trae un listado con todos los elementos
@@ -115,11 +115,11 @@ foreach($arrContenidos as $categoria=>$permisos){
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<tr>
 							<td class="meta-head">Nombre Elearning</td>
-							<td><?php echo $rowdata['Nombre']; ?></td>
+							<td><?php echo $rowData['Nombre']; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Estado</td>
-							<td><?php echo $rowdata['Estado']; ?></td>
+							<td><?php echo $rowData['Estado']; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Dias de Duracion</td>
@@ -127,23 +127,23 @@ foreach($arrContenidos as $categoria=>$permisos){
 						</tr>
 						<tr>
 							<td class="meta-head">Resumen</td>
-							<td><span style="word-wrap: break-word;white-space: initial;"><?php echo $rowdata['Resumen']; ?></span></td>
+							<td><span style="word-wrap: break-word;white-space: initial;"><?php echo $rowData['Resumen']; ?></span></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Ultima Actualizacion</td>
-							<td><?php echo fecha_estandar($rowdata['LastUpdate']); ?></td>
+							<td><?php echo fecha_estandar($rowData['LastUpdate']); ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Objetivos</td>
-							<td><span style="word-wrap: break-word;white-space: initial;"><?php echo $rowdata['Objetivos']; ?></span></td>
+							<td><span style="word-wrap: break-word;white-space: initial;"><?php echo $rowData['Objetivos']; ?></span></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Requisitos</td>
-							<td><span style="word-wrap: break-word;white-space: initial;"><?php echo $rowdata['Requisitos']; ?></span></td>
+							<td><span style="word-wrap: break-word;white-space: initial;"><?php echo $rowData['Requisitos']; ?></span></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Descripcion</td>
-							<td><span style="word-wrap: break-word;white-space: initial;"><?php echo $rowdata['Descripcion']; ?></span></td>
+							<td><span style="word-wrap: break-word;white-space: initial;"><?php echo $rowData['Descripcion']; ?></span></td>
 						</tr>
 					</tbody>
 				</table>

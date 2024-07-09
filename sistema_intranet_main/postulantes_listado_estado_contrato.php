@@ -60,12 +60,12 @@ postulantes_listado.idEstadoContrato,
 core_estado_contrato.Nombre AS EstadoContrato';
 $SIS_join  = 'LEFT JOIN `core_estado_contrato`  ON core_estado_contrato.idEstadoContrato = postulantes_listado.idEstadoContrato';
 $SIS_where = 'idPostulante ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Postulante', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Estado'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Postulante', $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat'], 'Editar Estado'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -100,13 +100,13 @@ $rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, 
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<tr class="odd">
-						<td><?php echo 'Postulante '.$rowdata['EstadoContrato']; ?></td>
+						<td><?php echo 'Postulante '.$rowData['EstadoContrato']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
 								<?php if ($rowlevel['level']>=2){ ?>
-									<?php if ( $rowdata['idEstadoContrato']==1 ) {   
-										$ubicacion = $new_location.'&id='.$rowdata['idPostulante'].'&estadoContrato='.simpleEncode(2, fecha_actual());
-										$dialogo   = 'Esta a punto de contratar al postulante '.$rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'].', una vez hecho se desactivara como postulante y sera registrado como trabajador activo'; ?>
+									<?php if ( $rowData['idEstadoContrato']==1 ) {   
+										$ubicacion = $new_location.'&id='.$rowData['idPostulante'].'&estadoContrato='.simpleEncode(2, fecha_actual());
+										$dialogo   = 'Esta a punto de contratar al postulante '.$rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat'].', una vez hecho se desactivara como postulante y sera registrado como trabajador activo'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-success pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Contratar</a>
 									<?php } ?>
 								<?php } ?>

@@ -42,14 +42,14 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	COUNT(telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTabla) AS Total';
 	$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria';
 	$SIS_where = '(telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema BETWEEN "'.$_GET['f_inicio'].'" AND "'.$_GET['f_termino'].'")';
-	$row_data = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*****************************************/
 	//Se escribe el dato
-	$Alert_Text  = 'Total de registros encontrados de '.$row_data['Nombre'].': '.Cantidades($row_data['Total'], 0);
+	$Alert_Text  = 'Total de registros encontrados de '.$rowData['Nombre'].': '.Cantidades($rowData['Total'], 0);
 	alert_post_data(1,1,1,0, $Alert_Text);
 
-	$total_files = ceil($row_data['Total']/5000);
+	$total_files = ceil($rowData['Total']/5000);
 	for ($i = 1; $i <= $total_files; $i++) {
 		$reg_ini = (5000*$i)-4999;
 		$reg_fin = 5000*$i;
@@ -97,12 +97,12 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 		//Se traen todos los registros
 		$SIS_query = 'COUNT(idTabla) AS Total';
 		$SIS_where = '(FechaSistema BETWEEN "'.$_GET['f_inicio'].'" AND "'.$_GET['f_termino'].'")';
-		$row_data = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+		$rowData = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
-		$Alert_Text .= 'Total de registros encontrados de '.$equipo['Nombre'].': '.Cantidades($row_data['Total'], 0).'<br/>';
+		$Alert_Text .= 'Total de registros encontrados de '.$equipo['Nombre'].': '.Cantidades($rowData['Total'], 0).'<br/>';
 		//verifico el valor maximo
-		if($s_max<$row_data['Total']){
-			$s_max=$row_data['Total'];
+		if($s_max<$rowData['Total']){
+			$s_max=$rowData['Total'];
 		}
 	}
 	alert_post_data(2,1,1,0, $Alert_Text);

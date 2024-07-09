@@ -65,7 +65,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'id_pmcat, Direccionweb, Direccionbase, Nombre,visualizacion, Version, Descripcion, Level_Limit, Habilita, Principal';
 	$SIS_join  = '';
 	$SIS_where = 'idAdmpm = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'core_permisos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'core_permisos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -80,16 +80,16 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($id_pmcat)){         $x1  = $id_pmcat;       }else{$x1  = $rowdata['id_pmcat'];}
-					if(isset($Nombre)){           $x2  = $Nombre;         }else{$x2  = $rowdata['Nombre'];}
-					if(isset($Direccionbase)){    $x3  = $Direccionbase;  }else{$x3  = $rowdata['Direccionbase'];}
-					if(isset($Direccionweb)){     $x4  = $Direccionweb;   }else{$x4  = $rowdata['Direccionweb'];}
-					if(isset($visualizacion)){    $x5  = $visualizacion;  }else{$x5  = $rowdata['visualizacion'];}
-					if(isset($Version)){          $x6  = $Version;        }else{$x6  = $rowdata['Version'];}
-					if(isset($Descripcion)){      $x7  = $Descripcion;    }else{$x7  = $rowdata['Descripcion'];}
-					if(isset($Habilita)){         $x8  = $Habilita;       }else{$x8  = $rowdata['Habilita'];}
-					if(isset($Principal)){        $x9  = $Principal;      }else{$x9  = $rowdata['Principal'];}
-					if(isset($Level_Limit)){      $x10 = $Level_Limit;    }else{$x10 = $rowdata['Level_Limit'];}
+					if(isset($id_pmcat)){         $x1  = $id_pmcat;       }else{$x1  = $rowData['id_pmcat'];}
+					if(isset($Nombre)){           $x2  = $Nombre;         }else{$x2  = $rowData['Nombre'];}
+					if(isset($Direccionbase)){    $x3  = $Direccionbase;  }else{$x3  = $rowData['Direccionbase'];}
+					if(isset($Direccionweb)){     $x4  = $Direccionweb;   }else{$x4  = $rowData['Direccionweb'];}
+					if(isset($visualizacion)){    $x5  = $visualizacion;  }else{$x5  = $rowData['visualizacion'];}
+					if(isset($Version)){          $x6  = $Version;        }else{$x6  = $rowData['Version'];}
+					if(isset($Descripcion)){      $x7  = $Descripcion;    }else{$x7  = $rowData['Descripcion'];}
+					if(isset($Habilita)){         $x8  = $Habilita;       }else{$x8  = $rowData['Habilita'];}
+					if(isset($Principal)){        $x9  = $Principal;      }else{$x9  = $rowData['Principal'];}
+					if(isset($Level_Limit)){      $x10 = $Level_Limit;    }else{$x10 = $rowData['Level_Limit'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -105,8 +105,8 @@ if(!empty($_GET['id'])){
 					$Form_Inputs->form_select_n_auto('Limite Nivel','Level_Limit', $x10, 2, 1, 4);
 
 					$Form_Inputs->form_input_hidden('idAdmpm', $_GET['id'], 2);
-					$Form_Inputs->form_input_hidden('fake_id_pmcat', $rowdata['id_pmcat'], 2);
-					$Form_Inputs->form_input_hidden('fake_Nombre', $rowdata['Nombre'], 2);
+					$Form_Inputs->form_input_hidden('fake_id_pmcat', $rowData['id_pmcat'], 2);
+					$Form_Inputs->form_input_hidden('fake_Nombre', $rowData['Nombre'], 2);
 
 					?>
 

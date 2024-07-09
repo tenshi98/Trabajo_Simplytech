@@ -58,7 +58,7 @@ for ($i = 1; $i <= $X_cantPuntos; $i++) {
 // consulto los datos
 $SIS_join  = '';
 $SIS_where = 'idMatriz ='.$X_idCalidad;
-$rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /***********************************************/
 //Armo cadena
@@ -131,7 +131,7 @@ $arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_u
 			//Cuento si hay items dentro de la categoria
 			$x_con = 0;
 			for ($i = 1; $i <= $X_cantPuntos; $i++) {
-				if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
+				if($grupo['idGrupo']==$rowData['PuntoidGrupo_'.$i]){
 					$x_con++;
 				}
 			}
@@ -147,58 +147,58 @@ $arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_u
 					<p class="text-muted well well-sm no-shadow" >';
 					
 					for ($i = 1; $i <= $X_cantPuntos; $i++) {
-						if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
+						if($grupo['idGrupo']==$rowData['PuntoidGrupo_'.$i]){
 							//sumo subtotales
 							$subto = $subto + $rowMuestras['Medida_'.$i];
 							//verifico unidad de medida
 							$xuni = '';
 							foreach ($arrUnidadMedida as $uml) {
-								if($rowdata['PuntoUniMed_'.$i]==$uml['idUml']){
+								if($rowData['PuntoUniMed_'.$i]==$uml['idUml']){
 									$xuni = ' '.$uml['Nombre'];
 								}
 							}
 									
 							//Verifico el tipo de dato
-							switch ($rowdata['PuntoidTipo_'.$i]) {
+							switch ($rowData['PuntoidTipo_'.$i]) {
 								//Medicion (Decimal) con parametros limitantes
 								case 1:
-									echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].$xuni.'<br/>';
+									echo '<strong>'.$rowData['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].$xuni.'<br/>';
 									break;
 								//Medicion (Decimal) sin parametros limitantes
 								case 2:
-									echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].$xuni.'<br/>';
+									echo '<strong>'.$rowData['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].$xuni.'<br/>';
 									break;
 								//Medicion (Enteros) con parametros limitantes
 								case 3:
-									echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].$xuni.'<br/>';
+									echo '<strong>'.$rowData['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].$xuni.'<br/>';
 									break;
 								//Medicion (Enteros) sin parametros limitantes
 								case 4:
-									echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].$xuni.'<br/>';
+									echo '<strong>'.$rowData['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].$xuni.'<br/>';
 									break;
 								//Fecha
 								case 5:
-									echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.fecha_estandar($rowMuestras['Medida_'.$i]).'<br/>';
+									echo '<strong>'.$rowData['PuntoNombre_'.$i].': </strong>'.fecha_estandar($rowMuestras['Medida_'.$i]).'<br/>';
 									break;
 								//Hora
 								case 6:
-									echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].' hrs.<br/>';
+									echo '<strong>'.$rowData['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].' hrs.<br/>';
 									break;
 								//Texto Libre
 								case 7:
-									echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].'<br/>';
+									echo '<strong>'.$rowData['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].'<br/>';
 									break;
 								//Seleccion 1 a 3
 								case 8:
-									echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].'<br/>';
+									echo '<strong>'.$rowData['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].'<br/>';
 									break;
 								//Seleccion 1 a 5
 								case 9:
-									echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].'<br/>';
+									echo '<strong>'.$rowData['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].'<br/>';
 									break;
 								//Seleccion 1 a 10
 								case 10:
-									echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].'<br/>';
+									echo '<strong>'.$rowData['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].'<br/>';
 									break;
 
 							}
@@ -219,15 +219,15 @@ $arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_u
 			<p class="lead">Decision</p>
 			<p class="text-muted well well-sm no-shadow" >';
 			//Nota Calidad
-			if(isset($rowdata['idNota_1'])&&$rowdata['idNota_1']==1){
+			if(isset($rowData['idNota_1'])&&$rowData['idNota_1']==1){
 				echo '<strong>Nota Calidad: </strong>'.$rowMuestras['Resolucion_1'].'<br/>';
 			}
 			//Nota Condición
-			if(isset($rowdata['idNota_2'])&&$rowdata['idNota_2']==1){
+			if(isset($rowData['idNota_2'])&&$rowData['idNota_2']==1){
 				echo '<strong>Nota Condición: </strong>'.$rowMuestras['Resolucion_2'].'<br/>';
 			}
 			//Calificacion
-			if(isset($rowdata['idNota_3'])&&$rowdata['idNota_3']==1){
+			if(isset($rowData['idNota_3'])&&$rowData['idNota_3']==1){
 				echo '<strong>Calificacion: </strong>'.$rowMuestras['Resolucion_3'].'<br/>';
 			}
 								
@@ -295,7 +295,7 @@ LEFT JOIN `ubicacion_listado_level_4`              ON ubicacion_listado_level_4.
 LEFT JOIN `ubicacion_listado_level_5`              ON ubicacion_listado_level_5.idLevel_5          = cross_quality_analisis_calidad.idUbicacion_lvl_5
 LEFT JOIN `cross_quality_calidad_matriz`           ON cross_quality_calidad_matriz.idMatriz        = productos_listado.idCalidad';
 $SIS_where = 'cross_quality_analisis_calidad.idAnalisis ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'cross_quality_analisis_calidad', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'cross_quality_analisis_calidad', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /***************************************************/
 // Se trae un listado con todos los trabajadores
@@ -349,8 +349,8 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
-				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $row_data['TipoAnalisis']?>.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['fecha_auto']); ?></small>
+				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $rowData['TipoAnalisis']?>.
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowData['fecha_auto']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -361,14 +361,14 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 			Datos Básicos
 			<address>
 				<strong>Producto</strong><br/>
-				<?php echo $row_data['ProductoCategoria'].', '.$row_data['ProductoNombre']; ?><br/>
-				Ubicación: <?php echo $row_data['UbicacionNombre']; ?>
+				<?php echo $rowData['ProductoCategoria'].', '.$rowData['ProductoNombre']; ?><br/>
+				Ubicación: <?php echo $rowData['UbicacionNombre']; ?>
 				<?php
-					if(isset($row_data['UbicacionNombre_lvl_1'])&&$row_data['UbicacionNombre_lvl_1']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_1'];}
-					if(isset($row_data['UbicacionNombre_lvl_2'])&&$row_data['UbicacionNombre_lvl_2']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_2'];}
-					if(isset($row_data['UbicacionNombre_lvl_3'])&&$row_data['UbicacionNombre_lvl_3']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_3'];}
-					if(isset($row_data['UbicacionNombre_lvl_4'])&&$row_data['UbicacionNombre_lvl_4']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_4'];}
-					if(isset($row_data['UbicacionNombre_lvl_5'])&&$row_data['UbicacionNombre_lvl_5']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_5'];}
+					if(isset($rowData['UbicacionNombre_lvl_1'])&&$rowData['UbicacionNombre_lvl_1']!=''){echo ' - '.$rowData['UbicacionNombre_lvl_1'];}
+					if(isset($rowData['UbicacionNombre_lvl_2'])&&$rowData['UbicacionNombre_lvl_2']!=''){echo ' - '.$rowData['UbicacionNombre_lvl_2'];}
+					if(isset($rowData['UbicacionNombre_lvl_3'])&&$rowData['UbicacionNombre_lvl_3']!=''){echo ' - '.$rowData['UbicacionNombre_lvl_3'];}
+					if(isset($rowData['UbicacionNombre_lvl_4'])&&$rowData['UbicacionNombre_lvl_4']!=''){echo ' - '.$rowData['UbicacionNombre_lvl_4'];}
+					if(isset($rowData['UbicacionNombre_lvl_5'])&&$rowData['UbicacionNombre_lvl_5']!=''){echo ' - '.$rowData['UbicacionNombre_lvl_5'];}
 				?>
 				<br/>
 			</address>
@@ -377,16 +377,16 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Fecha Creacion
 			<address>
-				Fecha Ingreso: <?php echo Fecha_estandar($row_data['Creacion_fecha']); ?><br/>
-				Temporada: <?php echo $row_data['Temporada']; ?><br/>
+				Fecha Ingreso: <?php echo Fecha_estandar($rowData['Creacion_fecha']); ?><br/>
+				Temporada: <?php echo $rowData['Temporada']; ?><br/>
 			</address>
 		</div>
 			   
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Datos Creacion
 			<address>
-				Sistema: <?php echo $row_data['Sistema']; ?><br/>
-				Usuario: <?php echo $row_data['Usuario']; ?><br/>
+				Sistema: <?php echo $rowData['Sistema']; ?><br/>
+				Usuario: <?php echo $rowData['Usuario']; ?><br/>
 			</address>
 		</div>
 
@@ -434,7 +434,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 								<td><?php echo $muestra['lote']; ?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
-										<a href="<?php echo 'view_cross_quality_calidad_analisis.php?view='.$_GET['view'].'&viewMuestra='.simpleEncode($muestra['idMuestras'], fecha_actual()).'&cantPuntos='.simpleEncode($row_data['Producto_cantPuntos'], fecha_actual()).'&idCalidad='.simpleEncode($row_data['Producto_idCalidad'], fecha_actual()); ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+										<a href="<?php echo 'view_cross_quality_calidad_analisis.php?view='.$_GET['view'].'&viewMuestra='.simpleEncode($muestra['idMuestras'], fecha_actual()).'&cantPuntos='.simpleEncode($rowData['Producto_cantPuntos'], fecha_actual()).'&idCalidad='.simpleEncode($rowData['Producto_idCalidad'], fecha_actual()); ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 									</div>
 								</td>
 							</tr>
@@ -448,7 +448,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $rowData['Observaciones']; ?></p>
 		</div>
 	</div>
 

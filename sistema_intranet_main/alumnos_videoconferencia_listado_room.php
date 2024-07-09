@@ -43,7 +43,7 @@ cursos_listado_videoconferencia.HoraTermino,
 cursos_listado_videoconferencia.idUsuario';
 $SIS_join  = 'LEFT JOIN `cursos_listado_videoconferencia`  ON cursos_listado_videoconferencia.idCurso  = cursos_listado.idCurso';
 $SIS_where = 'cursos_listado_videoconferencia.idVideoConferencia = '.$_GET['view'];
-$rowdata = db_select_data (false, $SIS_query, 'cursos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'cursos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -88,7 +88,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cursos_listado', $SIS_join, $SIS_
 	<input type="hidden" id="room-id" value="abcdef" autocorrect=off autocapitalize=off size=20>
 	<?php
 	//se verifica el usuario que accede
-	if(($rowdata['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
+	if(($rowData['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
 		<button id="open-room" class="btn btn-success pull-right margin_width fmrbtn" ><i class="fa fa-video-camera" aria-hidden="true"></i> Iniciar VideoConferencia</button>
 	<?php } ?>
 
@@ -107,7 +107,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cursos_listado', $SIS_join, $SIS_
 				<div class="chating">
 					<div class="headind_srch">
 						<div class="recent_heading">
-							<h4>Chat <?php echo $rowdata['Curso']; ?></h4>
+							<h4>Chat <?php echo $rowData['Curso']; ?></h4>
 						</div>
 					</div>
 					<div class="inbox_chat">
@@ -138,7 +138,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cursos_listado', $SIS_join, $SIS_
 // ......................................................
 // .......................UI Code........................
 // ......................................................
-<?php if(($rowdata['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
+<?php if(($rowData['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
 
 	document.getElementById('open-room').onclick = function() {
 		disableInputButtons();
@@ -420,7 +420,7 @@ function disableInputButtons(enable) {
     document.getElementById('room-id').onkeyup();
 
     //document.getElementById('open-or-join-room').disabled = !enable;
-	<?php if(($rowdata['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
+	<?php if(($rowData['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
 		document.getElementById('open-room').disabled = !enable;
 	<?php } ?>
     document.getElementById('room-id').disabled = !enable;

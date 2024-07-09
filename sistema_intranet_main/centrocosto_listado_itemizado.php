@@ -76,7 +76,7 @@ if(!empty($_GET['edit'])){
 	$SIS_query = 'Nombre';
 	$SIS_join  = '';
 	$SIS_where = 'idLevel_'.$_GET['lvl'].' = '.$_GET['edit'];
-	$rowdata = db_select_data (false, $SIS_query, 'centrocosto_listado_level_'.$_GET['lvl'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'centrocosto_listado_level_'.$_GET['lvl'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -91,7 +91,7 @@ if(!empty($_GET['edit'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){            $x1  = $Nombre;             }else{$x1  = $rowdata['Nombre'];}
+					if(isset($Nombre)){            $x1  = $Nombre;             }else{$x1  = $rowData['Nombre'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -190,7 +190,7 @@ if(!empty($_GET['edit'])){
 	$SIS_query = 'Nombre,idSistema';
 	$SIS_join  = '';
 	$SIS_where = 'idCentroCosto ='.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'centrocosto_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'centrocosto_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -293,9 +293,9 @@ if(!empty($_GET['edit'])){
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Centro de Costo', $rowdata['Nombre'], 'Itemizado'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Centro de Costo', $rowData['Nombre'], 'Itemizado'); ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
-			<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php } ?>
+			<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowData['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php } ?>
 		</div>
 	</div>
 	<div class="clearfix"></div>
@@ -318,7 +318,7 @@ if(!empty($_GET['edit'])){
 			<div class="table-responsive">
 
 				<?php //Se imprime el arbol
-				echo arrayToUL($array3d, 0, $rowlevel['level'],$new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'], $nmax);
+				echo arrayToUL($array3d, 0, $rowlevel['level'],$new_location.'&id='.$_GET['id'].'&idSistema='.$rowData['idSistema'], $nmax);
 				?>
 
 			</div>

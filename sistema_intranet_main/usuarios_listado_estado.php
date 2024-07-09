@@ -57,7 +57,7 @@ usuarios_listado.Nombre,
 core_estados.Nombre AS estado';
 $SIS_join  = 'LEFT JOIN `core_estados` ON core_estados.idEstado = usuarios_listado.idEstado';
 $SIS_where = 'usuarios_listado.idUsuario ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /********************************************************************************/
 /********************************************************************************/
@@ -188,7 +188,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Editar Estado'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowData['Nombre'], 'Editar Estado'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -239,16 +239,16 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<tr class="odd">
-						<td><?php echo 'Usuario '.$rowdata['estado']; ?></td>
+						<td><?php echo 'Usuario '.$rowData['estado']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
 								<?php if ($rowlevel['level']>=2){ ?>
-									<?php if ( $rowdata['estado']=='Activo' ){ ?>
-										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowdata['idUsuario'].'&estado='.simpleEncode(2, fecha_actual()) ; ?>">OFF</a>
+									<?php if ( $rowData['estado']=='Activo' ){ ?>
+										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowData['idUsuario'].'&estado='.simpleEncode(2, fecha_actual()) ; ?>">OFF</a>
 										<a class="btn btn-sm btn-info locked_active" href="#">ON</a>
 									<?php } else { ?>
 										<a class="btn btn-sm btn-info locked_active" href="#">OFF</a>
-										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowdata['idUsuario'].'&estado='.simpleEncode(1, fecha_actual()) ; ?>">ON</a>
+										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowData['idUsuario'].'&estado='.simpleEncode(1, fecha_actual()) ; ?>">ON</a>
 									<?php } ?>
 								<?php } ?>
 							</div>

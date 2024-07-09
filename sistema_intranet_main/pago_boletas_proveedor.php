@@ -81,7 +81,7 @@ if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){
 		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 						
 	}
-	$row_data = mysqli_fetch_assoc ($resultado);
+	$rowData = mysqli_fetch_assoc ($resultado);
 }
 /******************************************************************/
 //Se crea el select con todas las Boletas que se estan pagando
@@ -101,7 +101,7 @@ if(isset($_SESSION['pagos_boletas_empresas'])){
 <div class="row inbox">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h3>
-			<strong>Proveedor : </strong><?php echo $row_data['Nombre']; ?><br/>
+			<strong>Proveedor : </strong><?php echo $rowData['Nombre']; ?><br/>
 		</h3>
 		<hr>
 	</div>

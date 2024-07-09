@@ -74,7 +74,7 @@ if(!empty($_GET['edit'])){
 	$SIS_query = 'idTipo, idProceso, idSistema';
 	$SIS_join  = '';
 	$SIS_where = 'idEmbalaje = '.$_GET['edit'];
-	$rowdata = db_select_data (false, $SIS_query, 'sistema_variedades_categorias_tipo_emb', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'sistema_variedades_categorias_tipo_emb', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	//verifico que sea un administrador
@@ -93,8 +93,8 @@ if(!empty($_GET['edit'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idProceso)){  $x1  = $idProceso; }else{$x1  = $rowdata['idProceso'];}
-					if(isset($idTipo)){     $x2  = $idTipo;    }else{$x2  = $rowdata['idTipo'];}
+					if(isset($idProceso)){  $x1  = $idProceso; }else{$x1  = $rowData['idProceso'];}
+					if(isset($idTipo)){     $x2  = $idTipo;    }else{$x2  = $rowData['idTipo'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -170,7 +170,7 @@ if(!empty($_GET['edit'])){
 	$SIS_query = 'Nombre';
 	$SIS_join  = '';
 	$SIS_where = 'idCategoria = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'sistema_variedades_categorias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'sistema_variedades_categorias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -193,7 +193,7 @@ if(!empty($_GET['edit'])){
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Especies', $rowdata['Nombre'], 'Editar Tipos de Embalaje'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Especies', $rowData['Nombre'], 'Editar Tipos de Embalaje'); ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 			<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar nuevo embalaje</a><?php } ?>
 		</div>

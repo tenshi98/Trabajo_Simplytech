@@ -1797,10 +1797,10 @@ require_once '0_validate_user_1.php';
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 
-				$row_data = db_select_data (false, 'idProducto', 'cross_solicitud_aplicacion_listado', '', 'idSolicitud = "'.$idSolicitud.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'idProducto', 'cross_solicitud_aplicacion_listado', '', 'idSolicitud = "'.$idSolicitud.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//si cambia la variedad se resetea todo
-				if(isset($row_data['idProducto'], $idProducto)&&$row_data['idProducto']!=$idProducto){
+				if(isset($rowData['idProducto'], $idProducto)&&$rowData['idProducto']!=$idProducto){
 					//se borran los datos
 					$resultado_1 = db_delete_data (false, 'cross_solicitud_aplicacion_listado_cuarteles', 'idSolicitud = "'.$idSolicitud.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					$resultado_2 = db_delete_data (false, 'cross_solicitud_aplicacion_listado_productos', 'idSolicitud = "'.$idSolicitud.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -2128,7 +2128,7 @@ require_once '0_validate_user_1.php';
 
 				/******************************************/
 				//Obtengo datos
-				$rowdata = db_select_data (false, 'idCategoria, idProducto', 'cross_predios_listado_zonas', '', 'idZona = "'.$idZona.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'idCategoria, idProducto', 'cross_predios_listado_zonas', '', 'idZona = "'.$idZona.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Cuarteles
@@ -2141,8 +2141,8 @@ require_once '0_validate_user_1.php';
 				if(isset($TempMax) && $TempMax!=''){                            $SIS_data .= ",'".$TempMax."'";                  }else{$SIS_data .= ",''";}
 				if(isset($HumTempMax) && $HumTempMax!=''){                      $SIS_data .= ",'".$HumTempMax."'";               }else{$SIS_data .= ",''";}
 				$SIS_data .= ",'1'"; //se asigna el estado
-				if(isset($rowdata['idCategoria'])&&$rowdata['idCategoria']!=''){ $SIS_data .= ",'".$rowdata['idCategoria']."'";   }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idProducto'])&&$rowdata['idProducto']!=''){   $SIS_data .= ",'".$rowdata['idProducto']."'";    }else{$SIS_data .= ",''";}
+				if(isset($rowData['idCategoria'])&&$rowData['idCategoria']!=''){ $SIS_data .= ",'".$rowData['idCategoria']."'";   }else{$SIS_data .= ",''";}
+				if(isset($rowData['idProducto'])&&$rowData['idProducto']!=''){   $SIS_data .= ",'".$rowData['idProducto']."'";    }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSolicitud, idZona, Mojamiento, VelTractor, VelViento, TempMin, TempMax, HumTempMax, idEstado, idCategoria, idProducto';
@@ -2194,7 +2194,7 @@ require_once '0_validate_user_1.php';
 
 				/******************************************/
 				//Obtengo datos
-				$rowdata = db_select_data (false, 'idCategoria, idProducto', 'cross_predios_listado_zonas', '', 'idZona = "'.$idZona.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'idCategoria, idProducto', 'cross_predios_listado_zonas', '', 'idZona = "'.$idZona.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************/
 				//Filtros
@@ -2207,8 +2207,8 @@ require_once '0_validate_user_1.php';
 				if(isset($TempMin) && $TempMin!=''){                             $SIS_data .= ",TempMin='".$TempMin."'";}
 				if(isset($TempMax) && $TempMax!=''){                             $SIS_data .= ",TempMax='".$TempMax."'";}
 				if(isset($HumTempMax) && $HumTempMax!=''){                       $SIS_data .= ",HumTempMax='".$HumTempMax."'";}
-				if(isset($rowdata['idCategoria'])&&$rowdata['idCategoria']!=''){ $SIS_data .= ",idCategoria='".$rowdata['idCategoria']."'";}
-				if(isset($rowdata['idProducto'])&&$rowdata['idProducto']!=''){   $SIS_data .= ",idProducto='".$rowdata['idProducto']."'";}
+				if(isset($rowData['idCategoria'])&&$rowData['idCategoria']!=''){ $SIS_data .= ",idCategoria='".$rowData['idCategoria']."'";}
+				if(isset($rowData['idProducto'])&&$rowData['idProducto']!=''){   $SIS_data .= ",idProducto='".$rowData['idProducto']."'";}
 
 				/*******************************************************/
 				//se actualizan los datos
@@ -2246,9 +2246,9 @@ require_once '0_validate_user_1.php';
 						$select_join = 'LEFT JOIN `cross_predios_listado_zonas`    ON cross_predios_listado_zonas.idZona         = cross_solicitud_aplicacion_listado_cuarteles.idZona';
 						$select_where = 'cross_solicitud_aplicacion_listado_cuarteles.idCuarteles = '.$idCuarteles;
 						//consulto
-						$rowdata = db_select_data (false, $select_data, 'cross_solicitud_aplicacion_listado_cuarteles', $select_join, $select_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$rowData = db_select_data (false, $select_data, 'cross_solicitud_aplicacion_listado_cuarteles', $select_join, $select_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						//Operaciones
-						$T_Aplicacion = minutos2horas((($rowdata['CuartelNPlantas']*$rowdata['CuartelDistanciaPlant'])/$VelPromedio)*60);
+						$T_Aplicacion = minutos2horas((($rowData['CuartelNPlantas']*$rowData['CuartelDistanciaPlant'])/$VelPromedio)*60);
 
 						/***************************************/
 						//se cierra el cuartel

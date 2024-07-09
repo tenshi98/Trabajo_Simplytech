@@ -86,7 +86,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 $SIS_query = 'idCliente, idTipo, FechaEjecucion, Fecha, NSello, Observacion, Archivo';
 $SIS_join  = '';
 $SIS_where = 'idEventos = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_eventos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'aguas_clientes_eventos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //Indico el sistema
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado=1';
@@ -104,12 +104,12 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idCliente)){        $x1  = $idCliente;         }else{$x1  = $rowdata['idCliente'];}
-				if(isset($idTipo)){           $x2  = $idTipo;            }else{$x2  = $rowdata['idTipo'];}
-				if(isset($FechaEjecucion)){   $x3  = $FechaEjecucion;    }else{$x3  = $rowdata['FechaEjecucion'];}
-				if(isset($Fecha)){  $x4  = $Fecha;             }else{$x4  = $rowdata['Fecha'];}
-				if(isset($NSello)){           $x5  = $NSello;            }else{$x5  = $rowdata['NSello'];}
-				if(isset($Observacion)){      $x6  = $Observacion;       }else{$x6  = $rowdata['Observacion'];}
+				if(isset($idCliente)){        $x1  = $idCliente;         }else{$x1  = $rowData['idCliente'];}
+				if(isset($idTipo)){           $x2  = $idTipo;            }else{$x2  = $rowData['idTipo'];}
+				if(isset($FechaEjecucion)){   $x3  = $FechaEjecucion;    }else{$x3  = $rowData['FechaEjecucion'];}
+				if(isset($Fecha)){  $x4  = $Fecha;             }else{$x4  = $rowData['Fecha'];}
+				if(isset($NSello)){           $x5  = $NSello;            }else{$x5  = $rowData['NSello'];}
+				if(isset($Observacion)){      $x6  = $Observacion;       }else{$x6  = $rowData['Observacion'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -120,11 +120,11 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 				$Form_Inputs->form_input_icon('Numero de Sello', 'NSello', $x5, 1,'fa fa-barcode');
 				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x6, 1);
 				//si existe archivo se mustra previsualizador
-				if(isset($rowdata['Archivo'])&&$rowdata['Archivo']!=''){ ?>
+				if(isset($rowData['Archivo'])&&$rowData['Archivo']!=''){ ?>
 
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 						<h3>Archivo</h3>
-						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['Archivo'], ''); ?>
+						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowData['Archivo'], ''); ?>
 					</div>
 					<a href="<?php echo $location.'&id='.$_GET['id'].'&del_Archivo='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 					<div class="clearfix"></div>

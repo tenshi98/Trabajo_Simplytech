@@ -168,18 +168,18 @@ if(!empty($_GET['edit_trabajo'])){
 	$SIS_query = 'idMaquina, comp_tabla_id, comp_tabla, NombreComponente, idSubTipo, Descripcion';
 	$SIS_join  = '';
 	$SIS_where = 'idTrabajoOT ='.$idTrabajoOT;
-	$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_listado_trabajos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_listado_trabajos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 	//se crea cadena
 	/*$SIS_query = 'Nombre';
-	for ($i = 1; $i <= $rowdata['comp_tabla']; $i++) {$SIS_query.= ',idLevel_'.$i;}
+	for ($i = 1; $i <= $rowData['comp_tabla']; $i++) {$SIS_query.= ',idLevel_'.$i;}
 	//Se traen los datos de la ot
 	$SIS_join  = '';
-	$SIS_where = 'idLevel_'.$rowdata['comp_tabla'].' = '.$rowdata['comp_tabla_id'];
-	$rowMaquina = db_select_data (false, $SIS_query, 'maquinas_listado_level_'.$rowdata['comp_tabla'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+	$SIS_where = 'idLevel_'.$rowData['comp_tabla'].' = '.$rowData['comp_tabla_id'];
+	$rowMaquina = db_select_data (false, $SIS_query, 'maquinas_listado_level_'.$rowData['comp_tabla'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 	*/
 	//Verifico el tipo de usuario que esta ingresando
-	$z = 'idMaquina='.$rowdata['idMaquina'];
+	$z = 'idMaquina='.$rowData['idMaquina'];
 
 	?>
 
@@ -187,7 +187,7 @@ if(!empty($_GET['edit_trabajo'])){
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-				<h5>Editar Trabajo de <?php echo $rowdata['NombreComponente']; ?></h5>
+				<h5>Editar Trabajo de <?php echo $rowData['NombreComponente']; ?></h5>
 			</header>
 			<div class="body">
 				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
@@ -219,8 +219,8 @@ if(!empty($_GET['edit_trabajo'])){
 					if(isset($idLevel_23)){       $x23  = $idLevel_23;      }elseif(isset($rowMaquina['idLevel_23'])&&$rowMaquina['idLevel_23']!=''){ $x23  = $rowMaquina['idLevel_23'];    }else{$x23  = '';}
 					if(isset($idLevel_24)){       $x24  = $idLevel_24;      }elseif(isset($rowMaquina['idLevel_24'])&&$rowMaquina['idLevel_24']!=''){ $x24  = $rowMaquina['idLevel_24'];    }else{$x24  = '';}
 					if(isset($idLevel_25)){       $x25  = $idLevel_25;      }elseif(isset($rowMaquina['idLevel_25'])&&$rowMaquina['idLevel_25']!=''){ $x25  = $rowMaquina['idLevel_25'];    }else{$x25  = '';}*/
-					if(isset($idSubTipo)){        $x26  = $idSubTipo;       }elseif(isset($rowdata['idSubTipo'])&&$rowdata['idSubTipo']!=''){         $x26  = $rowdata['idSubTipo'];        }else{$x26  = '';}
-					if(isset($Descripcion)){      $x27  = $Descripcion;     }elseif(isset($rowdata['Descripcion'])&&$rowdata['Descripcion']!=''){     $x27  = $rowdata['Descripcion'];      }else{$x27  = '';}
+					if(isset($idSubTipo)){        $x26  = $idSubTipo;       }elseif(isset($rowData['idSubTipo'])&&$rowData['idSubTipo']!=''){         $x26  = $rowData['idSubTipo'];        }else{$x26  = '';}
+					if(isset($Descripcion)){      $x27  = $Descripcion;     }elseif(isset($rowData['Descripcion'])&&$rowData['Descripcion']!=''){     $x27  = $rowData['Descripcion'];      }else{$x27  = '';}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -277,10 +277,10 @@ if(!empty($_GET['edit_trabajo'])){
 	$SIS_query = 'idSistema, idMaquina, idEstado, idPrioridad, idTipo, f_programacion';
 	$SIS_join  = '';
 	$SIS_where = 'orden_trabajo_listado.idOT ='.$idOT;
-	$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 	//Verifico el tipo de usuario que esta ingresando
-	$z = 'idMaquina='.$rowdata['idMaquina'];
+	$z = 'idMaquina='.$rowData['idMaquina'];
 
 	?>
 
@@ -357,12 +357,12 @@ if(!empty($_GET['edit_trabajo'])){
 					/*$Form_Inputs->form_input_hidden('idOT',$idOT, 2);
 					$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 					$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
-					$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
-					$Form_Inputs->form_input_hidden('idMaquina', $rowdata['idMaquina'], 2);
-					$Form_Inputs->form_input_hidden('idEstado', $rowdata['idEstado'], 2);
-					$Form_Inputs->form_input_hidden('idPrioridad', $rowdata['idPrioridad'], 2);
-					$Form_Inputs->form_input_hidden('idTipo', $rowdata['idTipo'], 2);
-					$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);*/
+					$Form_Inputs->form_input_hidden('idSistema', $rowData['idSistema'], 2);
+					$Form_Inputs->form_input_hidden('idMaquina', $rowData['idMaquina'], 2);
+					$Form_Inputs->form_input_hidden('idEstado', $rowData['idEstado'], 2);
+					$Form_Inputs->form_input_hidden('idPrioridad', $rowData['idPrioridad'], 2);
+					$Form_Inputs->form_input_hidden('idTipo', $rowData['idTipo'], 2);
+					$Form_Inputs->form_input_hidden('f_programacion', $rowData['f_programacion'], 2);*/
 
 					?>
 
@@ -385,7 +385,7 @@ if(!empty($_GET['edit_trabajo'])){
 	$SIS_query = 'idSistema, idMaquina, idEstado, idPrioridad, idTipo, f_programacion';
 	$SIS_join  = '';
 	$SIS_where = 'orden_trabajo_listado.idOT ='.$idOT;
-	$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 	//Obtengo unidades de medida
 	$SIS_query = '
@@ -428,12 +428,12 @@ if(!empty($_GET['edit_trabajo'])){
 					$Form_Inputs->form_input_hidden('idOT',$idOT, 2);
 					$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 					$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
-					$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
-					$Form_Inputs->form_input_hidden('idMaquina', $rowdata['idMaquina'], 2);
-					$Form_Inputs->form_input_hidden('idEstado', $rowdata['idEstado'], 2);
-					$Form_Inputs->form_input_hidden('idPrioridad', $rowdata['idPrioridad'], 2);
-					$Form_Inputs->form_input_hidden('idTipo', $rowdata['idTipo'], 2);
-					$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
+					$Form_Inputs->form_input_hidden('idSistema', $rowData['idSistema'], 2);
+					$Form_Inputs->form_input_hidden('idMaquina', $rowData['idMaquina'], 2);
+					$Form_Inputs->form_input_hidden('idEstado', $rowData['idEstado'], 2);
+					$Form_Inputs->form_input_hidden('idPrioridad', $rowData['idPrioridad'], 2);
+					$Form_Inputs->form_input_hidden('idTipo', $rowData['idTipo'], 2);
+					$Form_Inputs->form_input_hidden('f_programacion', $rowData['f_programacion'], 2);
 					?>
 
 					<script>
@@ -482,7 +482,7 @@ if(!empty($_GET['edit_trabajo'])){
 	LEFT JOIN `productos_listado`       ON productos_listado.idProducto  = orden_trabajo_listado_productos.idProducto
 	LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml   = productos_listado.idUml';
 	$SIS_where = 'orden_trabajo_listado_productos.idProductos ='.$idProductos;
-	$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_listado_productos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_listado_productos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 	//Obtengo unidades de medida
 	$SIS_query = '
@@ -507,8 +507,8 @@ if(!empty($_GET['edit_trabajo'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $rowdata['idProducto'];}
-					if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = $rowdata['Cantidad'];}
+					if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $rowData['idProducto'];}
+					if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = $rowData['Cantidad'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -518,7 +518,7 @@ if(!empty($_GET['edit_trabajo'])){
 					echo '<div class="form-group" id="div_">
 						<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Unidad de Medida</label>
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-							<input type="text" value="'.$rowdata['Unidad'].'" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
+							<input type="text" value="'.$rowData['Unidad'].'" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 						</div>
 					</div>';
 
@@ -567,7 +567,7 @@ if(!empty($_GET['edit_trabajo'])){
 	$SIS_query = 'idSistema, idMaquina, idEstado, idPrioridad, idTipo, f_programacion';
 	$SIS_join  = '';
 	$SIS_where = 'orden_trabajo_listado.idOT ='.$idOT;
-	$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 	//Obtengo unidades de medida
 	$SIS_query = '
@@ -610,12 +610,12 @@ if(!empty($_GET['edit_trabajo'])){
 					$Form_Inputs->form_input_hidden('idOT',$idOT, 2);
 					$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 					$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
-					$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
-					$Form_Inputs->form_input_hidden('idMaquina', $rowdata['idMaquina'], 2);
-					$Form_Inputs->form_input_hidden('idEstado', $rowdata['idEstado'], 2);
-					$Form_Inputs->form_input_hidden('idPrioridad', $rowdata['idPrioridad'], 2);
-					$Form_Inputs->form_input_hidden('idTipo', $rowdata['idTipo'], 2);
-					$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
+					$Form_Inputs->form_input_hidden('idSistema', $rowData['idSistema'], 2);
+					$Form_Inputs->form_input_hidden('idMaquina', $rowData['idMaquina'], 2);
+					$Form_Inputs->form_input_hidden('idEstado', $rowData['idEstado'], 2);
+					$Form_Inputs->form_input_hidden('idPrioridad', $rowData['idPrioridad'], 2);
+					$Form_Inputs->form_input_hidden('idTipo', $rowData['idTipo'], 2);
+					$Form_Inputs->form_input_hidden('f_programacion', $rowData['f_programacion'], 2);
 
 					?>
 					</script>
@@ -666,7 +666,7 @@ if(!empty($_GET['edit_trabajo'])){
 	LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto  = orden_trabajo_listado_insumos.idProducto
 	LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml = insumos_listado.idUml';
 	$SIS_where = 'orden_trabajo_listado_insumos.idInsumos ='.$idInsumos;
-	$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_listado_insumos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_listado_insumos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 	//Obtengo unidades de medida
 	$SIS_query = '
@@ -691,8 +691,8 @@ if(!empty($_GET['edit_trabajo'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $rowdata['idProducto'];}
-					if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = $rowdata['Cantidad'];}
+					if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $rowData['idProducto'];}
+					if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = $rowData['Cantidad'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -702,7 +702,7 @@ if(!empty($_GET['edit_trabajo'])){
 					echo '<div class="form-group" id="div_">
 						<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Unidad de Medida</label>
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-							<input type="text" value="'.$rowdata['Unidad'].'" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
+							<input type="text" value="'.$rowData['Unidad'].'" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 						</div>
 					</div>';
 
@@ -753,7 +753,7 @@ if(!empty($_GET['edit_trabajo'])){
 	$SIS_query = 'idSistema, idMaquina, idEstado, idPrioridad, idTipo, f_programacion';
 	$SIS_join  = '';
 	$SIS_where = 'orden_trabajo_listado.idOT ='.$idOT;
-	$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 	?>
 
@@ -777,12 +777,12 @@ if(!empty($_GET['edit_trabajo'])){
 					$Form_Inputs->form_input_hidden('idOT',$idOT, 2);
 					$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 					$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
-					$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
-					$Form_Inputs->form_input_hidden('idMaquina', $rowdata['idMaquina'], 2);
-					$Form_Inputs->form_input_hidden('idEstado', $rowdata['idEstado'], 2);
-					$Form_Inputs->form_input_hidden('idPrioridad', $rowdata['idPrioridad'], 2);
-					$Form_Inputs->form_input_hidden('idTipo', $rowdata['idTipo'], 2);
-					$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
+					$Form_Inputs->form_input_hidden('idSistema', $rowData['idSistema'], 2);
+					$Form_Inputs->form_input_hidden('idMaquina', $rowData['idMaquina'], 2);
+					$Form_Inputs->form_input_hidden('idEstado', $rowData['idEstado'], 2);
+					$Form_Inputs->form_input_hidden('idPrioridad', $rowData['idPrioridad'], 2);
+					$Form_Inputs->form_input_hidden('idTipo', $rowData['idTipo'], 2);
+					$Form_Inputs->form_input_hidden('f_programacion', $rowData['f_programacion'], 2);
 					?>
 
 					<div class="form-group">
@@ -807,7 +807,7 @@ if(!empty($_GET['edit_trabajo'])){
 	$SIS_query = 'idTrabajador';
 	$SIS_join  = '';
 	$SIS_where = 'idResponsable ='.$idResponsable;
-	$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_listado_responsable', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_listado_responsable', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 	?>
 
@@ -822,7 +822,7 @@ if(!empty($_GET['edit_trabajo'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = $rowdata['idTrabajador'];}
+					if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = $rowData['idTrabajador'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -850,7 +850,7 @@ if(!empty($_GET['edit_trabajo'])){
 	$SIS_query = 'Observaciones';
 	$SIS_join  = '';
 	$SIS_where = 'orden_trabajo_listado.idOT ='.$idOT;
-	$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 	?>
 
@@ -865,7 +865,7 @@ if(!empty($_GET['edit_trabajo'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Observaciones)){    $x1  = $Observaciones;    }else{$x1  = $rowdata['Observaciones'];}
+					if(isset($Observaciones)){    $x1  = $Observaciones;    }else{$x1  = $rowData['Observaciones'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -895,7 +895,7 @@ if(!empty($_GET['edit_trabajo'])){
 	horaTermino,horaProg, idSupervisor';
 	$SIS_join  = '';
 	$SIS_where = 'orden_trabajo_listado.idOT ='.$idOT;
-	$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 	?>
 
@@ -910,14 +910,14 @@ if(!empty($_GET['edit_trabajo'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idPrioridad)){      $x1  = $idPrioridad;      }else{$x1  = $rowdata['idPrioridad'];}
-					if(isset($idTipo)){           $x2  = $idTipo;           }else{$x2  = $rowdata['idTipo'];}
-					if(isset($f_programacion)){   $x3  = $f_programacion;   }else{$x3  = $rowdata['f_programacion'];}
-					if(isset($f_termino)){        $x4  = $f_termino;        }else{$x4  = $rowdata['f_termino'];}
-					if(isset($horaInicio)){       $x5  = $horaInicio;       }else{$x5  = $rowdata['horaInicio'];}
-					if(isset($horaTermino)){      $x6  = $horaTermino;      }else{$x6  = $rowdata['horaTermino'];}
-					if(isset($horaProg)){         $x7  = $horaProg;         }else{$x7  = $rowdata['horaProg'];}
-					if(isset($idSupervisor)){     $x9  = $idSupervisor;     }else{$x9  = $rowdata['idSupervisor'];}
+					if(isset($idPrioridad)){      $x1  = $idPrioridad;      }else{$x1  = $rowData['idPrioridad'];}
+					if(isset($idTipo)){           $x2  = $idTipo;           }else{$x2  = $rowData['idTipo'];}
+					if(isset($f_programacion)){   $x3  = $f_programacion;   }else{$x3  = $rowData['f_programacion'];}
+					if(isset($f_termino)){        $x4  = $f_termino;        }else{$x4  = $rowData['f_termino'];}
+					if(isset($horaInicio)){       $x5  = $horaInicio;       }else{$x5  = $rowData['horaInicio'];}
+					if(isset($horaTermino)){      $x6  = $horaTermino;      }else{$x6  = $rowData['horaTermino'];}
+					if(isset($horaProg)){         $x7  = $horaProg;         }else{$x7  = $rowData['horaProg'];}
+					if(isset($idSupervisor)){     $x9  = $idSupervisor;     }else{$x9  = $rowData['idSupervisor'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -926,7 +926,7 @@ if(!empty($_GET['edit_trabajo'])){
 					$Form_Inputs->form_date('Fecha Programada','f_programacion', $x3, 2);
 
 					//Si la OT solo esta programada
-					if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){
+					if(isset($rowData['idEstado'])&&$rowData['idEstado']!=''&&$rowData['idEstado']==1){
 						if(isset($_GET['ter'])&&$_GET['ter']!=''&&$_GET['ter']=='true'){
 							$Form_Inputs->form_date('Fecha Termino','f_termino', $x4, 2);
 							$Form_Inputs->form_select_filter('Supervisor','idSupervisor', $x9, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
@@ -935,7 +935,7 @@ if(!empty($_GET['edit_trabajo'])){
 							//$Form_Inputs->form_time('Tiempo Programado','horaProg', $x7, 2, 1);
 						}
 					//Si la OT esta terminada
-					}elseif(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==2){
+					}elseif(isset($rowData['idEstado'])&&$rowData['idEstado']!=''&&$rowData['idEstado']==2){
 						$Form_Inputs->form_date('Fecha Termino','f_termino', $x4, 2);
 						$Form_Inputs->form_select_filter('Supervisor','idSupervisor', $x9, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
 						$Form_Inputs->form_time('Hora inicio','horaInicio', $x5, 2, 1);
@@ -990,7 +990,7 @@ if(!empty($_GET['edit_trabajo'])){
 	LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador  = orden_trabajo_listado.idSupervisor
 	LEFT JOIN `telemetria_listado`    ON telemetria_listado.idTelemetria    = orden_trabajo_listado.idTelemetria';
 	$SIS_where = 'orden_trabajo_listado.idOT ='.$idOT;
-	$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 	/***************************************************/
 	//Se traen a todos los trabajadores relacionados a las ot
@@ -1077,29 +1077,29 @@ if(!empty($_GET['edit_trabajo'])){
 						</tr>
 						<tr>
 							<td class="meta-head">Equipo de Telemetria</td>
-							<td><?php echo $rowdata['TelemetriaNombre'] ?></td>
+							<td><?php echo $rowData['TelemetriaNombre'] ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Maquina</td>
-							<td><?php echo $rowdata['NombreMaquina']?></td>
+							<td><?php echo $rowData['NombreMaquina']?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Prioridad</td>
-							<td><?php echo $rowdata['NombrePrioridad']?></td>
+							<td><?php echo $rowData['NombrePrioridad']?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Tipo de Trabajo</td>
-							<td><?php echo $rowdata['NombreTipo']?></td>
+							<td><?php echo $rowData['NombreTipo']?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Estado</td>
-							<td><?php echo $rowdata['NombreEstado']?></td>
+							<td><?php echo $rowData['NombreEstado']?></td>
 						</tr>
 
-						<?php if(isset($rowdata['idSupervisor'])&&$rowdata['idSupervisor']!=''&&$rowdata['idSupervisor']!=0){ ?>
+						<?php if(isset($rowData['idSupervisor'])&&$rowData['idSupervisor']!=''&&$rowData['idSupervisor']!=0){ ?>
 							<tr>
 								<td class="meta-head">Supervisor</td>
-								<td><?php echo $rowdata['NombreTrab'].' '.$rowdata['ApellidoPat']?></td>
+								<td><?php echo $rowData['NombreTrab'].' '.$rowData['ApellidoPat']?></td>
 							</tr>
 						<?php }elseif(isset($_GET['ter'])&&$_GET['ter']!=''){ ?>
 							<tr>
@@ -1113,24 +1113,24 @@ if(!empty($_GET['edit_trabajo'])){
 				<table id="meta" class="otdata2">
 					<tbody>
 
-						<?php if($rowdata['f_creacion']!='0000-00-00'){ ?>
+						<?php if($rowData['f_creacion']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Fecha creación</td>
-								<td><?php if($rowdata['f_creacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_creacion']);} ?></td>
+								<td><?php if($rowData['f_creacion']!='0000-00-00'){echo Fecha_estandar($rowData['f_creacion']);} ?></td>
 							</tr>
 						<?php } ?>
 
-						<?php if($rowdata['f_programacion']!='0000-00-00'){ ?>
+						<?php if($rowData['f_programacion']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Fecha programada</td>
-								<td><?php if($rowdata['f_programacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_programacion']);} ?></td>
+								<td><?php if($rowData['f_programacion']!='0000-00-00'){echo Fecha_estandar($rowData['f_programacion']);} ?></td>
 							</tr>
 						<?php } ?>
 
-						<?php if($rowdata['f_termino']!='0000-00-00'){ ?>
+						<?php if($rowData['f_termino']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Fecha termino</td>
-								<td><?php if($rowdata['f_termino']!='0000-00-00'){echo Fecha_estandar($rowdata['f_termino']);} ?></td>
+								<td><?php if($rowData['f_termino']!='0000-00-00'){echo Fecha_estandar($rowData['f_termino']);} ?></td>
 							</tr>
 						<?php }elseif(isset($_GET['ter'])&&$_GET['ter']!=''){ ?>
 							<tr>
@@ -1139,24 +1139,24 @@ if(!empty($_GET['edit_trabajo'])){
 							</tr>
 						<?php } ?>
 
-						<?php if($rowdata['horaInicio']!='00:00:00'){ ?>
+						<?php if($rowData['horaInicio']!='00:00:00'){ ?>
 							<tr>
 								<td class="meta-head">Hora inicio</td>
-								<td><?php if($rowdata['horaInicio']!='00:00:00'){echo $rowdata['horaInicio'];} ?></td>
+								<td><?php if($rowData['horaInicio']!='00:00:00'){echo $rowData['horaInicio'];} ?></td>
 							</tr>
 						<?php } ?>
 
-						<?php if($rowdata['horaTermino']!='00:00:00'){ ?>
+						<?php if($rowData['horaTermino']!='00:00:00'){ ?>
 							<tr>
 								<td class="meta-head">Hora termino</td>
-								<td><?php if($rowdata['horaTermino']!='00:00:00'){echo $rowdata['horaTermino'];} ?></td>
+								<td><?php if($rowData['horaTermino']!='00:00:00'){echo $rowData['horaTermino'];} ?></td>
 							</tr>
 						<?php } ?>
 
-						<?php if($rowdata['horaProg']!='00:00:00'){ ?>
+						<?php if($rowData['horaProg']!='00:00:00'){ ?>
 							<tr>
 								<td class="meta-head">Tiempo Programado</td>
-								<td><?php if($rowdata['horaProg']!='00:00:00'){echo $rowdata['horaProg'];} ?></td>
+								<td><?php if($rowData['horaProg']!='00:00:00'){echo $rowData['horaProg'];} ?></td>
 							</tr>
 						<?php } ?>
 
@@ -1176,7 +1176,7 @@ if(!empty($_GET['edit_trabajo'])){
 							<td colspan="5">Trabajadores Encargados</td>
 							<td>
 								<?php //Si la OT solo esta programada
-								if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){ ?>
+								if(isset($rowData['idEstado'])&&$rowData['idEstado']!=''&&$rowData['idEstado']==1){ ?>
 									<a href="<?php echo $location.'&addTrab=true' ?>" title="Agregar Trabajadores" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Trabajadores</a>
 								<?php } ?>
 							</td>
@@ -1200,10 +1200,10 @@ if(!empty($_GET['edit_trabajo'])){
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php /**********************************************************************************/ ?>
 						<tr class="item-row fact_tittle">
-							<td colspan="5">Insumos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';} ?></td>
+							<td colspan="5">Insumos <?php if(isset($rowData['idEstado'])&&$rowData['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';} ?></td>
 							<td>
 								<?php //Si la OT solo esta programada
-								if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){ ?>
+								if(isset($rowData['idEstado'])&&$rowData['idEstado']!=''&&$rowData['idEstado']==1){ ?>
 									<a href="<?php echo $location.'&addIns=true' ?>" title="Agregar Insumos" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Insumos</a>
 								<?php } ?>
 							</td>
@@ -1211,12 +1211,12 @@ if(!empty($_GET['edit_trabajo'])){
 						<?php foreach ($arrInsumos as $insumos) {
 							if(isset($insumos['Cantidad'])&&$insumos['Cantidad']!=0){ ?>
 								<tr class="item-row linea_punteada">
-									<td class="item-name" colspan="4"><?php echo $insumos['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
+									<td class="item-name" colspan="4"><?php echo $insumos['NombreProducto']; if(isset($rowData['NombreBodega'])&&$rowData['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
 									<td class="item-name"><?php echo $insumos['Cantidad'].' '.$insumos['UnidadMedida']; ?></td>
 									<td>
 										<div class="btn-group" style="width: 70px;" >
 											<?php //Si la OT solo esta programada
-											if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){ ?>
+											if(isset($rowData['idEstado'])&&$rowData['idEstado']!=''&&$rowData['idEstado']==1){ ?>
 												<a href="<?php echo $location.'&edit_ins='.simpleEncode($insumos['idMain'], fecha_actual()); ?>" title="Editar Insumos" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 												<?php
 												$ubicacion = $location.'&del_ins='.simpleEncode($insumos['idMain'], fecha_actual());
@@ -1232,10 +1232,10 @@ if(!empty($_GET['edit_trabajo'])){
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php /**********************************************************************************/?>
 						<tr class="item-row fact_tittle">
-							<td colspan="5">Productos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';} ?></td>
+							<td colspan="5">Productos <?php if(isset($rowData['idEstado'])&&$rowData['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';} ?></td>
 							<td>
 								<?php //Si la OT solo esta programada
-								if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){ ?>
+								if(isset($rowData['idEstado'])&&$rowData['idEstado']!=''&&$rowData['idEstado']==1){ ?>
 									<a href="<?php echo $location.'&addProd=true' ?>" title="Agregar Productos" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Productos</a>
 								<?php } ?>
 							</td>
@@ -1243,12 +1243,12 @@ if(!empty($_GET['edit_trabajo'])){
 						<?php foreach ($arrProductos as $prod) {
 							if(isset($prod['Cantidad'])&&$prod['Cantidad']!=0){ ?>
 								<tr class="item-row linea_punteada">
-									<td class="item-name" colspan="4"><?php echo $prod['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
+									<td class="item-name" colspan="4"><?php echo $prod['NombreProducto']; if(isset($rowData['NombreBodega'])&&$rowData['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
 									<td class="item-name"><?php echo $prod['Cantidad'].' '.$prod['UnidadMedida']; ?></td>
 									<td>
 										<div class="btn-group" style="width: 70px;" >
 											<?php //Si la OT solo esta programada
-											if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){ ?>
+											if(isset($rowData['idEstado'])&&$rowData['idEstado']!=''&&$rowData['idEstado']==1){ ?>
 												<a href="<?php echo $location.'&edit_prod='.simpleEncode($prod['idMain'], fecha_actual()); ?>" title="Editar Productos" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 												<?php
 												$ubicacion = $location.'&del_prod='.simpleEncode($prod['idMain'], fecha_actual());
@@ -1264,10 +1264,10 @@ if(!empty($_GET['edit_trabajo'])){
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php /**********************************************************************************/?>
 						<tr class="item-row fact_tittle">
-							<td colspan="5">Trabajos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Ejecutados';} ?></td>
+							<td colspan="5">Trabajos <?php if(isset($rowData['idEstado'])&&$rowData['idEstado']==1){echo 'Programados';}else{echo 'Ejecutados';} ?></td>
 							<td>
 								<?php //Si la OT solo esta programada
-								if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){ ?>
+								if(isset($rowData['idEstado'])&&$rowData['idEstado']!=''&&$rowData['idEstado']==1){ ?>
 									<a href="<?php echo $location.'&addtrabajo=true' ?>" title="Agregar Tareas" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Trabajo</a>
 								<?php } ?>
 							</td>
@@ -1280,7 +1280,7 @@ if(!empty($_GET['edit_trabajo'])){
 								<td>
 									<div class="btn-group" style="width: 70px;" >
 										<?php //Si la OT solo esta programada
-										if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){ ?>
+										if(isset($rowData['idEstado'])&&$rowData['idEstado']!=''&&$rowData['idEstado']==1){ ?>
 											<a href="<?php echo $location.'&edit_trabajo='.simpleEncode($trab['idTrabajoOT'], fecha_actual()); ?>" title="Editar Productos" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 											<?php
 											$ubicacion = $location.'&del_TrabajoOT='.simpleEncode($trab['idTrabajoOT'], fecha_actual());
@@ -1310,7 +1310,7 @@ if(!empty($_GET['edit_trabajo'])){
 									<td colspan="5">Trabajos Temporales</td>
 									<td>';
 									//Si la OT solo esta programada
-									if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){
+									if(isset($rowData['idEstado'])&&$rowData['idEstado']!=''&&$rowData['idEstado']==1){
 										echo '<a href="'.$location.'&aproTrab=true" class="btn btn-xs btn-success pull-right">Aprobar Trabajos Temp</a>';
 									}
 								echo '</td>
@@ -1358,7 +1358,7 @@ if(!empty($_GET['edit_trabajo'])){
 					<?php /**********************************************************************************/?>
 
 					<tr>
-						<td colspan="5" class="blank"><p><?php echo $rowdata['Observaciones']?></p></td>
+						<td colspan="5" class="blank"><p><?php echo $rowData['Observaciones']?></p></td>
 						<td class="blank">
 							<div class="btn-group" style="width: 35px;" >
 								<a href="<?php echo $location.'&edit_obs=true'; ?>" title="Editar Observacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>

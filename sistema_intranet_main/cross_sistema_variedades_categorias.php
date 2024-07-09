@@ -51,7 +51,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'Nombre';
 	$SIS_join  = '';
 	$SIS_where = 'idCategoria = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'sistema_variedades_categorias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'sistema_variedades_categorias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -101,7 +101,7 @@ if(!empty($_GET['id'])){
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Especie', $rowdata['Nombre'], 'Resumen'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Especie', $rowData['Nombre'], 'Resumen'); ?>
 	</div>
 	<div class="clearfix"></div>
 
@@ -126,7 +126,7 @@ if(!empty($_GET['id'])){
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 							<p class="text-muted">
-								<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
+								<strong>Nombre : </strong><?php echo $rowData['Nombre']; ?><br/>
 							</p>
 
 						</div>

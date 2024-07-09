@@ -108,7 +108,7 @@ LEFT JOIN `core_cross_prioridad`                           ON core_cross_priorid
 LEFT JOIN `trabajadores_listado`                           ON trabajadores_listado.idTrabajador                          = cross_solicitud_aplicacion_listado.idDosificador
 LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idSolicitud   = cross_solicitud_aplicacion_listado.idSolicitud';
 $SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud ='.$X_Puntero.' GROUP BY cross_solicitud_aplicacion_listado.idSolicitud';
-$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /*****************************************/
 //Insumos
@@ -148,8 +148,8 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
-				<i class="fa fa-globe" aria-hidden="true"></i> Detalles Solicitud de Aplicacion N°<?php echo n_doc($row_data['NSolicitud'], 5); ?>.
-				<small class="pull-right">Fecha Termino: <?php echo Fecha_estandar($row_data['f_termino']); ?></small>
+				<i class="fa fa-globe" aria-hidden="true"></i> Detalles Solicitud de Aplicacion N°<?php echo n_doc($rowData['NSolicitud'], 5); ?>.
+				<small class="pull-right">Fecha Termino: <?php echo Fecha_estandar($rowData['f_termino']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -159,41 +159,41 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			<strong>Datos Empresa</strong>
 			<address>
-				Rut: <?php echo $row_data['SistemaOrigenRut']; ?><br/>
-				Empresa: <?php echo $row_data['SistemaOrigen']; ?><br/>
-				Ciudad-Comuna: <?php echo $row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna']; ?><br/>
-				Dirección: <?php echo $row_data['SistemaOrigenDireccion']; ?><br/>
-				Fono: <?php echo formatPhone($row_data['SistemaOrigenFono']); ?><br/>
-				Email: <?php echo $row_data['SistemaOrigenEmail']; ?>
+				Rut: <?php echo $rowData['SistemaOrigenRut']; ?><br/>
+				Empresa: <?php echo $rowData['SistemaOrigen']; ?><br/>
+				Ciudad-Comuna: <?php echo $rowData['SistemaOrigenCiudad'].', '.$rowData['SistemaOrigenComuna']; ?><br/>
+				Dirección: <?php echo $rowData['SistemaOrigenDireccion']; ?><br/>
+				Fono: <?php echo formatPhone($rowData['SistemaOrigenFono']); ?><br/>
+				Email: <?php echo $rowData['SistemaOrigenEmail']; ?>
 			</address>
 		</div>
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			<strong>Identificación</strong>
 			<address>
-				Predio: <?php echo $row_data['NombrePredio']; ?><br/>
-				Estado: <?php echo $row_data['Estado']; ?><br/>
-				Temporada: <?php echo $row_data['TemporadaCodigo'].' '.$row_data['TemporadaNombre']; ?><br/>
-				Estado Fenologico: <?php echo $row_data['EstadoFenCodigo'].' '.$row_data['EstadoFenNombre']; ?><br/>
+				Predio: <?php echo $rowData['NombrePredio']; ?><br/>
+				Estado: <?php echo $rowData['Estado']; ?><br/>
+				Temporada: <?php echo $rowData['TemporadaCodigo'].' '.$rowData['TemporadaNombre']; ?><br/>
+				Estado Fenologico: <?php echo $rowData['EstadoFenCodigo'].' '.$rowData['EstadoFenNombre']; ?><br/>
 				<?php
-					if(isset($row_data['VariedadCat'])&&$row_data['VariedadCat']!=''){echo 'Especie: '.$row_data['VariedadCat'].'<br/>';     }else{echo 'Especie: Todas las Especies<br/>';}
-					if(isset($row_data['VariedadNombre'])&&$row_data['VariedadNombre']!=''){ echo 'Variedad: '.$row_data['VariedadNombre'].'<br/>';}else{echo 'Variedad: Todas las Variedades<br/>';}
+					if(isset($rowData['VariedadCat'])&&$rowData['VariedadCat']!=''){echo 'Especie: '.$rowData['VariedadCat'].'<br/>';     }else{echo 'Especie: Todas las Especies<br/>';}
+					if(isset($rowData['VariedadNombre'])&&$rowData['VariedadNombre']!=''){ echo 'Variedad: '.$rowData['VariedadNombre'].'<br/>';}else{echo 'Variedad: Todas las Variedades<br/>';}
 				?>
 			</address>
 		</div>
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			<strong>Datos de Solicitud</strong>
 			<address>
-				Prioridad: <?php echo $row_data['NombrePrioridad']; ?><br/>
-				N° Solicitud: <?php echo n_doc($row_data['NSolicitud'], 5); ?><br/>
-				Fecha inicio requerido: <?php echo fecha_estandar($row_data['f_programacion']).' '.$row_data['horaProg']; ?><br/>
-				Fecha termino requerido: <?php echo fecha_estandar($row_data['f_programacion_fin']).' '.$row_data['horaProg_fin']; ?><br/>
+				Prioridad: <?php echo $rowData['NombrePrioridad']; ?><br/>
+				N° Solicitud: <?php echo n_doc($rowData['NSolicitud'], 5); ?><br/>
+				Fecha inicio requerido: <?php echo fecha_estandar($rowData['f_programacion']).' '.$rowData['horaProg']; ?><br/>
+				Fecha termino requerido: <?php echo fecha_estandar($rowData['f_programacion_fin']).' '.$rowData['horaProg_fin']; ?><br/>
 				<?php
-					if(isset($row_data['f_ejecucion'])&&$row_data['f_ejecucion']!='0000-00-00'){echo 'Fecha inicio programación: '.fecha_estandar($row_data['f_ejecucion']).' '.$row_data['horaEjecucion'].'<br/>';}
-					if(isset($row_data['f_ejecucion_fin'])&&$row_data['f_ejecucion_fin']!='0000-00-00'){echo 'Fecha termino programación: '.fecha_estandar($row_data['f_ejecucion_fin']).' '.$row_data['horaEjecucion_fin'].'<br/>';}
-					if(isset($row_data['f_termino'])&&$row_data['f_termino']!='0000-00-00'){echo 'Fecha inicio ejecución: '.fecha_estandar($row_data['f_termino']).' '.$row_data['horaTermino'].'<br/>';}
-					if(isset($row_data['f_termino_fin'])&&$row_data['f_termino_fin']!='0000-00-00'){echo 'Terminado: '.fecha_estandar($row_data['f_termino_fin']).' '.$row_data['horaTermino_fin'].'<br/>';}
-					echo 'Agrónomo: '.$row_data['NombreUsuario'];
-					if(isset($row_data['idDosificador'])&&$row_data['idDosificador']!=0){echo 'Dosificador: '.$row_data['TrabajadorRut'].' '.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].'<br/>';}
+					if(isset($rowData['f_ejecucion'])&&$rowData['f_ejecucion']!='0000-00-00'){echo 'Fecha inicio programación: '.fecha_estandar($rowData['f_ejecucion']).' '.$rowData['horaEjecucion'].'<br/>';}
+					if(isset($rowData['f_ejecucion_fin'])&&$rowData['f_ejecucion_fin']!='0000-00-00'){echo 'Fecha termino programación: '.fecha_estandar($rowData['f_ejecucion_fin']).' '.$rowData['horaEjecucion_fin'].'<br/>';}
+					if(isset($rowData['f_termino'])&&$rowData['f_termino']!='0000-00-00'){echo 'Fecha inicio ejecución: '.fecha_estandar($rowData['f_termino']).' '.$rowData['horaTermino'].'<br/>';}
+					if(isset($rowData['f_termino_fin'])&&$rowData['f_termino_fin']!='0000-00-00'){echo 'Terminado: '.fecha_estandar($rowData['f_termino_fin']).' '.$rowData['horaTermino_fin'].'<br/>';}
+					echo 'Agrónomo: '.$rowData['NombreUsuario'];
+					if(isset($rowData['idDosificador'])&&$rowData['idDosificador']!=0){echo 'Dosificador: '.$rowData['TrabajadorRut'].' '.$rowData['TrabajadorNombre'].' '.$rowData['TrabajadorApellidoPat'].'<br/>';}
 				?>	
 					
 			</address>
@@ -204,21 +204,21 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			<strong>Parámetros de Aplicación</strong>
 			<address>
-				Mojamiento: <?php echo Cantidades_decimales_justos($row_data['Mojamiento']); ?> L/ha<br/>
-				Velocidad Tractor: <?php echo Cantidades_decimales_justos($row_data['VelTractor']); ?> Km/hr<br/>
-				Velocidad Viento: <?php echo Cantidades_decimales_justos($row_data['VelViento']); ?> Km/hr<br/>
-				Temperatura Min: <?php echo Cantidades_decimales_justos($row_data['TempMin']); ?> °<br/>
-				Temperatura Max: <?php echo Cantidades_decimales_justos($row_data['TempMax']); ?> °<br/>
-				Humedad: <?php echo Cantidades_decimales_justos($row_data['HumTempMax']); ?> %<br/>
+				Mojamiento: <?php echo Cantidades_decimales_justos($rowData['Mojamiento']); ?> L/ha<br/>
+				Velocidad Tractor: <?php echo Cantidades_decimales_justos($rowData['VelTractor']); ?> Km/hr<br/>
+				Velocidad Viento: <?php echo Cantidades_decimales_justos($rowData['VelViento']); ?> Km/hr<br/>
+				Temperatura Min: <?php echo Cantidades_decimales_justos($rowData['TempMin']); ?> °<br/>
+				Temperatura Max: <?php echo Cantidades_decimales_justos($rowData['TempMax']); ?> °<br/>
+				Humedad: <?php echo Cantidades_decimales_justos($rowData['HumTempMax']); ?> %<br/>
 
 			</address>
 		</div>
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			<strong>Cumplimiento</strong>
 			<address>
-				N° Cuarteles Programados: <?php echo $row_data['N_Cuarteles']; ?><br/>
-				N° Cuarteles Cerrados: <?php echo $row_data['N_Cuarteles_Cerrados']; ?><br/>
-				Avance %: <?php echo porcentaje($row_data['N_Cuarteles_Cerrados']/$row_data['N_Cuarteles']); ?><br/>
+				N° Cuarteles Programados: <?php echo $rowData['N_Cuarteles']; ?><br/>
+				N° Cuarteles Cerrados: <?php echo $rowData['N_Cuarteles_Cerrados']; ?><br/>
+				Avance %: <?php echo porcentaje($rowData['N_Cuarteles_Cerrados']/$rowData['N_Cuarteles']); ?><br/>
 
 			</address>
 		</div>

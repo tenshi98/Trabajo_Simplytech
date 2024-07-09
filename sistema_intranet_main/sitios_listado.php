@@ -137,7 +137,7 @@ LEFT JOIN `core_sistemas_opciones` menu_opc7   ON menu_opc7.idOpciones    = siti
 LEFT JOIN `core_sistemas_opciones` menu_opc8   ON menu_opc8.idOpciones    = sitios_listado.Config_Footer_Letters
 LEFT JOIN `core_estados`                       ON core_estados.idEstado   = sitios_listado.idEstado';
 $SIS_where = 'sitios_listado.idSitio = '.simpleDecode($_GET['id'], fecha_actual());
-$rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /**********************************/
 //Permisos a sistemas
@@ -218,7 +218,7 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 .text-muted {white-space: initial;}
 </style>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sitio', $rowdata['Nombre'], 'Resumen'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sitio', $rowData['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -232,10 +232,10 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<?php if(isset($rowdata['Config_Menu'])&&$rowdata['Config_Menu']==1){ ?>            <li class=""><a href="<?php echo 'sitios_listado_menu.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list" aria-hidden="true"></i> Menu</a></li><?php } ?>
-						<?php if(isset($rowdata['Config_MenuOtros'])&&$rowdata['Config_MenuOtros']==1){ ?>  <li class=""><a href="<?php echo 'sitios_listado_menu_otros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list" aria-hidden="true"></i> Menu Otros</a></li><?php } ?>
-						<?php if(isset($rowdata['Config_Carousel'])&&$rowdata['Config_Carousel']==1){ ?>    <li class=""><a href="<?php echo 'sitios_listado_carousel.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Carousel</a></li><?php } ?>
-						<?php if(isset($rowdata['Config_Links_Rel'])&&$rowdata['Config_Links_Rel']==1){ ?>  <li class=""><a href="<?php echo 'sitios_listado_links.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-link" aria-hidden="true"></i> Links Relacionados</a></li><?php } ?>
+						<?php if(isset($rowData['Config_Menu'])&&$rowData['Config_Menu']==1){ ?>            <li class=""><a href="<?php echo 'sitios_listado_menu.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list" aria-hidden="true"></i> Menu</a></li><?php } ?>
+						<?php if(isset($rowData['Config_MenuOtros'])&&$rowData['Config_MenuOtros']==1){ ?>  <li class=""><a href="<?php echo 'sitios_listado_menu_otros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list" aria-hidden="true"></i> Menu Otros</a></li><?php } ?>
+						<?php if(isset($rowData['Config_Carousel'])&&$rowData['Config_Carousel']==1){ ?>    <li class=""><a href="<?php echo 'sitios_listado_carousel.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Carousel</a></li><?php } ?>
+						<?php if(isset($rowData['Config_Links_Rel'])&&$rowData['Config_Links_Rel']==1){ ?>  <li class=""><a href="<?php echo 'sitios_listado_links.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-link" aria-hidden="true"></i> Links Relacionados</a></li><?php } ?>
 
 						<li class=""><a href="<?php echo 'sitios_listado_body.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Body</a></li>
 					</ul>
@@ -249,82 +249,82 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
-						<?php if (isset($rowdata['Config_Logo_Archivo'])&&$rowdata['Config_Logo_Archivo']!='') { ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO.'/'.$rowdata['Config_Root_Folder'].'/upload/'.$rowdata['Config_Logo_Archivo'] ?>">
+						<?php if (isset($rowData['Config_Logo_Archivo'])&&$rowData['Config_Logo_Archivo']!='') { ?>
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO.'/'.$rowData['Config_Root_Folder'].'/upload/'.$rowData['Config_Logo_Archivo'] ?>">
 						<?php } ?>
 
 						<p class="text-muted">
-							<strong>Estado : </strong><label class="label <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $rowdata['Estado']; ?></label><br/>
-							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
-							<strong>Dominio : </strong><?php echo $rowdata['Domain']; ?><br/>
+							<strong>Estado : </strong><label class="label <?php if(isset($rowData['idEstado'])&&$rowData['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $rowData['Estado']; ?></label><br/>
+							<strong>Nombre : </strong><?php echo $rowData['Nombre']; ?><br/>
+							<strong>Dominio : </strong><?php echo $rowData['Domain']; ?><br/>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Whatsapp</h2>
 						<p class="text-muted">
-							<strong>Titulo : </strong><?php echo $rowdata['Whatsapp_tittle']; ?><br/>
-							<strong>Numero Whatsapp 1 : </strong><?php echo $rowdata['Whatsapp_number_1']; ?><br/>
-							<strong>Numero Whatsapp 2 : </strong><?php echo $rowdata['Whatsapp_number_2']; ?><br/>
+							<strong>Titulo : </strong><?php echo $rowData['Whatsapp_tittle']; ?><br/>
+							<strong>Numero Whatsapp 1 : </strong><?php echo $rowData['Whatsapp_number_1']; ?><br/>
+							<strong>Numero Whatsapp 2 : </strong><?php echo $rowData['Whatsapp_number_2']; ?><br/>
 						</p>
 
-						<?php if(isset($rowdata['Config_Carousel'])&&$rowdata['Config_Carousel']==2){ ?>
+						<?php if(isset($rowData['Config_Carousel'])&&$rowData['Config_Carousel']==2){ ?>
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Header</h2>
 							<p class="text-muted">
-								<strong>Titulo : </strong><?php echo $rowdata['Header_Titulo']; ?><br/>
-								<strong>Texto : </strong><?php echo $rowdata['Header_Texto']; ?><br/>
-								<strong>Link Nombre : </strong><?php echo $rowdata['Header_LinkNombre']; ?><br/>
-								<strong>Link URL : </strong><?php echo $rowdata['Header_LinkURL']; ?><br/>
+								<strong>Titulo : </strong><?php echo $rowData['Header_Titulo']; ?><br/>
+								<strong>Texto : </strong><?php echo $rowData['Header_Texto']; ?><br/>
+								<strong>Link Nombre : </strong><?php echo $rowData['Header_LinkNombre']; ?><br/>
+								<strong>Link URL : </strong><?php echo $rowData['Header_LinkURL']; ?><br/>
 							</p>
 						<?php } ?>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Contacto</h2>
 						<p class="text-muted">
-							<strong>Contacto - Titulo : </strong><?php echo $rowdata['Contact_Tittle']; ?><br/>
-							<strong>Contacto - Cuerpo : </strong><?php echo $rowdata['Contact_Tittle_body']; ?><br/>
-							<strong>Dirección - Titulo : </strong><?php echo $rowdata['Contact_Address_tittle']; ?><br/>
-							<strong>Dirección - Cuerpo : </strong><?php echo $rowdata['Contact_Address_body']; ?><br/>
-							<strong>Email - Titulo : </strong><?php echo $rowdata['Contact_Email_tittle']; ?><br/>
-							<strong>Email - Cuerpo : </strong><?php echo $rowdata['Contact_Email_body']; ?><br/>
-							<strong>Fono - Titulo : </strong><?php echo $rowdata['Contact_Phone_tittle']; ?><br/>
-							<strong>Fono - Cuerpo : </strong><?php echo $rowdata['Contact_Phone_body']; ?><br/>
-							<strong>Receptor - Asunto : </strong><?php echo $rowdata['Contact_Recep_asunto']; ?><br/>
-							<strong>Receptor - Email : </strong><?php echo $rowdata['Contact_Recep_mail']; ?><br/>
-							<strong>Receptor - Nombre : </strong><?php echo $rowdata['Contact_Recep_name']; ?><br/>
+							<strong>Contacto - Titulo : </strong><?php echo $rowData['Contact_Tittle']; ?><br/>
+							<strong>Contacto - Cuerpo : </strong><?php echo $rowData['Contact_Tittle_body']; ?><br/>
+							<strong>Dirección - Titulo : </strong><?php echo $rowData['Contact_Address_tittle']; ?><br/>
+							<strong>Dirección - Cuerpo : </strong><?php echo $rowData['Contact_Address_body']; ?><br/>
+							<strong>Email - Titulo : </strong><?php echo $rowData['Contact_Email_tittle']; ?><br/>
+							<strong>Email - Cuerpo : </strong><?php echo $rowData['Contact_Email_body']; ?><br/>
+							<strong>Fono - Titulo : </strong><?php echo $rowData['Contact_Phone_tittle']; ?><br/>
+							<strong>Fono - Cuerpo : </strong><?php echo $rowData['Contact_Phone_body']; ?><br/>
+							<strong>Receptor - Asunto : </strong><?php echo $rowData['Contact_Recep_asunto']; ?><br/>
+							<strong>Receptor - Email : </strong><?php echo $rowData['Contact_Recep_mail']; ?><br/>
+							<strong>Receptor - Nombre : </strong><?php echo $rowData['Contact_Recep_name']; ?><br/>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Social</h2>
 						<p class="text-muted">
-							<strong>Titulo : </strong><?php echo $rowdata['Social_Tittle']; ?><br/>
-							<strong>Twitter : </strong><?php echo $rowdata['Social_Twitter']; ?><br/>
-							<strong>Facebook : </strong><?php echo $rowdata['Social_Facebook']; ?><br/>
-							<strong>Instagram : </strong><?php echo $rowdata['Social_Instagram']; ?><br/>
-							<strong>Googleplus : </strong><?php echo $rowdata['Social_Googleplus']; ?><br/>
-							<strong>Linkedin : </strong><?php echo $rowdata['Social_Linkedin']; ?><br/>
+							<strong>Titulo : </strong><?php echo $rowData['Social_Tittle']; ?><br/>
+							<strong>Twitter : </strong><?php echo $rowData['Social_Twitter']; ?><br/>
+							<strong>Facebook : </strong><?php echo $rowData['Social_Facebook']; ?><br/>
+							<strong>Instagram : </strong><?php echo $rowData['Social_Instagram']; ?><br/>
+							<strong>Googleplus : </strong><?php echo $rowData['Social_Googleplus']; ?><br/>
+							<strong>Linkedin : </strong><?php echo $rowData['Social_Linkedin']; ?><br/>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Nosotros</h2>
 						<p class="text-muted">
-							<strong>Titulo : </strong><?php echo $rowdata['Nosotros_Titulo']; ?><br/>
-							<strong>Subtitulo : </strong><?php echo $rowdata['Nosotros_Subtitulo']; ?><br/>
-							<strong>Texto : </strong><?php echo $rowdata['Nosotros_Texto']; ?><br/>
-							<strong>Link Video : </strong><?php echo $rowdata['Nosotros_Link']; ?><br/>
+							<strong>Titulo : </strong><?php echo $rowData['Nosotros_Titulo']; ?><br/>
+							<strong>Subtitulo : </strong><?php echo $rowData['Nosotros_Subtitulo']; ?><br/>
+							<strong>Texto : </strong><?php echo $rowData['Nosotros_Texto']; ?><br/>
+							<strong>Link Video : </strong><?php echo $rowData['Nosotros_Link']; ?><br/>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Configuracion</h2>
 						<p class="text-muted">
-							<strong>Uso Menu : </strong><?php echo $rowdata['Menu']; ?><br/>
-							<strong>Uso Menu Otros : </strong><?php echo $rowdata['MenuOtros']; ?><br/>
-							<strong>Uso Carousel : </strong><?php echo $rowdata['Carousel']; ?><br/>
-							<strong>Uso Links Relacionados : </strong><?php echo $rowdata['LinksRelacionados']; ?><br/>
-							<strong>Mostrar TopBar : </strong><?php echo $rowdata['TopBar']; ?><br/>
-							<strong>Mostrar enlaces en el Footer : </strong><?php echo $rowdata['Footer_Links']; ?><br/>
-							<strong>Mostrar servicios en el Footer : </strong><?php echo $rowdata['Footer_Services']; ?><br/>
-							<strong>Mostrar suscripcion en el Footer : </strong><?php echo $rowdata['Footer_Letters']; ?><br/>
+							<strong>Uso Menu : </strong><?php echo $rowData['Menu']; ?><br/>
+							<strong>Uso Menu Otros : </strong><?php echo $rowData['MenuOtros']; ?><br/>
+							<strong>Uso Carousel : </strong><?php echo $rowData['Carousel']; ?><br/>
+							<strong>Uso Links Relacionados : </strong><?php echo $rowData['LinksRelacionados']; ?><br/>
+							<strong>Mostrar TopBar : </strong><?php echo $rowData['TopBar']; ?><br/>
+							<strong>Mostrar enlaces en el Footer : </strong><?php echo $rowData['Footer_Links']; ?><br/>
+							<strong>Mostrar servicios en el Footer : </strong><?php echo $rowData['Footer_Services']; ?><br/>
+							<strong>Mostrar suscripcion en el Footer : </strong><?php echo $rowData['Footer_Letters']; ?><br/>
 
-							<strong>Usuario SMTP : </strong><?php echo $rowdata['Config_SMTP_mailUsername']; ?><br/>
-							<strong>Contraseña del usuario SMTP : </strong><?php echo $rowdata['Config_SMTP_mailPassword']; ?><br/>
-							<strong>Host del correo SMTP : </strong><?php echo $rowdata['Config_SMTP_Host']; ?><br/>
-							<strong>Puerto del correo SMTP : </strong><?php echo $rowdata['Config_SMTP_Port']; ?><br/>
-							<strong>Protocolo de seguridad del correo SMTP : </strong><?php echo $rowdata['Config_SMTP_Secure']; ?><br/>
+							<strong>Usuario SMTP : </strong><?php echo $rowData['Config_SMTP_mailUsername']; ?><br/>
+							<strong>Contraseña del usuario SMTP : </strong><?php echo $rowData['Config_SMTP_mailPassword']; ?><br/>
+							<strong>Host del correo SMTP : </strong><?php echo $rowData['Config_SMTP_Host']; ?><br/>
+							<strong>Puerto del correo SMTP : </strong><?php echo $rowData['Config_SMTP_Port']; ?><br/>
+							<strong>Protocolo de seguridad del correo SMTP : </strong><?php echo $rowData['Config_SMTP_Secure']; ?><br/>
 
 						</p>
 
@@ -332,7 +332,7 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 
-						<?php if(isset($rowdata['Config_Menu'])&&$rowdata['Config_Menu']==1){ ?>
+						<?php if(isset($rowData['Config_Menu'])&&$rowData['Config_Menu']==1){ ?>
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<h2 class="text-primary">Menu</h2>
 								<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -362,7 +362,7 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 							</div>
 						<?php } ?>
 
-						<?php if(isset($rowdata['Config_MenuOtros'])&&$rowdata['Config_MenuOtros']==1){ ?>
+						<?php if(isset($rowData['Config_MenuOtros'])&&$rowData['Config_MenuOtros']==1){ ?>
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<h2 class="text-primary">Menu Desplegable</h2>
 								<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -392,7 +392,7 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 							</div>
 						<?php } ?>
 
-						<?php if(isset($rowdata['Config_Carousel'])&&$rowdata['Config_Carousel']==1){ ?>
+						<?php if(isset($rowData['Config_Carousel'])&&$rowData['Config_Carousel']==1){ ?>
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<h2 class="text-primary">Carousel</h2>
 								<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">

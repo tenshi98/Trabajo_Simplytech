@@ -331,7 +331,7 @@ if(!empty($_GET['addOC'])){ ?>
 	LEFT JOIN `proveedor_listado`       ON proveedor_listado.idProveedor    = productos_listado.idProveedor';
 	$SIS_where = 'productos_listado.idProducto='.$_SESSION['productos_ing_productos'][$_GET['editProd']]['idProducto'];
 	$SIS_where.= ' AND productos_listado.idEstado=1';
-	$row_data = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -371,8 +371,8 @@ if(!empty($_GET['addOC'])){ ?>
 					$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 					$Form_Inputs->form_input_number('Cantidad', 'Number', $x2, 2);
 
-					if(isset($row_data['Proveedor'])&&$row_data['Proveedor']!=''){$prov=$row_data['Proveedor'];}else{$prov='Sin proveedor';}
-					$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $row_data['Unimed']);
+					if(isset($rowData['Proveedor'])&&$rowData['Proveedor']!=''){$prov=$rowData['Proveedor'];}else{$prov='Sin proveedor';}
+					$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $rowData['Unimed']);
 					$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', $prov);
 					$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['productos_ing_productos'][$_GET['editProd']]['ValorIngreso']));
 					$Form_Inputs->form_input_number('Valor Total Neto', 'ValorTotal', $x3, 2);
@@ -1110,7 +1110,7 @@ if(!empty($_GET['addOC'])){ ?>
 	$SIS_query = 'Creacion_fecha';
 	$SIS_join  = '';
 	$SIS_where = 'idFacturacion = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'bodegas_productos_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'bodegas_productos_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -1125,7 +1125,7 @@ if(!empty($_GET['addOC'])){ ?>
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Creacion_fecha)){   $x1  = $Creacion_fecha; }else{$x1  = $rowdata['Creacion_fecha'];}
+					if(isset($Creacion_fecha)){   $x1  = $Creacion_fecha; }else{$x1  = $rowData['Creacion_fecha'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

@@ -71,7 +71,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 //Se crean las variables
 $nmax = 15;
@@ -578,43 +578,43 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
 		
-							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){ ?>
+							<?php if(isset($rowData['idCliente'])&&$rowData['idCliente']!=''){ ?>
 								<tr class="odd">
 									<td>Cliente</td>
-									<td><?php echo $rowdata['Cliente']; ?></td>
+									<td><?php echo $rowData['Cliente']; ?></td>
 								</tr>
 							<?php } ?>
 							<tr class="odd">
 								<td>Nombre Contrato</td>
-								<td><?php echo $rowdata['Nombre']; ?></td>
+								<td><?php echo $rowData['Nombre']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td width="200">Codigo Contrato</td>
-								<td><?php echo $rowdata['Codigo']; ?></td>
+								<td><?php echo $rowData['Codigo']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Sistema</td>
-								<td><?php echo $rowdata['Sistema']; ?></td>
+								<td><?php echo $rowData['Sistema']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Duracion</td>
-								<td><?php echo 'Del '.Fecha_estandar($rowdata['FechaInicio']).' al '.Fecha_estandar($rowdata['FechaTermino']); ?></td>
+								<td><?php echo 'Del '.Fecha_estandar($rowData['FechaInicio']).' al '.Fecha_estandar($rowData['FechaTermino']); ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Estado</td>
-								<td><?php echo $rowdata['Estado']; ?></td>
+								<td><?php echo $rowData['Estado']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Estado Aprobacion</td>
-								<td><?php echo $rowdata['EstadoAprobacion']; ?></td>
+								<td><?php echo $rowData['EstadoAprobacion']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Bodega Productos Utilizada</td>
-								<td><?php echo $rowdata['BodegaProductos']; ?></td>
+								<td><?php echo $rowData['BodegaProductos']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Bodega Insumos Utilizada</td>
-								<td><?php echo $rowdata['BodegaInsumos']; ?></td>
+								<td><?php echo $rowData['BodegaInsumos']; ?></td>
 							</tr>
 
 						</tbody>

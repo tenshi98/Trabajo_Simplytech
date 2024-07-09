@@ -76,7 +76,7 @@ LEFT JOIN `aguas_analisis_parametros`                  ON aguas_analisis_paramet
 LEFT JOIN `aguas_analisis_aguas_signo`                 ON aguas_analisis_aguas_signo.idSigno                         = aguas_analisis_aguas.idSigno
 LEFT JOIN `aguas_analisis_laboratorios`                ON aguas_analisis_laboratorios.idLaboratorio                  = aguas_analisis_aguas.idLaboratorio';
 $SIS_where = 'aguas_analisis_aguas.idAnalisisAgua ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'aguas_analisis_aguas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'aguas_analisis_aguas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 
 ?>
@@ -87,39 +87,39 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_analisis_aguas', $SIS_join,
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Informe Fecha <?php echo Fecha_estandar($rowdata['f_muestra']); ?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Informe Fecha <?php echo Fecha_estandar($rowData['f_muestra']); ?></h5>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed dataTable">
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 
 					<tr class="odd"><td colspan="2">Datos Básicos</td></tr>
-					<tr class="odd"><td>Fecha muestra:</td>             <td><?php echo fecha_estandar($rowdata['f_muestra']); ?></td></tr>
-					<tr class="odd"><td>Periodo muestra:</td>           <td><?php if($rowdata['f_muestra']!='0000-00-00'){echo fecha2Ano($rowdata['f_muestra']).fecha2NMes($rowdata['f_muestra']);} ?></td></tr>
-					<tr class="odd"><td>Fecha recibida:</td>            <td><?php echo fecha_estandar($rowdata['f_recibida']); ?></td></tr>
-					<tr class="odd"><td>Laboratorio:</td>               <td><?php echo $rowdata['Laboratorio']; ?></td></tr>
-					<tr class="odd"><td>Codigo Muestra:</td>            <td><?php echo $rowdata['codigoMuestra']; ?></td></tr>
-					<tr class="odd"><td>Codigo Laboratorio:</td>        <td><?php echo $rowdata['CodigoLaboratorio']; ?></td></tr>
-					<tr class="odd"><td>Tipo Muestra:</td>              <td><?php echo $rowdata['TipoMuestra']; ?></td></tr>
-					<tr class="odd"><td>Fecha Remuestra:</td>           <td><?php echo $rowdata['RemuestraFecha']; ?></td></tr>
-					<tr class="odd"><td>Periodo Remuestreo:</td>        <td><?php if($rowdata['RemuestraFecha']!='0000-00-00'){echo fecha2Ano($rowdata['RemuestraFecha']).fecha2NMes($rowdata['RemuestraFecha']);} ?></td></tr>
-					<tr class="odd"><td>Codigo Remuestra:</td>          <td><?php echo $rowdata['Remuestra_codigo_muestra']; ?></td></tr>
-					<tr class="odd"><td>Parametro analizado:</td>       <td><?php echo $rowdata['Parametro']; ?></td></tr>
-					<tr class="odd"><td>Signo:</td>                     <td><?php echo $rowdata['Signo']; ?></td></tr>
-					<tr class="odd"><td>Valor Analisis:</td>            <td><?php echo $rowdata['valorAnalisis']; ?></td></tr>
+					<tr class="odd"><td>Fecha muestra:</td>             <td><?php echo fecha_estandar($rowData['f_muestra']); ?></td></tr>
+					<tr class="odd"><td>Periodo muestra:</td>           <td><?php if($rowData['f_muestra']!='0000-00-00'){echo fecha2Ano($rowData['f_muestra']).fecha2NMes($rowData['f_muestra']);} ?></td></tr>
+					<tr class="odd"><td>Fecha recibida:</td>            <td><?php echo fecha_estandar($rowData['f_recibida']); ?></td></tr>
+					<tr class="odd"><td>Laboratorio:</td>               <td><?php echo $rowData['Laboratorio']; ?></td></tr>
+					<tr class="odd"><td>Codigo Muestra:</td>            <td><?php echo $rowData['codigoMuestra']; ?></td></tr>
+					<tr class="odd"><td>Codigo Laboratorio:</td>        <td><?php echo $rowData['CodigoLaboratorio']; ?></td></tr>
+					<tr class="odd"><td>Tipo Muestra:</td>              <td><?php echo $rowData['TipoMuestra']; ?></td></tr>
+					<tr class="odd"><td>Fecha Remuestra:</td>           <td><?php echo $rowData['RemuestraFecha']; ?></td></tr>
+					<tr class="odd"><td>Periodo Remuestreo:</td>        <td><?php if($rowData['RemuestraFecha']!='0000-00-00'){echo fecha2Ano($rowData['RemuestraFecha']).fecha2NMes($rowData['RemuestraFecha']);} ?></td></tr>
+					<tr class="odd"><td>Codigo Remuestra:</td>          <td><?php echo $rowData['Remuestra_codigo_muestra']; ?></td></tr>
+					<tr class="odd"><td>Parametro analizado:</td>       <td><?php echo $rowData['Parametro']; ?></td></tr>
+					<tr class="odd"><td>Signo:</td>                     <td><?php echo $rowData['Signo']; ?></td></tr>
+					<tr class="odd"><td>Valor Analisis:</td>            <td><?php echo $rowData['valorAnalisis']; ?></td></tr>
 
 					<tr class="odd"><td colspan="2">Datos del Cliente</td></tr>
-					<tr class="odd"><td>Sector:</td>                    <td><?php echo $rowdata['Sector']; ?></td></tr>
-					<tr class="odd"><td>Codigo Sector:</td>             <td><?php echo $rowdata['CodigoSector']; ?></td></tr>
-					<tr class="odd"><td>UTM Norte:</td>                 <td><?php echo $rowdata['UTM_norte']; ?></td></tr>
-					<tr class="odd"><td>UTM Este:</td>                  <td><?php echo $rowdata['UTM_este']; ?></td></tr>
-					<tr class="odd"><td>Tipo de Medicion:</td>          <td><?php echo $rowdata['PuntoMuestreo']; ?></td></tr>
+					<tr class="odd"><td>Sector:</td>                    <td><?php echo $rowData['Sector']; ?></td></tr>
+					<tr class="odd"><td>Codigo Sector:</td>             <td><?php echo $rowData['CodigoSector']; ?></td></tr>
+					<tr class="odd"><td>UTM Norte:</td>                 <td><?php echo $rowData['UTM_norte']; ?></td></tr>
+					<tr class="odd"><td>UTM Este:</td>                  <td><?php echo $rowData['UTM_este']; ?></td></tr>
+					<tr class="odd"><td>Tipo de Medicion:</td>          <td><?php echo $rowData['PuntoMuestreo']; ?></td></tr>
 
 					<tr class="odd"><td colspan="2">Otros Datos</td></tr>
-					<tr class="odd"><td>Codigo Proceso:</td>            <td><?php echo $rowdata['codigoProceso']; ?></td></tr>
-					<tr class="odd"><td>Codigo Archivo:</td>            <td><?php echo $rowdata['codigoArchivo']; ?></td></tr>
-					<tr class="odd"><td>Rut:</td>                       <td><?php echo $rowdata['Rut']; ?></td></tr>
-					<tr class="odd"><td>Codigo Servicio:</td>           <td><?php echo $rowdata['codigoServicio']; ?></td></tr>
+					<tr class="odd"><td>Codigo Proceso:</td>            <td><?php echo $rowData['codigoProceso']; ?></td></tr>
+					<tr class="odd"><td>Codigo Archivo:</td>            <td><?php echo $rowData['codigoArchivo']; ?></td></tr>
+					<tr class="odd"><td>Rut:</td>                       <td><?php echo $rowData['Rut']; ?></td></tr>
+					<tr class="odd"><td>Codigo Servicio:</td>           <td><?php echo $rowData['codigoServicio']; ?></td></tr>
 					
 					                    
 				</tbody>

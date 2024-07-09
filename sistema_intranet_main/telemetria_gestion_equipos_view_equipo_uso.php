@@ -40,12 +40,12 @@ if(isset($_GET['data_3'])&&isset($_GET['data_4'])&&isset($_GET['data_5'])&&isset
 $SIS_query = 'Nombre,cantSensores, Direccion_img';
 $SIS_join  = '';
 $SIS_where = 'idTelemetria ='.simpleDecode($_GET['view'], fecha_actual());
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /*************************************************************************/
 //Se arma la consulta
 $cadena = '';
-for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 	$cadena .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
 	$cadena .= ',telemetria_listado_sensores_uso.SensoresUso_'.$i;
 	$cadena .= ',telemetria_listado_sensores_uso_fecha.SensoresFechaUso_'.$i;
@@ -68,12 +68,12 @@ LEFT JOIN `telemetria_listado_sensores_accion_med_c`    ON telemetria_listado_se
 LEFT JOIN `telemetria_listado_sensores_accion_med_t`    ON telemetria_listado_sensores_accion_med_t.idTelemetria   = telemetria_listado.idTelemetria
 LEFT JOIN `telemetria_listado_sensores_accion_alerta`   ON telemetria_listado_sensores_accion_alerta.idTelemetria  = telemetria_listado.idTelemetria';
 $SIS_where = 'telemetria_listado.idTelemetria ='.simpleDecode($_GET['view'], fecha_actual());
-$rowMed = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowMed = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /*************************************************************************/
 //Cuento si hay sensores activos
 $rowcount = 0;
-for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 	if(isset($rowMed['SensoresUso_'.$i])&&$rowMed['SensoresUso_'.$i]==1){
 		$rowcount++;
 	}
@@ -85,7 +85,7 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Equipo <?php echo $rowdata['Nombre']; ?></h5>
+			<h5>Equipo <?php echo $rowData['Nombre']; ?></h5>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#uso" data-toggle="tab"><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
 			</ul>
@@ -96,13 +96,13 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 				<div class="wmd-panel">
 
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<?php if ($rowdata['Direccion_img']=='') { ?>
+						<?php if ($rowData['Direccion_img']=='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 						<?php }else{  ?>
 							<?php if (isset($_GET['data_1'])&&$_GET['data_1']=='si') { ?>
-								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo 'https://'.$_GET['data_2'].$rowdata['Direccion_img']; ?>">
+								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo 'https://'.$_GET['data_2'].$rowData['Direccion_img']; ?>">
 							<?php }else{  ?>
-								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowData['Direccion_img']; ?>">
 							<?php } ?>
 						<?php } ?>
 					</div>
@@ -132,7 +132,7 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 												</tr>
 											</thead>
 											<tbody role="alert" aria-live="polite" aria-relevant="all">
-												<?php for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+												<?php for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 													//Se verifica si el sensor esta habilitado para la supervision
 													if(isset($rowMed['SensoresUso_'.$i])&&$rowMed['SensoresUso_'.$i]==1){ ?>
 														<tr class="odd">

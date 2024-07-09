@@ -85,7 +85,7 @@ if(!empty($_GET['edit'])){
 	$SIS_query = 'Nombre,ApellidoPat, ApellidoMat, idSexo, FNacimiento, Direccion_img, idPlan, idColegio';
 	$SIS_join  = '';
 	$SIS_where = 'idHijos = '.$_GET['edit'];
-	$rowdata = db_select_data (false, $SIS_query, 'apoderados_listado_hijos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'apoderados_listado_hijos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -100,13 +100,13 @@ if(!empty($_GET['edit'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idPlan)){              $x1  = $idPlan;               }else{$x1  = $rowdata['idPlan'];}
-					if(isset($Nombre)){              $x2  = $Nombre;               }else{$x2  = $rowdata['Nombre'];}
-					if(isset($ApellidoPat)){         $x3  = $ApellidoPat;          }else{$x3  = $rowdata['ApellidoPat'];}
-					if(isset($ApellidoMat)){         $x4  = $ApellidoMat;          }else{$x4  = $rowdata['ApellidoMat'];}
-					if(isset($idSexo)){              $x5  = $idSexo;               }else{$x5  = $rowdata['idSexo'];}
-					if(isset($FNacimiento)){         $x6  = $FNacimiento;          }else{$x6  = $rowdata['FNacimiento'];}
-					if(isset($idColegio)){           $x7  = $idColegio;            }else{$x7  = $rowdata['idColegio'];}
+					if(isset($idPlan)){              $x1  = $idPlan;               }else{$x1  = $rowData['idPlan'];}
+					if(isset($Nombre)){              $x2  = $Nombre;               }else{$x2  = $rowData['Nombre'];}
+					if(isset($ApellidoPat)){         $x3  = $ApellidoPat;          }else{$x3  = $rowData['ApellidoPat'];}
+					if(isset($ApellidoMat)){         $x4  = $ApellidoMat;          }else{$x4  = $rowData['ApellidoMat'];}
+					if(isset($idSexo)){              $x5  = $idSexo;               }else{$x5  = $rowData['idSexo'];}
+					if(isset($FNacimiento)){         $x6  = $FNacimiento;          }else{$x6  = $rowData['FNacimiento'];}
+					if(isset($idColegio)){           $x7  = $idColegio;            }else{$x7  = $rowData['idColegio'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -118,10 +118,10 @@ if(!empty($_GET['edit'])){
 					$Form_Inputs->form_date('FNacimiento','FNacimiento', $x6, 1);
 					$Form_Inputs->form_select_filter('Colegio','idColegio', $x7, 2, 'idColegio', 'Nombre', 'colegios_listado', 'idEstado=1', '',$dbConn);
 
-					if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){ ?>
+					if(isset($rowData['Direccion_img'])&&$rowData['Direccion_img']!=''){ ?>
 
 						<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
-						<img src="upload/<?php echo $rowdata['Direccion_img'] ?>" width="100%" >
+						<img src="upload/<?php echo $rowData['Direccion_img'] ?>" width="100%" >
 						</div>
 						<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_img='.$_GET['edit'].'&edit='.$_GET['edit']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
 						<div class="clearfix"></div>
@@ -199,7 +199,7 @@ if(!empty($_GET['edit'])){
 	$SIS_query = 'Nombre,ApellidoPat, ApellidoMat, idOpciones_1,idOpciones_2';
 	$SIS_join  = '';
 	$SIS_where = 'idApoderado = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -225,7 +225,7 @@ if(!empty($_GET['edit'])){
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apoderado', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Hijos'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apoderado', $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat'], 'Hijos'); ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 			<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Hijo</a><?php } ?>
 		</div>
@@ -245,12 +245,12 @@ if(!empty($_GET['edit'])){
 							<li class=""><a href="<?php echo 'apoderados_listado_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
 							<?php
 							//Si se utiliza la APP
-							if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>
+							if(isset($rowData['idOpciones_1'])&&$rowData['idOpciones_1']==1){ ?>
 								<li class=""><a href="<?php echo 'apoderados_listado_subcuentas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sitemap" aria-hidden="true"></i> Subcuentas</a></li>
 							<?php } ?>
 							<?php
 							//Si se utiliza subcuentas
-							if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
+							if(isset($rowData['idOpciones_2'])&&$rowData['idOpciones_2']==1){ ?>
 								<li class=""><a href="<?php echo 'apoderados_listado_password.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-key" aria-hidden="true"></i> Password</a></li>
 							<?php } ?>
 							<li class="active"><a href="<?php echo 'apoderados_listado_hijos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-child" aria-hidden="true"></i> Hijos</a></li>

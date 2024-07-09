@@ -37,7 +37,7 @@ require_once 'core/Web.Header.Main.php';
 $SIS_query = 'idUsuario';
 $SIS_join  = '';
 $SIS_where = 'idVideoConferencia = '.$_GET['view'];
-$rowdata = db_select_data (false, $SIS_query, 'comunicaciones_videoconferencia_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'comunicaciones_videoconferencia_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -82,7 +82,7 @@ $rowdata = db_select_data (false, $SIS_query, 'comunicaciones_videoconferencia_l
 	<input type="hidden" id="room-id" value="abcdef" autocorrect=off autocapitalize=off size=20>
 	<?php
 	//se verifica el usuario que accede
-	if(($rowdata['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
+	if(($rowData['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
 		<button id="open-room" class="btn btn-success pull-right margin_width fmrbtn" ><i class="fa fa-video-camera" aria-hidden="true"></i> Iniciar VideoConferencia</button>
 		<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?>
 			<button id="join-room" class="btn btn-success pull-right margin_width fmrbtn" ><i class="fa fa-video-camera" aria-hidden="true"></i> Unirse a VideoConferencia</button>
@@ -137,7 +137,7 @@ $rowdata = db_select_data (false, $SIS_query, 'comunicaciones_videoconferencia_l
     // ......................................................
     // .......................UI Code........................
     // ......................................................
-    <?php if(($rowdata['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
+    <?php if(($rowData['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
 
         document.getElementById('open-room').onclick = function() {
             disableInputButtons();
@@ -439,7 +439,7 @@ $rowdata = db_select_data (false, $SIS_query, 'comunicaciones_videoconferencia_l
         document.getElementById('room-id').onkeyup();
 
         //document.getElementById('open-or-join-room').disabled = !enable;
-        <?php if(($rowdata['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
+        <?php if(($rowData['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
             document.getElementById('open-room').disabled = !enable;
             <?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?>
                 document.getElementById('join-room').disabled = !enable;

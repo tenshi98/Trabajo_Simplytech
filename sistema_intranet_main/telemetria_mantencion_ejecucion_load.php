@@ -49,7 +49,7 @@ LEFT JOIN `telemetria_listado_sensores_nombre`      ON telemetria_listado_sensor
 LEFT JOIN `telemetria_listado_sensores_med_actual`  ON telemetria_listado_sensores_med_actual.idTelemetria   = telemetria_listado.idTelemetria
 LEFT JOIN `telemetria_listado_sensores_tipo`        ON telemetria_listado_sensores_tipo.idTelemetria         = telemetria_listado.idTelemetria';
 $SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['verify'];
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /*******************************************************/
 // consulto los datos
@@ -80,8 +80,8 @@ if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){                $location .= "
 		<div class="row">
 			<div class="col-xs-12">
 				<h2 class="page-header">
-					<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $rowdata['Tel_Equipo'].' ('.$rowdata['Tel_Identificador'].')'; ?>.
-					<small class="pull-right"> <?php echo $rowdata['Matriz_Nombre'] ?></small>
+					<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $rowData['Tel_Equipo'].' ('.$rowData['Tel_Identificador'].')'; ?>.
+					<small class="pull-right"> <?php echo $rowData['Matriz_Nombre'] ?></small>
 				</h2>
 			</div>
 		</div>
@@ -90,8 +90,8 @@ if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){                $location .= "
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 				<strong>Datos Mantencion</strong>
 				<address>
-					Fecha Inicio: <?php echo fecha_estandar($rowdata['Tel_Fecha']); ?><br/>
-					Hora Inicio: <?php echo $rowdata['Tel_Hora'].' horas'; ?>
+					Fecha Inicio: <?php echo fecha_estandar($rowData['Tel_Fecha']); ?><br/>
+					Hora Inicio: <?php echo $rowData['Tel_Hora'].' horas'; ?>
 					<strong></strong>
 				</address>
 			</div>
@@ -119,18 +119,18 @@ if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){                $location .= "
 					<tbody>
 						<?php
 						$pass_points = 0;
-						for ($i = 1; $i <= $rowdata['Matriz_Puntos']; $i++) { ?>
+						for ($i = 1; $i <= $rowData['Matriz_Puntos']; $i++) { ?>
 							<tr class="odd">
-								<td><?php echo $rowdata['Tel_Sensor_Nombre_'.$rowdata['Matriz_Sensor_Numero_'.$i]]; ?></td>
-								<td><?php echo $rowdata['Matriz_Punto_'.$i]; ?></td>
-								<td><?php foreach ($arrTipos as $tipo) { if($rowdata['Matriz_Sensor_Tipo_'.$rowdata['Tel_Sensor_Tipo_'.$i]]==$tipo['idSensores']){ echo $tipo['Nombre'];}} ?></td>
-								<td><?php foreach ($arrTipos as $tipo) { if($rowdata['Matriz_Sensor_Tipo_'.$i]==$tipo['idSensores']){ echo $tipo['Nombre'];}} ?></td>
-								<td><?php foreach ($arrTipos as $tipo) { if($rowdata['Matriz_Sensor_Tipo_'.$i]==$tipo['idSensores']){ echo $tipo['SensorFuncion'];}} ?></td>
-								<td align="center"><?php echo $rowdata['Matriz_Sensor_Valor_'.$i]; ?></td>
-								<td align="center"><?php echo Cantidades_decimales_justos($rowdata['Tel_Sensor_Valor_'.$i]); ?></td>
+								<td><?php echo $rowData['Tel_Sensor_Nombre_'.$rowData['Matriz_Sensor_Numero_'.$i]]; ?></td>
+								<td><?php echo $rowData['Matriz_Punto_'.$i]; ?></td>
+								<td><?php foreach ($arrTipos as $tipo) { if($rowData['Matriz_Sensor_Tipo_'.$rowData['Tel_Sensor_Tipo_'.$i]]==$tipo['idSensores']){ echo $tipo['Nombre'];}} ?></td>
+								<td><?php foreach ($arrTipos as $tipo) { if($rowData['Matriz_Sensor_Tipo_'.$i]==$tipo['idSensores']){ echo $tipo['Nombre'];}} ?></td>
+								<td><?php foreach ($arrTipos as $tipo) { if($rowData['Matriz_Sensor_Tipo_'.$i]==$tipo['idSensores']){ echo $tipo['SensorFuncion'];}} ?></td>
+								<td align="center"><?php echo $rowData['Matriz_Sensor_Valor_'.$i]; ?></td>
+								<td align="center"><?php echo Cantidades_decimales_justos($rowData['Tel_Sensor_Valor_'.$i]); ?></td>
 								<td align="center">
 									<?php
-									if($rowdata['Matriz_Sensor_Valor_'.$i]<$rowdata['Tel_Sensor_Valor_'.$i]){
+									if($rowData['Matriz_Sensor_Valor_'.$i]<$rowData['Tel_Sensor_Valor_'.$i]){
 										echo '<span style="color:#55BD55">Pasa</span>';
 										$pass_points++;
 									}else{
@@ -152,7 +152,7 @@ if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){                $location .= "
 		<div class="row" style="margin-top:15px;">
 			<div class="col-xs-12">
 
-				<?php if($pass_points>=$rowdata['Matriz_Puntos']){ ?>
+				<?php if($pass_points>=$rowData['Matriz_Puntos']){ ?>
 					<a href="<?php echo $location.'&verify='.$_GET['verify'].'&end=true'; ?>" class="btn btn-primary pull-right"  style="margin-left: 5px;" >
 						<i class="fa fa-check-circle" aria-hidden="true"></i> Finalizar Mantencion
 					</a>

@@ -67,7 +67,7 @@ if(!empty($_GET['ejecution'])){
 	$SIS_query = 'f_ejecucion, horaEjecucion, f_ejecucion_fin, horaEjecucion_fin';
 	$SIS_join  = '';
 	$SIS_where = 'idSolicitud = '.$_GET['ejecution'];
-	$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -82,10 +82,10 @@ if(!empty($_GET['ejecution'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($f_ejecucion)){        $x1  = $f_ejecucion;        }else{$x1  = $row_data['f_ejecucion'];}
-					if(isset($horaEjecucion)){      $x2  = $horaEjecucion;      }else{$x2  = $row_data['horaEjecucion'];}
-					if(isset($f_ejecucion_fin)){    $x3  = $f_ejecucion_fin;    }else{$x3  = $row_data['f_ejecucion_fin'];}
-					if(isset($horaEjecucion_fin)){  $x4  = $horaEjecucion_fin;  }else{$x4  = $row_data['horaEjecucion_fin'];}
+					if(isset($f_ejecucion)){        $x1  = $f_ejecucion;        }else{$x1  = $rowData['f_ejecucion'];}
+					if(isset($horaEjecucion)){      $x2  = $horaEjecucion;      }else{$x2  = $rowData['horaEjecucion'];}
+					if(isset($f_ejecucion_fin)){    $x3  = $f_ejecucion_fin;    }else{$x3  = $rowData['f_ejecucion_fin'];}
+					if(isset($horaEjecucion_fin)){  $x4  = $horaEjecucion_fin;  }else{$x4  = $rowData['horaEjecucion_fin'];}
 					if(isset($Observacion)){        $x5  = $Observacion;        }else{$x5  = '';}
 
 					//se dibujan los inputs

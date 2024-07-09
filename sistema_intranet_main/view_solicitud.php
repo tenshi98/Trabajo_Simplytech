@@ -59,7 +59,7 @@ LEFT JOIN `core_sistemas`   sistema_origen          ON sistema_origen.idSistema 
 LEFT JOIN `core_ubicacion_ciudad`   sis_or_ciudad   ON sis_or_ciudad.idCiudad      = sistema_origen.idCiudad
 LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna   ON sis_or_comuna.idComuna      = sistema_origen.idComuna';
 $SIS_where = 'solicitud_listado.idSolicitud ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'solicitud_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'solicitud_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /*****************************************/
 //Insumos
@@ -137,7 +137,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Solicitud de Productos.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['Creacion_fecha']); ?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowData['Creacion_fecha']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -147,12 +147,12 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 invoice-col">
 			Empresa Origen
 			<address>
-				<strong><?php echo $row_data['SistemaOrigen']; ?></strong><br/>
-				<?php echo $row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna']; ?><br/>
-				<?php echo $row_data['SistemaOrigenDireccion']; ?><br/>
-				Fono: <?php echo formatPhone($row_data['SistemaOrigenFono']); ?><br/>
-				Rut: <?php echo $row_data['SistemaOrigenRut']; ?><br/>
-				Email: <?php echo $row_data['SistemaOrigenEmail']; ?>
+				<strong><?php echo $rowData['SistemaOrigen']; ?></strong><br/>
+				<?php echo $rowData['SistemaOrigenCiudad'].', '.$rowData['SistemaOrigenComuna']; ?><br/>
+				<?php echo $rowData['SistemaOrigenDireccion']; ?><br/>
+				Fono: <?php echo formatPhone($rowData['SistemaOrigenFono']); ?><br/>
+				Rut: <?php echo $rowData['SistemaOrigenRut']; ?><br/>
+				Email: <?php echo $rowData['SistemaOrigenEmail']; ?>
 			</address>
 		</div>
 
@@ -221,7 +221,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $rowData['Observaciones']; ?></p>
 		</div>
 	</div>
 

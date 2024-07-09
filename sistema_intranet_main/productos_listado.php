@@ -114,10 +114,10 @@ LEFT JOIN `cross_quality_calidad_matriz`     ON cross_quality_calidad_matriz.idM
 LEFT JOIN `core_sistemas_opciones` ops1      ON ops1.idOpciones                                  = productos_listado.idOpciones_1
 LEFT JOIN `core_sistemas_opciones` ops2      ON ops2.idOpciones                                  = productos_listado.idOpciones_2';
 $SIS_where = 'productos_listado.idProducto = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //Se verifica el tipo de producto para traer su receta
-if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
+if(isset($rowData['idTipoProducto'])&&$rowData['idTipoProducto']==2){
 	// Se trae un listado con productos de la receta
 	$SIS_query = '
 	productos_listado.Nombre AS NombreProd,
@@ -136,7 +136,7 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowdata['Nombre'], 'Resumen'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowData['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -152,19 +152,19 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'productos_listado_datos_opciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Opciones</a></li>
 						<li class=""><a href="<?php echo 'productos_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
-						<?php if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2&&$rowdata['idTipoReceta']==1){ ?>
+						<?php if(isset($rowData['idTipoProducto'])&&$rowData['idTipoProducto']==2&&$rowData['idTipoReceta']==1){ ?>
 							<li class=""><a href="<?php echo 'productos_listado_datos_receta_01.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-align-left" aria-hidden="true"></i> Receta</a></li>
-						<?php }elseif(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2&&$rowdata['idTipoReceta']==2){ ?>
+						<?php }elseif(isset($rowData['idTipoProducto'])&&$rowData['idTipoProducto']==2&&$rowData['idTipoReceta']==2){ ?>
 							<li class=""><a href="<?php echo 'productos_listado_datos_receta_02.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-align-left" aria-hidden="true"></i> Receta</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'productos_listado_datos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<li class=""><a href="<?php echo 'productos_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
 						<li class=""><a href="<?php echo 'productos_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Ficha</a></li>
 						<li class=""><a href="<?php echo 'productos_listado_datos_hds.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> HDS</a></li>
-						<?php if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>
+						<?php if(isset($rowData['idOpciones_1'])&&$rowData['idOpciones_1']==1){ ?>
 							<li class=""><a href="<?php echo 'productos_listado_datos_ot.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Sistema Mantenlubric</a></li>
 						<?php } ?>
-						<?php if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
+						<?php if(isset($rowData['idOpciones_2'])&&$rowData['idOpciones_2']==1){ ?>
 							<li class=""><a href="<?php echo 'productos_listado_datos_cross.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Sistema CROSS</a></li>
 						<?php } ?>
 
@@ -178,67 +178,67 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 				<div class="wmd-panel">
 
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<?php if ($rowdata['Direccion_img']=='') { ?>
+						<?php if ($rowData['Direccion_img']=='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/productos.jpg">
 						<?php }else{
-							echo widget_TipoImagen($rowdata['idTipoImagen'], DB_SITE_REPO, DB_SITE_MAIN_PATH, 'upload', $rowdata['Direccion_img']);
+							echo widget_TipoImagen($rowData['idTipoImagen'], DB_SITE_REPO, DB_SITE_MAIN_PATH, 'upload', $rowData['Direccion_img']);
 						} ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Producto</h2>
 						<p class="text-muted">
-							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
-							<strong>Marca : </strong><?php echo $rowdata['Marca']; ?><br/>
-							<strong>Codigo : </strong><?php echo $rowdata['Codigo']; ?><br/>
-							<strong>Categoria : </strong><?php echo $rowdata['Categoria']; ?><br/>
-							<strong>Tipo de Producto : </strong><?php echo $rowdata['Tipo']; ?><br/>
-							<strong>Tipo de Producto : </strong><?php echo $rowdata['TipoProd']; ?><br/>
-							<strong>Unidad de medida : </strong><?php echo $rowdata['Unidad']; ?><br/>
-							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
+							<strong>Nombre : </strong><?php echo $rowData['Nombre']; ?><br/>
+							<strong>Marca : </strong><?php echo $rowData['Marca']; ?><br/>
+							<strong>Codigo : </strong><?php echo $rowData['Codigo']; ?><br/>
+							<strong>Categoria : </strong><?php echo $rowData['Categoria']; ?><br/>
+							<strong>Tipo de Producto : </strong><?php echo $rowData['Tipo']; ?><br/>
+							<strong>Tipo de Producto : </strong><?php echo $rowData['TipoProd']; ?><br/>
+							<strong>Unidad de medida : </strong><?php echo $rowData['Unidad']; ?><br/>
+							<strong>Estado : </strong><?php echo $rowData['Estado']; ?><br/>
 
-							<strong>Ingredientes Activos : </strong><br/><?php echo $rowdata['IngredienteActivo']; ?><br/>
+							<strong>Ingredientes Activos : </strong><br/><?php echo $rowData['IngredienteActivo']; ?><br/>
 
-							<strong>Dosis Recomendada : </strong><?php echo Cantidades_decimales_justos($rowdata['DosisRecomendada']); ?><br/>
-							<strong>Carencia Etiqueta : </strong><?php echo Cantidades_decimales_justos($rowdata['CarenciaExportador']); ?><br/>
-							<strong>Carencia ASOEX : </strong><?php echo $rowdata['Carencia']; ?><br/>
-							<strong>Carencia TESCO : </strong><?php echo Cantidades_decimales_justos($rowdata['EfectoResidual']); ?><br/>
-							<strong>Tiempo Re-Ingreso : </strong><?php echo Cantidades_decimales_justos($rowdata['EfectoRetroactivo']); ?><br/>
-							<strong>Aporte Nutricional : </strong><?php echo $rowdata['AporteNutricional']; ?><br/>
+							<strong>Dosis Recomendada : </strong><?php echo Cantidades_decimales_justos($rowData['DosisRecomendada']); ?><br/>
+							<strong>Carencia Etiqueta : </strong><?php echo Cantidades_decimales_justos($rowData['CarenciaExportador']); ?><br/>
+							<strong>Carencia ASOEX : </strong><?php echo $rowData['Carencia']; ?><br/>
+							<strong>Carencia TESCO : </strong><?php echo Cantidades_decimales_justos($rowData['EfectoResidual']); ?><br/>
+							<strong>Tiempo Re-Ingreso : </strong><?php echo Cantidades_decimales_justos($rowData['EfectoRetroactivo']); ?><br/>
+							<strong>Aporte Nutricional : </strong><?php echo $rowData['AporteNutricional']; ?><br/>
 
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Configuracion</h2>
 						<p class="text-muted">
-							<strong>Sistema Mantenlubric : </strong><?php echo $rowdata['SistemaMantenlubric']; ?><br/>
-							<strong>Sistema CROSS: </strong><?php echo $rowdata['SistemaCROSS']; ?><br/>
+							<strong>Sistema Mantenlubric : </strong><?php echo $rowData['SistemaMantenlubric']; ?><br/>
+							<strong>Sistema CROSS: </strong><?php echo $rowData['SistemaCROSS']; ?><br/>
 						</p>
 
-						<?php if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>
+						<?php if(isset($rowData['idOpciones_1'])&&$rowData['idOpciones_1']==1){ ?>
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Sistema Mantenlubric</h2>
 							<p class="text-muted">
-								<strong>Tareas Relacionadas : </strong><?php echo $rowdata['Tarea']; ?>
+								<strong>Tareas Relacionadas : </strong><?php echo $rowData['Tarea']; ?>
 							</p>
 						<?php } ?>
-						<?php if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
+						<?php if(isset($rowData['idOpciones_2'])&&$rowData['idOpciones_2']==1){ ?>
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Sistema Cross</h2>
 							<p class="text-muted">
-								<strong>Tipo Planilla de Calidad : </strong><?php echo $rowdata['MatrizCalidad']; ?><br/>
+								<strong>Tipo Planilla de Calidad : </strong><?php echo $rowData['MatrizCalidad']; ?><br/>
 							</p>
 						<?php } ?>
 						
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripción</h2>
-						<p class="text-muted"><?php echo $rowdata['Descripcion']; ?></p>
+						<p class="text-muted"><?php echo $rowData['Descripcion']; ?></p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
 						<p class="text-muted">
-							<strong>Proveedor predefinido : </strong><?php echo $rowdata['ProveedorFijo']; ?><br/>
-							<strong>Stock Minimo : </strong><?php echo Cantidades_decimales_justos($rowdata['StockLimite']).' '.$rowdata['Unidad']; ?><br/>
-							<strong>Valor promedio Ingreso : </strong><?php echo Valores(Cantidades_decimales_justos($rowdata['ValorIngreso']), 0); ?><br/>
-							<strong>Valor promedio Egreso : </strong><?php echo Valores(Cantidades_decimales_justos($rowdata['ValorEgreso']), 0); ?><br/>
+							<strong>Proveedor predefinido : </strong><?php echo $rowData['ProveedorFijo']; ?><br/>
+							<strong>Stock Minimo : </strong><?php echo Cantidades_decimales_justos($rowData['StockLimite']).' '.$rowData['Unidad']; ?><br/>
+							<strong>Valor promedio Ingreso : </strong><?php echo Valores(Cantidades_decimales_justos($rowData['ValorIngreso']), 0); ?><br/>
+							<strong>Valor promedio Egreso : </strong><?php echo Valores(Cantidades_decimales_justos($rowData['ValorEgreso']), 0); ?><br/>
 						</p>
 
-						<?php if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){ ?>
+						<?php if(isset($rowData['idTipoProducto'])&&$rowData['idTipoProducto']==2){ ?>
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Receta</h2>
 							<table  class="table table-bordered">
 								<?php
@@ -258,28 +258,28 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 							<tbody>
 								<?php
 								//Ficha Tecnica
-								if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
+								if(isset($rowData['FichaTecnica'])&&$rowData['FichaTecnica']!=''){
 									echo '
 										<tr class="item-row">
 											<td>Ficha Tecnica</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['FichaTecnica'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['FichaTecnica'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['FichaTecnica'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['FichaTecnica'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
 									';
 								}
 								//Hoja de seguridad
-								if(isset($rowdata['HDS'])&&$rowdata['HDS']!=''){
+								if(isset($rowData['HDS'])&&$rowData['HDS']!=''){
 									echo '
 										<tr class="item-row">
 											<td>Hoja de seguridad</td>
 											<td width="10">
 												<div class="btn-group" style="width: 70px;">
-													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['HDS'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['HDS'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+													<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['HDS'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+													<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['HDS'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>

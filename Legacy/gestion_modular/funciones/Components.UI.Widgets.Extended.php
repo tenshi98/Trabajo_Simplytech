@@ -563,11 +563,11 @@ function widget_bodega($titulo,
 
 	/***********************************************************/
 	// Se trae un listado con los valores de las existencias actuales
-	$año_pasado = ano_actual()-1;
+	$ano_pasado = ano_actual()-1;
 	if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-		$z = "idSistema>=0 AND Creacion_ano >= ".$año_pasado;
+		$z = "idSistema>=0 AND Creacion_ano >= ".$ano_pasado;
 	}else{
-		$z = "idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."' AND Creacion_ano >= ".$año_pasado;
+		$z = "idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."' AND Creacion_ano >= ".$ano_pasado;
 	}
 
 	$SIS_query = 'Creacion_ano,Creacion_mes,idTipo,SUM(ValorTotal) AS Valor';

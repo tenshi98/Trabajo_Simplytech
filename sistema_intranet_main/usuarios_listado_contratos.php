@@ -81,7 +81,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre';
 $SIS_join  = '';
 $SIS_where = 'idUsuario ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /********************************************************************************/
 /********************************************************************************/
@@ -233,7 +233,7 @@ $arrContratos = db_select_array (false, $SIS_query, 'licitacion_listado', $SIS_j
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Editar Permisos de acceso a Contratos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowData['Nombre'], 'Editar Permisos de acceso a Contratos'); ?>
 </div>
 <div class="clearfix"></div>
 

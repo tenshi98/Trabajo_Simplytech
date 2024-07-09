@@ -106,7 +106,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 //Se traen las rutas
 $query = "SELECT Latitud, Longitud
@@ -155,7 +155,7 @@ array_push( $arrPuntos,$row );
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Puntos de la geocerca <?php echo $rowdata['Nombre']; ?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Puntos de la geocerca <?php echo $rowData['Nombre']; ?></h5>
 		</header>
         <div class="table-responsive">
 
@@ -319,7 +319,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 //Se traen las rutas
 $arrPuntos = array();
@@ -347,7 +347,7 @@ array_push( $arrPuntos,$row );
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Puntos de la geocerca <?php echo $rowdata['Nombre']; ?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Puntos de la geocerca <?php echo $rowData['Nombre']; ?></h5>
 		</header>
         <div class="table-responsive">
 
@@ -536,7 +536,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 ?>
 
@@ -551,8 +551,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)){    $x1  = $Nombre;     }else{$x1  = $rowdata['Nombre'];}
-				if(isset($idEstado)){  $x2 = $idEstado;    }else{$x2 = $rowdata['idEstado'];}
+				if(isset($Nombre)){    $x1  = $Nombre;     }else{$x1  = $rowData['Nombre'];}
+				if(isset($idEstado)){  $x2 = $idEstado;    }else{$x2 = $rowData['idEstado'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

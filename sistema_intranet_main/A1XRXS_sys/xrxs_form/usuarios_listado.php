@@ -184,9 +184,9 @@ require_once '0_validate_user_1.php';
 					if($ultimo_id2!=0){
 
 						//Consulto el sistema que esta usando
-						$rowdata = db_select_data (false, 'idOpcionesGen_7', 'core_sistemas','', 'idSistema = "'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$rowData = db_select_data (false, 'idOpcionesGen_7', 'core_sistemas','', 'idSistema = "'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						//si tiene la interfaz de crosstech
-						if(isset($rowdata['idOpcionesGen_7'])&&$rowdata['idOpcionesGen_7']==6){
+						if(isset($rowData['idOpcionesGen_7'])&&$rowData['idOpcionesGen_7']==6){
 							//logo de la compañia
 							$login_logo  = DB_SITE_MAIN.'/img/round_logo.png';
 							$file_logo   = 'img/round_logo.png';
@@ -380,7 +380,7 @@ require_once '0_validate_user_1.php';
 
 			if($errorn==0){
 				// Se obtiene el nombre del archivo
-				$rowdata = db_select_data (false, 'Direccion_img', 'usuarios_listado', '', 'idUsuario = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'Direccion_img', 'usuarios_listado', '', 'idUsuario = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//se borran los datos
 				$resultado_1 = db_delete_data (false, 'usuarios_listado', 'idUsuario = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -390,12 +390,12 @@ require_once '0_validate_user_1.php';
 				if($resultado_1==true OR $resultado_2==true OR $resultado_3==true){
 
 					//se elimina el archivo
-					if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+					if(isset($rowData['Direccion_img'])&&$rowData['Direccion_img']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+							if(!is_writable('upload/'.$rowData['Direccion_img'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['Direccion_img']);
+								unlink('upload/'.$rowData['Direccion_img']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
@@ -514,12 +514,12 @@ require_once '0_validate_user_1.php';
 			if($errorn==0){
 				/**********************************************/
 				//Busco la información del permiso
-				$rowdata = db_select_data (false, 'idUsuario, idAdmpm, level', 'usuarios_permisos', '', 'idPermisos = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'idUsuario, idAdmpm, level', 'usuarios_permisos', '', 'idPermisos = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Datos generados
-				$idUsuario        = $rowdata['idUsuario'];
-				$idAdmpm          = $rowdata['idAdmpm'];
-				$level            = $rowdata['level'];
+				$idUsuario        = $rowData['idUsuario'];
+				$idAdmpm          = $rowData['idAdmpm'];
+				$level            = $rowData['level'];
 				$idUsuario_elim   = $_SESSION['usuario']['basic_data']['idUsuario'];
 				$Fecha_elim       = fecha_actual();
 				$Hora_elim        = hora_actual();
@@ -1068,7 +1068,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'Direccion_img', 'usuarios_listado', '', 'idUsuario = "'.$_GET['id_usuario'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'Direccion_img', 'usuarios_listado', '', 'idUsuario = "'.$_GET['id_usuario'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -1078,12 +1078,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+				if(isset($rowData['Direccion_img'])&&$rowData['Direccion_img']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+						if(!is_writable('upload/'.$rowData['Direccion_img'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['Direccion_img']);
+							unlink('upload/'.$rowData['Direccion_img']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -2227,11 +2227,11 @@ require_once '0_validate_user_1.php';
 			(SELECT COUNT(usuarios_permisos.idAdmpm) FROM usuarios_permisos INNER JOIN  core_permisos_listado ON core_permisos_listado.idAdmpm = usuarios_permisos.idAdmpm WHERE core_permisos_listado.Direccionbase ='".$trans_13."'  AND usuarios_permisos.idUsuario='".$_GET['id']."' LIMIT 1) AS tran_13";
 			$SIS_join  = '';
 			$SIS_where = 'usuarios_listado.idUsuario='.$_GET['id'];
-			$rowdatax = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowDatax = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
-			$productos    = $rowdatax['tran_1'] + $rowdatax['tran_2'] + $rowdatax['tran_3'] + $rowdatax['tran_4'];
-			$insumos      = $rowdatax['tran_10'] + $rowdatax['tran_11'] + $rowdatax['tran_12'] + $rowdatax['tran_13'];
-			$arriendos    = $rowdatax['tran_5'] + $rowdatax['tran_6'];
+			$productos    = $rowDatax['tran_1'] + $rowDatax['tran_2'] + $rowDatax['tran_3'] + $rowDatax['tran_4'];
+			$insumos      = $rowDatax['tran_10'] + $rowDatax['tran_11'] + $rowDatax['tran_12'] + $rowDatax['tran_13'];
+			$arriendos    = $rowDatax['tran_5'] + $rowDatax['tran_6'];
 
 			//Verifico que tenga permisos para ver la transaccion de bodega insumos
 			if($insumos!=0){

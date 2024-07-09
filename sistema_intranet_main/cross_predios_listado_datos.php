@@ -56,12 +56,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,idSistema, idPais, idCiudad, idComuna, Direccion';
 $SIS_join  = '';
 $SIS_where = 'idPredio = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'cross_predios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'cross_predios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Predio', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Predio', $rowData['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -81,11 +81,11 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_predios_listado', $SIS_join
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){       $x1  = $Nombre;        }else{$x1  = $rowdata['Nombre'];}
-					if(isset($idPais)){       $x2  = $idPais;        }else{$x2  = $rowdata['idPais'];}
-					if(isset($idCiudad)){     $x3  = $idCiudad;      }else{$x3  = $rowdata['idCiudad'];}
-					if(isset($idComuna)){     $x4  = $idComuna;      }else{$x4  = $rowdata['idComuna'];}
-					if(isset($Direccion)){    $x5  = $Direccion;     }else{$x5  = $rowdata['Direccion'];}
+					if(isset($Nombre)){       $x1  = $Nombre;        }else{$x1  = $rowData['Nombre'];}
+					if(isset($idPais)){       $x2  = $idPais;        }else{$x2  = $rowData['idPais'];}
+					if(isset($idCiudad)){     $x3  = $idCiudad;      }else{$x3  = $rowData['idCiudad'];}
+					if(isset($idComuna)){     $x4  = $idComuna;      }else{$x4  = $rowData['idComuna'];}
+					if(isset($Direccion)){    $x5  = $Direccion;     }else{$x5  = $rowData['Direccion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

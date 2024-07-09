@@ -26,7 +26,7 @@ require_once 'core/Web.Header.Main.php';
 $SIS_query = 'Nombre,LimiteVelocidad, GeoLatitud, GeoLongitud, GeoVelocidad, LastUpdateFecha, LastUpdateHora';
 $SIS_join  = '';
 $SIS_where = 'idTelemetria = '.$_GET['view'];
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 ?>
 
@@ -34,15 +34,15 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Datos del Equipo <?php echo $rowdata['Nombre']; ?></h5>
+			<h5>Datos del Equipo <?php echo $rowData['Nombre']; ?></h5>
 		</header>
         <div class="table-responsive">
 			<?php
-			$explanation  = '<strong>'.fecha_estandar($rowdata['LastUpdateFecha']).' - '.$rowdata['LastUpdateHora'].'</strong><br/>';
-			$explanation .= '<strong>Equipo: </strong>'.$rowdata['Nombre'].'<br/>';
-			$explanation .= '<strong>Velocidad: </strong>'.Cantidades($rowdata['GeoVelocidad'], 0).'/'.Cantidades($rowdata['LimiteVelocidad'], 0).' KM/h<br/>';
+			$explanation  = '<strong>'.fecha_estandar($rowData['LastUpdateFecha']).' - '.$rowData['LastUpdateHora'].'</strong><br/>';
+			$explanation .= '<strong>Equipo: </strong>'.$rowData['Nombre'].'<br/>';
+			$explanation .= '<strong>Velocidad: </strong>'.Cantidades($rowData['GeoVelocidad'], 0).'/'.Cantidades($rowData['LimiteVelocidad'], 0).' KM/h<br/>';
 
-			echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); ?>
+			echo mapa_from_gps($rowData['GeoLatitud'], $rowData['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); ?>
 
         </div>
 	</div>

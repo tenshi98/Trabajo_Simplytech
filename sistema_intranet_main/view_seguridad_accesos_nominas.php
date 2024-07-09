@@ -67,7 +67,7 @@ LEFT JOIN `ubicacion_listado_level_4`   ON ubicacion_listado_level_4.idLevel_4  
 LEFT JOIN `ubicacion_listado_level_5`   ON ubicacion_listado_level_5.idLevel_5   = seguridad_accesos_nominas.idUbicacion_lvl_5
 LEFT JOIN `core_estado_caja`            ON core_estado_caja.idEstado             = seguridad_accesos_nominas.idEstado';
 $SIS_where = 'seguridad_accesos_nominas.idAcceso ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /*****************************************/
 // Se trae un listado con todos los otros
@@ -112,28 +112,28 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Datos Básicos
 			<address>
-				<strong>Usuario:</strong> <?php echo $row_data['Usuario']; ?><br/>
-				<strong>Sistema:</strong> <?php echo $row_data['Sistema']; ?><br/>
-				<strong>Ubicación:</strong> <?php echo $row_data['Ubicacion'];
-				if(isset($row_data['UbicacionLVL_1'])&&$row_data['UbicacionLVL_1']!=''){echo ' - '.$row_data['UbicacionLVL_1'];}
-				if(isset($row_data['UbicacionLVL_2'])&&$row_data['UbicacionLVL_2']!=''){echo ' - '.$row_data['UbicacionLVL_2'];}
-				if(isset($row_data['UbicacionLVL_3'])&&$row_data['UbicacionLVL_3']!=''){echo ' - '.$row_data['UbicacionLVL_3'];}
-				if(isset($row_data['UbicacionLVL_4'])&&$row_data['UbicacionLVL_4']!=''){echo ' - '.$row_data['UbicacionLVL_4'];}
-				if(isset($row_data['UbicacionLVL_5'])&&$row_data['UbicacionLVL_5']!=''){echo ' - '.$row_data['UbicacionLVL_5'];}
+				<strong>Usuario:</strong> <?php echo $rowData['Usuario']; ?><br/>
+				<strong>Sistema:</strong> <?php echo $rowData['Sistema']; ?><br/>
+				<strong>Ubicación:</strong> <?php echo $rowData['Ubicacion'];
+				if(isset($rowData['UbicacionLVL_1'])&&$rowData['UbicacionLVL_1']!=''){echo ' - '.$rowData['UbicacionLVL_1'];}
+				if(isset($rowData['UbicacionLVL_2'])&&$rowData['UbicacionLVL_2']!=''){echo ' - '.$rowData['UbicacionLVL_2'];}
+				if(isset($rowData['UbicacionLVL_3'])&&$rowData['UbicacionLVL_3']!=''){echo ' - '.$rowData['UbicacionLVL_3'];}
+				if(isset($rowData['UbicacionLVL_4'])&&$rowData['UbicacionLVL_4']!=''){echo ' - '.$rowData['UbicacionLVL_4'];}
+				if(isset($rowData['UbicacionLVL_5'])&&$rowData['UbicacionLVL_5']!=''){echo ' - '.$rowData['UbicacionLVL_5'];}
 				?>
 
 				<br/>
-				<strong>Persona Reunion:</strong> <?php echo $row_data['PersonaReunion']; ?><br/>
-				<strong>Estado:</strong> <?php echo $row_data['Estado']; ?><br/>
+				<strong>Persona Reunion:</strong> <?php echo $rowData['PersonaReunion']; ?><br/>
+				<strong>Estado:</strong> <?php echo $rowData['Estado']; ?><br/>
 			</address>
 		</div>
 
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Programacion
 			<address>
-				<strong>Fecha:</strong> <?php echo Fecha_estandar($row_data['FechaProgramada']); ?><br/>
-				<strong>Hora Inicio:</strong> <?php echo $row_data['HoraInicioProgramada']; ?><br/>
-				<strong>Hora Termino:</strong> <?php echo $row_data['HoraTerminoProgramada']; ?><br/>
+				<strong>Fecha:</strong> <?php echo Fecha_estandar($rowData['FechaProgramada']); ?><br/>
+				<strong>Hora Inicio:</strong> <?php echo $rowData['HoraInicioProgramada']; ?><br/>
+				<strong>Hora Termino:</strong> <?php echo $rowData['HoraTerminoProgramada']; ?><br/>
 			</address>
 		</div>
 

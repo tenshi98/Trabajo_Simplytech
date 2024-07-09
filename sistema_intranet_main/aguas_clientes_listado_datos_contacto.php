@@ -54,12 +54,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Identificador, Fono1,Fono2, Fax, email, Web, Nombre, idTipo';
 $SIS_join  = '';
 $SIS_where = 'idCliente = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente '.$rowdata['Identificador'], $rowdata['Nombre'], 'Editar Datos de contacto'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente '.$rowData['Identificador'], $rowData['Nombre'], 'Editar Datos de contacto'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -88,11 +88,11 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_joi
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Fono1)){            $x1 = $Fono1;             }else{$x1 = $rowdata['Fono1'];}
-					if(isset($Fono2)){            $x2 = $Fono2;             }else{$x2 = $rowdata['Fono2'];}
-					if(isset($Fax)){              $x3 = $Fax;               }else{$x3 = $rowdata['Fax'];}
-					if(isset($email)){            $x4 = $email;             }else{$x4 = $rowdata['email'];}
-					if(isset($Web)){              $x5 = $Web;               }else{$x5 = $rowdata['Web'];}
+					if(isset($Fono1)){            $x1 = $Fono1;             }else{$x1 = $rowData['Fono1'];}
+					if(isset($Fono2)){            $x2 = $Fono2;             }else{$x2 = $rowData['Fono2'];}
+					if(isset($Fax)){              $x3 = $Fax;               }else{$x3 = $rowData['Fax'];}
+					if(isset($email)){            $x4 = $email;             }else{$x4 = $rowData['email'];}
+					if(isset($Web)){              $x5 = $Web;               }else{$x5 = $rowData['Web'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

@@ -81,7 +81,7 @@ $SIS_join  = '
 LEFT JOIN `core_estados`           ON core_estados.idEstado                    = telemetria_listado.idEstado
 LEFT JOIN `core_estado_encendido`  ON core_estado_encendido.idEstadoEncendido  = telemetria_listado.idEstadoEncendido';
 $SIS_where = 'telemetria_listado.idTelemetria ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 
 ?>
@@ -96,31 +96,31 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 			<div class="wmd-panel">
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-					<?php if ($rowdata['Direccion_img']=='') { ?>
+					<?php if ($rowData['Direccion_img']=='') { ?>
 						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 					<?php }else{  ?>
-						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowData['Direccion_img']; ?>">
 					<?php } ?>
 				</div>
 				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 					<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Equipo</h2>
 					<p class="text-muted">
-						<?php if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){ ?><strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/><?php } ?>
-						<?php if(isset($rowdata['IdentificadorEmpresa'])&&$rowdata['IdentificadorEmpresa']!=''){ ?><strong>Identificador Empresa : </strong><?php echo $rowdata['IdentificadorEmpresa']; ?><br/><?php } ?>
-						<?php if(isset($rowdata['Sim_Num_Tel'])&&$rowdata['Sim_Num_Tel']!=''){ ?><strong>SIM - Numero Telefonico : </strong><?php echo $rowdata['Sim_Num_Tel']; ?><br/><?php } ?>
-						<?php if(isset($rowdata['Sim_Num_Serie'])&&$rowdata['Sim_Num_Serie']!=''){ ?><strong>SIM - Numero Serie : </strong><?php echo $rowdata['Sim_Num_Serie']; ?><br/><?php } ?>
-						<?php if(isset($rowdata['Sim_Compania'])&&$rowdata['Sim_Compania']!=''){ ?><strong>SIM - Compañia : </strong><?php echo $rowdata['Sim_Compania']; ?><br/><?php } ?>
-						<?php if(isset($rowdata['Sim_marca'])&&$rowdata['Sim_marca']!=''){ ?><strong>BAM - Marca : </strong><?php echo $rowdata['Sim_marca']; ?><br/><?php } ?>
-						<?php if(isset($rowdata['Sim_modelo'])&&$rowdata['Sim_modelo']!=''){ ?><strong>BAM - Modelo : </strong><?php echo $rowdata['Sim_modelo']; ?><br/><?php } ?>
-						<?php if(isset($rowdata['IP_Client'])&&$rowdata['IP_Client']!=''){ ?><strong>IP Cliente : </strong><?php echo $rowdata['IP_Client']; ?><br/><?php } ?>
-						<?php if(isset($rowdata['idTelemetria'])&&$rowdata['idTelemetria']!=''){ ?><strong>ID Equipo : </strong><?php echo $rowdata['idTelemetria']; ?><br/><?php } ?>
+						<?php if(isset($rowData['Nombre'])&&$rowData['Nombre']!=''){ ?><strong>Nombre : </strong><?php echo $rowData['Nombre']; ?><br/><?php } ?>
+						<?php if(isset($rowData['IdentificadorEmpresa'])&&$rowData['IdentificadorEmpresa']!=''){ ?><strong>Identificador Empresa : </strong><?php echo $rowData['IdentificadorEmpresa']; ?><br/><?php } ?>
+						<?php if(isset($rowData['Sim_Num_Tel'])&&$rowData['Sim_Num_Tel']!=''){ ?><strong>SIM - Numero Telefonico : </strong><?php echo $rowData['Sim_Num_Tel']; ?><br/><?php } ?>
+						<?php if(isset($rowData['Sim_Num_Serie'])&&$rowData['Sim_Num_Serie']!=''){ ?><strong>SIM - Numero Serie : </strong><?php echo $rowData['Sim_Num_Serie']; ?><br/><?php } ?>
+						<?php if(isset($rowData['Sim_Compania'])&&$rowData['Sim_Compania']!=''){ ?><strong>SIM - Compañia : </strong><?php echo $rowData['Sim_Compania']; ?><br/><?php } ?>
+						<?php if(isset($rowData['Sim_marca'])&&$rowData['Sim_marca']!=''){ ?><strong>BAM - Marca : </strong><?php echo $rowData['Sim_marca']; ?><br/><?php } ?>
+						<?php if(isset($rowData['Sim_modelo'])&&$rowData['Sim_modelo']!=''){ ?><strong>BAM - Modelo : </strong><?php echo $rowData['Sim_modelo']; ?><br/><?php } ?>
+						<?php if(isset($rowData['IP_Client'])&&$rowData['IP_Client']!=''){ ?><strong>IP Cliente : </strong><?php echo $rowData['IP_Client']; ?><br/><?php } ?>
+						<?php if(isset($rowData['idTelemetria'])&&$rowData['idTelemetria']!=''){ ?><strong>ID Equipo : </strong><?php echo $rowData['idTelemetria']; ?><br/><?php } ?>
 					</p>
 
 					<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Configuracion</h2>
 					<p class="text-muted">
-						<strong>Identificador : </strong><?php echo $rowdata['Identificador']; ?><br/>
-						<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
-						<strong>Ultima Conexion : </strong><?php echo fecha_estandar($rowdata['LastUpdateFecha']).' a las '.$rowdata['LastUpdateHora']; ?><br/>
+						<strong>Identificador : </strong><?php echo $rowData['Identificador']; ?><br/>
+						<strong>Estado : </strong><?php echo $rowData['Estado']; ?><br/>
+						<strong>Ultima Conexion : </strong><?php echo fecha_estandar($rowData['LastUpdateFecha']).' a las '.$rowData['LastUpdateHora']; ?><br/>
 					</p>
 
 					<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Cambiar Estado</h2>
@@ -135,15 +135,15 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 
 					<table  class="table table-bordered">
 						<tr class="item-row">
-							<td><label class="label <?php if(isset($rowdata['idEstadoEncendido'])&&$rowdata['idEstadoEncendido']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $rowdata['EstadoEncendido']; ?></label></td>
+							<td><label class="label <?php if(isset($rowData['idEstadoEncendido'])&&$rowData['idEstadoEncendido']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $rowData['EstadoEncendido']; ?></label></td>
 							<td width="10">
 								<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
-									<?php if ( $rowdata['idEstadoEncendido']==1 ){ ?>   
-										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $location.'&idTelemetria='.$rowdata['idTelemetria'].'&idEstadoEncendido=2' ; ?>">OFF</a>
+									<?php if ( $rowData['idEstadoEncendido']==1 ){ ?>   
+										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $location.'&idTelemetria='.$rowData['idTelemetria'].'&idEstadoEncendido=2' ; ?>">OFF</a>
 										<a class="btn btn-sm btn-info locked_active" href="#">ON</a>
 									<?php } else { ?>
 										<a class="btn btn-sm btn-info locked_active" href="#">OFF</a>
-										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $location.'&idTelemetria='.$rowdata['idTelemetria'].'&idEstadoEncendido=1' ; ?>">ON</a>
+										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $location.'&idTelemetria='.$rowData['idTelemetria'].'&idEstadoEncendido=1' ; ?>">ON</a>
 									<?php } ?>
 								</div>
 							</td>

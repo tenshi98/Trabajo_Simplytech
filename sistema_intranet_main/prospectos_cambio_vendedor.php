@@ -69,7 +69,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'idUsuario';
 	$SIS_join  = '';
 	$SIS_where = 'idProspecto = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'prospectos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'prospectos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 	/*******************************************************/
 	//Verifico el tipo de usuario que esta ingresando
 	$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
@@ -92,7 +92,7 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idUsuario)){      $x1  = $idUsuario;     }else{$x1  = $rowdata['idUsuario'];}
+					if(isset($idUsuario)){      $x1  = $idUsuario;     }else{$x1  = $rowData['idUsuario'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

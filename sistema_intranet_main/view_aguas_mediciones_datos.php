@@ -64,7 +64,7 @@ LEFT JOIN `usuarios_listado`                       ON usuarios_listado.idUsuario
 LEFT JOIN `aguas_mediciones_datos_tipo_medicion`   ON aguas_mediciones_datos_tipo_medicion.idTipoMedicion   = aguas_mediciones_datos.idTipoMedicion
 LEFT JOIN `aguas_marcadores_listado`               ON aguas_marcadores_listado.idMarcadores                 = aguas_mediciones_datos.idMarcadoresUsado';
 $SIS_where = 'aguas_mediciones_datos.idDatos ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_datos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'aguas_mediciones_datos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /**********************************************************/
 // consulto los datos
@@ -91,7 +91,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 	<div id="page-wrap">
-		<div id="header"> Ingreso Medidores N°<?php echo n_doc($rowdata['idDatos'], 7); ?> </div>
+		<div id="header"> Ingreso Medidores N°<?php echo n_doc($rowData['idDatos'], 7); ?> </div>
 		<div id="customer">
 			<table id="meta" class="pull-left otdata">
 				<tbody>
@@ -101,34 +101,34 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 					</tr>
 					<tr>
 						<td class="meta-head">Creador</td>
-						<td><?php echo $rowdata['NombreUsuario']?></td>
+						<td><?php echo $rowData['NombreUsuario']?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Nombre del Archivo</td>
-						<td><?php echo $rowdata['NombreArchivo']?></td>
+						<td><?php echo $rowData['NombreArchivo']?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Sistema</td>
-						<td><?php echo $rowdata['Sistema']?></td>
+						<td><?php echo $rowData['Sistema']?></td>
 					</tr>
 
-					<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==2){ ?>
+					<?php if(isset($rowData['idTipo'])&&$rowData['idTipo']==2){ ?>
 
 						<tr>
 							<td class="meta-head">Cliente</td>
-							<td><?php echo $rowdata['ClienteIdentificador'].' '.$rowdata['ClienteNombre']; ?></td>
+							<td><?php echo $rowData['ClienteIdentificador'].' '.$rowData['ClienteNombre']; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Medidor Cliente</td>
-							<td><?php echo $rowdata['MarcadorNombre']; ?></td>
+							<td><?php echo $rowData['MarcadorNombre']; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Medicion del periodo</td>
-							<td><?php echo cantidades_decimales_justos($rowdata['ConsumoMedidor']).' Metros Cubicos'; ?></td>
+							<td><?php echo cantidades_decimales_justos($rowData['ConsumoMedidor']).' Metros Cubicos'; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Distribucion de diferencia</td>
-							<td><?php echo $rowdata['MedidorTipoMed']; ?></td>
+							<td><?php echo $rowData['MedidorTipoMed']; ?></td>
 						</tr>
 
 					<?php } ?>
@@ -138,11 +138,11 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td><?php echo Fecha_estandar($rowdata['fCreacion']); ?></td>
+						<td><?php echo Fecha_estandar($rowData['fCreacion']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Fecha Facturacion</td>
-						<td><?php echo Fecha_estandar($rowdata['Fecha']); ?></td>
+						<td><?php echo Fecha_estandar($rowData['Fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -177,8 +177,8 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 					<td colspan="6" class="blank">
 						<p>
 							<?php
-							if(isset($rowdata['Observaciones'])&&$rowdata['Observaciones']!=''){
-								echo $rowdata['Observaciones'];
+							if(isset($rowData['Observaciones'])&&$rowData['Observaciones']!=''){
+								echo $rowData['Observaciones'];
 							}else{
 								echo 'Sin Observaciones';
 							} ?>

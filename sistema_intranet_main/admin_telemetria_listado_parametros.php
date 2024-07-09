@@ -66,7 +66,7 @@ telemetria_listado.SensorActivacionValor,
 telemetria_listado.cantSensores'.$subquery;
 $SIS_join = 'LEFT JOIN `telemetria_listado_sensores_nombre` ON telemetria_listado_sensores_nombre.idTelemetria = telemetria_listado.idTelemetria';
 $SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -74,7 +74,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Editar Sensor Activacion de <?php echo $rowdata['Equipo']; ?></h5>
+			<h5>Editar Sensor Activacion de <?php echo $rowData['Equipo']; ?></h5>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
@@ -87,12 +87,12 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 						<select name="SensorActivacionID" id="SensorActivacionID" class="form-control" required >
 							<option value="" selected>Seleccione una Opción</option>';
-							for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+							for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 								$selected = '';
-								if($i==$rowdata['SensorActivacionID']){
+								if($i==$rowData['SensorActivacionID']){
 									$selected = 'selected="selected"';
 								}
-								$input .= '<option value="'.$i.'" '.$selected.' >Sensor : '.$rowdata['SensoresNombre_'.$i].'</option>';
+								$input .= '<option value="'.$i.'" '.$selected.' >Sensor : '.$rowData['SensoresNombre_'.$i].'</option>';
 							}
 							$input .= '
 						</select>
@@ -101,7 +101,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 				echo $input;
 
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_text('Valor Activacion', 'SensorActivacionValor', $rowdata['SensorActivacionValor'], 1);
+				$Form_Inputs->form_input_text('Valor Activacion', 'SensorActivacionValor', $rowData['SensorActivacionValor'], 1);
 
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 				?>
@@ -140,7 +140,7 @@ LEFT JOIN `telemetria_listado_sensores_accion_t`        ON telemetria_listado_se
 LEFT JOIN `telemetria_listado_sensores_accion_alerta`   ON telemetria_listado_sensores_accion_alerta.idTelemetria  = telemetria_listado.idTelemetria';
 $SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['id'];
 // consulto los datos
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -148,7 +148,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Editar Parametros de <?php echo $rowdata['Equipo']; ?></h5>
+			<h5>Editar Parametros de <?php echo $rowData['Equipo']; ?></h5>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
@@ -156,17 +156,17 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 				<?php
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_tittle(3, 'Editar Sensor:'.$rowdata['Nombre']);
+				$Form_Inputs->form_tittle(3, 'Editar Sensor:'.$rowData['Nombre']);
 
 				$Form_Inputs->form_tittle(3, 'Configuracion');
-				$Form_Inputs->form_select('Unidad de Medida','SensoresUniMed_'.$_GET['mod'], $rowdata['UniMed'], 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);
+				$Form_Inputs->form_select('Unidad de Medida','SensoresUniMed_'.$_GET['mod'], $rowData['UniMed'], 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);
 
 				$Form_Inputs->form_tittle(3, 'Uso');
-				$Form_Inputs->form_select('Medicion Acciones','SensoresUso_'.$_GET['mod'], $rowdata['Uso'], 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-				$Form_Inputs->form_date('Fecha Cambio','SensoresFechaUso_'.$_GET['mod'], $rowdata['FechaUso'], 1);
-				$Form_Inputs->form_input_number('Contador Accion (Cantidad)','SensoresAccionC_'.$_GET['mod'], Cantidades_decimales_justos($rowdata['AccionC']), 1);
-				$Form_Inputs->form_input_number('Tiempo Accion (Horas)','SensoresAccionT_'.$_GET['mod'], Cantidades_decimales_justos($rowdata['AccionT']/3600), 1);
-				$Form_Inputs->form_select_n_auto('Porcentaje cumplimiento','SensoresAccionAlerta_'.$_GET['mod'], Cantidades_decimales_justos($rowdata['AccionAlerta']), 1, 1, 100);
+				$Form_Inputs->form_select('Medicion Acciones','SensoresUso_'.$_GET['mod'], $rowData['Uso'], 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+				$Form_Inputs->form_date('Fecha Cambio','SensoresFechaUso_'.$_GET['mod'], $rowData['FechaUso'], 1);
+				$Form_Inputs->form_input_number('Contador Accion (Cantidad)','SensoresAccionC_'.$_GET['mod'], Cantidades_decimales_justos($rowData['AccionC']), 1);
+				$Form_Inputs->form_input_number('Tiempo Accion (Horas)','SensoresAccionT_'.$_GET['mod'], Cantidades_decimales_justos($rowData['AccionT']/3600), 1);
+				$Form_Inputs->form_select_n_auto('Porcentaje cumplimiento','SensoresAccionAlerta_'.$_GET['mod'], Cantidades_decimales_justos($rowData['AccionAlerta']), 1, 1, 100);
 
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 				?>
@@ -254,7 +254,7 @@ LEFT JOIN `telemetria_listado_sensores_tipo`            ON telemetria_listado_se
 LEFT JOIN `telemetria_listado_sensores_grupo`           ON telemetria_listado_sensores_grupo.idTelemetria          = telemetria_listado.idTelemetria
 LEFT JOIN `telemetria_listado_sensores_unimed`          ON telemetria_listado_sensores_unimed.idTelemetria         = telemetria_listado.idTelemetria';
 $SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 $arrGrupos = array();
 $arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
@@ -276,7 +276,7 @@ $arrFinalUnimed[0]    = 'No configurado';
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Datos Sensores'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowData['Nombre'], 'Editar Datos Sensores'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -291,13 +291,13 @@ $arrFinalUnimed[0]    = 'No configurado';
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-						<?php if($rowdata['id_Sensores']==1){ ?>
+						<?php if($rowData['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'admin_telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
 						<?php } ?>
-						<?php if($rowdata['id_Geo']==2){ ?>
+						<?php if($rowData['id_Geo']==2){ ?>
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
-						<?php if($rowdata['id_Sensores']==1){ ?>
+						<?php if($rowData['id_Sensores']==1){ ?>
 						<li class="active"><a href="<?php echo 'admin_telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
@@ -314,8 +314,8 @@ $arrFinalUnimed[0]    = 'No configurado';
 				<tr class="odd">
 					<td width="210"><strong>Sensor de Activacion</strong></td>
 					<td>
-						<?php if(isset($rowdata['SensoresNombre_'.$rowdata['SensorActivacionID']])&&$rowdata['SensoresNombre_'.$rowdata['SensorActivacionID']]!=''){
-							echo $rowdata['SensoresNombre_'.$rowdata['SensorActivacionID']];
+						<?php if(isset($rowData['SensoresNombre_'.$rowData['SensorActivacionID']])&&$rowData['SensoresNombre_'.$rowData['SensorActivacionID']]!=''){
+							echo $rowData['SensoresNombre_'.$rowData['SensorActivacionID']];
 						} ?>
 					</td>
 					<td width="10">
@@ -327,8 +327,8 @@ $arrFinalUnimed[0]    = 'No configurado';
 				<tr class="odd">
 					<td width="210"><strong>Valor Sensor Activo</strong></td>
 					<td colspan="2">
-						<?php if(isset($rowdata['SensorActivacionValor'])&&$rowdata['SensorActivacionValor']!=''){
-							echo $rowdata['SensorActivacionValor'];
+						<?php if(isset($rowData['SensorActivacionValor'])&&$rowData['SensorActivacionValor']!=''){
+							echo $rowData['SensorActivacionValor'];
 						} ?>
 					</td>
 				</tr>
@@ -345,14 +345,14 @@ $arrFinalUnimed[0]    = 'No configurado';
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+					<?php for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 						//Datos
-						$Grupos    = $arrFinalGrupos[$rowdata['SensoresGrupo_'.$i]];
-						$Unimed    = $arrFinalUnimed[$rowdata['SensoresUniMed_'.$i]];
+						$Grupos    = $arrFinalGrupos[$rowData['SensoresGrupo_'.$i]];
+						$Unimed    = $arrFinalUnimed[$rowData['SensoresUniMed_'.$i]];
 						?>
 						<tr class="odd">
 							<td><?php echo 's'.$i ?></td>
-							<td><?php echo $rowdata['SensoresNombre_'.$i]; ?></td>
+							<td><?php echo $rowData['SensoresNombre_'.$i]; ?></td>
 							<td><?php echo $Grupos; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >

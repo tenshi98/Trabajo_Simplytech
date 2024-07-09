@@ -75,7 +75,7 @@ if(!empty($_GET['edit'])){
 	$SIS_query = 'Nombre,Usuario, Password, email';
 	$SIS_join  = '';
 	$SIS_where = 'idSubcuenta = '.$_GET['edit'];
-	$rowdata = db_select_data (false, $SIS_query, 'apoderados_subcuentas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'apoderados_subcuentas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -90,10 +90,10 @@ if(!empty($_GET['edit'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){     $x1  = $Nombre;    }else{$x1  = $rowdata['Nombre'];}
-					if(isset($Usuario)){    $x2  = $Usuario;   }else{$x2  = $rowdata['Usuario'];}
-					if(isset($Password)){   $x3  = $Password;  }else{$x3  = $rowdata['Password'];}
-					if(isset($email)){      $x4  = $email;     }else{$x4  = $rowdata['email'];}
+					if(isset($Nombre)){     $x1  = $Nombre;    }else{$x1  = $rowData['Nombre'];}
+					if(isset($Usuario)){    $x2  = $Usuario;   }else{$x2  = $rowData['Usuario'];}
+					if(isset($Password)){   $x3  = $Password;  }else{$x3  = $rowData['Password'];}
+					if(isset($email)){      $x4  = $email;     }else{$x4  = $rowData['email'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -162,7 +162,7 @@ if(!empty($_GET['edit'])){
 	$SIS_query = 'Nombre,ApellidoPat,ApellidoMat, idOpciones_1,idOpciones_2';
 	$SIS_join  = '';
 	$SIS_where = 'idApoderado = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -176,7 +176,7 @@ if(!empty($_GET['edit'])){
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apoderado', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Listado de subcuentas'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apoderado', $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat'], 'Listado de subcuentas'); ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 			<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Subcuenta</a><?php } ?>
 		</div>
@@ -196,12 +196,12 @@ if(!empty($_GET['edit'])){
 							<li class=""><a href="<?php echo 'apoderados_listado_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
 							<?php
 							//Si se utiliza la APP
-							if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>
+							if(isset($rowData['idOpciones_1'])&&$rowData['idOpciones_1']==1){ ?>
 								<li class=""><a href="<?php echo 'apoderados_listado_subcuentas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sitemap" aria-hidden="true"></i> Subcuentas</a></li>
 							<?php } ?>
 							<?php
 							//Si se utiliza subcuentas
-							if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
+							if(isset($rowData['idOpciones_2'])&&$rowData['idOpciones_2']==1){ ?>
 								<li class=""><a href="<?php echo 'apoderados_listado_password.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-key" aria-hidden="true"></i> Password</a></li>
 							<?php } ?>
 							<li class=""><a href="<?php echo 'apoderados_listado_hijos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-child" aria-hidden="true"></i> Hijos</a></li>

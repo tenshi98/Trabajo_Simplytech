@@ -75,7 +75,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 $SIS_query = 'Nombre,UTM_norte, UTM_este';
 $SIS_join  = '';
 $SIS_where = 'idSector = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'aguas_analisis_sectores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'aguas_analisis_sectores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -90,9 +90,9 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_analisis_sectores', $SIS_jo
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)){      $x1  = $Nombre;      }else{$x1  = $rowdata['Nombre'];}
-				if(isset($UTM_norte)){   $x2  = $UTM_norte;   }else{$x2  = $rowdata['UTM_norte'];}
-				if(isset($UTM_este)){    $x3  = $UTM_este;    }else{$x3  = $rowdata['UTM_este'];}
+				if(isset($Nombre)){      $x1  = $Nombre;      }else{$x1  = $rowData['Nombre'];}
+				if(isset($UTM_norte)){   $x2  = $UTM_norte;   }else{$x2  = $rowData['UTM_norte'];}
+				if(isset($UTM_este)){    $x3  = $UTM_este;    }else{$x3  = $rowData['UTM_este'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

@@ -107,7 +107,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['editItem'])){
 	// consulto los datos
-	$rowdata = db_select_data (false, 'Sensor_N, Rango_ini, Rango_fin, valor_especifico', 'telemetria_listado_alarmas_perso_items', '', 'idItem ='.$_GET['editItem'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, 'Sensor_N, Rango_ini, Rango_fin, valor_especifico', 'telemetria_listado_alarmas_perso_items', '', 'idItem ='.$_GET['editItem'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	//numero sensores equipo
 	$N_Maximo_Sensores = 72;
@@ -163,7 +163,7 @@ if(!empty($_GET['editItem'])){
 												$Grupos = $arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]];
 												//Se marca como seleccionado
 												$selected = '';
-												if($rowdata['Sensor_N']==$i){
+												if($rowData['Sensor_N']==$i){
 													$selected = 'selected';
 												}
 												//se imprime
@@ -172,7 +172,7 @@ if(!empty($_GET['editItem'])){
 											}else{
 												//Se marca como seleccionado
 												$selected = '';
-												if($rowdata['Sensor_N']==$i){
+												if($rowData['Sensor_N']==$i){
 													$selected = 'selected';
 												}
 												//se imprime
@@ -191,8 +191,8 @@ if(!empty($_GET['editItem'])){
 							case 3:
 							case 4:
 								//Se verifican si existen los datos
-								if(isset($Rango_ini)){  $x1  = $Rango_ini;  }else{$x1  = Cantidades_decimales_justos($rowdata['Rango_ini']);}
-								if(isset($Rango_fin)){  $x2  = $Rango_fin;  }else{$x2  = Cantidades_decimales_justos($rowdata['Rango_fin']);}
+								if(isset($Rango_ini)){  $x1  = $Rango_ini;  }else{$x1  = Cantidades_decimales_justos($rowData['Rango_ini']);}
+								if(isset($Rango_fin)){  $x2  = $Rango_fin;  }else{$x2  = Cantidades_decimales_justos($rowData['Rango_fin']);}
 
 								//opcionales
 								$Form_Inputs->form_post_data(1,1,1, 'Rango de valores donde normalmente trabaja el sensor, en caso de que un valor sea distinto de este rango (inferior al minimo, superior al maximo) marcara una alerta personalizada');
@@ -200,14 +200,14 @@ if(!empty($_GET['editItem'])){
 								$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x2, 2);
 								break;
 							case 6:
-								if(isset($valor_especifico)){  $x3  = $valor_especifico;  }else{$x3  = Cantidades_decimales_justos($rowdata['valor_especifico']);}
+								if(isset($valor_especifico)){  $x3  = $valor_especifico;  }else{$x3  = Cantidades_decimales_justos($rowData['valor_especifico']);}
 
 								//opcionales
 								$Form_Inputs->form_post_data(1,1,1, 'El valor especifico que es considerado como error (por ejemplo 0 o 1)');
 								$Form_Inputs->form_input_number('Valor Especifico','valor_especifico', $x3, 2);
 								break;
 							case 7:
-								if(isset($valor_especifico)){  $x3  = $valor_especifico;  }else{$x3  = Cantidades_decimales_justos($rowdata['valor_especifico']);}
+								if(isset($valor_especifico)){  $x3  = $valor_especifico;  }else{$x3  = Cantidades_decimales_justos($rowData['valor_especifico']);}
 
 								//opcionales
 								$Form_Inputs->form_post_data(1,1,1, 'Valor con el cual se considera que el sensor esta activo');
@@ -449,7 +449,7 @@ if(!empty($_GET['editItem'])){
 	// consulto los datos
 	$SIS_query = 'Nombre,idTipoAlerta, idUniMed, idTipo, valor_error, valor_diferencia, Rango_ini, Rango_fin,
 	NErroresMax, NErroresActual, idEstado, HoraInicio, HoraTermino';
-	$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso', '', 'idAlarma ='.$_GET['editAlarma'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso', '', 'idAlarma ='.$_GET['editAlarma'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -464,19 +464,19 @@ if(!empty($_GET['editItem'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){            $x1  = $Nombre;            }else{$x1  = $rowdata['Nombre'];}
-					if(isset($idTipoAlerta)){      $x2  = $idTipoAlerta;      }else{$x2  = $rowdata['idTipoAlerta'];}
-					if(isset($idUniMed)){          $x3  = $idUniMed;          }else{$x3  = $rowdata['idUniMed'];}
-					if(isset($idTipo)){            $x4  = $idTipo;            }else{$x4  = $rowdata['idTipo'];}
-					if(isset($NErroresMax)){       $x5  = $NErroresMax;       }else{$x5  = Cantidades_decimales_justos($rowdata['NErroresMax']);}
-					if(isset($NErroresActual)){    $x6  = $NErroresActual;    }else{$x6  = Cantidades_decimales_justos($rowdata['NErroresActual']);}
-					if(isset($valor_error)){       $x7  = $valor_error;       }else{$x7  = Cantidades_decimales_justos($rowdata['valor_error']);}
-					if(isset($valor_diferencia)){  $x8  = $valor_diferencia;  }else{$x8  = Cantidades_decimales_justos($rowdata['valor_diferencia']);}
-					if(isset($Rango_ini)){         $x9  = $Rango_ini;         }else{$x9  = Cantidades_decimales_justos($rowdata['Rango_ini']);}
-					if(isset($Rango_fin)){         $x10 = $Rango_fin;         }else{$x10 = Cantidades_decimales_justos($rowdata['Rango_fin']);}
-					if(isset($HoraInicio)){        $x11 = $HoraInicio;        }else{$x11 = $rowdata['HoraInicio'];}
-					if(isset($HoraTermino)){       $x12 = $HoraTermino;       }else{$x12 = $rowdata['HoraTermino'];}
-					if(isset($idEstado)){          $x13 = $idEstado;          }else{$x13 = $rowdata['idEstado'];}
+					if(isset($Nombre)){            $x1  = $Nombre;            }else{$x1  = $rowData['Nombre'];}
+					if(isset($idTipoAlerta)){      $x2  = $idTipoAlerta;      }else{$x2  = $rowData['idTipoAlerta'];}
+					if(isset($idUniMed)){          $x3  = $idUniMed;          }else{$x3  = $rowData['idUniMed'];}
+					if(isset($idTipo)){            $x4  = $idTipo;            }else{$x4  = $rowData['idTipo'];}
+					if(isset($NErroresMax)){       $x5  = $NErroresMax;       }else{$x5  = Cantidades_decimales_justos($rowData['NErroresMax']);}
+					if(isset($NErroresActual)){    $x6  = $NErroresActual;    }else{$x6  = Cantidades_decimales_justos($rowData['NErroresActual']);}
+					if(isset($valor_error)){       $x7  = $valor_error;       }else{$x7  = Cantidades_decimales_justos($rowData['valor_error']);}
+					if(isset($valor_diferencia)){  $x8  = $valor_diferencia;  }else{$x8  = Cantidades_decimales_justos($rowData['valor_diferencia']);}
+					if(isset($Rango_ini)){         $x9  = $Rango_ini;         }else{$x9  = Cantidades_decimales_justos($rowData['Rango_ini']);}
+					if(isset($Rango_fin)){         $x10 = $Rango_fin;         }else{$x10 = Cantidades_decimales_justos($rowData['Rango_fin']);}
+					if(isset($HoraInicio)){        $x11 = $HoraInicio;        }else{$x11 = $rowData['HoraInicio'];}
+					if(isset($HoraTermino)){       $x12 = $HoraTermino;       }else{$x12 = $rowData['HoraTermino'];}
+					if(isset($idEstado)){          $x13 = $idEstado;          }else{$x13 = $rowData['idEstado'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -905,11 +905,11 @@ if(!empty($_GET['editItem'])){
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 	// tomo los datos del equipo
-	$rowdata = db_select_data (false, 'Nombre,id_Geo, id_Sensores, cantSensores', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, 'Nombre,id_Geo, id_Sensores, cantSensores', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	//defino los nombres de los sensores
 	$subsql = '';
-	for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+	for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 		$subsql .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
 		$subsql .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
 	}
@@ -957,7 +957,7 @@ if(!empty($_GET['editItem'])){
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Alertas Personalizadas'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowData['Nombre'], 'Editar Alertas Personalizadas'); ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 			<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location; ?>&newAlarma=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Alarma</a><?php } ?>
 		</div>
@@ -975,15 +975,15 @@ if(!empty($_GET['editItem'])){
 						<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 						<ul class="dropdown-menu" role="menu">
 							<li class=""><a href="<?php echo 'telemetria_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-							<?php if($rowdata['id_Sensores']==1){ ?>
+							<?php if($rowData['id_Sensores']==1){ ?>
 								<li class="active"><a href="<?php echo 'telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
 							<?php } ?>
-							<?php if($rowdata['id_Geo']==1){ ?>
+							<?php if($rowData['id_Geo']==1){ ?>
 								<li class=""><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
-							<?php }elseif($rowdata['id_Geo']==2){ ?>
+							<?php }elseif($rowData['id_Geo']==2){ ?>
 								<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 							<?php } ?>
-							<?php if($rowdata['id_Sensores']==1){ ?>
+							<?php if($rowData['id_Sensores']==1){ ?>
 								<li class=""><a href="<?php echo 'telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
 								<li class=""><a href="<?php echo 'telemetria_listado_sensor_operaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Definicion Operacional</a></li>
 							<?php } ?>

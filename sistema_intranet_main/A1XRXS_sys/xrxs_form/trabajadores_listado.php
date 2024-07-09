@@ -422,7 +422,7 @@ require_once '0_validate_user_1.php';
 
 			if($errorn==0){
 				// Se obtiene el nombre del archivo
-				$rowdata = db_select_data (false, 'Direccion_img, File_Curriculum, File_Antecedentes, File_Carnet, File_Contrato, File_Licencia, File_RHTM', 'trabajadores_listado', '', 'idTrabajador = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'Direccion_img, File_Curriculum, File_Antecedentes, File_Carnet, File_Contrato, File_Licencia, File_RHTM', 'trabajadores_listado', '', 'idTrabajador = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//se borran los datos
 				$resultado = db_delete_data (false, 'trabajadores_listado', 'idTrabajador = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -430,84 +430,84 @@ require_once '0_validate_user_1.php';
 				if($resultado==true){
 
 					//se elimina la foto
-					if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+					if(isset($rowData['Direccion_img'])&&$rowData['Direccion_img']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+							if(!is_writable('upload/'.$rowData['Direccion_img'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['Direccion_img']);
+								unlink('upload/'.$rowData['Direccion_img']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
 					//se elimina el curriculum
-					if(isset($rowdata['File_Curriculum'])&&$rowdata['File_Curriculum']!=''){
+					if(isset($rowData['File_Curriculum'])&&$rowData['File_Curriculum']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['File_Curriculum'])){
+							if(!is_writable('upload/'.$rowData['File_Curriculum'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['File_Curriculum']);
+								unlink('upload/'.$rowData['File_Curriculum']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
 					//se elimina los antecedentes
-					if(isset($rowdata['File_Antecedentes'])&&$rowdata['File_Antecedentes']!=''){
+					if(isset($rowData['File_Antecedentes'])&&$rowData['File_Antecedentes']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['File_Antecedentes'])){
+							if(!is_writable('upload/'.$rowData['File_Antecedentes'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['File_Antecedentes']);
+								unlink('upload/'.$rowData['File_Antecedentes']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
 					//se elimina el carnet de identidad
-					if(isset($rowdata['File_Carnet'])&&$rowdata['File_Carnet']!=''){
+					if(isset($rowData['File_Carnet'])&&$rowData['File_Carnet']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['File_Carnet'])){
+							if(!is_writable('upload/'.$rowData['File_Carnet'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['File_Carnet']);
+								unlink('upload/'.$rowData['File_Carnet']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
 					//se elimina el contrato
-					if(isset($rowdata['File_Contrato'])&&$rowdata['File_Contrato']!=''){
+					if(isset($rowData['File_Contrato'])&&$rowData['File_Contrato']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['File_Contrato'])){
+							if(!is_writable('upload/'.$rowData['File_Contrato'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['File_Contrato']);
+								unlink('upload/'.$rowData['File_Contrato']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
 					//se elimina el contrato
-					if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){
+					if(isset($rowData['File_Licencia'])&&$rowData['File_Licencia']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['File_Licencia'])){
+							if(!is_writable('upload/'.$rowData['File_Licencia'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['File_Licencia']);
+								unlink('upload/'.$rowData['File_Licencia']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
 					//se elimina el contrato
-					if(isset($rowdata['File_RHTM'])&&$rowdata['File_RHTM']!=''){
+					if(isset($rowData['File_RHTM'])&&$rowData['File_RHTM']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['File_RHTM'])){
+							if(!is_writable('upload/'.$rowData['File_RHTM'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['File_RHTM']);
+								unlink('upload/'.$rowData['File_RHTM']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
@@ -671,7 +671,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre de la imagen
-			$rowdata = db_select_data (false, 'Direccion_img', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'Direccion_img', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -681,12 +681,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+				if(isset($rowData['Direccion_img'])&&$rowData['Direccion_img']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+						if(!is_writable('upload/'.$rowData['Direccion_img'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['Direccion_img']);
+							unlink('upload/'.$rowData['Direccion_img']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -777,7 +777,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'File_Curriculum', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Curriculum'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'File_Curriculum', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Curriculum'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -787,12 +787,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['File_Curriculum'])&&$rowdata['File_Curriculum']!=''){
+				if(isset($rowData['File_Curriculum'])&&$rowData['File_Curriculum']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['File_Curriculum'])){
+						if(!is_writable('upload/'.$rowData['File_Curriculum'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['File_Curriculum']);
+							unlink('upload/'.$rowData['File_Curriculum']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -883,7 +883,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'File_Antecedentes', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Antecedentes'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'File_Antecedentes', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Antecedentes'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -893,12 +893,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['File_Antecedentes'])&&$rowdata['File_Antecedentes']!=''){
+				if(isset($rowData['File_Antecedentes'])&&$rowData['File_Antecedentes']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['File_Antecedentes'])){
+						if(!is_writable('upload/'.$rowData['File_Antecedentes'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['File_Antecedentes']);
+							unlink('upload/'.$rowData['File_Antecedentes']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -989,7 +989,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'File_Carnet', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Carnet'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'File_Carnet', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Carnet'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -999,12 +999,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['File_Carnet'])&&$rowdata['File_Carnet']!=''){
+				if(isset($rowData['File_Carnet'])&&$rowData['File_Carnet']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['File_Carnet'])){
+						if(!is_writable('upload/'.$rowData['File_Carnet'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['File_Carnet']);
+							unlink('upload/'.$rowData['File_Carnet']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -1094,7 +1094,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'File_Contrato', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Contrato'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'File_Contrato', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Contrato'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -1104,12 +1104,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['File_Contrato'])&&$rowdata['File_Contrato']!=''){
+				if(isset($rowData['File_Contrato'])&&$rowData['File_Contrato']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['File_Contrato'])){
+						if(!is_writable('upload/'.$rowData['File_Contrato'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['File_Contrato']);
+							unlink('upload/'.$rowData['File_Contrato']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -1214,7 +1214,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'File_Licencia', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Licencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'File_Licencia', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Licencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -1224,12 +1224,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){
+				if(isset($rowData['File_Licencia'])&&$rowData['File_Licencia']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['File_Licencia'])){
+						if(!is_writable('upload/'.$rowData['File_Licencia'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['File_Licencia']);
+							unlink('upload/'.$rowData['File_Licencia']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -1322,7 +1322,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'File_RHTM', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_RHTM'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'File_RHTM', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_RHTM'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -1332,12 +1332,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['File_RHTM'])&&$rowdata['File_RHTM']!=''){
+				if(isset($rowData['File_RHTM'])&&$rowData['File_RHTM']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['File_RHTM'])){
+						if(!is_writable('upload/'.$rowData['File_RHTM'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['File_RHTM']);
+							unlink('upload/'.$rowData['File_RHTM']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log

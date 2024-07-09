@@ -66,12 +66,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,ApellidoPat,ApellidoMat,idTipoLicencia,CA_Licencia,LicenciaFechaControlUltimo,LicenciaFechaControl, File_Licencia';
 $SIS_join  = '';
 $SIS_where = 'idTrabajador = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Licencia Conducir'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat'], 'Editar Licencia Conducir'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -107,10 +107,10 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idTipoLicencia)){               $x1 = $idTipoLicencia;                }else{$x1 = $rowdata['idTipoLicencia'];}
-					if(isset($CA_Licencia)){                  $x2 = $CA_Licencia;                   }else{$x2 = $rowdata['CA_Licencia'];}
-					if(isset($LicenciaFechaControlUltimo)){   $x3 = $LicenciaFechaControlUltimo;    }else{$x3 = $rowdata['LicenciaFechaControlUltimo'];}
-					if(isset($LicenciaFechaControl)){         $x4 = $LicenciaFechaControl;          }else{$x4 = $rowdata['LicenciaFechaControl'];}
+					if(isset($idTipoLicencia)){               $x1 = $idTipoLicencia;                }else{$x1 = $rowData['idTipoLicencia'];}
+					if(isset($CA_Licencia)){                  $x2 = $CA_Licencia;                   }else{$x2 = $rowData['CA_Licencia'];}
+					if(isset($LicenciaFechaControlUltimo)){   $x3 = $LicenciaFechaControlUltimo;    }else{$x3 = $rowData['LicenciaFechaControlUltimo'];}
+					if(isset($LicenciaFechaControl)){         $x4 = $LicenciaFechaControl;          }else{$x4 = $rowData['LicenciaFechaControl'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -119,10 +119,10 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 					$Form_Inputs->form_date('Fecha Ultimo Control','LicenciaFechaControlUltimo', $x3, 1);
 					$Form_Inputs->form_date('Fecha Control','LicenciaFechaControl', $x4, 1);
 
-					if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){
+					if(isset($rowData['File_Licencia'])&&$rowData['File_Licencia']!=''){
 
 						echo '<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter"><h3>Archivo</h3>';
-						echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['File_Licencia'], '');
+						echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowData['File_Licencia'], '');
 						echo '</div>
 						<a href="'.$new_location.'&id='.$_GET['id'].'&del_File_Licencia='.$_GET['id'].'" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 						<div class="clearfix"></div>';

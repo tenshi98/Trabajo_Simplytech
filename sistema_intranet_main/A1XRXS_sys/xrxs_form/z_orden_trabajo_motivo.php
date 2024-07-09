@@ -995,7 +995,7 @@ require_once '0_validate_user_1.php';
 
 				/*****************************************************/
 				// Se traen todos los datos de la ot seleccionada
-				$rowdata = db_select_data (false, 'idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idPrioridad, idTipo, Observaciones', 'orden_trabajo_tareas_listado', '', 'idOT = '.$idOT, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idPrioridad, idTipo, Observaciones', 'orden_trabajo_tareas_listado', '', 'idOT = '.$idOT, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*****************************************************/
 				// Se trae un listado con los trabajadores de la OT
@@ -1009,17 +1009,17 @@ require_once '0_validate_user_1.php';
 
 				/*****************************************************/
 				//Se guardan los datos basicos
-				if(isset($rowdata['idSistema']) &&$rowdata['idSistema']!=''){                   $SIS_data  = "'".$rowdata['idSistema']."'";            }else{$SIS_data  = "''";}
-				if(isset($rowdata['idUbicacion']) && $rowdata['idUbicacion']!=''){              $SIS_data .= ",'".$rowdata['idUbicacion']."'";         }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idUbicacion_lvl_1']) && $rowdata['idUbicacion_lvl_1']!=''){  $SIS_data .= ",'".$rowdata['idUbicacion_lvl_1']."'";   }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idUbicacion_lvl_2']) && $rowdata['idUbicacion_lvl_2']!=''){  $SIS_data .= ",'".$rowdata['idUbicacion_lvl_2']."'";   }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idUbicacion_lvl_3']) && $rowdata['idUbicacion_lvl_3']!=''){  $SIS_data .= ",'".$rowdata['idUbicacion_lvl_3']."'";   }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idUbicacion_lvl_4']) && $rowdata['idUbicacion_lvl_4']!=''){  $SIS_data .= ",'".$rowdata['idUbicacion_lvl_4']."'";   }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idUbicacion_lvl_5']) && $rowdata['idUbicacion_lvl_5']!=''){  $SIS_data .= ",'".$rowdata['idUbicacion_lvl_5']."'";   }else{$SIS_data .= ",''";}
+				if(isset($rowData['idSistema']) &&$rowData['idSistema']!=''){                   $SIS_data  = "'".$rowData['idSistema']."'";            }else{$SIS_data  = "''";}
+				if(isset($rowData['idUbicacion']) && $rowData['idUbicacion']!=''){              $SIS_data .= ",'".$rowData['idUbicacion']."'";         }else{$SIS_data .= ",''";}
+				if(isset($rowData['idUbicacion_lvl_1']) && $rowData['idUbicacion_lvl_1']!=''){  $SIS_data .= ",'".$rowData['idUbicacion_lvl_1']."'";   }else{$SIS_data .= ",''";}
+				if(isset($rowData['idUbicacion_lvl_2']) && $rowData['idUbicacion_lvl_2']!=''){  $SIS_data .= ",'".$rowData['idUbicacion_lvl_2']."'";   }else{$SIS_data .= ",''";}
+				if(isset($rowData['idUbicacion_lvl_3']) && $rowData['idUbicacion_lvl_3']!=''){  $SIS_data .= ",'".$rowData['idUbicacion_lvl_3']."'";   }else{$SIS_data .= ",''";}
+				if(isset($rowData['idUbicacion_lvl_4']) && $rowData['idUbicacion_lvl_4']!=''){  $SIS_data .= ",'".$rowData['idUbicacion_lvl_4']."'";   }else{$SIS_data .= ",''";}
+				if(isset($rowData['idUbicacion_lvl_5']) && $rowData['idUbicacion_lvl_5']!=''){  $SIS_data .= ",'".$rowData['idUbicacion_lvl_5']."'";   }else{$SIS_data .= ",''";}
 				if(isset($idUsuario) && $idUsuario!=''){                                        $SIS_data .= ",'".$idUsuario."'";                      }else{$SIS_data .= ",''";}
 				if(isset($idEstado) && $idEstado!=''){                                          $SIS_data .= ",'".$idEstado."'";                       }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idPrioridad']) && $rowdata['idPrioridad']!=''){              $SIS_data .= ",'".$rowdata['idPrioridad']."'";         }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idTipo']) && $rowdata['idTipo']!= ''){                       $SIS_data .= ",'".$rowdata['idTipo']."'";              }else{$SIS_data .= ",''";}
+				if(isset($rowData['idPrioridad']) && $rowData['idPrioridad']!=''){              $SIS_data .= ",'".$rowData['idPrioridad']."'";         }else{$SIS_data .= ",''";}
+				if(isset($rowData['idTipo']) && $rowData['idTipo']!= ''){                       $SIS_data .= ",'".$rowData['idTipo']."'";              }else{$SIS_data .= ",''";}
 				if(isset($f_creacion) && $f_creacion!=''){                                      $SIS_data .= ",'".$f_creacion."'";                     }else{$SIS_data .= ",''";}
 				if(isset($f_programacion) && $f_programacion!=''){
 					$SIS_data .= ",'".$f_programacion."'";
@@ -1034,7 +1034,7 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($rowdata['Observaciones']) && $rowdata['Observaciones']!=''){   $SIS_data .= ",'".$rowdata['Observaciones']."'";      }else{$SIS_data .= ",'Sin Observaciones'";}
+				if(isset($rowData['Observaciones']) && $rowData['Observaciones']!=''){   $SIS_data .= ",'".$rowData['Observaciones']."'";      }else{$SIS_data .= ",'Sin Observaciones'";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4,
@@ -1051,17 +1051,17 @@ require_once '0_validate_user_1.php';
 
 						//filtros
 						if(isset($ultimo_id) &&$ultimo_id!=''){                                         $SIS_data  = "'".$ultimo_id."'";                       }else{$SIS_data  = "''";}
-						if(isset($rowdata['idSistema']) && $rowdata['idSistema']!=''){                  $SIS_data .= ",'".$rowdata['idSistema']."'";           }else{$SIS_data .= ",''";}
-						if(isset($rowdata['idUbicacion']) && $rowdata['idUbicacion']!=''){              $SIS_data .= ",'".$rowdata['idUbicacion']."'";         }else{$SIS_data .= ",''";}
-						if(isset($rowdata['idUbicacion_lvl_1']) && $rowdata['idUbicacion_lvl_1']!=''){  $SIS_data .= ",'".$rowdata['idUbicacion_lvl_1']."'";   }else{$SIS_data .= ",''";}
-						if(isset($rowdata['idUbicacion_lvl_2']) && $rowdata['idUbicacion_lvl_2']!=''){  $SIS_data .= ",'".$rowdata['idUbicacion_lvl_2']."'";   }else{$SIS_data .= ",''";}
-						if(isset($rowdata['idUbicacion_lvl_3']) && $rowdata['idUbicacion_lvl_3']!=''){  $SIS_data .= ",'".$rowdata['idUbicacion_lvl_3']."'";   }else{$SIS_data .= ",''";}
-						if(isset($rowdata['idUbicacion_lvl_4']) && $rowdata['idUbicacion_lvl_4']!=''){  $SIS_data .= ",'".$rowdata['idUbicacion_lvl_4']."'";   }else{$SIS_data .= ",''";}
-						if(isset($rowdata['idUbicacion_lvl_5']) && $rowdata['idUbicacion_lvl_5']!=''){  $SIS_data .= ",'".$rowdata['idUbicacion_lvl_5']."'";   }else{$SIS_data .= ",''";}
+						if(isset($rowData['idSistema']) && $rowData['idSistema']!=''){                  $SIS_data .= ",'".$rowData['idSistema']."'";           }else{$SIS_data .= ",''";}
+						if(isset($rowData['idUbicacion']) && $rowData['idUbicacion']!=''){              $SIS_data .= ",'".$rowData['idUbicacion']."'";         }else{$SIS_data .= ",''";}
+						if(isset($rowData['idUbicacion_lvl_1']) && $rowData['idUbicacion_lvl_1']!=''){  $SIS_data .= ",'".$rowData['idUbicacion_lvl_1']."'";   }else{$SIS_data .= ",''";}
+						if(isset($rowData['idUbicacion_lvl_2']) && $rowData['idUbicacion_lvl_2']!=''){  $SIS_data .= ",'".$rowData['idUbicacion_lvl_2']."'";   }else{$SIS_data .= ",''";}
+						if(isset($rowData['idUbicacion_lvl_3']) && $rowData['idUbicacion_lvl_3']!=''){  $SIS_data .= ",'".$rowData['idUbicacion_lvl_3']."'";   }else{$SIS_data .= ",''";}
+						if(isset($rowData['idUbicacion_lvl_4']) && $rowData['idUbicacion_lvl_4']!=''){  $SIS_data .= ",'".$rowData['idUbicacion_lvl_4']."'";   }else{$SIS_data .= ",''";}
+						if(isset($rowData['idUbicacion_lvl_5']) && $rowData['idUbicacion_lvl_5']!=''){  $SIS_data .= ",'".$rowData['idUbicacion_lvl_5']."'";   }else{$SIS_data .= ",''";}
 						if(isset($idUsuario) && $idUsuario!=''){                                        $SIS_data .= ",'".$idUsuario."'";                      }else{$SIS_data .= ",''";}
 						if(isset($idEstado) && $idEstado!=''){                                          $SIS_data .= ",'".$idEstado."'";                       }else{$SIS_data .= ",''";}
-						if(isset($rowdata['idPrioridad']) && $rowdata['idPrioridad']!=''){              $SIS_data .= ",'".$rowdata['idPrioridad']."'";         }else{$SIS_data .= ",''";}
-						if(isset($rowdata['idTipo']) && $rowdata['idTipo']!= ''){                       $SIS_data .= ",'".$rowdata['idTipo']."'";              }else{$SIS_data .= ",''";}
+						if(isset($rowData['idPrioridad']) && $rowData['idPrioridad']!=''){              $SIS_data .= ",'".$rowData['idPrioridad']."'";         }else{$SIS_data .= ",''";}
+						if(isset($rowData['idTipo']) && $rowData['idTipo']!= ''){                       $SIS_data .= ",'".$rowData['idTipo']."'";              }else{$SIS_data .= ",''";}
 						if(isset($f_creacion) && $f_creacion!=''){                                      $SIS_data .= ",'".$f_creacion."'";                     }else{$SIS_data .= ",''";}
 						if(isset($f_programacion) && $f_programacion!=''){                              $SIS_data .= ",'".$f_programacion."'";                 }else{$SIS_data .= ",''";}
 						if(isset($trabajador['idTrabajador']) && $trabajador['idTrabajador']!=''){      $SIS_data .= ",'".$trabajador['idTrabajador']."'";     }else{$SIS_data .= ",''";}
@@ -1080,17 +1080,17 @@ require_once '0_validate_user_1.php';
 
 						//filtros
 						if(isset($ultimo_id) &&$ultimo_id!=''){                                         $SIS_data  = "'".$ultimo_id."'";                       }else{$SIS_data  = "''";}
-						if(isset($rowdata['idSistema']) && $rowdata['idSistema']!=''){                  $SIS_data .= ",'".$rowdata['idSistema']."'";           }else{$SIS_data .= ",''";}
-						if(isset($rowdata['idUbicacion']) && $rowdata['idUbicacion']!=''){              $SIS_data .= ",'".$rowdata['idUbicacion']."'";         }else{$SIS_data .= ",''";}
-						if(isset($rowdata['idUbicacion_lvl_1']) && $rowdata['idUbicacion_lvl_1']!=''){  $SIS_data .= ",'".$rowdata['idUbicacion_lvl_1']."'";   }else{$SIS_data .= ",''";}
-						if(isset($rowdata['idUbicacion_lvl_2']) && $rowdata['idUbicacion_lvl_2']!=''){  $SIS_data .= ",'".$rowdata['idUbicacion_lvl_2']."'";   }else{$SIS_data .= ",''";}
-						if(isset($rowdata['idUbicacion_lvl_3']) && $rowdata['idUbicacion_lvl_3']!=''){  $SIS_data .= ",'".$rowdata['idUbicacion_lvl_3']."'";   }else{$SIS_data .= ",''";}
-						if(isset($rowdata['idUbicacion_lvl_4']) && $rowdata['idUbicacion_lvl_4']!=''){  $SIS_data .= ",'".$rowdata['idUbicacion_lvl_4']."'";   }else{$SIS_data .= ",''";}
-						if(isset($rowdata['idUbicacion_lvl_5']) && $rowdata['idUbicacion_lvl_5']!=''){  $SIS_data .= ",'".$rowdata['idUbicacion_lvl_5']."'";   }else{$SIS_data .= ",''";}
+						if(isset($rowData['idSistema']) && $rowData['idSistema']!=''){                  $SIS_data .= ",'".$rowData['idSistema']."'";           }else{$SIS_data .= ",''";}
+						if(isset($rowData['idUbicacion']) && $rowData['idUbicacion']!=''){              $SIS_data .= ",'".$rowData['idUbicacion']."'";         }else{$SIS_data .= ",''";}
+						if(isset($rowData['idUbicacion_lvl_1']) && $rowData['idUbicacion_lvl_1']!=''){  $SIS_data .= ",'".$rowData['idUbicacion_lvl_1']."'";   }else{$SIS_data .= ",''";}
+						if(isset($rowData['idUbicacion_lvl_2']) && $rowData['idUbicacion_lvl_2']!=''){  $SIS_data .= ",'".$rowData['idUbicacion_lvl_2']."'";   }else{$SIS_data .= ",''";}
+						if(isset($rowData['idUbicacion_lvl_3']) && $rowData['idUbicacion_lvl_3']!=''){  $SIS_data .= ",'".$rowData['idUbicacion_lvl_3']."'";   }else{$SIS_data .= ",''";}
+						if(isset($rowData['idUbicacion_lvl_4']) && $rowData['idUbicacion_lvl_4']!=''){  $SIS_data .= ",'".$rowData['idUbicacion_lvl_4']."'";   }else{$SIS_data .= ",''";}
+						if(isset($rowData['idUbicacion_lvl_5']) && $rowData['idUbicacion_lvl_5']!=''){  $SIS_data .= ",'".$rowData['idUbicacion_lvl_5']."'";   }else{$SIS_data .= ",''";}
 						if(isset($idUsuario) && $idUsuario!=''){                                        $SIS_data .= ",'".$idUsuario."'";                      }else{$SIS_data .= ",''";}
 						if(isset($idEstado) && $idEstado!=''){                                          $SIS_data .= ",'".$idEstado."'";                       }else{$SIS_data .= ",''";}
-						if(isset($rowdata['idPrioridad']) && $rowdata['idPrioridad']!=''){              $SIS_data .= ",'".$rowdata['idPrioridad']."'";         }else{$SIS_data .= ",''";}
-						if(isset($rowdata['idTipo']) && $rowdata['idTipo']!= ''){                       $SIS_data .= ",'".$rowdata['idTipo']."'";              }else{$SIS_data .= ",''";}
+						if(isset($rowData['idPrioridad']) && $rowData['idPrioridad']!=''){              $SIS_data .= ",'".$rowData['idPrioridad']."'";         }else{$SIS_data .= ",''";}
+						if(isset($rowData['idTipo']) && $rowData['idTipo']!= ''){                       $SIS_data .= ",'".$rowData['idTipo']."'";              }else{$SIS_data .= ",''";}
 						if(isset($f_creacion) && $f_creacion!=''){                                      $SIS_data .= ",'".$f_creacion."'";                     }else{$SIS_data .= ",''";}
 						if(isset($f_programacion) && $f_programacion!=''){                              $SIS_data .= ",'".$f_programacion."'";                 }else{$SIS_data .= ",''";}
 						$SIS_data .= ",'1'";//idEstadoTarea
@@ -1208,7 +1208,7 @@ require_once '0_validate_user_1.php';
 				LEFT JOIN `ubicacion_listado_level_4`  ON ubicacion_listado_level_4.idLevel_4   = orden_trabajo_tareas_listado.idUbicacion_lvl_4
 				LEFT JOIN `ubicacion_listado_level_5`  ON ubicacion_listado_level_5.idLevel_5   = orden_trabajo_tareas_listado.idUbicacion_lvl_5';
 				$SIS_where = 'orden_trabajo_tareas_listado.idOT = '.$idOT;
-				$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Filtros
 				$SIS_data = "idOT='".$idOT."'";
@@ -1272,51 +1272,51 @@ require_once '0_validate_user_1.php';
 					LEFT JOIN `ubicacion_listado_level_4`  ON ubicacion_listado_level_4.idLevel_4   = orden_trabajo_tareas_listado.idUbicacion_lvl_4
 					LEFT JOIN `ubicacion_listado_level_5`  ON ubicacion_listado_level_5.idLevel_5   = orden_trabajo_tareas_listado.idUbicacion_lvl_5';
 					$SIS_where = 'orden_trabajo_tareas_listado.idOT = '.$idOT;
-					$rowdataPost = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$rowDataPost = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 					//Comparacion datos antiguos con datos nuevos
 					$compare = 'Modificacion en los datos basicos de la OT:</strong><br/>';
-					if(isset($rowdata['f_programacion'])&&isset($rowdataPost['f_programacion'])&&$rowdata['f_programacion']!=$rowdataPost['f_programacion']){
-						$compare .= ' - Se cambia la fecha de programacion, de <strong>'.fecha_estandar($rowdata['f_programacion']).'</strong> a <strong>'.fecha_estandar($rowdataPost['f_programacion']).'</strong><br/>';
+					if(isset($rowData['f_programacion'])&&isset($rowDataPost['f_programacion'])&&$rowData['f_programacion']!=$rowDataPost['f_programacion']){
+						$compare .= ' - Se cambia la fecha de programacion, de <strong>'.fecha_estandar($rowData['f_programacion']).'</strong> a <strong>'.fecha_estandar($rowDataPost['f_programacion']).'</strong><br/>';
 					}
-					if(isset($rowdata['f_termino'])&&isset($rowdataPost['f_termino'])&&$rowdata['f_termino']!=$rowdataPost['f_termino']){
-						$compare .= ' - Se cambia la fecha de termino, de <strong>'.fecha_estandar($rowdata['f_termino']).'</strong> a <strong>'.fecha_estandar($rowdataPost['f_termino']).'</strong><br/>';
+					if(isset($rowData['f_termino'])&&isset($rowDataPost['f_termino'])&&$rowData['f_termino']!=$rowDataPost['f_termino']){
+						$compare .= ' - Se cambia la fecha de termino, de <strong>'.fecha_estandar($rowData['f_termino']).'</strong> a <strong>'.fecha_estandar($rowDataPost['f_termino']).'</strong><br/>';
 					}
-					if(isset($rowdata['hora_Inicio'])&&isset($rowdataPost['hora_Inicio'])&&$rowdata['hora_Inicio']!=$rowdataPost['hora_Inicio']){
-						$compare .= ' - Se cambia la hora de inicio, de <strong>'.$rowdata['hora_Inicio'].'</strong> a <strong>'.$rowdataPost['hora_Inicio'].'</strong><br/>';
+					if(isset($rowData['hora_Inicio'])&&isset($rowDataPost['hora_Inicio'])&&$rowData['hora_Inicio']!=$rowDataPost['hora_Inicio']){
+						$compare .= ' - Se cambia la hora de inicio, de <strong>'.$rowData['hora_Inicio'].'</strong> a <strong>'.$rowDataPost['hora_Inicio'].'</strong><br/>';
 					}
-					if(isset($rowdata['hora_Termino'])&&isset($rowdataPost['hora_Termino'])&&$rowdata['hora_Termino']!=$rowdataPost['hora_Termino']){
-						$compare .= ' - Se cambia la hora de termino, de <strong>'.$rowdata['hora_Termino'].'</strong> a <strong>'.$rowdataPost['hora_Termino'].'</strong><br/>';
+					if(isset($rowData['hora_Termino'])&&isset($rowDataPost['hora_Termino'])&&$rowData['hora_Termino']!=$rowDataPost['hora_Termino']){
+						$compare .= ' - Se cambia la hora de termino, de <strong>'.$rowData['hora_Termino'].'</strong> a <strong>'.$rowDataPost['hora_Termino'].'</strong><br/>';
 					}
-					if(isset($rowdata['Observaciones'])&&isset($rowdataPost['Observaciones'])&&$rowdata['Observaciones']!=$rowdataPost['Observaciones']){
-						$compare .= ' - Se cambia la observacion, de <strong>'.$rowdata['Observaciones'].',</strong> a <strong>'.$rowdataPost['Observaciones'].'</strong><br/>';
+					if(isset($rowData['Observaciones'])&&isset($rowDataPost['Observaciones'])&&$rowData['Observaciones']!=$rowDataPost['Observaciones']){
+						$compare .= ' - Se cambia la observacion, de <strong>'.$rowData['Observaciones'].',</strong> a <strong>'.$rowDataPost['Observaciones'].'</strong><br/>';
 					}
-					if(isset($rowdata['idEstado'])&&isset($rowdataPost['idEstado'])&&$rowdata['idEstado']!=$rowdataPost['idEstado']){
-						$compare .= ' - Se cambia el estado, de <strong>'.$rowdata['NombreEstado'].'</strong> a <strong>'.$rowdataPost['NombreEstado'].'</strong><br/>';
+					if(isset($rowData['idEstado'])&&isset($rowDataPost['idEstado'])&&$rowData['idEstado']!=$rowDataPost['idEstado']){
+						$compare .= ' - Se cambia el estado, de <strong>'.$rowData['NombreEstado'].'</strong> a <strong>'.$rowDataPost['NombreEstado'].'</strong><br/>';
 					}
-					if(isset($rowdata['NombrePrioridad'])&&isset($rowdataPost['NombrePrioridad'])&&$rowdata['NombrePrioridad']!=$rowdataPost['NombrePrioridad']){
-						$compare .= ' - Se cambia la prioridad de la OT, de <strong>'.$rowdata['NombrePrioridad'].'</strong> a <strong>'.$rowdataPost['NombrePrioridad'].'</strong><br/>';
+					if(isset($rowData['NombrePrioridad'])&&isset($rowDataPost['NombrePrioridad'])&&$rowData['NombrePrioridad']!=$rowDataPost['NombrePrioridad']){
+						$compare .= ' - Se cambia la prioridad de la OT, de <strong>'.$rowData['NombrePrioridad'].'</strong> a <strong>'.$rowDataPost['NombrePrioridad'].'</strong><br/>';
 					}
-					if(isset($rowdata['NombreTipo'])&&isset($rowdataPost['NombreTipo'])&&$rowdata['NombreTipo']!=$rowdataPost['NombreTipo']){
-						$compare .= ' - Se cambia el tipo de OT, de <strong>'.$rowdata['NombreTipo'].'</strong> a <strong>'.$rowdataPost['NombreTipo'].'</strong><br/>';
+					if(isset($rowData['NombreTipo'])&&isset($rowDataPost['NombreTipo'])&&$rowData['NombreTipo']!=$rowDataPost['NombreTipo']){
+						$compare .= ' - Se cambia el tipo de OT, de <strong>'.$rowData['NombreTipo'].'</strong> a <strong>'.$rowDataPost['NombreTipo'].'</strong><br/>';
 					}
-					if(isset($rowdata['Ubicacion'])&&isset($rowdataPost['Ubicacion'])&&$rowdata['Ubicacion']!=$rowdataPost['Ubicacion']){
-						$compare .= ' - Se cambia la ubicacion de la OT, de <strong>'.$rowdata['Ubicacion'].'</strong> a <strong>'.$rowdataPost['Ubicacion'].'</strong><br/>';
+					if(isset($rowData['Ubicacion'])&&isset($rowDataPost['Ubicacion'])&&$rowData['Ubicacion']!=$rowDataPost['Ubicacion']){
+						$compare .= ' - Se cambia la ubicacion de la OT, de <strong>'.$rowData['Ubicacion'].'</strong> a <strong>'.$rowDataPost['Ubicacion'].'</strong><br/>';
 					}
-					if(isset($rowdata['UbicacionLVL_1'])&&isset($rowdataPost['UbicacionLVL_1'])&&$rowdata['UbicacionLVL_1']!=$rowdataPost['UbicacionLVL_1']){
-						$compare .= ' - Se cambia el nivel 1 la ubicacion de la OT, de <strong>'.$rowdata['UbicacionLVL_1'].'</strong> a <strong>'.$rowdataPost['UbicacionLVL_1'].'</strong><br/>';
+					if(isset($rowData['UbicacionLVL_1'])&&isset($rowDataPost['UbicacionLVL_1'])&&$rowData['UbicacionLVL_1']!=$rowDataPost['UbicacionLVL_1']){
+						$compare .= ' - Se cambia el nivel 1 la ubicacion de la OT, de <strong>'.$rowData['UbicacionLVL_1'].'</strong> a <strong>'.$rowDataPost['UbicacionLVL_1'].'</strong><br/>';
 					}
-					if(isset($rowdata['UbicacionLVL_2'])&&isset($rowdataPost['UbicacionLVL_2'])&&$rowdata['UbicacionLVL_2']!=$rowdataPost['UbicacionLVL_2']){
-						$compare .= ' - Se cambia el nivel 2 la ubicacion de la OT, de <strong>'.$rowdata['UbicacionLVL_2'].'</strong> a <strong>'.$rowdataPost['UbicacionLVL_2'].'</strong><br/>';
+					if(isset($rowData['UbicacionLVL_2'])&&isset($rowDataPost['UbicacionLVL_2'])&&$rowData['UbicacionLVL_2']!=$rowDataPost['UbicacionLVL_2']){
+						$compare .= ' - Se cambia el nivel 2 la ubicacion de la OT, de <strong>'.$rowData['UbicacionLVL_2'].'</strong> a <strong>'.$rowDataPost['UbicacionLVL_2'].'</strong><br/>';
 					}
-					if(isset($rowdata['UbicacionLVL_3'])&&isset($rowdataPost['UbicacionLVL_3'])&&$rowdata['UbicacionLVL_3']!=$rowdataPost['UbicacionLVL_3']){
-						$compare .= ' - Se cambia el nivel 3 la ubicacion de la OT, de <strong>'.$rowdata['UbicacionLVL_3'].'</strong> a <strong>'.$rowdataPost['UbicacionLVL_3'].'</strong><br/>';
+					if(isset($rowData['UbicacionLVL_3'])&&isset($rowDataPost['UbicacionLVL_3'])&&$rowData['UbicacionLVL_3']!=$rowDataPost['UbicacionLVL_3']){
+						$compare .= ' - Se cambia el nivel 3 la ubicacion de la OT, de <strong>'.$rowData['UbicacionLVL_3'].'</strong> a <strong>'.$rowDataPost['UbicacionLVL_3'].'</strong><br/>';
 					}
-					if(isset($rowdata['UbicacionLVL_4'])&&isset($rowdataPost['UbicacionLVL_4'])&&$rowdata['UbicacionLVL_4']!=$rowdataPost['UbicacionLVL_4']){
-						$compare .= ' - Se cambia el nivel 4 la ubicacion de la OT, de <strong>'.$rowdata['UbicacionLVL_4'].'</strong> a <strong>'.$rowdataPost['UbicacionLVL_4'].'</strong><br/>';
+					if(isset($rowData['UbicacionLVL_4'])&&isset($rowDataPost['UbicacionLVL_4'])&&$rowData['UbicacionLVL_4']!=$rowDataPost['UbicacionLVL_4']){
+						$compare .= ' - Se cambia el nivel 4 la ubicacion de la OT, de <strong>'.$rowData['UbicacionLVL_4'].'</strong> a <strong>'.$rowDataPost['UbicacionLVL_4'].'</strong><br/>';
 					}
-					if(isset($rowdata['UbicacionLVL_5'])&&isset($rowdataPost['UbicacionLVL_5'])&&$rowdata['UbicacionLVL_5']!=$rowdataPost['UbicacionLVL_5']){
-						$compare .= ' - Se cambia el nivel 5 la ubicacion de la OT, de <strong>'.$rowdata['UbicacionLVL_5'].'</strong> a <strong>'.$rowdataPost['UbicacionLVL_5'].'</strong><br/>';
+					if(isset($rowData['UbicacionLVL_5'])&&isset($rowDataPost['UbicacionLVL_5'])&&$rowData['UbicacionLVL_5']!=$rowDataPost['UbicacionLVL_5']){
+						$compare .= ' - Se cambia el nivel 5 la ubicacion de la OT, de <strong>'.$rowData['UbicacionLVL_5'].'</strong> a <strong>'.$rowDataPost['UbicacionLVL_5'].'</strong><br/>';
 					}
 
 					/*********************************************************************/
@@ -1385,10 +1385,10 @@ require_once '0_validate_user_1.php';
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//Consulto por el item recien ingresado
-					$rowdata = db_select_data (false, 'trabajadores_listado.Nombre,trabajadores_listado.ApellidoPat, trabajadores_listado.ApellidoMat', 'orden_trabajo_tareas_listado_responsable', 'LEFT JOIN `trabajadores_listado`    ON trabajadores_listado.idTrabajador  = orden_trabajo_tareas_listado_responsable.idTrabajador', 'orden_trabajo_tareas_listado_responsable.idResponsable = '.$ultimo_id, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$rowData = db_select_data (false, 'trabajadores_listado.Nombre,trabajadores_listado.ApellidoPat, trabajadores_listado.ApellidoMat', 'orden_trabajo_tareas_listado_responsable', 'LEFT JOIN `trabajadores_listado`    ON trabajadores_listado.idTrabajador  = orden_trabajo_tareas_listado_responsable.idTrabajador', 'orden_trabajo_tareas_listado_responsable.idResponsable = '.$ultimo_id, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 					//Nombre del item
-					$NombreItem = $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'];
+					$NombreItem = $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat'];
 
 					/*********************************************************************/
 					//Se guarda en historial la accion
@@ -1432,7 +1432,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//Consulto por el item antiguo
-				$rowdata = db_select_data (false, 'trabajadores_listado.Nombre,trabajadores_listado.ApellidoPat, trabajadores_listado.ApellidoMat', 'orden_trabajo_tareas_listado_responsable', 'LEFT JOIN `trabajadores_listado`    ON trabajadores_listado.idTrabajador  = orden_trabajo_tareas_listado_responsable.idTrabajador', 'orden_trabajo_tareas_listado_responsable.idResponsable = '.$idResponsable, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'trabajadores_listado.Nombre,trabajadores_listado.ApellidoPat, trabajadores_listado.ApellidoMat', 'orden_trabajo_tareas_listado_responsable', 'LEFT JOIN `trabajadores_listado`    ON trabajadores_listado.idTrabajador  = orden_trabajo_tareas_listado_responsable.idTrabajador', 'orden_trabajo_tareas_listado_responsable.idResponsable = '.$idResponsable, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//filtros
 				$SIS_data = "idResponsable='".$idResponsable."'";
@@ -1445,12 +1445,12 @@ require_once '0_validate_user_1.php';
 				if($resultado==true){
 
 					//Consulto por el item antiguo
-					$rowdataPost = db_select_data (false, 'trabajadores_listado.Nombre,trabajadores_listado.ApellidoPat, trabajadores_listado.ApellidoMat', 'orden_trabajo_tareas_listado_responsable', 'LEFT JOIN `trabajadores_listado`    ON trabajadores_listado.idTrabajador  = orden_trabajo_tareas_listado_responsable.idTrabajador', 'orden_trabajo_tareas_listado_responsable.idResponsable = '.$idResponsable, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$rowDataPost = db_select_data (false, 'trabajadores_listado.Nombre,trabajadores_listado.ApellidoPat, trabajadores_listado.ApellidoMat', 'orden_trabajo_tareas_listado_responsable', 'LEFT JOIN `trabajadores_listado`    ON trabajadores_listado.idTrabajador  = orden_trabajo_tareas_listado_responsable.idTrabajador', 'orden_trabajo_tareas_listado_responsable.idResponsable = '.$idResponsable, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 					//se hace la comparacion
-					if(isset($rowdata['ApellidoPat'])&&isset($rowdataPost['ApellidoPat'])&&$rowdata['ApellidoPat']!=$rowdataPost['ApellidoPat']){
-						$NombreItem1 = $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'];
-						$NombreItem2 = $rowdataPost['Nombre'].' '.$rowdataPost['ApellidoPat'].' '.$rowdataPost['ApellidoMat'];
+					if(isset($rowData['ApellidoPat'])&&isset($rowDataPost['ApellidoPat'])&&$rowData['ApellidoPat']!=$rowDataPost['ApellidoPat']){
+						$NombreItem1 = $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat'];
+						$NombreItem2 = $rowDataPost['Nombre'].' '.$rowDataPost['ApellidoPat'].' '.$rowDataPost['ApellidoMat'];
 						$NombreItem  = 'Se cambia Trabajador: <strong>'.$NombreItem1.'</strong> por <strong>'.$NombreItem2.'</strong>';
 						/*********************************************************************/
 						//Se guarda en historial la accion
@@ -1505,14 +1505,14 @@ require_once '0_validate_user_1.php';
 
 			if($errorn==0){
 				//Consulto por el item recien ingresado
-				$rowdata = db_select_data (false, 'orden_trabajo_tareas_listado_responsable.idOT, trabajadores_listado.Nombre,trabajadores_listado.ApellidoPat, trabajadores_listado.ApellidoMat', 'orden_trabajo_tareas_listado_responsable', 'LEFT JOIN `trabajadores_listado` ON trabajadores_listado.idTrabajador  = orden_trabajo_tareas_listado_responsable.idTrabajador', 'orden_trabajo_tareas_listado_responsable.idResponsable = '.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'orden_trabajo_tareas_listado_responsable.idOT, trabajadores_listado.Nombre,trabajadores_listado.ApellidoPat, trabajadores_listado.ApellidoMat', 'orden_trabajo_tareas_listado_responsable', 'LEFT JOIN `trabajadores_listado` ON trabajadores_listado.idTrabajador  = orden_trabajo_tareas_listado_responsable.idTrabajador', 'orden_trabajo_tareas_listado_responsable.idResponsable = '.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Nombre del item
-				$NombreItem = $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'];
+				$NombreItem = $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat'];
 
 				/*********************************************************************/
 				//Se guarda en historial la accion
-				if(isset($rowdata['idOT']) && $rowdata['idOT']!=''){    $SIS_data  = "'".$rowdata['idOT']."'";  }else{$SIS_data  = "''";}
+				if(isset($rowData['idOT']) && $rowData['idOT']!=''){    $SIS_data  = "'".$rowData['idOT']."'";  }else{$SIS_data  = "''";}
 				$SIS_data .= ",'".fecha_actual()."'";
 				$SIS_data .= ",'1'";                                                        //Creacion Satisfactoria
 				$SIS_data .= ",'Se elimina Trabajador: <strong>".$NombreItem."</strong>'";  //Observacion
@@ -1584,10 +1584,10 @@ require_once '0_validate_user_1.php';
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//Consulto por el item recien ingresado
-					$rowdata = db_select_data (false, 'insumos_listado.Nombre AS Producto, orden_trabajo_tareas_listado_insumos.Cantidad, sistema_productos_uml.Nombre AS Unidad', 'orden_trabajo_tareas_listado_insumos', 'LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = orden_trabajo_tareas_listado_insumos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'orden_trabajo_tareas_listado_insumos.idInsumos = '.$ultimo_id, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$rowData = db_select_data (false, 'insumos_listado.Nombre AS Producto, orden_trabajo_tareas_listado_insumos.Cantidad, sistema_productos_uml.Nombre AS Unidad', 'orden_trabajo_tareas_listado_insumos', 'LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = orden_trabajo_tareas_listado_insumos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'orden_trabajo_tareas_listado_insumos.idInsumos = '.$ultimo_id, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 					//Nombre del item
-					$NombreItem = $rowdata['Cantidad'].' '.$rowdata['Unidad'].' de '.$rowdata['Producto'];
+					$NombreItem = $rowData['Cantidad'].' '.$rowData['Unidad'].' de '.$rowData['Producto'];
 
 					/*********************************************************************/
 					//Se guarda en historial la accion
@@ -1631,7 +1631,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//Consulto por el item recien ingresado
-				$rowdata = db_select_data (false, 'insumos_listado.Nombre AS Producto, orden_trabajo_tareas_listado_insumos.Cantidad, sistema_productos_uml.Nombre AS Unidad', 'orden_trabajo_tareas_listado_insumos', 'LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = orden_trabajo_tareas_listado_insumos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'orden_trabajo_tareas_listado_insumos.idInsumos = '.$idInsumos, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'insumos_listado.Nombre AS Producto, orden_trabajo_tareas_listado_insumos.Cantidad, sistema_productos_uml.Nombre AS Unidad', 'orden_trabajo_tareas_listado_insumos', 'LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = orden_trabajo_tareas_listado_insumos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'orden_trabajo_tareas_listado_insumos.idInsumos = '.$idInsumos, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//filtros
 				$SIS_data = "idInsumos='".$idInsumos."'";
@@ -1645,12 +1645,12 @@ require_once '0_validate_user_1.php';
 				if($resultado==true){
 
 					//Consulto por el item recien ingresado
-					$rowdataPost = db_select_data (false, 'insumos_listado.Nombre AS Producto, orden_trabajo_tareas_listado_insumos.Cantidad, sistema_productos_uml.Nombre AS Unidad', 'orden_trabajo_tareas_listado_insumos', 'LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = orden_trabajo_tareas_listado_insumos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'orden_trabajo_tareas_listado_insumos.idInsumos = '.$idInsumos, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$rowDataPost = db_select_data (false, 'insumos_listado.Nombre AS Producto, orden_trabajo_tareas_listado_insumos.Cantidad, sistema_productos_uml.Nombre AS Unidad', 'orden_trabajo_tareas_listado_insumos', 'LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = orden_trabajo_tareas_listado_insumos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'orden_trabajo_tareas_listado_insumos.idInsumos = '.$idInsumos, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
-					if(isset($rowdata['Producto'])&&isset($rowdataPost['Producto'])&&($rowdata['Producto']!=$rowdataPost['Producto'] OR $rowdata['Cantidad']!=$rowdataPost['Cantidad'])){
+					if(isset($rowData['Producto'])&&isset($rowDataPost['Producto'])&&($rowData['Producto']!=$rowDataPost['Producto'] OR $rowData['Cantidad']!=$rowDataPost['Cantidad'])){
 						//Nombre del item
-						$NombreItem1 = $rowdata['Cantidad'].' '.$rowdata['Unidad'].' de '.$rowdata['Producto'];
-						$NombreItem2 = $rowdataPost['Cantidad'].' '.$rowdataPost['Unidad'].' de '.$rowdataPost['Producto'];
+						$NombreItem1 = $rowData['Cantidad'].' '.$rowData['Unidad'].' de '.$rowData['Producto'];
+						$NombreItem2 = $rowDataPost['Cantidad'].' '.$rowDataPost['Unidad'].' de '.$rowDataPost['Producto'];
 						$NombreItem  = 'Se cambia Insumo: <strong>'.$NombreItem1.'</strong> por <strong>'.$NombreItem2.'</strong>';
 
 						/*********************************************************************/
@@ -1707,14 +1707,14 @@ require_once '0_validate_user_1.php';
 
 			if($errorn==0){
 				//Consulto por el item recien ingresado
-				$rowdata = db_select_data (false, 'orden_trabajo_tareas_listado_insumos.idOT, insumos_listado.Nombre AS Producto, orden_trabajo_tareas_listado_insumos.Cantidad, sistema_productos_uml.Nombre AS Unidad', 'orden_trabajo_tareas_listado_insumos', 'LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = orden_trabajo_tareas_listado_insumos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'orden_trabajo_tareas_listado_insumos.idInsumos = '.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'orden_trabajo_tareas_listado_insumos.idOT, insumos_listado.Nombre AS Producto, orden_trabajo_tareas_listado_insumos.Cantidad, sistema_productos_uml.Nombre AS Unidad', 'orden_trabajo_tareas_listado_insumos', 'LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = orden_trabajo_tareas_listado_insumos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'orden_trabajo_tareas_listado_insumos.idInsumos = '.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Nombre del item
-				$NombreItem = $rowdata['Cantidad'].' '.$rowdata['Unidad'].' de '.$rowdata['Producto'];
+				$NombreItem = $rowData['Cantidad'].' '.$rowData['Unidad'].' de '.$rowData['Producto'];
 
 				/*********************************************************************/
 				//Se guarda en historial la accion
-				if(isset($rowdata['idOT']) && $rowdata['idOT']!=''){    $SIS_data  = "'".$rowdata['idOT']."'";  }else{$SIS_data  = "''";}
+				if(isset($rowData['idOT']) && $rowData['idOT']!=''){    $SIS_data  = "'".$rowData['idOT']."'";  }else{$SIS_data  = "''";}
 				$SIS_data .= ",'".fecha_actual()."'";
 				$SIS_data .= ",'1'";                                                    //Creacion Satisfactoria
 				$SIS_data .= ",'Se elimina Insumo: <strong>".$NombreItem."</strong>'";  //Observacion
@@ -1786,10 +1786,10 @@ require_once '0_validate_user_1.php';
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//Consulto por el item recien ingresado
-					$rowdata = db_select_data (false, 'productos_listado.Nombre AS Producto, orden_trabajo_tareas_listado_productos.Cantidad, sistema_productos_uml.Nombre AS Unidad', 'orden_trabajo_tareas_listado_productos', 'LEFT JOIN `productos_listado` ON productos_listado.idProducto = orden_trabajo_tareas_listado_productos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'orden_trabajo_tareas_listado_productos.idProductos = '.$ultimo_id, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$rowData = db_select_data (false, 'productos_listado.Nombre AS Producto, orden_trabajo_tareas_listado_productos.Cantidad, sistema_productos_uml.Nombre AS Unidad', 'orden_trabajo_tareas_listado_productos', 'LEFT JOIN `productos_listado` ON productos_listado.idProducto = orden_trabajo_tareas_listado_productos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'orden_trabajo_tareas_listado_productos.idProductos = '.$ultimo_id, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 					//Nombre del item
-					$NombreItem = $rowdata['Cantidad'].' '.$rowdata['Unidad'].' de '.$rowdata['Producto'];
+					$NombreItem = $rowData['Cantidad'].' '.$rowData['Unidad'].' de '.$rowData['Producto'];
 
 					/*********************************************************************/
 					//Se guarda en historial la accion
@@ -1833,7 +1833,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//Consulto por el item recien ingresado
-				$rowdata = db_select_data (false, 'productos_listado.Nombre AS Producto, orden_trabajo_tareas_listado_productos.Cantidad, sistema_productos_uml.Nombre AS Unidad', 'orden_trabajo_tareas_listado_productos', 'LEFT JOIN `productos_listado` ON productos_listado.idProducto = orden_trabajo_tareas_listado_productos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'orden_trabajo_tareas_listado_productos.idProductos = '.$idProductos, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'productos_listado.Nombre AS Producto, orden_trabajo_tareas_listado_productos.Cantidad, sistema_productos_uml.Nombre AS Unidad', 'orden_trabajo_tareas_listado_productos', 'LEFT JOIN `productos_listado` ON productos_listado.idProducto = orden_trabajo_tareas_listado_productos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'orden_trabajo_tareas_listado_productos.idProductos = '.$idProductos, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//filtros
 				$SIS_data = "idProductos='".$idProductos."'";
@@ -1847,12 +1847,12 @@ require_once '0_validate_user_1.php';
 				if($resultado==true){
 
 					//Consulto por el item recien ingresado
-					$rowdataPost = db_select_data (false, 'productos_listado.Nombre AS Producto, orden_trabajo_tareas_listado_productos.Cantidad, sistema_productos_uml.Nombre AS Unidad', 'orden_trabajo_tareas_listado_productos', 'LEFT JOIN `productos_listado` ON productos_listado.idProducto = orden_trabajo_tareas_listado_productos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'orden_trabajo_tareas_listado_productos.idProductos = '.$idProductos, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$rowDataPost = db_select_data (false, 'productos_listado.Nombre AS Producto, orden_trabajo_tareas_listado_productos.Cantidad, sistema_productos_uml.Nombre AS Unidad', 'orden_trabajo_tareas_listado_productos', 'LEFT JOIN `productos_listado` ON productos_listado.idProducto = orden_trabajo_tareas_listado_productos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'orden_trabajo_tareas_listado_productos.idProductos = '.$idProductos, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
-					if(isset($rowdata['Producto'])&&isset($rowdataPost['Producto'])&&($rowdata['Producto']!=$rowdataPost['Producto'] OR $rowdata['Cantidad']!=$rowdataPost['Cantidad'])){
+					if(isset($rowData['Producto'])&&isset($rowDataPost['Producto'])&&($rowData['Producto']!=$rowDataPost['Producto'] OR $rowData['Cantidad']!=$rowDataPost['Cantidad'])){
 						//Nombre del item
-						$NombreItem1 = $rowdata['Cantidad'].' '.$rowdata['Unidad'].' de '.$rowdata['Producto'];
-						$NombreItem2 = $rowdataPost['Cantidad'].' '.$rowdataPost['Unidad'].' de '.$rowdataPost['Producto'];
+						$NombreItem1 = $rowData['Cantidad'].' '.$rowData['Unidad'].' de '.$rowData['Producto'];
+						$NombreItem2 = $rowDataPost['Cantidad'].' '.$rowDataPost['Unidad'].' de '.$rowDataPost['Producto'];
 						$NombreItem  = 'Se cambia Producto: <strong>'.$NombreItem1.'</strong> por <strong>'.$NombreItem2.'</strong>';
 
 						/*********************************************************************/
@@ -1908,14 +1908,14 @@ require_once '0_validate_user_1.php';
 
 			if($errorn==0){
 				//Consulto por el item recien ingresado
-				$rowdata = db_select_data (false, 'orden_trabajo_tareas_listado_productos.idOT, productos_listado.Nombre AS Producto, orden_trabajo_tareas_listado_productos.Cantidad, sistema_productos_uml.Nombre AS Unidad', 'orden_trabajo_tareas_listado_productos', 'LEFT JOIN `productos_listado` ON productos_listado.idProducto = orden_trabajo_tareas_listado_productos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'orden_trabajo_tareas_listado_productos.idProductos = '.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'orden_trabajo_tareas_listado_productos.idOT, productos_listado.Nombre AS Producto, orden_trabajo_tareas_listado_productos.Cantidad, sistema_productos_uml.Nombre AS Unidad', 'orden_trabajo_tareas_listado_productos', 'LEFT JOIN `productos_listado` ON productos_listado.idProducto = orden_trabajo_tareas_listado_productos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'orden_trabajo_tareas_listado_productos.idProductos = '.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Nombre del item
-				$NombreItem = $rowdata['Cantidad'].' '.$rowdata['Unidad'].' de '.$rowdata['Producto'];
+				$NombreItem = $rowData['Cantidad'].' '.$rowData['Unidad'].' de '.$rowData['Producto'];
 
 				/*********************************************************************/
 				//Se guarda en historial la accion
-				if(isset($rowdata['idOT']) && $rowdata['idOT']!=''){    $SIS_data  = "'".$rowdata['idOT']."'";  }else{$SIS_data  = "''";}
+				if(isset($rowData['idOT']) && $rowData['idOT']!=''){    $SIS_data  = "'".$rowData['idOT']."'";  }else{$SIS_data  = "''";}
 				$SIS_data .= ",'".fecha_actual()."'";
 				$SIS_data .= ",'1'";                                                      //Creacion Satisfactoria
 				$SIS_data .= ",'Se elimina Producto: <strong>".$NombreItem."</strong>'";  //Observacion
@@ -2063,36 +2063,36 @@ require_once '0_validate_user_1.php';
 					LEFT JOIN `licitacion_listado_level_24`    ON licitacion_listado_level_24.idLevel_24        = orden_trabajo_tareas_listado_tareas.idLevel_24
 					LEFT JOIN `licitacion_listado_level_25`    ON licitacion_listado_level_25.idLevel_25        = orden_trabajo_tareas_listado_tareas.idLevel_25';
 					$SIS_where = 'orden_trabajo_tareas_listado_tareas.idTrabajoOT = '.$ultimo_id;
-					$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_tareas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_tareas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 					//Nombre del item
 					$NombreItem  = 'Se agrega Tarea:<br/>';
-					$NombreItem .= '<strong>Licitacion:</strong>'.$rowdata['Licitacion'].'<br/>';
-					if(isset($rowdata['LicitacionLVL_1'])&&$rowdata['LicitacionLVL_1']!=''){   $NombreItem .= '<strong>Tarea:</strong>'.$rowdata['LicitacionLVL_1'];}
-					if(isset($rowdata['LicitacionLVL_2'])&&$rowdata['LicitacionLVL_2']!=''){   $NombreItem .= ' - '.$rowdata['LicitacionLVL_2'];}
-					if(isset($rowdata['LicitacionLVL_3'])&&$rowdata['LicitacionLVL_3']!=''){   $NombreItem .= ' - '.$rowdata['LicitacionLVL_3'];}
-					if(isset($rowdata['LicitacionLVL_4'])&&$rowdata['LicitacionLVL_4']!=''){   $NombreItem .= ' - '.$rowdata['LicitacionLVL_4'];}
-					if(isset($rowdata['LicitacionLVL_5'])&&$rowdata['LicitacionLVL_5']!=''){   $NombreItem .= ' - '.$rowdata['LicitacionLVL_5'];}
-					if(isset($rowdata['LicitacionLVL_6'])&&$rowdata['LicitacionLVL_6']!=''){   $NombreItem .= ' - '.$rowdata['LicitacionLVL_6'];}
-					if(isset($rowdata['LicitacionLVL_7'])&&$rowdata['LicitacionLVL_7']!=''){   $NombreItem .= ' - '.$rowdata['LicitacionLVL_7'];}
-					if(isset($rowdata['LicitacionLVL_8'])&&$rowdata['LicitacionLVL_8']!=''){   $NombreItem .= ' - '.$rowdata['LicitacionLVL_8'];}
-					if(isset($rowdata['LicitacionLVL_9'])&&$rowdata['LicitacionLVL_9']!=''){   $NombreItem .= ' - '.$rowdata['LicitacionLVL_9'];}
-					if(isset($rowdata['LicitacionLVL_10'])&&$rowdata['LicitacionLVL_10']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_10'];}
-					if(isset($rowdata['LicitacionLVL_11'])&&$rowdata['LicitacionLVL_11']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_11'];}
-					if(isset($rowdata['LicitacionLVL_12'])&&$rowdata['LicitacionLVL_12']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_12'];}
-					if(isset($rowdata['LicitacionLVL_13'])&&$rowdata['LicitacionLVL_13']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_13'];}
-					if(isset($rowdata['LicitacionLVL_14'])&&$rowdata['LicitacionLVL_14']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_14'];}
-					if(isset($rowdata['LicitacionLVL_15'])&&$rowdata['LicitacionLVL_15']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_15'];}
-					if(isset($rowdata['LicitacionLVL_16'])&&$rowdata['LicitacionLVL_16']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_16'];}
-					if(isset($rowdata['LicitacionLVL_17'])&&$rowdata['LicitacionLVL_17']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_17'];}
-					if(isset($rowdata['LicitacionLVL_18'])&&$rowdata['LicitacionLVL_18']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_18'];}
-					if(isset($rowdata['LicitacionLVL_19'])&&$rowdata['LicitacionLVL_19']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_19'];}
-					if(isset($rowdata['LicitacionLVL_20'])&&$rowdata['LicitacionLVL_20']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_20'];}
-					if(isset($rowdata['LicitacionLVL_21'])&&$rowdata['LicitacionLVL_21']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_21'];}
-					if(isset($rowdata['LicitacionLVL_22'])&&$rowdata['LicitacionLVL_22']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_22'];}
-					if(isset($rowdata['LicitacionLVL_23'])&&$rowdata['LicitacionLVL_23']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_23'];}
-					if(isset($rowdata['LicitacionLVL_24'])&&$rowdata['LicitacionLVL_24']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_24'];}
-					if(isset($rowdata['LicitacionLVL_25'])&&$rowdata['LicitacionLVL_25']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_25'];}
+					$NombreItem .= '<strong>Licitacion:</strong>'.$rowData['Licitacion'].'<br/>';
+					if(isset($rowData['LicitacionLVL_1'])&&$rowData['LicitacionLVL_1']!=''){   $NombreItem .= '<strong>Tarea:</strong>'.$rowData['LicitacionLVL_1'];}
+					if(isset($rowData['LicitacionLVL_2'])&&$rowData['LicitacionLVL_2']!=''){   $NombreItem .= ' - '.$rowData['LicitacionLVL_2'];}
+					if(isset($rowData['LicitacionLVL_3'])&&$rowData['LicitacionLVL_3']!=''){   $NombreItem .= ' - '.$rowData['LicitacionLVL_3'];}
+					if(isset($rowData['LicitacionLVL_4'])&&$rowData['LicitacionLVL_4']!=''){   $NombreItem .= ' - '.$rowData['LicitacionLVL_4'];}
+					if(isset($rowData['LicitacionLVL_5'])&&$rowData['LicitacionLVL_5']!=''){   $NombreItem .= ' - '.$rowData['LicitacionLVL_5'];}
+					if(isset($rowData['LicitacionLVL_6'])&&$rowData['LicitacionLVL_6']!=''){   $NombreItem .= ' - '.$rowData['LicitacionLVL_6'];}
+					if(isset($rowData['LicitacionLVL_7'])&&$rowData['LicitacionLVL_7']!=''){   $NombreItem .= ' - '.$rowData['LicitacionLVL_7'];}
+					if(isset($rowData['LicitacionLVL_8'])&&$rowData['LicitacionLVL_8']!=''){   $NombreItem .= ' - '.$rowData['LicitacionLVL_8'];}
+					if(isset($rowData['LicitacionLVL_9'])&&$rowData['LicitacionLVL_9']!=''){   $NombreItem .= ' - '.$rowData['LicitacionLVL_9'];}
+					if(isset($rowData['LicitacionLVL_10'])&&$rowData['LicitacionLVL_10']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_10'];}
+					if(isset($rowData['LicitacionLVL_11'])&&$rowData['LicitacionLVL_11']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_11'];}
+					if(isset($rowData['LicitacionLVL_12'])&&$rowData['LicitacionLVL_12']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_12'];}
+					if(isset($rowData['LicitacionLVL_13'])&&$rowData['LicitacionLVL_13']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_13'];}
+					if(isset($rowData['LicitacionLVL_14'])&&$rowData['LicitacionLVL_14']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_14'];}
+					if(isset($rowData['LicitacionLVL_15'])&&$rowData['LicitacionLVL_15']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_15'];}
+					if(isset($rowData['LicitacionLVL_16'])&&$rowData['LicitacionLVL_16']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_16'];}
+					if(isset($rowData['LicitacionLVL_17'])&&$rowData['LicitacionLVL_17']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_17'];}
+					if(isset($rowData['LicitacionLVL_18'])&&$rowData['LicitacionLVL_18']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_18'];}
+					if(isset($rowData['LicitacionLVL_19'])&&$rowData['LicitacionLVL_19']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_19'];}
+					if(isset($rowData['LicitacionLVL_20'])&&$rowData['LicitacionLVL_20']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_20'];}
+					if(isset($rowData['LicitacionLVL_21'])&&$rowData['LicitacionLVL_21']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_21'];}
+					if(isset($rowData['LicitacionLVL_22'])&&$rowData['LicitacionLVL_22']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_22'];}
+					if(isset($rowData['LicitacionLVL_23'])&&$rowData['LicitacionLVL_23']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_23'];}
+					if(isset($rowData['LicitacionLVL_24'])&&$rowData['LicitacionLVL_24']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_24'];}
+					if(isset($rowData['LicitacionLVL_25'])&&$rowData['LicitacionLVL_25']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_25'];}
 
 					/*********************************************************************/
 					//Se guarda en historial la accion
@@ -2184,7 +2184,7 @@ require_once '0_validate_user_1.php';
 				LEFT JOIN `licitacion_listado_level_24`    ON licitacion_listado_level_24.idLevel_24        = orden_trabajo_tareas_listado_tareas.idLevel_24
 				LEFT JOIN `licitacion_listado_level_25`    ON licitacion_listado_level_25.idLevel_25        = orden_trabajo_tareas_listado_tareas.idLevel_25';
 				$SIS_where = 'orden_trabajo_tareas_listado_tareas.idTrabajoOT = '.$idTrabajoOT;
-				$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_tareas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_tareas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/***********************************************************/
 				//Reseteo todo antes de guardar
@@ -2319,66 +2319,66 @@ require_once '0_validate_user_1.php';
 					LEFT JOIN `licitacion_listado_level_24`    ON licitacion_listado_level_24.idLevel_24        = orden_trabajo_tareas_listado_tareas.idLevel_24
 					LEFT JOIN `licitacion_listado_level_25`    ON licitacion_listado_level_25.idLevel_25        = orden_trabajo_tareas_listado_tareas.idLevel_25';
 					$SIS_where = 'orden_trabajo_tareas_listado_tareas.idTrabajoOT = '.$idTrabajoOT;
-					$rowdataPost = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_tareas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$rowDataPost = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_tareas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 					/************************************************************************/
 					//Nombre del item antiguo
 					$NombreItem1  = '';
-					$NombreItem1 .= '<strong>Licitacion:</strong>'.$rowdata['Licitacion'].'<br/>';
-					if(isset($rowdata['LicitacionLVL_1'])&&$rowdata['LicitacionLVL_1']!=''){   $NombreItem1 .= '<strong>Tarea:</strong>'.$rowdata['LicitacionLVL_1'];}
-					if(isset($rowdata['LicitacionLVL_2'])&&$rowdata['LicitacionLVL_2']!=''){   $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_2'];}
-					if(isset($rowdata['LicitacionLVL_3'])&&$rowdata['LicitacionLVL_3']!=''){   $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_3'];}
-					if(isset($rowdata['LicitacionLVL_4'])&&$rowdata['LicitacionLVL_4']!=''){   $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_4'];}
-					if(isset($rowdata['LicitacionLVL_5'])&&$rowdata['LicitacionLVL_5']!=''){   $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_5'];}
-					if(isset($rowdata['LicitacionLVL_6'])&&$rowdata['LicitacionLVL_6']!=''){   $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_6'];}
-					if(isset($rowdata['LicitacionLVL_7'])&&$rowdata['LicitacionLVL_7']!=''){   $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_7'];}
-					if(isset($rowdata['LicitacionLVL_8'])&&$rowdata['LicitacionLVL_8']!=''){   $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_8'];}
-					if(isset($rowdata['LicitacionLVL_9'])&&$rowdata['LicitacionLVL_9']!=''){   $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_9'];}
-					if(isset($rowdata['LicitacionLVL_10'])&&$rowdata['LicitacionLVL_10']!=''){ $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_10'];}
-					if(isset($rowdata['LicitacionLVL_11'])&&$rowdata['LicitacionLVL_11']!=''){ $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_11'];}
-					if(isset($rowdata['LicitacionLVL_12'])&&$rowdata['LicitacionLVL_12']!=''){ $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_12'];}
-					if(isset($rowdata['LicitacionLVL_13'])&&$rowdata['LicitacionLVL_13']!=''){ $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_13'];}
-					if(isset($rowdata['LicitacionLVL_14'])&&$rowdata['LicitacionLVL_14']!=''){ $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_14'];}
-					if(isset($rowdata['LicitacionLVL_15'])&&$rowdata['LicitacionLVL_15']!=''){ $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_15'];}
-					if(isset($rowdata['LicitacionLVL_16'])&&$rowdata['LicitacionLVL_16']!=''){ $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_16'];}
-					if(isset($rowdata['LicitacionLVL_17'])&&$rowdata['LicitacionLVL_17']!=''){ $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_17'];}
-					if(isset($rowdata['LicitacionLVL_18'])&&$rowdata['LicitacionLVL_18']!=''){ $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_18'];}
-					if(isset($rowdata['LicitacionLVL_19'])&&$rowdata['LicitacionLVL_19']!=''){ $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_19'];}
-					if(isset($rowdata['LicitacionLVL_20'])&&$rowdata['LicitacionLVL_20']!=''){ $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_20'];}
-					if(isset($rowdata['LicitacionLVL_21'])&&$rowdata['LicitacionLVL_21']!=''){ $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_21'];}
-					if(isset($rowdata['LicitacionLVL_22'])&&$rowdata['LicitacionLVL_22']!=''){ $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_22'];}
-					if(isset($rowdata['LicitacionLVL_23'])&&$rowdata['LicitacionLVL_23']!=''){ $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_23'];}
-					if(isset($rowdata['LicitacionLVL_24'])&&$rowdata['LicitacionLVL_24']!=''){ $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_24'];}
-					if(isset($rowdata['LicitacionLVL_25'])&&$rowdata['LicitacionLVL_25']!=''){ $NombreItem1 .= ' - '.$rowdata['LicitacionLVL_25'];}
+					$NombreItem1 .= '<strong>Licitacion:</strong>'.$rowData['Licitacion'].'<br/>';
+					if(isset($rowData['LicitacionLVL_1'])&&$rowData['LicitacionLVL_1']!=''){   $NombreItem1 .= '<strong>Tarea:</strong>'.$rowData['LicitacionLVL_1'];}
+					if(isset($rowData['LicitacionLVL_2'])&&$rowData['LicitacionLVL_2']!=''){   $NombreItem1 .= ' - '.$rowData['LicitacionLVL_2'];}
+					if(isset($rowData['LicitacionLVL_3'])&&$rowData['LicitacionLVL_3']!=''){   $NombreItem1 .= ' - '.$rowData['LicitacionLVL_3'];}
+					if(isset($rowData['LicitacionLVL_4'])&&$rowData['LicitacionLVL_4']!=''){   $NombreItem1 .= ' - '.$rowData['LicitacionLVL_4'];}
+					if(isset($rowData['LicitacionLVL_5'])&&$rowData['LicitacionLVL_5']!=''){   $NombreItem1 .= ' - '.$rowData['LicitacionLVL_5'];}
+					if(isset($rowData['LicitacionLVL_6'])&&$rowData['LicitacionLVL_6']!=''){   $NombreItem1 .= ' - '.$rowData['LicitacionLVL_6'];}
+					if(isset($rowData['LicitacionLVL_7'])&&$rowData['LicitacionLVL_7']!=''){   $NombreItem1 .= ' - '.$rowData['LicitacionLVL_7'];}
+					if(isset($rowData['LicitacionLVL_8'])&&$rowData['LicitacionLVL_8']!=''){   $NombreItem1 .= ' - '.$rowData['LicitacionLVL_8'];}
+					if(isset($rowData['LicitacionLVL_9'])&&$rowData['LicitacionLVL_9']!=''){   $NombreItem1 .= ' - '.$rowData['LicitacionLVL_9'];}
+					if(isset($rowData['LicitacionLVL_10'])&&$rowData['LicitacionLVL_10']!=''){ $NombreItem1 .= ' - '.$rowData['LicitacionLVL_10'];}
+					if(isset($rowData['LicitacionLVL_11'])&&$rowData['LicitacionLVL_11']!=''){ $NombreItem1 .= ' - '.$rowData['LicitacionLVL_11'];}
+					if(isset($rowData['LicitacionLVL_12'])&&$rowData['LicitacionLVL_12']!=''){ $NombreItem1 .= ' - '.$rowData['LicitacionLVL_12'];}
+					if(isset($rowData['LicitacionLVL_13'])&&$rowData['LicitacionLVL_13']!=''){ $NombreItem1 .= ' - '.$rowData['LicitacionLVL_13'];}
+					if(isset($rowData['LicitacionLVL_14'])&&$rowData['LicitacionLVL_14']!=''){ $NombreItem1 .= ' - '.$rowData['LicitacionLVL_14'];}
+					if(isset($rowData['LicitacionLVL_15'])&&$rowData['LicitacionLVL_15']!=''){ $NombreItem1 .= ' - '.$rowData['LicitacionLVL_15'];}
+					if(isset($rowData['LicitacionLVL_16'])&&$rowData['LicitacionLVL_16']!=''){ $NombreItem1 .= ' - '.$rowData['LicitacionLVL_16'];}
+					if(isset($rowData['LicitacionLVL_17'])&&$rowData['LicitacionLVL_17']!=''){ $NombreItem1 .= ' - '.$rowData['LicitacionLVL_17'];}
+					if(isset($rowData['LicitacionLVL_18'])&&$rowData['LicitacionLVL_18']!=''){ $NombreItem1 .= ' - '.$rowData['LicitacionLVL_18'];}
+					if(isset($rowData['LicitacionLVL_19'])&&$rowData['LicitacionLVL_19']!=''){ $NombreItem1 .= ' - '.$rowData['LicitacionLVL_19'];}
+					if(isset($rowData['LicitacionLVL_20'])&&$rowData['LicitacionLVL_20']!=''){ $NombreItem1 .= ' - '.$rowData['LicitacionLVL_20'];}
+					if(isset($rowData['LicitacionLVL_21'])&&$rowData['LicitacionLVL_21']!=''){ $NombreItem1 .= ' - '.$rowData['LicitacionLVL_21'];}
+					if(isset($rowData['LicitacionLVL_22'])&&$rowData['LicitacionLVL_22']!=''){ $NombreItem1 .= ' - '.$rowData['LicitacionLVL_22'];}
+					if(isset($rowData['LicitacionLVL_23'])&&$rowData['LicitacionLVL_23']!=''){ $NombreItem1 .= ' - '.$rowData['LicitacionLVL_23'];}
+					if(isset($rowData['LicitacionLVL_24'])&&$rowData['LicitacionLVL_24']!=''){ $NombreItem1 .= ' - '.$rowData['LicitacionLVL_24'];}
+					if(isset($rowData['LicitacionLVL_25'])&&$rowData['LicitacionLVL_25']!=''){ $NombreItem1 .= ' - '.$rowData['LicitacionLVL_25'];}
 					/************************************************************************/
 					//Nombre del item nuevo
 					$NombreItem2  = '';
-					$NombreItem2 .= '<strong>Licitacion:</strong>'.$rowdataPost['Licitacion'].'<br/>';
-					if(isset($rowdataPost['LicitacionLVL_1'])&&$rowdataPost['LicitacionLVL_1']!=''){   $NombreItem2 .= '<strong>Tarea:</strong>'.$rowdataPost['LicitacionLVL_1'];}
-					if(isset($rowdataPost['LicitacionLVL_2'])&&$rowdataPost['LicitacionLVL_2']!=''){   $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_2'];}
-					if(isset($rowdataPost['LicitacionLVL_3'])&&$rowdataPost['LicitacionLVL_3']!=''){   $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_3'];}
-					if(isset($rowdataPost['LicitacionLVL_4'])&&$rowdataPost['LicitacionLVL_4']!=''){   $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_4'];}
-					if(isset($rowdataPost['LicitacionLVL_5'])&&$rowdataPost['LicitacionLVL_5']!=''){   $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_5'];}
-					if(isset($rowdataPost['LicitacionLVL_6'])&&$rowdataPost['LicitacionLVL_6']!=''){   $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_6'];}
-					if(isset($rowdataPost['LicitacionLVL_7'])&&$rowdataPost['LicitacionLVL_7']!=''){   $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_7'];}
-					if(isset($rowdataPost['LicitacionLVL_8'])&&$rowdataPost['LicitacionLVL_8']!=''){   $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_8'];}
-					if(isset($rowdataPost['LicitacionLVL_9'])&&$rowdataPost['LicitacionLVL_9']!=''){   $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_9'];}
-					if(isset($rowdataPost['LicitacionLVL_10'])&&$rowdataPost['LicitacionLVL_10']!=''){ $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_10'];}
-					if(isset($rowdataPost['LicitacionLVL_11'])&&$rowdataPost['LicitacionLVL_11']!=''){ $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_11'];}
-					if(isset($rowdataPost['LicitacionLVL_12'])&&$rowdataPost['LicitacionLVL_12']!=''){ $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_12'];}
-					if(isset($rowdataPost['LicitacionLVL_13'])&&$rowdataPost['LicitacionLVL_13']!=''){ $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_13'];}
-					if(isset($rowdataPost['LicitacionLVL_14'])&&$rowdataPost['LicitacionLVL_14']!=''){ $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_14'];}
-					if(isset($rowdataPost['LicitacionLVL_15'])&&$rowdataPost['LicitacionLVL_15']!=''){ $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_15'];}
-					if(isset($rowdataPost['LicitacionLVL_16'])&&$rowdataPost['LicitacionLVL_16']!=''){ $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_16'];}
-					if(isset($rowdataPost['LicitacionLVL_17'])&&$rowdataPost['LicitacionLVL_17']!=''){ $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_17'];}
-					if(isset($rowdataPost['LicitacionLVL_18'])&&$rowdataPost['LicitacionLVL_18']!=''){ $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_18'];}
-					if(isset($rowdataPost['LicitacionLVL_19'])&&$rowdataPost['LicitacionLVL_19']!=''){ $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_19'];}
-					if(isset($rowdataPost['LicitacionLVL_20'])&&$rowdataPost['LicitacionLVL_20']!=''){ $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_20'];}
-					if(isset($rowdataPost['LicitacionLVL_21'])&&$rowdataPost['LicitacionLVL_21']!=''){ $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_21'];}
-					if(isset($rowdataPost['LicitacionLVL_22'])&&$rowdataPost['LicitacionLVL_22']!=''){ $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_22'];}
-					if(isset($rowdataPost['LicitacionLVL_23'])&&$rowdataPost['LicitacionLVL_23']!=''){ $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_23'];}
-					if(isset($rowdataPost['LicitacionLVL_24'])&&$rowdataPost['LicitacionLVL_24']!=''){ $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_24'];}
-					if(isset($rowdataPost['LicitacionLVL_25'])&&$rowdataPost['LicitacionLVL_25']!=''){ $NombreItem2 .= ' - '.$rowdataPost['LicitacionLVL_25'];}
+					$NombreItem2 .= '<strong>Licitacion:</strong>'.$rowDataPost['Licitacion'].'<br/>';
+					if(isset($rowDataPost['LicitacionLVL_1'])&&$rowDataPost['LicitacionLVL_1']!=''){   $NombreItem2 .= '<strong>Tarea:</strong>'.$rowDataPost['LicitacionLVL_1'];}
+					if(isset($rowDataPost['LicitacionLVL_2'])&&$rowDataPost['LicitacionLVL_2']!=''){   $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_2'];}
+					if(isset($rowDataPost['LicitacionLVL_3'])&&$rowDataPost['LicitacionLVL_3']!=''){   $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_3'];}
+					if(isset($rowDataPost['LicitacionLVL_4'])&&$rowDataPost['LicitacionLVL_4']!=''){   $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_4'];}
+					if(isset($rowDataPost['LicitacionLVL_5'])&&$rowDataPost['LicitacionLVL_5']!=''){   $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_5'];}
+					if(isset($rowDataPost['LicitacionLVL_6'])&&$rowDataPost['LicitacionLVL_6']!=''){   $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_6'];}
+					if(isset($rowDataPost['LicitacionLVL_7'])&&$rowDataPost['LicitacionLVL_7']!=''){   $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_7'];}
+					if(isset($rowDataPost['LicitacionLVL_8'])&&$rowDataPost['LicitacionLVL_8']!=''){   $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_8'];}
+					if(isset($rowDataPost['LicitacionLVL_9'])&&$rowDataPost['LicitacionLVL_9']!=''){   $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_9'];}
+					if(isset($rowDataPost['LicitacionLVL_10'])&&$rowDataPost['LicitacionLVL_10']!=''){ $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_10'];}
+					if(isset($rowDataPost['LicitacionLVL_11'])&&$rowDataPost['LicitacionLVL_11']!=''){ $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_11'];}
+					if(isset($rowDataPost['LicitacionLVL_12'])&&$rowDataPost['LicitacionLVL_12']!=''){ $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_12'];}
+					if(isset($rowDataPost['LicitacionLVL_13'])&&$rowDataPost['LicitacionLVL_13']!=''){ $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_13'];}
+					if(isset($rowDataPost['LicitacionLVL_14'])&&$rowDataPost['LicitacionLVL_14']!=''){ $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_14'];}
+					if(isset($rowDataPost['LicitacionLVL_15'])&&$rowDataPost['LicitacionLVL_15']!=''){ $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_15'];}
+					if(isset($rowDataPost['LicitacionLVL_16'])&&$rowDataPost['LicitacionLVL_16']!=''){ $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_16'];}
+					if(isset($rowDataPost['LicitacionLVL_17'])&&$rowDataPost['LicitacionLVL_17']!=''){ $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_17'];}
+					if(isset($rowDataPost['LicitacionLVL_18'])&&$rowDataPost['LicitacionLVL_18']!=''){ $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_18'];}
+					if(isset($rowDataPost['LicitacionLVL_19'])&&$rowDataPost['LicitacionLVL_19']!=''){ $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_19'];}
+					if(isset($rowDataPost['LicitacionLVL_20'])&&$rowDataPost['LicitacionLVL_20']!=''){ $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_20'];}
+					if(isset($rowDataPost['LicitacionLVL_21'])&&$rowDataPost['LicitacionLVL_21']!=''){ $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_21'];}
+					if(isset($rowDataPost['LicitacionLVL_22'])&&$rowDataPost['LicitacionLVL_22']!=''){ $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_22'];}
+					if(isset($rowDataPost['LicitacionLVL_23'])&&$rowDataPost['LicitacionLVL_23']!=''){ $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_23'];}
+					if(isset($rowDataPost['LicitacionLVL_24'])&&$rowDataPost['LicitacionLVL_24']!=''){ $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_24'];}
+					if(isset($rowDataPost['LicitacionLVL_25'])&&$rowDataPost['LicitacionLVL_25']!=''){ $NombreItem2 .= ' - '.$rowDataPost['LicitacionLVL_25'];}
 					//comparacion cambio tarea
 					if(isset($NombreItem1)&&isset($NombreItem2)&&$NombreItem1!=$NombreItem2){
 						$NombreItem = 'Se cambia Tarea:<br/>'.$NombreItem1.'<br/>por<br/>'.$NombreItem2;
@@ -2396,8 +2396,8 @@ require_once '0_validate_user_1.php';
 
 					}
 					//comparacion cambio de estado
-					if(isset($rowdata['EstadoTarea'])&&isset($rowdataPost['EstadoTarea'])&&$rowdata['EstadoTarea']!=$rowdataPost['EstadoTarea']){
-						$NombreItem = 'Se cambia el estado de la Tarea: <br/>'.$NombreItem1.'<br/>- De <strong>'.$rowdata['EstadoTarea'].'</strong> por <strong>'.$rowdataPost['EstadoTarea'].'</strong>';
+					if(isset($rowData['EstadoTarea'])&&isset($rowDataPost['EstadoTarea'])&&$rowData['EstadoTarea']!=$rowDataPost['EstadoTarea']){
+						$NombreItem = 'Se cambia el estado de la Tarea: <br/>'.$NombreItem1.'<br/>- De <strong>'.$rowData['EstadoTarea'].'</strong> por <strong>'.$rowDataPost['EstadoTarea'].'</strong>';
 						/*********************************************************************/
 						//Se guarda en historial la accion
 						if(isset($idOT) && $idOT!=''){    $SIS_data  = "'".$idOT."'";  }else{$SIS_data  = "''";}
@@ -2544,40 +2544,40 @@ require_once '0_validate_user_1.php';
 				LEFT JOIN `licitacion_listado_level_24`    ON licitacion_listado_level_24.idLevel_24        = orden_trabajo_tareas_listado_tareas.idLevel_24
 				LEFT JOIN `licitacion_listado_level_25`    ON licitacion_listado_level_25.idLevel_25        = orden_trabajo_tareas_listado_tareas.idLevel_25';
 				$SIS_where = 'orden_trabajo_tareas_listado_tareas.idTrabajoOT = '.$indice;
-				$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_tareas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_tareas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Nombre del item
 				$NombreItem  = 'Se elimina Tarea:<br/>';
-				$NombreItem .= '<strong>Licitacion:</strong>'.$rowdata['Licitacion'].'<br/>';
-				if(isset($rowdata['LicitacionLVL_1'])&&$rowdata['LicitacionLVL_1']!=''){   $NombreItem .= '<strong>Tarea:</strong>'.$rowdata['LicitacionLVL_1'];}
-				if(isset($rowdata['LicitacionLVL_2'])&&$rowdata['LicitacionLVL_2']!=''){   $NombreItem .= ' - '.$rowdata['LicitacionLVL_2'];}
-				if(isset($rowdata['LicitacionLVL_3'])&&$rowdata['LicitacionLVL_3']!=''){   $NombreItem .= ' - '.$rowdata['LicitacionLVL_3'];}
-				if(isset($rowdata['LicitacionLVL_4'])&&$rowdata['LicitacionLVL_4']!=''){   $NombreItem .= ' - '.$rowdata['LicitacionLVL_4'];}
-				if(isset($rowdata['LicitacionLVL_5'])&&$rowdata['LicitacionLVL_5']!=''){   $NombreItem .= ' - '.$rowdata['LicitacionLVL_5'];}
-				if(isset($rowdata['LicitacionLVL_6'])&&$rowdata['LicitacionLVL_6']!=''){   $NombreItem .= ' - '.$rowdata['LicitacionLVL_6'];}
-				if(isset($rowdata['LicitacionLVL_7'])&&$rowdata['LicitacionLVL_7']!=''){   $NombreItem .= ' - '.$rowdata['LicitacionLVL_7'];}
-				if(isset($rowdata['LicitacionLVL_8'])&&$rowdata['LicitacionLVL_8']!=''){   $NombreItem .= ' - '.$rowdata['LicitacionLVL_8'];}
-				if(isset($rowdata['LicitacionLVL_9'])&&$rowdata['LicitacionLVL_9']!=''){   $NombreItem .= ' - '.$rowdata['LicitacionLVL_9'];}
-				if(isset($rowdata['LicitacionLVL_10'])&&$rowdata['LicitacionLVL_10']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_10'];}
-				if(isset($rowdata['LicitacionLVL_11'])&&$rowdata['LicitacionLVL_11']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_11'];}
-				if(isset($rowdata['LicitacionLVL_12'])&&$rowdata['LicitacionLVL_12']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_12'];}
-				if(isset($rowdata['LicitacionLVL_13'])&&$rowdata['LicitacionLVL_13']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_13'];}
-				if(isset($rowdata['LicitacionLVL_14'])&&$rowdata['LicitacionLVL_14']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_14'];}
-				if(isset($rowdata['LicitacionLVL_15'])&&$rowdata['LicitacionLVL_15']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_15'];}
-				if(isset($rowdata['LicitacionLVL_16'])&&$rowdata['LicitacionLVL_16']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_16'];}
-				if(isset($rowdata['LicitacionLVL_17'])&&$rowdata['LicitacionLVL_17']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_17'];}
-				if(isset($rowdata['LicitacionLVL_18'])&&$rowdata['LicitacionLVL_18']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_18'];}
-				if(isset($rowdata['LicitacionLVL_19'])&&$rowdata['LicitacionLVL_19']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_19'];}
-				if(isset($rowdata['LicitacionLVL_20'])&&$rowdata['LicitacionLVL_20']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_20'];}
-				if(isset($rowdata['LicitacionLVL_21'])&&$rowdata['LicitacionLVL_21']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_21'];}
-				if(isset($rowdata['LicitacionLVL_22'])&&$rowdata['LicitacionLVL_22']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_22'];}
-				if(isset($rowdata['LicitacionLVL_23'])&&$rowdata['LicitacionLVL_23']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_23'];}
-				if(isset($rowdata['LicitacionLVL_24'])&&$rowdata['LicitacionLVL_24']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_24'];}
-				if(isset($rowdata['LicitacionLVL_25'])&&$rowdata['LicitacionLVL_25']!=''){ $NombreItem .= ' - '.$rowdata['LicitacionLVL_25'];}
+				$NombreItem .= '<strong>Licitacion:</strong>'.$rowData['Licitacion'].'<br/>';
+				if(isset($rowData['LicitacionLVL_1'])&&$rowData['LicitacionLVL_1']!=''){   $NombreItem .= '<strong>Tarea:</strong>'.$rowData['LicitacionLVL_1'];}
+				if(isset($rowData['LicitacionLVL_2'])&&$rowData['LicitacionLVL_2']!=''){   $NombreItem .= ' - '.$rowData['LicitacionLVL_2'];}
+				if(isset($rowData['LicitacionLVL_3'])&&$rowData['LicitacionLVL_3']!=''){   $NombreItem .= ' - '.$rowData['LicitacionLVL_3'];}
+				if(isset($rowData['LicitacionLVL_4'])&&$rowData['LicitacionLVL_4']!=''){   $NombreItem .= ' - '.$rowData['LicitacionLVL_4'];}
+				if(isset($rowData['LicitacionLVL_5'])&&$rowData['LicitacionLVL_5']!=''){   $NombreItem .= ' - '.$rowData['LicitacionLVL_5'];}
+				if(isset($rowData['LicitacionLVL_6'])&&$rowData['LicitacionLVL_6']!=''){   $NombreItem .= ' - '.$rowData['LicitacionLVL_6'];}
+				if(isset($rowData['LicitacionLVL_7'])&&$rowData['LicitacionLVL_7']!=''){   $NombreItem .= ' - '.$rowData['LicitacionLVL_7'];}
+				if(isset($rowData['LicitacionLVL_8'])&&$rowData['LicitacionLVL_8']!=''){   $NombreItem .= ' - '.$rowData['LicitacionLVL_8'];}
+				if(isset($rowData['LicitacionLVL_9'])&&$rowData['LicitacionLVL_9']!=''){   $NombreItem .= ' - '.$rowData['LicitacionLVL_9'];}
+				if(isset($rowData['LicitacionLVL_10'])&&$rowData['LicitacionLVL_10']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_10'];}
+				if(isset($rowData['LicitacionLVL_11'])&&$rowData['LicitacionLVL_11']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_11'];}
+				if(isset($rowData['LicitacionLVL_12'])&&$rowData['LicitacionLVL_12']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_12'];}
+				if(isset($rowData['LicitacionLVL_13'])&&$rowData['LicitacionLVL_13']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_13'];}
+				if(isset($rowData['LicitacionLVL_14'])&&$rowData['LicitacionLVL_14']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_14'];}
+				if(isset($rowData['LicitacionLVL_15'])&&$rowData['LicitacionLVL_15']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_15'];}
+				if(isset($rowData['LicitacionLVL_16'])&&$rowData['LicitacionLVL_16']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_16'];}
+				if(isset($rowData['LicitacionLVL_17'])&&$rowData['LicitacionLVL_17']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_17'];}
+				if(isset($rowData['LicitacionLVL_18'])&&$rowData['LicitacionLVL_18']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_18'];}
+				if(isset($rowData['LicitacionLVL_19'])&&$rowData['LicitacionLVL_19']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_19'];}
+				if(isset($rowData['LicitacionLVL_20'])&&$rowData['LicitacionLVL_20']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_20'];}
+				if(isset($rowData['LicitacionLVL_21'])&&$rowData['LicitacionLVL_21']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_21'];}
+				if(isset($rowData['LicitacionLVL_22'])&&$rowData['LicitacionLVL_22']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_22'];}
+				if(isset($rowData['LicitacionLVL_23'])&&$rowData['LicitacionLVL_23']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_23'];}
+				if(isset($rowData['LicitacionLVL_24'])&&$rowData['LicitacionLVL_24']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_24'];}
+				if(isset($rowData['LicitacionLVL_25'])&&$rowData['LicitacionLVL_25']!=''){ $NombreItem .= ' - '.$rowData['LicitacionLVL_25'];}
 
 				/*********************************************************************/
 				//Se guarda en historial la accion
-				if(isset($rowdata['idOT']) && $rowdata['idOT']!=''){    $SIS_data  = "'".$rowdata['idOT']."'";  }else{$SIS_data  = "''";}
+				if(isset($rowData['idOT']) && $rowData['idOT']!=''){    $SIS_data  = "'".$rowData['idOT']."'";  }else{$SIS_data  = "''";}
 				$SIS_data .= ",'".fecha_actual()."'";
 				$SIS_data .= ",'1'";                                                      //Creacion Satisfactoria
 				$SIS_data .= ",'".$NombreItem."'";                                        //Observacion
@@ -2784,14 +2784,14 @@ require_once '0_validate_user_1.php';
 
 			if($errorn==0){
 				// Se obtiene el nombre del archivo
-				$rowdata = db_select_data (false, 'idOT, NombreArchivo', 'orden_trabajo_tareas_listado_tareas_adjuntos', '', 'idAdjunto = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'idOT, NombreArchivo', 'orden_trabajo_tareas_listado_tareas_adjuntos', '', 'idAdjunto = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*********************************************************************/
 				//Se guarda en historial la accion
-				if(isset($rowdata['idOT']) && $rowdata['idOT']!=''){    $SIS_data  = "'".$rowdata['idOT']."'";  }else{$SIS_data  = "''";}
+				if(isset($rowData['idOT']) && $rowData['idOT']!=''){    $SIS_data  = "'".$rowData['idOT']."'";  }else{$SIS_data  = "''";}
 				$SIS_data .= ",'".fecha_actual()."'";
 				$SIS_data .= ",'1'";                                                                   //Creacion Satisfactoria
-				$SIS_data .= ",'Se elimina Archivo: <strong>".$rowdata['NombreArchivo']."</strong>'";  //Observacion
+				$SIS_data .= ",'Se elimina Archivo: <strong>".$rowData['NombreArchivo']."</strong>'";  //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";                 //idUsuario
 
 				// inserto los datos de registro en la db
@@ -2804,12 +2804,12 @@ require_once '0_validate_user_1.php';
 				if($resultado==true){
 
 					//se elimina el archivo
-					if(isset($rowdata['NombreArchivo'])&&$rowdata['NombreArchivo']!=''){
+					if(isset($rowData['NombreArchivo'])&&$rowData['NombreArchivo']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['NombreArchivo'])){
+							if(!is_writable('upload/'.$rowData['NombreArchivo'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['NombreArchivo']);
+								unlink('upload/'.$rowData['NombreArchivo']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log

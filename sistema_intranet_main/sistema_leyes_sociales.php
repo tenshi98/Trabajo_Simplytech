@@ -84,7 +84,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 //sistema
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 
@@ -101,24 +101,24 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($AFP_idCentroCosto)){            $x2  = $AFP_idCentroCosto;            }else{$x2  = $rowdata['AFP_idCentroCosto'];}
-				if(isset($AFP_idLevel_1)){                $x3  = $AFP_idLevel_1;                }else{$x3  = $rowdata['AFP_idLevel_1'];}
-				if(isset($AFP_idLevel_2)){                $x4  = $AFP_idLevel_2;                }else{$x4  = $rowdata['AFP_idLevel_2'];}
-				if(isset($AFP_idLevel_3)){                $x5  = $AFP_idLevel_3;                }else{$x5  = $rowdata['AFP_idLevel_3'];}
-				if(isset($AFP_idLevel_4)){                $x6  = $AFP_idLevel_4;                }else{$x6  = $rowdata['AFP_idLevel_4'];}
-				if(isset($AFP_idLevel_5)){                $x7  = $AFP_idLevel_5;                }else{$x7  = $rowdata['AFP_idLevel_5'];}
-				if(isset($SALUD_idCentroCosto)){          $x8  = $SALUD_idCentroCosto;          }else{$x8  = $rowdata['SALUD_idCentroCosto'];}
-				if(isset($SALUD_idLevel_1)){              $x9  = $SALUD_idLevel_1;              }else{$x9  = $rowdata['SALUD_idLevel_1'];}
-				if(isset($SALUD_idLevel_2)){              $x10 = $SALUD_idLevel_2;              }else{$x10 = $rowdata['SALUD_idLevel_2'];}
-				if(isset($SALUD_idLevel_3)){              $x11 = $SALUD_idLevel_3;              }else{$x11 = $rowdata['SALUD_idLevel_3'];}
-				if(isset($SALUD_idLevel_4)){              $x12 = $SALUD_idLevel_4;              }else{$x12 = $rowdata['SALUD_idLevel_4'];}
-				if(isset($SALUD_idLevel_5)){              $x13 = $SALUD_idLevel_5;              }else{$x13 = $rowdata['SALUD_idLevel_5'];}
-				if(isset($SEGURIDAD_idCentroCosto)){      $x14 = $SEGURIDAD_idCentroCosto;      }else{$x14 = $rowdata['SEGURIDAD_idCentroCosto'];}
-				if(isset($SEGURIDAD_idLevel_1)){          $x15 = $SEGURIDAD_idLevel_1;          }else{$x15 = $rowdata['SEGURIDAD_idLevel_1'];}
-				if(isset($SEGURIDAD_idLevel_2)){          $x16 = $SEGURIDAD_idLevel_2;          }else{$x16 = $rowdata['SEGURIDAD_idLevel_2'];}
-				if(isset($SEGURIDAD_idLevel_3)){          $x17 = $SEGURIDAD_idLevel_3;          }else{$x17 = $rowdata['SEGURIDAD_idLevel_3'];}
-				if(isset($SEGURIDAD_idLevel_4)){          $x18 = $SEGURIDAD_idLevel_4;          }else{$x18 = $rowdata['SEGURIDAD_idLevel_4'];}
-				if(isset($SEGURIDAD_idLevel_5)){          $x19 = $SEGURIDAD_idLevel_5;          }else{$x19 = $rowdata['SEGURIDAD_idLevel_5'];}
+				if(isset($AFP_idCentroCosto)){            $x2  = $AFP_idCentroCosto;            }else{$x2  = $rowData['AFP_idCentroCosto'];}
+				if(isset($AFP_idLevel_1)){                $x3  = $AFP_idLevel_1;                }else{$x3  = $rowData['AFP_idLevel_1'];}
+				if(isset($AFP_idLevel_2)){                $x4  = $AFP_idLevel_2;                }else{$x4  = $rowData['AFP_idLevel_2'];}
+				if(isset($AFP_idLevel_3)){                $x5  = $AFP_idLevel_3;                }else{$x5  = $rowData['AFP_idLevel_3'];}
+				if(isset($AFP_idLevel_4)){                $x6  = $AFP_idLevel_4;                }else{$x6  = $rowData['AFP_idLevel_4'];}
+				if(isset($AFP_idLevel_5)){                $x7  = $AFP_idLevel_5;                }else{$x7  = $rowData['AFP_idLevel_5'];}
+				if(isset($SALUD_idCentroCosto)){          $x8  = $SALUD_idCentroCosto;          }else{$x8  = $rowData['SALUD_idCentroCosto'];}
+				if(isset($SALUD_idLevel_1)){              $x9  = $SALUD_idLevel_1;              }else{$x9  = $rowData['SALUD_idLevel_1'];}
+				if(isset($SALUD_idLevel_2)){              $x10 = $SALUD_idLevel_2;              }else{$x10 = $rowData['SALUD_idLevel_2'];}
+				if(isset($SALUD_idLevel_3)){              $x11 = $SALUD_idLevel_3;              }else{$x11 = $rowData['SALUD_idLevel_3'];}
+				if(isset($SALUD_idLevel_4)){              $x12 = $SALUD_idLevel_4;              }else{$x12 = $rowData['SALUD_idLevel_4'];}
+				if(isset($SALUD_idLevel_5)){              $x13 = $SALUD_idLevel_5;              }else{$x13 = $rowData['SALUD_idLevel_5'];}
+				if(isset($SEGURIDAD_idCentroCosto)){      $x14 = $SEGURIDAD_idCentroCosto;      }else{$x14 = $rowData['SEGURIDAD_idCentroCosto'];}
+				if(isset($SEGURIDAD_idLevel_1)){          $x15 = $SEGURIDAD_idLevel_1;          }else{$x15 = $rowData['SEGURIDAD_idLevel_1'];}
+				if(isset($SEGURIDAD_idLevel_2)){          $x16 = $SEGURIDAD_idLevel_2;          }else{$x16 = $rowData['SEGURIDAD_idLevel_2'];}
+				if(isset($SEGURIDAD_idLevel_3)){          $x17 = $SEGURIDAD_idLevel_3;          }else{$x17 = $rowData['SEGURIDAD_idLevel_3'];}
+				if(isset($SEGURIDAD_idLevel_4)){          $x18 = $SEGURIDAD_idLevel_4;          }else{$x18 = $rowData['SEGURIDAD_idLevel_4'];}
+				if(isset($SEGURIDAD_idLevel_5)){          $x19 = $SEGURIDAD_idLevel_5;          }else{$x19 = $rowData['SEGURIDAD_idLevel_5'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

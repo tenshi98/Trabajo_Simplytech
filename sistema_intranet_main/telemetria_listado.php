@@ -223,7 +223,7 @@ if(!empty($_GET['clone_idTelemetria'])){
 	LEFT JOIN `telemetria_listado_grupos`  grupo_14  ON grupo_14.idGrupo                                   = telemetria_listado.idGrupoEstanque
 	LEFT JOIN `core_telemetria_ubicaciones`          ON core_telemetria_ubicaciones.idUbicacion            = telemetria_listado.idUbicacion';
 	$SIS_where = 'telemetria_listado.idTelemetria = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	$arrOpciones = array();
 	$arrOpciones = db_select_array (false, 'idOpciones,Nombre', 'core_sistemas_opciones', '', '', 'idOpciones ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrOpciones');
@@ -239,7 +239,7 @@ if(!empty($_GET['clone_idTelemetria'])){
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Resumen'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowData['Nombre'], 'Resumen'); ?>
 	</div>
 	<div class="clearfix"></div>
 
@@ -254,15 +254,15 @@ if(!empty($_GET['clone_idTelemetria'])){
 						<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 						<ul class="dropdown-menu" role="menu">
 							<li class=""><a href="<?php echo 'telemetria_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-							<?php if($rowdata['id_Sensores']==1){ ?>
+							<?php if($rowData['id_Sensores']==1){ ?>
 								<li class=""><a href="<?php echo 'telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
 							<?php } ?>
-							<?php if($rowdata['id_Geo']==1){ ?>
+							<?php if($rowData['id_Geo']==1){ ?>
 								<li class=""><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
-							<?php }elseif($rowdata['id_Geo']==2){ ?>
+							<?php }elseif($rowData['id_Geo']==2){ ?>
 								<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 							<?php } ?>
-							<?php if($rowdata['id_Sensores']==1){ ?>
+							<?php if($rowData['id_Sensores']==1){ ?>
 								<li class=""><a href="<?php echo 'telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
 								<li class=""><a href="<?php echo 'telemetria_listado_sensor_operaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Definicion Operacional</a></li>
 							<?php } ?>
@@ -283,110 +283,110 @@ if(!empty($_GET['clone_idTelemetria'])){
 					<div class="wmd-panel">
 
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-							<?php if ($rowdata['Direccion_img']=='') { ?>
+							<?php if ($rowData['Direccion_img']=='') { ?>
 								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 							<?php }else{  ?>
-								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowData['Direccion_img']; ?>">
 							<?php } ?>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Equipo</h2>
 							<p class="text-muted">
-								<?php if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){ ?>                              <strong>Nombre Equipo: </strong><?php echo $rowdata['Nombre']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['NumSerie'])&&$rowdata['NumSerie']!=''){ ?>                          <strong>Numero de Serie: </strong><?php echo $rowdata['NumSerie']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['IdentificadorEmpresa'])&&$rowdata['IdentificadorEmpresa']!=''){ ?>  <strong>Identificador Empresa : </strong><?php echo $rowdata['IdentificadorEmpresa']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Sim_Num_Tel'])&&$rowdata['Sim_Num_Tel']!=''){ ?>                    <strong>SIM - Numero Telefonico : </strong><?php echo $rowdata['Sim_Num_Tel']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Sim_Num_Serie'])&&$rowdata['Sim_Num_Serie']!=''){ ?>                <strong>SIM - Numero Serie : </strong><?php echo $rowdata['Sim_Num_Serie']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Sim_Compania'])&&$rowdata['Sim_Compania']!=''){ ?>                  <strong>SIM - Compañia : </strong><?php echo $rowdata['Sim_Compania']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Sim_marca'])&&$rowdata['Sim_marca']!=''){ ?>                        <strong>BAM - Marca : </strong><?php echo $rowdata['Sim_marca']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Sim_modelo'])&&$rowdata['Sim_modelo']!=''){ ?>                      <strong>BAM - Modelo : </strong><?php echo $rowdata['Sim_modelo']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['IP_Client'])&&$rowdata['IP_Client']!=''){ ?>                        <strong>IP Cliente : </strong><?php echo $rowdata['IP_Client']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['idTelemetria'])&&$rowdata['idTelemetria']!=''){ ?>                  <strong>ID Equipo : </strong><?php echo $rowdata['idTelemetria']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Estado'])&&$rowdata['Estado']!=''){ ?>                              <strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Nombre'])&&$rowData['Nombre']!=''){ ?>                              <strong>Nombre Equipo: </strong><?php echo $rowData['Nombre']; ?><br/><?php } ?>
+								<?php if(isset($rowData['NumSerie'])&&$rowData['NumSerie']!=''){ ?>                          <strong>Numero de Serie: </strong><?php echo $rowData['NumSerie']; ?><br/><?php } ?>
+								<?php if(isset($rowData['IdentificadorEmpresa'])&&$rowData['IdentificadorEmpresa']!=''){ ?>  <strong>Identificador Empresa : </strong><?php echo $rowData['IdentificadorEmpresa']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Sim_Num_Tel'])&&$rowData['Sim_Num_Tel']!=''){ ?>                    <strong>SIM - Numero Telefonico : </strong><?php echo $rowData['Sim_Num_Tel']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Sim_Num_Serie'])&&$rowData['Sim_Num_Serie']!=''){ ?>                <strong>SIM - Numero Serie : </strong><?php echo $rowData['Sim_Num_Serie']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Sim_Compania'])&&$rowData['Sim_Compania']!=''){ ?>                  <strong>SIM - Compañia : </strong><?php echo $rowData['Sim_Compania']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Sim_marca'])&&$rowData['Sim_marca']!=''){ ?>                        <strong>BAM - Marca : </strong><?php echo $rowData['Sim_marca']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Sim_modelo'])&&$rowData['Sim_modelo']!=''){ ?>                      <strong>BAM - Modelo : </strong><?php echo $rowData['Sim_modelo']; ?><br/><?php } ?>
+								<?php if(isset($rowData['IP_Client'])&&$rowData['IP_Client']!=''){ ?>                        <strong>IP Cliente : </strong><?php echo $rowData['IP_Client']; ?><br/><?php } ?>
+								<?php if(isset($rowData['idTelemetria'])&&$rowData['idTelemetria']!=''){ ?>                  <strong>ID Equipo : </strong><?php echo $rowData['idTelemetria']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Estado'])&&$rowData['Estado']!=''){ ?>                              <strong>Estado : </strong><?php echo $rowData['Estado']; ?><br/><?php } ?>
 
 							</p>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Configuracion</h2>
 							<p class="text-muted">
 								<strong class="color-red-dark">Basicos</strong><br/>
-								<strong>Identificador : </strong><?php echo $rowdata['Identificador']; ?><br/>
-								<?php if(isset($rowdata['Dispositivo'])&&$rowdata['Dispositivo']!=''){ ?>            <strong>Hardware : </strong><?php echo $rowdata['Dispositivo']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Shield'])&&$rowdata['Shield']!=''){ ?>                      <strong>Shield : </strong><?php echo $rowdata['Shield']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['TiempoFueraLinea'])&&$rowdata['TiempoFueraLinea']!=''){ ?>  <strong>Tiempo Fuera Linea Maximo : </strong><?php echo $rowdata['TiempoFueraLinea']; ?> Horas<br/><?php } ?>
-								<?php if(isset($rowdata['Tab'])&&$rowdata['Tab']!=''){ ?>                            <strong>Tab: </strong><?php echo $rowdata['Tab']; ?><br/><?php } ?>
+								<strong>Identificador : </strong><?php echo $rowData['Identificador']; ?><br/>
+								<?php if(isset($rowData['Dispositivo'])&&$rowData['Dispositivo']!=''){ ?>            <strong>Hardware : </strong><?php echo $rowData['Dispositivo']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Shield'])&&$rowData['Shield']!=''){ ?>                      <strong>Shield : </strong><?php echo $rowData['Shield']; ?><br/><?php } ?>
+								<?php if(isset($rowData['TiempoFueraLinea'])&&$rowData['TiempoFueraLinea']!=''){ ?>  <strong>Tiempo Fuera Linea Maximo : </strong><?php echo $rowData['TiempoFueraLinea']; ?> Horas<br/><?php } ?>
+								<?php if(isset($rowData['Tab'])&&$rowData['Tab']!=''){ ?>                            <strong>Tab: </strong><?php echo $rowData['Tab']; ?><br/><?php } ?>
 
 								<br/>
 								<strong class="color-red-dark">Funciones</strong><br/>
-								<?php if(isset($rowdata['Geo'])&&$rowdata['Geo']!=''){ ?>                        <strong>Geolocalizacion : </strong><?php echo $rowdata['Geo']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Sensores'])&&$rowdata['Sensores']!=''){ ?>              <strong>Sensores : </strong><?php echo $rowdata['Sensores'].' ';if($rowdata['id_Sensores']==1){echo '('.$rowdata['cantSensores'].' Sensores)';} ?><br/><?php } ?>
-								<?php if(isset($rowdata['Predio'])&&$rowdata['Predio']!=''){ ?>                  <strong>Utilizacion de Predios : </strong><?php echo $rowdata['Predio']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Backup'])&&$rowdata['Backup']!=''){ ?>                  <strong>Utilizacion de Backup : </strong><?php echo $rowdata['Backup'].' ';if(isset($rowdata['NregBackup'])&&$rowdata['NregBackup']!=''&&$rowdata['NregBackup']!=0){echo '('.$rowdata['NregBackup'].' Registros)';} ?><br/><?php } ?>
-								<?php if(isset($rowdata['Generador'])&&$rowdata['Generador']!=''){ ?>            <strong>Generador Electrico : </strong><?php echo $rowdata['Generador'].' ';if(isset($rowdata['GeneradorNombre'])&&$rowdata['GeneradorNombre']!=''){echo'('.$rowdata['GeneradorNombre'].' instaladado el '.fecha_estandar($rowdata['GeneradorFecha']).')';} ?><br/><?php } ?>
-								<?php if(isset($rowdata['AlertaTemprana'])&&$rowdata['AlertaTemprana']!=''){ ?>  <strong>Alerta Temprana : </strong><?php echo $rowdata['AlertaTemprana']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['UsoFTP'])&&$rowdata['UsoFTP']!=''){ ?>                  <strong>Uso FTP : </strong><?php echo $rowdata['UsoFTP']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['idUsoFTP'])&&$rowdata['idUsoFTP']==1){ ?>               <strong>Carpeta FTP : </strong><?php echo $rowdata['FTP_Carpeta']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Geo'])&&$rowData['Geo']!=''){ ?>                        <strong>Geolocalizacion : </strong><?php echo $rowData['Geo']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Sensores'])&&$rowData['Sensores']!=''){ ?>              <strong>Sensores : </strong><?php echo $rowData['Sensores'].' ';if($rowData['id_Sensores']==1){echo '('.$rowData['cantSensores'].' Sensores)';} ?><br/><?php } ?>
+								<?php if(isset($rowData['Predio'])&&$rowData['Predio']!=''){ ?>                  <strong>Utilizacion de Predios : </strong><?php echo $rowData['Predio']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Backup'])&&$rowData['Backup']!=''){ ?>                  <strong>Utilizacion de Backup : </strong><?php echo $rowData['Backup'].' ';if(isset($rowData['NregBackup'])&&$rowData['NregBackup']!=''&&$rowData['NregBackup']!=0){echo '('.$rowData['NregBackup'].' Registros)';} ?><br/><?php } ?>
+								<?php if(isset($rowData['Generador'])&&$rowData['Generador']!=''){ ?>            <strong>Generador Electrico : </strong><?php echo $rowData['Generador'].' ';if(isset($rowData['GeneradorNombre'])&&$rowData['GeneradorNombre']!=''){echo'('.$rowData['GeneradorNombre'].' instaladado el '.fecha_estandar($rowData['GeneradorFecha']).')';} ?><br/><?php } ?>
+								<?php if(isset($rowData['AlertaTemprana'])&&$rowData['AlertaTemprana']!=''){ ?>  <strong>Alerta Temprana : </strong><?php echo $rowData['AlertaTemprana']; ?><br/><?php } ?>
+								<?php if(isset($rowData['UsoFTP'])&&$rowData['UsoFTP']!=''){ ?>                  <strong>Uso FTP : </strong><?php echo $rowData['UsoFTP']; ?><br/><?php } ?>
+								<?php if(isset($rowData['idUsoFTP'])&&$rowData['idUsoFTP']==1){ ?>               <strong>Carpeta FTP : </strong><?php echo $rowData['FTP_Carpeta']; ?><br/><?php } ?>
 
 								<br/>
 								<strong class="color-red-dark">Otros Datos</strong><br/>
-								<?php if(isset($rowdata['Capacidad'])&&$rowdata['Capacidad']!=0){ ?>                             <strong>Capacidad Nebulizador: </strong><?php echo Cantidades_decimales_justos($rowdata['Capacidad']); ?><br/><?php } ?>
-								<?php if(isset($rowdata['TiempoRevision'])&&$rowdata['TiempoRevision']!=0){ ?>                   <strong>Hora Revision: </strong><?php echo $rowdata['TiempoRevision']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Grupo_amperaje'])&&$rowdata['Grupo_amperaje']!=0){ ?>                   <strong>Gruas - Grupo Alimentacion: </strong><?php echo $rowdata['Grupo_amperaje']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Grupo_elevacion'])&&$rowdata['Grupo_elevacion']!=0){ ?>                 <strong>Gruas - Grupo Elevacion: </strong><?php echo $rowdata['Grupo_elevacion']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Grupo_giro'])&&$rowdata['Grupo_giro']!=0){ ?>                           <strong>Gruas - Grupo Giro: </strong><?php echo $rowdata['Grupo_giro']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Grupo_carro'])&&$rowdata['Grupo_carro']!=0){ ?>                         <strong>Gruas - Grupo Carro: </strong><?php echo $rowdata['Grupo_carro']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Grupo_voltaje'])&&$rowdata['Grupo_voltaje']!=0){ ?>                     <strong>Gruas - Grupo Voltaje: </strong><?php echo $rowdata['Grupo_voltaje']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=0){ ?>                             <strong>Gruas - Ubicación: </strong><?php echo $rowdata['Ubicacion']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Grupo_motor_subida'])&&$rowdata['Grupo_motor_subida']!=0){ ?>           <strong>Ascensores - Grupo Amperaje Motor Subida: </strong><?php echo $rowdata['Grupo_motor_subida']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Grupo_motor_bajada'])&&$rowdata['Grupo_motor_bajada']!=0){ ?>           <strong>Ascensores - Grupo Amperaje Motor Bajada: </strong><?php echo $rowdata['Grupo_motor_bajada']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Grupo_Despliegue'])&&$rowdata['Grupo_Despliegue']!=0){ ?>               <strong>SimpliEnergy - Grupo Despliegue: </strong><?php echo $rowdata['Grupo_Despliegue']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Grupo_Vmonofasico'])&&$rowdata['Grupo_Vmonofasico']!=0){ ?>             <strong>SimpliEnergy - Grupo V monofasico: </strong><?php echo $rowdata['Grupo_Vmonofasico']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Grupo_VTrifasico'])&&$rowdata['Grupo_VTrifasico']!=0){ ?>               <strong>SimpliEnergy - Grupo V Trifasico: </strong><?php echo $rowdata['Grupo_VTrifasico']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Grupo_Potencia'])&&$rowdata['Grupo_Potencia']!=0){ ?>                   <strong>SimpliEnergy - Grupo Potencia: </strong><?php echo $rowdata['Grupo_Potencia']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Grupo_ConsumoMesHabil'])&&$rowdata['Grupo_ConsumoMesHabil']!=0){ ?>     <strong>SimpliEnergy - Grupo Consumo Mes Habil: </strong><?php echo $rowdata['Grupo_ConsumoMesHabil']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Grupo_ConsumoMesCurso'])&&$rowdata['Grupo_ConsumoMesCurso']!=0){ ?>     <strong>SimpliEnergy - Grupo Consumo Mes Curso: </strong><?php echo $rowdata['Grupo_ConsumoMesCurso']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Grupo_Estanque'])&&$rowdata['Grupo_Estanque']!=0){ ?>                   <strong>SimpliEnergy - Grupo Estanque Combustible: </strong><?php echo $rowdata['Grupo_Estanque']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['CrossCMinHorno'])&&$rowdata['CrossCMinHorno']!=0){ ?>                   <strong>SimpliC - Temperatura Minima del Horno: </strong><?php echo $rowdata['CrossCMinHorno']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Capacidad'])&&$rowData['Capacidad']!=0){ ?>                             <strong>Capacidad Nebulizador: </strong><?php echo Cantidades_decimales_justos($rowData['Capacidad']); ?><br/><?php } ?>
+								<?php if(isset($rowData['TiempoRevision'])&&$rowData['TiempoRevision']!=0){ ?>                   <strong>Hora Revision: </strong><?php echo $rowData['TiempoRevision']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Grupo_amperaje'])&&$rowData['Grupo_amperaje']!=0){ ?>                   <strong>Gruas - Grupo Alimentacion: </strong><?php echo $rowData['Grupo_amperaje']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Grupo_elevacion'])&&$rowData['Grupo_elevacion']!=0){ ?>                 <strong>Gruas - Grupo Elevacion: </strong><?php echo $rowData['Grupo_elevacion']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Grupo_giro'])&&$rowData['Grupo_giro']!=0){ ?>                           <strong>Gruas - Grupo Giro: </strong><?php echo $rowData['Grupo_giro']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Grupo_carro'])&&$rowData['Grupo_carro']!=0){ ?>                         <strong>Gruas - Grupo Carro: </strong><?php echo $rowData['Grupo_carro']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Grupo_voltaje'])&&$rowData['Grupo_voltaje']!=0){ ?>                     <strong>Gruas - Grupo Voltaje: </strong><?php echo $rowData['Grupo_voltaje']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Ubicacion'])&&$rowData['Ubicacion']!=0){ ?>                             <strong>Gruas - Ubicación: </strong><?php echo $rowData['Ubicacion']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Grupo_motor_subida'])&&$rowData['Grupo_motor_subida']!=0){ ?>           <strong>Ascensores - Grupo Amperaje Motor Subida: </strong><?php echo $rowData['Grupo_motor_subida']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Grupo_motor_bajada'])&&$rowData['Grupo_motor_bajada']!=0){ ?>           <strong>Ascensores - Grupo Amperaje Motor Bajada: </strong><?php echo $rowData['Grupo_motor_bajada']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Grupo_Despliegue'])&&$rowData['Grupo_Despliegue']!=0){ ?>               <strong>SimpliEnergy - Grupo Despliegue: </strong><?php echo $rowData['Grupo_Despliegue']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Grupo_Vmonofasico'])&&$rowData['Grupo_Vmonofasico']!=0){ ?>             <strong>SimpliEnergy - Grupo V monofasico: </strong><?php echo $rowData['Grupo_Vmonofasico']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Grupo_VTrifasico'])&&$rowData['Grupo_VTrifasico']!=0){ ?>               <strong>SimpliEnergy - Grupo V Trifasico: </strong><?php echo $rowData['Grupo_VTrifasico']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Grupo_Potencia'])&&$rowData['Grupo_Potencia']!=0){ ?>                   <strong>SimpliEnergy - Grupo Potencia: </strong><?php echo $rowData['Grupo_Potencia']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Grupo_ConsumoMesHabil'])&&$rowData['Grupo_ConsumoMesHabil']!=0){ ?>     <strong>SimpliEnergy - Grupo Consumo Mes Habil: </strong><?php echo $rowData['Grupo_ConsumoMesHabil']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Grupo_ConsumoMesCurso'])&&$rowData['Grupo_ConsumoMesCurso']!=0){ ?>     <strong>SimpliEnergy - Grupo Consumo Mes Curso: </strong><?php echo $rowData['Grupo_ConsumoMesCurso']; ?><br/><?php } ?>
+								<?php if(isset($rowData['Grupo_Estanque'])&&$rowData['Grupo_Estanque']!=0){ ?>                   <strong>SimpliEnergy - Grupo Estanque Combustible: </strong><?php echo $rowData['Grupo_Estanque']; ?><br/><?php } ?>
+								<?php if(isset($rowData['CrossCMinHorno'])&&$rowData['CrossCMinHorno']!=0){ ?>                   <strong>SimpliC - Temperatura Minima del Horno: </strong><?php echo $rowData['CrossCMinHorno']; ?><br/><?php } ?>
 
-								<?php if($rowdata['id_Geo']==2){ ?>
+								<?php if($rowData['id_Geo']==2){ ?>
 									<br/>
 									<strong class="color-red-dark">Ubicación</strong><br/>
-									<?php if(isset($rowdata['ZonaSinGPS'])&&$rowdata['ZonaSinGPS']!=''){ ?> <strong>Zona de Trabajo : </strong><?php echo $rowdata['ZonaSinGPS']; ?><br/><?php } ?>
-									<?php if(isset($rowdata['Direccion'])&&$rowdata['Direccion']!=''){ ?>   <strong>Dirección : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['Comuna'].', '.$rowdata['Ciudad']; ?><br/><?php } ?>
+									<?php if(isset($rowData['ZonaSinGPS'])&&$rowData['ZonaSinGPS']!=''){ ?> <strong>Zona de Trabajo : </strong><?php echo $rowData['ZonaSinGPS']; ?><br/><?php } ?>
+									<?php if(isset($rowData['Direccion'])&&$rowData['Direccion']!=''){ ?>   <strong>Dirección : </strong><?php echo $rowData['Direccion'].', '.$rowData['Comuna'].', '.$rowData['Ciudad']; ?><br/><?php } ?>
 								<?php } ?>
 
 							</p>
 
-							<?php if($rowdata['id_Geo']==1){ ?>
+							<?php if($rowData['id_Geo']==1){ ?>
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos GPS</h2>
 								<p class="text-muted">
 									<strong class="color-red-dark">Basicos</strong><br/>
-									<strong>Tipo de Vehiculo : </strong><?php echo $rowdata['TipoVehiculo']; ?><br/>
-									<strong>Marca : </strong><?php echo $rowdata['Marca']; ?><br/>
-									<strong>Modelo : </strong><?php echo $rowdata['Modelo']; ?><br/>
-									<strong>Patente : </strong><?php echo $rowdata['Patente']; ?><br/>
-									<strong>Numero de serie : </strong><?php echo $rowdata['Num_serie']; ?><br/>
-									<strong>Año de Fabricacion : </strong><?php echo $rowdata['AnoFab']; ?><br/>
+									<strong>Tipo de Vehiculo : </strong><?php echo $rowData['TipoVehiculo']; ?><br/>
+									<strong>Marca : </strong><?php echo $rowData['Marca']; ?><br/>
+									<strong>Modelo : </strong><?php echo $rowData['Modelo']; ?><br/>
+									<strong>Patente : </strong><?php echo $rowData['Patente']; ?><br/>
+									<strong>Numero de serie : </strong><?php echo $rowData['Num_serie']; ?><br/>
+									<strong>Año de Fabricacion : </strong><?php echo $rowData['AnoFab']; ?><br/>
 
 									<br/>
 									<strong class="color-red-dark">Caracteristicos</strong><br/>
-									<strong>Zona de Trabajo : </strong><?php echo $rowdata['ZonaConGPS']; ?><br/>
-									<strong>Capacidad Pasajeros : </strong><?php echo $rowdata['CapacidadPersonas']; ?><br/>
-									<strong>Capacidad (Kilos) : </strong><?php echo Cantidades_decimales_justos($rowdata['CapacidadKilos']); ?><br/>
-									<strong>Metros Cubicos (M3) : </strong><?php echo Cantidades_decimales_justos($rowdata['MCubicos']); ?><br/>
+									<strong>Zona de Trabajo : </strong><?php echo $rowData['ZonaConGPS']; ?><br/>
+									<strong>Capacidad Pasajeros : </strong><?php echo $rowData['CapacidadPersonas']; ?><br/>
+									<strong>Capacidad (Kilos) : </strong><?php echo Cantidades_decimales_justos($rowData['CapacidadKilos']); ?><br/>
+									<strong>Metros Cubicos (M3) : </strong><?php echo Cantidades_decimales_justos($rowData['MCubicos']); ?><br/>
 
 									<br/>
 									<strong class="color-red-dark">Datos Movilizacion</strong><br/>
-									<strong>Limite Velocidad : </strong><?php echo Cantidades_decimales_justos($rowdata['LimiteVelocidad']).' KM/h'; ?><br/>
-									<strong>Tiempo Maximo Detencion : </strong><?php echo $rowdata['TiempoDetencion']; ?> Horas<br/>
+									<strong>Limite Velocidad : </strong><?php echo Cantidades_decimales_justos($rowData['LimiteVelocidad']).' KM/h'; ?><br/>
+									<strong>Tiempo Maximo Detencion : </strong><?php echo $rowData['TiempoDetencion']; ?> Horas<br/>
 								</p>
 
 							<?php } ?>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Jornada Laboral</h2>
 							<p class="text-muted">
-								<strong>Jornada : </strong><?php echo 'De '.$rowdata['Jornada_inicio'].' a '.$rowdata['Jornada_termino']; ?><br/>
-								<strong>Colacion : </strong><?php echo 'De '.$rowdata['Colacion_inicio'].' a '.$rowdata['Colacion_termino']; ?><br/>
-								<strong>Tiempo Microparadas : </strong><?php echo $rowdata['Microparada'].' hrs'; ?><br/>
+								<strong>Jornada : </strong><?php echo 'De '.$rowData['Jornada_inicio'].' a '.$rowData['Jornada_termino']; ?><br/>
+								<strong>Colacion : </strong><?php echo 'De '.$rowData['Colacion_inicio'].' a '.$rowData['Colacion_termino']; ?><br/>
+								<strong>Tiempo Microparadas : </strong><?php echo $rowData['Microparada'].' hrs'; ?><br/>
 							</p>
 
 

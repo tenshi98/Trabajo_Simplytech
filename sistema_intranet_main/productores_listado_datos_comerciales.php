@@ -51,12 +51,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,Rut, RazonSocial, Giro, idRubro';
 $SIS_join  = '';
 $SIS_where = 'idProductor = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'productores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'productores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productor', $rowdata['Nombre'], 'Editar Datos Comerciales'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productor', $rowData['Nombre'], 'Editar Datos Comerciales'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -84,10 +84,10 @@ $rowdata = db_select_data (false, $SIS_query, 'productores_listado', $SIS_join, 
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Rut)){              $x1  = $Rut;               }else{$x1  = $rowdata['Rut'];}
-					if(isset($RazonSocial)){      $x2  = $RazonSocial;       }else{$x2  = $rowdata['RazonSocial'];}
-					if(isset($Giro)){             $x3  = $Giro;              }else{$x3  = $rowdata['Giro'];}
-					if(isset($idRubro)){          $x4  = $idRubro;           }else{$x4  = $rowdata['idRubro'];}
+					if(isset($Rut)){              $x1  = $Rut;               }else{$x1  = $rowData['Rut'];}
+					if(isset($RazonSocial)){      $x2  = $RazonSocial;       }else{$x2  = $rowData['RazonSocial'];}
+					if(isset($Giro)){             $x3  = $Giro;              }else{$x3  = $rowData['Giro'];}
+					if(isset($idRubro)){          $x4  = $idRubro;           }else{$x4  = $rowData['idRubro'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

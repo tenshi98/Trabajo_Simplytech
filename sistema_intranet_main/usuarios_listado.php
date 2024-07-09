@@ -161,7 +161,7 @@ LEFT JOIN `core_ubicacion_ciudad`    ON core_ubicacion_ciudad.idCiudad    = usua
 LEFT JOIN `core_ubicacion_comunas`   ON core_ubicacion_comunas.idComuna   = usuarios_listado.idComuna
 LEFT JOIN `usuarios_tipos`           ON usuarios_tipos.idTipoUsuario      = usuarios_listado.idTipoUsuario';
 $SIS_where = 'idUsuario ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /**********************************/
 //Permisos asignados
@@ -362,7 +362,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Resumen'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowData['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -409,31 +409,31 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 				<div class="wmd-panel">
 
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<?php if ($rowdata['Direccion_img']=='') { ?>
+						<?php if ($rowData['Direccion_img']=='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowData['Direccion_img']; ?>">
 						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Perfil</h2>
 						<p class="text-muted">
-							<strong>Usuario : </strong><?php echo $rowdata['usuario']; ?><br/>
-							<strong>Tipo de usuario : </strong><?php echo $rowdata['tipo']; ?><br/>
-							<strong>Estado : </strong><?php echo $rowdata['estado']; ?><br/>
-							<strong>Ultimo Acceso : </strong><?php echo $rowdata['Ultimo_acceso']; ?>
+							<strong>Usuario : </strong><?php echo $rowData['usuario']; ?><br/>
+							<strong>Tipo de usuario : </strong><?php echo $rowData['tipo']; ?><br/>
+							<strong>Estado : </strong><?php echo $rowData['estado']; ?><br/>
+							<strong>Ultimo Acceso : </strong><?php echo $rowData['Ultimo_acceso']; ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Personales</h2>
 						<p class="text-muted">
-							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
-							<strong>Fono : </strong><?php echo formatPhone($rowdata['Fono']); ?><br/>
-							<strong>Email : </strong><?php echo $rowdata['email']; ?><br/>
-							<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
-							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
-							<strong>Ciudad : </strong><?php echo $rowdata['Ciudad']; ?><br/>
-							<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-							<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?>
+							<strong>Nombre : </strong><?php echo $rowData['Nombre']; ?><br/>
+							<strong>Fono : </strong><?php echo formatPhone($rowData['Fono']); ?><br/>
+							<strong>Email : </strong><?php echo $rowData['email']; ?><br/>
+							<strong>Rut : </strong><?php echo $rowData['Rut']; ?><br/>
+							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_completa($rowData['fNacimiento']); ?><br/>
+							<strong>Ciudad : </strong><?php echo $rowData['Ciudad']; ?><br/>
+							<strong>Comuna : </strong><?php echo $rowData['Comuna']; ?><br/>
+							<strong>Dirección : </strong><?php echo $rowData['Direccion']; ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Sistemas Asignados</h2>

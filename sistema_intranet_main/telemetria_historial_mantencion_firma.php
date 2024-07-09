@@ -68,12 +68,12 @@ telemetria_historial_mantencion.Path_Firma,
 core_telemetria_servicio_tecnico.Nombre AS Servicio';
 $SIS_join  = 'LEFT JOIN `core_telemetria_servicio_tecnico` ON core_telemetria_servicio_tecnico.idServicio  = telemetria_historial_mantencion.idServicio';
 $SIS_where = 'telemetria_historial_mantencion.idMantencion = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_historial_mantencion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_historial_mantencion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Mantencion', $rowdata['Servicio'], 'Editar Firma'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Mantencion', $rowData['Servicio'], 'Editar Firma'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -96,12 +96,12 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_historial_mantencion',
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
 
-				<?php if(isset($rowdata['Path_Firma'])&&$rowdata['Path_Firma']!=''){ ?>
+				<?php if(isset($rowData['Path_Firma'])&&$rowData['Path_Firma']!=''){ ?>
 
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
-						<img src="upload/<?php echo $rowdata['Path_Firma'] ?>" width="100%" class="img-thumbnail" >
+						<img src="upload/<?php echo $rowData['Path_Firma'] ?>" width="100%" class="img-thumbnail" >
 						<br/>
-						<a href="<?php echo $new_location.'&del_firma='.$rowdata['idMantencion']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
+						<a href="<?php echo $new_location.'&del_firma='.$rowData['idMantencion']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
 					</div>
 					<div class="clearfix"></div>
 

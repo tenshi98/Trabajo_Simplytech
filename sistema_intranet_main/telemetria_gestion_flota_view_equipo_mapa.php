@@ -25,7 +25,7 @@ require_once 'core/Web.Header.Views.php';
 $SIS_query = 'Nombre,IdentificadorEmpresa, LimiteVelocidad, cantSensores, id_Geo, id_Sensores, Direccion_img, TiempoFueraLinea, TiempoDetencion, GeoLatitud, GeoLongitud';
 $SIS_join  = '';
 $SIS_where = 'idTelemetria ='.simpleDecode($_GET['view'], fecha_actual());
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /*****************************************************************/
 
@@ -49,7 +49,7 @@ $SIS_join  = 'LEFT JOIN `telemetria_listado_sensores_unimed` ON telemetria_lista
 $SIS_where = 'telemetria_listado_errores.idTelemetria = '.simpleDecode($_GET['view'], fecha_actual()).' AND telemetria_listado_errores.idTipo!=999 AND telemetria_listado_errores.Valor<99900';
 $SIS_order = 'telemetria_listado_errores.idErrores DESC LIMIT 20';
 $arrAlertas = array();
-$arrAlertas = db_select_array (false, $SIS_query, 'telemetria_listado_errores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrAlertas');
+$arrAlertas = db_select_array (false, $SIS_query, 'telemetria_listado_errores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrAlertas');
 
 //Se traen todas las unidades de medida
 $arrUnimed = array();
@@ -66,9 +66,9 @@ $SIS_join  = '';
 $SIS_where = 'idTelemetria ='.simpleDecode($_GET['view'], fecha_actual());
 $SIS_order = 'idFueraLinea DESC LIMIT 20';
 $arrFlinea = array();
-$arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera_linea', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrFlinea');
+$arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera_linea', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrFlinea');
 
-if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
+if(isset($rowData['id_Sensores'])&&$rowData['id_Sensores']==1){
 	//numero sensores equipo
 	$N_Maximo_Sensores = 72;
 	$subquery = '';
@@ -94,7 +94,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 	LEFT JOIN `telemetria_listado_sensores_activo`        ON telemetria_listado_sensores_activo.idTelemetria       = telemetria_listado.idTelemetria
 	LEFT JOIN `telemetria_listado_sensores_med_actual`    ON telemetria_listado_sensores_med_actual.idTelemetria   = telemetria_listado.idTelemetria';
 	$SIS_where = 'idTelemetria ='.simpleDecode($_GET['view'], fecha_actual());
-	$rowMed = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowMed');
+	$rowMed = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowMed');
 
 }
 
@@ -104,11 +104,11 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Equipo <?php echo $rowdata['Nombre']; ?></h5>
+			<h5>Equipo <?php echo $rowData['Nombre']; ?></h5>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
 
-				<?php if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){ ?>
+				<?php if(isset($rowData['id_Sensores'])&&$rowData['id_Sensores']==1){ ?>
 					<li class=""><a href="#mediciones" data-toggle="tab"><i class="fa fa-wifi" aria-hidden="true"></i> Ultimas Mediciones</a></li>
 				<?php } ?>
 				<?php if($arrAlertas!=false && !empty($arrAlertas) && $arrAlertas!=''){ ?>
@@ -124,24 +124,24 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 			<div class="tab-pane fade active in" id="basicos">
 
 				<?php
-				$explanation  = '<strong>Nombre : </strong>'.$rowdata['Nombre'].'<br/>';
-				if(isset($rowdata['IdentificadorEmpresa'])&&$rowdata['IdentificadorEmpresa']!=''){$explanation .= '<strong>Identificador Empresa : </strong>'.$rowdata['IdentificadorEmpresa'].'<br/>';}
+				$explanation  = '<strong>Nombre : </strong>'.$rowData['Nombre'].'<br/>';
+				if(isset($rowData['IdentificadorEmpresa'])&&$rowData['IdentificadorEmpresa']!=''){$explanation .= '<strong>Identificador Empresa : </strong>'.$rowData['IdentificadorEmpresa'].'<br/>';}
 				$explanation .= '<br/>Datos de Configuracion<br/>';
-				if($rowdata['id_Geo']==1){
-					$explanation .= '<strong>Limite Velocidad : </strong>'.Cantidades_decimales_justos($rowdata['LimiteVelocidad']).' KM/h<br/>';
+				if($rowData['id_Geo']==1){
+					$explanation .= '<strong>Limite Velocidad : </strong>'.Cantidades_decimales_justos($rowData['LimiteVelocidad']).' KM/h<br/>';
 				}
-				if($rowdata['id_Sensores']==1){
-					$explanation .= '<strong>Cantidad de Sensores : </strong>'.$rowdata['cantSensores'].'<br/>';
+				if($rowData['id_Sensores']==1){
+					$explanation .= '<strong>Cantidad de Sensores : </strong>'.$rowData['cantSensores'].'<br/>';
 				}
-				$explanation .= '<strong>Tiempo Fuera Linea Maximo : </strong>'.$rowdata['TiempoFueraLinea'].' Horas<br/>';
-				$explanation .= '<strong>Tiempo Maximo Detencion : </strong>'.$rowdata['TiempoDetencion'].' Horas<br/>';
+				$explanation .= '<strong>Tiempo Fuera Linea Maximo : </strong>'.$rowData['TiempoFueraLinea'].' Horas<br/>';
+				$explanation .= '<strong>Tiempo Maximo Detencion : </strong>'.$rowData['TiempoDetencion'].' Horas<br/>';
 
-				echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Ultima Ubicación', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1)
+				echo mapa_from_gps($rowData['GeoLatitud'], $rowData['GeoLongitud'], 'Ultima Ubicación', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1)
 				?>
 
 			</div>
 
-			<?php if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){ ?>
+			<?php if(isset($rowData['id_Sensores'])&&$rowData['id_Sensores']==1){ ?>
 				<div class="tab-pane fade" id="mediciones">
 					<div class="wmd-panel">
 						<div class="table-responsive">
@@ -158,7 +158,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
 
-							<?php if(isset($rowdata['LimiteVelocidad'])&&$rowdata['LimiteVelocidad']!=0){ ?>
+							<?php if(isset($rowData['LimiteVelocidad'])&&$rowData['LimiteVelocidad']!=0){ ?>
 								<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 									<thead>
 										<tr role="row">
@@ -169,11 +169,11 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 										</tr>
 									</thead>
 									<tbody role="alert" aria-live="polite" aria-relevant="all">
-										<tr class="odd <?php if($rowMed['GeoVelocidad'] > $rowdata['LimiteVelocidad']){echo 'danger';} ?>">		
+										<tr class="odd <?php if($rowMed['GeoVelocidad'] > $rowData['LimiteVelocidad']){echo 'danger';} ?>">		
 											<td>Velocidad</td>
 											<td><?php echo fecha_estandar($rowMed['LastUpdateFecha']).' - '.$rowMed['LastUpdateHora'].' hrs'; ?></td>
 											<td><?php echo Cantidades($rowMed['GeoVelocidad'], 0).' KM/h'; ?></td>
-											<td><?php echo Cantidades($rowdata['LimiteVelocidad'], 0).' KM/h'; ?></td>
+											<td><?php echo Cantidades($rowData['LimiteVelocidad'], 0).' KM/h'; ?></td>
 										</tr>
 
 									</tbody>
@@ -190,7 +190,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 										</tr>
 									</thead>
 									<tbody role="alert" aria-live="polite" aria-relevant="all">
-										<?php for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+										<?php for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 											//solo sensores activos
 											if(isset($rowMed['SensoresActivo_'.$i])&&$rowMed['SensoresActivo_'.$i]==1){
 												$unimed = ' '.$arrFinalUnimed[$rowMed['SensoresUniMed_'.$i]]; ?>
@@ -223,7 +223,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 						<div class="table-responsive">
 
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
-								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_errores_'.$rowdata['id_Geo'].'.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
+								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_errores_'.$rowData['id_Geo'].'.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
 
@@ -236,7 +236,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 										<th>Valor</th>
 										<th>Min</th>
 										<th>Max</th>
-										<?php if($rowdata['id_Geo']==1){ ?>
+										<?php if($rowData['id_Geo']==1){ ?>
 											<th>Ubicación</th>
 										<?php } ?>
 									</tr>
@@ -254,10 +254,10 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 											<td><?php echo Cantidades_decimales_justos($error['Valor']).$unimed; ?></td>
 											<td><?php echo Cantidades_decimales_justos($error['Valor_min']).$unimed; ?></td>
 											<td><?php echo Cantidades_decimales_justos($error['Valor_max']).$unimed; ?></td>
-											<?php if($rowdata['id_Geo']==1){ ?>
+											<?php if($rowData['id_Geo']==1){ ?>
 												<td>
 													<div class="btn-group" style="width: 35px;" >
-														<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_errores_'.$rowdata['id_Geo'].'_view.php?view='.$error['idErrores']; ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+														<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_errores_'.$rowData['id_Geo'].'_view.php?view='.$error['idErrores']; ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 													</div>
 												</td>
 											<?php } ?>
@@ -278,7 +278,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 						<div class="table-responsive">
 
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
-								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_'.$rowdata['id_Geo'].'.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
+								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_'.$rowData['id_Geo'].'.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
 
@@ -290,7 +290,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 										<th>Fecha Termino</th>
 										<th>Hora Termino</th>
 										<th>Tiempo</th>
-										<?php if($rowdata['id_Geo']==1){ ?>
+										<?php if($rowData['id_Geo']==1){ ?>
 											<th>Ubicación</th>
 										<?php } ?>
 									</tr>
@@ -304,10 +304,10 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 											<td><?php echo fecha_estandar($error['Fecha_termino']); ?></td>
 											<td><?php echo $error['Hora_termino'].' hrs'; ?></td>
 											<td><?php echo $error['Tiempo'].' hrs'; ?></td>
-											<?php if($rowdata['id_Geo']==1){ ?>
+											<?php if($rowData['id_Geo']==1){ ?>
 												<td>
 													<div class="btn-group" style="width: 35px;" >
-														<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_'.$rowdata['id_Geo'].'_view.php?view='.$error['idFueraLinea']; ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+														<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_'.$rowData['id_Geo'].'_view.php?view='.$error['idFueraLinea']; ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 													</div>
 												</td>
 											<?php } ?>

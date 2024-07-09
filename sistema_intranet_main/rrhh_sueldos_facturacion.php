@@ -110,7 +110,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 // Se trae un listado con todos los trabajadores
 $arrTrabajador = array();
 $query = "SELECT  idFactTrab, TrabajadorNombre,TrabajadorRut, TotalHaberes,
@@ -172,11 +172,11 @@ array_push( $arrArchivos,$row );
 					</tr>
 					<tr>
 						<td class="meta-head">Periodo Desde</td>
-						<td><?php echo Fecha_estandar($rowdata['Fecha_desde']); ?></td>
+						<td><?php echo Fecha_estandar($rowData['Fecha_desde']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Periodo Hasta</td>
-						<td><?php echo Fecha_estandar($rowdata['Fecha_hasta']); ?></td>
+						<td><?php echo Fecha_estandar($rowData['Fecha_hasta']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head"><strong>INDICES</strong></td>
@@ -184,33 +184,33 @@ array_push( $arrArchivos,$row );
 					</tr>
 					<tr>
 						<td class="meta-head">UF</td>
-						<td align="right"><?php echo Valores($rowdata['UF'], 2) ?></td>
+						<td align="right"><?php echo Valores($rowData['UF'], 2) ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">UTM</td>
-						<td align="right"><?php echo Valores($rowdata['UTM'], 2) ?></td>
+						<td align="right"><?php echo Valores($rowData['UTM'], 2) ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Renta Minima</td>
-						<td align="right"><?php echo Valores($rowdata['IMM'], 2) ?></td>
+						<td align="right"><?php echo Valores($rowData['IMM'], 2) ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Tope Imponible AFP</td>
-						<td align="right"><?php echo Valores($rowdata['TopeImpAFP'], 2) ?></td>
+						<td align="right"><?php echo Valores($rowData['TopeImpAFP'], 2) ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Tope Imponible IPS</td>
-						<td align="right"><?php echo Valores($rowdata['TopeImpIPS'], 2) ?></td>
+						<td align="right"><?php echo Valores($rowData['TopeImpIPS'], 2) ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Tope Seguro Cesantia</td>
-						<td align="right"><?php echo Valores($rowdata['TopeSegCesantia'], 2) ?></td>
+						<td align="right"><?php echo Valores($rowData['TopeSegCesantia'], 2) ?></td>
 					</tr>
 						<td class="meta-head">Tope APV Mensual</td>
-						<td align="right"><?php echo Valores($rowdata['TopeAPVMensual'], 2) ?></td>
+						<td align="right"><?php echo Valores($rowData['TopeAPVMensual'], 2) ?></td>
 					</tr>
 						<td class="meta-head">Tope Deposito Convenido</td>
-						<td align="right"><?php echo Valores($rowdata['TopeDepConv'], 2) ?></td>
+						<td align="right"><?php echo Valores($rowData['TopeDepConv'], 2) ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -218,11 +218,11 @@ array_push( $arrArchivos,$row );
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td colspan="2"><?php echo Fecha_estandar($rowdata['fecha_auto']); ?></td>
+						<td colspan="2"><?php echo Fecha_estandar($rowData['fecha_auto']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Fecha Facturacion</td>
-						<td colspan="2"><?php echo Fecha_estandar($rowdata['Creacion_fecha']); ?></td>
+						<td colspan="2"><?php echo Fecha_estandar($rowData['Creacion_fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -278,7 +278,7 @@ array_push( $arrArchivos,$row );
     <div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $rowdata['Observaciones']; ?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $rowData['Observaciones']; ?></p>
 		</div>
 	</div>
 	

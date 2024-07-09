@@ -73,7 +73,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 $SIS_query = 'Fecha, Titulo, Cuerpo, idSistema,idOpciones';
 $SIS_join  = '';
 $SIS_where = 'idCalendario = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'principal_calendario_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'principal_calendario_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -88,10 +88,10 @@ $rowdata = db_select_data (false, $SIS_query, 'principal_calendario_listado', $S
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Fecha)){      $x1 = $Fecha;       }else{$x1 = $rowdata['Fecha'];}
-				if(isset($Titulo)){     $x2 = $Titulo;      }else{$x2 = $rowdata['Titulo'];}
-				if(isset($Cuerpo)){     $x3 = $Cuerpo;      }else{$x3 = $rowdata['Cuerpo'];}
-				if(isset($idOpciones)){ $x4 = $idOpciones;  }else{$x4 = $rowdata['idOpciones'];}
+				if(isset($Fecha)){      $x1 = $Fecha;       }else{$x1 = $rowData['Fecha'];}
+				if(isset($Titulo)){     $x2 = $Titulo;      }else{$x2 = $rowData['Titulo'];}
+				if(isset($Cuerpo)){     $x3 = $Cuerpo;      }else{$x3 = $rowData['Cuerpo'];}
+				if(isset($idOpciones)){ $x4 = $idOpciones;  }else{$x4 = $rowData['idOpciones'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -129,7 +129,7 @@ usuarios_listado.Nombre AS Autor,
 principal_calendario_listado.idUsuario';
 $SIS_join  = 'LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = principal_calendario_listado.idUsuario';
 $SIS_where = 'principal_calendario_listado.idCalendario = '.$_GET['view'];
-$row_data = db_select_data (false, $SIS_query, 'principal_calendario_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'principal_calendario_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -150,13 +150,13 @@ $row_data = db_select_data (false, $SIS_query, 'principal_calendario_listado', $
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary">Datos del Evento</h2>
 						<p class="text-muted">
-							<strong>Autor: </strong><?php if($row_data['idUsuario']!=9999){echo $row_data['Autor'];}else{echo 'Sistema';} ?><br/>
-							<strong>Titulo: </strong><?php echo $row_data['Titulo']; ?><br/>
-							<strong>Fecha: </strong><?php echo fecha_estandar($row_data['Fecha']); ?>
+							<strong>Autor: </strong><?php if($rowData['idUsuario']!=9999){echo $rowData['Autor'];}else{echo 'Sistema';} ?><br/>
+							<strong>Titulo: </strong><?php echo $rowData['Titulo']; ?><br/>
+							<strong>Fecha: </strong><?php echo fecha_estandar($rowData['Fecha']); ?>
 						</p>
 
 						<h2 class="text-primary">Mensaje</h2>
-						<p class="text-muted" style="white-space: normal;"><?php echo $row_data['Cuerpo']; ?></p>
+						<p class="text-muted" style="white-space: normal;"><?php echo $rowData['Cuerpo']; ?></p>
 
 						<div class="form-group" >
 							<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$_GET["view"]; ?>" class="btn btn-default pull-right margin_width" >Editar Evento</a><?php } ?>
@@ -280,7 +280,7 @@ $arrEventos = db_select_array (false, $SIS_query, 'principal_calendario_listado'
 								$Ano_a  = date("Y");
 								$Ano_b  = date("Y");
 							}
-							if (($Mes-1)==0)  {$mes_atras=12;   $Ano_a=$Ano_a-1;}else{$mes_atras=$Mes-1; }
+							if (($Mes-1)==0){$mes_atras=12;   $Ano_a=$Ano_a-1;}else{$mes_atras=$Mes-1; }
 							if (($Mes+1)==13) {$mes_adelante=1; $Ano_b=$Ano_b+1;}else{$mes_adelante=$Mes+1; }
 							?>
 							<td class="fc-header-left"><a href="<?php echo $original.'?Mes='.$mes_atras.'&Ano='.$Ano_a ?>" class="btn btn-default"><i class="fa fa-angle-left faa-horizontal animated" aria-hidden="true"></i></a></td>

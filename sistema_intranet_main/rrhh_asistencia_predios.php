@@ -82,7 +82,7 @@ trabajadores_asistencias_predios.idZona,
 trabajadores_asistencias_predios.idEstado';
 $SIS_join  = 'LEFT JOIN cross_predios_listado_zonas ON cross_predios_listado_zonas.idZona = trabajadores_asistencias_predios.idZona';
 $SIS_where = 'idAsistencia='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'trabajadores_asistencias_predios', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'trabajadores_asistencias_predios', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //Verifico el tipo de usuario que esta ingresando
 $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
@@ -100,12 +100,12 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idTrabajador)){  $x1 = $idTrabajador;  }else{$x1 = $rowdata['idTrabajador'];}
-				if(isset($Fecha)){         $x2 = $Fecha;         }else{$x2 = $rowdata['Fecha'];}
-				if(isset($Hora)){          $x3 = $Hora;          }else{$x3 = $rowdata['Hora'];}
-				if(isset($idPredio)){      $x4 = $idPredio;      }else{$x4 = $rowdata['idPredio'];}
-				if(isset($idZona)){        $x5 = $idZona;        }else{$x5 = $rowdata['idZona'];}
-				if(isset($idEstado)){      $x6 = $idEstado;      }else{$x6 = $rowdata['idEstado'];}
+				if(isset($idTrabajador)){  $x1 = $idTrabajador;  }else{$x1 = $rowData['idTrabajador'];}
+				if(isset($Fecha)){         $x2 = $Fecha;         }else{$x2 = $rowData['Fecha'];}
+				if(isset($Hora)){          $x3 = $Hora;          }else{$x3 = $rowData['Hora'];}
+				if(isset($idPredio)){      $x4 = $idPredio;      }else{$x4 = $rowData['idPredio'];}
+				if(isset($idZona)){        $x5 = $idZona;        }else{$x5 = $rowData['idZona'];}
+				if(isset($idEstado)){      $x6 = $idEstado;      }else{$x6 = $rowData['idEstado'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

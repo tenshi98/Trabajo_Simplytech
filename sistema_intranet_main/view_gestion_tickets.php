@@ -68,7 +68,7 @@ LEFT JOIN `core_ot_prioridad`                     ON core_ot_prioridad.idPriorid
 LEFT JOIN `usuarios_listado`  usuario_asignado    ON usuario_asignado.idUsuario            = gestion_tickets.idUsuarioAsignado
 LEFT JOIN `gestion_tickets_area`                  ON gestion_tickets_area.idArea           = gestion_tickets.idArea';
 $SIS_where = 'gestion_tickets.idTicket ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'gestion_tickets', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'gestion_tickets', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 ?>
 
@@ -77,8 +77,8 @@ $rowdata = db_select_data (false, $SIS_query, 'gestion_tickets', $SIS_join, $SIS
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
-				<i class="fa fa-globe" aria-hidden="true"> <?php echo $rowdata['Titulo']; ?></i>.
-				<small class="pull-right">Ticket N°<?php echo n_doc($rowdata['idTicket'], 8); ?></small>
+				<i class="fa fa-globe" aria-hidden="true"> <?php echo $rowData['Titulo']; ?></i>.
+				<small class="pull-right">Ticket N°<?php echo n_doc($rowData['idTicket'], 8); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -88,17 +88,17 @@ $rowdata = db_select_data (false, $SIS_query, 'gestion_tickets', $SIS_join, $SIS
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Datos del Ticket
 			<address>
-				<strong>Estado Ticket: </strong><?php echo $rowdata['EstadoTicket']; ?><br/>
-				<strong>Area Ticket: </strong><?php echo $rowdata['AreaTicket']; ?><br/>
-				<strong>Tipo Ticket: </strong><?php echo $rowdata['TipoTicket']; ?><br/>
-				<strong>Prioridad Ticket: </strong><?php echo $rowdata['PrioridadTicket']; ?><br/>
+				<strong>Estado Ticket: </strong><?php echo $rowData['EstadoTicket']; ?><br/>
+				<strong>Area Ticket: </strong><?php echo $rowData['AreaTicket']; ?><br/>
+				<strong>Tipo Ticket: </strong><?php echo $rowData['TipoTicket']; ?><br/>
+				<strong>Prioridad Ticket: </strong><?php echo $rowData['PrioridadTicket']; ?><br/>
 			</address>
 		</div>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Usuarios
 			<address>
-				<strong>Usuario Creacion: </strong><?php echo $rowdata['Usuario']; ?><br/>
-				<strong>Usuario Asignado: </strong><?php echo $rowdata['UsuarioAsignado']; ?><br/>
+				<strong>Usuario Creacion: </strong><?php echo $rowData['Usuario']; ?><br/>
+				<strong>Usuario Asignado: </strong><?php echo $rowData['UsuarioAsignado']; ?><br/>
 			</address>
 		</div>
 
@@ -107,25 +107,25 @@ $rowdata = db_select_data (false, $SIS_query, 'gestion_tickets', $SIS_join, $SIS
 
 	<div class="col-xs-12">
 		<div class="row">
-			<p class="lead"><a name="Ancla_obs"></a>Problema (<?php echo fecha_estandar($rowdata['FechaCreacion']); ?>)</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $rowdata['Descripcion']; ?></p>
+			<p class="lead"><a name="Ancla_obs"></a>Problema (<?php echo fecha_estandar($rowData['FechaCreacion']); ?>)</p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $rowData['Descripcion']; ?></p>
 		</div>
 	</div>
 
-	<?php if(isset($rowdata['FechaCierre'])&&$rowdata['FechaCierre']!='0000-00-00'){ ?>
+	<?php if(isset($rowData['FechaCierre'])&&$rowData['FechaCierre']!='0000-00-00'){ ?>
 		<div class="col-xs-12">
 			<div class="row">
-				<p class="lead"><a name="Ancla_obs"></a>Solucion (<?php echo fecha_estandar($rowdata['FechaCierre']); ?>)</p>
-				<p class="text-muted well well-sm no-shadow" ><?php echo $rowdata['DescripcionCierre']; ?></p>
+				<p class="lead"><a name="Ancla_obs"></a>Solucion (<?php echo fecha_estandar($rowData['FechaCierre']); ?>)</p>
+				<p class="text-muted well well-sm no-shadow" ><?php echo $rowData['DescripcionCierre']; ?></p>
 			</div>
 		</div>
 	<?php } ?>
 
-	<?php if(isset($rowdata['FechaCancelacion'])&&$rowdata['FechaCancelacion']!='0000-00-00'){ ?>
+	<?php if(isset($rowData['FechaCancelacion'])&&$rowData['FechaCancelacion']!='0000-00-00'){ ?>
 		<div class="col-xs-12">
 			<div class="row">
-				<p class="lead"><a name="Ancla_obs"></a>Solucion (<?php echo fecha_estandar($rowdata['FechaCancelacion']); ?>)</p>
-				<p class="text-muted well well-sm no-shadow" ><?php echo $rowdata['DescripcionCancelacion']; ?></p>
+				<p class="lead"><a name="Ancla_obs"></a>Solucion (<?php echo fecha_estandar($rowData['FechaCancelacion']); ?>)</p>
+				<p class="text-muted well well-sm no-shadow" ><?php echo $rowData['DescripcionCancelacion']; ?></p>
 			</div>
 		</div>
 	<?php } ?>

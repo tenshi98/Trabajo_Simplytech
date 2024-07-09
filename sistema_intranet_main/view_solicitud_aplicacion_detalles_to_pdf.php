@@ -80,7 +80,7 @@ LEFT JOIN `telemetria_listado`                             ON telemetria_listado
 LEFT JOIN `vehiculos_listado`                              ON vehiculos_listado.idVehiculo                               = cross_solicitud_aplicacion_listado_tractores.idVehiculo
 LEFT JOIN `telemetria_listado_sensores_nombre`             ON telemetria_listado_sensores_nombre.idTelemetria            = cross_solicitud_aplicacion_listado_tractores.idTelemetria';
 $SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idTractores ='.$view;
-$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /********************************************************************/
 //Se define el contenido del PDF
@@ -101,31 +101,31 @@ $html .= '
 				<table style="text-align: left; width: 100%;"  cellpadding="0" cellspacing="0">
 					<tbody>
 						<tr class="oddrow">
-							<td colspan="2" rowspan="1" style="vertical-align: top;">Detalles Solicitud de Aplicacion N°'.n_doc($row_data['NSolicitud'], 7).'</td>
-							<td style="vertical-align: top;">Fecha Termino: '.Fecha_estandar($row_data['f_termino']).'</td>
+							<td colspan="2" rowspan="1" style="vertical-align: top;">Detalles Solicitud de Aplicacion N°'.n_doc($rowData['NSolicitud'], 7).'</td>
+							<td style="vertical-align: top;">Fecha Termino: '.Fecha_estandar($rowData['f_termino']).'</td>
 						</tr>
 						<tr>
 							<td style="vertical-align: top; width:33%;">
 								Identificacion<br/>
-								<strong>Predio:</strong> '.$row_data['PredioNombre'].'<br/>
-								<strong>Especie:</strong> '.$row_data['VariedadCat'].'<br/>
-								<strong>Variedad:</strong> '.$row_data['VariedadNombre'].'<br/>
-								<strong>Cuartel:</strong> '.$row_data['CuartelNombre'].'<br/>
-								<strong>Tractor:</strong> '.$row_data['TractorNombre'].'<br/>
-								<strong>Nebulizador:</strong> '.$row_data['NebNombre'].'<br/>
+								<strong>Predio:</strong> '.$rowData['PredioNombre'].'<br/>
+								<strong>Especie:</strong> '.$rowData['VariedadCat'].'<br/>
+								<strong>Variedad:</strong> '.$rowData['VariedadNombre'].'<br/>
+								<strong>Cuartel:</strong> '.$rowData['CuartelNombre'].'<br/>
+								<strong>Tractor:</strong> '.$rowData['TractorNombre'].'<br/>
+								<strong>Nebulizador:</strong> '.$rowData['NebNombre'].'<br/>
 							</td>
 							<td style="vertical-align: top; width:33%;">
 								Velocidad Tractores (Km/hr)<br/>
-								<strong>Minima:</strong> '.Cantidades($row_data['GeoVelocidadMin'], 2).'<br/>
-								<strong>Maxima:</strong> '.Cantidades($row_data['GeoVelocidadMax'], 2).'<br/>
-								<strong>Promedio:</strong> '.Cantidades($row_data['GeoVelocidadProm'], 2).'<br/>
-								<strong>Programada:</strong> '.Cantidades($row_data['VelTractor'], 2).'<br/>
+								<strong>Minima:</strong> '.Cantidades($rowData['GeoVelocidadMin'], 2).'<br/>
+								<strong>Maxima:</strong> '.Cantidades($rowData['GeoVelocidadMax'], 2).'<br/>
+								<strong>Promedio:</strong> '.Cantidades($rowData['GeoVelocidadProm'], 2).'<br/>
+								<strong>Programada:</strong> '.Cantidades($rowData['VelTractor'], 2).'<br/>
 							</td>
 							<td style="vertical-align: top; width:33%;">
 								Distancia Recorrida(KM)<br/>
-								<strong>Recorrida:</strong> '.Cantidades($row_data['GeoDistance'], 2).'<br/>
-								<strong>Estimada:</strong> '.Cantidades(($row_data['CuartelDistanciaPlant']*$row_data['CuartelCantPlantas'])/1000, 2).'<br/>
-								<strong>Faltante:</strong> '.Cantidades((($row_data['CuartelDistanciaPlant']*$row_data['CuartelCantPlantas'])/1000) - $row_data['GeoDistance'], 2).'<br/>
+								<strong>Recorrida:</strong> '.Cantidades($rowData['GeoDistance'], 2).'<br/>
+								<strong>Estimada:</strong> '.Cantidades(($rowData['CuartelDistanciaPlant']*$rowData['CuartelCantPlantas'])/1000, 2).'<br/>
+								<strong>Faltante:</strong> '.Cantidades((($rowData['CuartelDistanciaPlant']*$rowData['CuartelCantPlantas'])/1000) - $rowData['GeoDistance'], 2).'<br/>
 							</td>
 						</tr>
 					</tbody>
@@ -145,13 +145,13 @@ $html .= '
 					</thead>
 					<tbody>';
 						//si existen productos
-						for ($i = 1; $i <= $row_data['cantSensores']; $i++) {
+						for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 							$html .= '
 							<tr>
-								<td style="vertical-align: top;">'.$row_data['Sensor_'.$i.'_Nombre'].'</td>
-								<td align="right">'.Cantidades($row_data['Sensor_'.$i.'_Min'], 1).'</td>
-								<td align="right">'.Cantidades($row_data['Sensor_'.$i.'_Max'], 1).'</td>
-								<td align="right">'.Cantidades($row_data['Sensor_'.$i.'_Prom'], 1).'</td>
+								<td style="vertical-align: top;">'.$rowData['Sensor_'.$i.'_Nombre'].'</td>
+								<td align="right">'.Cantidades($rowData['Sensor_'.$i.'_Min'], 1).'</td>
+								<td align="right">'.Cantidades($rowData['Sensor_'.$i.'_Max'], 1).'</td>
+								<td align="right">'.Cantidades($rowData['Sensor_'.$i.'_Prom'], 1).'</td>
 							</tr>';
 						}
 
@@ -169,9 +169,9 @@ $html .= '
 /*                                                          Impresion PDF                                                         */
 /**********************************************************************************************************************************/
 //Config
-$pdf_titulo     = 'Detalles Solicitud de Aplicacion N°'.n_doc($row_data['NSolicitud'], 7);
-$pdf_subtitulo  = 'Fecha Termino: '.Fecha_estandar($row_data['f_termino']);
-$pdf_file       = 'Detalles Solicitud '.n_doc($row_data['NSolicitud'], 7).'.pdf';
+$pdf_titulo     = 'Detalles Solicitud de Aplicacion N°'.n_doc($rowData['NSolicitud'], 7);
+$pdf_subtitulo  = 'Fecha Termino: '.Fecha_estandar($rowData['f_termino']);
+$pdf_file       = 'Detalles Solicitud '.n_doc($rowData['NSolicitud'], 7).'.pdf';
 $OpcDom         = "'A4', 'landscape'";
 $OpcTcpOrt      = "P";  //P->PORTRAIT - L->LANDSCAPE
 $OpcTcpPg       = "A4"; //Tipo de Hoja

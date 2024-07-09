@@ -68,7 +68,7 @@ if(!empty($_GET['id'])){
 	IMPRENT_idCentroCosto,IMPRENT_idLevel_1,IMPRENT_idLevel_2,IMPRENT_idLevel_3,IMPRENT_idLevel_4,IMPRENT_idLevel_5,Porcentaje_Ret_Boletas';
 	$SIS_join  = '';
 	$SIS_where = 'idMantenedor ='.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'sistema_leyes_fiscales', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'sistema_leyes_fiscales', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	//sistema
 	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
@@ -86,32 +86,32 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Porcentaje_PPM)){           $x0  = $Porcentaje_PPM;           }else{$x0  = $rowdata['Porcentaje_PPM'];}
-					if(isset($Porcentaje_Ret_Boletas)){   $x1  = $Porcentaje_Ret_Boletas;   }else{$x1  = $rowdata['Porcentaje_Ret_Boletas'];}
-					if(isset($IVA_idCentroCosto)){        $x2  = $IVA_idCentroCosto;        }else{$x2  = $rowdata['IVA_idCentroCosto'];}
-					if(isset($IVA_idLevel_1)){            $x3  = $IVA_idLevel_1;            }else{$x3  = $rowdata['IVA_idLevel_1'];}
-					if(isset($IVA_idLevel_2)){            $x4  = $IVA_idLevel_2;            }else{$x4  = $rowdata['IVA_idLevel_2'];}
-					if(isset($IVA_idLevel_3)){            $x5  = $IVA_idLevel_3;            }else{$x5  = $rowdata['IVA_idLevel_3'];}
-					if(isset($IVA_idLevel_4)){            $x6  = $IVA_idLevel_4;            }else{$x6  = $rowdata['IVA_idLevel_4'];}
-					if(isset($IVA_idLevel_5)){            $x7  = $IVA_idLevel_5;            }else{$x7  = $rowdata['IVA_idLevel_5'];}
-					if(isset($PPM_idCentroCosto)){        $x8  = $PPM_idCentroCosto;        }else{$x8  = $rowdata['PPM_idCentroCosto'];}
-					if(isset($PPM_idLevel_1)){            $x9  = $PPM_idLevel_1;            }else{$x9  = $rowdata['PPM_idLevel_1'];}
-					if(isset($PPM_idLevel_2)){            $x10 = $PPM_idLevel_2;            }else{$x10 = $rowdata['PPM_idLevel_2'];}
-					if(isset($PPM_idLevel_3)){            $x11 = $PPM_idLevel_3;            }else{$x11 = $rowdata['PPM_idLevel_3'];}
-					if(isset($PPM_idLevel_4)){            $x12 = $PPM_idLevel_4;            }else{$x12 = $rowdata['PPM_idLevel_4'];}
-					if(isset($PPM_idLevel_5)){            $x13 = $PPM_idLevel_5;            }else{$x13 = $rowdata['PPM_idLevel_5'];}
-					if(isset($RET_idCentroCosto)){        $x14 = $RET_idCentroCosto;        }else{$x14 = $rowdata['RET_idCentroCosto'];}
-					if(isset($RET_idLevel_1)){            $x15 = $RET_idLevel_1;            }else{$x15 = $rowdata['RET_idLevel_1'];}
-					if(isset($RET_idLevel_2)){            $x16 = $RET_idLevel_2;            }else{$x16 = $rowdata['RET_idLevel_2'];}
-					if(isset($RET_idLevel_3)){            $x17 = $RET_idLevel_3;            }else{$x17 = $rowdata['RET_idLevel_3'];}
-					if(isset($RET_idLevel_4)){            $x18 = $RET_idLevel_4;            }else{$x18 = $rowdata['RET_idLevel_4'];}
-					if(isset($RET_idLevel_5)){            $x19 = $RET_idLevel_5;            }else{$x19 = $rowdata['RET_idLevel_5'];}
-					if(isset($IMPRENT_idCentroCosto)){    $x20 = $IMPRENT_idCentroCosto;    }else{$x20 = $rowdata['IMPRENT_idCentroCosto'];}
-					if(isset($IMPRENT_idLevel_1)){        $x21 = $IMPRENT_idLevel_1;        }else{$x21 = $rowdata['IMPRENT_idLevel_1'];}
-					if(isset($IMPRENT_idLevel_2)){        $x22 = $IMPRENT_idLevel_2;        }else{$x22 = $rowdata['IMPRENT_idLevel_2'];}
-					if(isset($IMPRENT_idLevel_3)){        $x23 = $IMPRENT_idLevel_3;        }else{$x23 = $rowdata['IMPRENT_idLevel_3'];}
-					if(isset($IMPRENT_idLevel_4)){        $x24 = $IMPRENT_idLevel_4;        }else{$x24 = $rowdata['IMPRENT_idLevel_4'];}
-					if(isset($IMPRENT_idLevel_5)){        $x25 = $IMPRENT_idLevel_5;        }else{$x25 = $rowdata['IMPRENT_idLevel_5'];}
+					if(isset($Porcentaje_PPM)){           $x0  = $Porcentaje_PPM;           }else{$x0  = $rowData['Porcentaje_PPM'];}
+					if(isset($Porcentaje_Ret_Boletas)){   $x1  = $Porcentaje_Ret_Boletas;   }else{$x1  = $rowData['Porcentaje_Ret_Boletas'];}
+					if(isset($IVA_idCentroCosto)){        $x2  = $IVA_idCentroCosto;        }else{$x2  = $rowData['IVA_idCentroCosto'];}
+					if(isset($IVA_idLevel_1)){            $x3  = $IVA_idLevel_1;            }else{$x3  = $rowData['IVA_idLevel_1'];}
+					if(isset($IVA_idLevel_2)){            $x4  = $IVA_idLevel_2;            }else{$x4  = $rowData['IVA_idLevel_2'];}
+					if(isset($IVA_idLevel_3)){            $x5  = $IVA_idLevel_3;            }else{$x5  = $rowData['IVA_idLevel_3'];}
+					if(isset($IVA_idLevel_4)){            $x6  = $IVA_idLevel_4;            }else{$x6  = $rowData['IVA_idLevel_4'];}
+					if(isset($IVA_idLevel_5)){            $x7  = $IVA_idLevel_5;            }else{$x7  = $rowData['IVA_idLevel_5'];}
+					if(isset($PPM_idCentroCosto)){        $x8  = $PPM_idCentroCosto;        }else{$x8  = $rowData['PPM_idCentroCosto'];}
+					if(isset($PPM_idLevel_1)){            $x9  = $PPM_idLevel_1;            }else{$x9  = $rowData['PPM_idLevel_1'];}
+					if(isset($PPM_idLevel_2)){            $x10 = $PPM_idLevel_2;            }else{$x10 = $rowData['PPM_idLevel_2'];}
+					if(isset($PPM_idLevel_3)){            $x11 = $PPM_idLevel_3;            }else{$x11 = $rowData['PPM_idLevel_3'];}
+					if(isset($PPM_idLevel_4)){            $x12 = $PPM_idLevel_4;            }else{$x12 = $rowData['PPM_idLevel_4'];}
+					if(isset($PPM_idLevel_5)){            $x13 = $PPM_idLevel_5;            }else{$x13 = $rowData['PPM_idLevel_5'];}
+					if(isset($RET_idCentroCosto)){        $x14 = $RET_idCentroCosto;        }else{$x14 = $rowData['RET_idCentroCosto'];}
+					if(isset($RET_idLevel_1)){            $x15 = $RET_idLevel_1;            }else{$x15 = $rowData['RET_idLevel_1'];}
+					if(isset($RET_idLevel_2)){            $x16 = $RET_idLevel_2;            }else{$x16 = $rowData['RET_idLevel_2'];}
+					if(isset($RET_idLevel_3)){            $x17 = $RET_idLevel_3;            }else{$x17 = $rowData['RET_idLevel_3'];}
+					if(isset($RET_idLevel_4)){            $x18 = $RET_idLevel_4;            }else{$x18 = $rowData['RET_idLevel_4'];}
+					if(isset($RET_idLevel_5)){            $x19 = $RET_idLevel_5;            }else{$x19 = $rowData['RET_idLevel_5'];}
+					if(isset($IMPRENT_idCentroCosto)){    $x20 = $IMPRENT_idCentroCosto;    }else{$x20 = $rowData['IMPRENT_idCentroCosto'];}
+					if(isset($IMPRENT_idLevel_1)){        $x21 = $IMPRENT_idLevel_1;        }else{$x21 = $rowData['IMPRENT_idLevel_1'];}
+					if(isset($IMPRENT_idLevel_2)){        $x22 = $IMPRENT_idLevel_2;        }else{$x22 = $rowData['IMPRENT_idLevel_2'];}
+					if(isset($IMPRENT_idLevel_3)){        $x23 = $IMPRENT_idLevel_3;        }else{$x23 = $rowData['IMPRENT_idLevel_3'];}
+					if(isset($IMPRENT_idLevel_4)){        $x24 = $IMPRENT_idLevel_4;        }else{$x24 = $rowData['IMPRENT_idLevel_4'];}
+					if(isset($IMPRENT_idLevel_5)){        $x25 = $IMPRENT_idLevel_5;        }else{$x25 = $rowData['IMPRENT_idLevel_5'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

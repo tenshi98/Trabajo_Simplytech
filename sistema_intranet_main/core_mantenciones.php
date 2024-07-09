@@ -65,7 +65,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'Fecha, Descripcion, Hora_ini, Hora_fin';
 	$SIS_join  = '';
 	$SIS_where = 'idMantencion = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'core_mantenciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'core_mantenciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -80,10 +80,10 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Fecha)){       $x1  = $Fecha;       }else{$x1  = $rowdata['Fecha'];}
-					if(isset($Hora_ini)){    $x2  = $Hora_ini;    }else{$x2  = $rowdata['Hora_ini'];}
-					if(isset($Hora_fin)){    $x3  = $Hora_fin;    }else{$x3  = $rowdata['Hora_fin'];}
-					if(isset($Descripcion)){ $x4  = $Descripcion; }else{$x4  = $rowdata['Descripcion'];}
+					if(isset($Fecha)){       $x1  = $Fecha;       }else{$x1  = $rowData['Fecha'];}
+					if(isset($Hora_ini)){    $x2  = $Hora_ini;    }else{$x2  = $rowData['Hora_ini'];}
+					if(isset($Hora_fin)){    $x3  = $Hora_fin;    }else{$x3  = $rowData['Hora_fin'];}
+					if(isset($Descripcion)){ $x4  = $Descripcion; }else{$x4  = $rowData['Descripcion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

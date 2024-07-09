@@ -51,12 +51,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'idTipo, Nombre , Rut, fNacimiento, idPais, idCiudad, idComuna, Direccion, idSistema, Giro';
 $SIS_join  = '';
 $SIS_where = 'idProveedor = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'proveedor_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'proveedor_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Proveedor', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Proveedor', $rowData['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -71,7 +71,7 @@ $rowdata = db_select_data (false, $SIS_query, 'proveedor_listado', $SIS_join, $S
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'proveedor_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-volume-control-phone" aria-hidden="true"></i> Persona Contacto</a></li>
-						<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
+						<?php if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){ ?>
 							<li class=""><a href="<?php echo 'proveedor_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'proveedor_listado_datos_facturacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Facturacion</a></li>
@@ -87,20 +87,20 @@ $rowdata = db_select_data (false, $SIS_query, 'proveedor_listado', $SIS_join, $S
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idTipo)){           $x1  = $idTipo;            }else{$x1  = $rowdata['idTipo'];}
-					if(isset($Nombre)){           $x2  = $Nombre;            }else{$x2  = $rowdata['Nombre'];}
-					if(isset($Rut)){              $x3  = $Rut;               }else{$x3  = $rowdata['Rut'];}
-					if(isset($fNacimiento)){      $x4  = $fNacimiento;       }else{$x4  = $rowdata['fNacimiento'];}
-					if(isset($idPais)){           $x5  = $idPais;            }else{$x5  = $rowdata['idPais'];}
-					if(isset($idCiudad)){         $x6  = $idCiudad;          }else{$x6  = $rowdata['idCiudad'];}
-					if(isset($idComuna)){         $x7  = $idComuna;          }else{$x7  = $rowdata['idComuna'];}
-					if(isset($Direccion)){        $x8  = $Direccion;         }else{$x8  = $rowdata['Direccion'];}
+					if(isset($idTipo)){           $x1  = $idTipo;            }else{$x1  = $rowData['idTipo'];}
+					if(isset($Nombre)){           $x2  = $Nombre;            }else{$x2  = $rowData['Nombre'];}
+					if(isset($Rut)){              $x3  = $Rut;               }else{$x3  = $rowData['Rut'];}
+					if(isset($fNacimiento)){      $x4  = $fNacimiento;       }else{$x4  = $rowData['fNacimiento'];}
+					if(isset($idPais)){           $x5  = $idPais;            }else{$x5  = $rowData['idPais'];}
+					if(isset($idCiudad)){         $x6  = $idCiudad;          }else{$x6  = $rowData['idCiudad'];}
+					if(isset($idComuna)){         $x7  = $idComuna;          }else{$x7  = $rowData['idComuna'];}
+					if(isset($Direccion)){        $x8  = $Direccion;         }else{$x8  = $rowData['Direccion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_select('Tipo de Proveedor','idTipo', $x1, 2, 'idTipo', 'Nombre', 'proveedor_tipos', 0, '', $dbConn);
 					//Si el cliente es una empresa
-					if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){
+					if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){
 						$Form_Inputs->form_input_text('Nombre Fantasia', 'Nombre', $x2, 2);
 					//si es una persona
 					}else{

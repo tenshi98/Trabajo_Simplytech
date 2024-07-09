@@ -45,7 +45,7 @@ if (validarNumero($_GET['view'])){
 $SIS_query = 'Nombre';
 $SIS_join  = '';
 $SIS_where = 'idRuta ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'vehiculos_rutas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'vehiculos_rutas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 //Se traen las rutas
 $SIS_query = 'idUbicaciones, Latitud, Longitud, direccion';
@@ -61,7 +61,7 @@ $arrRutas = db_select_array (false, $SIS_query, 'vehiculos_rutas_ubicaciones', $
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Ruta <?php echo $rowdata['Nombre']; ?></h5>
+			<h5>Ruta <?php echo $rowData['Nombre']; ?></h5>
 		</header>
         <div class="tab-content">
 

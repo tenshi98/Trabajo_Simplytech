@@ -76,7 +76,7 @@ $SIS_query = 'idPosicion,Imagen,Titulo,TituloStyle,Subtitulo,SubtituloStyle,Text
 PosicionBloque,idEstado';
 $SIS_join  = '';
 $SIS_where = 'idCarousel ='.$_GET['edit'];
-$rowdata = db_select_data (false, $SIS_query, 'sitios_listado_carousel', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'sitios_listado_carousel', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -91,16 +91,16 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado_carousel', $SIS_jo
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idPosicion)){      $x1  = $idPosicion;      }else{$x1  = $rowdata['idPosicion'];}
-				if(isset($Imagen)){          $x2  = $Imagen;          }else{$x2  = $rowdata['Imagen'];}
-				if(isset($Titulo)){          $x3  = $Titulo;          }else{$x3  = $rowdata['Titulo'];}
-				if(isset($TituloStyle)){     $x4  = $TituloStyle;     }else{$x4  = $rowdata['TituloStyle'];}
-				if(isset($Subtitulo)){       $x5  = $Subtitulo;       }else{$x5  = $rowdata['Subtitulo'];}
-				if(isset($SubtituloStyle)){  $x6  = $SubtituloStyle;  }else{$x6  = $rowdata['SubtituloStyle'];}
-				if(isset($Texto)){           $x7  = $Texto;           }else{$x7  = $rowdata['Texto'];}
-				if(isset($TextoStyle)){      $x8  = $TextoStyle;      }else{$x8  = $rowdata['TextoStyle'];}
-				if(isset($PosicionBloque)){  $x9  = $PosicionBloque;  }else{$x9  = $rowdata['PosicionBloque'];}
-				if(isset($idEstado)){        $x10 = $idEstado;        }else{$x10 = $rowdata['idEstado'];}
+				if(isset($idPosicion)){      $x1  = $idPosicion;      }else{$x1  = $rowData['idPosicion'];}
+				if(isset($Imagen)){          $x2  = $Imagen;          }else{$x2  = $rowData['Imagen'];}
+				if(isset($Titulo)){          $x3  = $Titulo;          }else{$x3  = $rowData['Titulo'];}
+				if(isset($TituloStyle)){     $x4  = $TituloStyle;     }else{$x4  = $rowData['TituloStyle'];}
+				if(isset($Subtitulo)){       $x5  = $Subtitulo;       }else{$x5  = $rowData['Subtitulo'];}
+				if(isset($SubtituloStyle)){  $x6  = $SubtituloStyle;  }else{$x6  = $rowData['SubtituloStyle'];}
+				if(isset($Texto)){           $x7  = $Texto;           }else{$x7  = $rowData['Texto'];}
+				if(isset($TextoStyle)){      $x8  = $TextoStyle;      }else{$x8  = $rowData['TextoStyle'];}
+				if(isset($PosicionBloque)){  $x9  = $PosicionBloque;  }else{$x9  = $rowData['PosicionBloque'];}
+				if(isset($idEstado)){        $x10 = $idEstado;        }else{$x10 = $rowData['idEstado'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -195,7 +195,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 $SIS_query = 'Nombre,Config_Menu,Config_MenuOtros,Config_Carousel,Config_Links_Rel';
 $SIS_join  = '';
 $SIS_where = 'idSitio = '.simpleDecode($_GET['id'], fecha_actual());
-$rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /**********************************/
 //Permisos a sistemas
@@ -215,7 +215,7 @@ $arrCarousel = db_select_array (false, $SIS_query, 'sitios_listado_carousel', $S
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sitio', $rowdata['Nombre'], 'Elementos Carousel'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sitio', $rowData['Nombre'], 'Elementos Carousel'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Carousel</a><?php } ?>
 	</div>
@@ -232,10 +232,10 @@ $arrCarousel = db_select_array (false, $SIS_query, 'sitios_listado_carousel', $S
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<?php if(isset($rowdata['Config_Menu'])&&$rowdata['Config_Menu']==1){ ?>            <li class=""><a href="<?php echo 'sitios_listado_menu.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list" aria-hidden="true"></i> Menu</a></li><?php } ?>
-						<?php if(isset($rowdata['Config_MenuOtros'])&&$rowdata['Config_MenuOtros']==1){ ?>  <li class=""><a href="<?php echo 'sitios_listado_menu_otros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list" aria-hidden="true"></i> Menu Otros</a></li><?php } ?>
-						<?php if(isset($rowdata['Config_Carousel'])&&$rowdata['Config_Carousel']==1){ ?>    <li class="active"><a href="<?php echo 'sitios_listado_carousel.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Carousel</a></li><?php } ?>
-						<?php if(isset($rowdata['Config_Links_Rel'])&&$rowdata['Config_Links_Rel']==1){ ?>  <li class=""><a href="<?php echo 'sitios_listado_links.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-link" aria-hidden="true"></i> Links Relacionados</a></li><?php } ?>
+						<?php if(isset($rowData['Config_Menu'])&&$rowData['Config_Menu']==1){ ?>            <li class=""><a href="<?php echo 'sitios_listado_menu.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list" aria-hidden="true"></i> Menu</a></li><?php } ?>
+						<?php if(isset($rowData['Config_MenuOtros'])&&$rowData['Config_MenuOtros']==1){ ?>  <li class=""><a href="<?php echo 'sitios_listado_menu_otros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list" aria-hidden="true"></i> Menu Otros</a></li><?php } ?>
+						<?php if(isset($rowData['Config_Carousel'])&&$rowData['Config_Carousel']==1){ ?>    <li class="active"><a href="<?php echo 'sitios_listado_carousel.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Carousel</a></li><?php } ?>
+						<?php if(isset($rowData['Config_Links_Rel'])&&$rowData['Config_Links_Rel']==1){ ?>  <li class=""><a href="<?php echo 'sitios_listado_links.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-link" aria-hidden="true"></i> Links Relacionados</a></li><?php } ?>
 
 						<li class=""><a href="<?php echo 'sitios_listado_body.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Body</a></li>
 					</ul>

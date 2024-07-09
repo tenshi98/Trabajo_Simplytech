@@ -83,12 +83,12 @@ if(!empty($_GET['id'])){
 	LEFT JOIN `core_ubicacion_comunas`    ON core_ubicacion_comunas.idComuna          = colegios_listado.idComuna
 	LEFT JOIN `core_sistemas`             ON core_sistemas.idSistema                  = colegios_listado.idSistema';
 	$SIS_where = 'colegios_listado.idColegio = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'colegios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'colegios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Colegio', $rowdata['Nombre'], 'Resumen'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Colegio', $rowData['Nombre'], 'Resumen'); ?>
 	</div>
 	<div class="clearfix"></div>
 
@@ -109,12 +109,12 @@ if(!empty($_GET['id'])){
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 								<p class="text-muted word_break">
-									<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
-									<strong>Región : </strong><?php echo $rowdata['nombre_region']; ?><br/>
-									<strong>Comuna : </strong><?php echo $rowdata['nombre_comuna']; ?><br/>
-									<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
-									<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
-									<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
+									<strong>Nombre Fantasia: </strong><?php echo $rowData['Nombre']; ?><br/>
+									<strong>Región : </strong><?php echo $rowData['nombre_region']; ?><br/>
+									<strong>Comuna : </strong><?php echo $rowData['nombre_comuna']; ?><br/>
+									<strong>Dirección : </strong><?php echo $rowData['Direccion']; ?><br/>
+									<strong>Sistema Relacionado : </strong><?php echo $rowData['sistema']; ?><br/>
+									<strong>Estado : </strong><?php echo $rowData['estado']; ?>
 								</p>
 							</div>
 						</div>
@@ -124,9 +124,9 @@ if(!empty($_GET['id'])){
 							<?php
 								//se arma la dirección
 								$direccion = "";
-								if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){           $direccion .= $rowdata["Direccion"];}
-								if(isset($rowdata["nombre_comuna"])&&$rowdata["nombre_comuna"]!=''){   $direccion .= ', '.$rowdata["nombre_comuna"];}
-								if(isset($rowdata["nombre_region"])&&$rowdata["nombre_region"]!=''){   $direccion .= ', '.$rowdata["nombre_region"];}
+								if(isset($rowData["Direccion"])&&$rowData["Direccion"]!=''){           $direccion .= $rowData["Direccion"];}
+								if(isset($rowData["nombre_comuna"])&&$rowData["nombre_comuna"]!=''){   $direccion .= ', '.$rowData["nombre_comuna"];}
+								if(isset($rowData["nombre_region"])&&$rowData["nombre_region"]!=''){   $direccion .= ', '.$rowData["nombre_region"];}
 								//se despliega mensaje en caso de no existir dirección
 								if($direccion!=''){
 									echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1) ;

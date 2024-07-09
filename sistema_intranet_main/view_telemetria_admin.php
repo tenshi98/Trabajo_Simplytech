@@ -83,7 +83,7 @@ LEFT JOIN `core_ubicacion_ciudad`            ON core_ubicacion_ciudad.idCiudad  
 LEFT JOIN `core_ubicacion_comunas`           ON core_ubicacion_comunas.idComuna  = telemetria_listado.idComuna
 LEFT JOIN `telemetria_zonas`                 ON telemetria_zonas.idZona          = telemetria_listado.idZona';
 $SIS_where = 'telemetria_listado.idTelemetria ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /***************************************/
 //Se consulta
@@ -105,11 +105,11 @@ foreach ($arrUnimed as $sen) {   $arrFinalUnimed[$sen['idUniMed']]     = $sen['N
 $arrFinalOpciones[0]  = 'No Asignado';
 $arrFinalUnimed[0]    = 'No Asignado';
 
-if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
+if(isset($rowData['id_Sensores'])&&$rowData['id_Sensores']==1){
 
 	//numero sensores equipo
 	$subquery = '';
-	for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+	for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 		$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
 		$subquery .= ',telemetria_listado_sensores_tipo.SensoresTipo_'.$i;
 		$subquery .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
@@ -150,7 +150,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 
 }
 
-if(isset($rowdata['idTrabajador'])&&$rowdata['idTrabajador']!=0){
+if(isset($rowData['idTrabajador'])&&$rowData['idTrabajador']!=0){
 	// consulto los datos
 	$SIS_query = '
 	trabajadores_listado.Nombre,
@@ -176,12 +176,12 @@ if(isset($rowdata['idTrabajador'])&&$rowdata['idTrabajador']!=0){
 	LEFT JOIN `core_ubicacion_comunas`      ON core_ubicacion_comunas.idComuna     = trabajadores_listado.idComuna
 	LEFT JOIN `sistema_afp`                 ON sistema_afp.idAFP                   = trabajadores_listado.idAFP
 	LEFT JOIN `sistema_salud`               ON sistema_salud.idSalud               = trabajadores_listado.idSalud';
-	$SIS_where = 'trabajadores_listado.idTrabajador ='.$rowdata['idTrabajador'];
+	$SIS_where = 'trabajadores_listado.idTrabajador ='.$rowData['idTrabajador'];
 	$rowTrabajador = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowTrabajador');
 
 }
 
-if(isset($rowdata['idBodega'])&&$rowdata['idBodega']!=0){
+if(isset($rowData['idBodega'])&&$rowData['idBodega']!=0){
 
 	//se consulta
 	$SIS_query = '
@@ -197,7 +197,7 @@ if(isset($rowdata['idBodega'])&&$rowdata['idBodega']!=0){
 	LEFT JOIN `sistema_productos_uml`       ON sistema_productos_uml.idUml          = productos_listado.idUml
 	LEFT JOIN `bodegas_productos_listado`   ON bodegas_productos_listado.idBodega   = bodegas_productos_facturacion_existencias.idBodega
 	LEFT JOIN `core_tipo_producto`          ON core_tipo_producto.idTipoProducto    = productos_listado.idTipoProducto';
-	$SIS_where = 'bodegas_productos_facturacion_existencias.idBodega='.$rowdata['idBodega'].' GROUP BY bodegas_productos_facturacion_existencias.idProducto';
+	$SIS_where = 'bodegas_productos_facturacion_existencias.idBodega='.$rowData['idBodega'].' GROUP BY bodegas_productos_facturacion_existencias.idProducto';
 	$SIS_order = 'core_tipo_producto.Nombre ASC, productos_listado.Nombre ASC';
 	$arrProductos = array();
 	$arrProductos = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
@@ -206,7 +206,7 @@ if(isset($rowdata['idBodega'])&&$rowdata['idBodega']!=0){
 
 //numero sensores equipo
 $subquery = '';
-for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
 }
 // Se trae un listado con todas las alertas
@@ -245,15 +245,15 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
 
-				<?php if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){ ?>
+				<?php if(isset($rowData['id_Sensores'])&&$rowData['id_Sensores']==1){ ?>
 				<li class=""><a href="#mediciones" data-toggle="tab"><i class="fa fa-wifi" aria-hidden="true"></i> Ultimas Mediciones</a></li>
 				<?php } ?>
 
-				<?php if(isset($rowdata['idTrabajador'])&&$rowdata['idTrabajador']!=0){ ?>
+				<?php if(isset($rowData['idTrabajador'])&&$rowData['idTrabajador']!=0){ ?>
 				<li class=""><a href="#trabajador" data-toggle="tab"><i class="fa fa-users" aria-hidden="true"></i> Datos del Trabajador</a></li>
 				<?php } ?>
 
-				<?php if(isset($rowdata['idBodega'])&&$rowdata['idBodega']!=0){ ?>
+				<?php if(isset($rowData['idBodega'])&&$rowData['idBodega']!=0){ ?>
 				<li class=""><a href="#bodega" data-toggle="tab"><i class="fa fa-building-o" aria-hidden="true"></i> Stock Bodega</a></li>
 				<?php } ?>
 
@@ -272,54 +272,54 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 				<div class="wmd-panel">
 
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<?php if ($rowdata['Direccion_img']=='') { ?>
+						<?php if ($rowData['Direccion_img']=='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 						<?php }else{  ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowData['Direccion_img']; ?>">
 						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Equipo</h2>
 						<p class="text-muted">
-							<?php if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){ ?><strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['IdentificadorEmpresa'])&&$rowdata['IdentificadorEmpresa']!=''){ ?><strong>Identificador Empresa : </strong><?php echo $rowdata['IdentificadorEmpresa']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_Num_Tel'])&&$rowdata['Sim_Num_Tel']!=''){ ?><strong>SIM - Numero Telefonico : </strong><?php echo $rowdata['Sim_Num_Tel']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_Num_Serie'])&&$rowdata['Sim_Num_Serie']!=''){ ?><strong>SIM - Numero Serie : </strong><?php echo $rowdata['Sim_Num_Serie']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_Compania'])&&$rowdata['Sim_Compania']!=''){ ?><strong>SIM - Compañia : </strong><?php echo $rowdata['Sim_Compania']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_marca'])&&$rowdata['Sim_marca']!=''){ ?><strong>BAM - Marca : </strong><?php echo $rowdata['Sim_marca']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_modelo'])&&$rowdata['Sim_modelo']!=''){ ?><strong>BAM - Modelo : </strong><?php echo $rowdata['Sim_modelo']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['IP_Client'])&&$rowdata['IP_Client']!=''){ ?><strong>IP Cliente : </strong><?php echo $rowdata['IP_Client']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['idTelemetria'])&&$rowdata['idTelemetria']!=''){ ?><strong>ID Equipo : </strong><?php echo $rowdata['idTelemetria']; ?><br/><?php } ?>
+							<?php if(isset($rowData['Nombre'])&&$rowData['Nombre']!=''){ ?><strong>Nombre : </strong><?php echo $rowData['Nombre']; ?><br/><?php } ?>
+							<?php if(isset($rowData['IdentificadorEmpresa'])&&$rowData['IdentificadorEmpresa']!=''){ ?><strong>Identificador Empresa : </strong><?php echo $rowData['IdentificadorEmpresa']; ?><br/><?php } ?>
+							<?php if(isset($rowData['Sim_Num_Tel'])&&$rowData['Sim_Num_Tel']!=''){ ?><strong>SIM - Numero Telefonico : </strong><?php echo $rowData['Sim_Num_Tel']; ?><br/><?php } ?>
+							<?php if(isset($rowData['Sim_Num_Serie'])&&$rowData['Sim_Num_Serie']!=''){ ?><strong>SIM - Numero Serie : </strong><?php echo $rowData['Sim_Num_Serie']; ?><br/><?php } ?>
+							<?php if(isset($rowData['Sim_Compania'])&&$rowData['Sim_Compania']!=''){ ?><strong>SIM - Compañia : </strong><?php echo $rowData['Sim_Compania']; ?><br/><?php } ?>
+							<?php if(isset($rowData['Sim_marca'])&&$rowData['Sim_marca']!=''){ ?><strong>BAM - Marca : </strong><?php echo $rowData['Sim_marca']; ?><br/><?php } ?>
+							<?php if(isset($rowData['Sim_modelo'])&&$rowData['Sim_modelo']!=''){ ?><strong>BAM - Modelo : </strong><?php echo $rowData['Sim_modelo']; ?><br/><?php } ?>
+							<?php if(isset($rowData['IP_Client'])&&$rowData['IP_Client']!=''){ ?><strong>IP Cliente : </strong><?php echo $rowData['IP_Client']; ?><br/><?php } ?>
+							<?php if(isset($rowData['idTelemetria'])&&$rowData['idTelemetria']!=''){ ?><strong>ID Equipo : </strong><?php echo $rowData['idTelemetria']; ?><br/><?php } ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Configuracion</h2>
 						<p class="text-muted">
-							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
-							<strong>Geolocalizacion : </strong><?php echo $rowdata['Geo']; ?><br/>
-							<?php if($rowdata['id_Geo']==1){ ?>
-							<strong>Limite Velocidad : </strong><?php echo Cantidades_decimales_justos($rowdata['LimiteVelocidad']).' KM/h'; ?><br/>
+							<strong>Estado : </strong><?php echo $rowData['Estado']; ?><br/>
+							<strong>Geolocalizacion : </strong><?php echo $rowData['Geo']; ?><br/>
+							<?php if($rowData['id_Geo']==1){ ?>
+							<strong>Limite Velocidad : </strong><?php echo Cantidades_decimales_justos($rowData['LimiteVelocidad']).' KM/h'; ?><br/>
 							<?php }
-							if($rowdata['id_Geo']==2){ ?>
-								<strong>Zona : </strong><?php echo $rowdata['Zona']; ?><br/>
-								<strong>Dirección : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['Comuna'].', '.$rowdata['Ciudad']; ?><br/>
+							if($rowData['id_Geo']==2){ ?>
+								<strong>Zona : </strong><?php echo $rowData['Zona']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowData['Direccion'].', '.$rowData['Comuna'].', '.$rowData['Ciudad']; ?><br/>
 							<?php } ?>
-							<strong>Sensores : </strong><?php echo $rowdata['Sensores'].' ';if($rowdata['id_Sensores']==1){echo '('.$rowdata['cantSensores'].' Sensores)';} ?><br/>
-							<strong>Tiempo Fuera Linea Maximo : </strong><?php echo $rowdata['TiempoFueraLinea']; ?> Horas<br/>
-							<?php if($rowdata['id_Geo']==1){ ?>
-							<strong>Tiempo Maximo Detencion : </strong><?php echo $rowdata['TiempoDetencion']; ?> Horas<br/>
+							<strong>Sensores : </strong><?php echo $rowData['Sensores'].' ';if($rowData['id_Sensores']==1){echo '('.$rowData['cantSensores'].' Sensores)';} ?><br/>
+							<strong>Tiempo Fuera Linea Maximo : </strong><?php echo $rowData['TiempoFueraLinea']; ?> Horas<br/>
+							<?php if($rowData['id_Geo']==1){ ?>
+							<strong>Tiempo Maximo Detencion : </strong><?php echo $rowData['TiempoDetencion']; ?> Horas<br/>
 							<?php } ?>
-							<?php if(isset($rowdata['Capacidad'])&&$rowdata['Capacidad']!=0){ ?>
-								<strong>Capacidad : </strong><?php echo Cantidades_decimales_justos($rowdata['Capacidad']); ?><br/>
+							<?php if(isset($rowData['Capacidad'])&&$rowData['Capacidad']!=0){ ?>
+								<strong>Capacidad : </strong><?php echo Cantidades_decimales_justos($rowData['Capacidad']); ?><br/>
 							<?php } ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Jornada Laboral</h2>
 						<p class="text-muted">
-							<strong>Hora Inicio Jornada : </strong><?php echo $rowdata['Jornada_inicio'].' hrs'; ?><br/>
-							<strong>Hora Termino Jornada : </strong><?php echo $rowdata['Jornada_termino'].' hrs'; ?><br/>
-							<strong>Hora Inicio Colacion : </strong><?php echo $rowdata['Colacion_inicio'].' hrs'; ?><br/>
-							<strong>Hora Termino Colacion : </strong><?php echo $rowdata['Colacion_termino'].' hrs'; ?><br/>
-							<strong>Tiempo Microparadas : </strong><?php echo $rowdata['Microparada'].' hrs'; ?><br/>
+							<strong>Hora Inicio Jornada : </strong><?php echo $rowData['Jornada_inicio'].' hrs'; ?><br/>
+							<strong>Hora Termino Jornada : </strong><?php echo $rowData['Jornada_termino'].' hrs'; ?><br/>
+							<strong>Hora Inicio Colacion : </strong><?php echo $rowData['Colacion_inicio'].' hrs'; ?><br/>
+							<strong>Hora Termino Colacion : </strong><?php echo $rowData['Colacion_termino'].' hrs'; ?><br/>
+							<strong>Tiempo Microparadas : </strong><?php echo $rowData['Microparada'].' hrs'; ?><br/>
 						</p>
 
 					</div>
@@ -328,24 +328,24 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 				</div>
 			</div>
 
-			<?php if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){ ?>
+			<?php if(isset($rowData['id_Sensores'])&&$rowData['id_Sensores']==1){ ?>
 				<div class="tab-pane fade" id="mediciones">
 					<div class="wmd-panel">
 						<div class="table-responsive">
 
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
-								<?php if(isset($rowdata['id_Geo'])&&$rowdata['id_Geo']!=''&&$rowdata['id_Geo']==1){ ?>
-									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_flota_view_equipo_mediciones.php?view='.$X_Puntero.'&cantSensores='.$rowdata['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ultima Ubicación</a>
+								<?php if(isset($rowData['id_Geo'])&&$rowData['id_Geo']!=''&&$rowData['id_Geo']==1){ ?>
+									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_flota_view_equipo_mediciones.php?view='.$X_Puntero.'&cantSensores='.$rowData['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ultima Ubicación</a>
 									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_1.php?view='.$X_Puntero; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Informe Medicion Sensores</a>
 									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_velocidad.php?view='.$X_Puntero; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Informe Medicion Velocidades</a>
-								<?php }elseif(isset($rowdata['id_Geo'])&&$rowdata['id_Geo']!=''&&$rowdata['id_Geo']==2){ ?>
-									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_sensores_view_equipo_mediciones.php?view='.$X_Puntero.'&cantSensores='.$rowdata['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ultima Ubicación</a>
+								<?php }elseif(isset($rowData['id_Geo'])&&$rowData['id_Geo']!=''&&$rowData['id_Geo']==2){ ?>
+									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_sensores_view_equipo_mediciones.php?view='.$X_Puntero.'&cantSensores='.$rowData['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ultima Ubicación</a>
 									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_2.php?view='.$X_Puntero; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Informe Medicion Sensores</a>
 								<?php } ?>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
 
-							<?php if(isset($rowdata['LimiteVelocidad'])&&$rowdata['LimiteVelocidad']!=0){ ?>
+							<?php if(isset($rowData['LimiteVelocidad'])&&$rowData['LimiteVelocidad']!=0){ ?>
 								<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 									<thead>
 										<tr role="row">
@@ -356,11 +356,11 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 										</tr>
 									</thead>
 									<tbody role="alert" aria-live="polite" aria-relevant="all">
-										<tr class="odd <?php if($rowMed['GeoVelocidad'] > $rowdata['LimiteVelocidad']){echo 'danger';} ?>">
+										<tr class="odd <?php if($rowMed['GeoVelocidad'] > $rowData['LimiteVelocidad']){echo 'danger';} ?>">
 											<td>Velocidad</td>
-											<td><?php echo fecha_estandar($rowdata['LastUpdateFecha']).' - '.$rowdata['LastUpdateHora'].' hrs'; ?></td>
+											<td><?php echo fecha_estandar($rowData['LastUpdateFecha']).' - '.$rowData['LastUpdateHora'].' hrs'; ?></td>
 											<td><?php echo Cantidades($rowMed['GeoVelocidad'], 0).' KM/h'; ?></td>
-											<td><?php echo Cantidades($rowdata['LimiteVelocidad'], 0).' KM/h'; ?></td>
+											<td><?php echo Cantidades($rowData['LimiteVelocidad'], 0).' KM/h'; ?></td>
 										</tr>
 
 									</tbody>
@@ -379,7 +379,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 									</tr>
 								</thead>
 								<tbody role="alert" aria-live="polite" aria-relevant="all">
-									<?php for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+									<?php for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 										//solo sensores activos
 										if(isset($rowMed['SensoresActivo_'.$i])&&$rowMed['SensoresActivo_'.$i]==1){
 											$unimed = ' '.$arrFinalUnimed[$rowMed['SensoresUniMed_'.$i]];
@@ -408,15 +408,15 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 				</div>
 			<?php } ?>
 
-			<?php if(isset($rowdata['idTrabajador'])&&$rowdata['idTrabajador']!=0){ ?>
+			<?php if(isset($rowData['idTrabajador'])&&$rowData['idTrabajador']!=0){ ?>
 				<div class="tab-pane fade" id="trabajador">
 					<div class="wmd-panel">
 
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-							<?php if ($rowdata['Direccion_img']=='') { ?>
+							<?php if ($rowData['Direccion_img']=='') { ?>
 								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 							<?php }else{  ?>
-								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowData['Direccion_img']; ?>">
 							<?php } ?>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
@@ -445,7 +445,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 				</div>
 			<?php } ?>
 
-			<?php if(isset($rowdata['idBodega'])&&$rowdata['idBodega']!=0){ ?>
+			<?php if(isset($rowData['idBodega'])&&$rowData['idBodega']!=0){ ?>
 				<div class="tab-pane fade" id="bodega">
 					<div class="wmd-panel">
 						<div class="table-responsive">
@@ -483,7 +483,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 					<div class="table-responsive">
 
 						<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
-							<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_errores_'.$rowdata['id_Geo'].'.php?idTelemetria='.$X_Puntero.'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
+							<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_errores_'.$rowData['id_Geo'].'.php?idTelemetria='.$X_Puntero.'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
 							<div style="padding-bottom:10px;padding-top:10px;"></div>
 						</div>
 
@@ -496,7 +496,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 									<th>Valor</th>
 									<th>Min</th>
 									<th>Max</th>
-									<?php if($rowdata['id_Geo']==1){ ?><th>Ubicación</th><?php } ?>
+									<?php if($rowData['id_Geo']==1){ ?><th>Ubicación</th><?php } ?>
 								</tr>
 							</thead>
 
@@ -511,10 +511,10 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 										<td><?php echo Cantidades_decimales_justos($error['Valor']).$unimed; ?></td>
 										<td><?php echo Cantidades_decimales_justos($error['Valor_min']).$unimed; ?></td>
 										<td><?php echo Cantidades_decimales_justos($error['Valor_max']).$unimed; ?></td>
-										<?php if($rowdata['id_Geo']==1){ ?>
+										<?php if($rowData['id_Geo']==1){ ?>
 											<td>
 												<div class="btn-group" style="width: 35px;" >
-													<a href="<?php echo 'informe_telemetria_errores_'.$rowdata['id_Geo'].'_view.php?view='.$error['idErrores'].'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+													<a href="<?php echo 'informe_telemetria_errores_'.$rowData['id_Geo'].'_view.php?view='.$error['idErrores'].'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										<?php } ?>
@@ -532,7 +532,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 					<div class="table-responsive">
 
 						<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
-							<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_'.$rowdata['id_Geo'].'.php?idTelemetria='.$X_Puntero.'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
+							<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_'.$rowData['id_Geo'].'.php?idTelemetria='.$X_Puntero.'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
 							<div style="padding-bottom:10px;padding-top:10px;"></div>
 						</div>
 
@@ -544,7 +544,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 									<th>Fecha Termino</th>
 									<th>Hora Termino</th>
 									<th>Tiempo</th>
-									<?php if($rowdata['id_Geo']==1){ ?><th>Ubicación</th><?php } ?>
+									<?php if($rowData['id_Geo']==1){ ?><th>Ubicación</th><?php } ?>
 								</tr>
 							</thead>
 
@@ -556,10 +556,10 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 										<td><?php echo fecha_estandar($error['Fecha_termino']); ?></td>
 										<td><?php echo $error['Hora_termino'].' hrs'; ?></td>
 										<td><?php echo $error['Tiempo'].' hrs'; ?></td>
-										<?php if($rowdata['id_Geo']==1){ ?>
+										<?php if($rowData['id_Geo']==1){ ?>
 											<td>
 												<div class="btn-group" style="width: 35px;" >
-													<a href="<?php echo 'informe_telemetria_fuera_linea_'.$rowdata['id_Geo'].'_view.php?view='.$error['idFueraLinea'].'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+													<a href="<?php echo 'informe_telemetria_fuera_linea_'.$rowData['id_Geo'].'_view.php?view='.$error['idFueraLinea'].'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										<?php } ?>

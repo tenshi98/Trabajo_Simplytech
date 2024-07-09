@@ -73,7 +73,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'Nombre,Porcentaje';
 	$SIS_join  = '';
 	$SIS_where = 'idImpuesto = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'sistema_impuestos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'sistema_impuestos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -88,8 +88,8 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){      $x1  = $Nombre;      }else{$x1  = $rowdata['Nombre'];}
-					if(isset($Porcentaje)){  $x2  = $Porcentaje;  }else{$x2  = $rowdata['Porcentaje'];}
+					if(isset($Nombre)){      $x1  = $Nombre;      }else{$x1  = $rowData['Nombre'];}
+					if(isset($Porcentaje)){  $x2  = $Porcentaje;  }else{$x2  = $rowData['Porcentaje'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

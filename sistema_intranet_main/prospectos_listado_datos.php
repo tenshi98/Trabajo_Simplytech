@@ -53,12 +53,12 @@ idTab_1, idTab_2, idTab_3, idTab_4, idTab_5, idTab_6, idTab_7, idTab_8, idTab_8,
 idTab_10, idTab_11, idTab_12, idTab_13, idTab_14, idTab_15';
 $SIS_join  = '';
 $SIS_where = 'idProspecto = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'prospectos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'prospectos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowData['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -89,27 +89,27 @@ $rowdata = db_select_data (false, $SIS_query, 'prospectos_listado', $SIS_join, $
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idTipo)){           $x1  = $idTipo;            }else{$x1  = $rowdata['idTipo'];}
-					if(isset($Nombre)){           $x2  = $Nombre;            }else{$x2  = $rowdata['Nombre'];}
-					if(isset($fNacimiento)){      $x3  = $fNacimiento;       }else{$x3  = $rowdata['fNacimiento'];}
-					if(isset($idCiudad)){         $x4  = $idCiudad;          }else{$x4  = $rowdata['idCiudad'];}
-					if(isset($idComuna)){         $x5  = $idComuna;          }else{$x5  = $rowdata['idComuna'];}
-					if(isset($Direccion)){        $x6  = $Direccion;         }else{$x6  = $rowdata['Direccion'];}
-					if(isset($idTab_1)){          $x7  = $idTab_1;           }else{$x7  = $rowdata['idTab_1'];}
-					if(isset($idTab_2)){          $x7 .= ','.$idTab_2;       }else{$x7 .= ','.$rowdata['idTab_2'];}
-					if(isset($idTab_3)){          $x7 .= ','.$idTab_3;       }else{$x7 .= ','.$rowdata['idTab_3'];}
-					if(isset($idTab_4)){          $x7 .= ','.$idTab_4;       }else{$x7 .= ','.$rowdata['idTab_4'];}
-					if(isset($idTab_5)){          $x7 .= ','.$idTab_5;       }else{$x7 .= ','.$rowdata['idTab_5'];}
-					if(isset($idTab_6)){          $x7 .= ','.$idTab_6;       }else{$x7 .= ','.$rowdata['idTab_6'];}
-					if(isset($idTab_7)){          $x7 .= ','.$idTab_7;       }else{$x7 .= ','.$rowdata['idTab_7'];}
-					if(isset($idTab_8)){          $x7 .= ','.$idTab_8;       }else{$x7 .= ','.$rowdata['idTab_8'];}
-					if(isset($idTab_9)){          $x7 .= ','.$idTab_9;       }else{$x7 .= ','.$rowdata['idTab_9'];}
-					if(isset($idTab_10)){         $x7 .= ','.$idTab_10;      }else{$x7 .= ','.$rowdata['idTab_10'];}
-					if(isset($idTab_11)){         $x7 .= ','.$idTab_11;      }else{$x7 .= ','.$rowdata['idTab_11'];}
-					if(isset($idTab_12)){         $x7 .= ','.$idTab_12;      }else{$x7 .= ','.$rowdata['idTab_12'];}
-					if(isset($idTab_13)){         $x7 .= ','.$idTab_13;      }else{$x7 .= ','.$rowdata['idTab_13'];}
-					if(isset($idTab_14)){         $x7 .= ','.$idTab_14;      }else{$x7 .= ','.$rowdata['idTab_14'];}
-					if(isset($idTab_15)){         $x7 .= ','.$idTab_15;      }else{$x7 .= ','.$rowdata['idTab_15'];}
+					if(isset($idTipo)){           $x1  = $idTipo;            }else{$x1  = $rowData['idTipo'];}
+					if(isset($Nombre)){           $x2  = $Nombre;            }else{$x2  = $rowData['Nombre'];}
+					if(isset($fNacimiento)){      $x3  = $fNacimiento;       }else{$x3  = $rowData['fNacimiento'];}
+					if(isset($idCiudad)){         $x4  = $idCiudad;          }else{$x4  = $rowData['idCiudad'];}
+					if(isset($idComuna)){         $x5  = $idComuna;          }else{$x5  = $rowData['idComuna'];}
+					if(isset($Direccion)){        $x6  = $Direccion;         }else{$x6  = $rowData['Direccion'];}
+					if(isset($idTab_1)){          $x7  = $idTab_1;           }else{$x7  = $rowData['idTab_1'];}
+					if(isset($idTab_2)){          $x7 .= ','.$idTab_2;       }else{$x7 .= ','.$rowData['idTab_2'];}
+					if(isset($idTab_3)){          $x7 .= ','.$idTab_3;       }else{$x7 .= ','.$rowData['idTab_3'];}
+					if(isset($idTab_4)){          $x7 .= ','.$idTab_4;       }else{$x7 .= ','.$rowData['idTab_4'];}
+					if(isset($idTab_5)){          $x7 .= ','.$idTab_5;       }else{$x7 .= ','.$rowData['idTab_5'];}
+					if(isset($idTab_6)){          $x7 .= ','.$idTab_6;       }else{$x7 .= ','.$rowData['idTab_6'];}
+					if(isset($idTab_7)){          $x7 .= ','.$idTab_7;       }else{$x7 .= ','.$rowData['idTab_7'];}
+					if(isset($idTab_8)){          $x7 .= ','.$idTab_8;       }else{$x7 .= ','.$rowData['idTab_8'];}
+					if(isset($idTab_9)){          $x7 .= ','.$idTab_9;       }else{$x7 .= ','.$rowData['idTab_9'];}
+					if(isset($idTab_10)){         $x7 .= ','.$idTab_10;      }else{$x7 .= ','.$rowData['idTab_10'];}
+					if(isset($idTab_11)){         $x7 .= ','.$idTab_11;      }else{$x7 .= ','.$rowData['idTab_11'];}
+					if(isset($idTab_12)){         $x7 .= ','.$idTab_12;      }else{$x7 .= ','.$rowData['idTab_12'];}
+					if(isset($idTab_13)){         $x7 .= ','.$idTab_13;      }else{$x7 .= ','.$rowData['idTab_13'];}
+					if(isset($idTab_14)){         $x7 .= ','.$idTab_14;      }else{$x7 .= ','.$rowData['idTab_14'];}
+					if(isset($idTab_15)){         $x7 .= ','.$idTab_15;      }else{$x7 .= ','.$rowData['idTab_15'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

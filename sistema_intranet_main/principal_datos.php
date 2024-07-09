@@ -55,7 +55,7 @@ LEFT JOIN `usuarios_tipos`           ON usuarios_tipos.idTipoUsuario      = usua
 LEFT JOIN `core_ubicacion_ciudad`    ON core_ubicacion_ciudad.idCiudad    = usuarios_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`   ON core_ubicacion_comunas.idComuna   = usuarios_listado.idComuna';
 $SIS_where = 'usuarios_listado.idUsuario ='.$_SESSION['usuario']['basic_data']['idUsuario'];
-$rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /**********************************/
 //Permisos asignados
@@ -186,29 +186,29 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 			<div class="tab-pane fade active in" id="basicos" style="padding-top:5px;">
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-					<?php if ($rowdata['Direccion_img']=='') { ?>
+					<?php if ($rowData['Direccion_img']=='') { ?>
 						<img class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 					<?php }else{  ?>
-						<img class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+						<img class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowData['Direccion_img']; ?>">
 					<?php } ?>
 				</div>
 				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 					<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Perfil</h2>
 					<p class="text-muted">
-						<strong>Usuario : </strong><?php echo $rowdata['usuario']; ?><br/>
-						<strong>Tipo de usuario : </strong><?php echo $rowdata['Usuario_Tipo']; ?>
+						<strong>Usuario : </strong><?php echo $rowData['usuario']; ?><br/>
+						<strong>Tipo de usuario : </strong><?php echo $rowData['Usuario_Tipo']; ?>
 					</p>
 
 					<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Personales</h2>
 					<p class="text-muted">
-						<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
-						<strong>Fono : </strong><?php echo formatPhone($rowdata['Fono']); ?><br/>
-						<strong>Email : </strong><?php echo $rowdata['email']; ?><br/>
-						<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
-						<strong>Fecha de Nacimiento : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
-						<strong>Ciudad : </strong><?php echo $rowdata['Ciudad']; ?><br/>
-						<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-						<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
+						<strong>Nombre : </strong><?php echo $rowData['Nombre']; ?><br/>
+						<strong>Fono : </strong><?php echo formatPhone($rowData['Fono']); ?><br/>
+						<strong>Email : </strong><?php echo $rowData['email']; ?><br/>
+						<strong>Rut : </strong><?php echo $rowData['Rut']; ?><br/>
+						<strong>Fecha de Nacimiento : </strong><?php echo Fecha_completa($rowData['fNacimiento']); ?><br/>
+						<strong>Ciudad : </strong><?php echo $rowData['Ciudad']; ?><br/>
+						<strong>Comuna : </strong><?php echo $rowData['Comuna']; ?><br/>
+						<strong>Dirección : </strong><?php echo $rowData['Direccion']; ?><br/>
 					</p>
 
 					<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Sistemas Asignados</h2>

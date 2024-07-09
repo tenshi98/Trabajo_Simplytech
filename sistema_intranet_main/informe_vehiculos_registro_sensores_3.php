@@ -57,13 +57,13 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 						
 	}
-	$row_data = mysqli_fetch_assoc ($resultado);
+	$rowData = mysqli_fetch_assoc ($resultado);
 	/*****************************************/
 	//Se escribe el dato
-	$Alert_Text  = 'Total de registros encontrados de '.$row_data['Nombre'].': '.Cantidades($row_data['Total'], 0);
+	$Alert_Text  = 'Total de registros encontrados de '.$rowData['Nombre'].': '.Cantidades($rowData['Total'], 0);
 	alert_post_data(1,1,1,0, $Alert_Text);
 
-	$total_files = ceil($row_data['Total']/5000);
+	$total_files = ceil($rowData['Total']/5000);
 	for ($i = 1; $i <= $total_files; $i++) {
 		$reg_ini = (5000*$i)-4999;
 		$reg_fin = 5000*$i;
@@ -140,12 +140,12 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 							
 		}
-		$row_data = mysqli_fetch_assoc ($resultado);
+		$rowData = mysqli_fetch_assoc ($resultado);
 
-		$Alert_Text .= 'Total de registros encontrados de '.$equipo['Nombre'].': '.Cantidades($row_data['Total'], 0).'<br/>';
+		$Alert_Text .= 'Total de registros encontrados de '.$equipo['Nombre'].': '.Cantidades($rowData['Total'], 0).'<br/>';
 		//verifico el valor maximo
-		if($s_max<$row_data['Total']){
-			$s_max=$row_data['Total'];
+		if($s_max<$rowData['Total']){
+			$s_max=$rowData['Total'];
 		}
 	}
 	alert_post_data(2,1,1,0, $Alert_Text);

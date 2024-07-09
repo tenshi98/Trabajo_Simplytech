@@ -91,7 +91,7 @@ switch ($_GET['type']) {
 			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 							
 		}
-		$row_data = mysqli_fetch_assoc ($resultado);
+		$rowData = mysqli_fetch_assoc ($resultado);
     break;
     /********************************************************/
     //Arriendo
@@ -117,7 +117,7 @@ switch ($_GET['type']) {
 			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 							
 		}
-		$row_data = mysqli_fetch_assoc ($resultado);
+		$rowData = mysqli_fetch_assoc ($resultado);
     break;
     /********************************************************/
     //Insumo
@@ -143,7 +143,7 @@ switch ($_GET['type']) {
 			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 							
 		}
-		$row_data = mysqli_fetch_assoc ($resultado);
+		$rowData = mysqli_fetch_assoc ($resultado);
     break;
     /********************************************************/
     //Productos
@@ -169,7 +169,7 @@ switch ($_GET['type']) {
 			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 							
 		}
-		$row_data = mysqli_fetch_assoc ($resultado);
+		$rowData = mysqli_fetch_assoc ($resultado);
     break;
     /********************************************************/
     //Boletas Trabajadores
@@ -197,7 +197,7 @@ switch ($_GET['type']) {
 			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 							
 		}
-		$row_data = mysqli_fetch_assoc ($resultado);
+		$rowData = mysqli_fetch_assoc ($resultado);
     break;
     /********************************************************/
     //Boletas Empresas
@@ -218,7 +218,7 @@ switch ($_GET['type']) {
 			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 							
 		}
-		$row_data = mysqli_fetch_assoc ($resultado);
+		$rowData = mysqli_fetch_assoc ($resultado);
     break;
 }
 
@@ -249,9 +249,9 @@ switch ($_GET['type']) {
 					case 3:
 					case 4:
     
-						$x1  = $row_data['Producto'];
-						$x2  = Cantidades_decimales_justos($row_data['Cantidad']);
-						if(isset($cant_ingresada)){   $x3  = $cant_ingresada;  }else{$x3  = Cantidades_decimales_justos($row_data['cant_ingresada']);}
+						$x1  = $rowData['Producto'];
+						$x2  = Cantidades_decimales_justos($rowData['Cantidad']);
+						if(isset($cant_ingresada)){   $x3  = $cant_ingresada;  }else{$x3  = Cantidades_decimales_justos($rowData['cant_ingresada']);}
 
 						//se dibujan los inputs
 						$Form_Inputs->form_input_disabled('Producto','Producto_fake', $x1);
@@ -263,9 +263,9 @@ switch ($_GET['type']) {
 					/********************************************************/
 					case 5:
 					
-						$x1  = $row_data['TrabRut'].' - '.$row_data['TrabNombre'].' '.$row_data['TrabApellidoPat'];
-						$x2  = $row_data['N_Doc'];
-						$x3  = Cantidades_decimales_justos($row_data['Valor']);
+						$x1  = $rowData['TrabRut'].' - '.$rowData['TrabNombre'].' '.$rowData['TrabApellidoPat'];
+						$x2  = $rowData['N_Doc'];
+						$x3  = Cantidades_decimales_justos($rowData['Valor']);
 						$x4  = 0;
 
 						//se dibujan los inputs
@@ -280,9 +280,9 @@ switch ($_GET['type']) {
 					/********************************************************/
 					case 6:
 					
-						$x1  = $row_data['Descripcion'];
-						$x2  = Cantidades_decimales_justos($row_data['Valor']);
-						$x3  = Cantidades_decimales_justos($row_data['Total_Ingresado']);
+						$x1  = $rowData['Descripcion'];
+						$x2  = Cantidades_decimales_justos($rowData['Valor']);
+						$x3  = Cantidades_decimales_justos($rowData['Total_Ingresado']);
 
 						//se dibujan los inputs
 						$Form_Inputs->form_input_disabled('Descripcion','Producto_fake', $x1);

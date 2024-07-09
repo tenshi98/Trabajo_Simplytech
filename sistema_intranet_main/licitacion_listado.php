@@ -102,7 +102,7 @@ LEFT JOIN `core_sistemas`                ON core_sistemas.idSistema             
 LEFT JOIN `core_licitacion_tipos`        ON core_licitacion_tipos.idTipoLicitacion   = licitacion_listado.idTipoLicitacion
 LEFT JOIN `core_sistemas_opciones`       ON core_sistemas_opciones.idOpciones        = licitacion_listado.idOpcionItem';
 $SIS_where = 'licitacion_listado.idLicitacion='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'licitacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'licitacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /*****************************************/
 // Se trae un listado con el historial
@@ -122,7 +122,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'licitacion_listado_historia
 
 /***********************************************************************************/
 //Se verifica que se utilice el itemizado
-if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
+if(isset($rowData['idOpcionItem'])&&$rowData['idOpcionItem']==1){
 	//Se crean las variables
 	$nmax = 15;
 	$SIS_query = 'licitacion_listado_level_1.idLevel_1 AS bla';
@@ -328,7 +328,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Contrato', $rowdata['Nombre'], 'Resumen'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Contrato', $rowData['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -342,7 +342,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<?php if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){ ?>
+						<?php if(isset($rowData['idOpcionItem'])&&$rowData['idOpcionItem']==1){ ?>
 							<li class=""><a href="<?php echo 'licitacion_listado_itemizado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sitemap" aria-hidden="true"></i> Itemizado</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'licitacion_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
@@ -361,60 +361,60 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
 							<tr class="odd">
 								<td width="200">Codigo Contrato</td>
-								<td><?php echo $rowdata['Codigo']; ?></td>
+								<td><?php echo $rowData['Codigo']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Nombre Contrato</td>
-								<td><?php echo $rowdata['Nombre']; ?></td>
+								<td><?php echo $rowData['Nombre']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Sistema</td>
-								<td><?php echo $rowdata['Sistema']; ?></td>
+								<td><?php echo $rowData['Sistema']; ?></td>
 							</tr>
 
-							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){ ?>
+							<?php if(isset($rowData['idCliente'])&&$rowData['idCliente']!=''){ ?>
 								<tr class="odd">
 									<td>Cliente</td>
-									<td><?php echo $rowdata['Cliente']; ?></td>
+									<td><?php echo $rowData['Cliente']; ?></td>
 								</tr>
 							<?php } ?>
 							<tr class="odd">
 								<td>Duracion</td>
-								<td><?php echo 'Del '.Fecha_estandar($rowdata['FechaInicio']).' al '.Fecha_estandar($rowdata['FechaTermino']); ?></td>
+								<td><?php echo 'Del '.Fecha_estandar($rowData['FechaInicio']).' al '.Fecha_estandar($rowData['FechaTermino']); ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Tipo de Contrato</td>
-								<td><?php echo $rowdata['TipoLicitacion']; ?></td>
+								<td><?php echo $rowData['TipoLicitacion']; ?></td>
 							</tr>
-							<?php if(isset($rowdata['idTipoLicitacion'])&&$rowdata['idTipoLicitacion']==1){ ?>
+							<?php if(isset($rowData['idTipoLicitacion'])&&$rowData['idTipoLicitacion']==1){ ?>
 								<tr class="odd">
 									<td>Valor Mensual</td>
-									<td align="right"><?php echo Valores($rowdata['ValorMensual'], 0); ?></td>
+									<td align="right"><?php echo Valores($rowData['ValorMensual'], 0); ?></td>
 								</tr>
 							<?php } ?>
-							<?php if(isset($rowdata['idTipoLicitacion'])&&$rowdata['idTipoLicitacion']==2){ ?>
+							<?php if(isset($rowData['idTipoLicitacion'])&&$rowData['idTipoLicitacion']==2){ ?>
 								<tr class="odd">
 									<td>Presupuesto</td>
-									<td align="right"><?php echo Valores($rowdata['Presupuesto'], 0); ?></td>
+									<td align="right"><?php echo Valores($rowData['Presupuesto'], 0); ?></td>
 								</tr>
 							<?php } ?>
 							<tr class="odd">
 								<td>Estado</td>
-								<td><?php echo $rowdata['Estado']; ?></td>
+								<td><?php echo $rowData['Estado']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Estado Aprobacion</td>
-								<td><?php echo $rowdata['EstadoAprobacion']; ?></td>
+								<td><?php echo $rowData['EstadoAprobacion']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Bodega Productos Utilizada</td>
-								<td><?php echo $rowdata['BodegaProductos']; ?></td>
+								<td><?php echo $rowData['BodegaProductos']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Bodega Insumos Utilizada</td>
-								<td><?php echo $rowdata['BodegaInsumos']; ?></td>
+								<td><?php echo $rowData['BodegaInsumos']; ?></td>
 							</tr>
-							<?php if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){ ?>
+							<?php if(isset($rowData['idOpcionItem'])&&$rowData['idOpcionItem']==1){ ?>
 								<tr>
 									<td colspan="2" style="background-color: #ccc;">Itemizado</td>
 								</tr>
@@ -429,7 +429,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 									</td>
 								</tr>
 							<?php } ?>
-							<?php if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==2){ ?>
+							<?php if(isset($rowData['idOpcionItem'])&&$rowData['idOpcionItem']==2){ ?>
 								<tr>
 									<td colspan="2" style="background-color: #ccc;">Itemizado</td>
 								</tr>

@@ -54,12 +54,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Identificador, Nombre,idSector, idPuntoMuestreo, UTM_norte, UTM_este';
 $SIS_join  = '';
 $SIS_where = 'idCliente = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente '.$rowdata['Identificador'], $rowdata['Nombre'], 'Editar Datos Mediciones'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente '.$rowData['Identificador'], $rowData['Nombre'], 'Editar Datos Mediciones'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -88,10 +88,10 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_joi
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idSector)){          $x1  = $idSector;          }else{$x1  = $rowdata['idSector'];}
-					if(isset($idPuntoMuestreo)){   $x2  = $idPuntoMuestreo;   }else{$x2  = $rowdata['idPuntoMuestreo'];}
-					if(isset($UTM_norte)){         $x3  = $UTM_norte;         }else{$x3  = $rowdata['UTM_norte'];}
-					if(isset($UTM_este)){          $x4  = $UTM_este;          }else{$x4  = $rowdata['UTM_este'];}
+					if(isset($idSector)){          $x1  = $idSector;          }else{$x1  = $rowData['idSector'];}
+					if(isset($idPuntoMuestreo)){   $x2  = $idPuntoMuestreo;   }else{$x2  = $rowData['idPuntoMuestreo'];}
+					if(isset($UTM_norte)){         $x3  = $UTM_norte;         }else{$x3  = $rowData['UTM_norte'];}
+					if(isset($UTM_este)){          $x4  = $UTM_este;          }else{$x4  = $rowData['UTM_este'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

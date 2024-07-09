@@ -145,7 +145,7 @@ if(!empty($_GET['addTarea'])){
 $SIS_query = 'idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, idTipo, f_programacion';
 $SIS_join  = '';
 $SIS_where = 'idOT ='.$_GET['view'];
-$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
@@ -238,19 +238,19 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				$Form_Inputs->form_textarea('Observacion','Observacion', $x26, 1);
 
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
-				$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
-				$Form_Inputs->form_input_hidden('idUbicacion', $rowdata['idUbicacion'], 2);
-				if(isset($rowdata['idUbicacion_lvl_1'])&&$rowdata['idUbicacion_lvl_1']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_1', $rowdata['idUbicacion_lvl_1'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_2'])&&$rowdata['idUbicacion_lvl_2']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_2', $rowdata['idUbicacion_lvl_2'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_3'])&&$rowdata['idUbicacion_lvl_3']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $rowdata['idUbicacion_lvl_3'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_4'])&&$rowdata['idUbicacion_lvl_4']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $rowdata['idUbicacion_lvl_4'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_5'])&&$rowdata['idUbicacion_lvl_5']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $rowdata['idUbicacion_lvl_5'], 2);}
+				$Form_Inputs->form_input_hidden('idSistema', $rowData['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idUbicacion', $rowData['idUbicacion'], 2);
+				if(isset($rowData['idUbicacion_lvl_1'])&&$rowData['idUbicacion_lvl_1']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_1', $rowData['idUbicacion_lvl_1'], 2);}
+				if(isset($rowData['idUbicacion_lvl_2'])&&$rowData['idUbicacion_lvl_2']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_2', $rowData['idUbicacion_lvl_2'], 2);}
+				if(isset($rowData['idUbicacion_lvl_3'])&&$rowData['idUbicacion_lvl_3']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $rowData['idUbicacion_lvl_3'], 2);}
+				if(isset($rowData['idUbicacion_lvl_4'])&&$rowData['idUbicacion_lvl_4']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $rowData['idUbicacion_lvl_4'], 2);}
+				if(isset($rowData['idUbicacion_lvl_5'])&&$rowData['idUbicacion_lvl_5']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $rowData['idUbicacion_lvl_5'], 2);}
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Inputs->form_input_hidden('idEstado', $rowdata['idEstado'], 2);
-				$Form_Inputs->form_input_hidden('idPrioridad', $rowdata['idPrioridad'], 2);
-				$Form_Inputs->form_input_hidden('idTipo', $rowdata['idTipo'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', $rowData['idEstado'], 2);
+				$Form_Inputs->form_input_hidden('idPrioridad', $rowData['idPrioridad'], 2);
+				$Form_Inputs->form_input_hidden('idTipo', $rowData['idTipo'], 2);
 				$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
-				$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
+				$Form_Inputs->form_input_hidden('f_programacion', $rowData['f_programacion'], 2);
 				$Form_Inputs->form_input_hidden('idEstadoTarea', 1, 2);
 
 				?>
@@ -272,7 +272,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 $SIS_query = 'idLicitacion, idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5, idLevel_6, idLevel_7, idLevel_8, idLevel_9, idLevel_10, idLevel_11, idLevel_12, idLevel_13, idLevel_14, idLevel_15, idLevel_16, idLevel_17, idLevel_18, idLevel_19, idLevel_20, idLevel_21, idLevel_22, idLevel_23, idLevel_24, idLevel_25,Observacion';
 $SIS_join  = '';
 $SIS_where = 'idTrabajoOT ='.$_GET['editTarea'];
-$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_tareas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_tareas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
@@ -306,33 +306,33 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idLicitacion)){     $x0  = $idLicitacion;     }else{$x0  = $rowdata['idLicitacion'];}
-				if(isset($idLevel_1)){        $x1  = $idLevel_1;        }else{$x1  = $rowdata['idLevel_1'];}
-				if(isset($idLevel_2)){        $x2  = $idLevel_2;        }else{$x2  = $rowdata['idLevel_2'];}
-				if(isset($idLevel_3)){        $x3  = $idLevel_3;        }else{$x3  = $rowdata['idLevel_3'];}
-				if(isset($idLevel_4)){        $x4  = $idLevel_4;        }else{$x4  = $rowdata['idLevel_4'];}
-				if(isset($idLevel_5)){        $x5  = $idLevel_5;        }else{$x5  = $rowdata['idLevel_5'];}
-				if(isset($idLevel_6)){        $x6  = $idLevel_6;        }else{$x6  = $rowdata['idLevel_6'];}
-				if(isset($idLevel_7)){        $x7  = $idLevel_7;        }else{$x7  = $rowdata['idLevel_7'];}
-				if(isset($idLevel_8)){        $x8  = $idLevel_8;        }else{$x8  = $rowdata['idLevel_8'];}
-				if(isset($idLevel_9)){        $x9  = $idLevel_9;        }else{$x9  = $rowdata['idLevel_9'];}
-				if(isset($idLevel_10)){       $x10  = $idLevel_10;      }else{$x10  = $rowdata['idLevel_10'];}
-				if(isset($idLevel_11)){       $x11  = $idLevel_11;      }else{$x11  = $rowdata['idLevel_11'];}
-				if(isset($idLevel_12)){       $x12  = $idLevel_12;      }else{$x12  = $rowdata['idLevel_12'];}
-				if(isset($idLevel_13)){       $x13  = $idLevel_13;      }else{$x13  = $rowdata['idLevel_13'];}
-				if(isset($idLevel_14)){       $x14  = $idLevel_14;      }else{$x14  = $rowdata['idLevel_14'];}
-				if(isset($idLevel_15)){       $x15  = $idLevel_15;      }else{$x15  = $rowdata['idLevel_15'];}
-				if(isset($idLevel_16)){       $x16  = $idLevel_16;      }else{$x16  = $rowdata['idLevel_16'];}
-				if(isset($idLevel_17)){       $x17  = $idLevel_17;      }else{$x17  = $rowdata['idLevel_17'];}
-				if(isset($idLevel_18)){       $x18  = $idLevel_18;      }else{$x18  = $rowdata['idLevel_18'];}
-				if(isset($idLevel_19)){       $x19  = $idLevel_19;      }else{$x19  = $rowdata['idLevel_19'];}
-				if(isset($idLevel_20)){       $x20  = $idLevel_20;      }else{$x20  = $rowdata['idLevel_20'];}
-				if(isset($idLevel_21)){       $x21  = $idLevel_21;      }else{$x21  = $rowdata['idLevel_21'];}
-				if(isset($idLevel_22)){       $x22  = $idLevel_22;      }else{$x22  = $rowdata['idLevel_22'];}
-				if(isset($idLevel_23)){       $x23  = $idLevel_23;      }else{$x23  = $rowdata['idLevel_23'];}
-				if(isset($idLevel_24)){       $x24  = $idLevel_24;      }else{$x24  = $rowdata['idLevel_24'];}
-				if(isset($idLevel_25)){       $x25  = $idLevel_25;      }else{$x25  = $rowdata['idLevel_25'];}
-				if(isset($Observacion)){      $x26  = $Observacion;     }else{$x26  = $rowdata['Observacion'];}
+				if(isset($idLicitacion)){     $x0  = $idLicitacion;     }else{$x0  = $rowData['idLicitacion'];}
+				if(isset($idLevel_1)){        $x1  = $idLevel_1;        }else{$x1  = $rowData['idLevel_1'];}
+				if(isset($idLevel_2)){        $x2  = $idLevel_2;        }else{$x2  = $rowData['idLevel_2'];}
+				if(isset($idLevel_3)){        $x3  = $idLevel_3;        }else{$x3  = $rowData['idLevel_3'];}
+				if(isset($idLevel_4)){        $x4  = $idLevel_4;        }else{$x4  = $rowData['idLevel_4'];}
+				if(isset($idLevel_5)){        $x5  = $idLevel_5;        }else{$x5  = $rowData['idLevel_5'];}
+				if(isset($idLevel_6)){        $x6  = $idLevel_6;        }else{$x6  = $rowData['idLevel_6'];}
+				if(isset($idLevel_7)){        $x7  = $idLevel_7;        }else{$x7  = $rowData['idLevel_7'];}
+				if(isset($idLevel_8)){        $x8  = $idLevel_8;        }else{$x8  = $rowData['idLevel_8'];}
+				if(isset($idLevel_9)){        $x9  = $idLevel_9;        }else{$x9  = $rowData['idLevel_9'];}
+				if(isset($idLevel_10)){       $x10  = $idLevel_10;      }else{$x10  = $rowData['idLevel_10'];}
+				if(isset($idLevel_11)){       $x11  = $idLevel_11;      }else{$x11  = $rowData['idLevel_11'];}
+				if(isset($idLevel_12)){       $x12  = $idLevel_12;      }else{$x12  = $rowData['idLevel_12'];}
+				if(isset($idLevel_13)){       $x13  = $idLevel_13;      }else{$x13  = $rowData['idLevel_13'];}
+				if(isset($idLevel_14)){       $x14  = $idLevel_14;      }else{$x14  = $rowData['idLevel_14'];}
+				if(isset($idLevel_15)){       $x15  = $idLevel_15;      }else{$x15  = $rowData['idLevel_15'];}
+				if(isset($idLevel_16)){       $x16  = $idLevel_16;      }else{$x16  = $rowData['idLevel_16'];}
+				if(isset($idLevel_17)){       $x17  = $idLevel_17;      }else{$x17  = $rowData['idLevel_17'];}
+				if(isset($idLevel_18)){       $x18  = $idLevel_18;      }else{$x18  = $rowData['idLevel_18'];}
+				if(isset($idLevel_19)){       $x19  = $idLevel_19;      }else{$x19  = $rowData['idLevel_19'];}
+				if(isset($idLevel_20)){       $x20  = $idLevel_20;      }else{$x20  = $rowData['idLevel_20'];}
+				if(isset($idLevel_21)){       $x21  = $idLevel_21;      }else{$x21  = $rowData['idLevel_21'];}
+				if(isset($idLevel_22)){       $x22  = $idLevel_22;      }else{$x22  = $rowData['idLevel_22'];}
+				if(isset($idLevel_23)){       $x23  = $idLevel_23;      }else{$x23  = $rowData['idLevel_23'];}
+				if(isset($idLevel_24)){       $x24  = $idLevel_24;      }else{$x24  = $rowData['idLevel_24'];}
+				if(isset($idLevel_25)){       $x25  = $idLevel_25;      }else{$x25  = $rowData['idLevel_25'];}
+				if(isset($Observacion)){      $x26  = $Observacion;     }else{$x26  = $rowData['Observacion'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -387,7 +387,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 $SIS_query = 'idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, idTipo, f_programacion';
 $SIS_join  = '';
 $SIS_where = 'idOT ='.$_GET['view'];
-$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //Se revisan los permisos a los productos
 $SIS_query = 'idProducto';
@@ -441,19 +441,19 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 				</div>';
 
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
-				$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
-				$Form_Inputs->form_input_hidden('idUbicacion', $rowdata['idUbicacion'], 2);
-				if(isset($rowdata['idUbicacion_lvl_1'])&&$rowdata['idUbicacion_lvl_1']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_1', $rowdata['idUbicacion_lvl_1'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_2'])&&$rowdata['idUbicacion_lvl_2']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_2', $rowdata['idUbicacion_lvl_2'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_3'])&&$rowdata['idUbicacion_lvl_3']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $rowdata['idUbicacion_lvl_3'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_4'])&&$rowdata['idUbicacion_lvl_4']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $rowdata['idUbicacion_lvl_4'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_5'])&&$rowdata['idUbicacion_lvl_5']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $rowdata['idUbicacion_lvl_5'], 2);}
+				$Form_Inputs->form_input_hidden('idSistema', $rowData['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idUbicacion', $rowData['idUbicacion'], 2);
+				if(isset($rowData['idUbicacion_lvl_1'])&&$rowData['idUbicacion_lvl_1']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_1', $rowData['idUbicacion_lvl_1'], 2);}
+				if(isset($rowData['idUbicacion_lvl_2'])&&$rowData['idUbicacion_lvl_2']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_2', $rowData['idUbicacion_lvl_2'], 2);}
+				if(isset($rowData['idUbicacion_lvl_3'])&&$rowData['idUbicacion_lvl_3']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $rowData['idUbicacion_lvl_3'], 2);}
+				if(isset($rowData['idUbicacion_lvl_4'])&&$rowData['idUbicacion_lvl_4']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $rowData['idUbicacion_lvl_4'], 2);}
+				if(isset($rowData['idUbicacion_lvl_5'])&&$rowData['idUbicacion_lvl_5']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $rowData['idUbicacion_lvl_5'], 2);}
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Inputs->form_input_hidden('idEstado', $rowdata['idEstado'], 2);
-				$Form_Inputs->form_input_hidden('idPrioridad', $rowdata['idPrioridad'], 2);
-				$Form_Inputs->form_input_hidden('idTipo', $rowdata['idTipo'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', $rowData['idEstado'], 2);
+				$Form_Inputs->form_input_hidden('idPrioridad', $rowData['idPrioridad'], 2);
+				$Form_Inputs->form_input_hidden('idTipo', $rowData['idTipo'], 2);
 				$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
-				$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
+				$Form_Inputs->form_input_hidden('f_programacion', $rowData['f_programacion'], 2);
 
 				?>
 
@@ -500,7 +500,7 @@ $SIS_join  = '
 LEFT JOIN `productos_listado`         ON productos_listado.idProducto  = orden_trabajo_tareas_listado_productos.idProducto
 LEFT JOIN `sistema_productos_uml`     ON sistema_productos_uml.idUml   = productos_listado.idUml';
 $SIS_where = 'idProductos ='.$_GET['edit_prod'];
-$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_productos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_productos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //Se revisan los permisos a los productos
 $SIS_query = 'idProducto';
@@ -538,8 +538,8 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $rowdata['idProducto'];}
-				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = $rowdata['Cantidad'];}
+				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $rowData['idProducto'];}
+				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = $rowData['Cantidad'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -549,7 +549,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 				echo '<div class="form-group" id="div_">
 					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Unidad de Medida</label>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-						<input type="text" value="'.$rowdata['Unidad'].'" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
+						<input type="text" value="'.$rowData['Unidad'].'" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
 
@@ -596,7 +596,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 $SIS_query = 'idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, idTipo, f_programacion';
 $SIS_join  = '';
 $SIS_where = 'idOT ='.$_GET['view'];
-$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //Se revisan los permisos a los productos
 $SIS_query = 'idProducto';
@@ -650,19 +650,19 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 				</div>';
 
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
-				$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
-				$Form_Inputs->form_input_hidden('idUbicacion', $rowdata['idUbicacion'], 2);
-				if(isset($rowdata['idUbicacion_lvl_1'])&&$rowdata['idUbicacion_lvl_1']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_1', $rowdata['idUbicacion_lvl_1'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_2'])&&$rowdata['idUbicacion_lvl_2']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_2', $rowdata['idUbicacion_lvl_2'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_3'])&&$rowdata['idUbicacion_lvl_3']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $rowdata['idUbicacion_lvl_3'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_4'])&&$rowdata['idUbicacion_lvl_4']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $rowdata['idUbicacion_lvl_4'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_5'])&&$rowdata['idUbicacion_lvl_5']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $rowdata['idUbicacion_lvl_5'], 2);}
+				$Form_Inputs->form_input_hidden('idSistema', $rowData['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idUbicacion', $rowData['idUbicacion'], 2);
+				if(isset($rowData['idUbicacion_lvl_1'])&&$rowData['idUbicacion_lvl_1']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_1', $rowData['idUbicacion_lvl_1'], 2);}
+				if(isset($rowData['idUbicacion_lvl_2'])&&$rowData['idUbicacion_lvl_2']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_2', $rowData['idUbicacion_lvl_2'], 2);}
+				if(isset($rowData['idUbicacion_lvl_3'])&&$rowData['idUbicacion_lvl_3']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $rowData['idUbicacion_lvl_3'], 2);}
+				if(isset($rowData['idUbicacion_lvl_4'])&&$rowData['idUbicacion_lvl_4']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $rowData['idUbicacion_lvl_4'], 2);}
+				if(isset($rowData['idUbicacion_lvl_5'])&&$rowData['idUbicacion_lvl_5']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $rowData['idUbicacion_lvl_5'], 2);}
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Inputs->form_input_hidden('idEstado', $rowdata['idEstado'], 2);
-				$Form_Inputs->form_input_hidden('idPrioridad', $rowdata['idPrioridad'], 2);
-				$Form_Inputs->form_input_hidden('idTipo', $rowdata['idTipo'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', $rowData['idEstado'], 2);
+				$Form_Inputs->form_input_hidden('idPrioridad', $rowData['idPrioridad'], 2);
+				$Form_Inputs->form_input_hidden('idTipo', $rowData['idTipo'], 2);
 				$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
-				$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
+				$Form_Inputs->form_input_hidden('f_programacion', $rowData['f_programacion'], 2);
 
 				?>
 
@@ -709,7 +709,7 @@ $SIS_join  = '
 LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto  = orden_trabajo_tareas_listado_insumos.idProducto
 LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml = insumos_listado.idUml';
 $SIS_where = 'idInsumos ='.$_GET['edit_ins'];
-$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_insumos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_insumos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //Se revisan los permisos a los productos
 $SIS_query = 'idProducto';
@@ -747,8 +747,8 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $rowdata['idProducto'];}
-				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = $rowdata['Cantidad'];}
+				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $rowData['idProducto'];}
+				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = $rowData['Cantidad'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -758,7 +758,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 				echo '<div class="form-group" id="div_">
 					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Unidad de Medida</label>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-						<input type="text" value="'.$rowdata['Unidad'].'" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
+						<input type="text" value="'.$rowData['Unidad'].'" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
 
@@ -805,7 +805,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 $SIS_query = 'idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, idTipo, f_programacion';
 $SIS_join  = '';
 $SIS_where = 'idOT ='.$_GET['view'];
-$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
@@ -830,19 +830,19 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_select_filter('Trabajador responsable','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
 
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
-				$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
-				$Form_Inputs->form_input_hidden('idUbicacion', $rowdata['idUbicacion'], 2);
-				if(isset($rowdata['idUbicacion_lvl_1'])&&$rowdata['idUbicacion_lvl_1']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_1', $rowdata['idUbicacion_lvl_1'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_2'])&&$rowdata['idUbicacion_lvl_2']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_2', $rowdata['idUbicacion_lvl_2'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_3'])&&$rowdata['idUbicacion_lvl_3']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $rowdata['idUbicacion_lvl_3'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_4'])&&$rowdata['idUbicacion_lvl_4']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $rowdata['idUbicacion_lvl_4'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_5'])&&$rowdata['idUbicacion_lvl_5']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $rowdata['idUbicacion_lvl_5'], 2);}
+				$Form_Inputs->form_input_hidden('idSistema', $rowData['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idUbicacion', $rowData['idUbicacion'], 2);
+				if(isset($rowData['idUbicacion_lvl_1'])&&$rowData['idUbicacion_lvl_1']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_1', $rowData['idUbicacion_lvl_1'], 2);}
+				if(isset($rowData['idUbicacion_lvl_2'])&&$rowData['idUbicacion_lvl_2']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_2', $rowData['idUbicacion_lvl_2'], 2);}
+				if(isset($rowData['idUbicacion_lvl_3'])&&$rowData['idUbicacion_lvl_3']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $rowData['idUbicacion_lvl_3'], 2);}
+				if(isset($rowData['idUbicacion_lvl_4'])&&$rowData['idUbicacion_lvl_4']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $rowData['idUbicacion_lvl_4'], 2);}
+				if(isset($rowData['idUbicacion_lvl_5'])&&$rowData['idUbicacion_lvl_5']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $rowData['idUbicacion_lvl_5'], 2);}
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				$Form_Inputs->form_input_hidden('idEstado', $rowdata['idEstado'], 2);
-				$Form_Inputs->form_input_hidden('idPrioridad', $rowdata['idPrioridad'], 2);
-				$Form_Inputs->form_input_hidden('idTipo', $rowdata['idTipo'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', $rowData['idEstado'], 2);
+				$Form_Inputs->form_input_hidden('idPrioridad', $rowData['idPrioridad'], 2);
+				$Form_Inputs->form_input_hidden('idTipo', $rowData['idTipo'], 2);
 				$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
-				$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
+				$Form_Inputs->form_input_hidden('f_programacion', $rowData['f_programacion'], 2);
 
 				?>
 
@@ -863,7 +863,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 $SIS_query = 'idTrabajador';
 $SIS_join  = '';
 $SIS_where = 'idResponsable ='.$_GET['edit_trab'];
-$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_responsable', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_responsable', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
@@ -881,7 +881,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = $rowdata['idTrabajador'];}
+				if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = $rowData['idTrabajador'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -907,7 +907,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 $SIS_query = 'Observaciones';
 $SIS_join  = '';
 $SIS_where = 'idOT ='.$_GET['view'];
-$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -922,7 +922,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Observaciones)){    $x1  = $Observaciones;    }else{$x1  = $rowdata['Observaciones'];}
+				if(isset($Observaciones)){    $x1  = $Observaciones;    }else{$x1  = $rowData['Observaciones'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -947,7 +947,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 $SIS_query = 'idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4,idUbicacion_lvl_5, idPrioridad, idTipo, f_programacion';
 $SIS_join  = '';
 $SIS_where = 'idOT ='.$_GET['view'];
-$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 	
@@ -963,15 +963,15 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idUbicacion)){        $x1  = $idUbicacion;        }else{$x1  = $rowdata['idUbicacion'];}
-				if(isset($idUbicacion_lvl_1)){  $x2  = $idUbicacion_lvl_1;  }else{$x2  = $rowdata['idUbicacion_lvl_1'];}
-				if(isset($idUbicacion_lvl_2)){  $x3  = $idUbicacion_lvl_2;  }else{$x3  = $rowdata['idUbicacion_lvl_2'];}
-				if(isset($idUbicacion_lvl_3)){  $x4  = $idUbicacion_lvl_3;  }else{$x4  = $rowdata['idUbicacion_lvl_3'];}
-				if(isset($idUbicacion_lvl_4)){  $x5  = $idUbicacion_lvl_4;  }else{$x5  = $rowdata['idUbicacion_lvl_4'];}
-				if(isset($idUbicacion_lvl_5)){  $x6  = $idUbicacion_lvl_5;  }else{$x6  = $rowdata['idUbicacion_lvl_5'];}
-				if(isset($idPrioridad)){        $x7  = $idPrioridad;        }else{$x7  = $rowdata['idPrioridad'];}
-				if(isset($idTipo)){             $x8  = $idTipo;             }else{$x8  = $rowdata['idTipo'];}
-				if(isset($f_programacion)){     $x9  = $f_programacion;     }else{$x9  = $rowdata['f_programacion'];}
+				if(isset($idUbicacion)){        $x1  = $idUbicacion;        }else{$x1  = $rowData['idUbicacion'];}
+				if(isset($idUbicacion_lvl_1)){  $x2  = $idUbicacion_lvl_1;  }else{$x2  = $rowData['idUbicacion_lvl_1'];}
+				if(isset($idUbicacion_lvl_2)){  $x3  = $idUbicacion_lvl_2;  }else{$x3  = $rowData['idUbicacion_lvl_2'];}
+				if(isset($idUbicacion_lvl_3)){  $x4  = $idUbicacion_lvl_3;  }else{$x4  = $rowData['idUbicacion_lvl_3'];}
+				if(isset($idUbicacion_lvl_4)){  $x5  = $idUbicacion_lvl_4;  }else{$x5  = $rowData['idUbicacion_lvl_4'];}
+				if(isset($idUbicacion_lvl_5)){  $x6  = $idUbicacion_lvl_5;  }else{$x6  = $rowData['idUbicacion_lvl_5'];}
+				if(isset($idPrioridad)){        $x7  = $idPrioridad;        }else{$x7  = $rowData['idPrioridad'];}
+				if(isset($idTipo)){             $x8  = $idTipo;             }else{$x8  = $rowData['idTipo'];}
+				if(isset($f_programacion)){     $x9  = $f_programacion;     }else{$x9  = $rowData['f_programacion'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -1033,7 +1033,7 @@ LEFT JOIN `ubicacion_listado_level_3`  ON ubicacion_listado_level_3.idLevel_3   
 LEFT JOIN `ubicacion_listado_level_4`  ON ubicacion_listado_level_4.idLevel_4   = orden_trabajo_tareas_listado.idUbicacion_lvl_4
 LEFT JOIN `ubicacion_listado_level_5`  ON ubicacion_listado_level_5.idLevel_5   = orden_trabajo_tareas_listado.idUbicacion_lvl_5';
 $SIS_where = 'orden_trabajo_tareas_listado.idOT ='.$_GET['view'];
-$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //Se traen a todos los trabajadores relacionados a las ot
 $SIS_query = '
@@ -1174,26 +1174,26 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 					<tr>
 						<td class="meta-head">Ubicación</td>
 						<td>
-							<?php echo $rowdata['Ubicacion'];
-							if(isset($rowdata['UbicacionLVL_1'])&&$rowdata['UbicacionLVL_1']!=''){echo ' - '.$rowdata['UbicacionLVL_1'];}
-							if(isset($rowdata['UbicacionLVL_2'])&&$rowdata['UbicacionLVL_2']!=''){echo ' - '.$rowdata['UbicacionLVL_2'];}
-							if(isset($rowdata['UbicacionLVL_3'])&&$rowdata['UbicacionLVL_3']!=''){echo ' - '.$rowdata['UbicacionLVL_3'];}
-							if(isset($rowdata['UbicacionLVL_4'])&&$rowdata['UbicacionLVL_4']!=''){echo ' - '.$rowdata['UbicacionLVL_4'];}
-							if(isset($rowdata['UbicacionLVL_5'])&&$rowdata['UbicacionLVL_5']!=''){echo ' - '.$rowdata['UbicacionLVL_5'];}
+							<?php echo $rowData['Ubicacion'];
+							if(isset($rowData['UbicacionLVL_1'])&&$rowData['UbicacionLVL_1']!=''){echo ' - '.$rowData['UbicacionLVL_1'];}
+							if(isset($rowData['UbicacionLVL_2'])&&$rowData['UbicacionLVL_2']!=''){echo ' - '.$rowData['UbicacionLVL_2'];}
+							if(isset($rowData['UbicacionLVL_3'])&&$rowData['UbicacionLVL_3']!=''){echo ' - '.$rowData['UbicacionLVL_3'];}
+							if(isset($rowData['UbicacionLVL_4'])&&$rowData['UbicacionLVL_4']!=''){echo ' - '.$rowData['UbicacionLVL_4'];}
+							if(isset($rowData['UbicacionLVL_5'])&&$rowData['UbicacionLVL_5']!=''){echo ' - '.$rowData['UbicacionLVL_5'];}
 							?>
 						</td>
 					</tr>
 					<tr>
 						<td class="meta-head">Prioridad</td>
-						<td><?php echo $rowdata['NombrePrioridad']?></td>
+						<td><?php echo $rowData['NombrePrioridad']?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Tipo de Trabajo</td>
-						<td><?php echo $rowdata['NombreTipo']?></td>
+						<td><?php echo $rowData['NombreTipo']?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Estado</td>
-						<td><?php echo $rowdata['NombreEstado']?></td>
+						<td><?php echo $rowData['NombreEstado']?></td>
 					</tr>
 
 				</tbody>
@@ -1201,38 +1201,38 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 			<table id="meta" class="otdata2">
 				<tbody>
 
-					<?php if($rowdata['f_creacion']!='0000-00-00'){ ?>
+					<?php if($rowData['f_creacion']!='0000-00-00'){ ?>
 						<tr>
 							<td class="meta-head">Fecha creación</td>
-							<td><?php if($rowdata['f_creacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_creacion']);} ?></td>
+							<td><?php if($rowData['f_creacion']!='0000-00-00'){echo Fecha_estandar($rowData['f_creacion']);} ?></td>
 						</tr>
 					<?php } ?>
 
-					<?php if($rowdata['f_programacion']!='0000-00-00'){ ?>
+					<?php if($rowData['f_programacion']!='0000-00-00'){ ?>
 						<tr>
 							<td class="meta-head">Fecha programada</td>
-							<td><?php if($rowdata['f_programacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_programacion']);} ?></td>
+							<td><?php if($rowData['f_programacion']!='0000-00-00'){echo Fecha_estandar($rowData['f_programacion']);} ?></td>
 						</tr>
 					<?php } ?>
 
-					<?php if($rowdata['f_termino']!='0000-00-00'){ ?>
+					<?php if($rowData['f_termino']!='0000-00-00'){ ?>
 						<tr>
 							<td class="meta-head">Fecha termino</td>
-							<td><?php if($rowdata['f_termino']!='0000-00-00'){echo Fecha_estandar($rowdata['f_termino']);} ?></td>
+							<td><?php if($rowData['f_termino']!='0000-00-00'){echo Fecha_estandar($rowData['f_termino']);} ?></td>
 						</tr>
 					<?php } ?>
 
-					<?php if($rowdata['hora_Inicio']!='00:00:00'){ ?>
+					<?php if($rowData['hora_Inicio']!='00:00:00'){ ?>
 						<tr>
 							<td class="meta-head">Hora inicio</td>
-							<td><?php if($rowdata['hora_Inicio']!='00:00:00'){echo $rowdata['hora_Inicio'];} ?></td>
+							<td><?php if($rowData['hora_Inicio']!='00:00:00'){echo $rowData['hora_Inicio'];} ?></td>
 						</tr>
 					<?php } ?>
 
-					<?php if($rowdata['hora_Termino']!='00:00:00'){ ?>
+					<?php if($rowData['hora_Termino']!='00:00:00'){ ?>
 						<tr>
 							<td class="meta-head">Hora termino</td>
-							<td><?php if($rowdata['hora_Termino']!='00:00:00'){echo $rowdata['hora_Termino'];} ?></td>
+							<td><?php if($rowData['hora_Termino']!='00:00:00'){echo $rowData['hora_Termino'];} ?></td>
 						</tr>
 					<?php } ?>
 
@@ -1252,7 +1252,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 						<td colspan="5">Trabajadores Encargados</td>
 						<td>
 							<?php //Si la OT solo esta programada
-							if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){ ?>
+							if(isset($rowData['idEstado'])&&$rowData['idEstado']!=''&&$rowData['idEstado']==1){ ?>
 								<a href="<?php echo $location.'&addTrab=true' ?>" title="Agregar Trabajadores" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Trabajadores</a>
 							<?php } ?>
 						</td>
@@ -1276,10 +1276,10 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 					<tr id="hiderow"><td colspan="6"></td></tr>
 				<?php /**********************************************************************************/ ?>
 					<tr class="item-row fact_tittle">
-						<td colspan="5">Insumos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';} ?></td>
+						<td colspan="5">Insumos <?php if(isset($rowData['idEstado'])&&$rowData['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';} ?></td>
 						<td>
 							<?php //Si la OT solo esta programada
-							if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){ ?>
+							if(isset($rowData['idEstado'])&&$rowData['idEstado']!=''&&$rowData['idEstado']==1){ ?>
 								<a href="<?php echo $location.'&addIns=true' ?>" title="Agregar Insumos" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Insumos</a>
 							<?php } ?>
 						</td>
@@ -1287,12 +1287,12 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 					<?php foreach ($arrInsumos as $insumos) {
 						if(isset($insumos['Cantidad'])&&$insumos['Cantidad']!=0){ ?>
 							<tr class="item-row linea_punteada">
-								<td class="item-name" colspan="4"><?php echo $insumos['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
+								<td class="item-name" colspan="4"><?php echo $insumos['NombreProducto']; if(isset($rowData['NombreBodega'])&&$rowData['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
 								<td class="item-name"><?php echo $insumos['Cantidad'].' '.$insumos['UnidadMedida']; ?></td>
 								<td>
 									<div class="btn-group" style="width: 70px;" >
 										<?php //Si la OT solo esta programada
-										if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){ ?>
+										if(isset($rowData['idEstado'])&&$rowData['idEstado']!=''&&$rowData['idEstado']==1){ ?>
 											<a href="<?php echo $location.'&edit_ins='.$insumos['idMain']; ?>" title="Editar Insumos" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 											<?php
 											$ubicacion = $location.'&del_ins='.simpleEncode($insumos['idMain'], fecha_actual());
@@ -1308,10 +1308,10 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 					<tr id="hiderow"><td colspan="6"></td></tr>
 				<?php /**********************************************************************************/?>
 					<tr class="item-row fact_tittle">
-						<td colspan="5">Productos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';} ?></td>
+						<td colspan="5">Productos <?php if(isset($rowData['idEstado'])&&$rowData['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';} ?></td>
 						<td>
 							<?php //Si la OT solo esta programada
-							if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){ ?>
+							if(isset($rowData['idEstado'])&&$rowData['idEstado']!=''&&$rowData['idEstado']==1){ ?>
 								<a href="<?php echo $location.'&addProd=true' ?>" title="Agregar Productos" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Productos</a>
 							<?php } ?>
 						</td>
@@ -1319,12 +1319,12 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 					<?php foreach ($arrProductos as $prod) {
 						if(isset($prod['Cantidad'])&&$prod['Cantidad']!=0){ ?>
 							<tr class="item-row linea_punteada">
-								<td class="item-name" colspan="4"><?php echo $prod['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
+								<td class="item-name" colspan="4"><?php echo $prod['NombreProducto']; if(isset($rowData['NombreBodega'])&&$rowData['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
 								<td class="item-name"><?php echo $prod['Cantidad'].' '.$prod['UnidadMedida']; ?></td>
 								<td>
 									<div class="btn-group" style="width: 70px;" >
 										<?php //Si la OT solo esta programada
-										if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){ ?>
+										if(isset($rowData['idEstado'])&&$rowData['idEstado']!=''&&$rowData['idEstado']==1){ ?>
 											<a href="<?php echo $location.'&edit_prod='.$prod['idMain']; ?>" title="Editar Productos" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 											<?php
 											$ubicacion = $location.'&del_prod='.simpleEncode($prod['idMain'], fecha_actual());
@@ -1340,10 +1340,10 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 					<tr id="hiderow"><td colspan="6"></td></tr>
 				<?php /**********************************************************************************/?>
 					<tr class="item-row fact_tittle">
-						<td colspan="5">Tareas <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Ejecutados';} ?></td>
+						<td colspan="5">Tareas <?php if(isset($rowData['idEstado'])&&$rowData['idEstado']==1){echo 'Programados';}else{echo 'Ejecutados';} ?></td>
 						<td>
 							<?php //Si la OT solo esta programada
-							if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){ ?>
+							if(isset($rowData['idEstado'])&&$rowData['idEstado']!=''&&$rowData['idEstado']==1){ ?>
 								<a href="<?php echo $location.'&addTarea=true' ?>" title="Agregar Tareas" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Tarea</a>
 							<?php } ?>
 						</td>
@@ -1406,7 +1406,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 				<?php /**********************************************************************************/?>
 
 				<tr>
-					<td colspan="5" class="blank"><p><?php echo $rowdata['Observaciones']?></p></td>
+					<td colspan="5" class="blank"><p><?php echo $rowData['Observaciones']?></p></td>
 					<td class="blank">
 						<div class="btn-group" style="width: 35px;" >
 							<a href="<?php echo $location.'&edit_obs=true'; ?>" title="Editar Observacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>

@@ -88,7 +88,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);	 
+$rowData = mysqli_fetch_assoc ($resultado);	 
  
  ?>
 
@@ -103,15 +103,15 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)){            $x1  = $Nombre;             }else{$x1  = $rowdata['Nombre'];}
-				if(isset($Codigo)){            $x2  = $Codigo;             }else{$x2  = $rowdata['Codigo'];}
-				if(isset($idUtilizable)){      $x3  = $idUtilizable;       }else{$x3  = $rowdata['idUtilizable'];}
-				if(isset($idFrecuencia)){      $x4  = $idFrecuencia;       }else{$x4  = $rowdata['idFrecuencia'];}
-				if(isset($Cantidad)){          $x5  = $Cantidad;           }else{$x5  = $rowdata['Cantidad'];}
-				if(isset($TiempoProgramado)){  $x6  = $TiempoProgramado;   }else{$x6  = $rowdata['TiempoProgramado'];}
-				if(isset($idTrabajo)){         $x7  = $idTrabajo;          }else{$x7  = $rowdata['idTrabajo'];}
-				if(isset($Valor)){             $x8  = $Valor;             }else{$x8  = $rowdata['Valor'];}
-				if(isset($ValorTotal)){        $x9  = $ValorTotal;         }else{$x9  = $rowdata['ValorTotal'];}
+				if(isset($Nombre)){            $x1  = $Nombre;             }else{$x1  = $rowData['Nombre'];}
+				if(isset($Codigo)){            $x2  = $Codigo;             }else{$x2  = $rowData['Codigo'];}
+				if(isset($idUtilizable)){      $x3  = $idUtilizable;       }else{$x3  = $rowData['idUtilizable'];}
+				if(isset($idFrecuencia)){      $x4  = $idFrecuencia;       }else{$x4  = $rowData['idFrecuencia'];}
+				if(isset($Cantidad)){          $x5  = $Cantidad;           }else{$x5  = $rowData['Cantidad'];}
+				if(isset($TiempoProgramado)){  $x6  = $TiempoProgramado;   }else{$x6  = $rowData['TiempoProgramado'];}
+				if(isset($idTrabajo)){         $x7  = $idTrabajo;          }else{$x7  = $rowData['idTrabajo'];}
+				if(isset($Valor)){             $x8  = $Valor;             }else{$x8  = $rowData['Valor'];}
+				if(isset($ValorTotal)){        $x9  = $ValorTotal;         }else{$x9  = $rowData['ValorTotal'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -425,7 +425,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 //Se crean las variables
 $nmax = 15;
@@ -738,9 +738,9 @@ function arrayToUL(array $array, array $TipoMaq, $lv, $rowlevel,$location, $nmax
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Contrato', $rowdata['Nombre'], 'Itemizado'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Contrato', $rowData['Nombre'], 'Itemizado'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
-		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php } ?>
+		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowData['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -755,7 +755,7 @@ function arrayToUL(array $array, array $TipoMaq, $lv, $rowlevel,$location, $nmax
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<?php if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){ ?>
+						<?php if(isset($rowData['idOpcionItem'])&&$rowData['idOpcionItem']==1){ ?>
 							<li class="active"><a href="<?php echo 'licitacion_listado_itemizado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sitemap" aria-hidden="true"></i> Itemizado</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'licitacion_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
@@ -768,7 +768,7 @@ function arrayToUL(array $array, array $TipoMaq, $lv, $rowlevel,$location, $nmax
         <div class="table-responsive">
 
 			<?php //Se imprime el arbol
-			echo arrayToUL($array3d, $TipoMaq, 0, $rowlevel['level'],$new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'], $nmax);
+			echo arrayToUL($array3d, $TipoMaq, 0, $rowlevel['level'],$new_location.'&id='.$_GET['id'].'&idSistema='.$rowData['idSistema'], $nmax);
 			?>
 
 		</div>

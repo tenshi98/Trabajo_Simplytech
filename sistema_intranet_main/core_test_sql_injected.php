@@ -36,33 +36,28 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Sistema Borrado correc
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*******************************************************/
 // consulto los datos
-$query1 = "SELECT
+$SIS_query = '
 usuarios_listado.password,
 usuarios_listado.usuario,
 usuarios_listado.Nombre,
-usuarios_tipos.Nombre AS Usuario_Tipo
+usuarios_tipos.Nombre AS Usuario_Tipo';
+$SIS_join  = 'LEFT JOIN `usuarios_tipos` ON usuarios_tipos.idTipoUsuario = usuarios_listado.idTipoUsuario';
+$SIS_where = 'usuarios_listado.usuario = "'.$usuario_1.'" AND usuarios_listado.password = "'.md5($password_1).'"';
+$rowUser1 = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'test_logo');
 
-FROM `usuarios_listado`
-LEFT JOIN `usuarios_tipos` ON usuarios_tipos.idTipoUsuario = usuarios_listado.idTipoUsuario
-WHERE usuarios_listado.usuario = '".$usuario_1."' AND usuarios_listado.password = '".md5($password_1)."'";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-$rowUser1   = mysqli_fetch_assoc ($resultado);
-
+/*******************************************************/
 // consulto los datos
-$query2 = "SELECT
+$SIS_query = '
 usuarios_listado.password,
 usuarios_listado.usuario,
 usuarios_listado.Nombre,
-usuarios_tipos.Nombre AS Usuario_Tipo
+usuarios_tipos.Nombre AS Usuario_Tipo';
+$SIS_join  = 'LEFT JOIN `usuarios_tipos` ON usuarios_tipos.idTipoUsuario = usuarios_listado.idTipoUsuario';
+$SIS_where = 'usuarios_listado.usuario = "'.$usuario_2.'" AND usuarios_listado.password = "'.md5($password_2).'"';
+$rowUser2 = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'test_logo');
 
-FROM `usuarios_listado`
-LEFT JOIN `usuarios_tipos` ON usuarios_tipos.idTipoUsuario = usuarios_listado.idTipoUsuario
-WHERE usuarios_listado.usuario = '".$usuario_2."' AND usuarios_listado.password = '".md5($password_2)."'";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-$rowUser2 = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">

@@ -79,7 +79,7 @@ idSigno,valorAnalisis,idLaboratorio,codigoMuestra,idOpciones,idSector,UTM_norte,
 idCliente,idSistema, idEstado, Observaciones, CodigoLaboratorio';
 $SIS_join  = '';
 $SIS_where = 'idAnalisisAgua = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'aguas_analisis_aguas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'aguas_analisis_aguas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /************************************/
 //Busco los datos de los clientes
@@ -117,25 +117,25 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($f_muestra)){                 $x1  = $f_muestra;                  }else{$x1  = $rowdata['f_muestra'];}
-				if(isset($f_recibida)){                $x2  = $f_recibida;                 }else{$x2  = $rowdata['f_recibida'];}
-				if(isset($idLaboratorio)){             $x3  = $idLaboratorio;              }else{$x3  = $rowdata['idLaboratorio'];}
-				if(isset($codigoMuestra)){             $x4  = $codigoMuestra;              }else{$x4  = $rowdata['codigoMuestra'];}
-				if(isset($CodigoLaboratorio)){         $x5  = $CodigoLaboratorio;          }else{$x5  = $rowdata['CodigoLaboratorio'];}
-				if(isset($idTipoMuestra)){             $x6  = $idTipoMuestra;              }else{$x6  = $rowdata['idTipoMuestra'];}
-				if(isset($RemuestraFecha)){            $x7  = $RemuestraFecha;             }else{$x7  = $rowdata['RemuestraFecha'];}
-				if(isset($Remuestra_codigo_muestra)){  $x8  = $Remuestra_codigo_muestra;   }else{$x8  = $rowdata['Remuestra_codigo_muestra'];}
-				if(isset($idParametros)){              $x9  = $idParametros;               }else{$x9  = $rowdata['idParametros'];}
-				if(isset($idSigno)){                   $x10 = $idSigno;                    }else{$x10 = $rowdata['idSigno'];}
-				if(isset($valorAnalisis)){             $x11 = $valorAnalisis;              }else{$x11 = $rowdata['valorAnalisis'];}
-				if(isset($idOpciones)){                $x12 = $idOpciones;                 }else{$x12 = $rowdata['idOpciones'];}
-				if(isset($idSector)){                  $x13 = $idSector;                   }else{$x13 = $rowdata['idSector'];}
-				if(isset($UTM_norte)){                 $x14 = $UTM_norte;                  }else{$x14 = $rowdata['UTM_norte'];}
-				if(isset($UTM_este)){                  $x15 = $UTM_este;                   }else{$x15 = $rowdata['UTM_este'];}
-				if(isset($idPuntoMuestreo)){           $x16 = $idPuntoMuestreo;            }else{$x16 = $rowdata['idPuntoMuestreo'];}
-				if(isset($idCliente)){                 $x17 = $idCliente;                  }else{$x17 = $rowdata['idCliente'];}
-				if(isset($idEstado)){                  $x18 = $idEstado;                   }else{$x18 = $rowdata['idEstado'];}
-				if(isset($Observaciones)){             $x19 = $Observaciones;              }else{$x19 = $rowdata['Observaciones'];}
+				if(isset($f_muestra)){                 $x1  = $f_muestra;                  }else{$x1  = $rowData['f_muestra'];}
+				if(isset($f_recibida)){                $x2  = $f_recibida;                 }else{$x2  = $rowData['f_recibida'];}
+				if(isset($idLaboratorio)){             $x3  = $idLaboratorio;              }else{$x3  = $rowData['idLaboratorio'];}
+				if(isset($codigoMuestra)){             $x4  = $codigoMuestra;              }else{$x4  = $rowData['codigoMuestra'];}
+				if(isset($CodigoLaboratorio)){         $x5  = $CodigoLaboratorio;          }else{$x5  = $rowData['CodigoLaboratorio'];}
+				if(isset($idTipoMuestra)){             $x6  = $idTipoMuestra;              }else{$x6  = $rowData['idTipoMuestra'];}
+				if(isset($RemuestraFecha)){            $x7  = $RemuestraFecha;             }else{$x7  = $rowData['RemuestraFecha'];}
+				if(isset($Remuestra_codigo_muestra)){  $x8  = $Remuestra_codigo_muestra;   }else{$x8  = $rowData['Remuestra_codigo_muestra'];}
+				if(isset($idParametros)){              $x9  = $idParametros;               }else{$x9  = $rowData['idParametros'];}
+				if(isset($idSigno)){                   $x10 = $idSigno;                    }else{$x10 = $rowData['idSigno'];}
+				if(isset($valorAnalisis)){             $x11 = $valorAnalisis;              }else{$x11 = $rowData['valorAnalisis'];}
+				if(isset($idOpciones)){                $x12 = $idOpciones;                 }else{$x12 = $rowData['idOpciones'];}
+				if(isset($idSector)){                  $x13 = $idSector;                   }else{$x13 = $rowData['idSector'];}
+				if(isset($UTM_norte)){                 $x14 = $UTM_norte;                  }else{$x14 = $rowData['UTM_norte'];}
+				if(isset($UTM_este)){                  $x15 = $UTM_este;                   }else{$x15 = $rowData['UTM_este'];}
+				if(isset($idPuntoMuestreo)){           $x16 = $idPuntoMuestreo;            }else{$x16 = $rowData['idPuntoMuestreo'];}
+				if(isset($idCliente)){                 $x17 = $idCliente;                  }else{$x17 = $rowData['idCliente'];}
+				if(isset($idEstado)){                  $x18 = $idEstado;                   }else{$x18 = $rowData['idEstado'];}
+				if(isset($Observaciones)){             $x19 = $Observaciones;              }else{$x19 = $rowData['Observaciones'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

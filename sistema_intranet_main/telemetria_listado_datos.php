@@ -48,12 +48,12 @@ require_once 'core/Web.Header.Main.php';
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
-$rowdata = db_select_data (false, 'Nombre,NumSerie,IdentificadorEmpresa,Sim_Num_Tel,Sim_Num_Serie,Sim_Compania,Sim_marca,Sim_modelo,idSistema, id_Sensores, id_Geo', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, 'Nombre,NumSerie,IdentificadorEmpresa,Sim_Num_Tel,Sim_Num_Serie,Sim_Compania,Sim_marca,Sim_modelo,idSistema, id_Sensores, id_Geo', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowData['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -68,15 +68,15 @@ $rowdata = db_select_data (false, 'Nombre,NumSerie,IdentificadorEmpresa,Sim_Num_
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'telemetria_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-						<?php if($rowdata['id_Sensores']==1){ ?>
+						<?php if($rowData['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
 						<?php } ?>
-						<?php if($rowdata['id_Geo']==1){ ?>
+						<?php if($rowData['id_Geo']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
-						<?php }elseif($rowdata['id_Geo']==2){ ?>
+						<?php }elseif($rowData['id_Geo']==2){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
-						<?php if($rowdata['id_Sensores']==1){ ?>
+						<?php if($rowData['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
 							<li class=""><a href="<?php echo 'telemetria_listado_sensor_operaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Definicion Operacional</a></li>
 						<?php } ?>
@@ -97,14 +97,14 @@ $rowdata = db_select_data (false, 'Nombre,NumSerie,IdentificadorEmpresa,Sim_Num_
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){                 $x1 = $Nombre;                  }else{$x1 = $rowdata['Nombre'];}
-					if(isset($NumSerie)){               $x2 = $NumSerie;                }else{$x2 = $rowdata['NumSerie'];}
-					if(isset($IdentificadorEmpresa)){   $x3 = $IdentificadorEmpresa;    }else{$x3 = $rowdata['IdentificadorEmpresa'];}
-					if(isset($Sim_Num_Tel)){            $x4 = $Sim_Num_Tel;             }else{$x4 = $rowdata['Sim_Num_Tel'];}
-					if(isset($Sim_Num_Serie)){          $x5 = $Sim_Num_Serie;           }else{$x5 = $rowdata['Sim_Num_Serie'];}
-					if(isset($Sim_Compania)){           $x6 = $Sim_Compania;            }else{$x6 = $rowdata['Sim_Compania'];}
-					if(isset($Sim_marca)){              $x7 = $Sim_marca;               }else{$x7 = $rowdata['Sim_marca'];}
-					if(isset($Sim_modelo)){             $x8 = $Sim_modelo;              }else{$x8 = $rowdata['Sim_modelo'];}
+					if(isset($Nombre)){                 $x1 = $Nombre;                  }else{$x1 = $rowData['Nombre'];}
+					if(isset($NumSerie)){               $x2 = $NumSerie;                }else{$x2 = $rowData['NumSerie'];}
+					if(isset($IdentificadorEmpresa)){   $x3 = $IdentificadorEmpresa;    }else{$x3 = $rowData['IdentificadorEmpresa'];}
+					if(isset($Sim_Num_Tel)){            $x4 = $Sim_Num_Tel;             }else{$x4 = $rowData['Sim_Num_Tel'];}
+					if(isset($Sim_Num_Serie)){          $x5 = $Sim_Num_Serie;           }else{$x5 = $rowData['Sim_Num_Serie'];}
+					if(isset($Sim_Compania)){           $x6 = $Sim_Compania;            }else{$x6 = $rowData['Sim_Compania'];}
+					if(isset($Sim_marca)){              $x7 = $Sim_marca;               }else{$x7 = $rowData['Sim_marca'];}
+					if(isset($Sim_modelo)){             $x8 = $Sim_modelo;              }else{$x8 = $rowData['Sim_modelo'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

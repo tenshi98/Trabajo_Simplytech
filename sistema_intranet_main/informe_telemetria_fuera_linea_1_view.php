@@ -32,7 +32,7 @@ telemetria_listado_error_fuera_linea.GeoLongitud_Last,
 telemetria_listado.Nombre AS NombreEquipo';
 $SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_error_fuera_linea.idTelemetria';
 $SIS_where = 'telemetria_listado_error_fuera_linea.idFueraLinea ='.simpleDecode($_GET['view'], fecha_actual());
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_error_fuera_linea', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado_error_fuera_linea', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -48,11 +48,11 @@ require_once 'core/Web.Header.Views.php';
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Datos del Equipo <?php echo $rowdata['NombreEquipo']; ?></h5>
+			<h5>Datos del Equipo <?php echo $rowData['NombreEquipo']; ?></h5>
 		</header>
 		<div class="table-responsive">
 			<?php
-			$explanation2 .= '<strong>Tiempo: </strong>'.$rowdata['Tiempo'].' hrs<br/>';
+			$explanation2 .= '<strong>Tiempo: </strong>'.$rowData['Tiempo'].' hrs<br/>';
 
 			//Si no existe una ID se utiliza una por defecto
 			if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
@@ -67,10 +67,10 @@ require_once 'core/Web.Header.Views.php';
 					async function initMap() {
 						const { Map } = await google.maps.importLibrary("maps");
 
-						var myLatlng = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud'] ?>, <?php echo $rowdata['GeoLongitud'] ?>);
+						var myLatlng = new google.maps.LatLng(<?php echo $rowData['GeoLatitud'] ?>, <?php echo $rowData['GeoLongitud'] ?>);
 						// marker position
-						var factory_1 = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud_Last'] ?>, <?php echo $rowdata['GeoLongitud_Last'] ?>);
-						var factory_2 = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud'] ?>, <?php echo $rowdata['GeoLongitud'] ?>);
+						var factory_1 = new google.maps.LatLng(<?php echo $rowData['GeoLatitud_Last'] ?>, <?php echo $rowData['GeoLongitud_Last'] ?>);
+						var factory_2 = new google.maps.LatLng(<?php echo $rowData['GeoLatitud'] ?>, <?php echo $rowData['GeoLongitud'] ?>);
 
 						var myOptions = {
 							zoom: 15,
@@ -85,7 +85,7 @@ require_once 'core/Web.Header.Views.php';
 										'<div class="iw-title">Desconexion</div>' +
 										'<div class="iw-content">' +
 										'<div class="iw-subTitle">Fecha - Hora</div>' +
-										'<p><?php echo fecha_estandar($rowdata['Fecha_inicio']).' - '.$rowdata['Hora_inicio']; ?></p>' +
+										'<p><?php echo fecha_estandar($rowData['Fecha_inicio']).' - '.$rowData['Hora_inicio']; ?></p>' +
 										'</div>' +
 										'<div class="iw-bottom-gradient"></div>' +
 										'</div>';
@@ -94,9 +94,9 @@ require_once 'core/Web.Header.Views.php';
 										'<div class="iw-title">Conexion</div>' +
 										'<div class="iw-content">' +
 										'<div class="iw-subTitle">Fecha - Hora</div>' +
-										'<p><?php echo fecha_estandar($rowdata['Fecha_termino']).' - '.$rowdata['Hora_termino']; ?></p>' +
+										'<p><?php echo fecha_estandar($rowData['Fecha_termino']).' - '.$rowData['Hora_termino']; ?></p>' +
 										'<div class="iw-subTitle">Tiempo</div>' +
-										'<p><?php echo $rowdata['Tiempo']; ?></p>' +
+										'<p><?php echo $rowData['Tiempo']; ?></p>' +
 										'</div>' +
 										'<div class="iw-bottom-gradient"></div>' +
 										'</div>';

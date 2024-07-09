@@ -48,12 +48,12 @@ require_once 'core/Web.Header.Main.php';
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
-$rowdata = db_select_data (false, 'Nombre,id_Sensores, id_Geo,idTipo, Marca, Modelo, Patente, Num_serie, AnoFab, idZona, CapacidadPersonas,CapacidadKilos, MCubicos, LimiteVelocidad, TiempoDetencion', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, 'Nombre,id_Sensores, id_Geo,idTipo, Marca, Modelo, Patente, Num_serie, AnoFab, idZona, CapacidadPersonas,CapacidadKilos, MCubicos, LimiteVelocidad, TiempoDetencion', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Datos GPS'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowData['Nombre'], 'Editar Datos GPS'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -68,15 +68,15 @@ $rowdata = db_select_data (false, 'Nombre,id_Sensores, id_Geo,idTipo, Marca, Mod
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'telemetria_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-						<?php if($rowdata['id_Sensores']==1){ ?>
+						<?php if($rowData['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
 						<?php } ?>
-						<?php if($rowdata['id_Geo']==1){ ?>
+						<?php if($rowData['id_Geo']==1){ ?>
 							<li class="active"><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
-						<?php }elseif($rowdata['id_Geo']==2){ ?>
+						<?php }elseif($rowData['id_Geo']==2){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
-						<?php if($rowdata['id_Sensores']==1){ ?>
+						<?php if($rowData['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
 							<li class=""><a href="<?php echo 'telemetria_listado_sensor_operaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Definicion Operacional</a></li>
 						<?php } ?>
@@ -97,18 +97,18 @@ $rowdata = db_select_data (false, 'Nombre,id_Sensores, id_Geo,idTipo, Marca, Mod
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idTipo)){            $x1  = $idTipo;             }else{$x1  = $rowdata['idTipo'];}
-					if(isset($Marca)){             $x2  = $Marca;              }else{$x2  = $rowdata['Marca'];}
-					if(isset($Modelo)){            $x3  = $Modelo;             }else{$x3  = $rowdata['Modelo'];}
-					if(isset($Patente)){           $x4  = $Patente;            }else{$x4  = $rowdata['Patente'];}
-					if(isset($Num_serie)){         $x5  = $Num_serie;          }else{$x5  = $rowdata['Num_serie'];}
-					if(isset($AnoFab)){            $x6  = $AnoFab;             }else{$x6  = $rowdata['AnoFab'];}
-					if(isset($idZona)){            $x7  = $idZona;             }else{$x7  = $rowdata['idZona'];}
-					if(isset($CapacidadPersonas)){ $x8  = $CapacidadPersonas;  }else{$x8  = $rowdata['CapacidadPersonas'];}
-					if(isset($CapacidadKilos)){    $x9  = $CapacidadKilos;     }else{$x9  = Cantidades_decimales_justos($rowdata['CapacidadKilos']);}
-					if(isset($MCubicos)){          $x10 = $MCubicos;           }else{$x10 = Cantidades_decimales_justos($rowdata['MCubicos']);}
-					if(isset($LimiteVelocidad)){   $x11 = $LimiteVelocidad;    }else{$x11 = Cantidades_decimales_justos($rowdata['LimiteVelocidad']);}
-					if(isset($TiempoDetencion)){   $x12 = $TiempoDetencion;    }else{$x12 = $rowdata['TiempoDetencion'];}
+					if(isset($idTipo)){            $x1  = $idTipo;             }else{$x1  = $rowData['idTipo'];}
+					if(isset($Marca)){             $x2  = $Marca;              }else{$x2  = $rowData['Marca'];}
+					if(isset($Modelo)){            $x3  = $Modelo;             }else{$x3  = $rowData['Modelo'];}
+					if(isset($Patente)){           $x4  = $Patente;            }else{$x4  = $rowData['Patente'];}
+					if(isset($Num_serie)){         $x5  = $Num_serie;          }else{$x5  = $rowData['Num_serie'];}
+					if(isset($AnoFab)){            $x6  = $AnoFab;             }else{$x6  = $rowData['AnoFab'];}
+					if(isset($idZona)){            $x7  = $idZona;             }else{$x7  = $rowData['idZona'];}
+					if(isset($CapacidadPersonas)){ $x8  = $CapacidadPersonas;  }else{$x8  = $rowData['CapacidadPersonas'];}
+					if(isset($CapacidadKilos)){    $x9  = $CapacidadKilos;     }else{$x9  = Cantidades_decimales_justos($rowData['CapacidadKilos']);}
+					if(isset($MCubicos)){          $x10 = $MCubicos;           }else{$x10 = Cantidades_decimales_justos($rowData['MCubicos']);}
+					if(isset($LimiteVelocidad)){   $x11 = $LimiteVelocidad;    }else{$x11 = Cantidades_decimales_justos($rowData['LimiteVelocidad']);}
+					if(isset($TiempoDetencion)){   $x12 = $TiempoDetencion;    }else{$x12 = $rowData['TiempoDetencion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

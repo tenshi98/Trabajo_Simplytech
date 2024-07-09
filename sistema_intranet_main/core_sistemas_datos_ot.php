@@ -52,12 +52,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,OT_idBodegaProd,OT_idBodegaIns';
 $SIS_join  = '';
 $SIS_where = 'idSistema ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Bodegas asignadas a las OT'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowData['Nombre'], 'Editar Bodegas asignadas a las OT'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -93,8 +93,8 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($OT_idBodegaProd)){  $x1  = $OT_idBodegaProd;   }else{$x1  = $rowdata['OT_idBodegaProd'];}
-					if(isset($OT_idBodegaIns)){   $x2  = $OT_idBodegaIns;    }else{$x2  = $rowdata['OT_idBodegaIns'];}
+					if(isset($OT_idBodegaProd)){  $x1  = $OT_idBodegaProd;   }else{$x1  = $rowData['OT_idBodegaProd'];}
+					if(isset($OT_idBodegaIns)){   $x2  = $OT_idBodegaIns;    }else{$x2  = $rowData['OT_idBodegaIns'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

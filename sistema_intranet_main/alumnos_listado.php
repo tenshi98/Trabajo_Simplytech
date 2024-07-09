@@ -100,12 +100,12 @@ LEFT JOIN `core_ubicacion_comunas`    ON core_ubicacion_comunas.idComuna        
 LEFT JOIN `core_sistemas`             ON core_sistemas.idSistema                  = alumnos_listado.idSistema
 LEFT JOIN `cursos_listado`            ON cursos_listado.idCurso                   = alumnos_listado.idCurso';
 $SIS_where = 'alumnos_listado.idAlumno = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'alumnos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'alumnos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Alumno', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'], 'Resumen'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Alumno', $rowData['Nombre'].' '.$rowData['ApellidoPat'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -133,40 +133,40 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_listado', $SIS_join, $SIS
 				<div class="wmd-panel">
 
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<?php if ($rowdata['Direccion_img']=='') { ?>
+						<?php if ($rowData['Direccion_img']=='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowData['Direccion_img']; ?>">
 						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary">Datos Básicos</h2>
 						<p class="text-muted">
-							<strong>Curso : </strong><?php echo $rowdata['Curso']; ?><br/>
-							<strong>Nombre: </strong><?php echo $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat']; ?><br/>
-							<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
-							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
-							<strong>Región : </strong><?php echo $rowdata['nombre_region']; ?><br/>
-							<strong>Comuna : </strong><?php echo $rowdata['nombre_comuna']; ?><br/>
-							<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
-							<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
-							<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
+							<strong>Curso : </strong><?php echo $rowData['Curso']; ?><br/>
+							<strong>Nombre: </strong><?php echo $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat']; ?><br/>
+							<strong>Rut : </strong><?php echo $rowData['Rut']; ?><br/>
+							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_completa($rowData['fNacimiento']); ?><br/>
+							<strong>Región : </strong><?php echo $rowData['nombre_region']; ?><br/>
+							<strong>Comuna : </strong><?php echo $rowData['nombre_comuna']; ?><br/>
+							<strong>Dirección : </strong><?php echo $rowData['Direccion']; ?><br/>
+							<strong>Sistema Relacionado : </strong><?php echo $rowData['sistema']; ?><br/>
+							<strong>Estado : </strong><?php echo $rowData['estado']; ?>
 						</p>
 
 						<h2 class="text-primary">Datos de Contacto</h2>
 						<p class="text-muted">
-							<strong>Telefono Fijo : </strong><?php echo formatPhone($rowdata['Fono1']); ?><br/>
-							<strong>Telefono Movil : </strong><?php echo formatPhone($rowdata['Fono2']); ?><br/>
-							<strong>Fax : </strong><?php echo $rowdata['Fax']; ?><br/>
-							<strong>Email : </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
-							<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowdata['Web']; ?>"><?php echo $rowdata['Web']; ?></a>
+							<strong>Telefono Fijo : </strong><?php echo formatPhone($rowData['Fono1']); ?><br/>
+							<strong>Telefono Movil : </strong><?php echo formatPhone($rowData['Fono2']); ?><br/>
+							<strong>Fax : </strong><?php echo $rowData['Fax']; ?><br/>
+							<strong>Email : </strong><a href="mailto:<?php echo $rowData['email']; ?>"><?php echo $rowData['email']; ?></a><br/>
+							<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowData['Web']; ?>"><?php echo $rowData['Web']; ?></a>
 						</p>
 
 						<h2 class="text-primary">Persona de Contacto</h2>
 						<p class="text-muted">
-							<strong>Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto']; ?><br/>
-							<strong>Telefono : </strong><?php echo formatPhone($rowdata['PersonaContacto_Fono']); ?><br/>
-							<strong>Email : </strong><a href="mailto:<?php echo $rowdata['PersonaContacto_email']; ?>"><?php echo $rowdata['PersonaContacto_email']; ?></a><br/>
+							<strong>Persona de Contacto : </strong><?php echo $rowData['PersonaContacto']; ?><br/>
+							<strong>Telefono : </strong><?php echo formatPhone($rowData['PersonaContacto_Fono']); ?><br/>
+							<strong>Email : </strong><a href="mailto:<?php echo $rowData['PersonaContacto_email']; ?>"><?php echo $rowData['PersonaContacto_email']; ?></a><br/>
 						</p>
 
 					</div>

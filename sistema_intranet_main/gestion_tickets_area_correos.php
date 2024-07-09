@@ -73,7 +73,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'idArea, idUsuario';
 	$SIS_join  = '';
 	$SIS_where = 'idCorreos = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'gestion_tickets_area_correos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'gestion_tickets_area_correos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 	/*******************************************************/
 	//Verifico el tipo de usuario que esta ingresando
 	$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
@@ -95,8 +95,8 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idArea)){      $x1  = $idArea;      }else{$x1  = $rowdata['idArea'];}
-					if(isset($idUsuario)){   $x2  = $idUsuario;   }else{$x2  = $rowdata['idUsuario'];}
+					if(isset($idArea)){      $x1  = $idArea;      }else{$x1  = $rowData['idArea'];}
+					if(isset($idUsuario)){   $x2  = $idUsuario;   }else{$x2  = $rowData['idUsuario'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

@@ -109,7 +109,7 @@ if(!empty($_GET['mod'])){
 	LEFT JOIN `core_ubicacion_ciudad`    ON core_ubicacion_ciudad.idCiudad    = cross_predios_listado.idCiudad
 	LEFT JOIN `core_ubicacion_comunas`   ON core_ubicacion_comunas.idComuna   = cross_predios_listado.idComuna';
 	$SIS_where = 'cross_predios_listado_zonas.idZona ='.$_GET['edit_puntos'];
-	$rowdata = db_select_data (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -129,9 +129,9 @@ if(!empty($_GET['mod'])){
 
 	/*******************************************************/
 	//Se obtiene la ubicacion
-	$Ubicacion = $rowdata['Direccion'];
-	if(isset($rowdata['Comuna'])&&$rowdata['Comuna']!=''){$Ubicacion.=', '.$rowdata['Comuna'];}
-	if(isset($rowdata['Ciudad'])&&$rowdata['Ciudad']!=''){$Ubicacion.=', '.$rowdata['Ciudad'];}
+	$Ubicacion = $rowData['Direccion'];
+	if(isset($rowData['Comuna'])&&$rowData['Comuna']!=''){$Ubicacion.=', '.$rowData['Comuna'];}
+	if(isset($rowData['Ciudad'])&&$rowData['Ciudad']!=''){$Ubicacion.=', '.$rowData['Ciudad'];}
 
 	//Se limpian los nombres
 	$Ubicacion = str_replace('Nº', '', $Ubicacion);
@@ -148,7 +148,7 @@ if(!empty($_GET['mod'])){
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Puntos del Cuartel <?php echo $rowdata['Nombre']; ?></h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Puntos del Cuartel <?php echo $rowData['Nombre']; ?></h5>
 			</header>
 			<div class="table-responsive">
 
@@ -326,7 +326,7 @@ if(!empty($_GET['mod'])){
 	LEFT JOIN `core_ubicacion_ciudad`    ON core_ubicacion_ciudad.idCiudad    = cross_predios_listado.idCiudad
 	LEFT JOIN `core_ubicacion_comunas`   ON core_ubicacion_comunas.idComuna   = cross_predios_listado.idComuna';
 	$SIS_where = 'cross_predios_listado_zonas.idZona = '.$_GET['edit_puntos'];
-	$rowdata = db_select_data (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -355,13 +355,13 @@ if(!empty($_GET['mod'])){
 	$SIS_where = 'cross_predios_listado_zonas.idPredio = '.$_GET['id'];
 	$SIS_where.= ' AND cross_predios_listado_zonas_ubicaciones.idZona!='.$_GET['edit_puntos'];
 	$SIS_order = 'cross_predios_listado_zonas.idZona ASC';
-	$SIS_order.= ',cross_predios_listado_zonas_ubicaciones.idUbicaciones ASC';
+	$SIS_order.= ', cross_predios_listado_zonas_ubicaciones.idUbicaciones ASC';
 	$arrZonas = array();
 	$arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrZonas');
 
 	/*******************************************************/
 	//Se limpian los nombres
-	$Ubicacion = $rowdata['Direccion'].', '.$rowdata['Comuna'].', '.$rowdata['Ciudad'];
+	$Ubicacion = $rowData['Direccion'].', '.$rowData['Comuna'].', '.$rowData['Ciudad'];
 
 	$Ubicacion = str_replace('Nº', '', $Ubicacion);
 	$Ubicacion = str_replace('nº', '', $Ubicacion);
@@ -377,7 +377,7 @@ if(!empty($_GET['mod'])){
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Puntos del Cuartel <?php echo $rowdata['Nombre']; ?></h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Puntos del Cuartel <?php echo $rowData['Nombre']; ?></h5>
 			</header>
 			<div class="table-responsive">
 
@@ -629,7 +629,7 @@ if(!empty($_GET['mod'])){
 	idEstadoProd,DistanciaPlant,DistanciaHileras,idEstado';
 	$SIS_join  = '';
 	$SIS_where = 'idZona = '.$_GET['edit_zona'];
-	$rowdata = db_select_data (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -644,18 +644,18 @@ if(!empty($_GET['mod'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){           $x1  = $Nombre;            }else{$x1  = $rowdata['Nombre'];}
-					if(isset($Codigo)){           $x2  = $Codigo;            }else{$x2  = $rowdata['Codigo'];}
-					if(isset($idCategoria)){      $x3  = $idCategoria;       }else{$x3  = $rowdata['idCategoria'];}
-					if(isset($idProducto)){       $x4  = $idProducto;        }else{$x4  = $rowdata['idProducto'];}
-					if(isset($AnoPlantacion)){    $x5  = $AnoPlantacion;     }else{$x5  = $rowdata['AnoPlantacion'];}
-					if(isset($Hectareas)){        $x6  = $Hectareas;         }else{$x6  = $rowdata['Hectareas'];}
-					if(isset($Hileras)){          $x7  = $Hileras;           }else{$x7  = $rowdata['Hileras'];}
-					if(isset($Plantas)){          $x8  = $Plantas;           }else{$x8  = $rowdata['Plantas'];}
-					if(isset($idEstadoProd)){     $x9  = $idEstadoProd;      }else{$x9  = $rowdata['idEstadoProd'];}
-					if(isset($DistanciaPlant)){   $x10 = $DistanciaPlant;    }else{$x10 = $rowdata['DistanciaPlant'];}
-					if(isset($DistanciaHileras)){ $x11 = $DistanciaHileras;  }else{$x11 = $rowdata['DistanciaHileras'];}
-					if(isset($idEstado)){         $x12 = $idEstado;          }else{$x12 = $rowdata['idEstado'];}
+					if(isset($Nombre)){           $x1  = $Nombre;            }else{$x1  = $rowData['Nombre'];}
+					if(isset($Codigo)){           $x2  = $Codigo;            }else{$x2  = $rowData['Codigo'];}
+					if(isset($idCategoria)){      $x3  = $idCategoria;       }else{$x3  = $rowData['idCategoria'];}
+					if(isset($idProducto)){       $x4  = $idProducto;        }else{$x4  = $rowData['idProducto'];}
+					if(isset($AnoPlantacion)){    $x5  = $AnoPlantacion;     }else{$x5  = $rowData['AnoPlantacion'];}
+					if(isset($Hectareas)){        $x6  = $Hectareas;         }else{$x6  = $rowData['Hectareas'];}
+					if(isset($Hileras)){          $x7  = $Hileras;           }else{$x7  = $rowData['Hileras'];}
+					if(isset($Plantas)){          $x8  = $Plantas;           }else{$x8  = $rowData['Plantas'];}
+					if(isset($idEstadoProd)){     $x9  = $idEstadoProd;      }else{$x9  = $rowData['idEstadoProd'];}
+					if(isset($DistanciaPlant)){   $x10 = $DistanciaPlant;    }else{$x10 = $rowData['DistanciaPlant'];}
+					if(isset($DistanciaHileras)){ $x11 = $DistanciaHileras;  }else{$x11 = $rowData['DistanciaHileras'];}
+					if(isset($idEstado)){         $x12 = $idEstado;          }else{$x12 = $rowData['idEstado'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -753,7 +753,7 @@ if(!empty($_GET['mod'])){
 	$SIS_query = 'Nombre';
 	$SIS_join  = '';
 	$SIS_where = 'idPredio = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'cross_predios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'cross_predios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -775,15 +775,15 @@ if(!empty($_GET['mod'])){
 	LEFT JOIN `core_cross_estados_productivos`   ON core_cross_estados_productivos.idEstadoProd   = cross_predios_listado_zonas.idEstadoProd';
 	$SIS_where = 'cross_predios_listado_zonas.idPredio ='.$_GET['id'];
 	$SIS_order = 'sistema_variedades_categorias.Nombre ASC';
-	$SIS_order.= ',variedades_listado.Nombre ASC';
-	$SIS_order.= ',cross_predios_listado_zonas.Nombre ASC';
+	$SIS_order.= ', variedades_listado.Nombre ASC';
+	$SIS_order.= ', cross_predios_listado_zonas.Nombre ASC';
 	$arrZonas = array();
 	$arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrZonas');
 
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Predio', $rowdata['Nombre'], 'Editar Cuarteles'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Predio', $rowData['Nombre'], 'Editar Cuarteles'); ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 			<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Cuartel</a><?php } ?>
 		</div>

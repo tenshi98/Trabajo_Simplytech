@@ -121,7 +121,7 @@ $SIS_query .= ',telemetria_mantencion_matriz.SensoresTipo_'.$_GET['mod'].' AS Se
 $SIS_query .= ',telemetria_mantencion_matriz.SensoresValor_'.$_GET['mod'].' AS Valor';
 $SIS_query .= ',telemetria_mantencion_matriz.SensoresNumero_'.$_GET['mod'].' AS SensoresNumero';
 $SIS_join  = '';
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_mantencion_matriz', $SIS_join, 'idMatriz = '.$_GET['idMatriz'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_mantencion_matriz', $SIS_join, 'idMatriz = '.$_GET['idMatriz'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -137,10 +137,10 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_mantencion_matriz', $S
 				<?php
 				//Se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_text('Nombre', 'PuntoNombre', $rowdata['Nombre'], 2);
-				$Form_Inputs->form_select('Tipo de Sensor','SensoresTipo', $rowdata['Sensor'], 2, 'idSensores', 'Nombre', 'telemetria_listado_sensores', 0, '', $dbConn);
-				$Form_Inputs->form_input_number('Valor a Alcanzar','SensoresValor', Cantidades_decimales_justos($rowdata['Valor']), 2);
-				$Form_Inputs->form_select_n_auto('N° Sensor Revisado','SensoresNumero', $rowdata['SensoresNumero'], 2, 1, 72);
+				$Form_Inputs->form_input_text('Nombre', 'PuntoNombre', $rowData['Nombre'], 2);
+				$Form_Inputs->form_select('Tipo de Sensor','SensoresTipo', $rowData['Sensor'], 2, 'idSensores', 'Nombre', 'telemetria_listado_sensores', 0, '', $dbConn);
+				$Form_Inputs->form_input_number('Valor a Alcanzar','SensoresValor', Cantidades_decimales_justos($rowData['Valor']), 2);
+				$Form_Inputs->form_select_n_auto('N° Sensor Revisado','SensoresNumero', $rowData['SensoresNumero'], 2, 1, 72);
 
 				$Form_Inputs->form_input_hidden('idMatriz', $_GET['idMatriz'], 2);
 				$Form_Inputs->form_input_hidden('mod', $_GET['mod'], 2);
@@ -172,7 +172,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$SIS_query .= ',telemetria_mantencion_matriz.SensoresNumero_'.$i;
 }
 $SIS_join  = '';
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_mantencion_matriz', $SIS_join, 'idMatriz = '.$_GET['idMatriz'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_mantencion_matriz', $SIS_join, 'idMatriz = '.$_GET['idMatriz'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 // Se trae un listado con todos los elementos
 $SIS_query = '
@@ -190,7 +190,7 @@ $arrTipos = db_select_array (false, $SIS_query, 'telemetria_listado_sensores', $
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Puntos de <?php echo $rowdata['Nombre']; ?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Puntos de <?php echo $rowData['Nombre']; ?></h5>
 		</header>
 
         <div class="table-responsive">
@@ -206,13 +206,13 @@ $arrTipos = db_select_array (false, $SIS_query, 'telemetria_listado_sensores', $
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php for ($i = 1; $i <= $rowdata['cantPuntos']; $i++) { ?>
+					<?php for ($i = 1; $i <= $rowData['cantPuntos']; $i++) { ?>
 					<tr class="odd">
-						<td><?php echo $rowdata['PuntoNombre_'.$i]; ?></td>
-						<td><?php foreach ($arrTipos as $tipo) { if($rowdata['SensoresTipo_'.$i]==$tipo['idSensores']){ echo $tipo['Nombre'];}} ?></td>
-						<td><?php foreach ($arrTipos as $tipo) { if($rowdata['SensoresTipo_'.$i]==$tipo['idSensores']){ echo $tipo['SensorFuncion'];}} ?></td>
-						<td><?php echo $rowdata['SensoresNumero_'.$i]; ?></td>
-						<td><?php echo $rowdata['SensoresValor_'.$i]; ?></td>
+						<td><?php echo $rowData['PuntoNombre_'.$i]; ?></td>
+						<td><?php foreach ($arrTipos as $tipo) { if($rowData['SensoresTipo_'.$i]==$tipo['idSensores']){ echo $tipo['Nombre'];}} ?></td>
+						<td><?php foreach ($arrTipos as $tipo) { if($rowData['SensoresTipo_'.$i]==$tipo['idSensores']){ echo $tipo['SensorFuncion'];}} ?></td>
+						<td><?php echo $rowData['SensoresNumero_'.$i]; ?></td>
+						<td><?php echo $rowData['SensoresValor_'.$i]; ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
 								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&idMatriz='.$_GET['idMatriz'].'&mod='.$i; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
@@ -237,7 +237,7 @@ $arrTipos = db_select_array (false, $SIS_query, 'telemetria_listado_sensores', $
 // consulto los datos
 $SIS_query  = 'Nombre,cantPuntos, idSistema';
 $SIS_join  = '';
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_mantencion_matriz', $SIS_join, 'idMatriz = '.$_GET['idMatriz_2'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_mantencion_matriz', $SIS_join, 'idMatriz = '.$_GET['idMatriz_2'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -252,8 +252,8 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_mantencion_matriz', $S
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)){      $x1  = $Nombre;       }else{$x1  = $rowdata['Nombre'];}
-				if(isset($cantPuntos)){  $x2  = $cantPuntos;   }else{$x2  = $rowdata['cantPuntos'];}
+				if(isset($Nombre)){      $x1  = $Nombre;       }else{$x1  = $rowData['Nombre'];}
+				if(isset($cantPuntos)){  $x2  = $cantPuntos;   }else{$x2  = $rowData['cantPuntos'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

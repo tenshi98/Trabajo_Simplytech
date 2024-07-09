@@ -77,7 +77,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'idTelemetria, FechaCarga, FechaVencimiento, idDocPago, N_DocPago, Monto';
 	$SIS_join  = '';
 	$SIS_where = 'idCarga = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'telemetria_carga_bam', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'telemetria_carga_bam', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 	/*******************************************************/
 	//filtro
 	$z = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.idEstado=1";
@@ -99,12 +99,12 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idTelemetria)){     $x1  = $idTelemetria;      }else{$x1  = $rowdata['idTelemetria'];}
-					if(isset($FechaCarga)){       $x2  = $FechaCarga;        }else{$x2  = $rowdata['FechaCarga'];}
-					if(isset($FechaVencimiento)){ $x3  = $FechaVencimiento;  }else{$x3  = $rowdata['FechaVencimiento'];}
-					if(isset($idDocPago)){        $x4  = $idDocPago;         }else{$x4  = $rowdata['idDocPago'];}
-					if(isset($N_DocPago)){        $x5  = $N_DocPago;         }else{$x5  = $rowdata['N_DocPago'];}
-					if(isset($Monto)){            $x6  = $Monto;             }else{$x6  = $rowdata['Monto'];}
+					if(isset($idTelemetria)){     $x1  = $idTelemetria;      }else{$x1  = $rowData['idTelemetria'];}
+					if(isset($FechaCarga)){       $x2  = $FechaCarga;        }else{$x2  = $rowData['FechaCarga'];}
+					if(isset($FechaVencimiento)){ $x3  = $FechaVencimiento;  }else{$x3  = $rowData['FechaVencimiento'];}
+					if(isset($idDocPago)){        $x4  = $idDocPago;         }else{$x4  = $rowData['idDocPago'];}
+					if(isset($N_DocPago)){        $x5  = $N_DocPago;         }else{$x5  = $rowData['N_DocPago'];}
+					if(isset($Monto)){            $x6  = $Monto;             }else{$x6  = $rowData['Monto'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

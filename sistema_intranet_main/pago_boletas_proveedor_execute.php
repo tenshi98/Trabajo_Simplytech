@@ -34,18 +34,18 @@ if(isset($_SESSION['pagos_boletas_empresas'][$_GET['idFacturacion']]['idFacturac
 	(SELECT SUM(MontoPagado) FROM `pagos_boletas_empresas` WHERE idFacturacion= boleta_honorarios_facturacion.idFacturacion LIMIT 1) AS MontoPagado';
 	$SIS_join  = 'LEFT JOIN `proveedor_listado` ON proveedor_listado.idProveedor = boleta_honorarios_facturacion.idProveedor';
 	$SIS_where = 'boleta_honorarios_facturacion.idFacturacion='.$_GET['idFacturacion'];
-	$row_data = db_select_data (false, $SIS_query, 'boleta_honorarios_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'boleta_honorarios_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/******************************************************************/
 	//Se traspasan los valores a variables de sesion
-	$_SESSION['pagos_boletas_empresas'][$row_data['idFacturacion']]['idFacturacion']      = $row_data['idFacturacion'];
-	$_SESSION['pagos_boletas_empresas'][$row_data['idFacturacion']]['N_Doc']              = $row_data['N_Doc'];
-	$_SESSION['pagos_boletas_empresas'][$row_data['idFacturacion']]['Proveedor']          = $row_data['ProveedorNombre'];
-	$_SESSION['pagos_boletas_empresas'][$row_data['idFacturacion']]['ValorTotal']         = $row_data['ValorTotal'];
-	$_SESSION['pagos_boletas_empresas'][$row_data['idFacturacion']]['MontoPagado']        = $row_data['MontoPagado'];
-	$_SESSION['pagos_boletas_empresas'][$row_data['idFacturacion']]['idSistema']          = $row_data['idSistema'];
-	$_SESSION['pagos_boletas_empresas'][$row_data['idFacturacion']]['idProveedor']        = $row_data['idProveedor'];
-	$_SESSION['pagos_boletas_empresas'][$row_data['idFacturacion']]['ValorReal']          = '';
+	$_SESSION['pagos_boletas_empresas'][$rowData['idFacturacion']]['idFacturacion']      = $rowData['idFacturacion'];
+	$_SESSION['pagos_boletas_empresas'][$rowData['idFacturacion']]['N_Doc']              = $rowData['N_Doc'];
+	$_SESSION['pagos_boletas_empresas'][$rowData['idFacturacion']]['Proveedor']          = $rowData['ProveedorNombre'];
+	$_SESSION['pagos_boletas_empresas'][$rowData['idFacturacion']]['ValorTotal']         = $rowData['ValorTotal'];
+	$_SESSION['pagos_boletas_empresas'][$rowData['idFacturacion']]['MontoPagado']        = $rowData['MontoPagado'];
+	$_SESSION['pagos_boletas_empresas'][$rowData['idFacturacion']]['idSistema']          = $rowData['idSistema'];
+	$_SESSION['pagos_boletas_empresas'][$rowData['idFacturacion']]['idProveedor']        = $rowData['idProveedor'];
+	$_SESSION['pagos_boletas_empresas'][$rowData['idFacturacion']]['ValorReal']          = '';
 
 }
 

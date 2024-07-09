@@ -89,7 +89,7 @@ if(!empty($_GET['view_facturacion'])){
 	LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario          = aguas_facturacion_listado.idUsuario
 	LEFT JOIN `core_sistemas_opciones`   ON core_sistemas_opciones.idOpciones   = aguas_facturacion_listado.idOpcionesInteres';
 	$SIS_where = 'aguas_facturacion_listado.idFacturacion = '.$_GET['view_facturacion'];
-	$rowdata = db_select_data (false, $SIS_query, 'aguas_facturacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'aguas_facturacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -124,19 +124,19 @@ if(!empty($_GET['view_facturacion'])){
 						</tr>
 						<tr>
 							<td class="meta-head">Creador</td>
-							<td><?php echo $rowdata['Usuario']; ?></td>
+							<td><?php echo $rowData['Usuario']; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Interes Anual</td>
-							<td><?php echo cantidades($rowdata['intAnual'], 2).'%'; ?></td>
+							<td><?php echo cantidades($rowData['intAnual'], 2).'%'; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Calculo de intereses</td>
-							<td><?php echo $rowdata['OpcionesInteres']; ?></td>
+							<td><?php echo $rowData['OpcionesInteres']; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Sistema</td>
-							<td><?php echo $rowdata['RazonSocial']; ?></td>
+							<td><?php echo $rowData['RazonSocial']; ?></td>
 						</tr>
 					</tbody>
 				</table>
@@ -144,11 +144,11 @@ if(!empty($_GET['view_facturacion'])){
 					<tbody>
 						<tr>
 							<td class="meta-head">Fecha Facturacion</td>
-							<td><?php echo Fecha_estandar($rowdata['Fecha']); ?></td>
+							<td><?php echo Fecha_estandar($rowData['Fecha']); ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Fecha Creacion</td>
-							<td><?php echo Fecha_estandar($rowdata['fCreacion']); ?></td>
+							<td><?php echo Fecha_estandar($rowData['fCreacion']); ?></td>
 						</tr>
 					</tbody>
 				</table>
@@ -179,7 +179,7 @@ if(!empty($_GET['view_facturacion'])){
 									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_aguas_facturacion.php?view='.simpleEncode($clientes['idFacturacionDetalle'], fecha_actual()); ?>" title="Ver Facturacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 									<?php
 									//verifico si hay alhun archivo asociado
-									$ruta = 'boleta_'.$rowdata['Ano'].'_'.$rowdata['idMes'].'_'.$clientes['ClienteIdentificador'];
+									$ruta = 'boleta_'.$rowData['Ano'].'_'.$rowData['idMes'].'_'.$clientes['ClienteIdentificador'];
 									if (file_exists('upload/'.$ruta)){ ?>
 										<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($ruta, fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a><?php } ?>
 										<?php if ($rowlevel['level']>=1){ ?><a href="1download.php?dir=<?php echo simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($ruta, fecha_actual()); ?>" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip" ><i class="fa fa-download" aria-hidden="true"></i></a><?php } ?>
@@ -195,7 +195,7 @@ if(!empty($_GET['view_facturacion'])){
 					<tr>
 						<td colspan="6" class="blank">
 							<p>
-								<?php echo $rowdata['Observaciones']; ?>
+								<?php echo $rowData['Observaciones']; ?>
 							</p>
 						</td>
 					</tr>

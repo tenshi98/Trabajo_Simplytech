@@ -88,7 +88,7 @@ LEFT JOIN `telemetria_listado_sensores_nombre`  ON telemetria_listado_sensores_n
 LEFT JOIN `telemetria_listado_sensores_grupo`   ON telemetria_listado_sensores_grupo.idTelemetria    = telemetria_listado.idTelemetria
 LEFT JOIN `telemetria_listado_sensores_activo`  ON telemetria_listado_sensores_activo.idTelemetria   = telemetria_listado.idTelemetria';
 $SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //Se consultan datos
 $arrGrupos = array();
@@ -98,7 +98,7 @@ $arrFinalGrupos = array();
 foreach ($arrGrupos as $sen) { $arrFinalGrupos[$sen['idGrupo']]['Nombre'] = $sen['Nombre']; $arrFinalGrupos[$sen['idGrupo']]['nColumnas'] = $sen['nColumnas']; $arrFinalGrupos[$sen['idGrupo']]['idGrupo'] = $sen['idGrupo'];}
 
 //los datos guardados
-$rowdata_i = db_select_data (false, 'N_Sensor, ValorActivo, RangoMinimo, RangoMaximo, idFuncion', 'telemetria_listado_definicion_operacional', '', 'idDefinicion ='.$_GET['edit'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata_i');
+$rowData_i = db_select_data (false, 'N_Sensor, ValorActivo, RangoMinimo, RangoMaximo, idFuncion', 'telemetria_listado_definicion_operacional', '', 'idDefinicion ='.$_GET['edit'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData_i');
 
 ?>
 
@@ -113,10 +113,10 @@ $rowdata_i = db_select_data (false, 'N_Sensor, ValorActivo, RangoMinimo, RangoMa
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idFuncion)){       $x1  = $idFuncion;      }else{$x1  = $rowdata_i['idFuncion'];}
-				if(isset($ValorActivo)){     $x2  = $ValorActivo;    }else{$x2  = Cantidades_decimales_justos($rowdata_i['ValorActivo']);}
-				if(isset($RangoMinimo)){     $x3  = $RangoMinimo;    }else{$x3  = Cantidades_decimales_justos($rowdata_i['RangoMinimo']);}
-				if(isset($RangoMaximo)){     $x4  = $RangoMaximo;    }else{$x4  = Cantidades_decimales_justos($rowdata_i['RangoMaximo']);}
+				if(isset($idFuncion)){       $x1  = $idFuncion;      }else{$x1  = $rowData_i['idFuncion'];}
+				if(isset($ValorActivo)){     $x2  = $ValorActivo;    }else{$x2  = Cantidades_decimales_justos($rowData_i['ValorActivo']);}
+				if(isset($RangoMinimo)){     $x3  = $RangoMinimo;    }else{$x3  = Cantidades_decimales_justos($rowData_i['RangoMinimo']);}
+				if(isset($RangoMaximo)){     $x4  = $RangoMaximo;    }else{$x4  = Cantidades_decimales_justos($rowData_i['RangoMaximo']);}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -127,12 +127,12 @@ $rowdata_i = db_select_data (false, 'N_Sensor, ValorActivo, RangoMinimo, RangoMa
 									<select name="N_Sensor" id="N_Sensor" class="form-control" required="">';
 										$input .= '<option value="" selected>Seleccione una Opción</option>';
 
-										for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+										for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 											//solo sensores activos
-											if(isset($rowdata['SensoresActivo_'.$i])&&$rowdata['SensoresActivo_'.$i]==1){
-												if(isset($rowdata_i['N_Sensor'])&&$rowdata_i['N_Sensor']==$i){$selected='selected';}else{$selected='';}
-												if(isset($arrFinalGrupos[$rowdata['SensoresGrupo_'.$i]]['Nombre'])){$grupo = $arrFinalGrupos[$rowdata['SensoresGrupo_'.$i]]['Nombre'].' - ';}else{$grupo = '';}
-												$input .= '<option value="'.$i.'" '.$selected.'>'.$grupo.$rowdata['SensoresNombre_'.$i].'</option>';
+											if(isset($rowData['SensoresActivo_'.$i])&&$rowData['SensoresActivo_'.$i]==1){
+												if(isset($rowData_i['N_Sensor'])&&$rowData_i['N_Sensor']==$i){$selected='selected';}else{$selected='';}
+												if(isset($arrFinalGrupos[$rowData['SensoresGrupo_'.$i]]['Nombre'])){$grupo = $arrFinalGrupos[$rowData['SensoresGrupo_'.$i]]['Nombre'].' - ';}else{$grupo = '';}
+												$input .= '<option value="'.$i.'" '.$selected.'>'.$grupo.$rowData['SensoresNombre_'.$i].'</option>';
 											}
 										}
 
@@ -232,7 +232,7 @@ LEFT JOIN `telemetria_listado_sensores_nombre`  ON telemetria_listado_sensores_n
 LEFT JOIN `telemetria_listado_sensores_grupo`   ON telemetria_listado_sensores_grupo.idTelemetria    = telemetria_listado.idTelemetria
 LEFT JOIN `telemetria_listado_sensores_activo`  ON telemetria_listado_sensores_activo.idTelemetria   = telemetria_listado.idTelemetria';
 $SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //Se consultan datos
 $arrGrupos = array();
@@ -268,11 +268,11 @@ foreach ($arrGrupos as $sen) { $arrFinalGrupos[$sen['idGrupo']]['Nombre'] = $sen
 									<select name="N_Sensor" id="N_Sensor" class="form-control" required="">';
 										$input .= '<option value="" selected>Seleccione una Opción</option>';
 
-										for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+										for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 											//solo sensores activos
-											if(isset($rowdata['SensoresActivo_'.$i])&&$rowdata['SensoresActivo_'.$i]==1){
-												if(isset($arrFinalGrupos[$rowdata['SensoresGrupo_'.$i]]['Nombre'])){$grupo = $arrFinalGrupos[$rowdata['SensoresGrupo_'.$i]]['Nombre'].' - ';}else{$grupo = '';}
-												$input .= '<option value="'.$i.'">'.$grupo.$rowdata['SensoresNombre_'.$i].'</option>';
+											if(isset($rowData['SensoresActivo_'.$i])&&$rowData['SensoresActivo_'.$i]==1){
+												if(isset($arrFinalGrupos[$rowData['SensoresGrupo_'.$i]]['Nombre'])){$grupo = $arrFinalGrupos[$rowData['SensoresGrupo_'.$i]]['Nombre'].' - ';}else{$grupo = '';}
+												$input .= '<option value="'.$i.'">'.$grupo.$rowData['SensoresNombre_'.$i].'</option>';
 											}
 										}
 
@@ -347,7 +347,7 @@ telemetria_listado.id_Geo,
 telemetria_listado.id_Sensores'.$subquery;
 $SIS_join  = 'LEFT JOIN `telemetria_listado_sensores_nombre`  ON telemetria_listado_sensores_nombre.idTelemetria = telemetria_listado.idTelemetria';
 $SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 // consulto los datos
 $SIS_query = '
@@ -367,7 +367,7 @@ $arrOperaciones = db_select_array (false, $SIS_query, 'telemetria_listado_defini
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Definicion Operacional'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowData['Nombre'], 'Editar Definicion Operacional'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Definicion Operacional</a><?php } ?>
 	</div>
@@ -385,15 +385,15 @@ $arrOperaciones = db_select_array (false, $SIS_query, 'telemetria_listado_defini
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'telemetria_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-						<?php if($rowdata['id_Sensores']==1){ ?>
+						<?php if($rowData['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
 						<?php } ?>
-						<?php if($rowdata['id_Geo']==1){ ?>
+						<?php if($rowData['id_Geo']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
-						<?php }elseif($rowdata['id_Geo']==2){ ?>
+						<?php }elseif($rowData['id_Geo']==2){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
-						<?php if($rowdata['id_Sensores']==1){ ?>
+						<?php if($rowData['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
 							<li class="active"><a href="<?php echo 'telemetria_listado_sensor_operaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Definicion Operacional</a></li>
 						<?php } ?>
@@ -421,7 +421,7 @@ $arrOperaciones = db_select_array (false, $SIS_query, 'telemetria_listado_defini
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrOperaciones as $oper) { ?>
 					<tr class="odd">
-						<td><?php echo $rowdata['SensoresNombre_'.$oper['N_Sensor']]; ?></td>
+						<td><?php echo $rowData['SensoresNombre_'.$oper['N_Sensor']]; ?></td>
 						<td>
 							<?php
 							if(isset($oper['idFuncion'])&&$oper['idFuncion']!=15){
@@ -436,7 +436,7 @@ $arrOperaciones = db_select_array (false, $SIS_query, 'telemetria_listado_defini
 								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$oper['idDefinicion']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($oper['idDefinicion'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la definicion de '.$rowdata['SensoresNombre_'.$oper['N_Sensor']].'?'; ?>
+									$dialogo   = '¿Realmente deseas eliminar la definicion de '.$rowData['SensoresNombre_'.$oper['N_Sensor']].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>

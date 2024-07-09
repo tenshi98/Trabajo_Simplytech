@@ -52,12 +52,12 @@ idOpciones_2,IngredienteActivo, Carencia, DosisRecomendada, EfectoResidual, Efec
 CarenciaExportador, AporteNutricional';
 $SIS_join  = '';
 $SIS_where = 'idProducto ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowData['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -73,19 +73,19 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'productos_listado_datos_opciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Opciones</a></li>
 						<li class=""><a href="<?php echo 'productos_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
-						<?php if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2&&$rowdata['idTipoReceta']==1){ ?>
+						<?php if(isset($rowData['idTipoProducto'])&&$rowData['idTipoProducto']==2&&$rowData['idTipoReceta']==1){ ?>
 							<li class=""><a href="<?php echo 'productos_listado_datos_receta_01.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-align-left" aria-hidden="true"></i> Receta</a></li>
-						<?php }elseif(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2&&$rowdata['idTipoReceta']==2){ ?>
+						<?php }elseif(isset($rowData['idTipoProducto'])&&$rowData['idTipoProducto']==2&&$rowData['idTipoReceta']==2){ ?>
 							<li class=""><a href="<?php echo 'productos_listado_datos_receta_02.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-align-left" aria-hidden="true"></i> Receta</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'productos_listado_datos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<li class=""><a href="<?php echo 'productos_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
 						<li class=""><a href="<?php echo 'productos_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Ficha</a></li>
 						<li class=""><a href="<?php echo 'productos_listado_datos_hds.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> HDS</a></li>
-						<?php if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>
+						<?php if(isset($rowData['idOpciones_1'])&&$rowData['idOpciones_1']==1){ ?>
 							<li class=""><a href="<?php echo 'productos_listado_datos_ot.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Sistema Mantenlubric</a></li>
 						<?php } ?>
-						<?php if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
+						<?php if(isset($rowData['idOpciones_2'])&&$rowData['idOpciones_2']==1){ ?>
 							<li class=""><a href="<?php echo 'productos_listado_datos_cross.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Sistema CROSS</a></li>
 						<?php } ?>
 
@@ -99,21 +99,21 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){              $x1  = $Nombre;                }else{$x1  = $rowdata['Nombre'];}
-					if(isset($idTipo)){              $x2  = $idTipo;                }else{$x2  = $rowdata['idTipo'];}
-					if(isset($idCategoria)){         $x3  = $idCategoria;           }else{$x3  = $rowdata['idCategoria'];}
-					if(isset($Marca)){               $x4  = $Marca;                 }else{$x4  = $rowdata['Marca'];}
-					if(isset($idUml)){               $x5  = $idUml;                 }else{$x5  = $rowdata['idUml'];}
-					if(isset($idTipoProducto)){      $x6  = $idTipoProducto;        }else{$x6  = $rowdata['idTipoProducto'];}
-					if(isset($idTipoReceta)){        $x7  = $idTipoReceta;          }else{$x7  = $rowdata['idTipoReceta'];}
-					if(isset($Codigo)){              $x8  = $Codigo;                }else{$x8  = $rowdata['Codigo'];}
-					if(isset($IngredienteActivo)){   $x9  = $IngredienteActivo;     }else{$x9  = $rowdata['IngredienteActivo'];}
-					if(isset($DosisRecomendada)){    $x10 = $DosisRecomendada;      }else{$x10 = Cantidades_decimales_justos($rowdata['DosisRecomendada']);}
-					if(isset($CarenciaExportador)){  $x11 = $CarenciaExportador;    }else{$x11 = Cantidades_decimales_justos($rowdata['CarenciaExportador']);}
-					if(isset($Carencia)){            $x12 = $Carencia;              }else{$x12 = $rowdata['Carencia'];}
-					if(isset($EfectoResidual)){      $x13 = $EfectoResidual;        }else{$x13 = Cantidades_decimales_justos($rowdata['EfectoResidual']);}
-					if(isset($EfectoRetroactivo)){   $x14 = $EfectoRetroactivo;     }else{$x14 = Cantidades_decimales_justos($rowdata['EfectoRetroactivo']);}
-					if(isset($AporteNutricional)){   $x15 = $AporteNutricional;     }else{$x15 = $rowdata['AporteNutricional'];}
+					if(isset($Nombre)){              $x1  = $Nombre;                }else{$x1  = $rowData['Nombre'];}
+					if(isset($idTipo)){              $x2  = $idTipo;                }else{$x2  = $rowData['idTipo'];}
+					if(isset($idCategoria)){         $x3  = $idCategoria;           }else{$x3  = $rowData['idCategoria'];}
+					if(isset($Marca)){               $x4  = $Marca;                 }else{$x4  = $rowData['Marca'];}
+					if(isset($idUml)){               $x5  = $idUml;                 }else{$x5  = $rowData['idUml'];}
+					if(isset($idTipoProducto)){      $x6  = $idTipoProducto;        }else{$x6  = $rowData['idTipoProducto'];}
+					if(isset($idTipoReceta)){        $x7  = $idTipoReceta;          }else{$x7  = $rowData['idTipoReceta'];}
+					if(isset($Codigo)){              $x8  = $Codigo;                }else{$x8  = $rowData['Codigo'];}
+					if(isset($IngredienteActivo)){   $x9  = $IngredienteActivo;     }else{$x9  = $rowData['IngredienteActivo'];}
+					if(isset($DosisRecomendada)){    $x10 = $DosisRecomendada;      }else{$x10 = Cantidades_decimales_justos($rowData['DosisRecomendada']);}
+					if(isset($CarenciaExportador)){  $x11 = $CarenciaExportador;    }else{$x11 = Cantidades_decimales_justos($rowData['CarenciaExportador']);}
+					if(isset($Carencia)){            $x12 = $Carencia;              }else{$x12 = $rowData['Carencia'];}
+					if(isset($EfectoResidual)){      $x13 = $EfectoResidual;        }else{$x13 = Cantidades_decimales_justos($rowData['EfectoResidual']);}
+					if(isset($EfectoRetroactivo)){   $x14 = $EfectoRetroactivo;     }else{$x14 = Cantidades_decimales_justos($rowData['EfectoRetroactivo']);}
+					if(isset($AporteNutricional)){   $x15 = $AporteNutricional;     }else{$x15 = $rowData['AporteNutricional'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

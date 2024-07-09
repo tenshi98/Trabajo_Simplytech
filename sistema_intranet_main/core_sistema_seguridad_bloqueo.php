@@ -65,7 +65,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'Fecha, Hora, IP_Client, Motivo';
 	$SIS_join  = '';
 	$SIS_where = 'idBloqueo = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'sistema_seguridad_bloqueo_ip', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'sistema_seguridad_bloqueo_ip', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -80,10 +80,10 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Fecha)){      $x1  = $Fecha;      }else{$x1  = $rowdata['Fecha'];}
-					if(isset($Hora)){       $x2  = $Hora;       }else{$x2  = $rowdata['Hora'];}
-					if(isset($IP_Client)){  $x3  = $IP_Client;  }else{$x3  = $rowdata['IP_Client'];}
-					if(isset($Motivo)){     $x4  = $Motivo;     }else{$x4  = $rowdata['Motivo'];}
+					if(isset($Fecha)){      $x1  = $Fecha;      }else{$x1  = $rowData['Fecha'];}
+					if(isset($Hora)){       $x2  = $Hora;       }else{$x2  = $rowData['Hora'];}
+					if(isset($IP_Client)){  $x3  = $IP_Client;  }else{$x3  = $rowData['IP_Client'];}
+					if(isset($Motivo)){     $x4  = $Motivo;     }else{$x4  = $rowData['Motivo'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

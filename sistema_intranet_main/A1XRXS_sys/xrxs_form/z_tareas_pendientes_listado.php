@@ -864,7 +864,7 @@ require_once '0_validate_user_1.php';
 				Nombre,f_termino, Observaciones, idUsuarioCierre, f_cierre, ObservacionesCierre';
 				$SIS_join  = '';
 				$SIS_where = 'idTareas ='.$idTareas;
-				$rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, $SIS_query, 'tareas_pendientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*********************************************************************/
 				//Filtros
@@ -891,18 +891,18 @@ require_once '0_validate_user_1.php';
 					/*********************************************************************/
 					//Se crea la observacion
 					$Observacion = 'Se realizan los siguientes cambios en los datos basicos:';
-					if(isset($idSistema) && $idSistema != '' && $idSistema != $rowdata['idSistema']){                                          $Observacion .= '<br/> - Cambio del sistema';}
-					if(isset($idUsuario) && $idUsuario != '' && $idUsuario != $rowdata['idUsuario']){                                          $Observacion .= '<br/> - Cambio del usuario';}
-					if(isset($idEstado) && $idEstado != '' && $idEstado != $rowdata['idEstado']){                                              $Observacion .= '<br/> - Cambio de estado';}
-					if(isset($idPrioridad) && $idPrioridad != '' && $idPrioridad != $rowdata['idPrioridad']){                                  $Observacion .= '<br/> - Cambio de prioridad';}
-					if(isset($idTipo) && $idTipo != '' && $idTipo != $rowdata['idTipo']){                                                      $Observacion .= '<br/> - Cambio de tipo';}
-					if(isset($f_creacion) && $f_creacion != '' && $f_creacion != $rowdata['f_creacion']){                                      $Observacion .= '<br/> - Cambio de la fecha de creación (de '.$rowdata['f_creacion'].' a '.$f_creacion.')';}
-					if(isset($Nombre) && $Nombre != '' && $Nombre != $rowdata['Nombre']){                                                      $Observacion .= '<br/> - Cambio de Tarea (de '.$rowdata['Nombre'].' a '.$Nombre.')';}
-					if(isset($f_termino) && $f_termino != '' && $f_termino != $rowdata['f_termino']){                                          $Observacion .= '<br/> - Cambio de fecha de termino (de '.$rowdata['f_termino'].' a '.$f_termino.')';}
-					if(isset($Observaciones) && $Observaciones != '' && $Observaciones != $rowdata['Observaciones']){                          $Observacion .= '<br/> - Cambio de la observacion (de '.$rowdata['Observaciones'].' a '.$Observaciones.')';}
-					if(isset($idUsuarioCierre) && $idUsuarioCierre != '' && $idUsuarioCierre != $rowdata['idUsuarioCierre']){                  $Observacion .= '<br/> - Cambio del usuario de cancelacion';}
-					if(isset($f_cierre) && $f_cierre != '' && $f_cierre != $rowdata['f_cierre']){                                              $Observacion .= '<br/> - Cambio de fecha de cancelacion (de '.$rowdata['f_cierre'].' a '.$f_cierre.')';}
-					if(isset($ObservacionesCierre) && $ObservacionesCierre != '' && $ObservacionesCierre != $rowdata['ObservacionesCierre']){  $Observacion .= '<br/> - Cambio de la observacion de cancelacion (de '.$rowdata['ObservacionesCierre'].' a '.$ObservacionesCierre.')';}
+					if(isset($idSistema) && $idSistema != '' && $idSistema != $rowData['idSistema']){                                          $Observacion .= '<br/> - Cambio del sistema';}
+					if(isset($idUsuario) && $idUsuario != '' && $idUsuario != $rowData['idUsuario']){                                          $Observacion .= '<br/> - Cambio del usuario';}
+					if(isset($idEstado) && $idEstado != '' && $idEstado != $rowData['idEstado']){                                              $Observacion .= '<br/> - Cambio de estado';}
+					if(isset($idPrioridad) && $idPrioridad != '' && $idPrioridad != $rowData['idPrioridad']){                                  $Observacion .= '<br/> - Cambio de prioridad';}
+					if(isset($idTipo) && $idTipo != '' && $idTipo != $rowData['idTipo']){                                                      $Observacion .= '<br/> - Cambio de tipo';}
+					if(isset($f_creacion) && $f_creacion != '' && $f_creacion != $rowData['f_creacion']){                                      $Observacion .= '<br/> - Cambio de la fecha de creación (de '.$rowData['f_creacion'].' a '.$f_creacion.')';}
+					if(isset($Nombre) && $Nombre != '' && $Nombre != $rowData['Nombre']){                                                      $Observacion .= '<br/> - Cambio de Tarea (de '.$rowData['Nombre'].' a '.$Nombre.')';}
+					if(isset($f_termino) && $f_termino != '' && $f_termino != $rowData['f_termino']){                                          $Observacion .= '<br/> - Cambio de fecha de termino (de '.$rowData['f_termino'].' a '.$f_termino.')';}
+					if(isset($Observaciones) && $Observaciones != '' && $Observaciones != $rowData['Observaciones']){                          $Observacion .= '<br/> - Cambio de la observacion (de '.$rowData['Observaciones'].' a '.$Observaciones.')';}
+					if(isset($idUsuarioCierre) && $idUsuarioCierre != '' && $idUsuarioCierre != $rowData['idUsuarioCierre']){                  $Observacion .= '<br/> - Cambio del usuario de cancelacion';}
+					if(isset($f_cierre) && $f_cierre != '' && $f_cierre != $rowData['f_cierre']){                                              $Observacion .= '<br/> - Cambio de fecha de cancelacion (de '.$rowData['f_cierre'].' a '.$f_cierre.')';}
+					if(isset($ObservacionesCierre) && $ObservacionesCierre != '' && $ObservacionesCierre != $rowData['ObservacionesCierre']){  $Observacion .= '<br/> - Cambio de la observacion de cancelacion (de '.$rowData['ObservacionesCierre'].' a '.$ObservacionesCierre.')';}
 
 					/*********************************************************************/
 					//Se guarda en historial la accion
@@ -1142,9 +1142,9 @@ require_once '0_validate_user_1.php';
 						$SIS_query = 'Nombre';
 						$SIS_join  = '';
 						$SIS_where = 'idUsuario ='.$idUsuario;
-						$rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$rowData = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						//mensaje
-						$new_Observacion2 = 'Se modifica la tarea por el responsable '.$rowdata['Nombre'].':'.$new_Observacion;
+						$new_Observacion2 = 'Se modifica la tarea por el responsable '.$rowData['Nombre'].':'.$new_Observacion;
 
 						/*********************************************************************/
 						//Se guarda en historial la accion
@@ -1256,9 +1256,9 @@ require_once '0_validate_user_1.php';
 									$SIS_query = 'Nombre';
 									$SIS_join  = '';
 									$SIS_where = 'idUsuario ='.$idUsuario;
-									$rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									$rowData = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									//mensaje
-									$new_Observacion = 'Se sube el archivo <strong>'.$NombreArchivo.'</strong> por el usuario '.$rowdata['Nombre'];
+									$new_Observacion = 'Se sube el archivo <strong>'.$NombreArchivo.'</strong> por el usuario '.$rowData['Nombre'];
 
 									/*********************************************************************/
 									//Se guarda en historial la accion
@@ -1334,9 +1334,9 @@ require_once '0_validate_user_1.php';
 					$SIS_query = 'Nombre';
 					$SIS_join  = '';
 					$SIS_where = 'idUsuario ='.$idUsuario;
-					$rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$rowData = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//mensaje
-					$new_Observacion = 'Se modifica la tarea por el responsable '.$rowdata['Nombre'].':';
+					$new_Observacion = 'Se modifica la tarea por el responsable '.$rowData['Nombre'].':';
 					$new_Observacion.= '<br/> - Se cambia el estado de la tarea de '.$Estado[$rowTarea['idEstado']].' a '.$Estado[$idEstado];
 					if(isset($Observacion)&&$Observacion!=''){$new_Observacion.= '<br/> - Con la Observacion: '.$Observacion;}
 

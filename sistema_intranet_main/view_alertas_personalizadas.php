@@ -64,11 +64,11 @@ if (validarNumero($_GET['view'])){
 }
 /**************************************************************/
 // tomo los datos del equipo
-$rowdata = db_select_data (false, 'Nombre, cantSensores', 'telemetria_listado', '', 'idTelemetria ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, 'Nombre, cantSensores', 'telemetria_listado', '', 'idTelemetria ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //defino los nombres de los sensores
 $subsql = '';
-for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
     $subsql .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
     $subsql .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
 }
@@ -116,7 +116,7 @@ foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre']
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Alertas Personalizadas del equipo <?php echo $rowdata['Nombre']; ?></h5>
+			<h5>Alertas Personalizadas del equipo <?php echo $rowData['Nombre']; ?></h5>
 		</header>
         <div class="tab-content">
 			<div class="table-responsive">

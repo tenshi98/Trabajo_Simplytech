@@ -32,13 +32,13 @@ require_once 'core/Web.Header.Main.php';
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*******************************************************/
 //variables
-$año_pasado = ano_actual()-1;
+$ano_pasado = ano_actual()-1;
 /*******************************************************/
 // consulto los datos
 $SIS_query = 'Creacion_ano,Creacion_mes,Cantidad_ing,Cantidad_eg,idTipo,SUM(ValorTotal) AS Valor';
 $SIS_join  = 'INNER JOIN usuarios_bodegas_insumos ON usuarios_bodegas_insumos.idBodega = bodegas_insumos_facturacion_existencias.idBodega';
 $SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-$SIS_where.= ' AND Creacion_ano >= '.$año_pasado;
+$SIS_where.= ' AND Creacion_ano >= '.$ano_pasado;
 $SIS_where.= ' AND bodegas_insumos_facturacion_existencias.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $SIS_where.= ' AND usuarios_bodegas_insumos.idUsuario = '.$_SESSION['usuario']['basic_data']['idUsuario'];
 $SIS_where.= ' GROUP BY Creacion_ano,Creacion_mes,idTipo';

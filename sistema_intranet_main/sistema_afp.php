@@ -72,7 +72,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'Nombre,PorcentajeDependiente, PorcentajeIndependiente, idEstado';
 	$SIS_join  = '';
 	$SIS_where = 'idAFP = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'sistema_afp', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'sistema_afp', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -87,10 +87,10 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){                   $x1  = $Nombre;                  }else{$x1  = $rowdata['Nombre'];}
-					if(isset($PorcentajeDependiente)){    $x2  = $PorcentajeDependiente;   }else{$x2  = $rowdata['PorcentajeDependiente'];}
-					if(isset($PorcentajeIndependiente)){  $x3  = $PorcentajeIndependiente; }else{$x3  = $rowdata['PorcentajeIndependiente'];}
-					if(isset($idEstado)){                 $x4  = $idEstado;                }else{$x4  = $rowdata['idEstado'];}
+					if(isset($Nombre)){                   $x1  = $Nombre;                  }else{$x1  = $rowData['Nombre'];}
+					if(isset($PorcentajeDependiente)){    $x2  = $PorcentajeDependiente;   }else{$x2  = $rowData['PorcentajeDependiente'];}
+					if(isset($PorcentajeIndependiente)){  $x3  = $PorcentajeIndependiente; }else{$x3  = $rowData['PorcentajeIndependiente'];}
+					if(isset($idEstado)){                 $x4  = $idEstado;                }else{$x4  = $rowData['idEstado'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

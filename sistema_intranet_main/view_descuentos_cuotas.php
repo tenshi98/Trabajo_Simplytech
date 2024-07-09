@@ -75,7 +75,7 @@ LEFT JOIN `trabajadores_descuentos_cuotas_tipos`    ON trabajadores_descuentos_c
 LEFT JOIN `trabajadores_listado`                    ON trabajadores_listado.idTrabajador            = trabajadores_descuentos_cuotas.idTrabajador
 LEFT JOIN `trabajadores_listado_tipos`              ON trabajadores_listado_tipos.idTipo            = trabajadores_listado.idTipo';
 $SIS_where = 'trabajadores_descuentos_cuotas.idFacturacion ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'trabajadores_descuentos_cuotas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'trabajadores_descuentos_cuotas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 // Se trae un listado de datos
 $SIS_query = 'Fecha, nCuota, TotalCuotas, monto_cuotas';
@@ -101,8 +101,8 @@ $arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuota
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
-				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $row_data['Documento']?>.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['Creacion_fecha']); ?></small>
+				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $rowData['Documento']?>.
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowData['Creacion_fecha']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -112,39 +112,39 @@ $arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuota
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Datos del Trabajador
 			<address>
-				<strong><?php echo $row_data['Nombre_trab'].' '.$row_data['ApellidoPat_trab'].' '.$row_data['ApellidoMat_trab']; ?></strong><br/>
-				Rut: <?php echo $row_data['Rut_trab']; ?><br/>
-				Fono: <?php echo formatPhone($row_data['Fono_trab']); ?><br/>
-				Cargo: <?php echo $row_data['Cargo_trab']; ?><br/>
-				Tipo Cargo: <?php echo $row_data['Tipo_trab']; ?>
+				<strong><?php echo $rowData['Nombre_trab'].' '.$rowData['ApellidoPat_trab'].' '.$rowData['ApellidoMat_trab']; ?></strong><br/>
+				Rut: <?php echo $rowData['Rut_trab']; ?><br/>
+				Fono: <?php echo formatPhone($rowData['Fono_trab']); ?><br/>
+				Cargo: <?php echo $rowData['Cargo_trab']; ?><br/>
+				Tipo Cargo: <?php echo $rowData['Tipo_trab']; ?>
 			</address>
 		</div>
 
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Empresa
 			<address>
-				<strong><?php echo $row_data['SistemaOrigen']; ?></strong><br/>
-				<?php echo $row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna']; ?><br/>
-				<?php echo $row_data['SistemaOrigenDireccion']; ?><br/>
-				Fono: <?php echo formatPhone($row_data['SistemaOrigenFono']); ?><br/>
-				Rut: <?php echo $row_data['SistemaOrigenRut']; ?><br/>
-				Email: <?php echo $row_data['SistemaOrigenEmail']; ?>
+				<strong><?php echo $rowData['SistemaOrigen']; ?></strong><br/>
+				<?php echo $rowData['SistemaOrigenCiudad'].', '.$rowData['SistemaOrigenComuna']; ?><br/>
+				<?php echo $rowData['SistemaOrigenDireccion']; ?><br/>
+				Fono: <?php echo formatPhone($rowData['SistemaOrigenFono']); ?><br/>
+				Rut: <?php echo $rowData['SistemaOrigenRut']; ?><br/>
+				Email: <?php echo $rowData['SistemaOrigenEmail']; ?>
 			</address>
 		</div>
 
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">';
 			<?php 		
-			if(isset($row_data['Usuario'])&&$row_data['Usuario']!=''){
-				echo '<strong>Usuario creador: </strong>'.$row_data['Usuario'].'<br/>';
+			if(isset($rowData['Usuario'])&&$rowData['Usuario']!=''){
+				echo '<strong>Usuario creador: </strong>'.$rowData['Usuario'].'<br/>';
 			}
-			if(isset($row_data['fecha_auto'])&&$row_data['fecha_auto']!=''&&$row_data['fecha_auto']!='0000-00-00'){
-				echo '<strong>Fecha Ingreso : </strong>'.Fecha_estandar($row_data['fecha_auto']).'<br/>';
+			if(isset($rowData['fecha_auto'])&&$rowData['fecha_auto']!=''&&$rowData['fecha_auto']!='0000-00-00'){
+				echo '<strong>Fecha Ingreso : </strong>'.Fecha_estandar($rowData['fecha_auto']).'<br/>';
 			}
-			if(isset($row_data['Monto'])&&$row_data['Monto']!=''){
-				echo '<strong>Monto Cuotas : </strong>'.valores($row_data['Monto'],0).'<br/>';
+			if(isset($rowData['Monto'])&&$rowData['Monto']!=''){
+				echo '<strong>Monto Cuotas : </strong>'.valores($rowData['Monto'],0).'<br/>';
 			}
-			if(isset($row_data['N_Cuotas'])&&$row_data['N_Cuotas']!=''&&$row_data['N_Cuotas']!='0'){
-				echo '<strong>N° Cuotas: </strong>'.$row_data['N_Cuotas'].'<br/>';
+			if(isset($rowData['N_Cuotas'])&&$rowData['N_Cuotas']!=''&&$rowData['N_Cuotas']!='0'){
+				echo '<strong>N° Cuotas: </strong>'.$rowData['N_Cuotas'].'<br/>';
 			}
 			?>
 		</div>
@@ -173,7 +173,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuota
 					<?php } ?>
 					<tr class="invoice-total" bgcolor="#f1f1f1">
 						<td colspan="2" align="right"><strong>Total Cuotas</strong></td>
-						<td width="160" align="right"><?php echo Valores($row_data['Monto'], 0); ?></td>
+						<td width="160" align="right"><?php echo Valores($rowData['Monto'], 0); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -183,7 +183,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuota
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $rowData['Observaciones']; ?></p>
 		</div>
 	</div>
 

@@ -24,19 +24,19 @@ if(isset($_SESSION['pago_rrhh_liquidaciones'][$_GET['idFactTrab']]['idFactTrab']
 }else{
 	//consulto todos los datos
 	$SIS_query = 'idFactTrab AS ID,	idFactTrab, idTrabajador,TrabajadorNombre,TrabajadorRut,TotalHaberes,TotalDescuentos,TotalAPagar,	(SELECT SUM(MontoPagado) FROM `pagos_rrhh_liquidaciones` WHERE idFactTrab = ID LIMIT 1) AS MontoPagado';
-	$row_data = db_select_data (false, $SIS_query, 'rrhh_sueldos_facturacion_trabajadores', '', 'idFactTrab ='.$_GET['idFactTrab'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'rrhh_sueldos_facturacion_trabajadores', '', 'idFactTrab ='.$_GET['idFactTrab'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 			
 	/******************************************************************/
 	//Se traspasan los valores a variables de sesion
-	$_SESSION['pago_rrhh_liquidaciones'][$row_data['idFactTrab']]['idFactTrab']        = $row_data['idFactTrab'];
-	$_SESSION['pago_rrhh_liquidaciones'][$row_data['idFactTrab']]['idTrabajador']      = $row_data['idTrabajador'];
-	$_SESSION['pago_rrhh_liquidaciones'][$row_data['idFactTrab']]['TrabajadorNombre']  = $row_data['TrabajadorNombre'];
-	$_SESSION['pago_rrhh_liquidaciones'][$row_data['idFactTrab']]['TrabajadorRut']     = $row_data['TrabajadorRut'];
-	$_SESSION['pago_rrhh_liquidaciones'][$row_data['idFactTrab']]['TotalHaberes']      = $row_data['TotalHaberes'];
-	$_SESSION['pago_rrhh_liquidaciones'][$row_data['idFactTrab']]['TotalDescuentos']   = $row_data['TotalDescuentos'];
-	$_SESSION['pago_rrhh_liquidaciones'][$row_data['idFactTrab']]['TotalAPagar']       = $row_data['TotalAPagar'];
-	$_SESSION['pago_rrhh_liquidaciones'][$row_data['idFactTrab']]['MontoPagado']       = $row_data['MontoPagado'];
-	$_SESSION['pago_rrhh_liquidaciones'][$row_data['idFactTrab']]['ValorPagado']       = 0;
+	$_SESSION['pago_rrhh_liquidaciones'][$rowData['idFactTrab']]['idFactTrab']        = $rowData['idFactTrab'];
+	$_SESSION['pago_rrhh_liquidaciones'][$rowData['idFactTrab']]['idTrabajador']      = $rowData['idTrabajador'];
+	$_SESSION['pago_rrhh_liquidaciones'][$rowData['idFactTrab']]['TrabajadorNombre']  = $rowData['TrabajadorNombre'];
+	$_SESSION['pago_rrhh_liquidaciones'][$rowData['idFactTrab']]['TrabajadorRut']     = $rowData['TrabajadorRut'];
+	$_SESSION['pago_rrhh_liquidaciones'][$rowData['idFactTrab']]['TotalHaberes']      = $rowData['TotalHaberes'];
+	$_SESSION['pago_rrhh_liquidaciones'][$rowData['idFactTrab']]['TotalDescuentos']   = $rowData['TotalDescuentos'];
+	$_SESSION['pago_rrhh_liquidaciones'][$rowData['idFactTrab']]['TotalAPagar']       = $rowData['TotalAPagar'];
+	$_SESSION['pago_rrhh_liquidaciones'][$rowData['idFactTrab']]['MontoPagado']       = $rowData['MontoPagado'];
+	$_SESSION['pago_rrhh_liquidaciones'][$rowData['idFactTrab']]['ValorPagado']       = 0;
 	
 			
 }

@@ -64,7 +64,7 @@ LEFT JOIN `rrhh_quiz_escala`  esc_2      ON esc_2.idEscala                      
 LEFT JOIN `rrhh_quiz_tipo_evaluacion`    ON rrhh_quiz_tipo_evaluacion.idTipoEvaluacion     = rrhh_quiz_listado.idTipoEvaluacion
 LEFT JOIN `rrhh_quiz_tipo_quiz`          ON rrhh_quiz_tipo_quiz.idTipoQuiz                 = rrhh_quiz_listado.idTipoQuiz';
 $SIS_where = 'rrhh_quiz_listado.idQuiz ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'rrhh_quiz_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'rrhh_quiz_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /**************************************************/
 // Se trae un listado con todas las preguntas
@@ -122,39 +122,39 @@ foreach ($arrPreguntas as $preg) {
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
 							<tr>
 								<td class="meta-head">Nombre</td>
-								<td colspan="3"><?php echo $rowdata['Nombre']?></td>
+								<td colspan="3"><?php echo $rowData['Nombre']?></td>
 							</tr>
 							<tr>
 								<td class="meta-head">Texto Cabecera</td>
-								<td colspan="3"><?php echo $rowdata['Header_texto']; ?></td>
+								<td colspan="3"><?php echo $rowData['Header_texto']; ?></td>
 							</tr>
 							<tr>
 								<td class="meta-head">Fecha Cabecera</td>
-								<td colspan="3"><?php echo fecha_estandar($rowdata['Header_fecha']); ?></td>
+								<td colspan="3"><?php echo fecha_estandar($rowData['Header_fecha']); ?></td>
 							</tr>
 							<tr>
 								<td class="meta-head">Texto Contenido</td>
-								<td colspan="3"><?php echo $rowdata['Texto_Inicio']; ?></td>
+								<td colspan="3"><?php echo $rowData['Texto_Inicio']; ?></td>
 							</tr>
 							<tr>
 								<td class="meta-head">Texto Pie Pagina</td>
-								<td colspan="3"><?php echo $rowdata['Footer_texto']; ?></td>
+								<td colspan="3"><?php echo $rowData['Footer_texto']; ?></td>
 							</tr>
 							<tr>
 								<td class="meta-head">Sistema</td>
-								<td><?php echo $rowdata['sistema']; ?></td>
+								<td><?php echo $rowData['sistema']; ?></td>
 								<td class="meta-head">Estado</td>
-								<td><?php echo $rowdata['Estado']; ?></td>
+								<td><?php echo $rowData['Estado']; ?></td>
 							</tr>
 							<tr>
 								<td class="meta-head">Tipo Puntuacion</td>
 								<?php
 								//Escala
-								if(isset($rowdata['idTipoEvaluacion'])&&$rowdata['idTipoEvaluacion']==1){
-									echo '<td colspan="3">'.$rowdata['TipoEvaluacion'].' : '.$rowdata['Escala'].'</td>';
+								if(isset($rowData['idTipoEvaluacion'])&&$rowData['idTipoEvaluacion']==1){
+									echo '<td colspan="3">'.$rowData['TipoEvaluacion'].' : '.$rowData['Escala'].'</td>';
 								//Porcentaje	
 								}else{
-									echo '<td colspan="3">'.$rowdata['TipoEvaluacion'].' : '.$rowdata['Aprobado'].'</td>';
+									echo '<td colspan="3">'.$rowData['TipoEvaluacion'].' : '.$rowData['Aprobado'].'</td>';
 								}
 								?>
 							</tr>
@@ -162,11 +162,11 @@ foreach ($arrPreguntas as $preg) {
 								<td class="meta-head">Tipo Evaluacion</td>
 								<?php
 								//Cerrada
-								if(isset($rowdata['idTipoQuiz'])&&$rowdata['idTipoQuiz']==1){
-									echo '<td colspan="3">'.$rowdata['TipoQuiz'].'</td>';
+								if(isset($rowData['idTipoQuiz'])&&$rowData['idTipoQuiz']==1){
+									echo '<td colspan="3">'.$rowData['TipoQuiz'].'</td>';
 								//Abierta 	
 								}else{
-									echo '<td colspan="3">'.$rowdata['TipoQuiz'].'</td>';
+									echo '<td colspan="3">'.$rowData['TipoQuiz'].'</td>';
 								}
 								?>
 							</tr>

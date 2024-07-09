@@ -111,7 +111,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 //Se traen las rutas
 $arrCamaras = array();
@@ -149,7 +149,7 @@ array_push( $arrCamaras,$row );
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Grupo Camaras', $rowdata['Nombre'], 'Resumen'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Grupo Camaras', $rowData['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -171,25 +171,25 @@ array_push( $arrCamaras,$row );
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 							<p class="text-muted word_break">
-								<strong>Nombre del Grupo : </strong><?php echo $rowdata['Nombre']; ?><br/>
-								<strong>Numero de Camaras: </strong><?php echo $rowdata['N_Camaras']; ?><br/>
-								<strong>Pais : </strong><?php echo $rowdata['Pais']; ?><br/>
-								<strong>Región : </strong><?php echo $rowdata['Ciudad']; ?><br/>
-								<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-								<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
-								<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
-								<strong>Estado : </strong><?php echo $rowdata['estado']; ?><br/>
-								<strong>Subconfiguracion : </strong><?php echo $rowdata['Subconfiguracion']; ?>
+								<strong>Nombre del Grupo : </strong><?php echo $rowData['Nombre']; ?><br/>
+								<strong>Numero de Camaras: </strong><?php echo $rowData['N_Camaras']; ?><br/>
+								<strong>Pais : </strong><?php echo $rowData['Pais']; ?><br/>
+								<strong>Región : </strong><?php echo $rowData['Ciudad']; ?><br/>
+								<strong>Comuna : </strong><?php echo $rowData['Comuna']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowData['Direccion']; ?><br/>
+								<strong>Sistema Relacionado : </strong><?php echo $rowData['sistema']; ?><br/>
+								<strong>Estado : </strong><?php echo $rowData['estado']; ?><br/>
+								<strong>Subconfiguracion : </strong><?php echo $rowData['Subconfiguracion']; ?>
 							</p>
 
-							<?php if(isset($rowdata['idSubconfiguracion'])&&$rowdata['idSubconfiguracion']==2){ ?>
+							<?php if(isset($rowData['idSubconfiguracion'])&&$rowData['idSubconfiguracion']==2){ ?>
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Subconfiguracion</h2>
 								<p class="text-muted word_break">
-									<strong>Tipo de Camara : </strong><?php echo $rowdata['TipoCamara']; ?><br/>
-									<strong>Usuario : </strong><?php echo $rowdata['Config_usuario']; ?><br/>
-									<strong>Password: </strong><?php echo $rowdata['Config_Password']; ?><br/>
-									<strong>IP : </strong><?php echo $rowdata['Config_IP']; ?><br/>
-									<strong>Puerto : </strong><?php echo $rowdata['Config_Puerto']; ?><br/>
+									<strong>Tipo de Camara : </strong><?php echo $rowData['TipoCamara']; ?><br/>
+									<strong>Usuario : </strong><?php echo $rowData['Config_usuario']; ?><br/>
+									<strong>Password: </strong><?php echo $rowData['Config_Password']; ?><br/>
+									<strong>IP : </strong><?php echo $rowData['Config_IP']; ?><br/>
+									<strong>Puerto : </strong><?php echo $rowData['Config_Puerto']; ?><br/>
 								</p>
 							<?php } ?>
 
@@ -198,7 +198,7 @@ array_push( $arrCamaras,$row );
 								<thead>
 									<tr role="row">
 										<th>Nombre</th>
-										<?php if(isset($rowdata['idSubconfiguracion'])&&$rowdata['idSubconfiguracion']==1){ ?>
+										<?php if(isset($rowData['idSubconfiguracion'])&&$rowData['idSubconfiguracion']==1){ ?>
 											<th>Usuario</th>
 											<th>Password</th>
 											<th>IP</th>
@@ -210,7 +210,7 @@ array_push( $arrCamaras,$row );
 									<?php foreach ($arrCamaras as $zona) { ?>
 										<tr class="odd">
 											<td><?php echo $zona['Nombre']; ?></td>
-											<?php if(isset($rowdata['idSubconfiguracion'])&&$rowdata['idSubconfiguracion']==1){ ?>
+											<?php if(isset($rowData['idSubconfiguracion'])&&$rowData['idSubconfiguracion']==1){ ?>
 												<td><?php echo $zona['Config_usuario']; ?></td>
 												<td><?php echo $zona['Config_Password']; ?></td>
 												<td><?php echo $zona['Config_IP']; ?></td>
@@ -231,9 +231,9 @@ array_push( $arrCamaras,$row );
 						<?php
 							//se arma la dirección
 							$direccion = "";
-							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){  $direccion .= $rowdata["Direccion"];}
-							if(isset($rowdata["Ciudad"])&&$rowdata["Ciudad"]!=''){        $direccion .= ', '.$rowdata["Ciudad"];}
-							if(isset($rowdata["Comuna"])&&$rowdata["Comuna"]!=''){        $direccion .= ', '.$rowdata["Comuna"];}
+							if(isset($rowData["Direccion"])&&$rowData["Direccion"]!=''){  $direccion .= $rowData["Direccion"];}
+							if(isset($rowData["Ciudad"])&&$rowData["Ciudad"]!=''){        $direccion .= ', '.$rowData["Ciudad"];}
+							if(isset($rowData["Comuna"])&&$rowData["Comuna"]!=''){        $direccion .= ', '.$rowData["Comuna"];}
 							//se despliega mensaje en caso de no existir dirección
 							if($direccion!=''){
 								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);

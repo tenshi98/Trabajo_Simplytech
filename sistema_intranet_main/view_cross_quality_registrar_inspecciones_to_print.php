@@ -90,7 +90,7 @@ LEFT JOIN `ubicacion_listado_level_3`              ON ubicacion_listado_level_3.
 LEFT JOIN `ubicacion_listado_level_4`              ON ubicacion_listado_level_4.idLevel_4          = cross_quality_registrar_inspecciones.idUbicacion_lvl_4
 LEFT JOIN `ubicacion_listado_level_5`              ON ubicacion_listado_level_5.idLevel_5          = cross_quality_registrar_inspecciones.idUbicacion_lvl_5';
 $SIS_where = 'cross_quality_registrar_inspecciones.idAnalisis ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /***************************************************/
 // Se trae un listado con todos los trabajadores
@@ -144,8 +144,8 @@ $html .= '
 		<div class="row">
 			<div class="col-xs-12">
 				<h2 class="page-header">
-					<i class="fa fa-globe" aria-hidden="true"></i>'.$row_data['TipoAnalisis'].'.
-					<small class="pull-right">Fecha Creacion: '.Fecha_estandar($row_data['fecha_auto']).'</small>
+					<i class="fa fa-globe" aria-hidden="true"></i>'.$rowData['TipoAnalisis'].'.
+					<small class="pull-right">Fecha Creacion: '.Fecha_estandar($rowData['fecha_auto']).'</small>
 				</h2>
 			</div>
 		</div>
@@ -155,13 +155,13 @@ $html .= '
 				Datos Básicos
 				<address>
 					<strong>Producto</strong><br/>
-					'.$row_data['ProductoCategoria'].', '.$row_data['ProductoNombre'].'<br/>
-					Ubicación: '.$row_data['UbicacionNombre'];
-					if(isset($row_data['UbicacionNombre_lvl_1'])&&$row_data['UbicacionNombre_lvl_1']!=''){$html .= ' - '.$row_data['UbicacionNombre_lvl_1'];}
-					if(isset($row_data['UbicacionNombre_lvl_2'])&&$row_data['UbicacionNombre_lvl_2']!=''){$html .= ' - '.$row_data['UbicacionNombre_lvl_2'];}
-					if(isset($row_data['UbicacionNombre_lvl_3'])&&$row_data['UbicacionNombre_lvl_3']!=''){$html .= ' - '.$row_data['UbicacionNombre_lvl_3'];}
-					if(isset($row_data['UbicacionNombre_lvl_4'])&&$row_data['UbicacionNombre_lvl_4']!=''){$html .= ' - '.$row_data['UbicacionNombre_lvl_4'];}
-					if(isset($row_data['UbicacionNombre_lvl_5'])&&$row_data['UbicacionNombre_lvl_5']!=''){$html .= ' - '.$row_data['UbicacionNombre_lvl_5'];}
+					'.$rowData['ProductoCategoria'].', '.$rowData['ProductoNombre'].'<br/>
+					Ubicación: '.$rowData['UbicacionNombre'];
+					if(isset($rowData['UbicacionNombre_lvl_1'])&&$rowData['UbicacionNombre_lvl_1']!=''){$html .= ' - '.$rowData['UbicacionNombre_lvl_1'];}
+					if(isset($rowData['UbicacionNombre_lvl_2'])&&$rowData['UbicacionNombre_lvl_2']!=''){$html .= ' - '.$rowData['UbicacionNombre_lvl_2'];}
+					if(isset($rowData['UbicacionNombre_lvl_3'])&&$rowData['UbicacionNombre_lvl_3']!=''){$html .= ' - '.$rowData['UbicacionNombre_lvl_3'];}
+					if(isset($rowData['UbicacionNombre_lvl_4'])&&$rowData['UbicacionNombre_lvl_4']!=''){$html .= ' - '.$rowData['UbicacionNombre_lvl_4'];}
+					if(isset($rowData['UbicacionNombre_lvl_5'])&&$rowData['UbicacionNombre_lvl_5']!=''){$html .= ' - '.$rowData['UbicacionNombre_lvl_5'];}
 						
 					$html .= '<br/>
 				</address>
@@ -170,16 +170,16 @@ $html .= '
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 				Fecha Creacion
 				<address>
-					Fecha Ingreso: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
-					Temporada: '.$row_data['Temporada'].'<br/>
+					Fecha Ingreso: '.Fecha_estandar($rowData['Creacion_fecha']).'<br/>
+					Temporada: '.$rowData['Temporada'].'<br/>
 				</address>
 			</div>
 			   
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 				Datos Creacion
 				<address>
-					Sistema: '.$row_data['Sistema'].'<br/>
-					Usuario: '.$row_data['Usuario'].'<br/>
+					Sistema: '.$rowData['Sistema'].'<br/>
+					Usuario: '.$rowData['Usuario'].'<br/>
 				</address>	
 					
 			</div>
@@ -241,7 +241,7 @@ $html .= '
 		<div class="col-xs-12">
 			<div class="row">
 				<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-				<p class="text-muted well well-sm no-shadow" >'.$row_data['Observaciones'].'</p>
+				<p class="text-muted well well-sm no-shadow" >'.$rowData['Observaciones'].'</p>
 			</div>
 		</div>
 	</section>';

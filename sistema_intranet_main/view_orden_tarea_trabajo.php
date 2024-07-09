@@ -77,7 +77,7 @@ LEFT JOIN `ubicacion_listado_level_4`  ON ubicacion_listado_level_4.idLevel_4   
 LEFT JOIN `ubicacion_listado_level_5`  ON ubicacion_listado_level_5.idLevel_5   = orden_trabajo_tareas_listado.idUbicacion_lvl_5
 LEFT JOIN `usuarios_listado`           ON usuarios_listado.idUsuario            = orden_trabajo_tareas_listado.idUsuarioCancel';
 $SIS_where = 'orden_trabajo_tareas_listado.idOT ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /***************************************************/
 //Se traen a todos los trabajadores relacionados a las ot
@@ -228,15 +228,15 @@ $SIS_order = 'orden_trabajo_tareas_quejas.idQueja DESC';
 $arrQuejas = array();
 $arrQuejas = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_quejas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrQuejas');
 
-if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
+if(isset($rowData['CancelUsuario'])&&$rowData['CancelUsuario']!=''){ ?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="bs-callout bs-callout-danger" >
 			<h4>Orden de Trabajo <?php echo n_doc($X_Puntero, 8); ?> cancelada</h4>
 			<p>
-				Usuario Cancelacion: <?php echo $rowdata['CancelUsuario']; ?><br/>
-				Fecha Cancelacion: <?php echo fecha_estandar($rowdata['CancelFecha']); ?><br/>
-				Motivo Cancelacion: <?php echo $rowdata['CancelObservacion']; ?>
+				Usuario Cancelacion: <?php echo $rowData['CancelUsuario']; ?><br/>
+				Fecha Cancelacion: <?php echo fecha_estandar($rowData['CancelFecha']); ?><br/>
+				Motivo Cancelacion: <?php echo $rowData['CancelObservacion']; ?>
 			</p>
 		</div>
 	</div>
@@ -259,60 +259,60 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 						<tr>
 							<td class="meta-head">Ubicación</td>
 							<td>
-								<?php echo $rowdata['Ubicacion'];
-								if(isset($rowdata['UbicacionLVL_1'])&&$rowdata['UbicacionLVL_1']!=''){echo ' - '.$rowdata['UbicacionLVL_1'];}
-								if(isset($rowdata['UbicacionLVL_2'])&&$rowdata['UbicacionLVL_2']!=''){echo ' - '.$rowdata['UbicacionLVL_2'];}
-								if(isset($rowdata['UbicacionLVL_3'])&&$rowdata['UbicacionLVL_3']!=''){echo ' - '.$rowdata['UbicacionLVL_3'];}
-								if(isset($rowdata['UbicacionLVL_4'])&&$rowdata['UbicacionLVL_4']!=''){echo ' - '.$rowdata['UbicacionLVL_4'];}
-								if(isset($rowdata['UbicacionLVL_5'])&&$rowdata['UbicacionLVL_5']!=''){echo ' - '.$rowdata['UbicacionLVL_5'];}
+								<?php echo $rowData['Ubicacion'];
+								if(isset($rowData['UbicacionLVL_1'])&&$rowData['UbicacionLVL_1']!=''){echo ' - '.$rowData['UbicacionLVL_1'];}
+								if(isset($rowData['UbicacionLVL_2'])&&$rowData['UbicacionLVL_2']!=''){echo ' - '.$rowData['UbicacionLVL_2'];}
+								if(isset($rowData['UbicacionLVL_3'])&&$rowData['UbicacionLVL_3']!=''){echo ' - '.$rowData['UbicacionLVL_3'];}
+								if(isset($rowData['UbicacionLVL_4'])&&$rowData['UbicacionLVL_4']!=''){echo ' - '.$rowData['UbicacionLVL_4'];}
+								if(isset($rowData['UbicacionLVL_5'])&&$rowData['UbicacionLVL_5']!=''){echo ' - '.$rowData['UbicacionLVL_5'];}
 								?>
 							</td>
 						</tr>
 						<tr>
 							<td class="meta-head">Prioridad</td>
-							<td><?php echo $rowdata['NombrePrioridad']?></td>
+							<td><?php echo $rowData['NombrePrioridad']?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Tipo de Trabajo</td>
-							<td><?php echo $rowdata['NombreTipo']?></td>
+							<td><?php echo $rowData['NombreTipo']?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Estado</td>
-							<td><?php echo $rowdata['NombreEstado']?></td>
+							<td><?php echo $rowData['NombreEstado']?></td>
 						</tr>
 					</tbody>
 				</table>
 				<table id="meta" class="otdata2">
 					<tbody>
 
-						<?php if($rowdata['f_creacion']!='0000-00-00'){ ?>
+						<?php if($rowData['f_creacion']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Fecha creación</td>
-								<td><?php if($rowdata['f_creacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_creacion']);} ?></td>
+								<td><?php if($rowData['f_creacion']!='0000-00-00'){echo Fecha_estandar($rowData['f_creacion']);} ?></td>
 							</tr>
 						<?php } ?>
-						<?php if($rowdata['f_programacion']!='0000-00-00'){ ?>
+						<?php if($rowData['f_programacion']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Fecha programada</td>
-								<td><?php if($rowdata['f_programacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_programacion']);} ?></td>
+								<td><?php if($rowData['f_programacion']!='0000-00-00'){echo Fecha_estandar($rowData['f_programacion']);} ?></td>
 							</tr>
 						<?php } ?>
-						<?php if($rowdata['f_termino']!='0000-00-00'){ ?>
+						<?php if($rowData['f_termino']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Fecha termino</td>
-								<td><?php if($rowdata['f_termino']!='0000-00-00'){echo Fecha_estandar($rowdata['f_termino']);} ?></td>
+								<td><?php if($rowData['f_termino']!='0000-00-00'){echo Fecha_estandar($rowData['f_termino']);} ?></td>
 							</tr>
 						<?php } ?>
-						<?php if($rowdata['hora_Inicio']!='00:00:00'){ ?>
+						<?php if($rowData['hora_Inicio']!='00:00:00'){ ?>
 							<tr>
 								<td class="meta-head">Hora inicio</td>
-								<td><?php if($rowdata['hora_Inicio']!='00:00:00'){echo $rowdata['hora_Inicio'];} ?></td>
+								<td><?php if($rowData['hora_Inicio']!='00:00:00'){echo $rowData['hora_Inicio'];} ?></td>
 							</tr>
 						<?php } ?>
-						<?php if($rowdata['hora_Termino']!='00:00:00'){ ?>
+						<?php if($rowData['hora_Termino']!='00:00:00'){ ?>
 							<tr>
 								<td class="meta-head">Hora termino</td>
-								<td><?php if($rowdata['hora_Termino']!='00:00:00'){echo $rowdata['hora_Termino'];} ?></td>
+								<td><?php if($rowData['hora_Termino']!='00:00:00'){echo $rowData['hora_Termino'];} ?></td>
 							</tr>
 						<?php } ?>
 					</tbody>
@@ -338,11 +338,11 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 					<?php } 
 					/**********************************************************************************/
 					if($arrInsumos!=false && !empty($arrInsumos) && $arrInsumos!='') { ?>
-						<tr class="item-row fact_tittle"><td colspan="6">Insumos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';} ?></td></tr>
+						<tr class="item-row fact_tittle"><td colspan="6">Insumos <?php if(isset($rowData['idEstado'])&&$rowData['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';} ?></td></tr>
 						<?php foreach ($arrInsumos as $insumos) {
 							if(isset($insumos['Cantidad'])&&$insumos['Cantidad']!=0){ ?>
 								<tr class="item-row linea_punteada">
-									<td class="item-name" colspan="5"><?php echo $insumos['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
+									<td class="item-name" colspan="5"><?php echo $insumos['NombreProducto']; if(isset($rowData['NombreBodega'])&&$rowData['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
 									<td class="item-name"><?php echo Cantidades_decimales_justos($insumos['Cantidad']).' '.$insumos['UnidadMedida']; ?></td>
 								</tr>
 							<?php
@@ -352,11 +352,11 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 					<?php } 
 					/**********************************************************************************/
 					if($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') { ?>
-						<tr class="item-row fact_tittle"><td colspan="6">Productos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';} ?></td></tr>
+						<tr class="item-row fact_tittle"><td colspan="6">Productos <?php if(isset($rowData['idEstado'])&&$rowData['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';} ?></td></tr>
 						<?php foreach ($arrProductos as $prod) {
 							if(isset($prod['Cantidad'])&&$prod['Cantidad']!=0){ ?>
 								<tr class="item-row linea_punteada">
-									<td class="item-name" colspan="5"><?php echo $prod['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
+									<td class="item-name" colspan="5"><?php echo $prod['NombreProducto']; if(isset($rowData['NombreBodega'])&&$rowData['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
 									<td class="item-name"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['UnidadMedida']; ?></td>
 								</tr>
 							<?php 
@@ -366,7 +366,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 					<?php } 
 					/**********************************************************************************/
 					if($arrTarea!=false && !empty($arrTarea) && $arrTarea!='') { ?>
-						<tr class="item-row fact_tittle"><td colspan="6">Trabajos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Ejecutados';} ?></td></tr>
+						<tr class="item-row fact_tittle"><td colspan="6">Trabajos <?php if(isset($rowData['idEstado'])&&$rowData['idEstado']==1){echo 'Programados';}else{echo 'Ejecutados';} ?></td></tr>
 						<?php foreach ($arrTarea as $tarea) {
 							$s_tarea = $tarea['LicitacionLVL_1'];
 							if(isset($tarea['LicitacionLVL_2'])&&$tarea['LicitacionLVL_2']!=''){$s_tarea .= ' - '.$tarea['LicitacionLVL_2'];}
@@ -437,7 +437,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 					/**********************************************************************************/?>
 
 					
-					<tr><td colspan="6" class="blank"><p><?php echo $rowdata['Observaciones']?></p></td></tr>
+					<tr><td colspan="6" class="blank"><p><?php echo $rowData['Observaciones']?></p></td></tr>
 					<tr><td colspan="6" class="blank"><p>Observacion</p></td></tr>
 
 				</tbody>

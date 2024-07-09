@@ -45,7 +45,7 @@ if (validarNumero($_GET['view'])){
 $SIS_query = 'Nombre';
 $SIS_join  = '';
 $SIS_where = 'idZona ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 //Se traen las rutas
 $SIS_query = 'idUbicaciones, Latitud, Longitud';
@@ -60,7 +60,7 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Puntos del Cuartel <?php echo $rowdata['Nombre']; ?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Puntos del Cuartel <?php echo $rowData['Nombre']; ?></h5>
 		</header>
 		<div class="tab-content">
 			<div class="table-responsive">

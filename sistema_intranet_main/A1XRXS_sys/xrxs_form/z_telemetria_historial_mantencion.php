@@ -502,7 +502,7 @@ require_once '0_validate_user_1.php';
 
 			if($errorn==0){
 				// Se obtiene el nombre del archivo
-				$rowdata = db_select_data (false, 'Nombre', 'telemetria_historial_mantencion_archivos', '', 'idArchivo = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'Nombre', 'telemetria_historial_mantencion_archivos', '', 'idArchivo = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//se borran los datos
 				$resultado = db_delete_data (false, 'telemetria_historial_mantencion_archivos', 'idArchivo = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -510,12 +510,12 @@ require_once '0_validate_user_1.php';
 				if($resultado==true){
 
 					//se elimina el archivo
-					if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){
+					if(isset($rowData['Nombre'])&&$rowData['Nombre']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['Nombre'])){
+							if(!is_writable('upload/'.$rowData['Nombre'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['Nombre']);
+								unlink('upload/'.$rowData['Nombre']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
@@ -657,7 +657,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'Path_Firma', 'telemetria_historial_mantencion', '', 'idMantencion = "'.$_GET['del_firma'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'Path_Firma', 'telemetria_historial_mantencion', '', 'idMantencion = "'.$_GET['del_firma'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -667,12 +667,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['Path_Firma'])&&$rowdata['Path_Firma']!=''){
+				if(isset($rowData['Path_Firma'])&&$rowData['Path_Firma']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['Path_Firma'])){
+						if(!is_writable('upload/'.$rowData['Path_Firma'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['Path_Firma']);
+							unlink('upload/'.$rowData['Path_Firma']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log

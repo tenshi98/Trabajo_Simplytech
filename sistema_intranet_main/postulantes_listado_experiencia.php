@@ -88,7 +88,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 // consulto los datos
 $query = "SELECT AnoInicio,AnoTermino,Nombre,Cargo,Descripcion
@@ -107,7 +107,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdatax = mysqli_fetch_assoc ($resultado);
+$rowDatax = mysqli_fetch_assoc ($resultado);
 
  ?>
 
@@ -122,11 +122,11 @@ $rowdatax = mysqli_fetch_assoc ($resultado);
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($AnoInicio)){        $x1  = $AnoInicio;         }else{$x1  = $rowdatax['AnoInicio'];}
-				if(isset($AnoTermino)){       $x2  = $AnoTermino;        }else{$x2  = $rowdatax['AnoTermino'];}
-				if(isset($Nombre)){           $x3  = $Nombre;            }else{$x3  = $rowdatax['Nombre'];}
-				if(isset($Cargo)){            $x4  = $Cargo;             }else{$x4  = $rowdatax['Cargo'];}
-				if(isset($Descripcion)){      $x5  = $Descripcion;       }else{$x5  = $rowdatax['Descripcion'];}
+				if(isset($AnoInicio)){        $x1  = $AnoInicio;         }else{$x1  = $rowDatax['AnoInicio'];}
+				if(isset($AnoTermino)){       $x2  = $AnoTermino;        }else{$x2  = $rowDatax['AnoTermino'];}
+				if(isset($Nombre)){           $x3  = $Nombre;            }else{$x3  = $rowDatax['Nombre'];}
+				if(isset($Cargo)){            $x4  = $Cargo;             }else{$x4  = $rowDatax['Cargo'];}
+				if(isset($Descripcion)){      $x5  = $Descripcion;       }else{$x5  = $rowDatax['Descripcion'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -211,7 +211,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 // consulto los datos
 $arrEstudios = array();
@@ -248,7 +248,7 @@ array_push( $arrEstudios,$row );
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Postulante', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Experiencia Laboral'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Postulante', $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat'], 'Experiencia Laboral'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Experiencia Laboral</a><?php } ?>
 	</div>

@@ -140,7 +140,7 @@ if(!empty($_GET['addFile'])){
 	$SIS_query = 'idAnalisis,Creacion_fecha,idTipo,Temporada,idCategoria,idProducto,idUbicacion,idUbicacion_lvl_1,idUbicacion_lvl_2,idUbicacion_lvl_3,idUbicacion_lvl_4,idUbicacion_lvl_5,idSistema';
 	$SIS_join  = '';
 	$SIS_where = 'idAnalisis ='.$_GET['edit'];
-	$row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -158,21 +158,21 @@ if(!empty($_GET['addFile'])){
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
 
-					$Form_Inputs->form_input_hidden('idAnalisis', $row_data['idAnalisis'], 2);
-					$Form_Inputs->form_input_hidden('idSistema', $row_data['idSistema'], 2);
+					$Form_Inputs->form_input_hidden('idAnalisis', $rowData['idAnalisis'], 2);
+					$Form_Inputs->form_input_hidden('idSistema', $rowData['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 					$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
-					$Form_Inputs->form_input_hidden('Creacion_fecha', $row_data['Creacion_fecha'], 2);
-					$Form_Inputs->form_input_hidden('idTipo', $row_data['idTipo'], 2);
-					$Form_Inputs->form_input_hidden('Temporada', $row_data['Temporada'], 2);
-					$Form_Inputs->form_input_hidden('idCategoria', $row_data['idCategoria'], 2);
-					$Form_Inputs->form_input_hidden('idProducto', $row_data['idProducto'], 2);
-					$Form_Inputs->form_input_hidden('idUbicacion', $row_data['idUbicacion'], 2);
-					if(isset($row_data['idUbicacion_lvl_1'])&&$row_data['idUbicacion_lvl_1']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_1', $row_data['idUbicacion_lvl_1'], 2);}
-					if(isset($row_data['idUbicacion_lvl_2'])&&$row_data['idUbicacion_lvl_2']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_2', $row_data['idUbicacion_lvl_2'], 2);}
-					if(isset($row_data['idUbicacion_lvl_3'])&&$row_data['idUbicacion_lvl_3']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $row_data['idUbicacion_lvl_3'], 2);}
-					if(isset($row_data['idUbicacion_lvl_4'])&&$row_data['idUbicacion_lvl_4']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $row_data['idUbicacion_lvl_4'], 2);}
-					if(isset($row_data['idUbicacion_lvl_5'])&&$row_data['idUbicacion_lvl_5']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $row_data['idUbicacion_lvl_5'], 2);}
+					$Form_Inputs->form_input_hidden('Creacion_fecha', $rowData['Creacion_fecha'], 2);
+					$Form_Inputs->form_input_hidden('idTipo', $rowData['idTipo'], 2);
+					$Form_Inputs->form_input_hidden('Temporada', $rowData['Temporada'], 2);
+					$Form_Inputs->form_input_hidden('idCategoria', $rowData['idCategoria'], 2);
+					$Form_Inputs->form_input_hidden('idProducto', $rowData['idProducto'], 2);
+					$Form_Inputs->form_input_hidden('idUbicacion', $rowData['idUbicacion'], 2);
+					if(isset($rowData['idUbicacion_lvl_1'])&&$rowData['idUbicacion_lvl_1']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_1', $rowData['idUbicacion_lvl_1'], 2);}
+					if(isset($rowData['idUbicacion_lvl_2'])&&$rowData['idUbicacion_lvl_2']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_2', $rowData['idUbicacion_lvl_2'], 2);}
+					if(isset($rowData['idUbicacion_lvl_3'])&&$rowData['idUbicacion_lvl_3']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $rowData['idUbicacion_lvl_3'], 2);}
+					if(isset($rowData['idUbicacion_lvl_4'])&&$rowData['idUbicacion_lvl_4']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $rowData['idUbicacion_lvl_4'], 2);}
+					if(isset($rowData['idUbicacion_lvl_5'])&&$rowData['idUbicacion_lvl_5']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $rowData['idUbicacion_lvl_5'], 2);}
 					?>
 
 					<div class="form-group">
@@ -199,7 +199,7 @@ if(!empty($_GET['addFile'])){
 	// consulto los datos
 	$SIS_join  = '';
 	$SIS_where = 'idMatriz ='.$_GET['idCalidad'];
-	$rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/***********************************************/
 	// Se trae un listado con todos los grupos
@@ -222,7 +222,7 @@ if(!empty($_GET['addFile'])){
 	$SIS_query = 'idProducto';
 	$SIS_join  = '';
 	$SIS_where = 'idAnalisis ='.$_GET['edit'];
-	$row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*****************************************************/
 	//Verifico el tipo de usuario que esta ingresando
@@ -235,7 +235,7 @@ if(!empty($_GET['addFile'])){
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-				<h5>Ingreso datos de <?php echo $rowdata['Nombre']; ?></h5>
+				<h5>Ingreso datos de <?php echo $rowData['Nombre']; ?></h5>
 			</header>
 			<div class="body">
 				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
@@ -271,7 +271,7 @@ if(!empty($_GET['addFile'])){
 						//Cuento si hay items dentro de la categoria
 						$x_con = 0;
 						for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
-							if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
+							if($grupo['idGrupo']==$rowData['PuntoidGrupo_'.$i]){
 								$x_con++;
 							}
 						}
@@ -282,52 +282,52 @@ if(!empty($_GET['addFile'])){
 							echo '<h4>'.$grupo['Nombre'].'</h4>';
 
 							for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
-								if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
+								if($grupo['idGrupo']==$rowData['PuntoidGrupo_'.$i]){
 									//Verifico el tipo de dato
-									switch ($rowdata['PuntoidTipo_'.$i]) {
+									switch ($rowData['PuntoidTipo_'.$i]) {
 										//Medicion (Decimal) con parametros limitantes
 										case 1:
-											$Form_Inputs->form_input_number($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
+											$Form_Inputs->form_input_number($rowData['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
 											break;
 										//Medicion (Decimal) sin parametros limitantes
 										case 2:
-											$Form_Inputs->form_input_number($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
+											$Form_Inputs->form_input_number($rowData['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
 											break;
 										//Medicion (Enteros) con parametros limitantes
 										case 3:
-											$Form_Inputs->form_input_number_integer($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
+											$Form_Inputs->form_input_number_integer($rowData['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
 											break;
 										//Medicion (Enteros) sin parametros limitantes
 										case 4:
-											$Form_Inputs->form_input_number_integer($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
+											$Form_Inputs->form_input_number_integer($rowData['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
 											break;
 										//Fecha
 										case 5:
-											$Form_Inputs->form_date($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1);
+											$Form_Inputs->form_date($rowData['PuntoNombre_'.$i],'Medida_'.$i, '', 1);
 											break;
 										//Hora
 										case 6:
-											$Form_Inputs->form_time_popover($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 24);
+											$Form_Inputs->form_time_popover($rowData['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 24);
 											break;
 										//Texto Libre
 										case 7:
-											$Form_Inputs->form_textarea($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1);
+											$Form_Inputs->form_textarea($rowData['PuntoNombre_'.$i],'Medida_'.$i, '', 1);
 											break;
 										//Seleccion 1 a 3
 										case 8:
-											$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 3);
+											$Form_Inputs->form_select_n_auto($rowData['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 3);
 											break;
 										//Seleccion 1 a 5
 										case 9:
-											$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 5);
+											$Form_Inputs->form_select_n_auto($rowData['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 5);
 											break;
 										//Seleccion 1 a 10
 										case 10:
-											$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 10);
+											$Form_Inputs->form_select_n_auto($rowData['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 10);
 											break;
 										//Texto Libre con Validacion
 										case 11:
-											$Form_Inputs->form_input_validate($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, $rowdata['Validacion_'.$i]);
+											$Form_Inputs->form_input_validate($rowData['PuntoNombre_'.$i],'Medida_'.$i, '', 1, $rowData['Validacion_'.$i]);
 											break;
 
 									}
@@ -338,16 +338,16 @@ if(!empty($_GET['addFile'])){
 					/*************************************************************/
 					$Form_Inputs->form_tittle(3, 'Decision');
 					//Verifico esta activo el dato 1
-					if(isset($rowdata['idNota_1'])&&$rowdata['idNota_1']==1){
-						echo print_select($rowdata['idNotaTipo_1'], 'Nota Calidad', 'Resolucion_1', '', $rowdata['Validar_1']);
+					if(isset($rowData['idNota_1'])&&$rowData['idNota_1']==1){
+						echo print_select($rowData['idNotaTipo_1'], 'Nota Calidad', 'Resolucion_1', '', $rowData['Validar_1']);
 					}
 					//Verifico esta activo el dato 2
-					if(isset($rowdata['idNota_2'])&&$rowdata['idNota_2']==1){
-						echo print_select($rowdata['idNotaTipo_2'], 'Nota Condición', 'Resolucion_2', '', $rowdata['Validar_2']);
+					if(isset($rowData['idNota_2'])&&$rowData['idNota_2']==1){
+						echo print_select($rowData['idNotaTipo_2'], 'Nota Condición', 'Resolucion_2', '', $rowData['Validar_2']);
 					}
 					//Verifico esta activo el dato 3
-					if(isset($rowdata['idNota_3'])&&$rowdata['idNota_3']==1){
-						echo print_select($rowdata['idNotaTipo_3'], 'Calificacion', 'Resolucion_3', '', $rowdata['Validar_3']);
+					if(isset($rowData['idNota_3'])&&$rowData['idNota_3']==1){
+						echo print_select($rowData['idNotaTipo_3'], 'Calificacion', 'Resolucion_3', '', $rowData['Validar_3']);
 					}
 
 					?>
@@ -376,7 +376,7 @@ if(!empty($_GET['addFile'])){
 	// consulto los datos
 	$SIS_join  = '';
 	$SIS_where = 'idMatriz ='.$_GET['idCalidad'];
-	$rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/***********************************************/
 	// Se trae un listado con todos los grupos
@@ -404,7 +404,7 @@ if(!empty($_GET['addFile'])){
 	$SIS_query = 'idProducto';
 	$SIS_join  = '';
 	$SIS_where = 'idAnalisis ='.$_GET['edit'];
-	$row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*****************************************************/
 	//Verifico el tipo de usuario que esta ingresando
@@ -417,7 +417,7 @@ if(!empty($_GET['addFile'])){
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-				<h5>Ingreso datos de <?php echo $rowdata['Nombre']; ?></h5>
+				<h5>Ingreso datos de <?php echo $rowData['Nombre']; ?></h5>
 			</header>
 			<div class="body">
 				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
@@ -457,7 +457,7 @@ if(!empty($_GET['addFile'])){
 						//Cuento si hay items dentro de la categoria
 						$x_con = 0;
 						for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
-							if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
+							if($grupo['idGrupo']==$rowData['PuntoidGrupo_'.$i]){
 								$x_con++;
 							}
 						}
@@ -468,52 +468,52 @@ if(!empty($_GET['addFile'])){
 							echo '<h4>'.$grupo['Nombre'].'</h4>';
 
 							for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
-								if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
+								if($grupo['idGrupo']==$rowData['PuntoidGrupo_'.$i]){
 									//Verifico el tipo de dato
-									switch ($rowdata['PuntoidTipo_'.$i]) {
+									switch ($rowData['PuntoidTipo_'.$i]) {
 										//Medicion (Decimal) con parametros limitantes
 										case 1:
-											$Form_Inputs->form_input_number($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
+											$Form_Inputs->form_input_number($rowData['PuntoNombre_'.$i], 'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
 											break;
 										//Medicion (Decimal) sin parametros limitantes
 										case 2:
-											$Form_Inputs->form_input_number($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
+											$Form_Inputs->form_input_number($rowData['PuntoNombre_'.$i], 'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
 											break;
 										//Medicion (Enteros) con parametros limitantes
 										case 3:
-											$Form_Inputs->form_input_number_integer($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
+											$Form_Inputs->form_input_number_integer($rowData['PuntoNombre_'.$i], 'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
 											break;
 										//Medicion (Enteros) sin parametros limitantes
 										case 4:
-											$Form_Inputs->form_input_number_integer($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
+											$Form_Inputs->form_input_number_integer($rowData['PuntoNombre_'.$i], 'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
 											break;
 										//Fecha
 										case 5:
-											$Form_Inputs->form_date($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
+											$Form_Inputs->form_date($rowData['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
 											break;
 										//Hora
 										case 6:
-											$Form_Inputs->form_time_popover($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, 1, 24);
+											$Form_Inputs->form_time_popover($rowData['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, 1, 24);
 											break;
 										//Texto Libre
 										case 7:
-											$Form_Inputs->form_textarea($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
+											$Form_Inputs->form_textarea($rowData['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
 											break;
 										//Seleccion 1 a 3
 										case 8:
-											$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, 1, 3);
+											$Form_Inputs->form_select_n_auto($rowData['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, 1, 3);
 											break;
 										//Seleccion 1 a 5
 										case 9:
-											$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, 1, 5);
+											$Form_Inputs->form_select_n_auto($rowData['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, 1, 5);
 											break;
 										//Seleccion 1 a 10
 										case 10:
-											$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, 1, 10);
+											$Form_Inputs->form_select_n_auto($rowData['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, 1, 10);
 											break;
 										//Texto Libre con Validacion
 										case 11:
-											$Form_Inputs->form_input_validate($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, $rowdata['Validacion_'.$i]);
+											$Form_Inputs->form_input_validate($rowData['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, $rowData['Validacion_'.$i]);
 											break;
 
 									}
@@ -524,16 +524,16 @@ if(!empty($_GET['addFile'])){
 					/*************************************************************/
 					$Form_Inputs->form_tittle(3, 'Decision');
 					//Verifico esta activo el dato 1
-					if(isset($rowdata['idNota_1'])&&$rowdata['idNota_1']==1){
-						echo print_select($rowdata['idNotaTipo_1'], 'Nota Calidad', 'Resolucion_1', $x10, $rowdata['Validar_1']);
+					if(isset($rowData['idNota_1'])&&$rowData['idNota_1']==1){
+						echo print_select($rowData['idNotaTipo_1'], 'Nota Calidad', 'Resolucion_1', $x10, $rowData['Validar_1']);
 					}
 					//Verifico esta activo el dato 2
-					if(isset($rowdata['idNota_2'])&&$rowdata['idNota_2']==1){
-						echo print_select($rowdata['idNotaTipo_2'], 'Nota Condición', 'Resolucion_2', $x11, $rowdata['Validar_2']);
+					if(isset($rowData['idNota_2'])&&$rowData['idNota_2']==1){
+						echo print_select($rowData['idNotaTipo_2'], 'Nota Condición', 'Resolucion_2', $x11, $rowData['Validar_2']);
 					}
 					//Verifico esta activo el dato 3
-					if(isset($rowdata['idNota_3'])&&$rowdata['idNota_3']==1){
-						echo print_select($rowdata['idNotaTipo_3'], 'Calificacion', 'Resolucion_3', $x12, $rowdata['Validar_3']);
+					if(isset($rowData['idNota_3'])&&$rowData['idNota_3']==1){
+						echo print_select($rowData['idNotaTipo_3'], 'Calificacion', 'Resolucion_3', $x12, $rowData['Validar_3']);
 					}
 
 					?>
@@ -562,7 +562,7 @@ if(!empty($_GET['addFile'])){
 	// consulto los datos
 	$SIS_join  = '';
 	$SIS_where = 'idMatriz ='.$_GET['idCalidad'];
-	$rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*****************************************************/
 	// Se trae un listado con todos los grupos
@@ -578,7 +578,7 @@ if(!empty($_GET['addFile'])){
 	$SIS_query = 'idProducto';
 	$SIS_join  = '';
 	$SIS_where = 'idAnalisis ='.$_GET['edit'];
-	$row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*****************************************************/
 	//Verifico el tipo de usuario que esta ingresando
@@ -591,7 +591,7 @@ if(!empty($_GET['addFile'])){
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-				<h5>Ingreso datos de <?php echo $rowdata['Nombre']; ?></h5>
+				<h5>Ingreso datos de <?php echo $rowData['Nombre']; ?></h5>
 			</header>
 			<div class="body">
 				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
@@ -627,7 +627,7 @@ if(!empty($_GET['addFile'])){
 						//Cuento si hay items dentro de la categoria
 						$x_con = 0;
 						for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
-							if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
+							if($grupo['idGrupo']==$rowData['PuntoidGrupo_'.$i]){
 								$x_con++;
 							}
 						}
@@ -638,52 +638,52 @@ if(!empty($_GET['addFile'])){
 							echo '<h4>'.$grupo['Nombre'].'</h4>';
 
 							for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
-								if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
+								if($grupo['idGrupo']==$rowData['PuntoidGrupo_'.$i]){
 									//Verifico el tipo de dato
-									switch ($rowdata['PuntoidTipo_'.$i]) {
+									switch ($rowData['PuntoidTipo_'.$i]) {
 										//Medicion (Decimal) con parametros limitantes
 										case 1:
-											$Form_Inputs->form_input_number($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
+											$Form_Inputs->form_input_number($rowData['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
 											break;
 										//Medicion (Decimal) sin parametros limitantes
 										case 2:
-											$Form_Inputs->form_input_number($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
+											$Form_Inputs->form_input_number($rowData['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
 											break;
 										//Medicion (Enteros) con parametros limitantes
 										case 3:
-											$Form_Inputs->form_input_number_integer($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
+											$Form_Inputs->form_input_number_integer($rowData['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
 											break;
 										//Medicion (Enteros) sin parametros limitantes
 										case 4:
-											$Form_Inputs->form_input_number_integer($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
+											$Form_Inputs->form_input_number_integer($rowData['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
 											break;
 										//Fecha
 										case 5:
-											$Form_Inputs->form_date($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1);
+											$Form_Inputs->form_date($rowData['PuntoNombre_'.$i],'Medida_'.$i, '', 1);
 											break;
 										//Hora
 										case 6:
-											$Form_Inputs->form_time_popover($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 24);
+											$Form_Inputs->form_time_popover($rowData['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 24);
 											break;
 										//Texto Libre
 										case 7:
-											$Form_Inputs->form_textarea($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1);
+											$Form_Inputs->form_textarea($rowData['PuntoNombre_'.$i],'Medida_'.$i, '', 1);
 											break;
 										//Seleccion 1 a 3
 										case 8:
-											$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 3);
+											$Form_Inputs->form_select_n_auto($rowData['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 3);
 											break;
 										//Seleccion 1 a 5
 										case 9:
-											$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 5);
+											$Form_Inputs->form_select_n_auto($rowData['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 5);
 											break;
 										//Seleccion 1 a 10
 										case 10:
-											$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 10);
+											$Form_Inputs->form_select_n_auto($rowData['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 10);
 											break;
 										//Texto Libre con Validacion
 										case 11:
-											$Form_Inputs->form_input_validate($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, $rowdata['Validacion_'.$i]);
+											$Form_Inputs->form_input_validate($rowData['PuntoNombre_'.$i],'Medida_'.$i, '', 1, $rowData['Validacion_'.$i]);
 											break;
 
 									}
@@ -694,16 +694,16 @@ if(!empty($_GET['addFile'])){
 					/*************************************************************/
 					$Form_Inputs->form_tittle(3, 'Decision');
 					//Verifico esta activo el dato 1
-					if(isset($rowdata['idNota_1'])&&$rowdata['idNota_1']==1){
-						echo print_select($rowdata['idNotaTipo_1'], 'Nota Calidad', 'Resolucion_1', '', $rowdata['Validar_1']);
+					if(isset($rowData['idNota_1'])&&$rowData['idNota_1']==1){
+						echo print_select($rowData['idNotaTipo_1'], 'Nota Calidad', 'Resolucion_1', '', $rowData['Validar_1']);
 					}
 					//Verifico esta activo el dato 2
-					if(isset($rowdata['idNota_2'])&&$rowdata['idNota_2']==1){
-						echo print_select($rowdata['idNotaTipo_2'], 'Nota Condición', 'Resolucion_2', '', $rowdata['Validar_2']);
+					if(isset($rowData['idNota_2'])&&$rowData['idNota_2']==1){
+						echo print_select($rowData['idNotaTipo_2'], 'Nota Condición', 'Resolucion_2', '', $rowData['Validar_2']);
 					}
 					//Verifico esta activo el dato 3
-					if(isset($rowdata['idNota_3'])&&$rowdata['idNota_3']==1){
-						echo print_select($rowdata['idNotaTipo_3'], 'Calificacion', 'Resolucion_3', '', $rowdata['Validar_3']);
+					if(isset($rowData['idNota_3'])&&$rowData['idNota_3']==1){
+						echo print_select($rowData['idNotaTipo_3'], 'Calificacion', 'Resolucion_3', '', $rowData['Validar_3']);
 					}
 
 					?>
@@ -724,7 +724,7 @@ if(!empty($_GET['addFile'])){
 	$SIS_query = 'idAnalisis,Creacion_fecha,idTipo,Temporada,idCategoria,idProducto,idUbicacion,idUbicacion_lvl_1,idUbicacion_lvl_2,idUbicacion_lvl_3,idUbicacion_lvl_4,idUbicacion_lvl_5,idSistema';
 	$SIS_join  = '';
 	$SIS_where = 'idAnalisis ='.$_GET['edit'];
-	$row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*****************************************************/
 	//Verifico el tipo de usuario que esta ingresando
@@ -749,21 +749,21 @@ if(!empty($_GET['addFile'])){
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_select_filter('Maquina','idMaquina', $x1, 2, 'idMaquina', 'Codigo,Nombre', 'maquinas_listado', $z, '', $dbConn);
 
-					$Form_Inputs->form_input_hidden('idAnalisis', $row_data['idAnalisis'], 2);
-					$Form_Inputs->form_input_hidden('idSistema', $row_data['idSistema'], 2);
+					$Form_Inputs->form_input_hidden('idAnalisis', $rowData['idAnalisis'], 2);
+					$Form_Inputs->form_input_hidden('idSistema', $rowData['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 					$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
-					$Form_Inputs->form_input_hidden('Creacion_fecha', $row_data['Creacion_fecha'], 2);
-					$Form_Inputs->form_input_hidden('idTipo', $row_data['idTipo'], 2);
-					$Form_Inputs->form_input_hidden('Temporada', $row_data['Temporada'], 2);
-					$Form_Inputs->form_input_hidden('idCategoria', $row_data['idCategoria'], 2);
-					$Form_Inputs->form_input_hidden('idProducto', $row_data['idProducto'], 2);
-					$Form_Inputs->form_input_hidden('idUbicacion', $row_data['idUbicacion'], 2);
-					if(isset($row_data['idUbicacion_lvl_1'])&&$row_data['idUbicacion_lvl_1']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_1', $row_data['idUbicacion_lvl_1'], 2);}
-					if(isset($row_data['idUbicacion_lvl_2'])&&$row_data['idUbicacion_lvl_2']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_2', $row_data['idUbicacion_lvl_2'], 2);}
-					if(isset($row_data['idUbicacion_lvl_3'])&&$row_data['idUbicacion_lvl_3']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $row_data['idUbicacion_lvl_3'], 2);}
-					if(isset($row_data['idUbicacion_lvl_4'])&&$row_data['idUbicacion_lvl_4']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $row_data['idUbicacion_lvl_4'], 2);}
-					if(isset($row_data['idUbicacion_lvl_5'])&&$row_data['idUbicacion_lvl_5']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $row_data['idUbicacion_lvl_5'], 2);}
+					$Form_Inputs->form_input_hidden('Creacion_fecha', $rowData['Creacion_fecha'], 2);
+					$Form_Inputs->form_input_hidden('idTipo', $rowData['idTipo'], 2);
+					$Form_Inputs->form_input_hidden('Temporada', $rowData['Temporada'], 2);
+					$Form_Inputs->form_input_hidden('idCategoria', $rowData['idCategoria'], 2);
+					$Form_Inputs->form_input_hidden('idProducto', $rowData['idProducto'], 2);
+					$Form_Inputs->form_input_hidden('idUbicacion', $rowData['idUbicacion'], 2);
+					if(isset($rowData['idUbicacion_lvl_1'])&&$rowData['idUbicacion_lvl_1']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_1', $rowData['idUbicacion_lvl_1'], 2);}
+					if(isset($rowData['idUbicacion_lvl_2'])&&$rowData['idUbicacion_lvl_2']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_2', $rowData['idUbicacion_lvl_2'], 2);}
+					if(isset($rowData['idUbicacion_lvl_3'])&&$rowData['idUbicacion_lvl_3']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $rowData['idUbicacion_lvl_3'], 2);}
+					if(isset($rowData['idUbicacion_lvl_4'])&&$rowData['idUbicacion_lvl_4']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $rowData['idUbicacion_lvl_4'], 2);}
+					if(isset($rowData['idUbicacion_lvl_5'])&&$rowData['idUbicacion_lvl_5']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $rowData['idUbicacion_lvl_5'], 2);}
 					?>
 
 					<div class="form-group">
@@ -782,7 +782,7 @@ if(!empty($_GET['addFile'])){
 	$SIS_query = 'idAnalisis,Creacion_fecha,idTipo,Temporada,idCategoria,idProducto,idUbicacion,idUbicacion_lvl_1,idUbicacion_lvl_2,idUbicacion_lvl_3,idUbicacion_lvl_4,idUbicacion_lvl_5,idSistema';
 	$SIS_join  = '';
 	$SIS_where = 'idAnalisis ='.$_GET['edit'];
-	$row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*****************************************************/
 	//Verifico el tipo de usuario que esta ingresando
@@ -806,21 +806,21 @@ if(!empty($_GET['addFile'])){
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_select_filter('Trabajador responsable','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
 
-					$Form_Inputs->form_input_hidden('idAnalisis', $row_data['idAnalisis'], 2);
-					$Form_Inputs->form_input_hidden('idSistema', $row_data['idSistema'], 2);
+					$Form_Inputs->form_input_hidden('idAnalisis', $rowData['idAnalisis'], 2);
+					$Form_Inputs->form_input_hidden('idSistema', $rowData['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 					$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
-					$Form_Inputs->form_input_hidden('Creacion_fecha', $row_data['Creacion_fecha'], 2);
-					$Form_Inputs->form_input_hidden('idTipo', $row_data['idTipo'], 2);
-					$Form_Inputs->form_input_hidden('Temporada', $row_data['Temporada'], 2);
-					$Form_Inputs->form_input_hidden('idCategoria', $row_data['idCategoria'], 2);
-					$Form_Inputs->form_input_hidden('idProducto', $row_data['idProducto'], 2);
-					$Form_Inputs->form_input_hidden('idUbicacion', $row_data['idUbicacion'], 2);
-					if(isset($row_data['idUbicacion_lvl_1'])&&$row_data['idUbicacion_lvl_1']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_1', $row_data['idUbicacion_lvl_1'], 2);}
-					if(isset($row_data['idUbicacion_lvl_2'])&&$row_data['idUbicacion_lvl_2']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_2', $row_data['idUbicacion_lvl_2'], 2);}
-					if(isset($row_data['idUbicacion_lvl_3'])&&$row_data['idUbicacion_lvl_3']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $row_data['idUbicacion_lvl_3'], 2);}
-					if(isset($row_data['idUbicacion_lvl_4'])&&$row_data['idUbicacion_lvl_4']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $row_data['idUbicacion_lvl_4'], 2);}
-					if(isset($row_data['idUbicacion_lvl_5'])&&$row_data['idUbicacion_lvl_5']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $row_data['idUbicacion_lvl_5'], 2);}
+					$Form_Inputs->form_input_hidden('Creacion_fecha', $rowData['Creacion_fecha'], 2);
+					$Form_Inputs->form_input_hidden('idTipo', $rowData['idTipo'], 2);
+					$Form_Inputs->form_input_hidden('Temporada', $rowData['Temporada'], 2);
+					$Form_Inputs->form_input_hidden('idCategoria', $rowData['idCategoria'], 2);
+					$Form_Inputs->form_input_hidden('idProducto', $rowData['idProducto'], 2);
+					$Form_Inputs->form_input_hidden('idUbicacion', $rowData['idUbicacion'], 2);
+					if(isset($rowData['idUbicacion_lvl_1'])&&$rowData['idUbicacion_lvl_1']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_1', $rowData['idUbicacion_lvl_1'], 2);}
+					if(isset($rowData['idUbicacion_lvl_2'])&&$rowData['idUbicacion_lvl_2']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_2', $rowData['idUbicacion_lvl_2'], 2);}
+					if(isset($rowData['idUbicacion_lvl_3'])&&$rowData['idUbicacion_lvl_3']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $rowData['idUbicacion_lvl_3'], 2);}
+					if(isset($rowData['idUbicacion_lvl_4'])&&$rowData['idUbicacion_lvl_4']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $rowData['idUbicacion_lvl_4'], 2);}
+					if(isset($rowData['idUbicacion_lvl_5'])&&$rowData['idUbicacion_lvl_5']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $rowData['idUbicacion_lvl_5'], 2);}
 
 					?>
 
@@ -840,7 +840,7 @@ if(!empty($_GET['addFile'])){
 	$SIS_query = 'Creacion_fecha,idTipo,Temporada,idCategoria,idProducto,idUbicacion,idUbicacion_lvl_1,idUbicacion_lvl_2,idUbicacion_lvl_3,idUbicacion_lvl_4,idUbicacion_lvl_5,Observaciones,idSistema';
 	$SIS_join  = '';
 	$SIS_where = 'idAnalisis ='.$_GET['edit'];
-	$row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/************************************/
 	//Se revisan los permisos a las especies
@@ -887,19 +887,19 @@ if(!empty($_GET['addFile'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Creacion_fecha)){      $x1  = $Creacion_fecha;    }else{$x1  = $row_data['Creacion_fecha'];}
-					if(isset($idTipo)){              $x2  = $idTipo;            }else{$x2  = $row_data['idTipo'];}
-					if(isset($Temporada)){           $x3  = $Temporada;         }else{$x3  = $row_data['Temporada'];}
-					if(isset($idCategoria)){         $x4  = $idCategoria;       }else{$x4  = $row_data['idCategoria'];}
-					if(isset($idProducto)){          $x5  = $idProducto;        }else{$x5  = $row_data['idProducto'];}
-					if(isset($idUbicacion)){         $x6  = $idUbicacion;       }else{$x6  = $row_data['idUbicacion'];}
+					if(isset($Creacion_fecha)){      $x1  = $Creacion_fecha;    }else{$x1  = $rowData['Creacion_fecha'];}
+					if(isset($idTipo)){              $x2  = $idTipo;            }else{$x2  = $rowData['idTipo'];}
+					if(isset($Temporada)){           $x3  = $Temporada;         }else{$x3  = $rowData['Temporada'];}
+					if(isset($idCategoria)){         $x4  = $idCategoria;       }else{$x4  = $rowData['idCategoria'];}
+					if(isset($idProducto)){          $x5  = $idProducto;        }else{$x5  = $rowData['idProducto'];}
+					if(isset($idUbicacion)){         $x6  = $idUbicacion;       }else{$x6  = $rowData['idUbicacion'];}
 
-					if(isset($row_data['idUbicacion_lvl_1'])&&$row_data['idUbicacion_lvl_1']!=''){if(isset($idUbicacion_lvl_1)){   $x7  = $idUbicacion_lvl_1; }else{$x7  = $row_data['idUbicacion_lvl_1'];}}
-					if(isset($row_data['idUbicacion_lvl_2'])&&$row_data['idUbicacion_lvl_2']!=''){if(isset($idUbicacion_lvl_2)){   $x8  = $idUbicacion_lvl_2; }else{$x8  = $row_data['idUbicacion_lvl_2'];}}
-					if(isset($row_data['idUbicacion_lvl_3'])&&$row_data['idUbicacion_lvl_3']!=''){if(isset($idUbicacion_lvl_3)){   $x9  = $idUbicacion_lvl_3; }else{$x9  = $row_data['idUbicacion_lvl_3'];}}
-					if(isset($row_data['idUbicacion_lvl_4'])&&$row_data['idUbicacion_lvl_4']!=''){if(isset($idUbicacion_lvl_4)){   $x10 = $idUbicacion_lvl_4; }else{$x10 = $row_data['idUbicacion_lvl_4'];}}
-					if(isset($row_data['idUbicacion_lvl_5'])&&$row_data['idUbicacion_lvl_5']!=''){if(isset($idUbicacion_lvl_5)){   $x11 = $idUbicacion_lvl_5; }else{$x11 = $row_data['idUbicacion_lvl_5'];}}
-					if(isset($Observaciones)){       $x12 = $Observaciones;     }else{$x12 = $row_data['Observaciones'];}
+					if(isset($rowData['idUbicacion_lvl_1'])&&$rowData['idUbicacion_lvl_1']!=''){if(isset($idUbicacion_lvl_1)){   $x7  = $idUbicacion_lvl_1; }else{$x7  = $rowData['idUbicacion_lvl_1'];}}
+					if(isset($rowData['idUbicacion_lvl_2'])&&$rowData['idUbicacion_lvl_2']!=''){if(isset($idUbicacion_lvl_2)){   $x8  = $idUbicacion_lvl_2; }else{$x8  = $rowData['idUbicacion_lvl_2'];}}
+					if(isset($rowData['idUbicacion_lvl_3'])&&$rowData['idUbicacion_lvl_3']!=''){if(isset($idUbicacion_lvl_3)){   $x9  = $idUbicacion_lvl_3; }else{$x9  = $rowData['idUbicacion_lvl_3'];}}
+					if(isset($rowData['idUbicacion_lvl_4'])&&$rowData['idUbicacion_lvl_4']!=''){if(isset($idUbicacion_lvl_4)){   $x10 = $idUbicacion_lvl_4; }else{$x10 = $rowData['idUbicacion_lvl_4'];}}
+					if(isset($rowData['idUbicacion_lvl_5'])&&$rowData['idUbicacion_lvl_5']!=''){if(isset($idUbicacion_lvl_5)){   $x11 = $idUbicacion_lvl_5; }else{$x11 = $rowData['idUbicacion_lvl_5'];}}
+					if(isset($Observaciones)){       $x12 = $Observaciones;     }else{$x12 = $rowData['Observaciones'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -990,7 +990,7 @@ if(!empty($_GET['addFile'])){
 	LEFT JOIN `ubicacion_listado_level_4`              ON ubicacion_listado_level_4.idLevel_4          = cross_quality_registrar_inspecciones.idUbicacion_lvl_4
 	LEFT JOIN `ubicacion_listado_level_5`              ON ubicacion_listado_level_5.idLevel_5          = cross_quality_registrar_inspecciones.idUbicacion_lvl_5';
 	$SIS_where = 'cross_quality_registrar_inspecciones.idAnalisis ='.$_GET['edit'];
-	$row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/***************************************************/
 	// Se trae un listado con todos los trabajadores
@@ -1046,7 +1046,7 @@ if(!empty($_GET['addFile'])){
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 		<div id="page-wrap">
-			<div id="header"> <?php echo $row_data['TipoAnalisis']?></div>
+			<div id="header"> <?php echo $rowData['TipoAnalisis']?></div>
 
 			<div id="customer">
 
@@ -1058,17 +1058,17 @@ if(!empty($_GET['addFile'])){
 						</tr>
 						<tr>
 							<td class="meta-head">Producto</td>
-							<td><?php echo $row_data['ProductoCategoria'].', '.$row_data['ProductoNombre']; ?></td>
+							<td><?php echo $rowData['ProductoCategoria'].', '.$rowData['ProductoNombre']; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Ubicación</td>
 							<td>
-								<?php echo $row_data['UbicacionNombre'];
-								if(isset($row_data['UbicacionNombre_lvl_1'])&&$row_data['UbicacionNombre_lvl_1']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_1'];}
-								if(isset($row_data['UbicacionNombre_lvl_2'])&&$row_data['UbicacionNombre_lvl_2']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_2'];}
-								if(isset($row_data['UbicacionNombre_lvl_3'])&&$row_data['UbicacionNombre_lvl_3']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_3'];}
-								if(isset($row_data['UbicacionNombre_lvl_4'])&&$row_data['UbicacionNombre_lvl_4']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_4'];}
-								if(isset($row_data['UbicacionNombre_lvl_5'])&&$row_data['UbicacionNombre_lvl_5']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_5'];}
+								<?php echo $rowData['UbicacionNombre'];
+								if(isset($rowData['UbicacionNombre_lvl_1'])&&$rowData['UbicacionNombre_lvl_1']!=''){echo ' - '.$rowData['UbicacionNombre_lvl_1'];}
+								if(isset($rowData['UbicacionNombre_lvl_2'])&&$rowData['UbicacionNombre_lvl_2']!=''){echo ' - '.$rowData['UbicacionNombre_lvl_2'];}
+								if(isset($rowData['UbicacionNombre_lvl_3'])&&$rowData['UbicacionNombre_lvl_3']!=''){echo ' - '.$rowData['UbicacionNombre_lvl_3'];}
+								if(isset($rowData['UbicacionNombre_lvl_4'])&&$rowData['UbicacionNombre_lvl_4']!=''){echo ' - '.$rowData['UbicacionNombre_lvl_4'];}
+								if(isset($rowData['UbicacionNombre_lvl_5'])&&$rowData['UbicacionNombre_lvl_5']!=''){echo ' - '.$rowData['UbicacionNombre_lvl_5'];}
 								?>
 							</td>
 						</tr>
@@ -1078,11 +1078,11 @@ if(!empty($_GET['addFile'])){
 					<tbody>
 						<tr>
 							<td class="meta-head">Fecha Ingreso</td>
-							<td colspan="2"><?php echo Fecha_estandar($row_data['Creacion_fecha']) ?></td>
+							<td colspan="2"><?php echo Fecha_estandar($rowData['Creacion_fecha']) ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Temporada</td>
-							<td colspan="2"><?php echo $row_data['Temporada'] ?></td>
+							<td colspan="2"><?php echo $rowData['Temporada'] ?></td>
 						</tr>
 
 					</tbody>
@@ -1153,7 +1153,7 @@ if(!empty($_GET['addFile'])){
 					<tr class="item-row fact_tittle">
 						<td colspan="5">Muestras</td>
 						<td>
-							<a href="<?php echo $new_location.'&addMuestra=true&cantPuntos='.$row_data['Producto_cantPuntos'].'&idCalidad='.$row_data['Producto_idCalidad']; ?>" title="Agregar Muestra" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Muestra</a>
+							<a href="<?php echo $new_location.'&addMuestra=true&cantPuntos='.$rowData['Producto_cantPuntos'].'&idCalidad='.$rowData['Producto_idCalidad']; ?>" title="Agregar Muestra" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Muestra</a>
 						</td>
 					</tr>
 					<tr class="item-row fact_tittle">
@@ -1172,8 +1172,8 @@ if(!empty($_GET['addFile'])){
 								<td class="item-name"><?php echo $muestra['lote']; ?></td>
 								<td>
 									<div class="btn-group" style="width: 105px;" >
-										<a href="<?php echo $new_location.'&cloneMuestra='.$muestra['idMuestras'].'&cantPuntos='.$row_data['Producto_cantPuntos'].'&idCalidad='.$row_data['Producto_idCalidad']; ?>" title="Clonar Registro" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a>
-										<a href="<?php echo $new_location.'&editMuestra='.$muestra['idMuestras'].'&cantPuntos='.$row_data['Producto_cantPuntos'].'&idCalidad='.$row_data['Producto_idCalidad']; ?>" title="Editar Registro" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+										<a href="<?php echo $new_location.'&cloneMuestra='.$muestra['idMuestras'].'&cantPuntos='.$rowData['Producto_cantPuntos'].'&idCalidad='.$rowData['Producto_idCalidad']; ?>" title="Clonar Registro" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a>
+										<a href="<?php echo $new_location.'&editMuestra='.$muestra['idMuestras'].'&cantPuntos='.$rowData['Producto_cantPuntos'].'&idCalidad='.$rowData['Producto_idCalidad']; ?>" title="Editar Registro" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 										<?php
 										$ubicacion = $new_location.'&del_muestra='.simpleEncode($muestra['idMuestras'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el registro ?'; ?>
@@ -1190,7 +1190,7 @@ if(!empty($_GET['addFile'])){
 
 					<tr>
 						<td colspan="6" class="blank word_break">
-							<?php echo $row_data['Observaciones']; ?>
+							<?php echo $rowData['Observaciones']; ?>
 						</td>
 					</tr>
 					<tr><td colspan="6" class="blank"><p>Observaciones</p></td></tr>

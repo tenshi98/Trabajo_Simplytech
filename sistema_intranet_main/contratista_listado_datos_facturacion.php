@@ -55,12 +55,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'FormaPago, Nombre';
 $SIS_join  = '';
 $SIS_where = 'idContratista = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'contratista_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'contratista_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Contratista', $rowdata['Nombre'], 'Editar Datos de Facturacion'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Contratista', $rowData['Nombre'], 'Editar Datos de Facturacion'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -87,7 +87,7 @@ $rowdata = db_select_data (false, $SIS_query, 'contratista_listado', $SIS_join, 
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($FormaPago)){   $x1  = $FormaPago;   }else{$x1  = $rowdata['FormaPago'];}
+					if(isset($FormaPago)){   $x1  = $FormaPago;   }else{$x1  = $rowData['FormaPago'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

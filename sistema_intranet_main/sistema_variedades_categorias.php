@@ -79,7 +79,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 // Se trae un listado con todos los elementos
 $arrMatrizCalidad = array();
@@ -173,7 +173,7 @@ array_push( $arrTiposEmbalaje,$row );
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Especie', $rowdata['Nombre'], 'Resumen'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Especie', $rowData['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -204,10 +204,10 @@ array_push( $arrTiposEmbalaje,$row );
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 						<p class="text-muted">
-							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
-							<strong>Temp. Optima Min : </strong><?php echo Cantidades_decimales_justos($rowdata['Temp_optima_min']); ?><br/>
-							<strong>Temp. Optima Max : </strong><?php echo Cantidades_decimales_justos($rowdata['Temp_optima_max']); ?><br/>
-							<strong>Temp. Margen Critico : </strong><?php echo Cantidades_decimales_justos($rowdata['Temp_optima_margen_critico']); ?><br/>
+							<strong>Nombre : </strong><?php echo $rowData['Nombre']; ?><br/>
+							<strong>Temp. Optima Min : </strong><?php echo Cantidades_decimales_justos($rowData['Temp_optima_min']); ?><br/>
+							<strong>Temp. Optima Max : </strong><?php echo Cantidades_decimales_justos($rowData['Temp_optima_max']); ?><br/>
+							<strong>Temp. Margen Critico : </strong><?php echo Cantidades_decimales_justos($rowData['Temp_optima_margen_critico']); ?><br/>
 						</p>
 
 					</div>

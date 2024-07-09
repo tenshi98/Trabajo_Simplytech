@@ -139,7 +139,7 @@ $SIS_query .= ',Validacion_'.$_GET['mod'].' AS Validar';
 // consulto los datos
 $SIS_join  = '';
 $SIS_where = 'idMatriz ='.$_GET['idMatriz'];
-$rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -155,15 +155,15 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 				<?php
 				//Se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select('Parametro','PuntoidGrupo', $rowdata['Grupo'], 1, 'idGrupo', 'Nombre', 'cross_quality_proceso_matriz_grupos', 0, '', $dbConn);
-				$Form_Inputs->form_input_text('Nombre', 'PuntoNombre', $rowdata['Nombre'], 1);
-				$Form_Inputs->form_select('Tipo','PuntoidTipo', $rowdata['Tipo'], 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 0, '', $dbConn);
+				$Form_Inputs->form_select('Parametro','PuntoidGrupo', $rowData['Grupo'], 1, 'idGrupo', 'Nombre', 'cross_quality_proceso_matriz_grupos', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Nombre', 'PuntoNombre', $rowData['Nombre'], 1);
+				$Form_Inputs->form_select('Tipo','PuntoidTipo', $rowData['Tipo'], 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 0, '', $dbConn);
 
-				$Form_Inputs->form_input_number('Aceptable','PuntoMedAceptable', Cantidades_decimales_justos($rowdata['Aceptable']), 1);
-				$Form_Inputs->form_input_number('Alerta','PuntoMedAlerta', Cantidades_decimales_justos($rowdata['Alerta']), 1);
-				$Form_Inputs->form_input_number('Condenatorio','PuntoMedCondenatorio', Cantidades_decimales_justos($rowdata['Condenatorio']), 1);
-				$Form_Inputs->form_select('Unidad de Medida','PuntoUniMed', $rowdata['UniMed'], 1, 'idUml', 'Nombre', 'sistema_cross_analisis_uml', 0, '', $dbConn);
-				$Form_Inputs->form_input_text('Datos a Validar', 'Validar', $rowdata['Validar'], 1);
+				$Form_Inputs->form_input_number('Aceptable','PuntoMedAceptable', Cantidades_decimales_justos($rowData['Aceptable']), 1);
+				$Form_Inputs->form_input_number('Alerta','PuntoMedAlerta', Cantidades_decimales_justos($rowData['Alerta']), 1);
+				$Form_Inputs->form_input_number('Condenatorio','PuntoMedCondenatorio', Cantidades_decimales_justos($rowData['Condenatorio']), 1);
+				$Form_Inputs->form_select('Unidad de Medida','PuntoUniMed', $rowData['UniMed'], 1, 'idUml', 'Nombre', 'sistema_cross_analisis_uml', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Datos a Validar', 'Validar', $rowData['Validar'], 1);
 
 				$Form_Inputs->form_input_hidden('idMatriz', $_GET['idMatriz'], 2);
 				$Form_Inputs->form_input_hidden('mod', $_GET['mod'], 2);
@@ -349,7 +349,7 @@ PuntoidTipo_41,PuntoidTipo_42,PuntoidTipo_43,PuntoidTipo_44,PuntoidTipo_45,
 PuntoidTipo_46,PuntoidTipo_47,PuntoidTipo_48,PuntoidTipo_49,PuntoidTipo_50';
 $SIS_join  = '';
 $SIS_where = 'idMatriz ='.$_GET['idMatriz'];
-$rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /************************************************/
 //consulto
@@ -392,20 +392,20 @@ foreach ($arrGrupos as $data) {  $arrFinalGrupos[$data['idGrupo']] = $data['Nomb
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php for ($i = 1; $i <= $rowdata['cantPuntos']; $i++) {
+					<?php for ($i = 1; $i <= $rowData['cantPuntos']; $i++) {
 						//compruebo
-						if(isset($arrFinalUnimed[$rowdata['SensoresUniMed_'.$i]])){ $unimed = $arrFinalUnimed[$rowdata['SensoresUniMed_'.$i]];  }else{ $unimed = '';}
-						if(isset($arrFinalTipos[$rowdata['PuntoidTipo_'.$i]])){     $tipo   = $arrFinalTipos[$rowdata['PuntoidTipo_'.$i]];      }else{ $tipo   = '';}
-						if(isset($arrFinalGrupos[$rowdata['PuntoidGrupo_'.$i]])){   $grupo  = $arrFinalGrupos[$rowdata['PuntoidGrupo_'.$i]];    }else{ $grupo  = '';}
+						if(isset($arrFinalUnimed[$rowData['SensoresUniMed_'.$i]])){ $unimed = $arrFinalUnimed[$rowData['SensoresUniMed_'.$i]];  }else{ $unimed = '';}
+						if(isset($arrFinalTipos[$rowData['PuntoidTipo_'.$i]])){     $tipo   = $arrFinalTipos[$rowData['PuntoidTipo_'.$i]];      }else{ $tipo   = '';}
+						if(isset($arrFinalGrupos[$rowData['PuntoidGrupo_'.$i]])){   $grupo  = $arrFinalGrupos[$rowData['PuntoidGrupo_'.$i]];    }else{ $grupo  = '';}
 						?>
 						<tr class="odd">
 							<td><?php echo 'p'.$i ?></td>
 							<td><?php echo $grupo; ?></td>
-							<td><?php echo $rowdata['PuntoNombre_'.$i]; ?></td>
+							<td><?php echo $rowData['PuntoNombre_'.$i]; ?></td>
 							<td><?php echo $tipo; ?></td>
-							<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedAceptable_'.$i]).' '.$unimed;    }else{echo 'No Aplica';} ?></td>
-							<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedAlerta_'.$i]).' '.$unimed;       }else{echo 'No Aplica';} ?></td>
-							<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedCondenatorio_'.$i]).' '.$unimed; }else{echo 'No Aplica';} ?></td>
+							<td><?php if(isset($rowData['PuntoidTipo_'.$i])&&$rowData['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowData['PuntoMedAceptable_'.$i]).' '.$unimed;    }else{echo 'No Aplica';} ?></td>
+							<td><?php if(isset($rowData['PuntoidTipo_'.$i])&&$rowData['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowData['PuntoMedAlerta_'.$i]).' '.$unimed;       }else{echo 'No Aplica';} ?></td>
+							<td><?php if(isset($rowData['PuntoidTipo_'.$i])&&$rowData['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowData['PuntoMedCondenatorio_'.$i]).' '.$unimed; }else{echo 'No Aplica';} ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
 									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&idMatriz='.$_GET['idMatriz'].'&mod='.$i; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
@@ -431,7 +431,7 @@ foreach ($arrGrupos as $data) {  $arrFinalGrupos[$data['idGrupo']] = $data['Nomb
 $SIS_query = 'Nombre,cantPuntos, idEstado, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3, idTipo, idSistema, Validar_1, Validar_2, Validar_3';
 $SIS_join  = '';
 $SIS_where = 'idMatriz ='.$_GET['idMatriz_2'];
-$rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -446,19 +446,19 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)){       $x1  = $Nombre;       }else{$x1  = $rowdata['Nombre'];}
-				if(isset($cantPuntos)){   $x2  = $cantPuntos;   }else{$x2  = $rowdata['cantPuntos'];}
-				if(isset($idTipo)){       $x3  = $idTipo;       }else{$x3  = $rowdata['idTipo'];}
-				if(isset($idEstado)){     $x4  = $idEstado;     }else{$x4  = $rowdata['idEstado'];}
-				if(isset($idNota_1)){     $x5  = $idNota_1;     }else{$x5  = $rowdata['idNota_1'];}
-				if(isset($idNotaTipo_1)){ $x6  = $idNotaTipo_1; }else{$x6  = $rowdata['idNotaTipo_1'];}
-				if(isset($Validar_1)){    $x7  = $Validar_1;    }else{$x7  = $rowdata['Validar_1'];}
-				if(isset($idNota_2)){     $x8  = $idNota_2;     }else{$x8  = $rowdata['idNota_2'];}
-				if(isset($idNotaTipo_2)){ $x9  = $idNotaTipo_2; }else{$x9  = $rowdata['idNotaTipo_2'];}
-				if(isset($Validar_2)){    $x10 = $Validar_2;    }else{$x10 = $rowdata['Validar_2'];}
-				if(isset($idNota_3)){     $x11 = $idNota_3;     }else{$x11 = $rowdata['idNota_3'];}
-				if(isset($idNotaTipo_3)){ $x12 = $idNotaTipo_3; }else{$x12 = $rowdata['idNotaTipo_3'];}
-				if(isset($Validar_3)){    $x13 = $Validar_3;    }else{$x13 = $rowdata['Validar_3'];}
+				if(isset($Nombre)){       $x1  = $Nombre;       }else{$x1  = $rowData['Nombre'];}
+				if(isset($cantPuntos)){   $x2  = $cantPuntos;   }else{$x2  = $rowData['cantPuntos'];}
+				if(isset($idTipo)){       $x3  = $idTipo;       }else{$x3  = $rowData['idTipo'];}
+				if(isset($idEstado)){     $x4  = $idEstado;     }else{$x4  = $rowData['idEstado'];}
+				if(isset($idNota_1)){     $x5  = $idNota_1;     }else{$x5  = $rowData['idNota_1'];}
+				if(isset($idNotaTipo_1)){ $x6  = $idNotaTipo_1; }else{$x6  = $rowData['idNotaTipo_1'];}
+				if(isset($Validar_1)){    $x7  = $Validar_1;    }else{$x7  = $rowData['Validar_1'];}
+				if(isset($idNota_2)){     $x8  = $idNota_2;     }else{$x8  = $rowData['idNota_2'];}
+				if(isset($idNotaTipo_2)){ $x9  = $idNotaTipo_2; }else{$x9  = $rowData['idNotaTipo_2'];}
+				if(isset($Validar_2)){    $x10 = $Validar_2;    }else{$x10 = $rowData['Validar_2'];}
+				if(isset($idNota_3)){     $x11 = $idNota_3;     }else{$x11 = $rowData['idNota_3'];}
+				if(isset($idNotaTipo_3)){ $x12 = $idNotaTipo_3; }else{$x12 = $rowData['idNotaTipo_3'];}
+				if(isset($Validar_3)){    $x13 = $Validar_3;    }else{$x13 = $rowData['Validar_3'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

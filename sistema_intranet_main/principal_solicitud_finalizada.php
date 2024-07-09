@@ -44,10 +44,10 @@ if(!empty($_GET['idSolicitud'])){
 	cross_predios_listado.Nombre AS PredioNombre';
 	$SIS_join  = 'LEFT JOIN `cross_predios_listado` ON cross_predios_listado.idPredio = cross_solicitud_aplicacion_listado.idPredio';
 	$SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud ='.$_GET['idSolicitud'];
-	$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	//Verifico si existe
-	if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
+	if(isset($rowData['idSolicitud'])&&$rowData['idSolicitud']!=''){
 		/*****************************************/
 		// Se trae un listado con todos los elementos
 		$SIS_query = '
@@ -75,7 +75,7 @@ if(!empty($_GET['idSolicitud'])){
 		$SIS_join  = '
 		LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idSolicitud   = cross_solicitud_aplicacion_listado.idSolicitud
 		LEFT JOIN `cross_solicitud_aplicacion_listado_tractores`   ON cross_solicitud_aplicacion_listado_tractores.idCuarteles   = cross_solicitud_aplicacion_listado_cuarteles.idCuarteles';
-		$SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud = '.$row_data['idSolicitud'].' GROUP BY cross_solicitud_aplicacion_listado.idSolicitud ORDER BY cross_solicitud_aplicacion_listado.idSolicitud DESC';
+		$SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud = '.$rowData['idSolicitud'].' GROUP BY cross_solicitud_aplicacion_listado.idSolicitud ORDER BY cross_solicitud_aplicacion_listado.idSolicitud DESC';
 		$rowSolicitud = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowSolicitud');
 
 		// consulto los datos
@@ -87,7 +87,7 @@ if(!empty($_GET['idSolicitud'])){
 		$SIS_join  = '
 		LEFT JOIN `telemetria_listado`   ON telemetria_listado.idTelemetria    = cross_solicitud_aplicacion_listado_tractores.idTelemetria
 		LEFT JOIN `vehiculos_listado`    ON vehiculos_listado.idVehiculo       = cross_solicitud_aplicacion_listado_tractores.idVehiculo';
-		$SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idSolicitud = '.$row_data['idSolicitud'].' GROUP BY cross_solicitud_aplicacion_listado_tractores.idTelemetria';
+		$SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idSolicitud = '.$rowData['idSolicitud'].' GROUP BY cross_solicitud_aplicacion_listado_tractores.idTelemetria';
 		$SIS_order = 'telemetria_listado.Nombre ASC';
 		$arrTractores = array();
 		$arrTractores = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTractores');
@@ -120,7 +120,7 @@ if(!empty($_GET['idSolicitud'])){
 			}
 			$SIS_query = 'idTabla, idTelemetria'.$subquery;
 			$SIS_join  = '';
-			$SIS_where = 'idSolicitud = '.$row_data['idSolicitud'].' AND idZona!=0';
+			$SIS_where = 'idSolicitud = '.$rowData['idSolicitud'].' AND idZona!=0';
 			$SIS_order = 'FechaSistema ASC, HoraSistema ASC';
 			$arrMediciones = array();
 			$arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$trac['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMediciones');
@@ -181,7 +181,7 @@ if(!empty($_GET['idSolicitud'])){
 		$SIS_join  = '
 		LEFT JOIN `cross_predios_listado_zonas`               ON cross_predios_listado_zonas.idPredio             = cross_solicitud_aplicacion_listado.idPredio
 		LEFT JOIN `cross_predios_listado_zonas_ubicaciones`   ON cross_predios_listado_zonas_ubicaciones.idZona   = cross_predios_listado_zonas.idZona';
-		$SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud ='.$row_data['idSolicitud'];
+		$SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud ='.$rowData['idSolicitud'];
 		$SIS_order = 'cross_predios_listado_zonas.idZona ASC, cross_predios_listado_zonas_ubicaciones.idUbicaciones ASC';
 		$arrZonas = array();
 		$arrZonas = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrZonas');
@@ -202,7 +202,7 @@ if(!empty($_GET['idSolicitud'])){
 		$SIS_join  = '
 		LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idCuarteles   = cross_solicitud_aplicacion_listado_tractores.idCuarteles
 		LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_listado_zonas.idZona                         = cross_solicitud_aplicacion_listado_cuarteles.idZona';
-		$SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idSolicitud ='.$row_data['idSolicitud'];
+		$SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idSolicitud ='.$rowData['idSolicitud'];
 		$SIS_order = 'cross_predios_listado_zonas.Nombre ASC';
 		$arrTractoresData = array();
 		$arrTractoresData = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTractoresData');
@@ -237,10 +237,10 @@ if(!empty($_GET['idSolicitud'])){
 		}
 
 		/*******************************************************/
-		$LitrosProgramados      = $row_data['Mojamiento']*$rowSolicitud['CuartelHectareas'];
+		$LitrosProgramados      = $rowData['Mojamiento']*$rowSolicitud['CuartelHectareas'];
 		$LitrosTotales          = $rowSolicitud['Litros'];
 		$MojamientoHectarea     = $LitrosTotales/$rowSolicitud['CuartelHectareas'];
-		$Porcen_Mojamiento      = ($MojamientoHectarea /$row_data['Mojamiento'])*100;
+		$Porcen_Mojamiento      = ($MojamientoHectarea /$rowData['Mojamiento'])*100;
 		$TotalPlantasAplicadas  = $rowSolicitud['CuartelCantPlantas'] - $PPendientes;
 		$TotalPlantasPendientes = $PPendientes;
 		$TractorVelocidadProm   = $rowSolicitud['GeoVelocidadProm'];
@@ -305,13 +305,13 @@ if(!empty($_GET['idSolicitud'])){
 					<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
 						<div class="field">
 							<div class="input-group">
-								<input type="text" class="form-control" placeholder="N° Solicitud" name="NSolicitud" id="NSolicitud" required="" onkeydown="return soloNumerosNaturales_NSolicitud(event)" value="<?php echo $row_data['NSolicitud']; ?>">
+								<input type="text" class="form-control" placeholder="N° Solicitud" name="NSolicitud" id="NSolicitud" required="" onkeydown="return soloNumerosNaturales_NSolicitud(event)" value="<?php echo $rowData['NSolicitud']; ?>">
 								<input type="hidden" name="idEstado" id="idEstado" value="3" required="">
 								<span class="input-group-btn">
 									<div class="btn-group" style="width: 140px;" >
 										<button type="submit" class="btn btn-primary" name="submit_filter" value="Filtrar"><i class="fa fa-search" aria-hidden="true"></i></button>                
-										<a rel="noopener noreferrer" href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($row_data['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary tooltip" style="padding-top: 7px;padding-bottom: 8px;"><i class="fa fa-list" aria-hidden="true"></i></a>
-										<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_cross_checking_05.php?idSolicitud='.$row_data['idSolicitud'].'&submit_filter=Filtrar'; ?>" title="Resumen ejecutivo " class="btn btn-primary tooltip" style="padding-top: 7px;padding-bottom: 8px;"><i class="fa fa-list" aria-hidden="true"></i></a>
+										<a rel="noopener noreferrer" href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($rowData['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary tooltip" style="padding-top: 7px;padding-bottom: 8px;"><i class="fa fa-list" aria-hidden="true"></i></a>
+										<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_cross_checking_05.php?idSolicitud='.$rowData['idSolicitud'].'&submit_filter=Filtrar'; ?>" title="Resumen ejecutivo " class="btn btn-primary tooltip" style="padding-top: 7px;padding-bottom: 8px;"><i class="fa fa-list" aria-hidden="true"></i></a>
 									</div>
 								</span>
 							</div>
@@ -890,8 +890,8 @@ if(!empty($_GET['idSolicitud'])){
 
 																<td>
 																	<div class="btn-group" style="width: 70px;" >
-																		<a href="<?php echo 'view_solicitud_aplicacion_detenciones.php?view='.simpleEncode($row_data['idSolicitud'], fecha_actual()).'&idTelemetria='.simpleEncode($trac['idTelemetria'], fecha_actual()).'&idZona='.simpleEncode($tractda['idZona'], fecha_actual()); ?>" title="Ver Detenciones" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
-																		<a href="<?php echo 'view_solicitud_aplicacion_fuera_linea.php?view='.simpleEncode($row_data['idSolicitud'], fecha_actual()).'&idTelemetria='.simpleEncode($trac['idTelemetria'], fecha_actual()).'&idZona='.simpleEncode($tractda['idZona'], fecha_actual()); ?>" title="Ver Fuera de Linea" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+																		<a href="<?php echo 'view_solicitud_aplicacion_detenciones.php?view='.simpleEncode($rowData['idSolicitud'], fecha_actual()).'&idTelemetria='.simpleEncode($trac['idTelemetria'], fecha_actual()).'&idZona='.simpleEncode($tractda['idZona'], fecha_actual()); ?>" title="Ver Detenciones" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+																		<a href="<?php echo 'view_solicitud_aplicacion_fuera_linea.php?view='.simpleEncode($rowData['idSolicitud'], fecha_actual()).'&idTelemetria='.simpleEncode($trac['idTelemetria'], fecha_actual()).'&idZona='.simpleEncode($tractda['idZona'], fecha_actual()); ?>" title="Ver Fuera de Linea" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 																	</div>
 																</td>
 
@@ -1090,10 +1090,10 @@ if(!empty($_GET['idSolicitud'])){
 
 	//si existe al menos un dato
 	}elseif($ndata_1==1) {
-		$rowdata = db_select_data (false, 'idSolicitud', 'cross_solicitud_aplicacion_listado', '', "NSolicitud = '".$_GET['NSolicitud']."' AND idEstado = '".$_GET['idEstado']."' AND idSistema ='".$_SESSION['usuario']['basic_data']['idSistema']."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'submit_filter');
+		$rowData = db_select_data (false, 'idSolicitud', 'cross_solicitud_aplicacion_listado', '', "NSolicitud = '".$_GET['NSolicitud']."' AND idEstado = '".$_GET['idEstado']."' AND idSistema ='".$_SESSION['usuario']['basic_data']['idSistema']."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'submit_filter');
 		//redirijo
 		echo '<script type="text/javascript">
-			window.location = "'.$location.'?idSolicitud='.$rowdata['idSolicitud'].'"
+			window.location = "'.$location.'?idSolicitud='.$rowData['idSolicitud'].'"
 		</script>';
 
 	//si hay mas de un dato se listan

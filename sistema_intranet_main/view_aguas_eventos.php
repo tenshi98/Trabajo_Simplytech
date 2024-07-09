@@ -60,7 +60,7 @@ LEFT JOIN `usuarios_listado`               ON usuarios_listado.idUsuario        
 LEFT JOIN `aguas_clientes_listado`         ON aguas_clientes_listado.idCliente      = aguas_clientes_eventos.idCliente
 LEFT JOIN `aguas_clientes_eventos_tipos`   ON aguas_clientes_eventos_tipos.idTipo   = aguas_clientes_eventos.idTipo';
 $SIS_where = 'aguas_clientes_eventos.idEventos ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_eventos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'aguas_clientes_eventos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 ?>
 
@@ -77,23 +77,23 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_eventos', $SIS_joi
 					</tr>
 					<tr>
 						<td class="meta-head">Cliente</td>
-						<td><?php echo $rowdata['ClienteIdentificador'].' '.$rowdata['ClienteNombre']; ?></td>
+						<td><?php echo $rowData['ClienteIdentificador'].' '.$rowData['ClienteNombre']; ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Tipo Evento</td>
-						<td><?php echo $rowdata['TipoEvento']?></td>
+						<td><?php echo $rowData['TipoEvento']?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Numero Sello</td>
-						<td><?php echo $rowdata['NSello']?></td>
+						<td><?php echo $rowData['NSello']?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Creador</td>
-						<td><?php echo $rowdata['NombreUsuario']?></td>
+						<td><?php echo $rowData['NombreUsuario']?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Sistema</td>
-						<td><?php echo $rowdata['Sistema']?></td>
+						<td><?php echo $rowData['Sistema']?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -101,23 +101,23 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_eventos', $SIS_joi
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td><?php echo Fecha_estandar($rowdata['Fecha']); ?></td>
+						<td><?php echo Fecha_estandar($rowData['Fecha']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Fecha Ejecucion</td>
-						<td><?php echo Fecha_estandar($rowdata['FechaEjecucion']); ?></td>
+						<td><?php echo Fecha_estandar($rowData['FechaEjecucion']); ?></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 		<table id="items">
 			<tbody>
-				<?php if(isset($rowdata['Archivo'])&&$rowdata['Archivo']!=''){ ?>
+				<?php if(isset($rowData['Archivo'])&&$rowData['Archivo']!=''){ ?>
 					<tr><th>Archivo</th></tr>		  
 					<tr class="item-row linea_punteada" bgcolor="#F0F0F0">
 						<td>
 							<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
-								<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['Archivo'], ''); ?>
+								<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowData['Archivo'], ''); ?>
 							</div>
 						</td>
 					</tr>
@@ -127,8 +127,8 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_eventos', $SIS_joi
 					<td colspan="6" class="blank">
 						<p>
 							<?php
-							if(isset($rowdata['Observacion'])&&$rowdata['Observacion']!=''){
-								echo $rowdata['Observacion'];
+							if(isset($rowData['Observacion'])&&$rowData['Observacion']!=''){
+								echo $rowData['Observacion'];
 							}else{
 								echo 'Sin Observaciones';
 							} ?>

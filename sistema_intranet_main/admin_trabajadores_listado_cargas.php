@@ -75,7 +75,7 @@ if(!empty($_GET['edit'])){
 $SIS_query = 'Nombre,ApellidoPat, ApellidoMat, idSexo, FNacimiento, idEstado';
 $SIS_join  = '';
 $SIS_where = 'idCarga = '.$_GET['edit'];
-$rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado_cargas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'trabajadores_listado_cargas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -90,12 +90,12 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado_cargas', $SI
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)){              $x1  = $Nombre;               }else{$x1  = $rowdata['Nombre'];}
-				if(isset($ApellidoPat)){         $x2  = $ApellidoPat;          }else{$x2  = $rowdata['ApellidoPat'];}
-				if(isset($ApellidoMat)){         $x3  = $ApellidoMat;          }else{$x3  = $rowdata['ApellidoMat'];}
-				if(isset($idSexo)){              $x4  = $idSexo;               }else{$x4  = $rowdata['idSexo'];}
-				if(isset($FNacimiento)){         $x5  = $FNacimiento;          }else{$x5  = $rowdata['FNacimiento'];}
-				if(isset($idEstado)){            $x6  = $idEstado;             }else{$x6  = $rowdata['idEstado'];}
+				if(isset($Nombre)){              $x1  = $Nombre;               }else{$x1  = $rowData['Nombre'];}
+				if(isset($ApellidoPat)){         $x2  = $ApellidoPat;          }else{$x2  = $rowData['ApellidoPat'];}
+				if(isset($ApellidoMat)){         $x3  = $ApellidoMat;          }else{$x3  = $rowData['ApellidoMat'];}
+				if(isset($idSexo)){              $x4  = $idSexo;               }else{$x4  = $rowData['idSexo'];}
+				if(isset($FNacimiento)){         $x5  = $FNacimiento;          }else{$x5  = $rowData['FNacimiento'];}
+				if(isset($idEstado)){            $x6  = $idEstado;             }else{$x6  = $rowData['idEstado'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -168,7 +168,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 $SIS_query = 'Nombre,ApellidoPat, ApellidoMat';
 $SIS_join  = '';
 $SIS_where = 'idTrabajador = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 // consulto los datos
 $SIS_query = '
@@ -191,7 +191,7 @@ $arrCargas = db_select_array (false, $SIS_query, 'trabajadores_listado_cargas', 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Cargas Familiares'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat'], 'Cargas Familiares'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Carga Familiar</a><?php } ?>
 	</div>

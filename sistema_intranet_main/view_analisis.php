@@ -122,7 +122,7 @@ LEFT JOIN `laboratorio_listado`                     ON laboratorio_listado.idLab
 LEFT JOIN `core_ubicacion_ciudad`   lab_ciudad      ON lab_ciudad.idCiudad                     = laboratorio_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`  lab_comuna      ON lab_comuna.idComuna                     = laboratorio_listado.idComuna';
 $SIS_where = 'analisis_listado.idAnalisis ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'analisis_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'analisis_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /**********************************************************************/
 //Se traen todas las unidades de medida
@@ -202,8 +202,8 @@ foreach ($arrFlashpoint as $datos) {
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
-				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $row_data['Analisis_Nombre']?>.
-				<small class="pull-right">Fecha Reporte: <?php echo Fecha_estandar($row_data['Analisis_f_reporte']); ?></small>
+				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $rowData['Analisis_Nombre']?>.
+				<small class="pull-right">Fecha Reporte: <?php echo Fecha_estandar($rowData['Analisis_f_reporte']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -213,17 +213,17 @@ foreach ($arrFlashpoint as $datos) {
 		<?php
 
 				//Si es interno muestro los datos de la empresa
-				if(isset($row_data['idTipo'])&&$row_data['idTipo']==1){
+				if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){
 					echo '
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 						Laboratorio
 						<address>
-							<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
-							'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
-							'.$row_data['SistemaOrigenDireccion'].'<br/>
-							Fono : '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
-							Rut: '.$row_data['SistemaOrigenRut'].'<br/>
-							Email: '.$row_data['SistemaOrigenEmail'].'<br/>
+							<strong>'.$rowData['SistemaOrigen'].'</strong><br/>
+							'.$rowData['SistemaOrigenCiudad'].', '.$rowData['SistemaOrigenComuna'].'<br/>
+							'.$rowData['SistemaOrigenDireccion'].'<br/>
+							Fono : '.formatPhone($rowData['SistemaOrigenFono']).'<br/>
+							Rut: '.$rowData['SistemaOrigenRut'].'<br/>
+							Email: '.$rowData['SistemaOrigenEmail'].'<br/>
 						</address>
 					</div>';
 				//si es externo muestro los datos del laboratorio
@@ -232,14 +232,14 @@ foreach ($arrFlashpoint as $datos) {
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 						Laboratorio
 						<address>
-							<strong>'.$row_data['LaboratorioNombre'].'</strong><br/>
-							'.$row_data['LaboratorioCiudad'].', '.$row_data['LaboratorioComuna'].'<br/>
-							'.$row_data['LaboratorioDireccion'].'<br/>
-							Fono 1 : '.formatPhone($row_data['LaboratorioFono1']).'<br/>
-							Fono 2 : '.formatPhone($row_data['LaboratorioFono2']).'<br/>
-							Rut: '.$row_data['LaboratorioRut'].'<br/>
-							Email: '.$row_data['LaboratorioEmail'].'<br/>
-							Persona Contacto: '.$row_data['LaboratorioContacto'].'<br/>
+							<strong>'.$rowData['LaboratorioNombre'].'</strong><br/>
+							'.$rowData['LaboratorioCiudad'].', '.$rowData['LaboratorioComuna'].'<br/>
+							'.$rowData['LaboratorioDireccion'].'<br/>
+							Fono 1 : '.formatPhone($rowData['LaboratorioFono1']).'<br/>
+							Fono 2 : '.formatPhone($rowData['LaboratorioFono2']).'<br/>
+							Rut: '.$rowData['LaboratorioRut'].'<br/>
+							Email: '.$rowData['LaboratorioEmail'].'<br/>
+							Persona Contacto: '.$rowData['LaboratorioContacto'].'<br/>
 						</address>
 					</div>';
 				}
@@ -248,26 +248,26 @@ foreach ($arrFlashpoint as $datos) {
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Maquina
 					<address>
-						<strong>'.$row_data['MaquinaNombre'].'</strong><br/>
-						Codigo: '.$row_data['MaquinaCodigo'].'<br/>
-						Modelo: '.$row_data['MaquinaModelo'].'<br/>
-						Serie: '.$row_data['MaquinaSerie'].'<br/>
-						Fabricante: '.$row_data['MaquinaFabricante'].'<br/>
-						Ubicación: '.$row_data['MaquinaUbicacion'];
-						if(isset($row_data['MaquinaUbicacion_lvl_1'])&&$row_data['MaquinaUbicacion_lvl_1']!=''){
-							echo ' - '.$row_data['MaquinaUbicacion_lvl_1'];
+						<strong>'.$rowData['MaquinaNombre'].'</strong><br/>
+						Codigo: '.$rowData['MaquinaCodigo'].'<br/>
+						Modelo: '.$rowData['MaquinaModelo'].'<br/>
+						Serie: '.$rowData['MaquinaSerie'].'<br/>
+						Fabricante: '.$rowData['MaquinaFabricante'].'<br/>
+						Ubicación: '.$rowData['MaquinaUbicacion'];
+						if(isset($rowData['MaquinaUbicacion_lvl_1'])&&$rowData['MaquinaUbicacion_lvl_1']!=''){
+							echo ' - '.$rowData['MaquinaUbicacion_lvl_1'];
 						}
-						if(isset($row_data['MaquinaUbicacion_lvl_2'])&&$row_data['MaquinaUbicacion_lvl_2']!=''){
-							echo ' - '.$row_data['MaquinaUbicacion_lvl_2'];
+						if(isset($rowData['MaquinaUbicacion_lvl_2'])&&$rowData['MaquinaUbicacion_lvl_2']!=''){
+							echo ' - '.$rowData['MaquinaUbicacion_lvl_2'];
 						}
-						if(isset($row_data['MaquinaUbicacion_lvl_3'])&&$row_data['MaquinaUbicacion_lvl_3']!=''){
-							echo ' - '.$row_data['MaquinaUbicacion_lvl_3'];
+						if(isset($rowData['MaquinaUbicacion_lvl_3'])&&$rowData['MaquinaUbicacion_lvl_3']!=''){
+							echo ' - '.$rowData['MaquinaUbicacion_lvl_3'];
 						}
-						if(isset($row_data['MaquinaUbicacion_lvl_4'])&&$row_data['MaquinaUbicacion_lvl_4']!=''){
-							echo ' - '.$row_data['MaquinaUbicacion_lvl_4'];
+						if(isset($rowData['MaquinaUbicacion_lvl_4'])&&$rowData['MaquinaUbicacion_lvl_4']!=''){
+							echo ' - '.$rowData['MaquinaUbicacion_lvl_4'];
 						}
-						if(isset($row_data['MaquinaUbicacion_lvl_5'])&&$row_data['MaquinaUbicacion_lvl_5']!=''){
-							echo ' - '.$row_data['MaquinaUbicacion_lvl_5'];
+						if(isset($rowData['MaquinaUbicacion_lvl_5'])&&$rowData['MaquinaUbicacion_lvl_5']!=''){
+							echo ' - '.$rowData['MaquinaUbicacion_lvl_5'];
 						}
 					echo '
 					</address>
@@ -275,23 +275,23 @@ foreach ($arrFlashpoint as $datos) {
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Datos</strong><br/>
-					<strong>Estado: </strong>'.$row_data['Analisis_Estado'].'<br/>
-					<strong>Sistema: </strong>'.$row_data['Analisis_Sistema'].'<br/>';
+					<strong>Estado: </strong>'.$rowData['Analisis_Estado'].'<br/>
+					<strong>Sistema: </strong>'.$rowData['Analisis_Sistema'].'<br/>';
 
-					if(isset($row_data['Analisis_OT'])&&$row_data['Analisis_OT']!=''&&$row_data['Analisis_OT']!=0){
-						echo '<strong>Orden Trabajo Relacionada: </strong>'.$row_data['Analisis_OT'].'<br/>';
+					if(isset($rowData['Analisis_OT'])&&$rowData['Analisis_OT']!=''&&$rowData['Analisis_OT']!=0){
+						echo '<strong>Orden Trabajo Relacionada: </strong>'.$rowData['Analisis_OT'].'<br/>';
 					}
-					if(isset($row_data['Analisis_f_muestreo'])&&$row_data['Analisis_f_muestreo']!=''&&$row_data['Analisis_f_muestreo']!='0000-00-00'){
-						echo '<strong>Fecha Muestreo : </strong>'.Fecha_estandar($row_data['Analisis_f_muestreo']).'<br/>';
+					if(isset($rowData['Analisis_f_muestreo'])&&$rowData['Analisis_f_muestreo']!=''&&$rowData['Analisis_f_muestreo']!='0000-00-00'){
+						echo '<strong>Fecha Muestreo : </strong>'.Fecha_estandar($rowData['Analisis_f_muestreo']).'<br/>';
 					}
-					if(isset($row_data['Analisis_f_recibida'])&&$row_data['Analisis_f_recibida']!=''&&$row_data['Analisis_f_recibida']!='0000-00-00'){
-						echo '<strong>Fecha Recepcion : </strong>'.Fecha_estandar($row_data['Analisis_f_recibida']).'<br/>';
+					if(isset($rowData['Analisis_f_recibida'])&&$rowData['Analisis_f_recibida']!=''&&$rowData['Analisis_f_recibida']!='0000-00-00'){
+						echo '<strong>Fecha Recepcion : </strong>'.Fecha_estandar($rowData['Analisis_f_recibida']).'<br/>';
 					}
-					if(isset($row_data['Analisis_f_reporte'])&&$row_data['Analisis_f_reporte']!=''&&$row_data['Analisis_f_reporte']!='0000-00-00'){
-						echo '<strong>Fecha Reporte : </strong>'.Fecha_estandar($row_data['Analisis_f_reporte']).'<br/>';
+					if(isset($rowData['Analisis_f_reporte'])&&$rowData['Analisis_f_reporte']!=''&&$rowData['Analisis_f_reporte']!='0000-00-00'){
+						echo '<strong>Fecha Reporte : </strong>'.Fecha_estandar($rowData['Analisis_f_reporte']).'<br/>';
 					}
-					if(isset($row_data['Analisis_n_muestra'])&&$row_data['Analisis_n_muestra']!=''){
-						echo '<strong>Muestra N° : </strong>'.$row_data['Analisis_n_muestra'].'<br/>';
+					if(isset($rowData['Analisis_n_muestra'])&&$rowData['Analisis_n_muestra']!=''){
+						echo '<strong>Muestra N° : </strong>'.$rowData['Analisis_n_muestra'].'<br/>';
 					}
 				echo '</div>';
 			?>
@@ -304,7 +304,7 @@ foreach ($arrFlashpoint as $datos) {
 				//Cuento si hay items dentro de la categoria
 				$x_con = 0;
 				for ($i = 1; $i <= $rowpre['cantPuntos']; $i++) {
-					if($grupo['idGrupo']==$row_data['PuntoidGrupo_'.$i]){
+					if($grupo['idGrupo']==$rowData['PuntoidGrupo_'.$i]){
 						$x_con++;
 					}
 				}
@@ -326,58 +326,58 @@ foreach ($arrFlashpoint as $datos) {
 					}
 
 					for ($i = 1; $i <= $rowpre['cantPuntos']; $i++) {
-						if($grupo['idGrupo']==$row_data['PuntoidGrupo_'.$i]){
+						if($grupo['idGrupo']==$rowData['PuntoidGrupo_'.$i]){
 							//obtengo la unidad de medida
 							//Verifico la existencia de la abreviatura
-							if(isset($arrFinalUnimed[$row_data['PuntoUniMed_'.$i]]['Abreviatura'])&&$arrFinalUnimed[$row_data['PuntoUniMed_'.$i]]['Abreviatura']!=''){
-								$uniMed = $arrFinalUnimed[$row_data['PuntoUniMed_'.$i]]['Abreviatura'];
+							if(isset($arrFinalUnimed[$rowData['PuntoUniMed_'.$i]]['Abreviatura'])&&$arrFinalUnimed[$rowData['PuntoUniMed_'.$i]]['Abreviatura']!=''){
+								$uniMed = $arrFinalUnimed[$rowData['PuntoUniMed_'.$i]]['Abreviatura'];
 							}else{
-								$uniMed = $arrFinalUnimed[$row_data['PuntoUniMed_'.$i]]['Nombre'];
+								$uniMed = $arrFinalUnimed[$rowData['PuntoUniMed_'.$i]]['Nombre'];
 							}
 							//obtengo datos
-							$Producto     = $arrFinalProducto[$row_data['Analisis_Medida_'.$i]]['Nombre'];
-							$Dispersancia = $arrFinalDispersancia[$row_data['Analisis_Medida_'.$i]]['Nombre'];
-							$Flashpoint   = $arrFinalFlashpoint[$row_data['Analisis_Medida_'.$i]]['Nombre'];
+							$Producto     = $arrFinalProducto[$rowData['Analisis_Medida_'.$i]]['Nombre'];
+							$Dispersancia = $arrFinalDispersancia[$rowData['Analisis_Medida_'.$i]]['Nombre'];
+							$Flashpoint   = $arrFinalFlashpoint[$rowData['Analisis_Medida_'.$i]]['Nombre'];
 
 							//comparo el tipo de dato a mostrar
-							switch ($row_data['PuntoidTipo_'.$i]) {
+							switch ($rowData['PuntoidTipo_'.$i]) {
 								//Medidas
 								case 1:
 									/***************************************************************/
 									//variable vacia
 									$alert_lvl = '';
 									//verifico cual es mayor para proceder a la verificacion
-									if($row_data['PuntoMedAceptable_'.$i]>$row_data['PuntoMedCondenatorio_'.$i]){
+									if($rowData['PuntoMedAceptable_'.$i]>$rowData['PuntoMedCondenatorio_'.$i]){
 										//alerta amarilla
-										if(isset($row_data['Analisis_Medida_'.$i])&&$row_data['Analisis_Medida_'.$i]!=''&&$row_data['Analisis_Medida_'.$i]>$row_data['PuntoMedAlerta_'.$i]&&$row_data['Analisis_Medida_'.$i]<=$row_data['PuntoMedAceptable_'.$i]){
+										if(isset($rowData['Analisis_Medida_'.$i])&&$rowData['Analisis_Medida_'.$i]!=''&&$rowData['Analisis_Medida_'.$i]>$rowData['PuntoMedAlerta_'.$i]&&$rowData['Analisis_Medida_'.$i]<=$rowData['PuntoMedAceptable_'.$i]){
 											//variables alerta amarilla
 											$alert_lvl = 'color-green-dark'; //amarilla
 										}
 										//alerta naranja
-										if(isset($row_data['Analisis_Medida_'.$i])&&$row_data['Analisis_Medida_'.$i]!=''&&$row_data['Analisis_Medida_'.$i]>$row_data['PuntoMedCondenatorio_'.$i]&&$row_data['Analisis_Medida_'.$i]<=$row_data['PuntoMedAlerta_'.$i]){
+										if(isset($rowData['Analisis_Medida_'.$i])&&$rowData['Analisis_Medida_'.$i]!=''&&$rowData['Analisis_Medida_'.$i]>$rowData['PuntoMedCondenatorio_'.$i]&&$rowData['Analisis_Medida_'.$i]<=$rowData['PuntoMedAlerta_'.$i]){
 											//variables alerta naranja
 											$alert_lvl = 'color-yellow'; //naranja
 										}
 										//alerta roja
-										if(isset($row_data['Analisis_Medida_'.$i])&&$row_data['Analisis_Medida_'.$i]!=''&&$row_data['Analisis_Medida_'.$i]<=$row_data['PuntoMedCondenatorio_'.$i]){
+										if(isset($rowData['Analisis_Medida_'.$i])&&$rowData['Analisis_Medida_'.$i]!=''&&$rowData['Analisis_Medida_'.$i]<=$rowData['PuntoMedCondenatorio_'.$i]){
 											//variables alerta roja
 											$alert_lvl = 'color-red-dark'; //roja
 										}
 
 									/***************************************************************/
-									}elseif($row_data['PuntoMedAceptable_'.$i]<$row_data['PuntoMedCondenatorio_'.$i]){
+									}elseif($rowData['PuntoMedAceptable_'.$i]<$rowData['PuntoMedCondenatorio_'.$i]){
 										//alerta amarilla
-										if(isset($row_data['Analisis_Medida_'.$i])&&$row_data['Analisis_Medida_'.$i]!=''&&$row_data['Analisis_Medida_'.$i]<$row_data['PuntoMedAlerta_'.$i]&&$row_data['Analisis_Medida_'.$i]>=$row_data['PuntoMedAceptable_'.$i]){
+										if(isset($rowData['Analisis_Medida_'.$i])&&$rowData['Analisis_Medida_'.$i]!=''&&$rowData['Analisis_Medida_'.$i]<$rowData['PuntoMedAlerta_'.$i]&&$rowData['Analisis_Medida_'.$i]>=$rowData['PuntoMedAceptable_'.$i]){
 											//variables alerta amarilla
 											$alert_lvl = 'color-green-dark'; //amarilla
 										}
 										//alerta naranja
-										if(isset($row_data['Analisis_Medida_'.$i])&&$row_data['Analisis_Medida_'.$i]!=''&&$row_data['Analisis_Medida_'.$i]<$row_data['PuntoMedCondenatorio_'.$i]&&$row_data['Analisis_Medida_'.$i]>=$row_data['PuntoMedAlerta_'.$i]){
+										if(isset($rowData['Analisis_Medida_'.$i])&&$rowData['Analisis_Medida_'.$i]!=''&&$rowData['Analisis_Medida_'.$i]<$rowData['PuntoMedCondenatorio_'.$i]&&$rowData['Analisis_Medida_'.$i]>=$rowData['PuntoMedAlerta_'.$i]){
 											//variables alerta naranja
 											$alert_lvl = 'color-yellow'; //naranja
 										}
 										//alerta roja
-										if(isset($row_data['Analisis_Medida_'.$i])&&$row_data['Analisis_Medida_'.$i]!=''&&$row_data['Analisis_Medida_'.$i]>=$row_data['PuntoMedCondenatorio_'.$i]){
+										if(isset($rowData['Analisis_Medida_'.$i])&&$rowData['Analisis_Medida_'.$i]!=''&&$rowData['Analisis_Medida_'.$i]>=$rowData['PuntoMedCondenatorio_'.$i]){
 											//variables alerta roja
 											$alert_lvl = 'color-red-dark'; //roja
 										}
@@ -386,11 +386,11 @@ foreach ($arrFlashpoint as $datos) {
 
 									/*******************************/
 									echo '<tr>';
-										echo '<td>'.$row_data['PuntoNombre_'.$i].'</td>';
-										echo '<td><span class="'.$alert_lvl.'">'.Cantidades_decimales_justos($row_data['Analisis_Medida_'.$i]).' '.$uniMed.'</span></td>';
-										echo '<td><span class="color-green-dark">'.Cantidades_decimales_justos($row_data['PuntoMedAceptable_'.$i]).' '.$uniMed.'</span></td>';
-										echo '<td><span class="color-yellow">'.Cantidades_decimales_justos($row_data['PuntoMedAlerta_'.$i]).' '.$uniMed.'</span></td>';
-										echo '<td><span class="color-red-dark">'.Cantidades_decimales_justos($row_data['PuntoMedCondenatorio_'.$i]).' '.$uniMed.'</span></td>';
+										echo '<td>'.$rowData['PuntoNombre_'.$i].'</td>';
+										echo '<td><span class="'.$alert_lvl.'">'.Cantidades_decimales_justos($rowData['Analisis_Medida_'.$i]).' '.$uniMed.'</span></td>';
+										echo '<td><span class="color-green-dark">'.Cantidades_decimales_justos($rowData['PuntoMedAceptable_'.$i]).' '.$uniMed.'</span></td>';
+										echo '<td><span class="color-yellow">'.Cantidades_decimales_justos($rowData['PuntoMedAlerta_'.$i]).' '.$uniMed.'</span></td>';
+										echo '<td><span class="color-red-dark">'.Cantidades_decimales_justos($rowData['PuntoMedCondenatorio_'.$i]).' '.$uniMed.'</span></td>';
 									echo '</tr>';
 									break;
 								//Producto
@@ -429,14 +429,14 @@ foreach ($arrFlashpoint as $datos) {
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Diagnostico:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Analisis_obs_Diagnostico']; ?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $rowData['Analisis_obs_Diagnostico']; ?></p>
 		</div>
 	</div>
 
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Recomendaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Analisis_obs_Accion']; ?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $rowData['Analisis_obs_Accion']; ?></p>
 		</div>
 	</div>
 

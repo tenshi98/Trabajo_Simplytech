@@ -55,7 +55,7 @@ $SIS_join  = '
 LEFT JOIN `soporte_software_listado_licencias`   ON soporte_software_listado_licencias.idLicencia     = soporte_software_listado.idLicencia
 LEFT JOIN `soporte_software_listado_categorias`  ON soporte_software_listado_categorias.idCategoria   = soporte_software_listado.idCategoria';
 $SIS_where = 'soporte_software_listado.idSoftware ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'soporte_software_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'soporte_software_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 ?>
 
@@ -68,14 +68,14 @@ $rowdata = db_select_data (false, $SIS_query, 'soporte_software_listado', $SIS_j
 				<div class="row with-padding">
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<div class="task-description">
-							<a href="#"><?php echo $rowdata['Nombre']; ?></a>
-							<i><?php echo $rowdata['Categoria']; ?></i>
-							<span><?php echo $rowdata['Descripcion']; ?></span>
+							<a href="#"><?php echo $rowData['Nombre']; ?></a>
+							<i><?php echo $rowData['Categoria']; ?></i>
+							<span><?php echo $rowData['Descripcion']; ?></span>
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 						<div class="task-info">
-							<span><?php echo $rowdata['Licencia']; ?></span>
+							<span><?php echo $rowData['Licencia']; ?></span>
 
 						</div>
 					</div>
@@ -86,8 +86,8 @@ $rowdata = db_select_data (false, $SIS_query, 'soporte_software_listado', $SIS_j
 					</div>
 					<div class="pull-right clearfix" style="width: 70px;">
 						<ul class="footer-icons-group">
-							<?php if(isset($rowdata['SitioWeb'])&&$rowdata['SitioWeb']!=''){ ?><li><a href="<?php echo $rowdata['SitioWeb']; ?>" title="Ir al Sitio" class="tooltip" style="position: relative;"><i class="fa fa-firefox" aria-hidden="true"></i></a></li><?php } ?>
-							<li><a href="<?php echo $rowdata['SitioDescarga']; ?>" title="Descargar" class="tooltip" style="position: relative;"><i class="fa fa-cloud-download" aria-hidden="true"></i></a></li>
+							<?php if(isset($rowData['SitioWeb'])&&$rowData['SitioWeb']!=''){ ?><li><a href="<?php echo $rowData['SitioWeb']; ?>" title="Ir al Sitio" class="tooltip" style="position: relative;"><i class="fa fa-firefox" aria-hidden="true"></i></a></li><?php } ?>
+							<li><a href="<?php echo $rowData['SitioDescarga']; ?>" title="Descargar" class="tooltip" style="position: relative;"><i class="fa fa-cloud-download" aria-hidden="true"></i></a></li>
 						</ul>
 					</div>
 					<div class="clearfix"></div>

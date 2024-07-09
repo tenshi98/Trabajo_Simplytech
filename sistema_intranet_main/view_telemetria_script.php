@@ -81,16 +81,16 @@ LEFT JOIN `core_sistemas_opciones`        opc3        ON opc3.idOpciones        
 LEFT JOIN `telemetria_listado_script_puerto_serial`   ON telemetria_listado_script_puerto_serial.idPuertoSerial   = telemetria_listado_script.idPuertoSerial
 LEFT JOIN `telemetria_listado_script_apn_listado`     ON telemetria_listado_script_apn_listado.idAPNListado       = telemetria_listado_script.idAPNListado';
 $SIS_where = 'telemetria_listado_script.idScript ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_script', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_listado_script', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /***************************************************************************/
 //Por tipo de SHIELD
-switch ($rowdata['idShield']) {
+switch ($rowData['idShield']) {
     /********************************************/
     //Dragino
     case 1:
 		//Tipo de trabajo que realiza el equipo
-		switch ($rowdata['idTab']) {
+		switch ($rowData['idTab']) {
 			case 1: break;//CrossChecking
 			case 2: break;//CrossC
 			case 3: break;//CrossTrack
@@ -104,9 +104,9 @@ switch ($rowdata['idShield']) {
     //Sim808
     case 2:
 		//Tipo de trabajo que realiza el equipo
-		switch ($rowdata['idTab']) {
+		switch ($rowData['idTab']) {
 			case 1: break;//CrossChecking
-			case 2: $code = sim80x_dht('sim808', $rowdata);  break;//CrossC
+			case 2: $code = sim80x_dht('sim808', $rowData);  break;//CrossC
 			case 3: break;//CrossTrack
 			case 4: break;//CrossWeather
 			case 5: break;//CrossWater
@@ -118,9 +118,9 @@ switch ($rowdata['idShield']) {
     //Sim800l
     case 3:
 		//Tipo de trabajo que realiza el equipo
-		switch ($rowdata['idTab']) {
+		switch ($rowData['idTab']) {
 			case 1: break;//CrossChecking
-			case 2: $code = sim80x_dht('sim800', $rowdata);  break;//CrossC
+			case 2: $code = sim80x_dht('sim800', $rowData);  break;//CrossC
 			case 3: break;//CrossTrack
 			case 4: break;//CrossWeather
 			case 5: break;//CrossWater
@@ -132,7 +132,7 @@ switch ($rowdata['idShield']) {
     //Ethernet
     case 4:
         //Tipo de trabajo que realiza el equipo
-		switch ($rowdata['idTab']) {
+		switch ($rowData['idTab']) {
 			case 1: break;//CrossChecking
 			case 2: break;//CrossC
 			case 3: break;//CrossTrack
@@ -146,7 +146,7 @@ switch ($rowdata['idShield']) {
     //Dragino Yun
     case 5:
         //Tipo de trabajo que realiza el equipo
-		switch ($rowdata['idTab']) {
+		switch ($rowData['idTab']) {
 			case 1: break;//CrossChecking
 			case 2: break;//CrossC
 			case 3: break;//CrossTrack
@@ -160,7 +160,7 @@ switch ($rowdata['idShield']) {
     //Arduino Yun
     case 6:
         //Tipo de trabajo que realiza el equipo
-		switch ($rowdata['idTab']) {
+		switch ($rowData['idTab']) {
 			case 1: break;//CrossChecking
 			case 2: break;//CrossC
 			case 3: break;//CrossTrack
@@ -187,27 +187,27 @@ switch ($rowdata['idShield']) {
         <div class="body">
             <h2 class="text-primary">Datos Básicos</h2>
             <p class="text-muted">
-				<strong>Equipo : </strong><?php echo $rowdata['nombre_equipo']; ?><br/>
-				<strong>Identificador : </strong><?php echo $rowdata['Identificador']; ?><br/>
-				<strong>Usuario : </strong><?php echo $rowdata['nombre_usuario']; ?><br/>
-				<strong>Fecha : </strong><?php echo Fecha_completa_alt($rowdata['Fecha']); ?><br/>
-				<strong>Modificado : </strong><?php if(isset($rowdata['idModificado'])&&$rowdata['idModificado']==1){ echo '<span class="label label-danger">'.$rowdata['Modificado'].'</span>';}else{ echo $rowdata['Modificado'];} ?>
+				<strong>Equipo : </strong><?php echo $rowData['nombre_equipo']; ?><br/>
+				<strong>Identificador : </strong><?php echo $rowData['Identificador']; ?><br/>
+				<strong>Usuario : </strong><?php echo $rowData['nombre_usuario']; ?><br/>
+				<strong>Fecha : </strong><?php echo Fecha_completa_alt($rowData['Fecha']); ?><br/>
+				<strong>Modificado : </strong><?php if(isset($rowData['idModificado'])&&$rowData['idModificado']==1){ echo '<span class="label label-danger">'.$rowData['Modificado'].'</span>';}else{ echo $rowData['Modificado'];} ?>
 			</p>
             
             <h2 class="text-primary">Configuracion Actual</h2>
             <p class="text-muted">
-				<strong>Hardware : </strong><?php echo $rowdata['Dispositivo']; ?><br/>
-				<strong>SHIELD : </strong><?php echo $rowdata['Shield']; ?><br/>
-				<strong>Tab : </strong><?php echo $rowdata['Tab']; ?><br/>
-				<strong>Geolocalizacion : </strong><?php echo $rowdata['Geo']; ?><br/>
-				<strong>Sensores : </strong><?php echo $rowdata['Sensores']; ?><br/>
-				<strong>Cantidad Sensores : </strong><?php echo $rowdata['cantSensores']; ?><br/>
+				<strong>Hardware : </strong><?php echo $rowData['Dispositivo']; ?><br/>
+				<strong>SHIELD : </strong><?php echo $rowData['Shield']; ?><br/>
+				<strong>Tab : </strong><?php echo $rowData['Tab']; ?><br/>
+				<strong>Geolocalizacion : </strong><?php echo $rowData['Geo']; ?><br/>
+				<strong>Sensores : </strong><?php echo $rowData['Sensores']; ?><br/>
+				<strong>Cantidad Sensores : </strong><?php echo $rowData['cantSensores']; ?><br/>
             </p>
                  
             <h2 class="text-primary">Observacion</h2>
             <p class="text-muted word_break">
 				<div class="text-muted well well-sm no-shadow">
-					<?php if(isset($rowdata['Observacion'])&&$rowdata['Observacion']!=''){echo $rowdata['Observacion'];}else{echo 'Sin Observaciones';} ?>
+					<?php if(isset($rowData['Observacion'])&&$rowData['Observacion']!=''){echo $rowData['Observacion'];}else{echo 'Sin Observaciones';} ?>
 					<div class="clearfix"></div>
 				</div>
 			</p>

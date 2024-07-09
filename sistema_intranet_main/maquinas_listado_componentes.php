@@ -245,7 +245,7 @@ if(!empty($_GET['addTrabajo'])){
 	sistema_productos_uml.Nombre AS UnidadMedida';
 	$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = maquinas_listado_level_'.$_GET['lvl'].'.idUml';
 	$SIS_where = 'maquinas_listado_level_'.$_GET['lvl'].'.idLevel_'.$_GET['lvl'].' = '.$_GET['edit'];
-	$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_level_'.$_GET['lvl'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'maquinas_listado_level_'.$_GET['lvl'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	//filtro
 	$zx1 = "idProducto=0";
@@ -288,27 +288,27 @@ if(!empty($_GET['addTrabajo'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){               $x1  = $Nombre;                 }else{$x1  = $rowdata['Nombre'];}
-					if(isset($Codigo)){               $x2  = $Codigo;                 }else{$x2  = $rowdata['Codigo'];}
-					if(isset($Marca)){                $x3  = $Marca;                  }else{$x3  = $rowdata['Marca'];}
-					if(isset($idUtilizable)){         $x4  = $idUtilizable;           }else{$x4  = $rowdata['idUtilizable'];}
+					if(isset($Nombre)){               $x1  = $Nombre;                 }else{$x1  = $rowData['Nombre'];}
+					if(isset($Codigo)){               $x2  = $Codigo;                 }else{$x2  = $rowData['Codigo'];}
+					if(isset($Marca)){                $x3  = $Marca;                  }else{$x3  = $rowData['Marca'];}
+					if(isset($idUtilizable)){         $x4  = $idUtilizable;           }else{$x4  = $rowData['idUtilizable'];}
 					//Si es componente
-					if(isset($Modelo)){               $x6  = $Modelo;                 }else{$x6  = $rowdata['Modelo'];}
-					if(isset($AnoFab)){               $x7  = $AnoFab;                 }else{$x7  = $rowdata['AnoFab'];}
-					if(isset($Serie)){                $x8  = $Serie;                  }else{$x8  = $rowdata['Serie'];}
+					if(isset($Modelo)){               $x6  = $Modelo;                 }else{$x6  = $rowData['Modelo'];}
+					if(isset($AnoFab)){               $x7  = $AnoFab;                 }else{$x7  = $rowData['AnoFab'];}
+					if(isset($Serie)){                $x8  = $Serie;                  }else{$x8  = $rowData['Serie'];}
 					//Si es subcomponente
-					if(isset($Saf)){                  $x9  = $Saf;                    }else{$x9  = $rowdata['Saf'];}
-					if(isset($Numero)){               $x10 = $Numero;                 }else{$x10 = $rowdata['Numero'];}
-					if(isset($idSubTipo)){            $x11 = $idSubTipo;              }else{$x11 = $rowdata['idSubTipo'];}
-					if(isset($idProducto)){           $x12 = $idProducto;             }else{$x12 = $rowdata['idProducto'];}
-					if(isset($Grasa_inicial)){        $x13 = $Grasa_inicial;          }else{$x13 = Cantidades_decimales_justos($rowdata['Grasa_inicial']);}
-					if(isset($Grasa_relubricacion)){  $x14 = $Grasa_relubricacion;    }else{$x14 = Cantidades_decimales_justos($rowdata['Grasa_relubricacion']);}
-					if(isset($Aceite)){               $x15 = $Aceite;                 }else{$x15 = Cantidades_decimales_justos($rowdata['Aceite']);}
-					if(isset($Cantidad)){             $x16 = $Cantidad;               }else{$x16 = Cantidades_decimales_justos($rowdata['Cantidad']);}
-					if(isset($idUml_fake)){           $x17 = $idUml_fake;             }else{$x17 = $rowdata['UnidadMedida'];}
-					if(isset($idUml)){                $x18 = $idUml;                  }else{$x18 = $rowdata['idUml'];}
-					if(isset($Frecuencia)){           $x19 = $Frecuencia;             }else{$x19 = $rowdata['Frecuencia'];}
-					if(isset($idFrecuencia)){         $x20 = $idFrecuencia;           }else{$x20 = $rowdata['idFrecuencia'];}
+					if(isset($Saf)){                  $x9  = $Saf;                    }else{$x9  = $rowData['Saf'];}
+					if(isset($Numero)){               $x10 = $Numero;                 }else{$x10 = $rowData['Numero'];}
+					if(isset($idSubTipo)){            $x11 = $idSubTipo;              }else{$x11 = $rowData['idSubTipo'];}
+					if(isset($idProducto)){           $x12 = $idProducto;             }else{$x12 = $rowData['idProducto'];}
+					if(isset($Grasa_inicial)){        $x13 = $Grasa_inicial;          }else{$x13 = Cantidades_decimales_justos($rowData['Grasa_inicial']);}
+					if(isset($Grasa_relubricacion)){  $x14 = $Grasa_relubricacion;    }else{$x14 = Cantidades_decimales_justos($rowData['Grasa_relubricacion']);}
+					if(isset($Aceite)){               $x15 = $Aceite;                 }else{$x15 = Cantidades_decimales_justos($rowData['Aceite']);}
+					if(isset($Cantidad)){             $x16 = $Cantidad;               }else{$x16 = Cantidades_decimales_justos($rowData['Cantidad']);}
+					if(isset($idUml_fake)){           $x17 = $idUml_fake;             }else{$x17 = $rowData['UnidadMedida'];}
+					if(isset($idUml)){                $x18 = $idUml;                  }else{$x18 = $rowData['idUml'];}
+					if(isset($Frecuencia)){           $x19 = $Frecuencia;             }else{$x19 = $rowData['Frecuencia'];}
+					if(isset($idFrecuencia)){         $x20 = $idFrecuencia;           }else{$x20 = $rowData['idFrecuencia'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -627,7 +627,7 @@ if(!empty($_GET['addTrabajo'])){
 	maquinas_listado_level_'.$_GET['lvl'].'.Direccion_img';
 	$SIS_join  = '';
 	$SIS_where = 'maquinas_listado_level_'.$_GET['lvl'].'.idLevel_'.$_GET['lvl'].' = '.$_GET['editimg'];
-	$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_level_'.$_GET['lvl'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'maquinas_listado_level_'.$_GET['lvl'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -635,14 +635,14 @@ if(!empty($_GET['addTrabajo'])){
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-				<h5>Modificar imagen de <?php echo $rowdata['Nombre']; ?></h5>
+				<h5>Modificar imagen de <?php echo $rowData['Nombre']; ?></h5>
 			</header>
 			<div class="body">
 
-				<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){ ?>
+				<?php if(isset($rowData['Direccion_img'])&&$rowData['Direccion_img']!=''){ ?>
 
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
-						<img src="upload/<?php echo $rowdata['Direccion_img']; ?>" width="100%" >
+						<img src="upload/<?php echo $rowData['Direccion_img']; ?>" width="100%" >
 					</div>
 
 					<div class="form-group">
@@ -1071,7 +1071,7 @@ if(!empty($_GET['addTrabajo'])){
 	$SIS_query = 'Nombre,idSistema, idConfig_1, idConfig_2, idConfig_3, idConfig_4';
 	$SIS_join  = '';
 	$SIS_where = 'idMaquina ='.simpleDecode($_GET['id'], fecha_actual());
-	$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	//Se crean las variables
 	$nmax = 15;
@@ -1500,9 +1500,9 @@ if(!empty($_GET['addTrabajo'])){
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquinas', $rowdata['Nombre'], 'Componentes'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquinas', $rowData['Nombre'], 'Componentes'); ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
-			<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Componente</a><?php } ?>
+			<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowData['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Componente</a><?php } ?>
 		</div>
 	</div>
 	<div class="clearfix"></div>
@@ -1519,12 +1519,12 @@ if(!empty($_GET['addTrabajo'])){
 						<ul class="dropdown-menu" role="menu">
 							<?php
 							//Dependencia Clientes
-							if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
+							if(isset($rowData['idConfig_3'])&&$rowData['idConfig_3']==1){ ?>
 								<li class=""><a href="<?php echo 'maquinas_listado_datos_clientes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-users" aria-hidden="true"></i> Clientes</a></li>
 							<?php } ?>
 							<?php
 							//Uso Ubicación
-							if(isset($rowdata['idConfig_4'])&&$rowdata['idConfig_4']==1){ ?>
+							if(isset($rowData['idConfig_4'])&&$rowData['idConfig_4']==1){ ?>
 								<li class=""><a href="<?php echo 'maquinas_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ubicación</a></li>
 							<?php } ?>
 							<li class=""><a href="<?php echo 'maquinas_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Ficha Tecnica</a></li>
@@ -1534,12 +1534,12 @@ if(!empty($_GET['addTrabajo'])){
 							<li class=""><a href="<?php echo 'maquinas_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Descripcion</a></li>
 							<?php
 							//Uso de componentes
-							if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
+							if(isset($rowData['idConfig_1'])&&$rowData['idConfig_1']==1){ ?>
 								<li class="active"><a href="<?php echo 'maquinas_listado_componentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Componentes</a></li>
 							<?php } ?>
 							<?php
 							//uso de matriz de analisis
-							if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
+							if(isset($rowData['idConfig_2'])&&$rowData['idConfig_2']==1){ ?>
 								<li class=""><a href="<?php echo 'maquinas_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-microchip" aria-hidden="true"></i> Matriz Analisis</a></li>
 							<?php } ?>
 
@@ -1550,7 +1550,7 @@ if(!empty($_GET['addTrabajo'])){
 			<div class="table-responsive">
 
 				<?php //Se imprime el arbol
-				echo arrayToUL($array3d, $TipoMaq, $Trabajo, 0, $rowlevel['level'],$new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'], $nmax);
+				echo arrayToUL($array3d, $TipoMaq, $Trabajo, 0, $rowlevel['level'],$new_location.'&id='.$_GET['id'].'&idSistema='.$rowData['idSistema'], $nmax);
 				?>
 
 				<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

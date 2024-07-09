@@ -66,7 +66,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);	?>
+$rowData = mysqli_fetch_assoc ($resultado);	?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -79,11 +79,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Tramo)){      $x1  = $Tramo;         }else{$x1  = $rowdata['Tramo'];}
-				if(isset($UTM_Desde)){  $x2  = $UTM_Desde;     }else{$x2  = Cantidades_decimales_justos($rowdata['UTM_Desde']);}
-				if(isset($UTM_Hasta)){  $x3  = $UTM_Hasta;     }else{$x3  = Cantidades_decimales_justos($rowdata['UTM_Hasta']);}
-				if(isset($Tasa)){       $x4  = $Tasa;          }else{$x4  = Cantidades_decimales_justos($rowdata['Tasa']);}
-				if(isset($Rebaja)){     $x5  = $Rebaja;        }else{$x5  = Cantidades_decimales_justos($rowdata['Rebaja']);}
+				if(isset($Tramo)){      $x1  = $Tramo;         }else{$x1  = $rowData['Tramo'];}
+				if(isset($UTM_Desde)){  $x2  = $UTM_Desde;     }else{$x2  = Cantidades_decimales_justos($rowData['UTM_Desde']);}
+				if(isset($UTM_Hasta)){  $x3  = $UTM_Hasta;     }else{$x3  = Cantidades_decimales_justos($rowData['UTM_Hasta']);}
+				if(isset($Tasa)){       $x4  = $Tasa;          }else{$x4  = Cantidades_decimales_justos($rowData['Tasa']);}
+				if(isset($Rebaja)){     $x5  = $Rebaja;        }else{$x5  = Cantidades_decimales_justos($rowData['Rebaja']);}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

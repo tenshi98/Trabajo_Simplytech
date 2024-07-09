@@ -65,12 +65,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,ApellidoPat, ApellidoMat, File_RHTM, File_RHTM_Fecha';
 $SIS_join  = '';
 $SIS_where = 'idTrabajador = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Permiso Trabajo Menor Edad'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowData['Nombre'].' '.$rowData['ApellidoPat'].' '.$rowData['ApellidoMat'], 'Editar Permiso Trabajo Menor Edad'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<a target="_blank" rel="noopener noreferrer" href="https://www.registrocivil.cl/principal/servicios-en-linea/inhabilidades-para-trabajar-con-menores-de-edad" class="btn btn-default pull-right margin_width" ><i class="fa fa-search" aria-hidden="true"></i> Consulta Trabajo Menores Edad</a>
 	</div>
@@ -110,12 +110,12 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
 
-				<?php if(isset($rowdata['File_RHTM'])&&$rowdata['File_RHTM']!=''){ ?>
+				<?php if(isset($rowData['File_RHTM'])&&$rowData['File_RHTM']!=''){ ?>
 
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 						<h3>Archivo</h3>
-						<p>Fecha de Revision: <?php echo fecha_estandar($rowdata['File_RHTM_Fecha']); ?></p>
-						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['File_RHTM'], ''); ?>
+						<p>Fecha de Revision: <?php echo fecha_estandar($rowData['File_RHTM_Fecha']); ?></p>
+						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowData['File_RHTM'], ''); ?>
 						<br/>
 						<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_File_RHTM='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 					</div>

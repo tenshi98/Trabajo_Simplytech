@@ -75,7 +75,7 @@ if(!empty($_GET['edit'])){
 $SIS_query = 'Email,Comentario';
 $SIS_join  = '';
 $SIS_where = 'idEmail = '.$_GET['edit'];
-$rowdata = db_select_data (false, $SIS_query, 'personas_listado_email', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'personas_listado_email', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -90,8 +90,8 @@ $rowdata = db_select_data (false, $SIS_query, 'personas_listado_email', $SIS_joi
 
 				<?php  
 				//Se verifican si existen los datos
-				if(isset($Email)){          $x1 = $Email;         }else{$x1 = $rowdata['Email'];}
-				if(isset($Comentario)){     $x2 = $Comentario;    }else{$x2 = $rowdata['Comentario'];}
+				if(isset($Email)){          $x1 = $Email;         }else{$x1 = $rowData['Email'];}
+				if(isset($Comentario)){     $x2 = $Comentario;    }else{$x2 = $rowData['Comentario'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -156,7 +156,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 $SIS_query = 'Nombre,ApellidoPaterno, ApellidoMaterno';
 $SIS_join  = '';
 $SIS_where = 'idPersona = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 // consulto los datos
 $SIS_query = 'idEmail,Email,Comentario';
@@ -169,7 +169,7 @@ $arrMails = db_select_array (false, $SIS_query, 'personas_listado_email', $SIS_j
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Personas', $rowdata['Nombre'].' '.$rowdata['ApellidoPaterno'].' '.$rowdata['ApellidoMaterno'], 'Emails'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Personas', $rowData['Nombre'].' '.$rowData['ApellidoPaterno'].' '.$rowData['ApellidoMaterno'], 'Emails'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Email</a><?php } ?>
 	</div>

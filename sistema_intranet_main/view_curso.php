@@ -53,7 +53,7 @@ $SIS_join  = '
 LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = cursos_listado.idSistema
 LEFT JOIN `core_estados`  ON core_estados.idEstado   = cursos_listado.idEstado';
 $SIS_where = 'cursos_listado.idCurso ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'cursos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'cursos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /************************************************************/
 // Se consulta
@@ -113,12 +113,12 @@ $arrVideo = db_select_array (false, $SIS_query, 'cursos_listado_videoconferencia
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary">Datos Básicos</h2>
 						<p class="text-muted">
-							<strong>Nombre : </strong><?php echo $rowdata['CursoNombre']; ?><br/>
-							<strong>Semanas : </strong><?php echo $rowdata['CursoSemanas'].' semanas de duracion'; ?><br/>
-							<strong>Fecha de Inicio : </strong><?php echo Fecha_completa($rowdata['CursoF_inicio']); ?><br/>
-							<strong>Fecha de Termino : </strong><?php echo Fecha_completa($rowdata['CursoF_termino']); ?><br/>
-							<strong>Sistema Relacionado : </strong><?php echo $rowdata['CursoSistema']; ?><br/>
-							<strong>Estado : </strong><?php echo $rowdata['CursoEstado']; ?>
+							<strong>Nombre : </strong><?php echo $rowData['CursoNombre']; ?><br/>
+							<strong>Semanas : </strong><?php echo $rowData['CursoSemanas'].' semanas de duracion'; ?><br/>
+							<strong>Fecha de Inicio : </strong><?php echo Fecha_completa($rowData['CursoF_inicio']); ?><br/>
+							<strong>Fecha de Termino : </strong><?php echo Fecha_completa($rowData['CursoF_termino']); ?><br/>
+							<strong>Sistema Relacionado : </strong><?php echo $rowData['CursoSistema']; ?><br/>
+							<strong>Estado : </strong><?php echo $rowData['CursoEstado']; ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Asignaturas  Relacionadas</h2>

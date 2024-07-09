@@ -134,10 +134,10 @@ if(!empty($_GET['clone_idMaquina'])){
 	LEFT JOIN `core_sistemas_opciones` ops1   ON ops1.idOpciones        = maquinas_listado.idConfig_1
 	LEFT JOIN `core_sistemas_opciones` ops2   ON ops2.idOpciones        = maquinas_listado.idConfig_2';
 	$SIS_where = 'maquinas_listado.idMaquina = '.simpleDecode($_GET['id'], fecha_actual());
-	$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 
-	if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
+	if(isset($rowData['idConfig_1'])&&$rowData['idConfig_1']==1){
 		//Se crean las variables
 		$nmax = 10;
 		$z = '';
@@ -330,7 +330,7 @@ if(!empty($_GET['clone_idMaquina'])){
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquinas', $rowdata['Nombre'], 'Resumen'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquinas', $rowData['Nombre'], 'Resumen'); ?>
 	</div>
 	<div class="clearfix"></div>
 
@@ -351,12 +351,12 @@ if(!empty($_GET['clone_idMaquina'])){
 							<li class=""><a href="<?php echo 'maquinaria_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Descripcion</a></li>
 							<?php
 							//Uso de componentes
-							if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
+							if(isset($rowData['idConfig_1'])&&$rowData['idConfig_1']==1){ ?>
 								<li class=""><a href="<?php echo 'maquinaria_listado_componentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Componentes</a></li>
 							<?php } ?>
 							<?php
 							//uso de matriz de analisis
-							if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
+							if(isset($rowData['idConfig_2'])&&$rowData['idConfig_2']==1){ ?>
 								<li class=""><a href="<?php echo 'maquinaria_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-microchip" aria-hidden="true"></i> Matriz Analisis</a></li>
 							<?php } ?>
 
@@ -369,60 +369,60 @@ if(!empty($_GET['clone_idMaquina'])){
 				<div class="tab-pane fade active in" id="basicos">
 					<div class="wmd-panel">
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-							<?php if ($rowdata['Direccion_img']=='') { ?>
+							<?php if ($rowData['Direccion_img']=='') { ?>
 								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 							<?php }else{  ?>
-								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowData['Direccion_img']; ?>">
 							<?php } ?>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 							<p class="text-muted">
-								<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
-								<strong>Codigo : </strong><?php echo $rowdata['Codigo']; ?><br/>
-								<strong>Modelo : </strong><?php echo $rowdata['Modelo']; ?><br/>
-								<strong>Serie : </strong><?php echo $rowdata['Serie']; ?><br/>
-								<strong>Fabricante : </strong><?php echo $rowdata['Fabricante']; ?><br/>
-								<strong>Fecha incorporacion : </strong><?php echo fecha_estandar($rowdata['fincorporacion']); ?><br/>
-								<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
+								<strong>Nombre : </strong><?php echo $rowData['Nombre']; ?><br/>
+								<strong>Codigo : </strong><?php echo $rowData['Codigo']; ?><br/>
+								<strong>Modelo : </strong><?php echo $rowData['Modelo']; ?><br/>
+								<strong>Serie : </strong><?php echo $rowData['Serie']; ?><br/>
+								<strong>Fabricante : </strong><?php echo $rowData['Fabricante']; ?><br/>
+								<strong>Fecha incorporacion : </strong><?php echo fecha_estandar($rowData['fincorporacion']); ?><br/>
+								<strong>Estado : </strong><?php echo $rowData['Estado']; ?><br/>
 							</p>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Configuracion</h2>
 							<p class="text-muted">
-								<strong>Componentes : </strong><?php echo $rowdata['Componentes']; ?><br/>
-								<strong>Matriz de Analisis: </strong><?php echo $rowdata['Matriz']; ?>
+								<strong>Componentes : </strong><?php echo $rowData['Componentes']; ?><br/>
+								<strong>Matriz de Analisis: </strong><?php echo $rowData['Matriz']; ?>
 							</p>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripción</h2>
-							<p class="text-muted"><?php echo $rowdata['Descripcion']; ?></p>
+							<p class="text-muted"><?php echo $rowData['Descripcion']; ?></p>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 							<table id="items" style="margin-bottom: 20px;">
 								<tbody>
 									<?php
 									//Ficha Tecnica
-									if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
+									if(isset($rowData['FichaTecnica'])&&$rowData['FichaTecnica']!=''){
 										echo '
 											<tr class="item-row">
 												<td>Ficha Tecnica</td>
 												<td width="10">
 													<div class="btn-group" style="width: 70px;">
-														<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['FichaTecnica'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-														<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['FichaTecnica'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+														<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['FichaTecnica'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+														<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['FichaTecnica'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 													</div>
 												</td>
 											</tr>
 										';
 									}
 									//Hoja de seguridad
-									if(isset($rowdata['HDS'])&&$rowdata['HDS']!=''){
+									if(isset($rowData['HDS'])&&$rowData['HDS']!=''){
 										echo '
 											<tr class="item-row">
 												<td>Hoja de seguridad</td>
 												<td width="10">
 													<div class="btn-group" style="width: 70px;">
-														<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['HDS'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-														<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['HDS'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+														<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['HDS'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+														<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['HDS'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 													</div>
 												</td>
 											</tr>
@@ -437,7 +437,7 @@ if(!empty($_GET['clone_idMaquina'])){
 
 						<?php
 						//Uso de componentes
-						if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
+						if(isset($rowData['idConfig_1'])&&$rowData['idConfig_1']==1){ ?>
 							<table id="dataTable" class="table table-bordered table-condensed dataTable">
 								<tbody role="alert" aria-live="polite" aria-relevant="all">
 									<tr>

@@ -113,7 +113,7 @@ if(!empty($_GET['edit_itemizado'])){
 	$SIS_query = 'Nombre,Codigo, idUtilizable, idFrecuencia, Cantidad, TiempoProgramado, idTrabajo, Valor, ValorTotal';
 	$SIS_join  = '';
 	$SIS_where = 'idLevel_'.$_GET['lvl'].' = '.$_GET['edit_itemizado'];
-	$rowdata = db_select_data (false, $SIS_query, 'licitacion_listado_level_'.$_GET['lvl'], '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'licitacion_listado_level_'.$_GET['lvl'], '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -128,15 +128,15 @@ if(!empty($_GET['edit_itemizado'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){            $x1  = $Nombre;             }else{$x1  = $rowdata['Nombre'];}
-					if(isset($Codigo)){            $x2  = $Codigo;             }else{$x2  = $rowdata['Codigo'];}
-					if(isset($idUtilizable)){      $x3  = $idUtilizable;       }else{$x3  = $rowdata['idUtilizable'];}
-					if(isset($idFrecuencia)){      $x4  = $idFrecuencia;       }else{$x4  = $rowdata['idFrecuencia'];}
-					if(isset($Cantidad)){          $x5  = $Cantidad;           }else{$x5  = $rowdata['Cantidad'];}
-					if(isset($TiempoProgramado)){  $x6  = $TiempoProgramado;   }else{$x6  = $rowdata['TiempoProgramado'];}
-					if(isset($idTrabajo)){         $x7  = $idTrabajo;          }else{$x7  = $rowdata['idTrabajo'];}
-					if(isset($Valor)){             $x8  = $Valor;              }else{$x8  = $rowdata['Valor'];}
-					if(isset($ValorTotal)){        $x9  = $ValorTotal;         }else{$x9  = $rowdata['ValorTotal'];}
+					if(isset($Nombre)){            $x1  = $Nombre;             }else{$x1  = $rowData['Nombre'];}
+					if(isset($Codigo)){            $x2  = $Codigo;             }else{$x2  = $rowData['Codigo'];}
+					if(isset($idUtilizable)){      $x3  = $idUtilizable;       }else{$x3  = $rowData['idUtilizable'];}
+					if(isset($idFrecuencia)){      $x4  = $idFrecuencia;       }else{$x4  = $rowData['idFrecuencia'];}
+					if(isset($Cantidad)){          $x5  = $Cantidad;           }else{$x5  = $rowData['Cantidad'];}
+					if(isset($TiempoProgramado)){  $x6  = $TiempoProgramado;   }else{$x6  = $rowData['TiempoProgramado'];}
+					if(isset($idTrabajo)){         $x7  = $idTrabajo;          }else{$x7  = $rowData['idTrabajo'];}
+					if(isset($Valor)){             $x8  = $Valor;              }else{$x8  = $rowData['Valor'];}
+					if(isset($ValorTotal)){        $x9  = $ValorTotal;         }else{$x9  = $rowData['ValorTotal'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -429,7 +429,7 @@ if(!empty($_GET['edit_itemizado'])){
 	$SIS_query = 'Nombre,idSistema';
 	$SIS_join  = '';
 	$SIS_where = 'idLicitacion = '.$_GET['itemizado'];
-	$rowdata = db_select_data (false, $SIS_query, 'licitacion_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'licitacion_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 	/*******************************************************/
 	//Se crean las variables
 	$nmax     = 15;
@@ -693,18 +693,18 @@ if(!empty($_GET['edit_itemizado'])){
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
-		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'].'&idSistema='.$rowdata['idSistema'].'&new_itemizado=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php } ?>
+		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'].'&idSistema='.$rowData['idSistema'].'&new_itemizado=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php } ?>
 	</div>
 	<div class="clearfix"></div>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Itemizado Contrato <?php echo $rowdata['Nombre']; ?></h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Itemizado Contrato <?php echo $rowData['Nombre']; ?></h5>
 			</header>
 			<div class="table-responsive">
 				<?php //Se imprime el arbol
-				echo arrayToUL($array3d, $TipoMaq, 0, $rowlevel['level'],$new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'].'&idSistema='.$rowdata['idSistema'], $nmax);
+				echo arrayToUL($array3d, $TipoMaq, 0, $rowlevel['level'],$new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'].'&idSistema='.$rowData['idSistema'], $nmax);
 				?>
 			</div>
 		</div>
@@ -726,7 +726,7 @@ if(!empty($_GET['edit_itemizado'])){
 	core_estados.Nombre AS estado';
 	$SIS_join  = 'LEFT JOIN `core_estados` ON core_estados.idEstado = licitacion_listado.idEstado';
 	$SIS_where = 'idLicitacion = '.$_GET['status'];
-	$rowdata = db_select_data (false, $SIS_query, 'licitacion_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'licitacion_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -745,11 +745,11 @@ if(!empty($_GET['edit_itemizado'])){
 					</thead>
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<tr class="odd">
-							<td><?php echo 'Contrato '.$rowdata['Nombre'].' '.$rowdata['estado']; ?></td>
+							<td><?php echo 'Contrato '.$rowData['Nombre'].' '.$rowData['estado']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
 									<?php if ($rowlevel['level']>=2){ ?>
-									<?php if ( $rowdata['estado']=='Activo' ){ ?>
+									<?php if ( $rowData['estado']=='Activo' ){ ?>
 											<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$_GET['id'].'&status='.$_GET['status'].'&estado='.simpleEncode(2, fecha_actual()) ; ?>">OFF</a>
 											<a class="btn btn-sm btn-info locked_active" href="#">ON</a>
 									<?php } else { ?>
@@ -783,7 +783,7 @@ if(!empty($_GET['edit_itemizado'])){
 	idSistema, idAprobado, idTipoLicitacion, ValorMensual, idOpcionItem';
 	$SIS_join  = '';
 	$SIS_where = 'idLicitacion = '.$_GET['edit'];
-	$rowdata = db_select_data (false, $SIS_query, 'licitacion_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'licitacion_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -798,17 +798,17 @@ if(!empty($_GET['edit_itemizado'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Codigo)){                $x2  = $Codigo;              }else{$x2  = $rowdata['Codigo'];}
-					if(isset($Nombre)){                $x3  = $Nombre;              }else{$x3  = $rowdata['Nombre'];}
-					if(isset($FechaInicio)){           $x4  = $FechaInicio;         }else{$x4  = $rowdata['FechaInicio'];}
-					if(isset($FechaTermino)){          $x5  = $FechaTermino;        }else{$x5  = $rowdata['FechaTermino'];}
-					if(isset($idTipoLicitacion)){      $x6  = $idTipoLicitacion;    }else{$x6  = $rowdata['idTipoLicitacion'];}
-					if(isset($ValorMensual)){          $x7  = $ValorMensual;        }else{$x7  = $rowdata['ValorMensual'];}
-					if(isset($Presupuesto)){           $x8  = $Presupuesto;         }else{$x8  = $rowdata['Presupuesto'];}
-					if(isset($idBodegaProd)){          $x9  = $idBodegaProd;        }else{$x9  = $rowdata['idBodegaProd'];}
-					if(isset($idBodegaIns)){           $x10 = $idBodegaIns;         }else{$x10 = $rowdata['idBodegaIns'];}
-					if(isset($idOpcionItem)){          $x11 = $idOpcionItem;        }else{$x11 = $rowdata['idOpcionItem'];}
-					if(isset($idAprobado)){            $x12 = $idAprobado;          }else{$x12 = $rowdata['idAprobado'];}
+					if(isset($Codigo)){                $x2  = $Codigo;              }else{$x2  = $rowData['Codigo'];}
+					if(isset($Nombre)){                $x3  = $Nombre;              }else{$x3  = $rowData['Nombre'];}
+					if(isset($FechaInicio)){           $x4  = $FechaInicio;         }else{$x4  = $rowData['FechaInicio'];}
+					if(isset($FechaTermino)){          $x5  = $FechaTermino;        }else{$x5  = $rowData['FechaTermino'];}
+					if(isset($idTipoLicitacion)){      $x6  = $idTipoLicitacion;    }else{$x6  = $rowData['idTipoLicitacion'];}
+					if(isset($ValorMensual)){          $x7  = $ValorMensual;        }else{$x7  = $rowData['ValorMensual'];}
+					if(isset($Presupuesto)){           $x8  = $Presupuesto;         }else{$x8  = $rowData['Presupuesto'];}
+					if(isset($idBodegaProd)){          $x9  = $idBodegaProd;        }else{$x9  = $rowData['idBodegaProd'];}
+					if(isset($idBodegaIns)){           $x10 = $idBodegaIns;         }else{$x10 = $rowData['idBodegaIns'];}
+					if(isset($idOpcionItem)){          $x11 = $idOpcionItem;        }else{$x11 = $rowData['idOpcionItem'];}
+					if(isset($idAprobado)){            $x12 = $idAprobado;          }else{$x12 = $rowData['idAprobado'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -979,7 +979,7 @@ if(!empty($_GET['edit_itemizado'])){
 	$SIS_query = 'Nombre,idTipo';
 	$SIS_join  = '';
 	$SIS_where = 'idCliente = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'clientes_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'clientes_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -1005,7 +1005,7 @@ if(!empty($_GET['edit_itemizado'])){
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowdata['Nombre'], 'Contratos'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowData['Nombre'], 'Contratos'); ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 			<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Contrato</a><?php } ?>
 		</div>
@@ -1023,7 +1023,7 @@ if(!empty($_GET['edit_itemizado'])){
 						<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 						<ul class="dropdown-menu" role="menu">
 							<li class=""><a href="<?php echo 'clientes_contrato_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-volume-control-phone" aria-hidden="true"></i> Persona Contacto</a></li>
-							<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
+							<?php if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){ ?>
 								<li class=""><a href="<?php echo 'clientes_contrato_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
 							<?php } ?>
 							<li class=""><a href="<?php echo 'clientes_contrato_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>

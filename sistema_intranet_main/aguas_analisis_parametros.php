@@ -76,7 +76,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 $SIS_query = 'Nombre,Codigo, Rango_min, Rango_max';
 $SIS_join  = '';
 $SIS_where = 'idParametros = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'aguas_analisis_parametros', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'aguas_analisis_parametros', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -91,10 +91,10 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_analisis_parametros', $SIS_
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)){      $x1  = $Nombre;      }else{$x1  = $rowdata['Nombre'];}
-				if(isset($Codigo)){      $x2  = $Codigo;      }else{$x2  = $rowdata['Codigo'];}
-				if(isset($Rango_min)){   $x3  = $Rango_min;   }else{$x3  = Cantidades_decimales_justos($rowdata['Rango_min']);}
-				if(isset($Rango_max)){   $x4  = $Rango_max;   }else{$x4  = Cantidades_decimales_justos($rowdata['Rango_max']);}
+				if(isset($Nombre)){      $x1  = $Nombre;      }else{$x1  = $rowData['Nombre'];}
+				if(isset($Codigo)){      $x2  = $Codigo;      }else{$x2  = $rowData['Codigo'];}
+				if(isset($Rango_min)){   $x3  = $Rango_min;   }else{$x3  = Cantidades_decimales_justos($rowData['Rango_min']);}
+				if(isset($Rango_max)){   $x4  = $Rango_max;   }else{$x4  = Cantidades_decimales_justos($rowData['Rango_max']);}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

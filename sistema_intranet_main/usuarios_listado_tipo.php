@@ -50,7 +50,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,idTipoUsuario';
 $SIS_join  = '';
 $SIS_where = 'idUsuario ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /********************************************************************************/
 /********************************************************************************/
@@ -181,7 +181,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Editar Tipo de usuario'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowData['Nombre'], 'Editar Tipo de usuario'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -227,7 +227,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idTipoUsuario)){   $x1  = $idTipoUsuario;  }else{$x1  = $rowdata['idTipoUsuario'];}
+					if(isset($idTipoUsuario)){   $x1  = $idTipoUsuario;  }else{$x1  = $rowData['idTipoUsuario'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

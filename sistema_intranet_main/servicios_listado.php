@@ -68,12 +68,12 @@ if(!empty($_GET['id'])){
 	core_estados.Nombre AS Estado';
 	$SIS_join  = 'LEFT JOIN `core_estados`   ON core_estados.idEstado = servicios_listado.idEstado';
 	$SIS_where = 'servicios_listado.idServicio = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'servicios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'servicios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Servicios', $rowdata['Nombre'], 'Resumen'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Servicios', $rowData['Nombre'], 'Resumen'); ?>
 	</div>
 	<div class="clearfix"></div>
 
@@ -97,8 +97,8 @@ if(!empty($_GET['id'])){
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Producto</h2>
 							<p class="text-muted">
-								<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
-								<strong>Estado : </strong><?php echo $rowdata['Estado']; ?>
+								<strong>Nombre : </strong><?php echo $rowData['Nombre']; ?><br/>
+								<strong>Estado : </strong><?php echo $rowData['Estado']; ?>
 							</p>
 
 						</div>

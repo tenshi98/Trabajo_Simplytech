@@ -76,7 +76,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'idTrabajador,Creacion_fecha,Monto,Observacion,idSistema,idBonoTemporal';
 	$SIS_join  = '';
 	$SIS_where = 'idBonoTemp = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'trabajadores_bonos_temporales', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'trabajadores_bonos_temporales', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 	/*******************************************************/
 	//Verifico el tipo de usuario que esta ingresando
 	$w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
@@ -93,11 +93,11 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idTrabajador)){    $x1  = $idTrabajador;    }else{$x1  = $rowdata['idTrabajador'];}
-					if(isset($Creacion_fecha)){  $x2  = $Creacion_fecha;  }else{$x2  = $rowdata['Creacion_fecha'];}
-					if(isset($idBonoTemporal)){  $x3  = $idBonoTemporal;  }else{$x3  = $rowdata['idBonoTemporal'];}
-					if(isset($Monto)){           $x4  = $Monto;           }else{$x4  = $rowdata['Monto'];}
-					if(isset($Observacion)){     $x5  = $Observacion;     }else{$x5  = $rowdata['Observacion'];}
+					if(isset($idTrabajador)){    $x1  = $idTrabajador;    }else{$x1  = $rowData['idTrabajador'];}
+					if(isset($Creacion_fecha)){  $x2  = $Creacion_fecha;  }else{$x2  = $rowData['Creacion_fecha'];}
+					if(isset($idBonoTemporal)){  $x3  = $idBonoTemporal;  }else{$x3  = $rowData['idBonoTemporal'];}
+					if(isset($Monto)){           $x4  = $Monto;           }else{$x4  = $rowData['Monto'];}
+					if(isset($Observacion)){     $x5  = $Observacion;     }else{$x5  = $rowData['Observacion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

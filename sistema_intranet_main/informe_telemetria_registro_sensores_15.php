@@ -76,7 +76,7 @@ if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
-$rowdata = db_select_data (false, 'idTracking, f_inicio, f_termino, h_inicio, h_termino, idTelemetria, idGrupo, idGrafico, idEstado, Observacion', 'telemetria_tracking', '', 'idTracking ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, 'idTracking, f_inicio, f_termino, h_inicio, h_termino, idTelemetria, idGrupo, idGrafico, idEstado, Observacion', 'telemetria_tracking', '', 'idTracking ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 $z = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.id_Geo='2'";	 
 //Verifico el tipo de usuario que esta ingresando
@@ -101,14 +101,14 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = $rowdata['f_inicio'];}
-				if(isset($h_inicio)){      $x2  = $h_inicio;     }else{$x2  = $rowdata['h_inicio'];}
-				if(isset($f_termino)){     $x3  = $f_termino;    }else{$x3  = $rowdata['f_termino'];}
-				if(isset($h_termino)){     $x4  = $h_termino;    }else{$x4  = $rowdata['h_termino'];}
-				if(isset($idTelemetria)){  $x5  = $idTelemetria; }else{$x5  = $rowdata['idTelemetria'];}
-				if(isset($idGrafico)){     $x8  = $idGrafico;    }else{$x8  = $rowdata['idGrafico'];}
-				if(isset($idEstado)){      $x9  = $idEstado;     }else{$x9  = $rowdata['idEstado'];}
-				if(isset($Observacion)){   $x10 = $Observacion;  }else{$x10 = $rowdata['Observacion'];}
+				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = $rowData['f_inicio'];}
+				if(isset($h_inicio)){      $x2  = $h_inicio;     }else{$x2  = $rowData['h_inicio'];}
+				if(isset($f_termino)){     $x3  = $f_termino;    }else{$x3  = $rowData['f_termino'];}
+				if(isset($h_termino)){     $x4  = $h_termino;    }else{$x4  = $rowData['h_termino'];}
+				if(isset($idTelemetria)){  $x5  = $idTelemetria; }else{$x5  = $rowData['idTelemetria'];}
+				if(isset($idGrafico)){     $x8  = $idGrafico;    }else{$x8  = $rowData['idGrafico'];}
+				if(isset($idEstado)){      $x9  = $idEstado;     }else{$x9  = $rowData['idEstado'];}
+				if(isset($Observacion)){   $x10 = $Observacion;  }else{$x10 = $rowData['Observacion'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

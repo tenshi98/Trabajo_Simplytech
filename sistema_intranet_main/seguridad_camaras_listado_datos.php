@@ -53,12 +53,12 @@ $SIS_query = 'Nombre,idSistema, idPais, idCiudad, idComuna, Direccion, N_Camaras
 Config_IP, Config_Puerto, Config_Web';
 $SIS_join  = '';
 $SIS_where = 'idCamara = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'seguridad_camaras_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'seguridad_camaras_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Grupo Camaras', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Grupo Camaras', $rowData['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -78,19 +78,19 @@ $rowdata = db_select_data (false, $SIS_query, 'seguridad_camaras_listado', $SIS_
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){              $x1  = $Nombre;               }else{$x1  = $rowdata['Nombre'];}
-					if(isset($N_Camaras)){           $x2  = $N_Camaras;            }else{$x2  = $rowdata['N_Camaras'];}
-					if(isset($idPais)){              $x3  = $idPais;               }else{$x3  = $rowdata['idPais'];}
-					if(isset($idCiudad)){            $x4  = $idCiudad;             }else{$x4  = $rowdata['idCiudad'];}
-					if(isset($idComuna)){            $x5  = $idComuna;             }else{$x5  = $rowdata['idComuna'];}
-					if(isset($Direccion)){           $x6  = $Direccion;            }else{$x6  = $rowdata['Direccion'];}
-					if(isset($idSubconfiguracion)){  $x7  = $idSubconfiguracion;   }else{$x7  = $rowdata['idSubconfiguracion'];}
-					if(isset($idTipoCamara)){        $x8  = $idTipoCamara;         }else{$x8  = $rowdata['idTipoCamara'];}
-					if(isset($Config_usuario)){      $x9  = $Config_usuario;       }else{$x9  = $rowdata['Config_usuario'];}
-					if(isset($Config_Password)){     $x10 = $Config_Password;      }else{$x10 = $rowdata['Config_Password'];}
-					if(isset($Config_IP)){           $x11 = $Config_IP;            }else{$x11 = $rowdata['Config_IP'];}
-					if(isset($Config_Puerto)){       $x12 = $Config_Puerto;        }else{$x12 = $rowdata['Config_Puerto'];}
-					if(isset($Config_Web)){          $x13 = $Config_Web;           }else{$x13 = $rowdata['Config_Web'];}
+					if(isset($Nombre)){              $x1  = $Nombre;               }else{$x1  = $rowData['Nombre'];}
+					if(isset($N_Camaras)){           $x2  = $N_Camaras;            }else{$x2  = $rowData['N_Camaras'];}
+					if(isset($idPais)){              $x3  = $idPais;               }else{$x3  = $rowData['idPais'];}
+					if(isset($idCiudad)){            $x4  = $idCiudad;             }else{$x4  = $rowData['idCiudad'];}
+					if(isset($idComuna)){            $x5  = $idComuna;             }else{$x5  = $rowData['idComuna'];}
+					if(isset($Direccion)){           $x6  = $Direccion;            }else{$x6  = $rowData['Direccion'];}
+					if(isset($idSubconfiguracion)){  $x7  = $idSubconfiguracion;   }else{$x7  = $rowData['idSubconfiguracion'];}
+					if(isset($idTipoCamara)){        $x8  = $idTipoCamara;         }else{$x8  = $rowData['idTipoCamara'];}
+					if(isset($Config_usuario)){      $x9  = $Config_usuario;       }else{$x9  = $rowData['Config_usuario'];}
+					if(isset($Config_Password)){     $x10 = $Config_Password;      }else{$x10 = $rowData['Config_Password'];}
+					if(isset($Config_IP)){           $x11 = $Config_IP;            }else{$x11 = $rowData['Config_IP'];}
+					if(isset($Config_Puerto)){       $x12 = $Config_Puerto;        }else{$x12 = $rowData['Config_Puerto'];}
+					if(isset($Config_Web)){          $x13 = $Config_Web;           }else{$x13 = $rowData['Config_Web'];}
 					//IP en caso de no existir
 					if(!isset($x11) OR $x11=='') { $x11 = obtenerIpCliente();}
 

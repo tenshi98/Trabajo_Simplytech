@@ -51,12 +51,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Fono1,Fono2, Fax, email, Web, Nombre,idCompartir, idTipo';
 $SIS_join  = '';
 $SIS_where = 'idCliente = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'seg_vecinal_clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Vecino', $rowdata['Nombre'], 'Editar Datos de contacto'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Vecino', $rowData['Nombre'], 'Editar Datos de contacto'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -71,7 +71,7 @@ $rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_clientes_listado', $S
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'seg_vecinal_clientes_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-volume-control-phone" aria-hidden="true"></i> Persona Contacto</a></li>
-						<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
+						<?php if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){ ?>
 							<li class=""><a href="<?php echo 'seg_vecinal_clientes_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'seg_vecinal_clientes_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
@@ -88,12 +88,12 @@ $rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_clientes_listado', $S
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idCompartir)){      $x1 = $idCompartir;       }else{$x1 = $rowdata['idCompartir'];}
-					if(isset($Fono1)){            $x2 = $Fono1;             }else{$x2 = $rowdata['Fono1'];}
-					if(isset($Fono2)){            $x3 = $Fono2;             }else{$x3 = $rowdata['Fono2'];}
-					if(isset($Fax)){              $x4 = $Fax;               }else{$x4 = $rowdata['Fax'];}
-					if(isset($email)){            $x5 = $email;             }else{$x5 = $rowdata['email'];}
-					if(isset($Web)){              $x6 = $Web;               }else{$x6 = $rowdata['Web'];}
+					if(isset($idCompartir)){      $x1 = $idCompartir;       }else{$x1 = $rowData['idCompartir'];}
+					if(isset($Fono1)){            $x2 = $Fono1;             }else{$x2 = $rowData['Fono1'];}
+					if(isset($Fono2)){            $x3 = $Fono2;             }else{$x3 = $rowData['Fono2'];}
+					if(isset($Fax)){              $x4 = $Fax;               }else{$x4 = $rowData['Fax'];}
+					if(isset($email)){            $x5 = $email;             }else{$x5 = $rowData['email'];}
+					if(isset($Web)){              $x6 = $Web;               }else{$x6 = $rowData['Web'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

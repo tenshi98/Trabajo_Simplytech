@@ -32,7 +32,7 @@ require_once 'core/Web.Header.Main.php';
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['submit_filter'])){
 //Variables
-$año_pasado = ano_actual()-1;
+$ano_pasado = ano_actual()-1;
 
 /****************************************************/
 //Nombre de la bodega
@@ -53,26 +53,15 @@ if(!$resultado){
 					
 }
 $rowBodega = mysqli_fetch_assoc ($resultado);
-/****************************************************/
+/*******************************************************/
+// consulto los datos
+$SIS_query = 'idCategoria, Nombre';
+$SIS_join  = '';
+$SIS_where = '';
+$SIS_order = 'Nombre ASC';
 $arrCategoria = array();
-$query = "SELECT idCategoria, Nombre
-FROM `sistema_productos_categorias`";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrCategoria,$row );
-}
+$arrCategoria = db_select_array (false, $SIS_query, 'sistema_productos_categorias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCategoria');
+
 /****************************************************/
 $arrBodega = array();
 $query = "SELECT idBodega, Nombre
@@ -94,9 +83,9 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrBodega,$row );
 }
 // Se trae un listado con los valores de las existencias actuales	
-$año_pasado = ano_actual()-1;
+$ano_pasado = ano_actual()-1;
 $z = "WHERE bodegas_productos_facturacion_existencias.idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."'";
-$z.= " AND bodegas_productos_facturacion_existencias.Creacion_ano >= ".$año_pasado;
+$z.= " AND bodegas_productos_facturacion_existencias.Creacion_ano >= ".$ano_pasado;
 
 $z.= " AND bodegas_productos_facturacion_existencias.idTipo = 6";
 $z.= " AND bodegas_productos_facturacion_existencias.idBodega = ".$_GET['idBodegaOrigen'];
@@ -179,7 +168,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 /****************************************************************************************/
 // Se trae un listado con los valores de las existencias actuales	
 $z = "WHERE bodegas_productos_facturacion_existencias.idTipo = 6";
-$z.= " AND bodegas_productos_facturacion_existencias.Creacion_ano >= ".$año_pasado;
+$z.= " AND bodegas_productos_facturacion_existencias.Creacion_ano >= ".$ano_pasado;
 $z.= " AND bodegas_productos_facturacion.idBodegaOrigen = ".$_GET['idBodegaOrigen'];
 $z.= " AND bodegas_productos_facturacion.idBodegaDestino != ".$_GET['idBodegaOrigen'];
 //Verificar si es por concepto de ingreso o egreso de bodega

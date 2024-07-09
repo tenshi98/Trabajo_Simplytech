@@ -51,12 +51,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,idBanco, NCuentaBanco, MailBanco';
 $SIS_join  = '';
 $SIS_where = 'idTransporte = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'transportes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'transportes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Transportista', $rowdata['Nombre'], 'Editar Datos Bancarios'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Transportista', $rowData['Nombre'], 'Editar Datos Bancarios'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -87,9 +87,9 @@ $rowdata = db_select_data (false, $SIS_query, 'transportes_listado', $SIS_join, 
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idBanco)){        $x1  = $idBanco;       }else{$x1  = $rowdata['idBanco'];}
-					if(isset($NCuentaBanco)){   $x2  = $NCuentaBanco;  }else{$x2  = $rowdata['NCuentaBanco'];}
-					if(isset($MailBanco)){      $x3  = $MailBanco;     }else{$x3  = $rowdata['MailBanco'];}
+					if(isset($idBanco)){        $x1  = $idBanco;       }else{$x1  = $rowData['idBanco'];}
+					if(isset($NCuentaBanco)){   $x2  = $NCuentaBanco;  }else{$x2  = $rowData['NCuentaBanco'];}
+					if(isset($MailBanco)){      $x3  = $MailBanco;     }else{$x3  = $rowData['MailBanco'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

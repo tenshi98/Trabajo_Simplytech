@@ -84,7 +84,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 //Se crean las variables
 $nmax = 5;
@@ -210,7 +210,7 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ubicación', $rowdata['Nombre'], 'Resumen'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ubicación', $rowData['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -238,11 +238,11 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
 							<tr class="odd">
 								<td>Nombre</td>
-								<td><?php echo $rowdata['Nombre']; ?></td>
+								<td><?php echo $rowData['Nombre']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Estado</td>
-								<td><?php echo $rowdata['Estado']; ?></td>
+								<td><?php echo $rowData['Estado']; ?></td>
 							</tr>
 							<tr>
 								<td colspan="2" style="background-color: #ccc;">Itemizado</td>

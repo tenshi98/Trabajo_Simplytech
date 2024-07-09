@@ -106,7 +106,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 $SIS_query = 'Nombre';
 $SIS_join  = '';
 $SIS_where = 'idCurso = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'alumnos_cursos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'alumnos_cursos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /*******************************************************/
 // consulto los datos
@@ -122,7 +122,7 @@ $arrCursos = db_select_array (false, $SIS_query, 'alumnos_cursos_elearning', $SI
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Asignatura', $rowdata['Nombre'], 'Editar Elearning Asignados'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Asignatura', $rowData['Nombre'], 'Editar Elearning Asignados'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Elearning</a><?php } ?>
 	</div>

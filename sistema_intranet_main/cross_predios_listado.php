@@ -126,7 +126,7 @@ if(!empty($_GET['new_plantilla'])){
 	LEFT JOIN `core_ubicacion_ciudad`   ON core_ubicacion_ciudad.idCiudad   = cross_predios_listado.idCiudad
 	LEFT JOIN `core_ubicacion_comunas`  ON core_ubicacion_comunas.idComuna  = cross_predios_listado.idComuna';
 	$SIS_where = 'cross_predios_listado.idPredio ='.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'cross_predios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'cross_predios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	//Se traen las zonas
 	$SIS_query = '
@@ -154,9 +154,9 @@ if(!empty($_GET['new_plantilla'])){
 	if(isset($arrZonas[0]['Ciudad'])&&$arrZonas[0]['Ciudad']!=''){      $Ubicacion.=', '.$arrZonas[0]['Ciudad'];}
 	//Si los puntos no existen
 	if(isset($Ubicacion)&&$Ubicacion==''){
-		if(isset($rowdata['Direccion'])&&$rowdata['Direccion']!=''){$Ubicacion.=' '.$rowdata['Direccion'];}
-		if(isset($rowdata['Comuna'])&&$rowdata['Comuna']!=''){      $Ubicacion.=', '.$rowdata['Comuna'];}
-		if(isset($rowdata['Ciudad'])&&$rowdata['Ciudad']!=''){      $Ubicacion.=', '.$rowdata['Ciudad'];}
+		if(isset($rowData['Direccion'])&&$rowData['Direccion']!=''){$Ubicacion.=' '.$rowData['Direccion'];}
+		if(isset($rowData['Comuna'])&&$rowData['Comuna']!=''){      $Ubicacion.=', '.$rowData['Comuna'];}
+		if(isset($rowData['Ciudad'])&&$rowData['Ciudad']!=''){      $Ubicacion.=', '.$rowData['Ciudad'];}
 
 	}
 
@@ -173,7 +173,7 @@ if(!empty($_GET['new_plantilla'])){
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Predio', $rowdata['Nombre'], 'Resumen'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Predio', $rowData['Nombre'], 'Resumen'); ?>
 	</div>
 	<div class="clearfix"></div>
 

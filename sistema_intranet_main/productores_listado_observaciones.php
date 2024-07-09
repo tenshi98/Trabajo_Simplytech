@@ -88,7 +88,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado); 
+$rowData = mysqli_fetch_assoc ($resultado); 
  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -102,7 +102,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Observacion)){     $x1  = $Observacion;    }else{$x1  = $rowdata['Observacion'];}
+				if(isset($Observacion)){     $x1  = $Observacion;    }else{$x1  = $rowData['Observacion'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -185,7 +185,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 ?>
 
@@ -197,15 +197,15 @@ $rowdata = mysqli_fetch_assoc ($resultado);
         <div class="body">
             <h2 class="text-primary">Datos Básicos</h2>
             <p class="text-muted">
-				<strong>Productor : </strong><?php echo $rowdata['nombre_cliente']; ?><br/>
-				<strong>Usuario : </strong><?php echo $rowdata['nombre_usuario']; ?><br/>
-				<strong>Fecha : </strong><?php echo Fecha_completa_alt($rowdata['Fecha']); ?>
+				<strong>Productor : </strong><?php echo $rowData['nombre_cliente']; ?><br/>
+				<strong>Usuario : </strong><?php echo $rowData['nombre_usuario']; ?><br/>
+				<strong>Fecha : </strong><?php echo Fecha_completa_alt($rowData['Fecha']); ?>
             </p>
 
             <h2 class="text-primary">Observacion</h2>
             <p class="text-muted word_break">
 				<div class="text-muted well well-sm no-shadow">
-					<?php if(isset($rowdata['Observacion'])&&$rowdata['Observacion']!=''){echo $rowdata['Observacion'];}else{echo 'Sin Observaciones';} ?>
+					<?php if(isset($rowData['Observacion'])&&$rowData['Observacion']!=''){echo $rowData['Observacion'];}else{echo 'Sin Observaciones';} ?>
 					<div class="clearfix"></div>
 				</div>
 			</p>
@@ -238,7 +238,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 // consulto los datos
 $arrObservaciones = array();
@@ -275,7 +275,7 @@ array_push( $arrObservaciones,$row );
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productor', $rowdata['Nombre'], 'Observaciones'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productor', $rowData['Nombre'], 'Observaciones'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Observacion</a><?php } ?>
 	</div>

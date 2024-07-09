@@ -87,7 +87,7 @@ LEFT JOIN `telemetria_listado`                             ON telemetria_listado
 LEFT JOIN `vehiculos_listado`                              ON vehiculos_listado.idVehiculo                               = cross_solicitud_aplicacion_listado_tractores.idVehiculo
 LEFT JOIN `telemetria_listado_sensores_nombre`             ON telemetria_listado_sensores_nombre.idTelemetria            = cross_solicitud_aplicacion_listado_tractores.idTelemetria';
 $SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idTractores ='.$X_Puntero;
-$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /***************************************/
 $subquery = '';
@@ -97,16 +97,16 @@ $subquery .= ',GeoLatitud';
 $subquery .= ',GeoLongitud';
 $subquery .= ',GeoVelocidad';
 //se recorre deacuerdo a la cantidad de sensores
-for ($i = 1; $i <= $row_data['cantSensores']; $i++) {
+for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
 	$subquery .= ',Sensor_'.$i;
 }
 
 $arrMediciones = array();
-$arrMediciones = db_select_array (false, 'idTabla'.$subquery, 'telemetria_listado_tablarelacionada_'.$row_data['idTelemetria'], '', 'idZona = '.$row_data['idZona'].' AND idSolicitud = '.$row_data['idSolicitud'], 'FechaSistema ASC, HoraSistema ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMediciones');
+$arrMediciones = db_select_array (false, 'idTabla'.$subquery, 'telemetria_listado_tablarelacionada_'.$rowData['idTelemetria'], '', 'idZona = '.$rowData['idZona'].' AND idSolicitud = '.$rowData['idSolicitud'], 'FechaSistema ASC, HoraSistema ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMediciones');
 
 //Se traen las rutas
 $arrPuntos = array();
-$arrPuntos = db_select_array (false, 'idUbicaciones, Latitud, Longitud', 'cross_predios_listado_zonas_ubicaciones', '', 'idZona = '.$row_data['idZona'], 'idUbicaciones ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPuntos');
+$arrPuntos = db_select_array (false, 'idUbicaciones, Latitud, Longitud', 'cross_predios_listado_zonas_ubicaciones', '', 'idZona = '.$rowData['idZona'], 'idUbicaciones ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPuntos');
 
 //datos para el grafico
 $Temp_1   = '';
@@ -148,8 +148,8 @@ document.getElementById("loading").style.display = "none";
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
-				<i class="fa fa-globe" aria-hidden="true"></i> Detalles Solicitud de Aplicacion N°<?php echo n_doc($row_data['NSolicitud'], 7); ?>.
-				<small class="pull-right">Fecha Termino: <?php echo Fecha_estandar($row_data['f_termino']); ?></small>
+				<i class="fa fa-globe" aria-hidden="true"></i> Detalles Solicitud de Aplicacion N°<?php echo n_doc($rowData['NSolicitud'], 7); ?>.
+				<small class="pull-right">Fecha Termino: <?php echo Fecha_estandar($rowData['f_termino']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -158,29 +158,29 @@ document.getElementById("loading").style.display = "none";
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			<strong>Identificación</strong>
 			<address>
-				Predio: <?php echo $row_data['PredioNombre']; ?><br/>
-				Especie: <?php echo $row_data['VariedadCat']; ?><br/>
-				Variedad: <?php echo $row_data['VariedadNombre']; ?><br/>
-				Cuartel: <?php echo $row_data['CuartelNombre']; ?><br/>
-				Tractor: <?php echo $row_data['TractorNombre']; ?><br/>
-				Nebulizador: <?php echo $row_data['NebNombre']; ?><br/>
+				Predio: <?php echo $rowData['PredioNombre']; ?><br/>
+				Especie: <?php echo $rowData['VariedadCat']; ?><br/>
+				Variedad: <?php echo $rowData['VariedadNombre']; ?><br/>
+				Cuartel: <?php echo $rowData['CuartelNombre']; ?><br/>
+				Tractor: <?php echo $rowData['TractorNombre']; ?><br/>
+				Nebulizador: <?php echo $rowData['NebNombre']; ?><br/>
 			</address>
 		</div>
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			<strong>Velocidad Tractores (Km/hr)</strong>
 			<address>
-				Minima: <?php echo Cantidades($row_data['GeoVelocidadMin'], 2); ?><br/>
-				Maxima: <?php echo Cantidades($row_data['GeoVelocidadMax'], 2); ?><br/>
-				Promedio: <?php echo Cantidades($row_data['GeoVelocidadProm'], 2); ?><br/>
-				Programada: <?php echo Cantidades($row_data['VelTractor'], 2); ?><br/>
+				Minima: <?php echo Cantidades($rowData['GeoVelocidadMin'], 2); ?><br/>
+				Maxima: <?php echo Cantidades($rowData['GeoVelocidadMax'], 2); ?><br/>
+				Promedio: <?php echo Cantidades($rowData['GeoVelocidadProm'], 2); ?><br/>
+				Programada: <?php echo Cantidades($rowData['VelTractor'], 2); ?><br/>
 			</address>
 		</div>
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			<strong>Distancia Recorrida(KM)</strong>
 			<address>
-				Recorrida: <?php echo Cantidades($row_data['GeoDistance'], 2); ?><br/>
-				Estimada: <?php echo Cantidades(($row_data['CuartelDistanciaPlant']*$row_data['CuartelCantPlantas'])/1000, 2); ?><br/>
-				Faltante: <?php echo Cantidades((($row_data['CuartelDistanciaPlant']*$row_data['CuartelCantPlantas'])/1000) - $row_data['GeoDistance'], 2); ?><br/>
+				Recorrida: <?php echo Cantidades($rowData['GeoDistance'], 2); ?><br/>
+				Estimada: <?php echo Cantidades(($rowData['CuartelDistanciaPlant']*$rowData['CuartelCantPlantas'])/1000, 2); ?><br/>
+				Faltante: <?php echo Cantidades((($rowData['CuartelDistanciaPlant']*$rowData['CuartelCantPlantas'])/1000) - $rowData['GeoDistance'], 2); ?><br/>
 		</div>
 
 	</div>
@@ -197,12 +197,12 @@ document.getElementById("loading").style.display = "none";
 					</tr>
 				</thead>
 				<tbody>
-					<?php for ($i = 1; $i <= $row_data['cantSensores']; $i++) {  ?>
+					<?php for ($i = 1; $i <= $rowData['cantSensores']; $i++) {  ?>
 						<tr>
-							<td><?php echo $row_data['Sensor_'.$i.'_Nombre']; ?></td>
-							<td><?php echo Cantidades($row_data['Sensor_'.$i.'_Min'], 1); ?></td>
-							<td><?php echo Cantidades($row_data['Sensor_'.$i.'_Max'], 1); ?></td>
-							<td><?php echo Cantidades($row_data['Sensor_'.$i.'_Prom'], 1); ?></td>
+							<td><?php echo $rowData['Sensor_'.$i.'_Nombre']; ?></td>
+							<td><?php echo Cantidades($rowData['Sensor_'.$i.'_Min'], 1); ?></td>
+							<td><?php echo Cantidades($rowData['Sensor_'.$i.'_Max'], 1); ?></td>
+							<td><?php echo Cantidades($rowData['Sensor_'.$i.'_Prom'], 1); ?></td>
 						</tr>
 					<?php } ?>
 				</tbody>
@@ -288,7 +288,7 @@ document.getElementById("loading").style.display = "none";
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
 	<?php
 	$Alert_Text = 'Ver mapa';
-	$Alert_Text.= '<a href="view_solicitud_aplicacion_finalizada_view_mapa.php?idTelemetria='.simpleEncode($row_data['idTelemetria'], fecha_actual()).'&idSolicitud='.simpleEncode($row_data['idSolicitud'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" class="btn btn-primary pull-right margin_form_btn"><i class="fa fa-map-o" aria-hidden="true"></i> Ver mapas</a>';
+	$Alert_Text.= '<a href="view_solicitud_aplicacion_finalizada_view_mapa.php?idTelemetria='.simpleEncode($rowData['idTelemetria'], fecha_actual()).'&idSolicitud='.simpleEncode($rowData['idSolicitud'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" class="btn btn-primary pull-right margin_form_btn"><i class="fa fa-map-o" aria-hidden="true"></i> Ver mapas</a>';
 	alert_post_data(4,2,2,0, $Alert_Text);
 	?>
 </div>

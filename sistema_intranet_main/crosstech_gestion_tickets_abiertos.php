@@ -65,7 +65,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'idEstado, DescripcionCierre, DescripcionCancelacion';
 	$SIS_join  = '';
 	$SIS_where = 'idTicket = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'crosstech_gestion_tickets', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'crosstech_gestion_tickets', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -80,9 +80,9 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idEstado)){                $x1  = $idEstado;                }else{$x1  = $rowdata['idEstado'];}
-					if(isset($DescripcionCierre)){       $x2  = $DescripcionCierre;       }else{$x2  = $rowdata['DescripcionCierre'];}
-					if(isset($DescripcionCancelacion)){  $x3  = $DescripcionCancelacion;  }else{$x3  = $rowdata['DescripcionCancelacion'];}
+					if(isset($idEstado)){                $x1  = $idEstado;                }else{$x1  = $rowData['idEstado'];}
+					if(isset($DescripcionCierre)){       $x2  = $DescripcionCierre;       }else{$x2  = $rowData['DescripcionCierre'];}
+					if(isset($DescripcionCancelacion)){  $x3  = $DescripcionCancelacion;  }else{$x3  = $rowData['DescripcionCancelacion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

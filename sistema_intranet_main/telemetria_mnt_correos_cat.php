@@ -72,7 +72,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 $SIS_query = 'Nombre,idEstado';
 $SIS_join  = '';
 $SIS_where = 'idCorreosCat = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_mnt_correos_cat', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'telemetria_mnt_correos_cat', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -87,8 +87,8 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_mnt_correos_cat', $SIS
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)){      $x1 = $Nombre;     }else{$x1 = $rowdata['Nombre'];}
-				if(isset($idEstado)){    $x2 = $idEstado;   }else{$x2 = $rowdata['idEstado'];}
+				if(isset($Nombre)){      $x1 = $Nombre;     }else{$x1 = $rowData['Nombre'];}
+				if(isset($idEstado)){    $x2 = $idEstado;   }else{$x2 = $rowData['idEstado'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

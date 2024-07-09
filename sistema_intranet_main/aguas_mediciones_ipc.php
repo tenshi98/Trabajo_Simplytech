@@ -81,7 +81,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 $SIS_query = 'Ano, idMes, UTM, UTA, ValorPuntos, Mensual, Acumulado, DoceMeses';
 $SIS_join  = '';
 $SIS_where = 'idIPC = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_ipc', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'aguas_mediciones_ipc', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
@@ -96,14 +96,14 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_ipc', $SIS_join,
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Ano)){          $x1  = $Ano;            }else{$x1  = $rowdata['Ano'];}
-				if(isset($idMes)){        $x2  = $idMes;          }else{$x2  = $rowdata['idMes'];}
-				if(isset($UTM)){          $x3  = $UTM;            }else{$x3  = Cantidades_decimales_justos($rowdata['UTM']);}
-				if(isset($UTA)){          $x4  = $UTA;            }else{$x4  = Cantidades_decimales_justos($rowdata['UTA']);}
-				if(isset($ValorPuntos)){  $x5  = $ValorPuntos;    }else{$x5  = Cantidades_decimales_justos($rowdata['ValorPuntos']);}
-				if(isset($Mensual)){      $x6  = $Mensual;        }else{$x6  = Cantidades_decimales_justos($rowdata['Mensual']);}
-				if(isset($Acumulado)){    $x7  = $Acumulado;      }else{$x7  = Cantidades_decimales_justos($rowdata['Acumulado']);}
-				if(isset($DoceMeses)){    $x8  = $DoceMeses;      }else{$x8  = Cantidades_decimales_justos($rowdata['DoceMeses']);}
+				if(isset($Ano)){          $x1  = $Ano;            }else{$x1  = $rowData['Ano'];}
+				if(isset($idMes)){        $x2  = $idMes;          }else{$x2  = $rowData['idMes'];}
+				if(isset($UTM)){          $x3  = $UTM;            }else{$x3  = Cantidades_decimales_justos($rowData['UTM']);}
+				if(isset($UTA)){          $x4  = $UTA;            }else{$x4  = Cantidades_decimales_justos($rowData['UTA']);}
+				if(isset($ValorPuntos)){  $x5  = $ValorPuntos;    }else{$x5  = Cantidades_decimales_justos($rowData['ValorPuntos']);}
+				if(isset($Mensual)){      $x6  = $Mensual;        }else{$x6  = Cantidades_decimales_justos($rowData['Mensual']);}
+				if(isset($Acumulado)){    $x7  = $Acumulado;      }else{$x7  = Cantidades_decimales_justos($rowData['Acumulado']);}
+				if(isset($DoceMeses)){    $x8  = $DoceMeses;      }else{$x8  = Cantidades_decimales_justos($rowData['DoceMeses']);}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

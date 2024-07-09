@@ -63,7 +63,7 @@ if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // Se tre el nombre
-$rowdata = db_select_data (false, 'Nombre,NombreLargo', 'telemetria_listado_unidad_medida', '', 'idUniMed='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowUnimed');
+$rowData = db_select_data (false, 'Nombre,NombreLargo', 'telemetria_listado_unidad_medida', '', 'idUniMed='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowUnimed');
 
 ?>
 
@@ -78,8 +78,8 @@ $rowdata = db_select_data (false, 'Nombre,NombreLargo', 'telemetria_listado_unid
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)){       $x1  = $Nombre;      }else{$x1  = $rowdata['Nombre'];}
-				if(isset($NombreLargo)){  $x2  = $NombreLargo; }else{$x2  = $rowdata['NombreLargo'];}
+				if(isset($Nombre)){       $x1  = $Nombre;      }else{$x1  = $rowData['Nombre'];}
+				if(isset($NombreLargo)){  $x2  = $NombreLargo; }else{$x2  = $rowData['NombreLargo'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();

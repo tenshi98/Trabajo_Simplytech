@@ -75,7 +75,7 @@ if(!empty($_GET['edit'])){
 	$SIS_query = 'idUsuario, Nombre,HoraInicio, HoraTermino, idDia_1, idDia_2, idDia_3, idDia_4, idDia_5, idDia_6, idDia_7';
 	$SIS_join  = '';
 	$SIS_where = 'idVideoConferencia = '.$_GET['edit'];
-	$rowdata = db_select_data (false, $SIS_query, 'cursos_listado_videoconferencia', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'cursos_listado_videoconferencia', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	//Verifico el tipo de usuario que esta ingresando
 	$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
@@ -97,17 +97,17 @@ if(!empty($_GET['edit'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){        $x1  = $Nombre;        }else{$x1  = $rowdata['Nombre'];}
-					if(isset($idUsuario)){     $x2  = $idUsuario;     }else{$x2  = $rowdata['idUsuario'];}
-					if(isset($HoraInicio)){    $x3  = $HoraInicio;    }else{$x3  = $rowdata['HoraInicio'];}
-					if(isset($HoraTermino)){   $x4  = $HoraTermino;   }else{$x4  = $rowdata['HoraTermino'];}
-					if(isset($idDia_1)){       $x5  = $idDia_1;       }else{$x5  = $rowdata['idDia_1'];}
-					if(isset($idDia_2)){       $x5 .= ','.$idDia_2;   }else{$x5 .= ','.$rowdata['idDia_2'];}
-					if(isset($idDia_3)){       $x5 .= ','.$idDia_3;   }else{$x5 .= ','.$rowdata['idDia_3'];}
-					if(isset($idDia_4)){       $x5 .= ','.$idDia_4;   }else{$x5 .= ','.$rowdata['idDia_4'];}
-					if(isset($idDia_5)){       $x5 .= ','.$idDia_5;   }else{$x5 .= ','.$rowdata['idDia_5'];}
-					if(isset($idDia_6)){       $x5 .= ','.$idDia_6;   }else{$x5 .= ','.$rowdata['idDia_6'];}
-					if(isset($idDia_7)){       $x5 .= ','.$idDia_7;   }else{$x5 .= ','.$rowdata['idDia_7'];}
+					if(isset($Nombre)){        $x1  = $Nombre;        }else{$x1  = $rowData['Nombre'];}
+					if(isset($idUsuario)){     $x2  = $idUsuario;     }else{$x2  = $rowData['idUsuario'];}
+					if(isset($HoraInicio)){    $x3  = $HoraInicio;    }else{$x3  = $rowData['HoraInicio'];}
+					if(isset($HoraTermino)){   $x4  = $HoraTermino;   }else{$x4  = $rowData['HoraTermino'];}
+					if(isset($idDia_1)){       $x5  = $idDia_1;       }else{$x5  = $rowData['idDia_1'];}
+					if(isset($idDia_2)){       $x5 .= ','.$idDia_2;   }else{$x5 .= ','.$rowData['idDia_2'];}
+					if(isset($idDia_3)){       $x5 .= ','.$idDia_3;   }else{$x5 .= ','.$rowData['idDia_3'];}
+					if(isset($idDia_4)){       $x5 .= ','.$idDia_4;   }else{$x5 .= ','.$rowData['idDia_4'];}
+					if(isset($idDia_5)){       $x5 .= ','.$idDia_5;   }else{$x5 .= ','.$rowData['idDia_5'];}
+					if(isset($idDia_6)){       $x5 .= ','.$idDia_6;   }else{$x5 .= ','.$rowData['idDia_6'];}
+					if(isset($idDia_7)){       $x5 .= ','.$idDia_7;   }else{$x5 .= ','.$rowData['idDia_7'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -196,7 +196,7 @@ if(!empty($_GET['edit'])){
 	$SIS_query = 'Nombre';
 	$SIS_join  = '';
 	$SIS_where = 'idCurso = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'cursos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'cursos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*******************************************************/
 	// consulto los datos
@@ -222,7 +222,7 @@ if(!empty($_GET['edit'])){
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Curso', $rowdata['Nombre'], 'Editar VideoConferencia Relacionadas'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Curso', $rowData['Nombre'], 'Editar VideoConferencia Relacionadas'); ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 			<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar VideoConferencia</a><?php } ?>
 		</div>

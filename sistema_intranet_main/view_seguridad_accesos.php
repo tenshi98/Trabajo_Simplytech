@@ -72,7 +72,7 @@ LEFT JOIN `ubicacion_listado_level_4`   ON ubicacion_listado_level_4.idLevel_4  
 LEFT JOIN `ubicacion_listado_level_5`   ON ubicacion_listado_level_5.idLevel_5   = seguridad_accesos.idUbicacion_lvl_5
 LEFT JOIN `core_estado_caja`            ON core_estado_caja.idEstado             = seguridad_accesos.idEstado';
 $SIS_where = 'seguridad_accesos.idAcceso ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'seguridad_accesos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'seguridad_accesos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 ?>
 
@@ -82,7 +82,7 @@ $rowdata = db_select_data (false, $SIS_query, 'seguridad_accesos', $SIS_join, $S
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Control AAcceso Visitas.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowdata['Fecha']); ?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowData['Fecha']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -90,38 +90,38 @@ $rowdata = db_select_data (false, $SIS_query, 'seguridad_accesos', $SIS_join, $S
 	<div class="row invoice-info">
 
 		<?php
-		$Ubicacion = $rowdata['Ubicacion']; 
-		if(isset($rowdata['UbicacionLVL_1'])&&$rowdata['UbicacionLVL_1']!=''){$Ubicacion .= ' - '.$rowdata['UbicacionLVL_1'];}
-		if(isset($rowdata['UbicacionLVL_2'])&&$rowdata['UbicacionLVL_2']!=''){$Ubicacion .= ' - '.$rowdata['UbicacionLVL_2'];}
-		if(isset($rowdata['UbicacionLVL_3'])&&$rowdata['UbicacionLVL_3']!=''){$Ubicacion .= ' - '.$rowdata['UbicacionLVL_3'];}
-		if(isset($rowdata['UbicacionLVL_4'])&&$rowdata['UbicacionLVL_4']!=''){$Ubicacion .= ' - '.$rowdata['UbicacionLVL_4'];}
-		if(isset($rowdata['UbicacionLVL_5'])&&$rowdata['UbicacionLVL_5']!=''){$Ubicacion .= ' - '.$rowdata['UbicacionLVL_5'];}
+		$Ubicacion = $rowData['Ubicacion']; 
+		if(isset($rowData['UbicacionLVL_1'])&&$rowData['UbicacionLVL_1']!=''){$Ubicacion .= ' - '.$rowData['UbicacionLVL_1'];}
+		if(isset($rowData['UbicacionLVL_2'])&&$rowData['UbicacionLVL_2']!=''){$Ubicacion .= ' - '.$rowData['UbicacionLVL_2'];}
+		if(isset($rowData['UbicacionLVL_3'])&&$rowData['UbicacionLVL_3']!=''){$Ubicacion .= ' - '.$rowData['UbicacionLVL_3'];}
+		if(isset($rowData['UbicacionLVL_4'])&&$rowData['UbicacionLVL_4']!=''){$Ubicacion .= ' - '.$rowData['UbicacionLVL_4'];}
+		if(isset($rowData['UbicacionLVL_5'])&&$rowData['UbicacionLVL_5']!=''){$Ubicacion .= ' - '.$rowData['UbicacionLVL_5'];}
 								
 								
 		echo '
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 invoice-col">
 			Datos del acceso
 			<address>
-				<strong>Usuario: </strong>'.$rowdata['Usuario'].'<br/>
-				<strong>Fecha - Hora: </strong>'.fecha_estandar($rowdata['Fecha']).', desde '.$rowdata['Hora'].' hasta las '.$rowdata['HoraSalida'].' hrs<br/>
-				<strong>Nombre Visita: </strong>'.$rowdata['Nombre'].'<br/>
-				<strong>Rut Visita: </strong>'.$rowdata['Rut'].'<br/>
-				<strong>Numero Doc Visita: </strong>'.$rowdata['NDocCedula'].'<br/>
+				<strong>Usuario: </strong>'.$rowData['Usuario'].'<br/>
+				<strong>Fecha - Hora: </strong>'.fecha_estandar($rowData['Fecha']).', desde '.$rowData['Hora'].' hasta las '.$rowData['HoraSalida'].' hrs<br/>
+				<strong>Nombre Visita: </strong>'.$rowData['Nombre'].'<br/>
+				<strong>Rut Visita: </strong>'.$rowData['Rut'].'<br/>
+				<strong>Numero Doc Visita: </strong>'.$rowData['NDocCedula'].'<br/>
 				<strong>Destino: </strong>'.$Ubicacion.'<br/>
-				<strong>Persona Reunion: </strong>'.$rowdata['PersonaReunion'].'<br/>
-				<strong>Estado: </strong>'.$rowdata['Estado'].'<br/>
+				<strong>Persona Reunion: </strong>'.$rowData['PersonaReunion'].'<br/>
+				<strong>Estado: </strong>'.$rowData['Estado'].'<br/>
 
 			</address>
 		</div>';
 		?>
 	</div>
 
-	<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){ ?>
+	<?php if(isset($rowData['Direccion_img'])&&$rowData['Direccion_img']!=''){ ?>
 		<div class="row">
 			<div class="col-xs-12">
 				<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 					<h3>Archivo Adjunto</h3>
-					<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['Direccion_img'], ''); ?>
+					<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowData['Direccion_img'], ''); ?>
 				</div>
 			</div>
 		</div>

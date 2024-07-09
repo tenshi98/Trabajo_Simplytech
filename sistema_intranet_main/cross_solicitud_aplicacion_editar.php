@@ -260,7 +260,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 	$SIS_query = 'idProducto, DosisAplicar, Objetivo';
 	$SIS_join  = '';
 	$SIS_where = 'idProdQuim ='.$_GET['edit_prod'];
-	$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado_productos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado_productos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	// consulto los datos
 	$SIS_query = '
@@ -286,9 +286,9 @@ if(!empty($_GET['addDetalle'])){ ?>
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idProducto)){     $x1  = $idProducto;    }else{$x1  = $row_data['idProducto'];}
-					if(isset($DosisAplicar)){   $x2  = $DosisAplicar;  }else{$x2  = $row_data['DosisAplicar'];}
-					if(isset($Objetivo)){       $x3  = $Objetivo;      }else{$x3  = $row_data['Objetivo'];}
+					if(isset($idProducto)){     $x1  = $idProducto;    }else{$x1  = $rowData['idProducto'];}
+					if(isset($DosisAplicar)){   $x2  = $DosisAplicar;  }else{$x2  = $rowData['DosisAplicar'];}
+					if(isset($Objetivo)){       $x3  = $Objetivo;      }else{$x3  = $rowData['Objetivo'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -433,7 +433,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 	$SIS_query = 'idVehiculo, idTelemetria, idTrabajador';
 	$SIS_join  = '';
 	$SIS_where = 'idTractores ='.$_GET['edit_trac'];
-	$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/***************************************************/
 	$w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.idEstado=1";
@@ -461,9 +461,9 @@ if(!empty($_GET['addDetalle'])){ ?>
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idVehiculo)){     $x1  = $idVehiculo;    }else{$x1  = $row_data['idVehiculo'];}
-					if(isset($idTelemetria)){   $x2  = $idTelemetria;  }else{$x2  = $row_data['idTelemetria'];}
-					if(isset($idTrabajador)){   $x3  = $idTrabajador;  }else{$x3  = $row_data['idTrabajador'];}
+					if(isset($idVehiculo)){     $x1  = $idVehiculo;    }else{$x1  = $rowData['idVehiculo'];}
+					if(isset($idTelemetria)){   $x2  = $idTelemetria;  }else{$x2  = $rowData['idTelemetria'];}
+					if(isset($idTrabajador)){   $x3  = $idTrabajador;  }else{$x3  = $rowData['idTrabajador'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -556,21 +556,21 @@ if(!empty($_GET['addDetalle'])){ ?>
 	$SIS_query = 'idPredio, idCategoria, idProducto';
 	$SIS_join  = '';
 	$SIS_where = 'idSolicitud ='.$_GET['view'];
-	$row_data_ini = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data_ini');
+	$rowData_ini = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData_ini');
 
 	/***************************************************/
 	// consulto los datos
 	$SIS_query = 'idZona,Mojamiento,VelTractor,VelViento,TempMin,TempMax,HumTempMax';
 	$SIS_join  = '';
 	$SIS_where = 'idCuarteles ='.$_GET['cuartel_id'];
-	$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado_cuarteles', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado_cuarteles', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/***************************************************/
 	//Verifico el tipo de usuario que esta ingresando
-	$z ="idPredio=".$row_data_ini['idPredio'];
+	$z ="idPredio=".$rowData_ini['idPredio'];
 	$z.=" AND idEstado=1 ";
-	if(isset($row_data_ini['idCategoria'])&&$row_data_ini['idCategoria']!=0){$z.= " AND idCategoria=".$row_data_ini['idCategoria'];}
-	if(isset($row_data_ini['idProducto'])&&$row_data_ini['idProducto']!=0){$z.= " AND idProducto=".$row_data_ini['idProducto'];}
+	if(isset($rowData_ini['idCategoria'])&&$rowData_ini['idCategoria']!=0){$z.= " AND idCategoria=".$rowData_ini['idCategoria'];}
+	if(isset($rowData_ini['idProducto'])&&$rowData_ini['idProducto']!=0){$z.= " AND idProducto=".$rowData_ini['idProducto'];}
 			
 	?>
 
@@ -585,13 +585,13 @@ if(!empty($_GET['addDetalle'])){ ?>
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idZona)){         $x1  = $idZona;        }else{$x1  = $row_data['idZona'];}
-					if(isset($Mojamiento)){     $x2  = $Mojamiento;    }else{$x2  = $row_data['Mojamiento'];}
-					if(isset($VelTractor)){     $x3  = $VelTractor;    }else{$x3  = $row_data['VelTractor'];}
-					if(isset($VelViento)){      $x4  = $VelViento;     }else{$x4  = $row_data['VelViento'];}
-					if(isset($TempMin)){        $x5  = $TempMin;       }else{$x5  = $row_data['TempMin'];}
-					if(isset($TempMax)){        $x6  = $TempMax;       }else{$x6  = $row_data['TempMax'];}
-					if(isset($HumTempMax)){     $x7  = $HumTempMax;    }else{$x7  = $row_data['HumTempMax'];}
+					if(isset($idZona)){         $x1  = $idZona;        }else{$x1  = $rowData['idZona'];}
+					if(isset($Mojamiento)){     $x2  = $Mojamiento;    }else{$x2  = $rowData['Mojamiento'];}
+					if(isset($VelTractor)){     $x3  = $VelTractor;    }else{$x3  = $rowData['VelTractor'];}
+					if(isset($VelViento)){      $x4  = $VelViento;     }else{$x4  = $rowData['VelViento'];}
+					if(isset($TempMin)){        $x5  = $TempMin;       }else{$x5  = $rowData['TempMin'];}
+					if(isset($TempMax)){        $x6  = $TempMax;       }else{$x6  = $rowData['TempMax'];}
+					if(isset($HumTempMax)){     $x7  = $HumTempMax;    }else{$x7  = $rowData['HumTempMax'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -627,7 +627,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 	$SIS_query = 'idPredio, idCategoria, idProducto, Mojamiento, VelTractor, VelViento, TempMin, TempMax, HumTempMax';
 	$SIS_join  = '';
 	$SIS_where = 'idSolicitud ='.$_GET['view'];
-	$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/**********************************************/
 	//Imprimo las variables
@@ -643,10 +643,10 @@ if(!empty($_GET['addDetalle'])){ ?>
 
 	/**********************************************/
 	//Verifico el tipo de usuario que esta ingresando
-	$z = "idPredio=".$row_data['idPredio'];
+	$z = "idPredio=".$rowData['idPredio'];
 	$z.= " AND idEstado=1 ";
-	if(isset($row_data['idCategoria'])&&$row_data['idCategoria']!=0){$z.= " AND idCategoria=".$row_data['idCategoria'];}
-	if(isset($row_data['idProducto'])&&$row_data['idProducto']!=0){$z.= " AND idProducto=".$row_data['idProducto'];}
+	if(isset($rowData['idCategoria'])&&$rowData['idCategoria']!=0){$z.= " AND idCategoria=".$rowData['idCategoria'];}
+	if(isset($rowData['idProducto'])&&$rowData['idProducto']!=0){$z.= " AND idProducto=".$rowData['idProducto'];}
 	//otros filtros
 	$x = "idEstado=1 ";
 	$w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.idEstado=1";
@@ -674,12 +674,12 @@ if(!empty($_GET['addDetalle'])){ ?>
 					<?php
 					//Se verifican si existen los datos
 					if(isset($idZona)){         $x1  = $idZona;        }else{$x1  = '';}
-					if(isset($Mojamiento)){     $x2  = $Mojamiento;    }else{$x2  = $row_data['Mojamiento'];}
-					if(isset($VelTractor)){     $x3  = $VelTractor;    }else{$x3  = $row_data['VelTractor'];}
-					if(isset($VelViento)){      $x4  = $VelViento;     }else{$x4  = $row_data['VelViento'];}
-					if(isset($TempMin)){        $x5  = $TempMin;       }else{$x5  = $row_data['TempMin'];}
-					if(isset($TempMax)){        $x6  = $TempMax;       }else{$x6  = $row_data['TempMax'];}
-					if(isset($HumTempMax)){     $x7  = $HumTempMax;    }else{$x7  = $row_data['HumTempMax'];}
+					if(isset($Mojamiento)){     $x2  = $Mojamiento;    }else{$x2  = $rowData['Mojamiento'];}
+					if(isset($VelTractor)){     $x3  = $VelTractor;    }else{$x3  = $rowData['VelTractor'];}
+					if(isset($VelViento)){      $x4  = $VelViento;     }else{$x4  = $rowData['VelViento'];}
+					if(isset($TempMin)){        $x5  = $TempMin;       }else{$x5  = $rowData['TempMin'];}
+					if(isset($TempMax)){        $x6  = $TempMax;       }else{$x6  = $rowData['TempMax'];}
+					if(isset($HumTempMax)){     $x7  = $HumTempMax;    }else{$x7  = $rowData['HumTempMax'];}
 					if(isset($idVehiculo)){     $x8  = $idVehiculo;    }else{$x8  = '';}
 					if(isset($idTelemetria)){   $x9  = $idTelemetria;  }else{$x9  = '';}
 					if(isset($idTrabajador)){   $x10 = $idTrabajador;  }else{$x10 = '';}
@@ -798,7 +798,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 	$SIS_query = 'idPredio, idTemporada, idEstadoFen, idCategoria, idProducto, f_programacion, horaProg, idSistema, idEstado, f_ejecucion, f_termino, horaEjecucion, horaTermino, Mojamiento, VelTractor, VelViento, TempMin, TempMax, idPrioridad, f_programacion_fin, horaProg_fin, f_ejecucion_fin, horaEjecucion_fin, f_termino_fin, horaTermino_fin, idDosificador, HumTempMax, NSolicitud';
 	$SIS_join  = '';
 	$SIS_where = 'idSolicitud ='.$_GET['view'];
-	$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	//Verifico el tipo de usuario que esta ingresando
 	$y = "idEstado=1";
@@ -818,37 +818,37 @@ if(!empty($_GET['addDetalle'])){ ?>
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idPrioridad)){          $x0  = $idPrioridad;          }else{$x0  = $row_data['idPrioridad'];}
-					if(isset($idPredio)){             $x1  = $idPredio;             }else{$x1  = $row_data['idPredio'];}
-					if(isset($idTemporada)){          $x2  = $idTemporada;          }else{$x2  = $row_data['idTemporada'];}
-					if(isset($idEstadoFen)){          $x3  = $idEstadoFen;          }else{$x3  = $row_data['idEstadoFen'];}
-					if(isset($idCategoria)){          $x4  = $idCategoria;          }else{$x4  = $row_data['idCategoria'];}
-					if(isset($idProducto)){           $x5  = $idProducto;           }else{$x5  = $row_data['idProducto'];}
-					if(isset($f_programacion)){       $x6  = $f_programacion;       }else{$x6  = $row_data['f_programacion'];}
-					if(isset($horaProg)){             $x7  = $horaProg;             }else{$x7  = $row_data['horaProg'];}
-					if(isset($f_ejecucion)){          $x8  = $f_ejecucion;          }else{$x8  = $row_data['f_ejecucion'];}
-					if(isset($horaEjecucion)){        $x9  = $horaEjecucion;        }else{$x9  = $row_data['horaEjecucion'];}
-					if(isset($f_termino)){            $x10 = $f_termino;            }else{$x10 = $row_data['f_termino'];}
-					if(isset($horaTermino)){          $x11 = $horaTermino;          }else{$x11 = $row_data['horaTermino'];}
-					if(isset($Mojamiento)){           $x13 = $Mojamiento;           }else{$x13 = Cantidades_decimales_justos($row_data['Mojamiento']);}
-					if(isset($VelTractor)){           $x14 = $VelTractor;           }else{$x14 = Cantidades_decimales_justos($row_data['VelTractor']);}
-					if(isset($VelViento)){            $x15 = $VelViento;            }else{$x15 = Cantidades_decimales_justos($row_data['VelViento']);}
-					if(isset($TempMin)){              $x16 = $TempMin;              }else{$x16 = Cantidades_decimales_justos($row_data['TempMin']);}
-					if(isset($TempMax)){              $x17 = $TempMax;              }else{$x17 = Cantidades_decimales_justos($row_data['TempMax']);}
-					if(isset($f_programacion_fin)){   $x18 = $f_programacion_fin;   }else{$x18 = $row_data['f_programacion_fin'];}
-					if(isset($horaProg_fin)){         $x19 = $horaProg_fin;         }else{$x19 = $row_data['horaProg_fin'];}
-					if(isset($f_ejecucion_fin)){      $x20 = $f_ejecucion_fin;      }else{$x20 = $row_data['f_ejecucion_fin'];}
-					if(isset($horaEjecucion_fin)){    $x21 = $horaEjecucion_fin;    }else{$x21 = $row_data['horaEjecucion_fin'];}
-					if(isset($f_termino_fin)){        $x22 = $f_termino_fin;        }else{$x22 = $row_data['f_termino_fin'];}
-					if(isset($horaTermino_fin)){      $x23 = $horaTermino_fin;      }else{$x23 = $row_data['horaTermino_fin'];}
-					if(isset($idDosificador)){        $x24 = $idDosificador;        }else{$x24 = $row_data['idDosificador'];}
-					if(isset($HumTempMax)){           $x25 = $HumTempMax;           }else{$x25 = Cantidades_decimales_justos($row_data['HumTempMax']);}
-					if(isset($NSolicitud)){           $x26 = $NSolicitud;           }else{$x26 = $row_data['NSolicitud'];}
+					if(isset($idPrioridad)){          $x0  = $idPrioridad;          }else{$x0  = $rowData['idPrioridad'];}
+					if(isset($idPredio)){             $x1  = $idPredio;             }else{$x1  = $rowData['idPredio'];}
+					if(isset($idTemporada)){          $x2  = $idTemporada;          }else{$x2  = $rowData['idTemporada'];}
+					if(isset($idEstadoFen)){          $x3  = $idEstadoFen;          }else{$x3  = $rowData['idEstadoFen'];}
+					if(isset($idCategoria)){          $x4  = $idCategoria;          }else{$x4  = $rowData['idCategoria'];}
+					if(isset($idProducto)){           $x5  = $idProducto;           }else{$x5  = $rowData['idProducto'];}
+					if(isset($f_programacion)){       $x6  = $f_programacion;       }else{$x6  = $rowData['f_programacion'];}
+					if(isset($horaProg)){             $x7  = $horaProg;             }else{$x7  = $rowData['horaProg'];}
+					if(isset($f_ejecucion)){          $x8  = $f_ejecucion;          }else{$x8  = $rowData['f_ejecucion'];}
+					if(isset($horaEjecucion)){        $x9  = $horaEjecucion;        }else{$x9  = $rowData['horaEjecucion'];}
+					if(isset($f_termino)){            $x10 = $f_termino;            }else{$x10 = $rowData['f_termino'];}
+					if(isset($horaTermino)){          $x11 = $horaTermino;          }else{$x11 = $rowData['horaTermino'];}
+					if(isset($Mojamiento)){           $x13 = $Mojamiento;           }else{$x13 = Cantidades_decimales_justos($rowData['Mojamiento']);}
+					if(isset($VelTractor)){           $x14 = $VelTractor;           }else{$x14 = Cantidades_decimales_justos($rowData['VelTractor']);}
+					if(isset($VelViento)){            $x15 = $VelViento;            }else{$x15 = Cantidades_decimales_justos($rowData['VelViento']);}
+					if(isset($TempMin)){              $x16 = $TempMin;              }else{$x16 = Cantidades_decimales_justos($rowData['TempMin']);}
+					if(isset($TempMax)){              $x17 = $TempMax;              }else{$x17 = Cantidades_decimales_justos($rowData['TempMax']);}
+					if(isset($f_programacion_fin)){   $x18 = $f_programacion_fin;   }else{$x18 = $rowData['f_programacion_fin'];}
+					if(isset($horaProg_fin)){         $x19 = $horaProg_fin;         }else{$x19 = $rowData['horaProg_fin'];}
+					if(isset($f_ejecucion_fin)){      $x20 = $f_ejecucion_fin;      }else{$x20 = $rowData['f_ejecucion_fin'];}
+					if(isset($horaEjecucion_fin)){    $x21 = $horaEjecucion_fin;    }else{$x21 = $rowData['horaEjecucion_fin'];}
+					if(isset($f_termino_fin)){        $x22 = $f_termino_fin;        }else{$x22 = $rowData['f_termino_fin'];}
+					if(isset($horaTermino_fin)){      $x23 = $horaTermino_fin;      }else{$x23 = $rowData['horaTermino_fin'];}
+					if(isset($idDosificador)){        $x24 = $idDosificador;        }else{$x24 = $rowData['idDosificador'];}
+					if(isset($HumTempMax)){           $x25 = $HumTempMax;           }else{$x25 = Cantidades_decimales_justos($rowData['HumTempMax']);}
+					if(isset($NSolicitud)){           $x26 = $NSolicitud;           }else{$x26 = $rowData['NSolicitud'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					//Verifico el estado
-					switch ($row_data['idEstado']) {
+					switch ($rowData['idEstado']) {
 						//Solicitada
 						case 1:
 							$Form_Inputs->form_tittle(3, 'Datos Básicos');
@@ -976,7 +976,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 	LEFT JOIN `core_cross_prioridad`                    ON core_cross_prioridad.idPrioridad               = cross_solicitud_aplicacion_listado.idPrioridad
 	LEFT JOIN `trabajadores_listado`                    ON trabajadores_listado.idTrabajador              = cross_solicitud_aplicacion_listado.idDosificador';
 	$SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud ='.$_GET['view'];
-	$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+	$rowData = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	/*****************************************/
 	//Cuarteles
@@ -1093,7 +1093,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 	<div class="col-xs-12 col-sm-11 col-md-11 col-lg-11 fcenter table-responsive" style="margin-bottom:30px">
 
 		<div id="page-wrap">
-			<div id="header"> SOLICITUD DE APLICACIONES N° <?php echo n_doc($row_data['NSolicitud'], 5); ?></div>
+			<div id="header"> SOLICITUD DE APLICACIONES N° <?php echo n_doc($rowData['NSolicitud'], 5); ?></div>
 			<div id="customer">
 				<table id="meta" class="pull-left otdata">
 					<tbody>
@@ -1103,26 +1103,26 @@ if(!empty($_GET['addDetalle'])){ ?>
 						</tr>
 						<tr>
 							<td class="meta-head">Prioridad</td>
-							<td><?php echo $row_data['NombrePrioridad']?></td>
+							<td><?php echo $rowData['NombrePrioridad']?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Predio</td>
-							<td><?php echo $row_data['NombrePredio']?></td>
+							<td><?php echo $rowData['NombrePredio']?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Temporada</td>
-							<td><?php echo $row_data['TemporadaCodigo'].' '.$row_data['TemporadaNombre']?></td>
+							<td><?php echo $rowData['TemporadaCodigo'].' '.$rowData['TemporadaNombre']?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Estado Fenológico</td>
-							<td><?php echo $row_data['EstadoFenCodigo'].' '.$row_data['EstadoFenNombre']?></td>
+							<td><?php echo $rowData['EstadoFenCodigo'].' '.$rowData['EstadoFenNombre']?></td>
 						</tr>
-						<?php if(isset($row_data['VariedadCat'])&&$row_data['VariedadCat']!=''){ ?>
+						<?php if(isset($rowData['VariedadCat'])&&$rowData['VariedadCat']!=''){ ?>
 							<tr>
 								<td class="meta-head">Especie - Variedad</td>
 								<td>
-									<?php echo $row_data['VariedadCat'];
-									if(isset($row_data['VariedadNombre'])&&$row_data['VariedadNombre']!=''){echo ' - '.$row_data['VariedadNombre'];}
+									<?php echo $rowData['VariedadCat'];
+									if(isset($rowData['VariedadNombre'])&&$rowData['VariedadNombre']!=''){echo ' - '.$rowData['VariedadNombre'];}
 									?>
 								</td>
 							</tr>
@@ -1134,11 +1134,11 @@ if(!empty($_GET['addDetalle'])){ ?>
 						<?php } ?>
 						<tr>
 							<td class="meta-head">Estado</td>
-							<td><?php echo $row_data['Estado']?></td>
+							<td><?php echo $rowData['Estado']?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Usuario Creador</td>
-							<td><?php echo $row_data['NombreUsuario']?></td>
+							<td><?php echo $rowData['NombreUsuario']?></td>
 						</tr>
 						<tr>
 							<td class="meta-head"><strong>PARAMETROS APLICACION</strong></td>
@@ -1146,27 +1146,27 @@ if(!empty($_GET['addDetalle'])){ ?>
 						</tr>
 						<tr>
 							<td class="meta-head">Mojamiento</td>
-							<td><?php echo Cantidades_decimales_justos($row_data['Mojamiento']).' L/ha'; ?></td>
+							<td><?php echo Cantidades_decimales_justos($rowData['Mojamiento']).' L/ha'; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Velocidad Tractor</td>
-							<td><?php echo Cantidades_decimales_justos($row_data['VelTractor']).' Km/hr'; ?></td>
+							<td><?php echo Cantidades_decimales_justos($rowData['VelTractor']).' Km/hr'; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Velocidad Viento</td>
-							<td><?php echo Cantidades_decimales_justos($row_data['VelViento']).' Km/hr'; ?></td>
+							<td><?php echo Cantidades_decimales_justos($rowData['VelViento']).' Km/hr'; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Temperatura Min</td>
-							<td><?php echo Cantidades_decimales_justos($row_data['TempMin']).' °'; ?></td>
+							<td><?php echo Cantidades_decimales_justos($rowData['TempMin']).' °'; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Temperatura Max</td>
-							<td><?php echo Cantidades_decimales_justos($row_data['TempMax']).' °'; ?></td>
+							<td><?php echo Cantidades_decimales_justos($rowData['TempMax']).' °'; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Humedad</td>
-							<td><?php echo Cantidades_decimales_justos($row_data['HumTempMax']).' %'; ?></td>
+							<td><?php echo Cantidades_decimales_justos($rowData['HumTempMax']).' %'; ?></td>
 						</tr>
 					</tbody>
 				</table>
@@ -1174,40 +1174,40 @@ if(!empty($_GET['addDetalle'])){ ?>
 					<tbody>
 						<tr>
 							<td class="meta-head">Creado</td>
-							<td><?php echo Fecha_estandar($row_data['f_creacion']); ?></td>
+							<td><?php echo Fecha_estandar($rowData['f_creacion']); ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Fecha inicio requerido</td>
-							<td><?php echo fecha_estandar($row_data['f_programacion']).' '.$row_data['horaProg']?></td>
+							<td><?php echo fecha_estandar($rowData['f_programacion']).' '.$rowData['horaProg']?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Fecha termino requerido</td>
-							<td><?php echo fecha_estandar($row_data['f_programacion_fin']).' '.$row_data['horaProg_fin']?></td>
+							<td><?php echo fecha_estandar($rowData['f_programacion_fin']).' '.$rowData['horaProg_fin']?></td>
 						</tr>
-						<?php if(isset($row_data['f_ejecucion'])&&$row_data['f_ejecucion']!='0000-00-00'){ ?>
+						<?php if(isset($rowData['f_ejecucion'])&&$rowData['f_ejecucion']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Fecha inicio programación</td>
-								<td><?php echo fecha_estandar($row_data['f_ejecucion']).' '.$row_data['horaEjecucion']?></td>
+								<td><?php echo fecha_estandar($rowData['f_ejecucion']).' '.$rowData['horaEjecucion']?></td>
 							</tr>
 							<tr>
 								<td class="meta-head">Fecha termino programación</td>
-								<td><?php echo fecha_estandar($row_data['f_ejecucion_fin']).' '.$row_data['horaEjecucion_fin']?></td>
+								<td><?php echo fecha_estandar($rowData['f_ejecucion_fin']).' '.$rowData['horaEjecucion_fin']?></td>
 							</tr>
 						<?php } ?>
-						<?php if(isset($row_data['f_termino'])&&$row_data['f_termino']!='0000-00-00'){ ?>
+						<?php if(isset($rowData['f_termino'])&&$rowData['f_termino']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Fecha inicio ejecución</td>
-								<td><?php echo fecha_estandar($row_data['f_termino']).' '.$row_data['horaTermino']?></td>
+								<td><?php echo fecha_estandar($rowData['f_termino']).' '.$rowData['horaTermino']?></td>
 							</tr>
 							<tr>
 								<td class="meta-head">Fecha termino ejecución</td>
-								<td><?php echo fecha_estandar($row_data['f_termino_fin']).' '.$row_data['horaTermino_fin']?></td>
+								<td><?php echo fecha_estandar($rowData['f_termino_fin']).' '.$rowData['horaTermino_fin']?></td>
 							</tr>
 						<?php } ?>
-						<?php if(isset($row_data['idDosificador'])&&$row_data['idDosificador']!=0){ ?>
+						<?php if(isset($rowData['idDosificador'])&&$rowData['idDosificador']!=0){ ?>
 							<tr>
 								<td class="meta-head">Dosificador</td>
-								<td><?php echo $row_data['TrabajadorRut'].' '.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat']?></td>
+								<td><?php echo $rowData['TrabajadorRut'].' '.$rowData['TrabajadorNombre'].' '.$rowData['TrabajadorApellidoPat']?></td>
 							</tr>
 						<?php } ?>
 
@@ -1226,7 +1226,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 						<td colspan="6"><strong>Materiales de Seguridad</strong></td>
 						<td colspan="2"><strong>Codigo</strong></td>
 						<td>
-							<?php if(isset($row_data['idEstado'])&&$row_data['idEstado']!=3){ ?><a href="<?php echo $location.'&addMaterial=true' ?>" title="Agregar Materiales" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Materiales</a><?php } ?>
+							<?php if(isset($rowData['idEstado'])&&$rowData['idEstado']!=3){ ?><a href="<?php echo $location.'&addMaterial=true' ?>" title="Agregar Materiales" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Materiales</a><?php } ?>
 						</td>
 					</tr>
 					<?php
@@ -1238,7 +1238,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 									<td class="item-name" colspan="2"><?php echo $prod['Codigo']; ?></td>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<?php if(isset($row_data['idEstado'])&&$row_data['idEstado']!=3&&isset($cuartel['idEstado'])&&$cuartel['idEstado']==1){ ?>
+											<?php if(isset($rowData['idEstado'])&&$rowData['idEstado']!=3&&isset($cuartel['idEstado'])&&$cuartel['idEstado']==1){ ?>
 												<?php
 												$ubicacion = $location.'&del_material='.simpleEncode($prod['idMatSeg'], fecha_actual());
 												$dialogo   = '¿Realmente deseas eliminar el material de seguridad '.$prod['Nombre'].'?'; ?>
@@ -1261,7 +1261,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 						<td><strong>Temp Max</strong></td>
 						<td><strong>Hum Temp Max</strong></td>
 						<td>
-							<?php if(isset($row_data['idEstado'])&&$row_data['idEstado']!=3){ ?><a href="<?php echo $location.'&addCuartel=true' ?>" title="Agregar Cuartel" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Cuartel</a><?php } ?>
+							<?php if(isset($rowData['idEstado'])&&$rowData['idEstado']!=3){ ?><a href="<?php echo $location.'&addCuartel=true' ?>" title="Agregar Cuartel" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Cuartel</a><?php } ?>
 						</td>
 					</tr>
 					<?php
@@ -1279,14 +1279,14 @@ if(!empty($_GET['addDetalle'])){ ?>
 									<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['HumTempMax']).' %'; ?></td>
 									<td>
 										<div class="btn-group" style="width: 140px;">
-											<?php if(isset($row_data['idEstado'])&&$row_data['idEstado']!=3&&isset($cuartel['idEstado'])&&$cuartel['idEstado']==1){ ?>
-												<a href="<?php echo $location.'&cuartel_id='.$cuartel['idCuarteles'].'&edit_Cuarteles='.$row_data['idEstado']; ?>" title="Editar Cuartel" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+											<?php if(isset($rowData['idEstado'])&&$rowData['idEstado']!=3&&isset($cuartel['idEstado'])&&$cuartel['idEstado']==1){ ?>
+												<a href="<?php echo $location.'&cuartel_id='.$cuartel['idCuarteles'].'&edit_Cuarteles='.$rowData['idEstado']; ?>" title="Editar Cuartel" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 												<a href="<?php echo $location.'&cuartel_id='.$cuartel['idCuarteles'].'&add_trac=true'; ?>" title="Agregar Tractor" class="btn btn-primary btn-sm tooltip"><i class="fa fa-truck" aria-hidden="true"></i></a>
 												<a href="<?php echo $location.'&cuartel_id='.$cuartel['idCuarteles'].'&add_prod=true'; ?>" title="Agregar Producto Químico" class="btn btn-primary btn-sm tooltip"><i class="fa fa-flask" aria-hidden="true"></i></a>
-												<?php /*if(isset($row_data['idEstado'])&&$row_data['idEstado']==2){
+												<?php /*if(isset($rowData['idEstado'])&&$rowData['idEstado']==2){
 													$distancia = $cuartel['CuartelDistanciaPlant']*$cuartel['CuartelNPlantas'];
 													?>
-													<a href="<?php echo $location.'&lock_cuartel='.$cuartel['idCuarteles'].'&f_ejecucion='.$row_data['f_ejecucion'].'&f_ejecucion_fin='.$row_data['f_ejecucion_fin'].'&distancia='.$distancia; ?>" title="Cerrar Cuartel" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-lock" aria-hidden="true"></i></a>
+													<a href="<?php echo $location.'&lock_cuartel='.$cuartel['idCuarteles'].'&f_ejecucion='.$rowData['f_ejecucion'].'&f_ejecucion_fin='.$rowData['f_ejecucion_fin'].'&distancia='.$distancia; ?>" title="Cerrar Cuartel" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-lock" aria-hidden="true"></i></a>
 												<?php }*/ ?>
 												<?php
 												$ubicacion = $location.'&del_cuartel='.simpleEncode($cuartel['idCuarteles'], fecha_actual());
@@ -1307,7 +1307,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 											<td class="item-name" colspan="2"><?php echo '<strong>Trabajador: </strong>'.$tract['Trabajador']; ?></td>
 											<td>
 												<div class="btn-group" style="width: 70px;" >
-													<?php if(isset($row_data['idEstado'])&&$row_data['idEstado']!=3&&isset($cuartel['idEstado'])&&$cuartel['idEstado']==1){ ?>
+													<?php if(isset($rowData['idEstado'])&&$rowData['idEstado']!=3&&isset($cuartel['idEstado'])&&$cuartel['idEstado']==1){ ?>
 														<a href="<?php echo $location.'&cuartel_id='.$cuartel['idCuarteles'].'&edit_trac='.$tract['idTractores']; ?>" title="Editar Tractor" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 														<?php
 														$ubicacion = $location.'&cuartel_id='.$cuartel['idCuarteles'].'&del_trac='.simpleEncode($tract['idTractores'], fecha_actual());
@@ -1336,7 +1336,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 											</td>
 											<td>
 												<div class="btn-group" style="width: 70px;" >
-													<?php if(isset($row_data['idEstado'])&&$row_data['idEstado']!=3&&isset($cuartel['idEstado'])&&$cuartel['idEstado']==1){ ?>
+													<?php if(isset($rowData['idEstado'])&&$rowData['idEstado']!=3&&isset($cuartel['idEstado'])&&$cuartel['idEstado']==1){ ?>
 														<a href="<?php echo $location.'&cuartel_id='.$cuartel['idCuarteles'].'&edit_prod='.$prod['idProdQuim']; ?>" title="Editar Producto Quimico" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 														<?php
 														$ubicacion = $location.'&cuartel_id='.$cuartel['idCuarteles'].'&del_prod='.simpleEncode($prod['idProdQuim'], fecha_actual());
@@ -1367,7 +1367,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 
 					<tr class="invoice-total" bgcolor="#f1f1f1">
 						<th colspan="8">Detalles</th>
-						<th width="160"><a href="<?php echo $location.'&idEstado='.$row_data['idEstado'].'&addDetalle=true' ?>" title="Agregar Detalle" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Detalle</a></th>
+						<th width="160"><a href="<?php echo $location.'&idEstado='.$rowData['idEstado'].'&addDetalle=true' ?>" title="Agregar Detalle" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Detalle</a></th>
 					</tr>
 					<tr>
 						<th width="160">Fecha</th>

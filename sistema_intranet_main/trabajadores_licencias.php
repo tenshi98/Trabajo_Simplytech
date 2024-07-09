@@ -85,7 +85,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'idTrabajador,Fecha_inicio, Fecha_termino, N_Dias,File_Licencia,Observacion, idSistema';
 	$SIS_join  = '';
 	$SIS_where = 'idLicencia = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'trabajadores_licencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'trabajadores_licencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 	/*******************************************************/
 	//Verifico el tipo de usuario que esta ingresando
 	$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
@@ -103,11 +103,11 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idTrabajador)){    $x1  = $idTrabajador;    }else{$x1  = $rowdata['idTrabajador'];}
-					if(isset($Fecha_inicio)){    $x2  = $Fecha_inicio;    }else{$x2  = $rowdata['Fecha_inicio'];}
-					if(isset($Fecha_termino)){   $x3  = $Fecha_termino;   }else{$x3  = $rowdata['Fecha_termino'];}
-					if(isset($N_Dias)){          $x4  = $N_Dias;          }else{$x4  = $rowdata['N_Dias'];}
-					if(isset($Observacion)){     $x5  = $Observacion;     }else{$x5  = $rowdata['Observacion'];}
+					if(isset($idTrabajador)){    $x1  = $idTrabajador;    }else{$x1  = $rowData['idTrabajador'];}
+					if(isset($Fecha_inicio)){    $x2  = $Fecha_inicio;    }else{$x2  = $rowData['Fecha_inicio'];}
+					if(isset($Fecha_termino)){   $x3  = $Fecha_termino;   }else{$x3  = $rowData['Fecha_termino'];}
+					if(isset($N_Dias)){          $x4  = $N_Dias;          }else{$x4  = $rowData['N_Dias'];}
+					if(isset($Observacion)){     $x5  = $Observacion;     }else{$x5  = $rowData['Observacion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -117,11 +117,11 @@ if(!empty($_GET['id'])){
 					$Form_Inputs->form_input_number('N° Dias', 'N_Dias', $x4, 2);
 					$Form_Inputs->form_textarea('Observaciones','Observacion', $x5, 1);
 
-					if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){ ?>
+					if(isset($rowData['File_Licencia'])&&$rowData['File_Licencia']!=''){ ?>
 
 						<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 							<h3>Archivo</h3>
-							<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['File_Licencia'], ''); ?>
+							<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowData['File_Licencia'], ''); ?>
 						</div>
 						<a href="<?php echo $location.'&id='.$_GET['id'].'&del_file='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 						<div class="clearfix"></div>

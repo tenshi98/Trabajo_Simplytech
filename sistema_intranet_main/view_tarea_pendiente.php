@@ -64,7 +64,7 @@ LEFT JOIN `core_tareas_pendientes_prioridad` ON core_tareas_pendientes_prioridad
 LEFT JOIN `core_tareas_pendientes_tipos`     ON core_tareas_pendientes_tipos.idTipo          = tareas_pendientes_listado.idTipo
 LEFT JOIN `usuarios_listado`         cancel  ON cancel.idUsuario                             = tareas_pendientes_listado.idUsuarioCierre';
 $SIS_where = 'tareas_pendientes_listado.idTareas ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'tareas_pendientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /***************************************************/
 //Se traen a todos los trabajadores relacionados a las ot
@@ -116,15 +116,15 @@ $arrHistorial = array();
 $arrHistorial = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_historial', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrHistorial');
 
 /*********************************************************/
-if(isset($rowdata['Cancelador'])&&$rowdata['Cancelador']!=''){ ?>
+if(isset($rowData['Cancelador'])&&$rowData['Cancelador']!=''){ ?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="bs-callout bs-callout-danger" >
 			<h4>Tarea Pendiente cancelada</h4>
 			<p>
-				Usuario Cancelacion: <?php echo $rowdata['Cancelador']; ?><br/>
-				Fecha Cancelacion: <?php echo fecha_estandar($rowdata['f_cierre']); ?><br/>
-				Motivo Cancelacion: <?php echo $rowdata['ObservacionesCierre']; ?>
+				Usuario Cancelacion: <?php echo $rowData['Cancelador']; ?><br/>
+				Fecha Cancelacion: <?php echo fecha_estandar($rowData['f_cierre']); ?><br/>
+				Motivo Cancelacion: <?php echo $rowData['ObservacionesCierre']; ?>
 			</p>
 		</div>
 	</div>
@@ -154,27 +154,27 @@ if((isset($_GET['editForm'])&&$_GET['editForm']='true') OR $_SESSION['usuario'][
 						</tr>
 						<tr>
 							<td class="meta-head">Estado</td>
-							<td><?php echo $rowdata['Estado']; ?></td>
+							<td><?php echo $rowData['Estado']; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Prioridad</td>
-							<td><?php echo $rowdata['Prioridad']; ?></td>
+							<td><?php echo $rowData['Prioridad']; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Tipo de Tarea</td>
-							<td><?php echo $rowdata['Tipo']; ?></td>
+							<td><?php echo $rowData['Tipo']; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Nombre de la Tarea</td>
-							<td><?php echo $rowdata['Nombre']; ?></td>
+							<td><?php echo $rowData['Nombre']; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Creador</td>
-							<td><?php echo $rowdata['Creador']; ?></td>
+							<td><?php echo $rowData['Creador']; ?></td>
 						</tr>
 						<tr>
 							<td class="meta-head">Sistema</td>
-							<td><?php echo $rowdata['Sistema']; ?></td>
+							<td><?php echo $rowData['Sistema']; ?></td>
 						</tr>
 					</tbody>
 				</table>
@@ -182,12 +182,12 @@ if((isset($_GET['editForm'])&&$_GET['editForm']='true') OR $_SESSION['usuario'][
 					<tbody>
 						<tr>
 							<td class="meta-head">Fecha Creacion</td>
-							<td><?php echo Fecha_estandar($rowdata['f_creacion']); ?></td>
+							<td><?php echo Fecha_estandar($rowData['f_creacion']); ?></td>
 						</tr>
-						<?php if(isset($rowdata['f_termino'])&&$rowdata['f_termino']!='0000-00-00'){ ?>
+						<?php if(isset($rowData['f_termino'])&&$rowData['f_termino']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Fecha Termino</td>
-								<td><?php echo Fecha_estandar($rowdata['f_termino']); ?></td>
+								<td><?php echo Fecha_estandar($rowData['f_termino']); ?></td>
 							</tr>
 						<?php } ?>
 					</tbody>
@@ -201,7 +201,7 @@ if((isset($_GET['editForm'])&&$_GET['editForm']='true') OR $_SESSION['usuario'][
 					/**********************************************************************************/?>
 					<tr class="item-row fact_tittle"><td colspan="6">Tarea</td></tr>
 					<tr class="item-row linea_punteada" style="white-space: initial;">
-						<td colspan="6"><?php echo $rowdata['Observaciones']; ?></td>
+						<td colspan="6"><?php echo $rowData['Observaciones']; ?></td>
 					</tr>
 					<?php 
 					/**********************************************************************************/

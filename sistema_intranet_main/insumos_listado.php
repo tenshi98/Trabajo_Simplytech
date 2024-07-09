@@ -88,12 +88,12 @@ if(!empty($_GET['id'])){
 	LEFT JOIN `core_estados`                     ON core_estados.idEstado                            = insumos_listado.idEstado
 	LEFT JOIN `proveedor_listado`                ON proveedor_listado.idProveedor                    = insumos_listado.idProveedorFijo';
 	$SIS_where = 'insumos_listado.idProducto ='.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'insumos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'insumos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Insumos', $rowdata['Nombre'], 'Resumen'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Insumos', $rowData['Nombre'], 'Resumen'); ?>
 	</div>
 	<div class="clearfix"></div>
 
@@ -123,32 +123,32 @@ if(!empty($_GET['id'])){
 					<div class="wmd-panel">
 
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-							<?php if ($rowdata['Direccion_img']=='') { ?>
+							<?php if ($rowData['Direccion_img']=='') { ?>
 								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/productos.jpg">
 							<?php }else{
-								echo widget_TipoImagen($rowdata['idTipoImagen'], DB_SITE_REPO, DB_SITE_MAIN_PATH, 'upload', $rowdata['Direccion_img']);
+								echo widget_TipoImagen($rowData['idTipoImagen'], DB_SITE_REPO, DB_SITE_MAIN_PATH, 'upload', $rowData['Direccion_img']);
 							} ?>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Insumo</h2>
 							<p class="text-muted">
-								<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
-								<strong>Marca : </strong><?php echo $rowdata['Marca']; ?><br/>
-								<strong>Codigo : </strong><?php echo $rowdata['Codigo']; ?><br/>
-								<strong>Categoria : </strong><?php echo $rowdata['Categoria']; ?><br/>
-								<strong>Unidad de medida : </strong><?php echo $rowdata['Unidad']; ?><br/>
-								<strong>Estado : </strong><?php echo $rowdata['Estado']; ?>
+								<strong>Nombre : </strong><?php echo $rowData['Nombre']; ?><br/>
+								<strong>Marca : </strong><?php echo $rowData['Marca']; ?><br/>
+								<strong>Codigo : </strong><?php echo $rowData['Codigo']; ?><br/>
+								<strong>Categoria : </strong><?php echo $rowData['Categoria']; ?><br/>
+								<strong>Unidad de medida : </strong><?php echo $rowData['Unidad']; ?><br/>
+								<strong>Estado : </strong><?php echo $rowData['Estado']; ?>
 							</p>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripción</h2>
-							<p class="text-muted"><?php echo $rowdata['Descripcion']; ?></p>
+							<p class="text-muted"><?php echo $rowData['Descripcion']; ?></p>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
 							<p class="text-muted">
-								<strong>Proveedor predefinido : </strong><?php echo $rowdata['ProveedorFijo']; ?><br/>
-								<strong>Stock Minimo : </strong><?php echo Cantidades_decimales_justos($rowdata['StockLimite']).' '.$rowdata['Unidad']; ?><br/>
-								<strong>Valor promedio Ingreso : </strong><?php echo Valores(Cantidades_decimales_justos($rowdata['ValorIngreso']), 0); ?><br/>
-								<strong>Valor promedio Egreso : </strong><?php echo Valores(Cantidades_decimales_justos($rowdata['ValorEgreso']), 0); ?><br/>
+								<strong>Proveedor predefinido : </strong><?php echo $rowData['ProveedorFijo']; ?><br/>
+								<strong>Stock Minimo : </strong><?php echo Cantidades_decimales_justos($rowData['StockLimite']).' '.$rowData['Unidad']; ?><br/>
+								<strong>Valor promedio Ingreso : </strong><?php echo Valores(Cantidades_decimales_justos($rowData['ValorIngreso']), 0); ?><br/>
+								<strong>Valor promedio Egreso : </strong><?php echo Valores(Cantidades_decimales_justos($rowData['ValorEgreso']), 0); ?><br/>
 							</p>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
@@ -156,28 +156,28 @@ if(!empty($_GET['id'])){
 								<tbody>
 									<?php
 									//Ficha Tecnica
-									if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
+									if(isset($rowData['FichaTecnica'])&&$rowData['FichaTecnica']!=''){
 										echo '
 											<tr class="item-row">
 												<td>Ficha Tecnica</td>
 												<td width="10">
 													<div class="btn-group" style="width: 70px;">
-														<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['FichaTecnica'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-														<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['FichaTecnica'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+														<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['FichaTecnica'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+														<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['FichaTecnica'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 													</div>
 												</td>
 											</tr>
 										';
 									}
 									//Hoja de seguridad
-									if(isset($rowdata['HDS'])&&$rowdata['HDS']!=''){
+									if(isset($rowData['HDS'])&&$rowData['HDS']!=''){
 										echo '
 											<tr class="item-row">
 												<td>Hoja de seguridad</td>
 												<td width="10">
 													<div class="btn-group" style="width: 70px;">
-														<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['HDS'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-														<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['HDS'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+														<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['HDS'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+														<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['HDS'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 													</div>
 												</td>
 											</tr>

@@ -88,7 +88,7 @@ if(!empty($_GET['map'])){
 		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 
 	}
-	$rowdata = mysqli_fetch_assoc ($resultado);
+	$rowData = mysqli_fetch_assoc ($resultado);
 
 	//información
 	echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">';
@@ -101,7 +101,7 @@ if(!empty($_GET['map'])){
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Modificar Posicion de <?php echo $rowdata['Nombre']; ?></h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Modificar Posicion de <?php echo $rowData['Nombre']; ?></h5>
 			</header>
 			<div class="table-responsive">
 
@@ -115,14 +115,14 @@ if(!empty($_GET['map'])){
 						}else{
 							$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle'];
 
-							if(isset($rowdata['GeoLatitud']) && $rowdata['GeoLatitud']!='' && $rowdata['GeoLatitud']!=0){
-								$nlat = $rowdata['GeoLatitud'];
+							if(isset($rowData['GeoLatitud']) && $rowData['GeoLatitud']!='' && $rowData['GeoLatitud']!=0){
+								$nlat = $rowData['GeoLatitud'];
 							}else{
 								$nlat = '-33.4372';
 							}
 
-							if(isset($rowdata['GeoLongitud']) && $rowdata['GeoLongitud']!='' && $rowdata['GeoLongitud']!=0){
-								$nlong = $rowdata['GeoLongitud'];
+							if(isset($rowData['GeoLongitud']) && $rowData['GeoLongitud']!='' && $rowData['GeoLongitud']!=0){
+								$nlong = $rowData['GeoLongitud'];
 							}else{
 								$nlong = '-70.6506';
 							}
@@ -215,12 +215,12 @@ if(!empty($_GET['map'])){
 							<?php
 							//Se dibujan los inputs
 							$Form_Inputs = new Form_Inputs();
-							$Form_Inputs->form_input_icon('Dirección', 'Direccion_fake', $rowdata['Direccion'], 1,'fa fa-map');
-							$Form_Inputs->form_input_disabled('Latitud', 'Latitud_fake', $rowdata['GeoLatitud']);
-							$Form_Inputs->form_input_disabled('Longitud', 'Longitud_fake', $rowdata['GeoLongitud']);
+							$Form_Inputs->form_input_icon('Dirección', 'Direccion_fake', $rowData['Direccion'], 1,'fa fa-map');
+							$Form_Inputs->form_input_disabled('Latitud', 'Latitud_fake', $rowData['GeoLatitud']);
+							$Form_Inputs->form_input_disabled('Longitud', 'Longitud_fake', $rowData['GeoLongitud']);
 
-							$Form_Inputs->form_input_hidden('GeoLatitud', $rowdata['GeoLatitud'], 2);
-							$Form_Inputs->form_input_hidden('GeoLongitud', $rowdata['GeoLongitud'], 2);
+							$Form_Inputs->form_input_hidden('GeoLatitud', $rowData['GeoLatitud'], 2);
+							$Form_Inputs->form_input_hidden('GeoLongitud', $rowData['GeoLongitud'], 2);
 							$Form_Inputs->form_input_hidden('idServicio', $_GET['map'], 2);
 							?>
 
@@ -261,7 +261,7 @@ if(!empty($_GET['map'])){
 		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 
 	}
-	$rowdata = mysqli_fetch_assoc ($resultado);
+	$rowData = mysqli_fetch_assoc ($resultado);
 
 	?>
 
@@ -276,18 +276,18 @@ if(!empty($_GET['map'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($idTipo)){      $x1  = $idTipo;      }else{$x1  = $rowdata['idTipo'];}
-					if(isset($Nombre)){      $x2  = $Nombre;      }else{$x2  = $rowdata['Nombre'];}
-					if(isset($idCiudad)){    $x3  = $idCiudad;    }else{$x3  = $rowdata['idCiudad'];}
-					if(isset($idComuna)){    $x4  = $idComuna;    }else{$x4  = $rowdata['idComuna'];}
-					if(isset($Direccion)){   $x5  = $Direccion;   }else{$x5  = $rowdata['Direccion'];}
-					if(isset($HoraInicio)){  $x6  = $HoraInicio;  }else{$x6  = $rowdata['HoraInicio'];}
-					if(isset($HoraTermino)){ $x7  = $HoraTermino; }else{$x7  = $rowdata['HoraTermino'];}
-					if(isset($Fono1)){       $x8  = $Fono1;       }else{$x8  = $rowdata['Fono1'];}
-					if(isset($Fono2)){       $x9  = $Fono2;       }else{$x9  = $rowdata['Fono2'];}
-					if(isset($Fax)){         $x10 = $Fax;         }else{$x10 = $rowdata['Fax'];}
-					if(isset($email)){       $x11 = $email;       }else{$x11 = $rowdata['email'];}
-					if(isset($Web)){         $x12 = $Web;         }else{$x12 = $rowdata['Web'];}
+					if(isset($idTipo)){      $x1  = $idTipo;      }else{$x1  = $rowData['idTipo'];}
+					if(isset($Nombre)){      $x2  = $Nombre;      }else{$x2  = $rowData['Nombre'];}
+					if(isset($idCiudad)){    $x3  = $idCiudad;    }else{$x3  = $rowData['idCiudad'];}
+					if(isset($idComuna)){    $x4  = $idComuna;    }else{$x4  = $rowData['idComuna'];}
+					if(isset($Direccion)){   $x5  = $Direccion;   }else{$x5  = $rowData['Direccion'];}
+					if(isset($HoraInicio)){  $x6  = $HoraInicio;  }else{$x6  = $rowData['HoraInicio'];}
+					if(isset($HoraTermino)){ $x7  = $HoraTermino; }else{$x7  = $rowData['HoraTermino'];}
+					if(isset($Fono1)){       $x8  = $Fono1;       }else{$x8  = $rowData['Fono1'];}
+					if(isset($Fono2)){       $x9  = $Fono2;       }else{$x9  = $rowData['Fono2'];}
+					if(isset($Fax)){         $x10 = $Fax;         }else{$x10 = $rowData['Fax'];}
+					if(isset($email)){       $x11 = $email;       }else{$x11 = $rowData['email'];}
+					if(isset($Web)){         $x12 = $Web;         }else{$x12 = $rowData['Web'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

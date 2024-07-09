@@ -72,7 +72,7 @@ if(!empty($_GET['id'])){
 	validaPermisoUser($rowlevel['level'], 2, $dbConn);
 	// consulto los datos
 	//Busco los datos
-	$rowdata = db_select_data (false, 'idEstado, Nombre,Ubicacion, Capacidad', 'oficinas_listado', '', 'idOficina = '.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, 'idEstado, Nombre,Ubicacion, Capacidad', 'oficinas_listado', '', 'idOficina = '.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -87,10 +87,10 @@ if(!empty($_GET['id'])){
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){          $x1  = $Nombre;      }else{$x1  = $rowdata['Nombre'];}
-					if(isset($UbicacionHora)){   $x2  = $Ubicacion;   }else{$x2  = $rowdata['Ubicacion'];}
-					if(isset($Capacidad)){       $x3  = $Capacidad;   }else{$x3  = $rowdata['Capacidad'];}
-					if(isset($idEstado)){        $x4  = $idEstado;    }else{$x4  = $rowdata['idEstado'];}
+					if(isset($Nombre)){          $x1  = $Nombre;      }else{$x1  = $rowData['Nombre'];}
+					if(isset($UbicacionHora)){   $x2  = $Ubicacion;   }else{$x2  = $rowData['Ubicacion'];}
+					if(isset($Capacidad)){       $x3  = $Capacidad;   }else{$x3  = $rowData['Capacidad'];}
+					if(isset($idEstado)){        $x4  = $idEstado;    }else{$x4  = $rowData['idEstado'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

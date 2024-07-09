@@ -54,12 +54,12 @@ seguridad_eventos_listado.Hora,
 seguridad_eventos_listado.Observacion';
 $SIS_join  = '';
 $SIS_where = 'seguridad_eventos_listado.idEvento = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'seguridad_eventos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'seguridad_eventos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Evento', fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].' hrs', 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Evento', fecha_estandar($rowData['Fecha']).' - '.$rowData['Hora'].' hrs', 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -78,9 +78,9 @@ $rowdata = db_select_data (false, $SIS_query, 'seguridad_eventos_listado', $SIS_
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Fecha)){         $x1  = $Fecha;        }else{$x1  = $rowdata['Fecha'];}
-					if(isset($Hora)){          $x2  = $Hora;         }else{$x2  = $rowdata['Hora'];}
-					if(isset($Observacion)){   $x3  = $Observacion;  }else{$x3  = $rowdata['Observacion'];}
+					if(isset($Fecha)){         $x1  = $Fecha;        }else{$x1  = $rowData['Fecha'];}
+					if(isset($Hora)){          $x2  = $Hora;         }else{$x2  = $rowData['Hora'];}
+					if(isset($Observacion)){   $x3  = $Observacion;  }else{$x3  = $rowData['Observacion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

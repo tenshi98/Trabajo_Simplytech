@@ -100,12 +100,12 @@ if(!empty($_GET['id'])){
 	LEFT JOIN `transportes_tipos`         ON transportes_tipos.idTipo                 = transportes_listado.idTipo
 	LEFT JOIN `core_rubros`               ON core_rubros.idRubro                      = transportes_listado.idRubro';
 	$SIS_where = 'transportes_listado.idTransporte = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'transportes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'transportes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Transportista', $rowdata['Nombre'], 'Resumen'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Transportista', $rowData['Nombre'], 'Resumen'); ?>
 	</div>
 	<div class="clearfix"></div>
 
@@ -138,51 +138,51 @@ if(!empty($_GET['id'])){
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 								<p class="text-muted word_break">
-									<strong>Tipo de Transportista : </strong><?php echo $rowdata['tipoTransporte']; ?><br/>
+									<strong>Tipo de Transportista : </strong><?php echo $rowData['tipoTransporte']; ?><br/>
 									<?php
 									//Si el cliente es una empresa
-									if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
-										<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
+									if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){ ?>
+										<strong>Nombre Fantasia: </strong><?php echo $rowData['Nombre']; ?><br/>
 									<?php
 									//si es una persona
 									}else{ ?>
-										<strong>Nombre: </strong><?php echo $rowdata['Nombre']; ?><br/>
-										<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
+										<strong>Nombre: </strong><?php echo $rowData['Nombre']; ?><br/>
+										<strong>Rut : </strong><?php echo $rowData['Rut']; ?><br/>
 									<?php } ?>
-									<strong>Fecha de Ingreso Sistema : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
-									<strong>Región : </strong><?php echo $rowdata['nombre_region']; ?><br/>
-									<strong>Comuna : </strong><?php echo $rowdata['nombre_comuna']; ?><br/>
-									<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
-									<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
-									<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
+									<strong>Fecha de Ingreso Sistema : </strong><?php echo Fecha_completa($rowData['fNacimiento']); ?><br/>
+									<strong>Región : </strong><?php echo $rowData['nombre_region']; ?><br/>
+									<strong>Comuna : </strong><?php echo $rowData['nombre_comuna']; ?><br/>
+									<strong>Dirección : </strong><?php echo $rowData['Direccion']; ?><br/>
+									<strong>Sistema Relacionado : </strong><?php echo $rowData['sistema']; ?><br/>
+									<strong>Estado : </strong><?php echo $rowData['estado']; ?>
 								</p>
 
 								<?php
 								//Si el cliente es una empresa
-								if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
+								if(isset($rowData['idTipo'])&&$rowData['idTipo']==1){ ?>
 									<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
 									<p class="text-muted word_break">
-										<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
-										<strong>Razón Social : </strong><?php echo $rowdata['RazonSocial']; ?><br/>
-										<strong>Giro de la empresa: </strong><?php echo $rowdata['Giro']; ?><br/>
-										<strong>Rubro : </strong><?php echo $rowdata['Rubro']; ?><br/>
+										<strong>Rut : </strong><?php echo $rowData['Rut']; ?><br/>
+										<strong>Razón Social : </strong><?php echo $rowData['RazonSocial']; ?><br/>
+										<strong>Giro de la empresa: </strong><?php echo $rowData['Giro']; ?><br/>
+										<strong>Rubro : </strong><?php echo $rowData['Rubro']; ?><br/>
 									</p>
 								<?php } ?>
 
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
 								<p class="text-muted word_break">
-									<strong>Telefono Fijo : </strong><?php echo formatPhone($rowdata['Fono1']); ?><br/>
-									<strong>Telefono Movil : </strong><?php echo formatPhone($rowdata['Fono2']); ?><br/>
-									<strong>Fax : </strong><?php echo $rowdata['Fax']; ?><br/>
-									<strong>Email : </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
-									<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowdata['Web']; ?>"><?php echo $rowdata['Web']; ?></a>
+									<strong>Telefono Fijo : </strong><?php echo formatPhone($rowData['Fono1']); ?><br/>
+									<strong>Telefono Movil : </strong><?php echo formatPhone($rowData['Fono2']); ?><br/>
+									<strong>Fax : </strong><?php echo $rowData['Fax']; ?><br/>
+									<strong>Email : </strong><a href="mailto:<?php echo $rowData['email']; ?>"><?php echo $rowData['email']; ?></a><br/>
+									<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowData['Web']; ?>"><?php echo $rowData['Web']; ?></a>
 								</p>
 
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Persona de Contacto</h2>
 								<p class="text-muted word_break">
-									<strong>Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto']; ?><br/>
-									<strong>Telefono : </strong><?php echo formatPhone($rowdata['PersonaContacto_Fono']); ?><br/>
-									<strong>Email : </strong><a href="mailto:<?php echo $rowdata['PersonaContacto_email']; ?>"><?php echo $rowdata['PersonaContacto_email']; ?></a><br/>
+									<strong>Persona de Contacto : </strong><?php echo $rowData['PersonaContacto']; ?><br/>
+									<strong>Telefono : </strong><?php echo formatPhone($rowData['PersonaContacto_Fono']); ?><br/>
+									<strong>Email : </strong><a href="mailto:<?php echo $rowData['PersonaContacto_email']; ?>"><?php echo $rowData['PersonaContacto_email']; ?></a><br/>
 								</p>
 							</div>
 						</div>
@@ -192,9 +192,9 @@ if(!empty($_GET['id'])){
 							<?php
 								//se arma la dirección
 								$direccion = "";
-								if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){           $direccion .= $rowdata["Direccion"];}
-								if(isset($rowdata["nombre_comuna"])&&$rowdata["nombre_comuna"]!=''){   $direccion .= ', '.$rowdata["nombre_comuna"];}
-								if(isset($rowdata["nombre_region"])&&$rowdata["nombre_region"]!=''){   $direccion .= ', '.$rowdata["nombre_region"];}
+								if(isset($rowData["Direccion"])&&$rowData["Direccion"]!=''){           $direccion .= $rowData["Direccion"];}
+								if(isset($rowData["nombre_comuna"])&&$rowData["nombre_comuna"]!=''){   $direccion .= ', '.$rowData["nombre_comuna"];}
+								if(isset($rowData["nombre_region"])&&$rowData["nombre_region"]!=''){   $direccion .= ', '.$rowData["nombre_region"];}
 								//se despliega mensaje en caso de no existir dirección
 								if($direccion!=''){
 									echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);

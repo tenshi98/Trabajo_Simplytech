@@ -105,7 +105,7 @@ if(!$resultado){
 	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
 		
 }
-$row_data = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 /*****************************************/
 //Insumos
@@ -258,7 +258,7 @@ array_push( $arrHistorial,$row );
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Solicitud de Aplicacion.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['f_creacion']); ?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowData['f_creacion']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -269,33 +269,33 @@ array_push( $arrHistorial,$row );
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Empresa Origen</strong>
 					<address>
-						Empresa: '.$row_data['SistemaOrigen'].'<br/>
-						Ciudad-Comuna: '.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
-						Dirección: '.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
-						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
-						Email: '.$row_data['SistemaOrigenEmail'].'
+						Empresa: '.$rowData['SistemaOrigen'].'<br/>
+						Ciudad-Comuna: '.$rowData['SistemaOrigenCiudad'].', '.$rowData['SistemaOrigenComuna'].'<br/>
+						Dirección: '.$rowData['SistemaOrigenDireccion'].'<br/>
+						Fono: '.formatPhone($rowData['SistemaOrigenFono']).'<br/>
+						Rut: '.$rowData['SistemaOrigenRut'].'<br/>
+						Email: '.$rowData['SistemaOrigenEmail'].'
 					</address>
 				</div>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Identificación</strong>
 					<address>
-						Predio: '.$row_data['NombrePredio'].'<br/>
-						Estado: '.$row_data['Estado'].'<br/>
-						Temporada: '.$row_data['TemporadaCodigo'].' '.$row_data['TemporadaNombre'].'<br/>
-						Estado Fenologico: '.$row_data['EstadoFenCodigo'].' '.$row_data['EstadoFenNombre'].'<br/>
-						Especie: '.$row_data['VariedadCat'].'<br/>
-						Variedad: '.$row_data['VariedadNombre'].'<br/>
+						Predio: '.$rowData['NombrePredio'].'<br/>
+						Estado: '.$rowData['Estado'].'<br/>
+						Temporada: '.$rowData['TemporadaCodigo'].' '.$rowData['TemporadaNombre'].'<br/>
+						Estado Fenologico: '.$rowData['EstadoFenCodigo'].' '.$rowData['EstadoFenNombre'].'<br/>
+						Especie: '.$rowData['VariedadCat'].'<br/>
+						Variedad: '.$rowData['VariedadNombre'].'<br/>
 					</address>
 				</div>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Datos de Solicitud</strong>
 					<address>
-						N° Solicitud: '.n_doc($row_data['idSolicitud'], 5).'<br/>
-						Programado: '.fecha_estandar($row_data['f_programacion']).' '.$row_data['horaProg'].'<br/>';
-						if(isset($row_data['f_ejecucion'])&&$row_data['f_ejecucion']!='0000-00-00'){echo 'Ejecutado: '.fecha_estandar($row_data['f_ejecucion']).' '.$row_data['horaEjecucion'].'<br/>';}
-						if(isset($row_data['f_termino'])&&$row_data['f_termino']!='0000-00-00'){echo 'Terminado: '.fecha_estandar($row_data['f_termino']).' '.$row_data['horaTermino'].'<br/>';}
-						echo 'Agrónomo: '.$row_data['NombreUsuario'].'
+						N° Solicitud: '.n_doc($rowData['idSolicitud'], 5).'<br/>
+						Programado: '.fecha_estandar($rowData['f_programacion']).' '.$rowData['horaProg'].'<br/>';
+						if(isset($rowData['f_ejecucion'])&&$rowData['f_ejecucion']!='0000-00-00'){echo 'Ejecutado: '.fecha_estandar($rowData['f_ejecucion']).' '.$rowData['horaEjecucion'].'<br/>';}
+						if(isset($rowData['f_termino'])&&$rowData['f_termino']!='0000-00-00'){echo 'Terminado: '.fecha_estandar($rowData['f_termino']).' '.$rowData['horaTermino'].'<br/>';}
+						echo 'Agrónomo: '.$rowData['NombreUsuario'].'
 					</address>
 				</div>';
 		?>
@@ -374,7 +374,7 @@ array_push( $arrHistorial,$row );
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $rowData['Observaciones']; ?></p>
 		</div>
 	</div>
 	

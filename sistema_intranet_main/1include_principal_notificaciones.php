@@ -87,14 +87,13 @@ echo '
 			</tr>
 		</tbody>
 	</table>';
-									
-}		
+
+}
 
 ?>
-  
+
 
 <div class="row inbox">
-  						
 	<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 		<div class="box">
 			<header>
@@ -140,9 +139,8 @@ echo '
 			</div>
 
 		</div>
-	</div>  
-	
-	
+	</div>
+
 	<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 mail-left-box">
   		<div class="list-group inbox-options">
 				<?php
@@ -153,9 +151,9 @@ echo '
 
 				<div class="list-group-item">Filtro</div>
 				<a href="<?php echo $original.'?pagina=1'; ?>" class="list-group-item">
-					<i class="fa fa-inbox" aria-hidden="true"></i> 
+					<i class="fa fa-inbox" aria-hidden="true"></i>
 					Mostrar Todos
-					<span class="badge  bg-primary"><?php echo $todos; ?></span> 
+					<span class="badge  bg-primary"><?php echo $todos; ?></span>
 				</a>
 
 			<?php foreach ($arrCategorias as $cat) { ?>
@@ -167,7 +165,7 @@ echo '
 					</a>
 				<?php }else{ ?>
 					<a href="<?php echo $original.'?pagina=1&filtersender=admin'; ?>" class="list-group-item">
-						<i class="fa fa-inbox" aria-hidden="true"></i> 
+						<i class="fa fa-inbox" aria-hidden="true"></i>
 						Administrador
 						<span class="badge bg-primary"><?php echo $cat['cuenta']; ?></span>
 					</a>
@@ -175,6 +173,6 @@ echo '
 			<?php } ?>
 
   		</div>
-	</div> 
-							
+	</div>
+
 </div>

@@ -81,12 +81,12 @@ if(!empty($_GET['id'])){
 	LEFT JOIN `sistema_variedades_categorias`    ON sistema_variedades_categorias.idCategoria        = variedades_listado.idCategoria
 	LEFT JOIN `core_estados`                     ON core_estados.idEstado                            = variedades_listado.idEstado';
 	$SIS_where = 'variedades_listado.idProducto = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'variedades_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'variedades_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Variedades', $rowdata['Nombre'], 'Resumen'); ?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Variedades', $rowData['Nombre'], 'Resumen'); ?>
 	</div>
 	<div class="clearfix"></div>
 
@@ -115,52 +115,52 @@ if(!empty($_GET['id'])){
 					<div class="wmd-panel">
 
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-							<?php if ($rowdata['Direccion_img']=='') { ?>
+							<?php if ($rowData['Direccion_img']=='') { ?>
 								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/productos.jpg">
 							<?php }else{
-								echo widget_TipoImagen($rowdata['idTipoImagen'], DB_SITE_REPO, DB_SITE_MAIN_PATH, 'upload', $rowdata['Direccion_img']);
+								echo widget_TipoImagen($rowData['idTipoImagen'], DB_SITE_REPO, DB_SITE_MAIN_PATH, 'upload', $rowData['Direccion_img']);
 							} ?>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Variedad</h2>
 							<p class="text-muted">
-								<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
-								<strong>Codigo : </strong><?php echo $rowdata['Codigo']; ?><br/>
-								<strong>Especie : </strong><?php echo $rowdata['Categoria']; ?><br/>
-								<strong>Grupo Especie : </strong><?php echo $rowdata['Tipo']; ?><br/>
-								<strong>Estado : </strong><?php echo $rowdata['Estado']; ?>
+								<strong>Nombre : </strong><?php echo $rowData['Nombre']; ?><br/>
+								<strong>Codigo : </strong><?php echo $rowData['Codigo']; ?><br/>
+								<strong>Especie : </strong><?php echo $rowData['Categoria']; ?><br/>
+								<strong>Grupo Especie : </strong><?php echo $rowData['Tipo']; ?><br/>
+								<strong>Estado : </strong><?php echo $rowData['Estado']; ?>
 							</p>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripción</h2>
-							<p class="text-muted"><?php echo $rowdata['Descripcion']; ?></p>
+							<p class="text-muted"><?php echo $rowData['Descripcion']; ?></p>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 							<table id="items" style="margin-bottom: 20px;">
 								<tbody>
 									<?php
 									//Ficha Tecnica
-									if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
+									if(isset($rowData['FichaTecnica'])&&$rowData['FichaTecnica']!=''){
 										echo '
 											<tr class="item-row">
 												<td>Ficha Tecnica</td>
 												<td width="10">
 													<div class="btn-group" style="width: 70px;">
-														<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['FichaTecnica'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-														<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['FichaTecnica'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+														<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['FichaTecnica'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+														<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['FichaTecnica'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 													</div>
 												</td>
 											</tr>
 										';
 									}
 									//Hoja de seguridad
-									if(isset($rowdata['HDS'])&&$rowdata['HDS']!=''){
+									if(isset($rowData['HDS'])&&$rowData['HDS']!=''){
 										echo '
 											<tr class="item-row">
 												<td>Hoja de seguridad</td>
 												<td width="10">
 													<div class="btn-group" style="width: 70px;">
-														<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['HDS'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-														<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['HDS'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+														<a href="view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['HDS'], fecha_actual()).'" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
+														<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowData['HDS'], fecha_actual()).'" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
 													</div>
 												</td>
 											</tr>

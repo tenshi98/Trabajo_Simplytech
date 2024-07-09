@@ -121,7 +121,7 @@ if(!empty($_GET['newPago'])){
 $Form_Inputs = new Inputs();
 
 // consulto los datos
-$row_data = db_select_data (false, 'IVA_MontoPago,PPM_Pago,Retencion,ImpuestoRenta,Saldos_IVA_Actual,TotalGeneral,TotalPagoGeneral', 'pagos_leyes_fiscales', '', 'idFactFiscal ='.$_GET['newPago'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+$rowData = db_select_data (false, 'IVA_MontoPago,PPM_Pago,Retencion,ImpuestoRenta,Saldos_IVA_Actual,TotalGeneral,TotalPagoGeneral', 'pagos_leyes_fiscales', '', 'idFactFiscal ='.$_GET['newPago'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 				
 $arrFormaPago = array();
 $arrFormaPago = db_select_array (false, 'sistema_documentos_pago.Nombre AS DocPago,pagos_leyes_fiscales_formas_pago.Creacion_fecha,pagos_leyes_fiscales_formas_pago.idTipo,pagos_leyes_fiscales_formas_pago.N_DocPago,pagos_leyes_fiscales_formas_pago.F_Pago,pagos_leyes_fiscales_formas_pago.Monto,usuarios_listado.Nombre AS Usuario','pagos_leyes_fiscales_formas_pago', 'LEFT JOIN `sistema_documentos_pago`     ON sistema_documentos_pago.idDocPago   = pagos_leyes_fiscales_formas_pago.idDocPago LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario    = pagos_leyes_fiscales_formas_pago.idUsuario', 'pagos_leyes_fiscales_formas_pago.idFactFiscal ='.$_GET['newPago'], 'pagos_leyes_fiscales_formas_pago.idTipo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrFormaPago');
@@ -148,10 +148,10 @@ if($arrFormaPago){
 }
 
 //obtengo los saldos
-$IVA_Total_deuda     = valores_comparables($row_data['IVA_MontoPago'] - $IVA_Pagado);
-$PPM_Total_deuda     = valores_comparables($row_data['PPM_Pago'] - $PPM_Pagado);
-$RET_Total_deuda     = valores_comparables($row_data['Retencion'] - $RET_Pagado);
-$IMPRENT_Total_deuda = valores_comparables($row_data['ImpuestoRenta'] - $IMPRENT_Pagado);
+$IVA_Total_deuda     = valores_comparables($rowData['IVA_MontoPago'] - $IVA_Pagado);
+$PPM_Total_deuda     = valores_comparables($rowData['PPM_Pago'] - $PPM_Pagado);
+$RET_Total_deuda     = valores_comparables($rowData['Retencion'] - $RET_Pagado);
+$IMPRENT_Total_deuda = valores_comparables($rowData['ImpuestoRenta'] - $IMPRENT_Pagado);
 
 
 ?>
@@ -260,7 +260,7 @@ input[type="date"].form-control{
 						</tr>
 						<tr>
 							<td class="meta-head">IVA a Pagar</td>
-							<td align="right"><?php echo valores($row_data['IVA_MontoPago'], 0); ?></td>
+							<td align="right"><?php echo valores($rowData['IVA_MontoPago'], 0); ?></td>
 							<td align="left">
 								<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 									foreach ($arrFormaPago as $pago) {
@@ -311,7 +311,7 @@ input[type="date"].form-control{
 						</tr>
 						<tr>
 							<td class="meta-head">PPM a Pagar</td>
-							<td align="right"><?php echo valores($row_data['PPM_Pago'], 0); ?></td>
+							<td align="right"><?php echo valores($rowData['PPM_Pago'], 0); ?></td>
 							<td align="left">
 								<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 									foreach ($arrFormaPago as $pago) {
@@ -362,7 +362,7 @@ input[type="date"].form-control{
 						</tr>
 						<tr>
 							<td class="meta-head">Retencion a Pagar</td>
-							<td align="right"><?php echo valores($row_data['Retencion'], 0); ?></td>
+							<td align="right"><?php echo valores($rowData['Retencion'], 0); ?></td>
 							<td align="left">
 								<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 									foreach ($arrFormaPago as $pago) {
@@ -413,7 +413,7 @@ input[type="date"].form-control{
 						</tr>
 						<tr>
 							<td class="meta-head">Impuesto a la renta a Pagar</td>
-							<td align="right"><?php echo valores($row_data['ImpuestoRenta'], 0); ?></td>
+							<td align="right"><?php echo valores($rowData['ImpuestoRenta'], 0); ?></td>
 							<td align="left">
 								<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 									foreach ($arrFormaPago as $pago) {
@@ -464,12 +464,12 @@ input[type="date"].form-control{
 						</tr>
 						<tr>
 							<td class="meta-head"><strong>Totales</strong></td>
-							<td align="right"><strong><?php echo valores($row_data['TotalGeneral'], 0); ?></strong></td>
+							<td align="right"><strong><?php echo valores($rowData['TotalGeneral'], 0); ?></strong></td>
 							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>
-							<td align="right"><strong><?php echo valores($row_data['TotalPagoGeneral'], 0); ?></strong></td>
+							<td align="right"><strong><?php echo valores($rowData['TotalPagoGeneral'], 0); ?></strong></td>
 						</tr>
 					</tbody>
 				</table>

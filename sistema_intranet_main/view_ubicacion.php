@@ -47,7 +47,7 @@ ubicacion_listado.Nombre,
 core_estados.Nombre AS Estado';
 $SIS_join  = 'LEFT JOIN `core_estados` ON core_estados.idEstado = ubicacion_listado.idEstado';
 $SIS_where = 'ubicacion_listado.idUbicacion='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'ubicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'ubicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 //Se crean las variables
 $nmax = 5;
@@ -150,11 +150,11 @@ function arrayToUL(array $array, $lv, $nmax){
 		
 							<tr class="odd">
 								<td>Nombre</td>
-								<td><?php echo $rowdata['Nombre']; ?></td>
+								<td><?php echo $rowData['Nombre']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Estado</td>
-								<td><?php echo $rowdata['Estado']; ?></td>
+								<td><?php echo $rowData['Estado']; ?></td>
 							</tr>
 							<tr>
 								<td colspan="2" style="background-color: #ccc;">Itemizado</td>

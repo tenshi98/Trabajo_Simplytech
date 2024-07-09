@@ -271,7 +271,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);	 
+$rowData = mysqli_fetch_assoc ($resultado);	 
 
 //filtro
 $zx1 = "idProducto=0";
@@ -313,27 +313,27 @@ foreach ($arrPermisos as $prod) {
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)){               $x1  = $Nombre;                 }else{$x1  = $rowdata['Nombre'];}
-				if(isset($Codigo)){               $x2  = $Codigo;                 }else{$x2  = $rowdata['Codigo'];}
-				if(isset($Marca)){                $x3  = $Marca;                  }else{$x3  = $rowdata['Marca'];}
-				if(isset($idUtilizable)){         $x4  = $idUtilizable;           }else{$x4  = $rowdata['idUtilizable'];}
+				if(isset($Nombre)){               $x1  = $Nombre;                 }else{$x1  = $rowData['Nombre'];}
+				if(isset($Codigo)){               $x2  = $Codigo;                 }else{$x2  = $rowData['Codigo'];}
+				if(isset($Marca)){                $x3  = $Marca;                  }else{$x3  = $rowData['Marca'];}
+				if(isset($idUtilizable)){         $x4  = $idUtilizable;           }else{$x4  = $rowData['idUtilizable'];}
 				//Si es componente
-				if(isset($Modelo)){               $x6  = $Modelo;                 }else{$x6  = $rowdata['Modelo'];}
-				if(isset($AnoFab)){               $x7  = $AnoFab;                 }else{$x7  = $rowdata['AnoFab'];}
-				if(isset($Serie)){                $x8  = $Serie;                  }else{$x8  = $rowdata['Serie'];}
+				if(isset($Modelo)){               $x6  = $Modelo;                 }else{$x6  = $rowData['Modelo'];}
+				if(isset($AnoFab)){               $x7  = $AnoFab;                 }else{$x7  = $rowData['AnoFab'];}
+				if(isset($Serie)){                $x8  = $Serie;                  }else{$x8  = $rowData['Serie'];}
 				//Si es subcomponente
-				if(isset($Saf)){                  $x9  = $Saf;                    }else{$x9  = $rowdata['Saf'];}
-				if(isset($Numero)){               $x10 = $Numero;                 }else{$x10 = $rowdata['Numero'];}
-				if(isset($idSubTipo)){            $x11 = $idSubTipo;              }else{$x11 = $rowdata['idSubTipo'];}
-				if(isset($idProducto)){           $x12 = $idProducto;             }else{$x12 = $rowdata['idProducto'];}
-				if(isset($Grasa_inicial)){        $x13 = $Grasa_inicial;          }else{$x13 = Cantidades_decimales_justos($rowdata['Grasa_inicial']);}
-				if(isset($Grasa_relubricacion)){  $x14 = $Grasa_relubricacion;    }else{$x14 = Cantidades_decimales_justos($rowdata['Grasa_relubricacion']);}
-				if(isset($Aceite)){               $x15 = $Aceite;                 }else{$x15 = Cantidades_decimales_justos($rowdata['Aceite']);}
-				if(isset($Cantidad)){             $x16 = $Cantidad;               }else{$x16 = Cantidades_decimales_justos($rowdata['Cantidad']);}
-				if(isset($idUml_fake)){           $x17 = $idUml_fake;             }else{$x17 = $rowdata['UnidadMedida'];}
-				if(isset($idUml)){                $x18 = $idUml;                  }else{$x18 = $rowdata['idUml'];}
-				if(isset($Frecuencia)){           $x19 = $Frecuencia;             }else{$x19 = $rowdata['Frecuencia'];}
-				if(isset($idFrecuencia)){         $x20 = $idFrecuencia;           }else{$x20 = $rowdata['idFrecuencia'];}
+				if(isset($Saf)){                  $x9  = $Saf;                    }else{$x9  = $rowData['Saf'];}
+				if(isset($Numero)){               $x10 = $Numero;                 }else{$x10 = $rowData['Numero'];}
+				if(isset($idSubTipo)){            $x11 = $idSubTipo;              }else{$x11 = $rowData['idSubTipo'];}
+				if(isset($idProducto)){           $x12 = $idProducto;             }else{$x12 = $rowData['idProducto'];}
+				if(isset($Grasa_inicial)){        $x13 = $Grasa_inicial;          }else{$x13 = Cantidades_decimales_justos($rowData['Grasa_inicial']);}
+				if(isset($Grasa_relubricacion)){  $x14 = $Grasa_relubricacion;    }else{$x14 = Cantidades_decimales_justos($rowData['Grasa_relubricacion']);}
+				if(isset($Aceite)){               $x15 = $Aceite;                 }else{$x15 = Cantidades_decimales_justos($rowData['Aceite']);}
+				if(isset($Cantidad)){             $x16 = $Cantidad;               }else{$x16 = Cantidades_decimales_justos($rowData['Cantidad']);}
+				if(isset($idUml_fake)){           $x17 = $idUml_fake;             }else{$x17 = $rowData['UnidadMedida'];}
+				if(isset($idUml)){                $x18 = $idUml;                  }else{$x18 = $rowData['idUml'];}
+				if(isset($Frecuencia)){           $x19 = $Frecuencia;             }else{$x19 = $rowData['Frecuencia'];}
+				if(isset($idFrecuencia)){         $x20 = $idFrecuencia;           }else{$x20 = $rowData['idFrecuencia'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -692,7 +692,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);	 
+$rowData = mysqli_fetch_assoc ($resultado);	 
 
 ?>
 
@@ -700,14 +700,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Modificar imagen de <?php echo $rowdata['Nombre']; ?></h5>
+			<h5>Modificar imagen de <?php echo $rowData['Nombre']; ?></h5>
 		</header>
 		<div class="body">
 
-			<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){ ?>
+			<?php if(isset($rowData['Direccion_img'])&&$rowData['Direccion_img']!=''){ ?>
 
 				<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
-					 <img src="upload/<?php echo $rowdata['Direccion_img']; ?>" width="100%" >
+					 <img src="upload/<?php echo $rowData['Direccion_img']; ?>" width="100%" >
 				</div>
 
 				<div class="form-group">
@@ -1193,7 +1193,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+$rowData = mysqli_fetch_assoc ($resultado);
 
 //Se crean las variables
 $nmax = 15;
@@ -1668,9 +1668,9 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Unidades de Negocio', $rowdata['Nombre'], 'Componentes'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Unidades de Negocio', $rowData['Nombre'], 'Componentes'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
-		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Componente</a><?php } ?>
+		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowData['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Componente</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -1693,12 +1693,12 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Descripcion</a></li>
 						<?php
 						//Uso de componentes
-						if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
+						if(isset($rowData['idConfig_1'])&&$rowData['idConfig_1']==1){ ?>
 							<li class="active"><a href="<?php echo 'unidad_negocio_listado_componentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Componentes</a></li>
 						<?php } ?>
 						<?php
 						//uso de matriz de analisis
-						if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
+						if(isset($rowData['idConfig_2'])&&$rowData['idConfig_2']==1){ ?>
 							<li class=""><a href="<?php echo 'unidad_negocio_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-microchip" aria-hidden="true"></i> Matriz Analisis</a></li>
 						<?php } ?>
 
@@ -1709,7 +1709,7 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
         <div class="table-responsive">
 
 			<?php //Se imprime el arbol
-			echo arrayToUL($array3d, $TipoMaq, $Trabajo, 0, $rowlevel['level'],$new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'], $nmax);
+			echo arrayToUL($array3d, $TipoMaq, $Trabajo, 0, $rowlevel['level'],$new_location.'&id='.$_GET['id'].'&idSistema='.$rowData['idSistema'], $nmax);
 			?>
 
 			<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

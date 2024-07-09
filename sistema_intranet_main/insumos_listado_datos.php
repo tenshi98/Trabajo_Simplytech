@@ -55,12 +55,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,idCategoria,Marca,idUml, Codigo';
 $SIS_join  = '';
 $SIS_where = 'idProducto = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'insumos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'insumos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Insumos', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Insumos', $rowData['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -90,11 +90,11 @@ $rowdata = db_select_data (false, $SIS_query, 'insumos_listado', $SIS_join, $SIS
 
 					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)){         $x1  = $Nombre;           }else{$x1  = $rowdata['Nombre'];}
-					if(isset($idCategoria)){    $x2  = $idCategoria;      }else{$x2  = $rowdata['idCategoria'];}
-					if(isset($idUml)){          $x3  = $idUml;            }else{$x3  = $rowdata['idUml'];}
-					if(isset($Marca)){          $x4  = $Marca;            }else{$x4  = $rowdata['Marca'];}
-					if(isset($Codigo)){         $x5  = $Codigo;           }else{$x5  = $rowdata['Codigo'];}
+					if(isset($Nombre)){         $x1  = $Nombre;           }else{$x1  = $rowData['Nombre'];}
+					if(isset($idCategoria)){    $x2  = $idCategoria;      }else{$x2  = $rowData['idCategoria'];}
+					if(isset($idUml)){          $x3  = $idUml;            }else{$x3  = $rowData['idUml'];}
+					if(isset($Marca)){          $x4  = $Marca;            }else{$x4  = $rowData['Marca'];}
+					if(isset($Codigo)){         $x5  = $Codigo;           }else{$x5  = $rowData['Codigo'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

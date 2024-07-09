@@ -77,7 +77,7 @@ if(!empty($_GET['id'])){
 	$SIS_query = 'Nombre,Descripcion, idLicencia, SitioWeb, SitioDescarga, idCategoria';
 	$SIS_join  = '';
 	$SIS_where = 'idSoftware = '.$_GET['id'];
-	$rowdata = db_select_data (false, $SIS_query, 'soporte_software_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$rowData = db_select_data (false, $SIS_query, 'soporte_software_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 	?>
 
@@ -93,12 +93,12 @@ if(!empty($_GET['id'])){
 					<?php
 					//Se verifican si existen los datos
 					//Se verifican si existen los datos
-					if(isset($Nombre)){         $x1  = $Nombre;         }else{$x1  = $rowdata['Nombre'];}
-					if(isset($Descripcion)){    $x2  = $Descripcion;    }else{$x2  = $rowdata['Descripcion'];}
-					if(isset($idLicencia)){     $x3  = $idLicencia;     }else{$x3  = $rowdata['idLicencia'];}
-					if(isset($SitioWeb)){       $x6  = $SitioWeb;       }else{$x6  = $rowdata['SitioWeb'];}
-					if(isset($SitioDescarga)){  $x7  = $SitioDescarga;  }else{$x7  = $rowdata['SitioDescarga'];}
-					if(isset($idCategoria)){    $x8  = $idCategoria;    }else{$x8  = $rowdata['idCategoria'];}
+					if(isset($Nombre)){         $x1  = $Nombre;         }else{$x1  = $rowData['Nombre'];}
+					if(isset($Descripcion)){    $x2  = $Descripcion;    }else{$x2  = $rowData['Descripcion'];}
+					if(isset($idLicencia)){     $x3  = $idLicencia;     }else{$x3  = $rowData['idLicencia'];}
+					if(isset($SitioWeb)){       $x6  = $SitioWeb;       }else{$x6  = $rowData['SitioWeb'];}
+					if(isset($SitioDescarga)){  $x7  = $SitioDescarga;  }else{$x7  = $rowData['SitioDescarga'];}
+					if(isset($idCategoria)){    $x8  = $idCategoria;    }else{$x8  = $rowData['idCategoria'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();

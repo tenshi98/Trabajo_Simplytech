@@ -174,7 +174,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 $SIS_query = 'idEstado, f_ejecucion, f_ejecucion_fin';
 $SIS_join  = '';
 $SIS_where = 'idSolicitud = '.$_GET['view'];
-$row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+$rowData = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /*****************************************/
 //Cuarteles
@@ -261,11 +261,11 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['HumTempMax']).' %'; ?></td>
 								<td>
 									<div class="btn-group" style="width: 100px;" >
-										<?php if(isset($row_data['idEstado'])&&$row_data['idEstado']!=3&&isset($cuartel['idEstado'])&&$cuartel['idEstado']==1){ ?>
-											<?php if(isset($row_data['idEstado'])&&$row_data['idEstado']==2){ 
+										<?php if(isset($rowData['idEstado'])&&$rowData['idEstado']!=3&&isset($cuartel['idEstado'])&&$cuartel['idEstado']==1){ ?>
+											<?php if(isset($rowData['idEstado'])&&$rowData['idEstado']==2){ 
 												$distancia = $cuartel['CuartelDistanciaPlant']*$cuartel['CuartelNPlantas'];
 												?>
-												<a href="<?php echo $location.'&lock_cuartel='.$cuartel['idCuarteles'].'&f_ejecucion='.$row_data['f_ejecucion'].'&f_ejecucion_fin='.$row_data['f_ejecucion_fin'].'&distancia='.$distancia; ?>" title="Cerrar Cuartel" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-lock" aria-hidden="true"></i> Cerrar</a>
+												<a href="<?php echo $location.'&lock_cuartel='.$cuartel['idCuarteles'].'&f_ejecucion='.$rowData['f_ejecucion'].'&f_ejecucion_fin='.$rowData['f_ejecucion_fin'].'&distancia='.$distancia; ?>" title="Cerrar Cuartel" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-lock" aria-hidden="true"></i> Cerrar</a>
 											<?php } ?>
 										<?php } ?>
 									</div>
@@ -290,7 +290,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 
 				<tr class="invoice-total" bgcolor="#f1f1f1">
 					<th colspan="8">Detalles</th>
-					<th width="160"><a href="<?php echo $location.'&idEstado='.$row_data['idEstado'].'&addDetalle=true' ?>" title="Agregar Detalle" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Detalle</a></th>
+					<th width="160"><a href="<?php echo $location.'&idEstado='.$rowData['idEstado'].'&addDetalle=true' ?>" title="Agregar Detalle" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Detalle</a></th>
 				</tr>
 				<tr>
 					<th width="160">Fecha</th>

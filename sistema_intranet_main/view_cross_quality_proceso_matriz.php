@@ -53,7 +53,7 @@ for ($i = 1; $i <= 50; $i++) {
 // consulto los datos
 $SIS_join  = '';
 $SIS_where = 'idMatriz ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowData = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowData');
 
 /***********************************************/
 // Se consulta
@@ -114,7 +114,7 @@ $arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_u
 												//Cuento si hay items dentro de la categoria
 												$x_con = 0;
 												for ($i = 1; $i <= 50; $i++) {
-													if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
+													if($grupo['idGrupo']==$rowData['PuntoidGrupo_'.$i]){
 														$x_con++;
 													}
 												}
@@ -133,60 +133,60 @@ $arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_u
 													
 														
 													for ($i = 1; $i <= 50; $i++) {
-														if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
+														if($grupo['idGrupo']==$rowData['PuntoidGrupo_'.$i]){
 															//verifico unidad de medida
 															$xuni = '';
 															foreach ($arrUnidadMedida as $uml) {
-																if($rowdata['PuntoUniMed_'.$i]==$uml['idUml']){
+																if($rowData['PuntoUniMed_'.$i]==$uml['idUml']){
 																	$xuni = ' '.$uml['Nombre'];
 																}
 															}
 																	
 															//Verifico el tipo de dato
-															switch ($rowdata['PuntoidTipo_'.$i]) {
+															switch ($rowData['PuntoidTipo_'.$i]) {
 																//Medicion (Decimal) con parametros limitantes
 																case 1:
-																	echo '<strong>'.$rowdata['PuntoNombre_'.$i].' </strong> ('.$xuni.')<br/>';
+																	echo '<strong>'.$rowData['PuntoNombre_'.$i].' </strong> ('.$xuni.')<br/>';
 																	break;
 																//Medicion (Decimal) sin parametros limitantes
 																case 2:
-																	echo '<strong>'.$rowdata['PuntoNombre_'.$i].' </strong> ('.$xuni.')<br/>';
+																	echo '<strong>'.$rowData['PuntoNombre_'.$i].' </strong> ('.$xuni.')<br/>';
 																	break;
 																//Medicion (Enteros) con parametros limitantes
 																case 3:
-																	echo '<strong>'.$rowdata['PuntoNombre_'.$i].' </strong> ('.$xuni.')<br/>';
+																	echo '<strong>'.$rowData['PuntoNombre_'.$i].' </strong> ('.$xuni.')<br/>';
 																	break;
 																//Medicion (Enteros) sin parametros limitantes
 																case 4:
-																	echo '<strong>'.$rowdata['PuntoNombre_'.$i].' </strong> ('.$xuni.')<br/>';
+																	echo '<strong>'.$rowData['PuntoNombre_'.$i].' </strong> ('.$xuni.')<br/>';
 																	break;
 																//Fecha
 																case 5:
-																	echo '<strong>'.$rowdata['PuntoNombre_'.$i].' </strong><br/>';
+																	echo '<strong>'.$rowData['PuntoNombre_'.$i].' </strong><br/>';
 																	break;
 																//Hora
 																case 6:
-																	echo '<strong>'.$rowdata['PuntoNombre_'.$i].' </strong><br/>';
+																	echo '<strong>'.$rowData['PuntoNombre_'.$i].' </strong><br/>';
 																	break;
 																//Texto Libre
 																case 7:
-																	echo '<strong>'.$rowdata['PuntoNombre_'.$i].' </strong><br/>';
+																	echo '<strong>'.$rowData['PuntoNombre_'.$i].' </strong><br/>';
 																	break;
 																//Seleccion 1 a 3
 																case 8:
-																	echo '<strong>'.$rowdata['PuntoNombre_'.$i].' </strong><br/>';
+																	echo '<strong>'.$rowData['PuntoNombre_'.$i].' </strong><br/>';
 																	break;
 																//Seleccion 1 a 5
 																case 9:
-																	echo '<strong>'.$rowdata['PuntoNombre_'.$i].' </strong><br/>';
+																	echo '<strong>'.$rowData['PuntoNombre_'.$i].' </strong><br/>';
 																	break;
 																//Seleccion 1 a 10
 																case 10:
-																	echo '<strong>'.$rowdata['PuntoNombre_'.$i].' </strong><br/>';
+																	echo '<strong>'.$rowData['PuntoNombre_'.$i].' </strong><br/>';
 																	break;
 																//Texto Libre con Validacion
 																case 11:
-																	echo '<strong>'.$rowdata['PuntoNombre_'.$i].' </strong><br/>';
+																	echo '<strong>'.$rowData['PuntoNombre_'.$i].' </strong><br/>';
 																	break;
 																	
 															}
@@ -207,15 +207,15 @@ $arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_u
 												<p class="lead">Decision</p>
 												<p class="text-muted well well-sm no-shadow" >';
 												//Nota Calidad
-												if(isset($rowdata['idNota_1'])&&$rowdata['idNota_1']==1){
+												if(isset($rowData['idNota_1'])&&$rowData['idNota_1']==1){
 													echo '<strong>Nota Calidad </strong><br/>';
 												}
 												//Nota Condición
-												if(isset($rowdata['idNota_2'])&&$rowdata['idNota_2']==1){
+												if(isset($rowData['idNota_2'])&&$rowData['idNota_2']==1){
 													echo '<strong>Nota Condición </strong><br/>';
 												}
 												//Calificacion
-												if(isset($rowdata['idNota_3'])&&$rowdata['idNota_3']==1){
+												if(isset($rowData['idNota_3'])&&$rowData['idNota_3']==1){
 													echo '<strong>Calificacion </strong><br/>';
 												}
 																	

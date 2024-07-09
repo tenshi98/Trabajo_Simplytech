@@ -435,7 +435,7 @@ require_once '0_validate_user_1.php';
 
 			if($errorn==0){
 				// Se obtiene el nombre del archivo
-				$rowdata = db_select_data (false, 'Direccion_img, doc_mantencion, doc_padron, doc_permiso_circulacion, doc_resolucion_sanitaria, doc_revision_tecnica,doc_seguro_carga, doc_soap, doc_cert_trans_personas', 'vehiculos_listado', '', 'idVehiculo = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'Direccion_img, doc_mantencion, doc_padron, doc_permiso_circulacion, doc_resolucion_sanitaria, doc_revision_tecnica,doc_seguro_carga, doc_soap, doc_cert_trans_personas', 'vehiculos_listado', '', 'idVehiculo = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//se borran los datos
 				$resultado = db_delete_data (false, 'vehiculos_listado', 'idVehiculo = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -443,108 +443,108 @@ require_once '0_validate_user_1.php';
 				if($resultado==true){
 
 					//se elimina la foto
-					if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+					if(isset($rowData['Direccion_img'])&&$rowData['Direccion_img']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+							if(!is_writable('upload/'.$rowData['Direccion_img'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['Direccion_img']);
+								unlink('upload/'.$rowData['Direccion_img']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
 					//se elimina el archivo
-					if(isset($rowdata['doc_mantencion'])&&$rowdata['doc_mantencion']!=''){
+					if(isset($rowData['doc_mantencion'])&&$rowData['doc_mantencion']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['doc_mantencion'])){
+							if(!is_writable('upload/'.$rowData['doc_mantencion'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['doc_mantencion']);
+								unlink('upload/'.$rowData['doc_mantencion']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
 					//se elimina el archivo
-					if(isset($rowdata['doc_padron'])&&$rowdata['doc_padron']!=''){
+					if(isset($rowData['doc_padron'])&&$rowData['doc_padron']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['doc_padron'])){
+							if(!is_writable('upload/'.$rowData['doc_padron'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['doc_padron']);
+								unlink('upload/'.$rowData['doc_padron']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
 					//se elimina el archivo
-					if(isset($rowdata['doc_permiso_circulacion'])&&$rowdata['doc_permiso_circulacion']!=''){
+					if(isset($rowData['doc_permiso_circulacion'])&&$rowData['doc_permiso_circulacion']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['doc_permiso_circulacion'])){
+							if(!is_writable('upload/'.$rowData['doc_permiso_circulacion'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['doc_permiso_circulacion']);
+								unlink('upload/'.$rowData['doc_permiso_circulacion']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
 					//se elimina el archivo
-					if(isset($rowdata['doc_resolucion_sanitaria'])&&$rowdata['doc_resolucion_sanitaria']!=''){
+					if(isset($rowData['doc_resolucion_sanitaria'])&&$rowData['doc_resolucion_sanitaria']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['doc_resolucion_sanitaria'])){
+							if(!is_writable('upload/'.$rowData['doc_resolucion_sanitaria'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['doc_resolucion_sanitaria']);
+								unlink('upload/'.$rowData['doc_resolucion_sanitaria']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
 					//se elimina el archivo
-					if(isset($rowdata['doc_revision_tecnica'])&&$rowdata['doc_revision_tecnica']!=''){
+					if(isset($rowData['doc_revision_tecnica'])&&$rowData['doc_revision_tecnica']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['doc_revision_tecnica'])){
+							if(!is_writable('upload/'.$rowData['doc_revision_tecnica'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['doc_revision_tecnica']);
+								unlink('upload/'.$rowData['doc_revision_tecnica']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
 					//se elimina el archivo
-					if(isset($rowdata['doc_seguro_carga'])&&$rowdata['doc_seguro_carga']!=''){
+					if(isset($rowData['doc_seguro_carga'])&&$rowData['doc_seguro_carga']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['doc_seguro_carga'])){
+							if(!is_writable('upload/'.$rowData['doc_seguro_carga'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['doc_seguro_carga']);
+								unlink('upload/'.$rowData['doc_seguro_carga']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
 					//se elimina el archivo
-					if(isset($rowdata['doc_soap'])&&$rowdata['doc_soap']!=''){
+					if(isset($rowData['doc_soap'])&&$rowData['doc_soap']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['doc_soap'])){
+							if(!is_writable('upload/'.$rowData['doc_soap'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['doc_soap']);
+								unlink('upload/'.$rowData['doc_soap']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
 					//se elimina el archivo
-					if(isset($rowdata['doc_cert_trans_personas'])&&$rowdata['doc_cert_trans_personas']!=''){
+					if(isset($rowData['doc_cert_trans_personas'])&&$rowData['doc_cert_trans_personas']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['doc_cert_trans_personas'])){
+							if(!is_writable('upload/'.$rowData['doc_cert_trans_personas'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['doc_cert_trans_personas']);
+								unlink('upload/'.$rowData['doc_cert_trans_personas']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
@@ -708,7 +708,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre de la imagen
-			$rowdata = db_select_data (false, 'Direccion_img', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'Direccion_img', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -718,12 +718,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
+				if(isset($rowData['Direccion_img'])&&$rowData['Direccion_img']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['Direccion_img'])){
+						if(!is_writable('upload/'.$rowData['Direccion_img'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['Direccion_img']);
+							unlink('upload/'.$rowData['Direccion_img']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -1025,7 +1025,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'doc_padron', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_padron'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'doc_padron', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_padron'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -1035,12 +1035,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['doc_padron'])&&$rowdata['doc_padron']!=''){
+				if(isset($rowData['doc_padron'])&&$rowData['doc_padron']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['doc_padron'])){
+						if(!is_writable('upload/'.$rowData['doc_padron'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['doc_padron']);
+							unlink('upload/'.$rowData['doc_padron']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -1131,7 +1131,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'doc_permiso_circulacion', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_permiso_circulacion'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'doc_permiso_circulacion', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_permiso_circulacion'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -1141,12 +1141,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['doc_permiso_circulacion'])&&$rowdata['doc_permiso_circulacion']!=''){
+				if(isset($rowData['doc_permiso_circulacion'])&&$rowData['doc_permiso_circulacion']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['doc_permiso_circulacion'])){
+						if(!is_writable('upload/'.$rowData['doc_permiso_circulacion'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['doc_permiso_circulacion']);
+							unlink('upload/'.$rowData['doc_permiso_circulacion']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -1237,7 +1237,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'doc_resolucion_sanitaria', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_resolucion_sanitaria'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'doc_resolucion_sanitaria', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_resolucion_sanitaria'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -1247,12 +1247,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['doc_resolucion_sanitaria'])&&$rowdata['doc_resolucion_sanitaria']!=''){
+				if(isset($rowData['doc_resolucion_sanitaria'])&&$rowData['doc_resolucion_sanitaria']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['doc_resolucion_sanitaria'])){
+						if(!is_writable('upload/'.$rowData['doc_resolucion_sanitaria'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['doc_resolucion_sanitaria']);
+							unlink('upload/'.$rowData['doc_resolucion_sanitaria']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -1344,7 +1344,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'doc_revision_tecnica', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_revision_tecnica'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'doc_revision_tecnica', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_revision_tecnica'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -1354,12 +1354,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['doc_revision_tecnica'])&&$rowdata['doc_revision_tecnica']!=''){
+				if(isset($rowData['doc_revision_tecnica'])&&$rowData['doc_revision_tecnica']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['doc_revision_tecnica'])){
+						if(!is_writable('upload/'.$rowData['doc_revision_tecnica'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['doc_revision_tecnica']);
+							unlink('upload/'.$rowData['doc_revision_tecnica']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -1450,7 +1450,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'doc_seguro_carga', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_seguro_carga'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'doc_seguro_carga', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_seguro_carga'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -1460,12 +1460,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['doc_seguro_carga'])&&$rowdata['doc_seguro_carga']!=''){
+				if(isset($rowData['doc_seguro_carga'])&&$rowData['doc_seguro_carga']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['doc_seguro_carga'])){
+						if(!is_writable('upload/'.$rowData['doc_seguro_carga'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['doc_seguro_carga']);
+							unlink('upload/'.$rowData['doc_seguro_carga']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -1556,7 +1556,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'doc_soap', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_soap'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'doc_soap', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_soap'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -1566,12 +1566,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['doc_soap'])&&$rowdata['doc_soap']!=''){
+				if(isset($rowData['doc_soap'])&&$rowData['doc_soap']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['doc_soap'])){
+						if(!is_writable('upload/'.$rowData['doc_soap'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['doc_soap']);
+							unlink('upload/'.$rowData['doc_soap']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -1662,7 +1662,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'doc_cert_trans_personas', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_cert_trans_personas'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'doc_cert_trans_personas', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_cert_trans_personas'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -1672,12 +1672,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['doc_cert_trans_personas'])&&$rowdata['doc_cert_trans_personas']!=''){
+				if(isset($rowData['doc_cert_trans_personas'])&&$rowData['doc_cert_trans_personas']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['doc_cert_trans_personas'])){
+						if(!is_writable('upload/'.$rowData['doc_cert_trans_personas'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['doc_cert_trans_personas']);
+							unlink('upload/'.$rowData['doc_cert_trans_personas']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
@@ -1939,7 +1939,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'doc_ficha_tecnica', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_ficha'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'doc_ficha_tecnica', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_ficha'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -1949,12 +1949,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['doc_ficha_tecnica'])&&$rowdata['doc_ficha_tecnica']!=''){
+				if(isset($rowData['doc_ficha_tecnica'])&&$rowData['doc_ficha_tecnica']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['doc_ficha_tecnica'])){
+						if(!is_writable('upload/'.$rowData['doc_ficha_tecnica'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['doc_ficha_tecnica']);
+							unlink('upload/'.$rowData['doc_ficha_tecnica']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log

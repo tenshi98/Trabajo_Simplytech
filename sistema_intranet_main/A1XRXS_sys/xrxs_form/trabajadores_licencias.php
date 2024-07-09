@@ -346,7 +346,7 @@ require_once '0_validate_user_1.php';
 
 			if($errorn==0){
 				// Se obtiene el nombre del archivo
-				$rowdata = db_select_data (false, 'File_Licencia', 'trabajadores_licencias', '', 'idLicencia = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowData = db_select_data (false, 'File_Licencia', 'trabajadores_licencias', '', 'idLicencia = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//se borran los datos
 				$resultado = db_delete_data (false, 'trabajadores_licencias', 'idLicencia = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -354,12 +354,12 @@ require_once '0_validate_user_1.php';
 				if($resultado==true){
 
 					//se elimina la foto
-					if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){
+					if(isset($rowData['File_Licencia'])&&$rowData['File_Licencia']!=''){
 						try {
-							if(!is_writable('upload/'.$rowdata['File_Licencia'])){
+							if(!is_writable('upload/'.$rowData['File_Licencia'])){
 								//throw new Exception('File not writable');
 							}else{
-								unlink('upload/'.$rowdata['File_Licencia']);
+								unlink('upload/'.$rowData['File_Licencia']);
 							}
 						}catch(Exception $e) {
 							//guardar el dato en un archivo log
@@ -384,7 +384,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del archivo
-			$rowdata = db_select_data (false, 'File_Licencia', 'trabajadores_licencias', '', 'idLicencia = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowData = db_select_data (false, 'File_Licencia', 'trabajadores_licencias', '', 'idLicencia = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
@@ -394,12 +394,12 @@ require_once '0_validate_user_1.php';
 			if($resultado==true){
 
 				//se elimina el archivo
-				if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){
+				if(isset($rowData['File_Licencia'])&&$rowData['File_Licencia']!=''){
 					try {
-						if(!is_writable('upload/'.$rowdata['File_Licencia'])){
+						if(!is_writable('upload/'.$rowData['File_Licencia'])){
 							//throw new Exception('File not writable');
 						}else{
-							unlink('upload/'.$rowdata['File_Licencia']);
+							unlink('upload/'.$rowData['File_Licencia']);
 						}
 					}catch(Exception $e) {
 						//guardar el dato en un archivo log
