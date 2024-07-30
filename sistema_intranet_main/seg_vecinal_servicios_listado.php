@@ -302,6 +302,7 @@ if(!empty($_GET['map'])){
 					$Form_Inputs->form_time('Hora Termino','HoraTermino', $x7, 2, 2);
 
 					$Form_Inputs->form_tittle(3, 'Datos de contacto');
+					$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 					$Form_Inputs->form_input_phone('Telefono Fijo', 'Fono1', $x8, 1);
 					$Form_Inputs->form_input_phone('Telefono Movil', 'Fono2', $x9, 1);
 					$Form_Inputs->form_input_fax('Fax', 'Fax', $x10, 1);
@@ -364,6 +365,7 @@ if(!empty($_GET['map'])){
 					$Form_Inputs->form_time('Hora Termino','HoraTermino', $x7, 2, 2);
 
 					$Form_Inputs->form_tittle(3, 'Datos de contacto');
+					$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 					$Form_Inputs->form_input_phone('Telefono Fijo', 'Fono1', $x8, 1);
 					$Form_Inputs->form_input_phone('Telefono Movil', 'Fono2', $x9, 1);
 					$Form_Inputs->form_input_fax('Fax', 'Fax', $x10, 1);

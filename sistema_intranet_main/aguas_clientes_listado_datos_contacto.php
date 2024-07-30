@@ -96,6 +96,7 @@ $rowData = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_joi
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 					$Form_Inputs->form_input_phone('Telefono Fijo', 'Fono1', $x1, 1);
 					$Form_Inputs->form_input_phone('Telefono Movil', 'Fono2', $x2, 1);
 					$Form_Inputs->form_input_fax('Fax', 'Fax', $x3, 1);

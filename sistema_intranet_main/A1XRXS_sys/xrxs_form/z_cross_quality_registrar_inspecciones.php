@@ -119,7 +119,7 @@ require_once '0_validate_user_1.php';
 	if(isset($Resolucion_3) && $Resolucion_3!=''){   $Resolucion_3  = EstandarizarInput($Resolucion_3);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){  $error['Observaciones']  = 'error/Edita Observaciones, contiene palabras no permitidas';}
 	if(isset($Resolucion_1)&&contar_palabras_censuradas($Resolucion_1)!=0){    $error['Resolucion_1']   = 'error/Edita Resolucion 1, contiene palabras no permitidas';}

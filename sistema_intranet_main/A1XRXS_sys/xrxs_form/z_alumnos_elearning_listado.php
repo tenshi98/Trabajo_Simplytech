@@ -84,7 +84,7 @@ require_once '0_validate_user_1.php';
 	if(isset($Contenido) && $Contenido!=''){     $Contenido   = EstandarizarInput($Contenido);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){            $error['Nombre']      = 'error/Edita Nombre,contiene palabras no permitidas';}
 	if(isset($Resumen)&&contar_palabras_censuradas($Resumen)!=0){          $error['Resumen']     = 'error/Edita Resumen, contiene palabras no permitidas';}

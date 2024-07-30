@@ -78,12 +78,12 @@ require_once '0_validate_user_1.php';
 	if(isset($Observaciones) && $Observaciones!=''){ $Observaciones = EstandarizarInput($Observaciones);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){  $error['Observaciones'] = 'error/Edita Observaciones, contiene palabras no permitidas';}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Fecha_desde)&&isset($Fecha_hasta)&&$Fecha_desde>$Fecha_hasta){ $error['Fono']    = 'error/La fecha Periodo Inicio debe ser inferior a la fecha de Periodo Termino';}
 

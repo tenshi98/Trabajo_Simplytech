@@ -87,11 +87,13 @@ require_once '0_validate_user_1.php';
 	//if(isset($email) && $email!=''){                  $email         = EstandarizarInput($email);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
-	if(isset($Fono1)&&!validarNumero($Fono1)){ $error['Fono1']  = 'error/Ingrese un numero telefonico valido';}
-	if(isset($Fono2)&&!validarNumero($Fono2)){ $error['Fono2']  = 'error/Ingrese un numero telefonico valido';}
+	if(isset($Fono1)&&!validarNumero($Fono1)){       $error['Fono1']  = 'error/Ingrese un número telefónico válido';}
+	if(isset($Fono2)&&!validarNumero($Fono2)){       $error['Fono2']  = 'error/Ingrese un número telefónico válido';}
+	if(isset($Fono1)&&palabra_corto($Fono1, 9)!=1){  $error['Fono1']  = 'error/'.palabra_corto($Fono1, 9);}
+	if(isset($Fono2)&&palabra_corto($Fono2, 9)!=1){  $error['Fono2']  = 'error/'.palabra_corto($Fono2, 9);}
 	//if(isset($Rut)&&!validarRut($Rut)){       $error['Rut']    = 'error/El Rut ingresado no es valido';}
 
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                $error['Nombre']        = 'error/Edita Nombre,contiene palabras no permitidas';}

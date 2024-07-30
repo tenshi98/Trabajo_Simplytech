@@ -53,7 +53,7 @@ require_once '0_validate_user_1.php';
 	if(isset($Descripcion) && $Descripcion!=''){   $Descripcion  = EstandarizarInput($Descripcion);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){              $error['Nombre']       = 'error/Edita Nombre,contiene palabras no permitidas';}
 	if(isset($CasaEstudios)&&contar_palabras_censuradas($CasaEstudios)!=0){  $error['CasaEstudios'] = 'error/Edita la Casa Estudios, contiene palabras no permitidas';}

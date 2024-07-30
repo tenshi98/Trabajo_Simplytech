@@ -65,7 +65,7 @@ require_once '0_validate_user_1.php';
 	if(isset($NSello) && $NSello!=''){            $NSello       = EstandarizarInput($NSello);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Observacion)&&contar_palabras_censuradas($Observacion)!=0){  $error['Observacion'] = 'error/Edita Observacion, contiene palabras no permitidas';}
 	if(isset($Archivo)&&contar_palabras_censuradas($Archivo)!=0){          $error['Archivo']     = 'error/Edita Archivo, contiene palabras no permitidas';}

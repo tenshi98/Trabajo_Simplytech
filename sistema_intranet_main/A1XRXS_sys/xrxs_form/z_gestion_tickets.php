@@ -68,7 +68,7 @@ require_once '0_validate_user_1.php';
 	if(isset($DescripcionCancelacion) && $DescripcionCancelacion!=''){ $DescripcionCancelacion = EstandarizarInput($DescripcionCancelacion);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Titulo)&&contar_palabras_censuradas($Titulo)!=0){                                  $error['Titulo']                  = 'error/Edita Titulo, contiene palabras no permitidas';}
 	if(isset($Descripcion)&&contar_palabras_censuradas($Descripcion)!=0){                        $error['Descripcion']             = 'error/Edita Descripcion, contiene palabras no permitidas';}

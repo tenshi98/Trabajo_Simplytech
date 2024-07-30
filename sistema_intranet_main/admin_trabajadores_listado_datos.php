@@ -123,6 +123,7 @@ $rowData = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 					$Form_Inputs->form_input_rut('Rut', 'Rut', $x4, 2);
 					$Form_Inputs->form_select('Sexo','idSexo', $x5, 2, 'idSexo', 'Nombre', 'core_sexo', 0, '', $dbConn);
 					$Form_Inputs->form_date('F Nacimiento','FNacimiento', $x6, 1);
+					$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 					$Form_Inputs->form_input_phone('Fono', 'Fono', $x7, 1);
 					$Form_Inputs->form_select_depend1('Región','idCiudad', $x8, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 											'Comuna','idComuna', $x9, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,

@@ -57,7 +57,7 @@ require_once '0_validate_user_1.php';
 	if(isset($dispositivo) && $dispositivo!=''){ $dispositivo = EstandarizarInput($dispositivo);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Usuario)){
 		if (strpos($Usuario, " ")){                      $error['usuario1'] = 'error/El nombre de usuario contiene espacios vacios';}

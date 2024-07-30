@@ -159,6 +159,7 @@ if(!empty($_GET['id'])){
 					$Form_Inputs = new Form_Inputs();
 					echo '<h3 class="register-heading">Datos Chofer</h3>';
 					$Form_Inputs->form_input_text('Nombre del chofer', 'Nombre', $x1, 2);
+					$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 					$Form_Inputs->form_input_phone('Telefono', 'Fono', $x2, 2);
 					$Form_Inputs->form_input_icon('Email', 'email', $x3, 1,'fa fa-envelope-o');
 

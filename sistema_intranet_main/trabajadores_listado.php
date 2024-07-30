@@ -640,6 +640,7 @@ $arrTrabajador = db_select_array (false, $SIS_query, 'trabajadores_listado', $SI
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x4, 1);
 				$Form_Inputs->form_select('Tipo Trabajador','idTipo', $x5, 1, 'idTipo', 'Nombre', 'trabajadores_listado_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Cargo', 'Cargo', $x6, 1);
+				$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 				$Form_Inputs->form_input_phone('Fono', 'Fono', $x7, 1);
 
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);

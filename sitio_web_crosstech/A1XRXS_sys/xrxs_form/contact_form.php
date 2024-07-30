@@ -20,7 +20,7 @@ if( ! defined('XMBCXRXSKGC')){
 	if (!empty($_POST['CuerpoHTML']))  $Post_CuerpoHTML  = $_POST['CuerpoHTML'];
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	//if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){  $error['Nombre'] = 'error/Edita Nombre,contiene palabras no permitidas';}
 

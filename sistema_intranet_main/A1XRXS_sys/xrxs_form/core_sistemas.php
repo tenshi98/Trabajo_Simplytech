@@ -245,12 +245,14 @@ require_once '0_validate_user_1.php';
 	if(isset($RepresentanteNombre) && $RepresentanteNombre!=''){              $RepresentanteNombre       = EstandarizarInput($RepresentanteNombre);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
 	if(isset($email_principal)&&$email_principal!=''&&!validarEmail($email_principal)){ $error['email_principal']   = 'error/El Email de sistema ingresado no es valido';}
-	if(isset($Contacto_Fono1)&&$Contacto_Fono1!=''&&!validarNumero($Contacto_Fono1)){   $error['Fono1']	            = 'error/Ingrese un numero telefonico valido';}
-	if(isset($Contacto_Fono2)&&$Contacto_Fono2!=''&&!validarNumero($Contacto_Fono2)){   $error['Fono2']	            = 'error/Ingrese un numero telefonico valido';}
+	if(isset($Contacto_Fono1)&&$Contacto_Fono1!=''&&!validarNumero($Contacto_Fono1)){   $error['Contacto_Fono1']	= 'error/Ingrese un número telefónico válido';}
+	if(isset($Contacto_Fono2)&&$Contacto_Fono2!=''&&!validarNumero($Contacto_Fono2)){   $error['Contacto_Fono2']	= 'error/Ingrese un número telefónico válido';}
+	if(isset($Contacto_Fono1)&&palabra_corto($Contacto_Fono1, 9)!=1){                   $error['Contacto_Fono1']    = 'error/'.palabra_corto($Contacto_Fono1, 9);}
+	if(isset($Contacto_Fono2)&&palabra_corto($Contacto_Fono2, 9)!=1){                   $error['Contacto_Fono2']    = 'error/'.palabra_corto($Contacto_Fono2, 9);}
 	if(isset($Rut)&&$Rut!=''&&!validarRut($Rut)){                                       $error['Rut']               = 'error/El Rut ingresado no es valido';}
 	if(isset($Contacto_Email)&&$email_principal!=''&&!validarEmail($Contacto_Email)){   $error['Contacto_Email']    = 'error/El Email de contacto ingresado no es valido';}
 

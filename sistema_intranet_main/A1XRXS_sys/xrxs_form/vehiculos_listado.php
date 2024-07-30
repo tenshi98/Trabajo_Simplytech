@@ -149,7 +149,7 @@ require_once '0_validate_user_1.php';
 	if(isset($Motivo) && $Motivo!=''){       $Motivo     = EstandarizarInput($Motivo);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){        $error['Nombre']    = 'error/Edita Nombre,contiene palabras no permitidas';}
 	if(isset($Marca)&&contar_palabras_censuradas($Marca)!=0){          $error['Marca']     = 'error/Edita la Marca, contiene palabras no permitidas';}

@@ -139,7 +139,7 @@ require_once '0_validate_user_1.php';
 	if(isset($NSerieSensor) && $NSerieSensor!=''){           $NSerieSensor      = EstandarizarInput($NSerieSensor);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($CTNNombreCompañia)&&contar_palabras_censuradas($CTNNombreCompañia)!=0){  $error['CTNNombreCompañia'] = 'error/Edita CTN Nombre Compañia, contiene palabras no permitidas';}
 	if(isset($ChoferNombreRut)&&contar_palabras_censuradas($ChoferNombreRut)!=0){      $error['ChoferNombreRut']   = 'error/Edita Chofer Nombre Rut, contiene palabras no permitidas';}

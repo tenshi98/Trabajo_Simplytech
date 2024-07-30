@@ -83,7 +83,7 @@ require_once '0_validate_user_1.php';
 	if(isset($PuntoNombre) && $PuntoNombre!=''){ $PuntoNombre = EstandarizarInput($PuntoNombre);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){            $error['Nombre']      = 'error/Edita Nombre,contiene palabras no permitidas';}
 	if(isset($PuntoNombre)&&contar_palabras_censuradas($PuntoNombre)!=0){  $error['PuntoNombre'] = 'error/Edita Punto Nombre,contiene palabras no permitidas';}

@@ -64,7 +64,7 @@ require_once '0_validate_user_1.php';
 	if(isset($Direccion) && $Direccion!=''){                  $Direccion         = EstandarizarInput($Direccion);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                        $error['Nombre']            = 'error/Edita Nombre,contiene palabras no permitidas';}

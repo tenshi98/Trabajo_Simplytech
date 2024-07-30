@@ -55,19 +55,20 @@ require_once '0_validate_user_1.php';
 	//if(isset($email_noti) && $email_noti!=''){ $email_noti = EstandarizarInput($email_noti);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){          $error['Nombre']     = 'error/Edita Nombre,contiene palabras no permitidas';}
 	if(isset($email)&&contar_palabras_censuradas($email)!=0){            $error['email']      = 'error/Edita email, contiene palabras no permitidas';}
 	if(isset($email_noti)&&contar_palabras_censuradas($email_noti)!=0){  $error['email_noti'] = 'error/Edita email noti, contiene palabras no permitidas';}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
 	if(isset($email)&&!validarEmail($email)){           $error['email']       = 'error/El Email ingresado no es valido';}
 	if(isset($email_noti)&&!validarEmail($email_noti)){ $error['email_noti']  = 'error/El Email ingresado no es valido';}
-	if(isset($Fono)&&!validarNumero($Fono)){            $error['Fono']        = 'error/Ingrese un numero telefonico valido';}
+	if(isset($Fono)&&!validarNumero($Fono)){            $error['Fono']        = 'error/Ingrese un número telefónico válido';}
+	if(isset($Fono)&&palabra_corto($Fono, 9)!=1){       $error['Fono']        = 'error/'.palabra_corto($Fono, 9);}
 
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */

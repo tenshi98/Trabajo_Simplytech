@@ -44,7 +44,7 @@ require_once '0_validate_user_1.php';
 	if(isset($Funcion) && $Funcion!=''){ $Funcion = EstandarizarInput($Funcion);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){    $error['Nombre']  = 'error/Edita Nombre,contiene palabras no permitidas';}
 	if(isset($Funcion)&&contar_palabras_censuradas($Funcion)!=0){  $error['Funcion'] = 'error/Edita la Funcion, contiene palabras no permitidas';}

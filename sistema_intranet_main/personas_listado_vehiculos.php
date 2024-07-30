@@ -88,14 +88,14 @@ $rowData = db_select_data (false, $SIS_query, 'personas_listado_vehiculos', $SIS
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
-				<?php  
+				<?php
 				//Se verifican si existen los datos
-				if(isset($Marca)){          $x1 = $Marca;         }else{$x1 = $rowData['Marca'];}
+				if(isset($Marca)){     $x1 = $Marca;    }else{$x1 = $rowData['Marca'];}
 				if(isset($Modelo)){    $x2 = $Modelo;   }else{$x2 = $rowData['Modelo'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_phone('Marca', 'Marca', $x1, 2);
+				$Form_Inputs->form_textarea('Marca', 'Marca', $x1, 2);
 				$Form_Inputs->form_textarea('Modelo', 'Modelo', $x2, 1);
 
 				$Form_Inputs->form_input_hidden('idVehiculos', $_GET['edit'], 2);
@@ -133,7 +133,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_phone('Marca', 'Marca', $x1, 2);
+				$Form_Inputs->form_textarea('Marca', 'Marca', $x1, 2);
 				$Form_Inputs->form_textarea('Modelo', 'Modelo', $x2, 1);
 
 				$Form_Inputs->form_input_hidden('idPersona', $_GET['id'], 2);

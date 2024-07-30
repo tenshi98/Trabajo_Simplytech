@@ -66,7 +66,7 @@ require_once '0_validate_user_1.php';
 	if(isset($Principal) && $Principal!=''){         $Principal     = EstandarizarInput($Principal);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Direccionweb)&&contar_palabras_censuradas($Direccionweb)!=0){    $error['Direccionweb']  = 'error/Edita la Dirección web, contiene palabras no permitidas';}
 	if(isset($Direccionbase)&&contar_palabras_censuradas($Direccionbase)!=0){  $error['Direccionbase'] = 'error/Edita la Dirección base, contiene palabras no permitidas';}

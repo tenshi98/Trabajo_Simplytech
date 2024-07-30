@@ -94,7 +94,7 @@ require_once '0_validate_user_1.php';
 	if(isset($Observaciones) && $Observaciones!=''){                       $Observaciones            = EstandarizarInput($Observaciones);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($codigoProceso)&&contar_palabras_censuradas($codigoProceso)!=0){                        $error['codigoProceso']            = 'error/Edita codigo Proceso, contiene palabras no permitidas';}
 	if(isset($codigoArchivo)&&contar_palabras_censuradas($codigoArchivo)!=0){                        $error['codigoArchivo']            = 'error/Edita codigo Archivo, contiene palabras no permitidas';}

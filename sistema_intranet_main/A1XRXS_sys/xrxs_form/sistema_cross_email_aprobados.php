@@ -41,7 +41,7 @@ require_once '0_validate_user_1.php';
 	//if(isset($email) && $email!=''){ $email = EstandarizarInput($email);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
 	if(isset($email)&&!validarEmail($email)){  $error['email']   = 'error/El Email ingresado no es valido';}

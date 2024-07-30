@@ -75,7 +75,7 @@ require_once '0_validate_user_1.php';
 	if(isset($obs_Accion) && $obs_Accion!=''){           $obs_Accion      = EstandarizarInput($obs_Accion);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($obs_Diagnostico)&&contar_palabras_censuradas($obs_Diagnostico)!=0){  $error['obs_Diagnostico'] = 'error/Edita obs Diagnostico, contiene palabras no permitidas';}
 	if(isset($obs_Accion)&&contar_palabras_censuradas($obs_Accion)!=0){            $error['obs_Accion']      = 'error/Edita obs Accion, contiene palabras no permitidas';}

@@ -139,6 +139,7 @@ $rowData = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 
 					$Form_Inputs->form_tittle(3, 'Whatsapp');
 					$Form_Inputs->form_input_text('Título', 'Whatsapp_tittle', $x3, 1);
+					$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 					$Form_Inputs->form_input_phone('Numero Whatsapp 1', 'Whatsapp_number_1', $x4, 1);
 					$Form_Inputs->form_input_phone('Numero Whatsapp 2', 'Whatsapp_number_2', $x5, 1);
 

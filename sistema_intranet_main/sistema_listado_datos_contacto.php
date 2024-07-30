@@ -226,6 +226,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 					$Form_Inputs->form_input_icon('Nombre Contacto', 'Contacto_Nombre', $x1, 1,'fa fa-address-card-o');
 					$Form_Inputs->form_input_phone('Fono 1', 'Contacto_Fono1', $x2, 1);
 					$Form_Inputs->form_input_phone('Fono 2', 'Contacto_Fono2', $x3, 1);

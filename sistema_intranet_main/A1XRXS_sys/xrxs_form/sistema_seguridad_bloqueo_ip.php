@@ -45,7 +45,7 @@ require_once '0_validate_user_1.php';
 	if(isset($Motivo) && $Motivo!=''){ $Motivo = EstandarizarInput($Motivo);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Motivo)&&contar_palabras_censuradas($Motivo)!=0){  $error['Motivo'] = 'error/Edita Motivo, contiene palabras no permitidas';}
 

@@ -242,6 +242,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+					$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 					$Form_Inputs->form_input_phone('Fono', 'Fono', $x2, 1);
 					$Form_Inputs->form_input_icon('Email', 'email', $x3, 2,'fa fa-envelope-o');
 					$Form_Inputs->form_input_rut('Rut', 'Rut', $x4, 1);

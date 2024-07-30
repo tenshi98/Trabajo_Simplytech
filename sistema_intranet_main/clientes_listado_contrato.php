@@ -149,6 +149,7 @@ $arrHistorial = db_select_array (false, 'clientes_listado_historial_contratos.Cr
 					$Form_Inputs->form_tittle(3, 'Representante Legal');
 					$Form_Inputs->form_input_text('Nombre', 'Contrato_Representante_Legal', $x7, 1);
 					$Form_Inputs->form_input_rut('Rut', 'Contrato_Representante_Rut', $x8, 1);
+					$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 					$Form_Inputs->form_input_phone('Fono', 'Contrato_Representante_Fono', $x9, 1);
 
 					$Form_Inputs->form_tittle(3, 'Valores');

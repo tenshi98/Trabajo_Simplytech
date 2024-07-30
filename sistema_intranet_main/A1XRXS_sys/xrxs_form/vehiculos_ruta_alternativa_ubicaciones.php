@@ -45,7 +45,7 @@ require_once '0_validate_user_1.php';
 	if(isset($direccion) && $direccion!=''){ $direccion = EstandarizarInput($direccion);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($direccion)&&contar_palabras_censuradas($direccion)!=0){  $error['direccion'] = 'error/Edita la dirección, contiene palabras no permitidas';}
 

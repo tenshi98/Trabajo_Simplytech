@@ -64,7 +64,7 @@ require_once '0_validate_user_1.php';
 	if(isset($TextoStyle) && $TextoStyle!=''){         $TextoStyle     = EstandarizarInput($TextoStyle);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Titulo)&&contar_palabras_censuradas($Titulo)!=0){                 $error['Titulo']         = 'error/Edita Titulo, contiene palabras no permitidas';}
 	if(isset($TituloStyle)&&contar_palabras_censuradas($TituloStyle)!=0){       $error['TituloStyle']    = 'error/Edita TituloStyle, contiene palabras no permitidas';}

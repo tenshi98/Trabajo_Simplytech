@@ -120,6 +120,7 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x5, 2);
 					$Form_Inputs->form_input_phone('Fono','Fono', $x6, 1);
 					$Form_Inputs->form_input_icon('Email', 'email', $x7, 2,'fa fa-envelope-o');

@@ -55,7 +55,7 @@ if( ! defined('XMBCXRXSKGC')){
 	}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
 	if(isset($Rut)&&!validarRut($Rut)){    $error['Rut']  = 'error/El Rut ingresado no es valido';}

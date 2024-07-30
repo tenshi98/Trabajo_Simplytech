@@ -59,7 +59,7 @@ require_once '0_validate_user_1.php';
 	if(isset($GmailPassword) && $GmailPassword!=''){     $GmailPassword   = EstandarizarInput($GmailPassword);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($email)&&contar_palabras_censuradas($email)!=0){                      $error['email']           = 'error/Edita email, contiene palabras no permitidas';}
 	if(isset($texto)&&contar_palabras_censuradas($texto)!=0){                      $error['texto']           = 'error/Edita texto, contiene palabras no permitidas';}

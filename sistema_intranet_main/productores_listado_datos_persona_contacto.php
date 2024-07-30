@@ -93,6 +93,7 @@ $rowData = db_select_data (false, $SIS_query, 'productores_listado', $SIS_join, 
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_icon('Persona de Contacto', 'PersonaContacto', $x1, 1,'fa fa-user-secret');
 					$Form_Inputs->form_input_icon('Cargo', 'PersonaContacto_Cargo', $x2, 1,'fa fa-university');
+					$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 					$Form_Inputs->form_input_phone('Telefono', 'PersonaContacto_Fono', $x3, 1);
 					$Form_Inputs->form_input_icon('Email', 'PersonaContacto_email', $x4, 1,'fa fa-envelope-o');
 

@@ -47,7 +47,7 @@ require_once '0_validate_user_1.php';
 	if(isset($Tramo) && $Tramo!=''){ $Tramo = EstandarizarInput($Tramo);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Tramo)&&contar_palabras_censuradas($Tramo)!=0){  $error['Tramo'] = 'error/Edita Tramo, contiene palabras no permitidas';}
 

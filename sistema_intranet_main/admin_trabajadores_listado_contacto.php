@@ -105,6 +105,7 @@ $rowData = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 					$Form_Inputs->form_input_icon('Persona de Contacto', 'ContactoPersona', $x1, 1,'fa fa-address-card-o');
 					$Form_Inputs->form_input_phone('Fono de Persona de Contacto', 'ContactoFono', $x2, 1);
 

@@ -78,7 +78,7 @@ require_once '0_validate_user_1.php';
 	if(isset($NumeroCertificado) && $NumeroCertificado!=''){          $NumeroCertificado      = EstandarizarInput($NumeroCertificado);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
 	if(isset($Patente)&&contar_palabras_censuradas($Patente)!=0){                               $error['Patente']               = 'error/Edita Patente, contiene palabras no permitidas';}

@@ -248,14 +248,14 @@ require_once '0_validate_user_1.php';
 	}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 //Si se ingresaron la utilizacion de los sensores
 	if(isset($id_Sensores)&&$id_Sensores==1&&isset($cantSensores)&&$cantSensores==0){  $error['cantSensores'] = 'error/No ha ingresado la cantidad de sensores a utilizar';}
 	if(isset($FTP_Carpeta)&&strpos($FTP_Carpeta, " ")){                                $error['FTP_Carpeta']  = 'error/El nombre de la carpeta FTP contiene espacios';}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Identificador)&&contar_palabras_censuradas($Identificador)!=0){  $error['Identificador'] = 'error/Edita Identificador, contiene palabras no permitidas';}
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                $error['Nombre']        = 'error/Edita Nombre,contiene palabras no permitidas';}

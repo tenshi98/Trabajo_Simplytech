@@ -109,6 +109,7 @@ if(!empty($_GET['clone_idUsuario'])){
 
 				$Form_Inputs->form_tittle(3, 'Datos Personales');
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x4, 2);
+				$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 				$Form_Inputs->form_input_phone('Fono', 'Fono', $x5, 1);
 				$Form_Inputs->form_input_icon('Email', 'email', $x6, 2,'fa fa-envelope-o');
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x7, 1);
@@ -644,6 +645,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 				$Form_Inputs->form_tittle(3, 'Datos Personales');
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x4, 2);
+				$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 				$Form_Inputs->form_input_phone('Fono', 'Fono', $x5, 1);
 				$Form_Inputs->form_input_icon('Email', 'email', $x6, 2,'fa fa-envelope-o');
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x7, 1);
@@ -783,6 +785,7 @@ foreach ($arrSistemas as $sis) {
 				$Form_Inputs->form_input_icon('Nombre de Usuario', 'usuario', $x1, 1,'fa fa-user');
 				$Form_Inputs->form_select('Tipo de usuario','idTipoUsuario', $x3, 1, 'idTipoUsuario', 'Nombre', 'usuarios_tipos', 'idTipoUsuario!=1', '', $dbConn);
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x4, 1);
+				$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 				$Form_Inputs->form_input_phone('Fono', 'Fono', $x5, 1);
 				$Form_Inputs->form_input_icon('Email', 'email', $x6, 1,'fa fa-envelope-o');
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x7, 1);

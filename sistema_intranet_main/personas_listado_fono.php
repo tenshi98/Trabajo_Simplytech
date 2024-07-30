@@ -88,13 +88,14 @@ $rowData = db_select_data (false, $SIS_query, 'personas_listado_fono', $SIS_join
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
-				<?php  
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Fono)){          $x1 = $Fono;         }else{$x1 = $rowData['Fono'];}
 				if(isset($Comentario)){    $x2 = $Comentario;   }else{$x2 = $rowData['Comentario'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 				$Form_Inputs->form_input_phone('Fono', 'Fono', $x1, 2);
 				$Form_Inputs->form_textarea('Comentario', 'Comentario', $x2, 1);
 
@@ -133,6 +134,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 				$Form_Inputs->form_input_phone('Fono', 'Fono', $x1, 2);
 				$Form_Inputs->form_textarea('Comentario', 'Comentario', $x2, 1);
 

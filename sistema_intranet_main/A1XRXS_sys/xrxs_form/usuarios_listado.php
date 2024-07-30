@@ -80,7 +80,7 @@ require_once '0_validate_user_1.php';
 	if(isset($Direccion) && $Direccion!=''){     $Direccion   = EstandarizarInput($Direccion);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($usuario)&&contar_palabras_censuradas($usuario)!=0){          $error['usuario']     = 'error/Edita usuario, contiene palabras no permitidas';}
 	if(isset($password)&&contar_palabras_censuradas($password)!=0){        $error['password']    = 'error/Edita password, contiene palabras no permitidas';}
@@ -95,7 +95,8 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
 	if(isset($email)&&!validarEmail($email)){     $error['email']    = 'error/El Email ingresado no es valido';}
-	if(isset($Fono)&&!validarNumero($Fono)){      $error['Fono']	 = 'error/Ingrese un numero telefonico valido';}
+	if(isset($Fono)&&!validarNumero($Fono)){      $error['Fono']	 = 'error/Ingrese un número telefónico válido';}
+	if(isset($Fono)&&palabra_corto($Fono, 9)!=1){ $error['Fono']     = 'error/'.palabra_corto($Fono, 9);}
 	if(isset($Rut)&&!validarRut($Rut)){           $error['Rut']      = 'error/El Rut ingresado no es valido';}
 	if(isset($password, $repassword)){
 		if ( $password <> $repassword )           $error['password'] = 'error/Las contraseñas ingresadas no coinciden';

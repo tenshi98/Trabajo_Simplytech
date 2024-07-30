@@ -122,6 +122,7 @@ $rowData = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $
 					$Form_Inputs->form_input_text('Apellido Materno', 'ApellidoMat', $x3, 2);
 					$Form_Inputs->form_input_rut('Rut', 'Rut', $x4, 2);
 					$Form_Inputs->form_date('F. Nacimiento','FNacimiento', $x5, 1);
+					$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 					$Form_Inputs->form_input_phone('Fono', 'Fono1', $x6, 1);
 					$Form_Inputs->form_input_phone('Fono', 'Fono2', $x7, 1);
 					$Form_Inputs->form_select_depend1('Región','idCiudad', $x8, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,

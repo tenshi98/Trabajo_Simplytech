@@ -64,7 +64,7 @@ require_once '0_validate_user_1.php';
 	if(isset($Direccion) && $Direccion!=''){ $Direccion = EstandarizarInput($Direccion);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Asunto)&&contar_palabras_censuradas($Asunto)!=0){              $error['Asunto']       = 'error/Edita Asunto, contiene palabras no permitidas';}
 	if(isset($Cuerpo)&&contar_palabras_censuradas($Cuerpo)!=0){              $error['Cuerpo']       = 'error/Edita Cuerpo, contiene palabras no permitidas';}

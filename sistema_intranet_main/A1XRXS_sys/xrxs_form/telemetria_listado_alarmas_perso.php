@@ -65,7 +65,7 @@ require_once '0_validate_user_1.php';
 	if(isset($Nombre) && $Nombre!=''){$Nombre = EstandarizarInput($Nombre);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){  $error['Nombre'] = 'error/Edita Nombre,contiene palabras no permitidas';}
 	if(isset($Rango_ini,$Rango_fin)&&$Rango_ini==$Rango_fin){    $error['Rango']  = 'error/El Valor Mínimo y el Valor Máximo tienen el mismo valor, edita los valores correctamente';}

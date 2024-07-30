@@ -77,7 +77,7 @@ require_once '0_validate_user_1.php';
 	if(isset($LinkURL) && $LinkURL!=''){         $LinkURL     = EstandarizarInput($LinkURL);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Icono)&&contar_palabras_censuradas($Icono)!=0){              $error['Icono']       = 'error/Edita Icono, contiene palabras no permitidas';}
 	if(isset($IconoStyle)&&contar_palabras_censuradas($IconoStyle)!=0){    $error['IconoStyle']  = 'error/Edita IconoStyle, contiene palabras no permitidas';}

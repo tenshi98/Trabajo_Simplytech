@@ -42,7 +42,7 @@ require_once '0_validate_user_1.php';
 	if(isset($NombreLargo) && $NombreLargo!=''){ $NombreLargo = EstandarizarInput($NombreLargo);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){            $error['Nombre']      = 'error/Edita Nombre,contiene palabras no permitidas';}
 	if(isset($NombreLargo)&&contar_palabras_censuradas($NombreLargo)!=0){  $error['NombreLargo'] = 'error/Edita NombreLargo, contiene palabras no permitidas';}

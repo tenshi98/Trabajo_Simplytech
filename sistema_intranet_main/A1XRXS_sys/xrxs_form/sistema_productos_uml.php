@@ -42,7 +42,7 @@ require_once '0_validate_user_1.php';
 	if(isset($Abreviatura) && $Abreviatura!=''){ $Abreviatura = EstandarizarInput($Abreviatura);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){            $error['Nombre']      = 'error/Edita Nombre,contiene palabras no permitidas';}
 	if(isset($Abreviatura)&&contar_palabras_censuradas($Abreviatura)!=0){  $error['Abreviatura'] = 'error/Edita Abreviatura, contiene palabras no permitidas';}

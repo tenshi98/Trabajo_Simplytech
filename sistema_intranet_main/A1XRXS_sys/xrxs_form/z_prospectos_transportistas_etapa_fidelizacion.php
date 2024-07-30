@@ -47,7 +47,7 @@ require_once '0_validate_user_1.php';
 	if(isset($Observacion) && $Observacion!=''){ $Observacion = EstandarizarInput($Observacion);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Observacion)&&contar_palabras_censuradas($Observacion)!=0){  $error['Observacion'] = 'error/Edita Observacion, contiene palabras no permitidas';}
 

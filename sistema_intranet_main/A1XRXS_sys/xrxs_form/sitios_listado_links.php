@@ -49,7 +49,7 @@ require_once '0_validate_user_1.php';
 	if(isset($PalabrasClave) && $PalabrasClave!=''){ $PalabrasClave = EstandarizarInput($PalabrasClave);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){               $error['Nombre']        = 'error/Edita Nombre,contiene palabras no permitidas';}
 	if(isset($Enlace)&&contar_palabras_censuradas($Enlace)!=0){               $error['Enlace']        = 'error/Edita Enlace, contiene palabras no permitidas';}

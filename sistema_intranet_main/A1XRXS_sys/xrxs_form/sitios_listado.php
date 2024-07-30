@@ -164,7 +164,7 @@ require_once '0_validate_user_1.php';
 	if(isset($Social_Linkedin) && $Social_Linkedin!=''){                $Social_Linkedin        = EstandarizarInput($Social_Linkedin);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                                  $error['Nombre']                  = 'error/Edita Nombre,contiene palabras no permitidas';}
 	if(isset($Domain)&&contar_palabras_censuradas($Domain)!=0){                                  $error['Domain']                  = 'error/Edita Domain, contiene palabras no permitidas';}
@@ -190,11 +190,13 @@ require_once '0_validate_user_1.php';
 	if(isset($Social_Linkedin)&&contar_palabras_censuradas($Social_Linkedin)!=0){                $error['Social_Linkedin']         = 'error/Edita Social_Linkedin, contiene palabras no permitidas';}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
-	if(isset($Whatsapp_number_1)&&$Whatsapp_number_1!=''&&!validarNumero($Whatsapp_number_1)){  $error['Whatsapp_number_1']    = 'error/Ingrese un numero telefonico valido';}
-	if(isset($Whatsapp_number_2)&&$Whatsapp_number_2!=''&&!validarNumero($Whatsapp_number_2)){  $error['Whatsapp_number_2']    = 'error/Ingrese un numero telefonico valido';}
+	if(isset($Whatsapp_number_1)&&$Whatsapp_number_1!=''&&!validarNumero($Whatsapp_number_1)){  $error['Whatsapp_number_1']    = 'error/Ingrese un número telefónico válido';}
+	if(isset($Whatsapp_number_2)&&$Whatsapp_number_2!=''&&!validarNumero($Whatsapp_number_2)){  $error['Whatsapp_number_2']    = 'error/Ingrese un número telefónico válido';}
+	if(isset($Whatsapp_number_1)&&palabra_corto($Whatsapp_number_1, 9)!=1){                     $error['Whatsapp_number_1']    = 'error/'.palabra_corto($Whatsapp_number_1, 9);}
+	if(isset($Whatsapp_number_2)&&palabra_corto($Whatsapp_number_2, 9)!=1){                     $error['Whatsapp_number_2']    = 'error/'.palabra_corto($Whatsapp_number_2, 9);}
 
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */

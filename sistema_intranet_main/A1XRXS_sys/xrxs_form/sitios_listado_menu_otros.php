@@ -52,7 +52,7 @@ require_once '0_validate_user_1.php';
 	if(isset($Link) && $Link!=''){     $Link   = EstandarizarInput($Link);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){  $error['Nombre']  = 'error/Edita Nombre,contiene palabras no permitidas';}
 	if(isset($Link)&&contar_palabras_censuradas($Link)!=0){      $error['Link']    = 'error/Edita Link, contiene palabras no permitidas';}

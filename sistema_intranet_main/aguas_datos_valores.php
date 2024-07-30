@@ -104,6 +104,7 @@ if(!empty($_GET['id'])){
 					$Form_Inputs->form_input_number('valor Reposicion 1 instancia', 'valorReposicion1', $x7, 2);
 					$Form_Inputs->form_input_number('valor Reposicion 2 instancia', 'valorReposicion2', $x8, 2);
 					$Form_Inputs->form_select_n_auto('Dias para Vencimiento','NdiasPago', $x9, 2, 1, 31);
+					$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 					$Form_Inputs->form_input_phone('Fono Emergencias 24 hrs', 'Fac_nEmergencia', $x10, 2);
 					$Form_Inputs->form_input_phone('Fono Consultas', 'Fac_nConsultas', $x11, 2);
 
@@ -162,6 +163,7 @@ if(!empty($_GET['id'])){
 					$Form_Inputs->form_input_number('valor Reposicion 1 instancia', 'valorReposicion1', $x7, 2);
 					$Form_Inputs->form_input_number('valor Reposicion 2 instancia', 'valorReposicion2', $x8, 2);
 					$Form_Inputs->form_select_n_auto('Dias para Vencimiento','NdiasPago', $x9, 2, 1, 31);
+					$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 					$Form_Inputs->form_input_phone('Fono Emergencias 24 hrs', 'Fac_nEmergencia', $x10, 2);
 					$Form_Inputs->form_input_phone('Fono Consultas', 'Fac_nConsultas', $x11, 2);
 

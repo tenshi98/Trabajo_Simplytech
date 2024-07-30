@@ -43,11 +43,12 @@ require_once '0_validate_user_1.php';
 	if(isset($Comentario) && $Comentario!=''){      $Comentario   = EstandarizarInput($Comentario);}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Verificación de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
 	if(isset($Comentario)&&contar_palabras_censuradas($Comentario)!=0){  $error['Comentario']   = 'error/Edita Comentario, contiene palabras no permitidas';}
-	if(isset($Fono)&&!validarNumero($Fono)){                             $error['Fono']         = 'error/Ingrese un numero telefonico valido';}
+	if(isset($Fono)&&!validarNumero($Fono)){                             $error['Fono']         = 'error/Ingrese un número telefónico válido';}
+	if(isset($Fono)&&palabra_corto($Fono, 9)!=1){                        $error['Fono']         = 'error/'.palabra_corto($Fono, 9);}
 
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */

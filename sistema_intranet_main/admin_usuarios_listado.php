@@ -264,6 +264,7 @@ foreach ($arrSistemas as $sis) {
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 				$Form_Inputs->form_input_icon('Nombre de Usuario', 'usuario', $x1, 1,'fa fa-user');
 				$Form_Inputs->form_select('Tipo de usuario','idTipoUsuario', $x3, 1, 'idTipoUsuario', 'Nombre', 'usuarios_tipos', 'idTipoUsuario!=1', '', $dbConn);
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x4, 1);

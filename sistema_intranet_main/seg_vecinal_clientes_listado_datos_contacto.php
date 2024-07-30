@@ -98,6 +98,7 @@ $rowData = db_select_data (false, $SIS_query, 'seg_vecinal_clientes_listado', $S
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_select('¿Compartir Datos de Contacto?','idCompartir', $x1, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+					$Form_Inputs->form_post_data(4,1,1, 'Al ingresar el numero telefónico omitir el +56 e ingresar el resto del número' );
 					$Form_Inputs->form_input_phone('Telefono Fijo', 'Fono1', $x2, 1);
 					$Form_Inputs->form_input_phone('Telefono Movil', 'Fono2', $x3, 1);
 					$Form_Inputs->form_input_fax('Fax', 'Fax', $x4, 1);
