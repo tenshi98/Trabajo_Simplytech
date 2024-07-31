@@ -543,7 +543,7 @@ array_push( $arrInsumos2,$row );
 							if($cantidad!=0){ ?>
 								<tr class="odd">
 									<td><?php echo $consumos['Producto']; ?></td>
-									<td><?php echo Cantidades_decimales_justos_alt($cantidad).' '.$consumos['Uml']; ?></td>
+									<td><?php echo Cantidades_decimales_justos($cantidad).' '.$consumos['Uml']; ?></td>
 									<td align="right"><?php echo valores($cantidad*$consumos['ValorIngreso'], 0); ?></td>
 								</tr>
 						<?php 
@@ -630,7 +630,7 @@ array_push( $arrInsumos2,$row );
 									if($cantidad!=0){ ?>
 										<tr class="odd">
 											<td><?php echo $consumos['Producto']; ?></td>
-											<td><?php echo Cantidades_decimales_justos_alt($cantidad).' '.$consumos['Uml']; ?></td>
+											<td><?php echo Cantidades_decimales_justos($cantidad).' '.$consumos['Uml']; ?></td>
 											<td align="right"><?php echo valores($consumos['ValorIngreso'], 0); ?></td>
 											<td align="right"><?php echo valores($cantidad*$consumos['ValorIngreso'], 0); ?></td>
 										</tr>
@@ -670,7 +670,7 @@ array_push( $arrInsumos2,$row );
 						foreach ($arrInsumos as $consumos) { ?>
 							<tr class="odd">
 								<td><?php echo $consumos['NombreInsumo']; ?></td>
-								<td><?php echo Cantidades_decimales_justos_alt($consumos['Cantidad']).' '.$consumos['Unidad']; ?></td>
+								<td><?php echo Cantidades_decimales_justos($consumos['Cantidad']).' '.$consumos['Unidad']; ?></td>
 								<td align="right"><?php echo valores($consumos['Cantidad']*$consumos['ValorIngreso'], 0); ?></td>
 							</tr>
 						<?php }  ?>                    
@@ -741,7 +741,7 @@ array_push( $arrInsumos2,$row );
 										<tr class="odd">
 											<td><?php echo $consumos['Maquina']; ?></td>
 											<td><?php echo $consumos['NombreInsumo']; ?></td>
-											<td><?php echo Cantidades_decimales_justos_alt($consumos['Cantidad']).' '.$consumos['Unidad']; ?></td>
+											<td><?php echo Cantidades_decimales_justos($consumos['Cantidad']).' '.$consumos['Unidad']; ?></td>
 											<td align="right"><?php echo valores($consumos['ValorIngreso'], 0); ?></td>
 											<td align="right"><?php echo valores($consumos['Cantidad']*$consumos['ValorIngreso'], 0); ?></td>
 										</tr>

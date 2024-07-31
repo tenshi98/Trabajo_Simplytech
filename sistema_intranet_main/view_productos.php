@@ -248,7 +248,7 @@ foreach ($arrPromedioProd as $productos) {
 									$total = $total + $receta['Cantidad']; ?>
 									<tr class="item-row">
 										<td><?php echo $receta['NombreProd']; ?></td>
-										<td width="90"><?php echo Cantidades_decimales_justos_alt($receta['Cantidad']).' '.$receta['UnidadMedida']; ?></td>
+										<td width="90"><?php echo Cantidades_decimales_justos($receta['Cantidad']).' '.$receta['UnidadMedida']; ?></td>
 									</tr>
 								<?php } ?>
 							</table>
