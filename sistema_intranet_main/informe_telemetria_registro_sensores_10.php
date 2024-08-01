@@ -52,9 +52,9 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 		$vardata = genera_password(8,'alfanumerico');
 						
 		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+		
+		
+		
 						
 	}
 	$rowData = mysqli_fetch_assoc ($resultado);
@@ -112,9 +112,9 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 		$vardata = genera_password(8,'alfanumerico');
 						
 		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+		
+		
+		
 						
 	}
 	while ( $row = mysqli_fetch_assoc ($resultado)){
@@ -141,9 +141,9 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 			$vardata = genera_password(8,'alfanumerico');
 							
 			//Guardo el error en una variable temporal
-			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+			
+			
+			
 							
 		}
 		$rowData = mysqli_fetch_assoc ($resultado);

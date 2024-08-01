@@ -32,8 +32,8 @@ class Inputs extends Basic_Inputs{
 	*===========================    Parametros   ===========================
 	* String   $placeholder   Nombre o texto a mostrar en el navegador
 	* String   $name          Nombre del identificador del Input
-	* Integer  $value         Valor por defecto, debe ser un numero entero
-	* Integer  $required      Si dato es obligatorio (1=no, 2=si)
+	* int      $value         Valor por defecto, debe ser un numero entero
+	* int      $required      Si dato es obligatorio (1=no, 2=si)
 	* String   $data1         Identificador de la base de datos
 	* String   $data2         Texto a mostrar en la opción del input
 	* String   $table1        Tabla desde donde tomar los datos
@@ -131,9 +131,9 @@ class Inputs extends Basic_Inputs{
 				$vardata = genera_password(8,'alfanumerico');
 
 				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+				
+				
+				
 
 				//Devuelvo mensaje
 				alert_post_data(4,1,1,0, 'Error en la consulta en <strong>'.$placeholder.'</strong>, consulte con el administrador');
