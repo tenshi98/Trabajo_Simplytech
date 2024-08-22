@@ -1107,6 +1107,13 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 		case 'login':
 
+			/**********************/
+			//Validaciones
+			if(!isset($usuario) OR $usuario==''){   return alert_post_data(4,1,1,0,'No ha ingresado el usuario.');}
+			if(!isset($password) OR $password==''){ return alert_post_data(4,1,1,0,'No ha ingresado el password.');}
+
+			/**********************/
+			//Si todo esta ok
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
