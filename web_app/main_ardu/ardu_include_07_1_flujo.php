@@ -300,6 +300,24 @@ if(isset($rowData['CrossCMinHorno'],$arrDatoX['Cuenta'],$rowData['MedicionTiempo
 		$Segs = $rowData['MedicionTiempo'] + $Segs;
 		//Actualizo
 		$chainxMain .= ",MedicionTiempo='".$Segs."'";
+
+
+		/*********************** Revision Uso solo en el caso de que sea superior al minimo ***********************/
+		if($rev_counter!=0){
+			//variable de update
+			$rev_upd          = $rowUsoRev['Horas_Sensor_activo'] + $segundosRev;
+			$rev_update_data .= ",Horas_Sensor_activo='".$rev_upd."'";
+
+			//variable de insert
+			$rev_insert_column .= ",Horas_Sensor_activo" ;
+			$rev_insert_data   .= ",'".$segundosRev."'";
+
+			//guardo o actualizo datos
+			switch ($UsoRevdata) {
+				case 0:  $insertHistorial = db_insert_data (false, $rev_insert_column, $rev_insert_data, 'telemetria_listado_historial_uso', $dbConn, 'insertHistorial', basename($_SERVER["REQUEST_URI"], ".php"), 'insertHistorial'); break;                    //si no existe dato del dia inserto
+				default: $resultado       = db_update_data (false, $rev_update_data, 'telemetria_listado_historial_uso', 'idUso = "'.$rowUsoRev['idUso'].'"', $dbConn, 'ardu_include_revision_uso', basename($_SERVER["REQUEST_URI"], ".php"), 'db_update_data'); //Si existe dato del dia actualizo
+			}
+		}
 	}
 }
 

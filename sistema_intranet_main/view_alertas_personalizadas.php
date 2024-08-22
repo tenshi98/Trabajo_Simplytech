@@ -67,12 +67,6 @@ if (validarNumero($_GET['view'])){
 $rowData = db_select_data (false, 'Nombre, cantSensores', 'telemetria_listado', '', 'idTelemetria ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 //defino los nombres de los sensores
-$subsql = '';
-for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
-    $subsql .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
-    $subsql .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
-}
-
 $SIS_query = '
 telemetria_listado_alarmas_perso.idAlarma,
 telemetria_listado_alarmas_perso.Nombre,
@@ -90,7 +84,11 @@ core_telemetria_tipo_alertas.Nombre AS Prioridad,
 telemetria_listado_unidad_medida.Nombre AS Unimed,
 telemetria_listado_alarmas_perso.idTipoAlerta,
 core_estados.Nombre AS Estado,
-telemetria_listado_alarmas_perso.idEstado'.$subsql;
+telemetria_listado_alarmas_perso.idEstado';
+for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
+    $SIS_query .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+    $SIS_query .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+}
 $SIS_join  = '
 LEFT JOIN `telemetria_listado_alarmas_perso_tipos` ON telemetria_listado_alarmas_perso_tipos.idTipo    = telemetria_listado_alarmas_perso.idTipo
 LEFT JOIN `telemetria_listado_alarmas_perso_items` ON telemetria_listado_alarmas_perso_items.idAlarma  = telemetria_listado_alarmas_perso.idAlarma
