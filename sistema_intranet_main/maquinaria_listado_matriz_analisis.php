@@ -195,10 +195,10 @@ if(!empty($_GET['clone_idMatriz'])){
 								document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
 								document.getElementById('div_PuntoUniMed').style.display = 'none';
 								//Reseteo los valores a 0
-								document.getElementById('PuntoMedAceptable').value = "0";
-								document.getElementById('PuntoMedAlerta').value = "0";
-								document.getElementById('PuntoMedCondenatorio').value = "0";
-								document.getElementById('PuntoUniMed').value = "0";
+								document.querySelector('input[name="PuntoMedAceptable"]').value = '0';
+								document.querySelector('input[name="PuntoMedAlerta"]').value = '0';
+								document.querySelector('input[name="PuntoMedCondenatorio"]').value = '0';
+								document.querySelector('input[name="PuntoUniMed"]').value = '0';
 
 							}
 						});
@@ -219,10 +219,10 @@ if(!empty($_GET['clone_idMatriz'])){
 								document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
 								document.getElementById('div_PuntoUniMed').style.display = 'none';
 								//Reseteo los valores a 0
-								document.getElementById('PuntoMedAceptable').value = "0";
-								document.getElementById('PuntoMedAlerta').value = "0";
-								document.getElementById('PuntoMedCondenatorio').value = "0";
-								document.getElementById('PuntoUniMed').value = "0";
+								document.querySelector('input[name="PuntoMedAceptable"]').value = '0';
+								document.querySelector('input[name="PuntoMedAlerta"]').value = '0';
+								document.querySelector('input[name="PuntoMedCondenatorio"]').value = '0';
+								document.querySelector('input[name="PuntoUniMed"]').value = '0';
 							}
 						});
 

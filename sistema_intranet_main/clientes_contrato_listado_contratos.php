@@ -204,12 +204,12 @@ if(!empty($_GET['edit_itemizado'])){
 									document.getElementById('div_ValorTotal').style.display = 'none';
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById('idFrecuencia').selectedIndex = 0;
-										document.getElementById('Cantidad').value = "0";
-										document.getElementById('TiempoProgramado').value = "0";
-										document.getElementById('idTrabajo').selectedIndex = 0;
-										document.getElementById('Valor').value = "0";
-										document.getElementById('ValorTotal').value = "0";
+										document.querySelector('input[name="idFrecuencia"]').selectedIndex = 0;
+										document.querySelector('input[name="Cantidad"]').value = '0';
+										document.querySelector('input[name="TiempoProgramado"]').value = '0';
+										document.querySelector('input[name="idTrabajo"]').selectedIndex = 0;
+										document.querySelector('input[name="Valor"]').value = '0';
+										document.querySelector('input[name="ValorTotal"]').value = '0';
 									}
 								break;
 								//Errores Conjuntos
@@ -220,10 +220,6 @@ if(!empty($_GET['edit_itemizado'])){
 									document.getElementById('div_idTrabajo').style.display = '';
 									document.getElementById('div_Valor').style.display = '';
 									document.getElementById('div_ValorTotal').style.display = '';
-									//Reseteo los valores a 0
-									if(caseLoad==1){
-										//nada
-									}
 								break;
 							}
 						}
@@ -358,12 +354,12 @@ if(!empty($_GET['edit_itemizado'])){
 									document.getElementById('div_ValorTotal').style.display = 'none';
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById('idFrecuencia').selectedIndex = 0;
-										document.getElementById('Cantidad').value = "0";
-										document.getElementById('TiempoProgramado').value = "0";
-										document.getElementById('idTrabajo').selectedIndex = 0;
-										document.getElementById('Valor').value = "0";
-										document.getElementById('ValorTotal').value = "0";
+										document.querySelector('input[name="idFrecuencia"]').selectedIndex = 0;
+										document.querySelector('input[name="Cantidad"]').value = '0';
+										document.querySelector('input[name="TiempoProgramado"]').value = '0';
+										document.querySelector('input[name="idTrabajo"]').selectedIndex = 0;
+										document.querySelector('input[name="Valor"]').value = '0';
+										document.querySelector('input[name="ValorTotal"]').value = '0';
 									}
 								break;
 								//Errores Conjuntos
@@ -374,10 +370,6 @@ if(!empty($_GET['edit_itemizado'])){
 									document.getElementById('div_idTrabajo').style.display = '';
 									document.getElementById('div_Valor').style.display = '';
 									document.getElementById('div_ValorTotal').style.display = '';
-									//Reseteo los valores a 0
-									if(caseLoad==1){
-										//nada
-									}
 								break;
 							}
 						}
@@ -852,13 +844,15 @@ if(!empty($_GET['edit_itemizado'])){
 								case '1':
 									document.getElementById('div_ValorMensual').style.display = '';
 									document.getElementById('div_Presupuesto').style.display = 'none';
-									document.getElementById('Presupuesto').value = "0";
+									//Reseteo los valores a 0
+									document.querySelector('input[name="Presupuesto"]').value = '0';
 								break;
 								//si es Por Itemizado
 								case '2':
 									document.getElementById('div_ValorMensual').style.display = 'none';
 									document.getElementById('div_Presupuesto').style.display = '';
-									document.getElementById('ValorMensual').value = "0";
+									//Reseteo los valores a 0
+									document.querySelector('input[name="ValorMensual"]').value = '0';
 								break;
 							}
 						}
@@ -949,13 +943,15 @@ if(!empty($_GET['edit_itemizado'])){
 								case '1':
 									document.getElementById('div_ValorMensual').style.display = '';
 									document.getElementById('div_Presupuesto').style.display = 'none';
-									document.getElementById('Presupuesto').value = "0";
+									//Reseteo los valores a 0
+									document.querySelector('input[name="Presupuesto"]').value = '0';
 								break;
 								//si es Por Itemizado
 								case '2':
 									document.getElementById('div_ValorMensual').style.display = 'none';
 									document.getElementById('div_Presupuesto').style.display = '';
-									document.getElementById('ValorMensual').value = "0";
+									//Reseteo los valores a 0
+									document.querySelector('input[name="ValorMensual"]').value = '0';
 								break;
 							}
 						}

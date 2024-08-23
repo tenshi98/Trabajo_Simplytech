@@ -206,10 +206,10 @@ $rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 								document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'none';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									document.getElementById('SensoresFechaUso_<?php echo $_GET['mod']; ?>').value = "0000-00-00";
-									document.getElementById('SensoresAccionC_<?php echo $_GET['mod']; ?>').value = "0";
-									document.getElementById('SensoresAccionT_<?php echo $_GET['mod']; ?>').value = "0";
-									document.getElementById('SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').selectedIndex = 0;
+									document.querySelector('input[name="SensoresFechaUso_<?php echo $_GET['mod']; ?>"]').value = '0000-00-00';
+									document.querySelector('input[name="SensoresAccionC_<?php echo $_GET['mod']; ?>"]').value = '0';
+									document.querySelector('input[name="SensoresAccionT_<?php echo $_GET['mod']; ?>"]').value = '0';
+									document.querySelector('input[name="SensoresAccionAlerta_<?php echo $_GET['mod']; ?>"]').selectedIndex = 0;
 								}
 							break;
 						}

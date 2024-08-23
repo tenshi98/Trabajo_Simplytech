@@ -314,10 +314,10 @@ if(!empty($_GET['clone_idMaquina'])){ ?>
 								document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
 								document.getElementById('div_PuntoUniMed').style.display = 'none';
 								//Reseteo los valores a 0
-								document.getElementById('PuntoMedAceptable').value = "0";
-								document.getElementById('PuntoMedAlerta').value = "0";
-								document.getElementById('PuntoMedCondenatorio').value = "0";
-								document.getElementById('PuntoUniMed').value = "0";
+								document.querySelector('input[name="PuntoMedAceptable"]').value = '0';
+								document.querySelector('input[name="PuntoMedAlerta"]').value = '0';
+								document.querySelector('input[name="PuntoMedCondenatorio"]').value = '0';
+								document.querySelector('input[name="PuntoUniMed"]').value = '0';
 
 							}
 						});
@@ -337,10 +337,10 @@ if(!empty($_GET['clone_idMaquina'])){ ?>
 								document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
 								document.getElementById('div_PuntoUniMed').style.display = 'none';
 								//Reseteo los valores a 0
-								document.getElementById('PuntoMedAceptable').value = "0";
-								document.getElementById('PuntoMedAlerta').value = "0";
-								document.getElementById('PuntoMedCondenatorio').value = "0";
-								document.getElementById('PuntoUniMed').value = "0";
+								document.querySelector('input[name="PuntoMedAceptable"]').value = '0';
+								document.querySelector('input[name="PuntoMedAlerta"]').value = '0';
+								document.querySelector('input[name="PuntoMedCondenatorio"]').value = '0';
+								document.querySelector('input[name="PuntoUniMed"]').value = '0';
 							}
 						});
 
@@ -977,10 +977,6 @@ if(!empty($_GET['clone_idMaquina'])){ ?>
 									document.getElementById('div_idUml').style.display = 'none';
 									document.getElementById('div_Frecuencia').style.display = 'none';
 									document.getElementById('div_idFrecuencia').style.display = 'none';
-									//Reseteo los valores a 0
-									if(caseLoad==1){
-										//nada
-									}
 								break;
 								//si es Componente
 								case '2':
@@ -999,10 +995,6 @@ if(!empty($_GET['clone_idMaquina'])){ ?>
 									document.getElementById('div_idUml').style.display = 'none';
 									document.getElementById('div_Frecuencia').style.display = 'none';
 									document.getElementById('div_idFrecuencia').style.display = 'none';
-									//Reseteo los valores a 0
-									if(caseLoad==1){
-										//nada
-									}
 								break;
 								//si es Subcomponente
 								case '3':
@@ -1021,10 +1013,6 @@ if(!empty($_GET['clone_idMaquina'])){ ?>
 									document.getElementById('div_idUml').style.display = 'none';
 									document.getElementById('div_Frecuencia').style.display = 'none';
 									document.getElementById('div_idFrecuencia').style.display = 'none';
-									//Reseteo los valores a 0
-									if(caseLoad==1){
-										//nada
-									}
 								break;
 							}
 						}
@@ -1050,8 +1038,8 @@ if(!empty($_GET['clone_idMaquina'])){ ?>
 									document.getElementById('div_idFrecuencia').style.display = '';
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById('Aceite').value = "0";
-										document.getElementById('Cantidad').value = "0";
+										document.querySelector('input[name="Aceite"]').value = '0';
+										document.querySelector('input[name="Cantidad"]').value = '0';
 									}
 								break;
 								//si es aceite
@@ -1069,9 +1057,9 @@ if(!empty($_GET['clone_idMaquina'])){ ?>
 									document.getElementById('div_idFrecuencia').style.display = '';
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById('Grasa_inicial').value = "0";
-										document.getElementById('Grasa_relubricacion').value = "0";
-										document.getElementById('Cantidad').value = "0";
+										document.querySelector('input[name="Grasa_inicial"]').value = '0';
+										document.querySelector('input[name="Grasa_relubricacion"]').value = '0';
+										document.querySelector('input[name="Cantidad"]').value = '0';
 									}
 								break;
 								//Errores Conjuntos
@@ -1089,9 +1077,9 @@ if(!empty($_GET['clone_idMaquina'])){ ?>
 									document.getElementById('div_idFrecuencia').style.display = '';
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById('Grasa_inicial').value = "0";
-										document.getElementById('Grasa_relubricacion').value = "0";
-										document.getElementById('Aceite').value = "0";
+										document.querySelector('input[name="Grasa_inicial"]').value = '0';
+										document.querySelector('input[name="Grasa_relubricacion"]').value = '0';
+										document.querySelector('input[name="Aceite"]').value = '0';
 									}
 								break;
 								//Errores Conjuntos
@@ -1109,10 +1097,10 @@ if(!empty($_GET['clone_idMaquina'])){ ?>
 									document.getElementById('div_idFrecuencia').style.display = '';
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById('Grasa_inicial').value = "0";
-										document.getElementById('Grasa_relubricacion').value = "0";
-										document.getElementById('Aceite').value = "0";
-										document.getElementById('Cantidad').value = "0";
+										document.querySelector('input[name="Grasa_inicial"]').value = '0';
+										document.querySelector('input[name="Grasa_relubricacion"]').value = '0';
+										document.querySelector('input[name="Aceite"]').value = '0';
+										document.querySelector('input[name="Cantidad"]').value = '0';
 									}
 								break;
 							}
@@ -1325,10 +1313,6 @@ if(!empty($_GET['clone_idMaquina'])){ ?>
 									document.getElementById('div_idUml').style.display = 'none';
 									document.getElementById('div_Frecuencia').style.display = 'none';
 									document.getElementById('div_idFrecuencia').style.display = 'none';
-									//Reseteo los valores a 0
-									if(caseLoad==1){
-										//nada
-									}
 								break;
 								//si es Componente
 								case '2':
@@ -1347,10 +1331,6 @@ if(!empty($_GET['clone_idMaquina'])){ ?>
 									document.getElementById('div_idUml').style.display = 'none';
 									document.getElementById('div_Frecuencia').style.display = 'none';
 									document.getElementById('div_idFrecuencia').style.display = 'none';
-									//Reseteo los valores a 0
-									if(caseLoad==1){
-										//nada
-									}
 								break;
 								//si es Subcomponente
 								case '3':
@@ -1369,10 +1349,6 @@ if(!empty($_GET['clone_idMaquina'])){ ?>
 									document.getElementById('div_idUml').style.display = 'none';
 									document.getElementById('div_Frecuencia').style.display = 'none';
 									document.getElementById('div_idFrecuencia').style.display = 'none';
-									//Reseteo los valores a 0
-									if(caseLoad==1){
-										//nada
-									}
 								break;
 							}
 						}
@@ -1398,8 +1374,8 @@ if(!empty($_GET['clone_idMaquina'])){ ?>
 									document.getElementById('div_idFrecuencia').style.display = '';
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById('Aceite').value = "0";
-										document.getElementById('Cantidad').value = "0";
+										document.querySelector('input[name="Aceite"]').value = '0';
+										document.querySelector('input[name="Cantidad"]').value = '0';
 									}
 								break;
 								//si es aceite
@@ -1417,9 +1393,9 @@ if(!empty($_GET['clone_idMaquina'])){ ?>
 									document.getElementById('div_idFrecuencia').style.display = '';
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById('Grasa_inicial').value = "0";
-										document.getElementById('Grasa_relubricacion').value = "0";
-										document.getElementById('Cantidad').value = "0";
+										document.querySelector('input[name="Grasa_inicial"]').value = '0';
+										document.querySelector('input[name="Grasa_relubricacion"]').value = '0';
+										document.querySelector('input[name="Cantidad"]').value = '0';
 									}
 								break;
 								//si es normal
@@ -1437,9 +1413,9 @@ if(!empty($_GET['clone_idMaquina'])){ ?>
 									document.getElementById('div_idFrecuencia').style.display = '';
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById('Grasa_inicial').value = "0";
-										document.getElementById('Grasa_relubricacion').value = "0";
-										document.getElementById('Aceite').value = "0";
+										document.querySelector('input[name="Grasa_inicial"]').value = '0';
+										document.querySelector('input[name="Grasa_relubricacion"]').value = '0';
+										document.querySelector('input[name="Aceite"]').value = '0';
 									}
 								break;
 								//si es otro
@@ -1457,10 +1433,10 @@ if(!empty($_GET['clone_idMaquina'])){ ?>
 									document.getElementById('div_idFrecuencia').style.display = '';
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById('Grasa_inicial').value = "0";
-										document.getElementById('Grasa_relubricacion').value = "0";
-										document.getElementById('Aceite').value = "0";
-										document.getElementById('Cantidad').value = "0";
+										document.querySelector('input[name="Grasa_inicial"]').value = '0';
+										document.querySelector('input[name="Grasa_relubricacion"]').value = '0';
+										document.querySelector('input[name="Aceite"]').value = '0';
+										document.querySelector('input[name="Cantidad"]').value = '0';
 									}
 								break;
 							}

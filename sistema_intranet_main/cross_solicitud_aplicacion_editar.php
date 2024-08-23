@@ -177,84 +177,6 @@ if(!empty($_GET['addDetalle'])){ ?>
 		</div>
 	</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*}elseif(!empty($_GET['lock_cuartel'])){ ?>
-
-	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box">
-			<header>
-				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-				<h5>Cerrar Cuartel</h5>
-			</header>
-			<div class="body">
-				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
-
-					<?php
-					//Se verifican si existen los datos
-					if(isset($f_cierre)){          $x1  = $f_cierre;         }else{$x1  = '';}
-					if(isset($idEjecucion)){       $x2  = $idEjecucion;      }else{$x2  = '';}
-					if(isset($GeoDistance)){       $x3  = $GeoDistance;      }elseif(isset($_GET['distancia'])&&$_GET['distancia']!=''){$x3  = Cantidades(($_GET['distancia']/1000), 0);}else{$x3  = '';}
-					if(isset($VelPromedio)){       $x4  = $VelPromedio;      }else{$x4  = '';}
-					if(isset($LitrosAplicados)){   $x5  = $LitrosAplicados;  }else{$x5  = '';}
-					//if(isset($T_Aplicacion)){      $x6  = $T_Aplicacion;     }else{$x6  = '';}
-
-					//se dibujan los inputs
-					$Form_Inputs = new Form_Inputs();
-					$Form_Inputs->form_date('Fecha Cierre Cuartel','f_cierre', $x1, 2);
-					$Form_Inputs->form_select('Ejecucion','idEjecucion', $x2, 2, 'idEjecucion', 'Nombre', 'core_estado_ejecucion', 0, '', $dbConn);
-					$Form_Inputs->form_input_number_spinner('Distancia Recorrida Km','GeoDistance', $x3, 0, 500000, '0.1', 1, 1);
-					$Form_Inputs->form_input_number_spinner('Vel. Promedio Tractor Km/hr','VelPromedio', $x4, 0, 50, '0.1', 1, 1);
-					$Form_Inputs->form_input_number_spinner('Litros Aplicados','LitrosAplicados', $x5, 0, 50000, '0.1', 1, 1);
-					//$Form_Inputs->form_time('Tiempo de Aplicacion','T_Aplicacion', $x6, 1, 1);
-
-					$Form_Inputs->form_input_hidden('idCuarteles', $_GET['lock_cuartel'], 2);
-					$Form_Inputs->form_input_hidden('f_ejecucion', $_GET['f_ejecucion'], 2);
-					$Form_Inputs->form_input_hidden('f_ejecucion_fin', $_GET['f_ejecucion_fin'], 2);
-					$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-					?>
-
-					<script>
-						document.getElementById('div_GeoDistance').style.display = 'none';
-						document.getElementById('div_VelPromedio').style.display = 'none';
-						document.getElementById('div_LitrosAplicados').style.display = 'none';
-						//document.getElementById('div_T_Aplicacion').style.display = 'none';
-
-						$("#idEjecucion").on("change", function(){ //se ejecuta al cambiar valor del select
-							let idEjecucion = $(this).val(); //Asignamos el valor seleccionado
-
-							//No ejecutado
-							if(idEjecucion == 1){
-								document.getElementById('div_GeoDistance').style.display = '';
-								document.getElementById('div_VelPromedio').style.display = '';
-								document.getElementById('div_LitrosAplicados').style.display = '';
-								//document.getElementById('div_T_Aplicacion').style.display = '';
-														
-							//Para el resto
-							} else {
-								document.getElementById('div_GeoDistance').style.display = 'none';
-								document.getElementById('div_VelPromedio').style.display = 'none';
-								document.getElementById('div_LitrosAplicados').style.display = 'none';
-								//document.getElementById('div_T_Aplicacion').style.display = 'none';
-								//Reseteo los valores a 0
-								document.getElementById('GeoDistance').value = "0";
-								document.getElementById('VelPromedio').value = "0";
-								document.getElementById('LitrosAplicados').value = "0";
-								//document.getElementById('T_Aplicacion').value = "0";
-							}
-						});
-
-					</script>
-
-					<div class="form-group">
-						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_close_cuartel">
-						<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
-					</div>
-
-				</form>
-				<?php widget_validator(); ?>
-			</div>
-		</div>
-	</div><?php */ ?>
-<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['edit_prod'])){
 	// consulto los datos
 	$SIS_query = 'idProducto, DosisAplicar, Objetivo';
@@ -264,7 +186,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 
 	// consulto los datos
 	$SIS_query = '
-	productos_listado.idProducto, 
+	productos_listado.idProducto,
 	productos_listado.DosisRecomendada,
 	sistema_productos_uml.Nombre AS Unimed';
 	$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
@@ -438,14 +360,14 @@ if(!empty($_GET['addDetalle'])){ ?>
 	/***************************************************/
 	$w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.idEstado=1";
 	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
-	$x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; 
+	$x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 	//Verifico el tipo de usuario que esta ingresando
 	if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 	}
 	//Solo para plataforma Simplytech
 	if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-		$w .= " AND telemetria_listado.idTab=1";//CrossChecking		
+		$w .= " AND telemetria_listado.idTab=1";//CrossChecking
 	}
 
 	?>

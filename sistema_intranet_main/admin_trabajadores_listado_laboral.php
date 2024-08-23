@@ -213,9 +213,8 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 									document.getElementById('div_SueldoHora').style.display = 'none';
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										//document.getElementById('SueldoLiquido').value = "0";
-										document.getElementById('SueldoDia').value = "0";
-										document.getElementById('SueldoHora').value = "0";
+										document.querySelector('input[name="SueldoDia"]').value = '0';
+										document.querySelector('input[name="SueldoHora"]').value = '0';
 									}
 								break;
 								//Trabajador con sueldo semanal
@@ -225,9 +224,8 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 									document.getElementById('div_SueldoHora').style.display = 'none';
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										//document.getElementById('SueldoLiquido').value = "0";
-										document.getElementById('SueldoDia').value = "0";
-										document.getElementById('SueldoHora').value = "0";
+										document.querySelector('input[name="SueldoDia"]').value = '0';
+										document.querySelector('input[name="SueldoHora"]').value = '0';
 									}
 								break;
 								//Trabajador con sueldo diario (jornada semanal de 5 días)
@@ -237,9 +235,8 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 									document.getElementById('div_SueldoHora').style.display = 'none';
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById('SueldoLiquido').value = "0";
-										//document.getElementById('SueldoDia').value = "0";
-										document.getElementById('SueldoHora').value = "0";
+										document.querySelector('input[name="SueldoLiquido"]').value = '0';
+										document.querySelector('input[name="SueldoHora"]').value = '0';
 									}
 								break;
 								//Trabajador con sueldo diario (jornada semanal de 6 días)
@@ -249,9 +246,8 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 									document.getElementById('div_SueldoHora').style.display = 'none';
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById('SueldoLiquido').value = "0";
-										//document.getElementById('SueldoDia').value = "0";
-										document.getElementById('SueldoHora').value = "0";
+										document.querySelector('input[name="SueldoLiquido"]').value = '0';
+										document.querySelector('input[name="SueldoHora"]').value = '0';
 									}
 								break;
 								//Trabajador con sueldo por hora
@@ -261,9 +257,8 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 									document.getElementById('div_SueldoHora').style.display = 'block';
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById('SueldoLiquido').value = "0";
-										document.getElementById('SueldoDia').value = "0";
-										//document.getElementById('SueldoHora').value = "0";
+										document.querySelector('input[name="SueldoLiquido"]').value = '0';
+										document.querySelector('input[name="SueldoDia"]').value = '0';
 									}
 								break;
 							}
@@ -280,16 +275,12 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 									document.getElementById('div_PorcentajeTrabajoPesado').style.display = 'none';
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById('PorcentajeTrabajoPesado').value = "0";
+										document.querySelector('input[name="PorcentajeTrabajoPesado"]').value = '0';
 									}
 								break;
 								//Errores Conjuntos
 								case '2':
 									document.getElementById('div_PorcentajeTrabajoPesado').style.display = 'block';
-									//Reseteo los valores a 0
-									if(caseLoad==1){
-
-									}
 								break;
 							}
 						}

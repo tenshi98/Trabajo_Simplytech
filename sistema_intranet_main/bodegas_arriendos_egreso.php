@@ -562,8 +562,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 								document.getElementById('div_fecha_fact_desde').style.display = 'none';
 								document.getElementById('div_fecha_fact_hasta').style.display = 'none';
 								//Reseteo los valores a 0
-								document.getElementsByName('fecha_fact_desde').value = "0";
-								document.getElementsByName('fecha_fact_hasta').value = "0";
+								document.querySelector('input[name="fecha_fact_desde"]').value = '0';
+								document.querySelector('input[name="fecha_fact_hasta"]').value = '0';
 							break;
 						}
 					}
@@ -1013,8 +1013,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 								document.getElementById('div_fecha_fact_desde').style.display = 'none';
 								document.getElementById('div_fecha_fact_hasta').style.display = 'none';
 								//Reseteo los valores a 0
-								document.getElementsByName('fecha_fact_desde').value = "0";
-								document.getElementsByName('fecha_fact_hasta').value = "0";
+								document.querySelector('input[name="fecha_fact_desde"]').value = '0';
+								document.querySelector('input[name="fecha_fact_hasta"]').value = '0';
 							break;
 						}
 					}

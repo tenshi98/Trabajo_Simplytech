@@ -186,7 +186,7 @@ $rowData_i = db_select_data (false, 'N_Sensor, ValorActivo, RangoMinimo, RangoMa
 							document.getElementById('div_RangoMinimo').style.display = 'block';
 							document.getElementById('div_RangoMaximo').style.display = 'block';
 							//Reseteo los valores a 0
-							document.getElementById('ValorActivo').value = "0";
+							document.querySelector('input[name="ValorActivo"]').value = '0';
 
 						//el resto
 						}else{
@@ -194,8 +194,8 @@ $rowData_i = db_select_data (false, 'N_Sensor, ValorActivo, RangoMinimo, RangoMa
 							document.getElementById('div_RangoMinimo').style.display = 'none';
 							document.getElementById('div_RangoMaximo').style.display = 'none';
 							//Reseteo los valores a 0
-							document.getElementById('RangoMinimo').value = "0";
-							document.getElementById('RangoMaximo').value = "0";
+							document.querySelector('input[name="RangoMinimo"]').value = '0';
+							document.querySelector('input[name="RangoMaximo"]').value = '0';
 
 						}
 					});
@@ -306,7 +306,7 @@ foreach ($arrGrupos as $sen) { $arrFinalGrupos[$sen['idGrupo']]['Nombre'] = $sen
 							document.getElementById('div_RangoMinimo').style.display = 'block';
 							document.getElementById('div_RangoMaximo').style.display = 'block';
 							//Reseteo los valores a 0
-							document.getElementById('ValorActivo').value = "0";
+							document.querySelector('input[name="ValorActivo"]').value = '0';
 
 						//el resto
 						}else{
@@ -314,8 +314,8 @@ foreach ($arrGrupos as $sen) { $arrFinalGrupos[$sen['idGrupo']]['Nombre'] = $sen
 							document.getElementById('div_RangoMinimo').style.display = 'none';
 							document.getElementById('div_RangoMaximo').style.display = 'none';
 							//Reseteo los valores a 0
-							document.getElementById('RangoMinimo').value = "0";
-							document.getElementById('RangoMaximo').value = "0";
+							document.querySelector('input[name="RangoMinimo"]').value = '0';
+							document.querySelector('input[name="RangoMaximo"]').value = '0';
 
 						}
 					});

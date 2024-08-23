@@ -139,13 +139,15 @@ $rowData = db_select_data (false, $SIS_query, 'licitacion_listado', $SIS_join, $
 							if(TipoLicitacion_val == 1){
 								document.getElementById('div_ValorMensual').style.display = '';
 								document.getElementById('div_Presupuesto').style.display = 'none';
-								document.getElementById('Presupuesto').value = "0";
+								//Reseteo los valores a 0
+								document.querySelector('input[name="Presupuesto"]').value = '0';
 
 							//si es Por Itemizado
 							} else if(TipoLicitacion_val == 2){
 								document.getElementById('div_ValorMensual').style.display = 'none';
 								document.getElementById('div_Presupuesto').style.display = '';
-								document.getElementById('ValorMensual').value = "0";
+								//Reseteo los valores a 0
+								document.querySelector('input[name="ValorMensual"]').value = '0';
 
 							}
 
@@ -158,13 +160,15 @@ $rowData = db_select_data (false, $SIS_query, 'licitacion_listado', $SIS_join, $
 							if(modelSelected1 == 1){
 								document.getElementById('div_ValorMensual').style.display = '';
 								document.getElementById('div_Presupuesto').style.display = 'none';
-								document.getElementById('Presupuesto').value = "0";
+								//Reseteo los valores a 0
+								document.querySelector('input[name="Presupuesto"]').value = '0';
 
 							//si es Por Itemizado
 							} else if(modelSelected1 == 2){
 								document.getElementById('div_ValorMensual').style.display = 'none';
 								document.getElementById('div_Presupuesto').style.display = '';
-								document.getElementById('ValorMensual').value = "0";
+								//Reseteo los valores a 0
+								document.querySelector('input[name="ValorMensual"]').value = '0';
 
 							}
 						});

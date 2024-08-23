@@ -200,12 +200,12 @@ $rowData = mysqli_fetch_assoc ($resultado);
 							document.getElementById('div_Valor').style.display = 'none';
 							document.getElementById('div_ValorTotal').style.display = 'none';
 							//Reseteo los valores a 0
-							document.getElementById("idFrecuencia").selectedIndex = 0;
-							document.getElementById('Cantidad').value = "0";
-							document.getElementById('TiempoProgramado').value = "0";
-							document.getElementById("idTrabajo").selectedIndex = 0;
-							document.getElementById('Valor').value = "0";
-							document.getElementById('ValorTotal').value = "0";
+							document.querySelector('input[name="idFrecuencia"]').selectedIndex = 0;
+							document.querySelector('input[name="Cantidad"]').value = '0';
+							document.querySelector('input[name="TiempoProgramado"]').value = '0';
+							document.querySelector('input[name="idTrabajo"]').selectedIndex = 0;
+							document.querySelector('input[name="Valor"]').value = '0';
+							document.querySelector('input[name="ValorTotal"]').value = '0';
 
 						//si es NO
 						} else if(modelSelected1 == 2){
@@ -347,12 +347,12 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 							document.getElementById('div_Valor').style.display = 'none';
 							document.getElementById('div_ValorTotal').style.display = 'none';
 							//Reseteo los valores a 0
-							document.getElementById('idFrecuencia').selectedIndex = 0;
-							document.getElementById('Cantidad').value = "0";
-							document.getElementById('TiempoProgramado').value = "0";
-							document.getElementById('idTrabajo').selectedIndex = 0;
-							document.getElementById('Valor').value = "0";
-							document.getElementById('ValorTotal').value = "0";
+							document.querySelector('input[name="idFrecuencia"]').selectedIndex = 0;
+							document.querySelector('input[name="Cantidad"]').value = '0';
+							document.querySelector('input[name="TiempoProgramado"]').value = '0';
+							document.querySelector('input[name="idTrabajo"]').selectedIndex = 0;
+							document.querySelector('input[name="Valor"]').value = '0';
+							document.querySelector('input[name="ValorTotal"]').value = '0';
 
 						//si es NO
 						} else if(modelSelected1 == 2){

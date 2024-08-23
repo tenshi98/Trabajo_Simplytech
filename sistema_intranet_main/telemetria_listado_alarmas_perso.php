@@ -155,28 +155,21 @@ if(!empty($_GET['editItem'])){
 									<option value="" selected>Seleccione una Opción</option>';
 
 									for ($i = 1; $i <= $rowSensores['cantSensores']; $i++) {
+										//Se marca como seleccionado
+										$selected = '';
+										if($rowData['Sensor_N']==$i){$selected = 'selected';}
 										//solo sensores activos
 										if(isset($rowSensores['SensoresActivo_'.$i])&&$rowSensores['SensoresActivo_'.$i]==1){
 											//se verifica que el grupo exista
 											if(isset($arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]])&&$arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]]!=''){
 												//Se trae el grupo
 												$Grupos = $arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]];
-												//Se marca como seleccionado
-												$selected = '';
-												if($rowData['Sensor_N']==$i){
-													$selected = 'selected';
-												}
 												//se imprime
-												echo '<option value="'.$i.'" '.$selected.'>'.$Grupos.' - '.$rowSensores['SensoresNombre_'.$i].' (s'.$i.')</option>';
+												echo '<option value="'.$i.'" '.$selected.'>'.TituloMenu($Grupos.' - '.$rowSensores['SensoresNombre_'.$i].' (s'.$i.')').'</option>';
 											//si no existe grupo se imprime sin este
 											}else{
-												//Se marca como seleccionado
-												$selected = '';
-												if($rowData['Sensor_N']==$i){
-													$selected = 'selected';
-												}
 												//se imprime
-												echo '<option value="'.$i.'" '.$selected.'>'.$rowSensores['SensoresNombre_'.$i].' (s'.$i.')</option>';
+												echo '<option value="'.$i.'" '.$selected.'>'.TituloMenu($rowSensores['SensoresNombre_'.$i].' (s'.$i.')').'</option>';
 											}
 										}
 									}
@@ -286,7 +279,7 @@ if(!empty($_GET['editItem'])){
 												//Se trae el grupo
 												$Grupos = $arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]];
 												//se imprime
-												echo '<option value="'.$i.'">'.$Grupos.' - '.$rowSensores['SensoresNombre_'.$i].' (s'.$i.')</option>';
+												echo '<option value="'.$i.'">'.TituloMenu($Grupos.' - '.$rowSensores['SensoresNombre_'.$i].' (s'.$i.')').'</option>';
 											//si no existe grupo se imprime sin este
 											}else{
 												//se imprime
@@ -400,7 +393,7 @@ if(!empty($_GET['editItem'])){
 								<td>
 									<?php
 									$grupo = $arrFinalGrupos[$rowSensores['SensoresGrupo_'.$alarmas['Sensor_N']]];
-									echo '<strong>'.$grupo.'</strong> - '.$rowSensores['SensoresNombre_'.$alarmas['Sensor_N']].' (s'.$alarmas['Sensor_N'].')';
+									echo TituloMenu('<strong>'.$grupo.'</strong> - '.$rowSensores['SensoresNombre_'.$alarmas['Sensor_N']].' (s'.$alarmas['Sensor_N'].')');
 									if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){
 										switch ($_GET['idTipo']) {
 											case 3:
@@ -546,12 +539,12 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_HoraTermino").style.display = "none";
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById("valor_diferencia").value = "";
-										document.getElementById("Rango_ini").value = "";
-										document.getElementById("Rango_fin").value = "";
-										document.getElementById("HoraInicio").value = "";
-										document.getElementById("HoraTermino").value = "";
 										document.getElementById("alert_post_data").innerHTML = "Todos los sensores tienen el mismo valor de error";
+										document.querySelector('input[name="valor_diferencia"]').value = '';
+										document.querySelector('input[name="Rango_ini"]').value = '';
+										document.querySelector('input[name="Rango_fin"]').value = '';
+										document.querySelector('input[name="HoraInicio"]').value = '';
+										document.querySelector('input[name="HoraTermino"]').value = '';
 									}
 								break;
 								//Rango Porcentaje Grupo
@@ -564,12 +557,12 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_HoraTermino").style.display = "none";
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById("valor_error").value = "";
-										document.getElementById("Rango_ini").value = "";
-										document.getElementById("Rango_fin").value = "";
-										document.getElementById("HoraInicio").value = "";
-										document.getElementById("HoraTermino").value = "";
 										document.getElementById("alert_post_data").innerHTML = "Un sensor tiene un valor que es x porcentaje inferior o superior a otro sensor dentro del grupo de sensores";
+										document.querySelector('input[name="valor_error"]').value = '';
+										document.querySelector('input[name="Rango_ini"]').value = '';
+										document.querySelector('input[name="Rango_fin"]').value = '';
+										document.querySelector('input[name="HoraInicio"]').value = '';
+										document.querySelector('input[name="HoraTermino"]').value = '';
 									}
 								break;
 								//Alertas Personalizadas (al menos 1 error)
@@ -582,13 +575,13 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_HoraTermino").style.display = "none";
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById("valor_error").value = "";
-										document.getElementById("valor_diferencia").value = "";
-										document.getElementById("Rango_ini").value = "";
-										document.getElementById("Rango_fin").value = "";
-										document.getElementById("HoraInicio").value = "";
-										document.getElementById("HoraTermino").value = "";
 										document.getElementById("alert_post_data").innerHTML = "Al menos un sensor se encuentra fuera del rango de trabajo normal";
+										document.querySelector('input[name="valor_error"]').value = '';
+										document.querySelector('input[name="valor_diferencia"]').value = '';
+										document.querySelector('input[name="Rango_ini"]').value = '';
+										document.querySelector('input[name="Rango_fin"]').value = '';
+										document.querySelector('input[name="HoraInicio"]').value = '';
+										document.querySelector('input[name="HoraTermino"]').value = '';
 									}
 								break;
 								//Alertas Personalizadas (todos con error)
@@ -601,13 +594,13 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_HoraTermino").style.display = "none";
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById("valor_error").value = "";
-										document.getElementById("valor_diferencia").value = "";
-										document.getElementById("Rango_ini").value = "";
-										document.getElementById("Rango_fin").value = "";
-										document.getElementById("HoraInicio").value = "";
-										document.getElementById("HoraTermino").value = "";
 										document.getElementById("alert_post_data").innerHTML = "Todos los sensores se encuentra fuera del rango de trabajo normal";
+										document.querySelector('input[name="valor_error"]').value = '';
+										document.querySelector('input[name="valor_diferencia"]').value = '';
+										document.querySelector('input[name="Rango_ini"]').value = '';
+										document.querySelector('input[name="Rango_fin"]').value = '';
+										document.querySelector('input[name="HoraInicio"]').value = '';
+										document.querySelector('input[name="HoraTermino"]').value = '';
 									}
 								break;
 								//Promedios fuera de Rangos
@@ -620,11 +613,11 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_HoraTermino").style.display = "none";
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById("valor_error").value = "";
-										document.getElementById("valor_diferencia").value = "";
-										document.getElementById("HoraInicio").value = "";
-										document.getElementById("HoraTermino").value = "";
 										document.getElementById("alert_post_data").innerHTML = "El promedio de los sensores esta fuera del rango establecido";
+										document.querySelector('input[name="valor_error"]').value = '';
+										document.querySelector('input[name="valor_diferencia"]').value = '';
+										document.querySelector('input[name="HoraInicio"]').value = '';
+										document.querySelector('input[name="HoraTermino"]').value = '';
 									}
 								break;
 								//Alertas Personalizadas (todos con valor especifico)
@@ -637,13 +630,13 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_HoraTermino").style.display = "none";
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById("valor_error").value = "";
-										document.getElementById("valor_diferencia").value = "";
-										document.getElementById("Rango_ini").value = "";
-										document.getElementById("Rango_fin").value = "";
-										document.getElementById("HoraInicio").value = "";
-										document.getElementById("HoraTermino").value = "";
 										document.getElementById("alert_post_data").innerHTML = "Todos los sensores estan con un valor predefinido, el cual indica error";
+										document.querySelector('input[name="valor_error"]').value = '';
+										document.querySelector('input[name="valor_diferencia"]').value = '';
+										document.querySelector('input[name="Rango_ini"]').value = '';
+										document.querySelector('input[name="Rango_fin"]').value = '';
+										document.querySelector('input[name="HoraInicio"]').value = '';
+										document.querySelector('input[name="HoraTermino"]').value = '';
 									}
 								break;
 								//Sensor funcionando fuera de horario
@@ -656,11 +649,28 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_HoraTermino").style.display = "block";
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById("valor_error").value = "";
-										document.getElementById("valor_diferencia").value = "";
-										document.getElementById("Rango_ini").value = "";
-										document.getElementById("Rango_fin").value = "";
 										document.getElementById("alert_post_data").innerHTML = "Los sensores seleccionados estan funcionando fuera de los horarios establecidos";
+										document.querySelector('input[name="valor_error"]').value = '';
+										document.querySelector('input[name="valor_diferencia"]').value = '';
+										document.querySelector('input[name="Rango_ini"]').value = '';
+										document.querySelector('input[name="Rango_fin"]').value = '';
+									}
+								break;
+								//Promedios dentro de Rangos
+								case '8':
+									document.getElementById("div_valor_error").style.display = "none";
+									document.getElementById("div_valor_diferencia").style.display = "none";
+									document.getElementById("div_Rango_ini").style.display = "block";
+									document.getElementById("div_Rango_fin").style.display = "block";
+									document.getElementById("div_HoraInicio").style.display = "none";
+									document.getElementById("div_HoraTermino").style.display = "none";
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										document.getElementById("alert_post_data").innerHTML = "El promedio de los sensores esta dentro del rango establecido";
+										document.querySelector('input[name="valor_error"]').value = '';
+										document.querySelector('input[name="valor_diferencia"]').value = '';
+										document.querySelector('input[name="HoraInicio"]').value = '';
+										document.querySelector('input[name="HoraTermino"]').value = '';
 									}
 								break;
 
@@ -769,12 +779,12 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_HoraTermino").style.display = "none";
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById("valor_diferencia").value = "";
-										document.getElementById("Rango_ini").value = "";
-										document.getElementById("Rango_fin").value = "";
-										document.getElementById("HoraInicio").value = "";
-										document.getElementById("HoraTermino").value = "";
 										document.getElementById("alert_post_data").innerHTML = "Todos los sensores tienen el mismo valor de error";
+										document.querySelector('input[name="valor_diferencia"]').value = '';
+										document.querySelector('input[name="Rango_ini"]').value = '';
+										document.querySelector('input[name="Rango_fin"]').value = '';
+										document.querySelector('input[name="HoraInicio"]').value = '';
+										document.querySelector('input[name="HoraTermino"]').value = '';
 									}
 								break;
 								//Rango Porcentaje Grupo
@@ -787,12 +797,12 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_HoraTermino").style.display = "none";
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById("valor_error").value = "";
-										document.getElementById("Rango_ini").value = "";
-										document.getElementById("Rango_fin").value = "";
-										document.getElementById("HoraInicio").value = "";
-										document.getElementById("HoraTermino").value = "";
 										document.getElementById("alert_post_data").innerHTML = "Un sensor tiene un valor que es x porcentaje inferior o superior a otro sensor dentro del grupo de sensores";
+										document.querySelector('input[name="valor_error"]').value = '';
+										document.querySelector('input[name="Rango_ini"]').value = '';
+										document.querySelector('input[name="Rango_fin"]').value = '';
+										document.querySelector('input[name="HoraInicio"]').value = '';
+										document.querySelector('input[name="HoraTermino"]').value = '';
 									}
 								break;
 								//Alertas Personalizadas (al menos 1 error)
@@ -805,13 +815,13 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_HoraTermino").style.display = "none";
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById("valor_error").value = "";
-										document.getElementById("valor_diferencia").value = "";
-										document.getElementById("Rango_ini").value = "";
-										document.getElementById("Rango_fin").value = "";
-										document.getElementById("HoraInicio").value = "";
-										document.getElementById("HoraTermino").value = "";
 										document.getElementById("alert_post_data").innerHTML = "Al menos un sensor se encuentra fuera del rango de trabajo normal";
+										document.querySelector('input[name="valor_error"]').value = '';
+										document.querySelector('input[name="valor_diferencia"]').value = '';
+										document.querySelector('input[name="Rango_ini"]').value = '';
+										document.querySelector('input[name="Rango_fin"]').value = '';
+										document.querySelector('input[name="HoraInicio"]').value = '';
+										document.querySelector('input[name="HoraTermino"]').value = '';
 									}
 								break;
 								//Alertas Personalizadas (todos con error)
@@ -824,13 +834,13 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_HoraTermino").style.display = "none";
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById("valor_error").value = "";
-										document.getElementById("valor_diferencia").value = "";
-										document.getElementById("Rango_ini").value = "";
-										document.getElementById("Rango_fin").value = "";
-										document.getElementById("HoraInicio").value = "";
-										document.getElementById("HoraTermino").value = "";
 										document.getElementById("alert_post_data").innerHTML = "Todos los sensores se encuentra fuera del rango de trabajo normal";
+										document.querySelector('input[name="valor_error"]').value = '';
+										document.querySelector('input[name="valor_diferencia"]').value = '';
+										document.querySelector('input[name="Rango_ini"]').value = '';
+										document.querySelector('input[name="Rango_fin"]').value = '';
+										document.querySelector('input[name="HoraInicio"]').value = '';
+										document.querySelector('input[name="HoraTermino"]').value = '';
 									}
 								break;
 								//Promedios fuera de Rangos
@@ -843,11 +853,11 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_HoraTermino").style.display = "none";
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById("valor_error").value = "";
-										document.getElementById("valor_diferencia").value = "";
-										document.getElementById("HoraInicio").value = "";
-										document.getElementById("HoraTermino").value = "";
 										document.getElementById("alert_post_data").innerHTML = "El promedio de los sensores esta fuera del rango establecido";
+										document.querySelector('input[name="valor_error"]').value = '';
+										document.querySelector('input[name="valor_diferencia"]').value = '';
+										document.querySelector('input[name="HoraInicio"]').value = '';
+										document.querySelector('input[name="HoraTermino"]').value = '';
 									}
 								break;
 								//Alertas Personalizadas (todos con valor especifico)
@@ -860,13 +870,13 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_HoraTermino").style.display = "none";
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById("valor_error").value = "";
-										document.getElementById("valor_diferencia").value = "";
-										document.getElementById("Rango_ini").value = "";
-										document.getElementById("Rango_fin").value = "";
-										document.getElementById("HoraInicio").value = "";
-										document.getElementById("HoraTermino").value = "";
 										document.getElementById("alert_post_data").innerHTML = "Todos los sensores estan con un valor predefinido, el cual indica error";
+										document.querySelector('input[name="valor_error"]').value = '';
+										document.querySelector('input[name="valor_diferencia"]').value = '';
+										document.querySelector('input[name="Rango_ini"]').value = '';
+										document.querySelector('input[name="Rango_fin"]').value = '';
+										document.querySelector('input[name="HoraInicio"]').value = '';
+										document.querySelector('input[name="HoraTermino"]').value = '';
 									}
 								break;
 								//Sensor funcionando fuera de horario
@@ -879,11 +889,28 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_HoraTermino").style.display = "block";
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById("valor_error").value = "";
-										document.getElementById("valor_diferencia").value = "";
-										document.getElementById("Rango_ini").value = "";
-										document.getElementById("Rango_fin").value = "";
 										document.getElementById("alert_post_data").innerHTML = "Los sensores seleccionados estan funcionando fuera de los horarios establecidos";
+										document.querySelector('input[name="valor_error"]').value = '';
+										document.querySelector('input[name="valor_diferencia"]').value = '';
+										document.querySelector('input[name="Rango_ini"]').value = '';
+										document.querySelector('input[name="Rango_fin"]').value = '';
+									}
+								break;
+								//Promedios dentro de Rangos
+								case '8':
+									document.getElementById("div_valor_error").style.display = "none";
+									document.getElementById("div_valor_diferencia").style.display = "none";
+									document.getElementById("div_Rango_ini").style.display = "block";
+									document.getElementById("div_Rango_fin").style.display = "block";
+									document.getElementById("div_HoraInicio").style.display = "none";
+									document.getElementById("div_HoraTermino").style.display = "none";
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										document.getElementById("alert_post_data").innerHTML = "El promedio de los sensores esta dentro del rango establecido";
+										document.querySelector('input[name="valor_error"]').value = '';
+										document.querySelector('input[name="valor_diferencia"]').value = '';
+										document.querySelector('input[name="HoraInicio"]').value = '';
+										document.querySelector('input[name="HoraTermino"]').value = '';
 									}
 								break;
 
@@ -1032,7 +1059,7 @@ if(!empty($_GET['editItem'])){
 									echo '<strong>Estado: </strong><label class="label '.$label_color_1.'">'.$alarmas[0]['Estado'].'</label><br/>';
 									echo '<strong>Tipo: </strong>'.$alarmas[0]['Tipo'].'<br/>';
 									echo '<strong>Prioridad Alarma: </strong><label class="label '.$label_color_2.'">'.$alarmas[0]['Prioridad'].'</label><br/>';
-									echo '<strong>Unidad Medida: </strong>'.$alarmas[0]['Unimed'].'<br/>';
+									if(isset($alarmas[0]['Unimed'])&&$alarmas[0]['Unimed']!=''){echo '<strong>Unidad Medida: </strong>'.$alarmas[0]['Unimed'].'<br/>';}
 									echo '<strong>N° Maximo Errores: </strong>'.$alarmas[0]['NErroresMax'].'<br/>';
 									echo '<strong>N° Actual Errores: </strong>'.$alarmas[0]['NErroresActual'].'<br/>';
 									?>
@@ -1041,16 +1068,12 @@ if(!empty($_GET['editItem'])){
 									<?php
 									echo '<strong>Nombre: </strong>'.$alarmas[0]['Nombre'];
 									if(isset($alarmas[0]['AlarmIni'],$alarmas[0]['AlarmFin'])&&$alarmas[0]['AlarmIni']!=0&&$alarmas[0]['AlarmFin']!=0){
-										echo '('.Cantidades_decimales_justos($alarmas[0]['AlarmIni']).' / '.Cantidades_decimales_justos($alarmas[0]['AlarmFin']).')<br/>';
-									}else{
-										echo '<br/>';
+										echo '<br/>('.Cantidades_decimales_justos($alarmas[0]['AlarmIni']).' / '.Cantidades_decimales_justos($alarmas[0]['AlarmFin']).')';
 									}
-									if(isset($alarmas[0]['HoraIni'],$alarmas[0]['HoraFin'])&&$alarmas[0]['HoraIni']!=0&&$alarmas[0]['HoraFin']!=0){
-										echo '(Activo desde '.$alarmas[0]['HoraIni'].' hasta las '.$alarmas[0]['HoraFin'].')<br/>';
-									}else{
-										echo '<br/>';
+									if(isset($alarmas[0]['HoraIni'],$alarmas[0]['HoraFin'])&&$alarmas[0]['HoraIni']!='00:00:00'&&$alarmas[0]['HoraFin']!='00:00:00'){
+										echo '<br/>(Activo desde '.$alarmas[0]['HoraIni'].' hasta las '.$alarmas[0]['HoraFin'].')';
 									}
-									echo '<strong>Sensores: </strong>';
+									echo '<br/><strong>Sensores: </strong>';
 									echo '<ul>';
 									foreach ($alarmas as $alarm) {
 										//grupo si es que existe
@@ -1080,7 +1103,7 @@ if(!empty($_GET['editItem'])){
 										/*if(isset($alarm['Rango_ini'])&&$alarm['Rango_ini']!=0&&isset($alarm['Rango_fin'])&&$alarm['Rango_fin']!=0){
 											$sub_nom .= '('.Cantidades_decimales_justos($alarm['Rango_ini']).' / '.Cantidades_decimales_justos($alarm['Rango_fin']).')';
 										}*/
-										echo '<li>'.$sub_nom.'</li>';
+										echo '<li>> '.TituloMenu($sub_nom).'</li>';
 									}
 									echo '</ul>';
 

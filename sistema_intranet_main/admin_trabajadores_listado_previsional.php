@@ -153,8 +153,8 @@ $rowData = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 									document.getElementById('div_MontoCotSaludExtra').style.display = 'none';
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById('PorcCotSaludExtra').value = "0";
-										document.getElementById('MontoCotSaludExtra').value = "0";
+										document.querySelector('input[name="PorcCotSaludExtra"]').value = '0';
+										document.querySelector('input[name="MontoCotSaludExtra"]').value = '0';
 									}
 								break;
 							}

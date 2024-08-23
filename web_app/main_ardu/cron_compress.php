@@ -63,7 +63,9 @@ if ($zip->open($Nombre_zip, ZipArchive::CREATE) === TRUE){
     $zip->addFile('logs_cron_informe_semanal_user.txt', 'logs_cron_informe_semanal_user.txt');
 
     // Archivos PHP a comprimir
-    $zip->addFile('ardu_include_02_ponderaciones.php', 'ardu_include_02_ponderaciones.php');
+    $zip->addFile('1_global_config.php', '1_global_config.php');
+    $zip->addFile('ardu_include_02_1_ponderaciones.php', 'ardu_include_02_1_ponderaciones.php');
+    $zip->addFile('ardu_include_02_2_calibraciones.php', 'ardu_include_02_2_calibraciones.php');
 
     //recorro los equipos y verifico que el archivo que exista
     foreach ($arrEquipos as $equip) {

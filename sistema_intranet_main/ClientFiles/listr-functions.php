@@ -210,8 +210,8 @@ function set_404_error() {
 }
 
 function utf8ify($str) {
-    if (is_file(!utf8_decode($str))){
-        return utf8_encode($str);
+    if (is_file(!mb_convert_encoding($str, 'ISO-8859-1', 'UTF-8'))){
+        return mb_convert_encoding($str, 'ISO-8859-1', 'UTF-8');
     } else {
         return $str;
     }

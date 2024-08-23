@@ -137,7 +137,7 @@ $rowData = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $
 									document.getElementById('div_idOpciones_2').style.display = 'none';
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById('idOpciones_2').selectedIndex = 0;
+										document.querySelector('input[name="idOpciones_2"]').selectedIndex = 0;
 									}
 								break;
 							}

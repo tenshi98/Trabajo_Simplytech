@@ -110,13 +110,13 @@ if(!empty($_GET['id'])){
 								document.getElementById('div_DescripcionCierre').style.display = '';
 								document.getElementById('div_DescripcionCancelacion').style.display = 'none';
 								//Reseteo los valores
-								document.getElementById('DescripcionCancelacion').value = "";
+								document.querySelector('input[name="DescripcionCancelacion"]').value = '';
 							//si es cancelada
 							} else if(idEstado == 3){
 								document.getElementById('div_DescripcionCierre').style.display = 'none';
 								document.getElementById('div_DescripcionCancelacion').style.display = '';
 								//Reseteo los valores
-								document.getElementById('DescripcionCierre').value = "";
+								document.querySelector('input[name="DescripcionCierre"]').value = '';
 							}
 						});
 

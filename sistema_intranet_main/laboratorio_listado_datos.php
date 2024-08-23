@@ -139,8 +139,9 @@ $rowData = db_select_data (false, $SIS_query, 'laboratorio_listado', $SIS_join, 
 								default:
 									document.getElementById("idCiudad").disabled = true;
 									document.getElementById("idComuna").disabled = true;
-									document.getElementById('idCiudad').selectedIndex = 0;
-									document.getElementById('idComuna').selectedIndex = 0;
+									//Reseteo los valores a 0
+									document.querySelector('input[name="idCiudad"]').selectedIndex = 0;
+									document.querySelector('input[name="idComuna"]').selectedIndex = 0;
 								break;
 							}
 						}

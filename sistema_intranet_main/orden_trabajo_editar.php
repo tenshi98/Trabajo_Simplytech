@@ -444,8 +444,8 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('div_idProducto').style.display = '';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									document.getElementById('Aceite').value = "0";
-									document.getElementById('Cantidad').value = "0";
+									document.querySelector('input[name="Aceite"]').value = '0';
+									document.querySelector('input[name="Cantidad"]').value = '0';
 								}
 							break;
 							//si es aceite
@@ -457,9 +457,9 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('div_idProducto').style.display = '';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									document.getElementById('Grasa_inicial').value = "0";
-									document.getElementById('Grasa_relubricacion').value = "0";
-									document.getElementById('Cantidad').value = "0";
+									document.querySelector('input[name="Grasa_inicial"]').value = '0';
+									document.querySelector('input[name="Grasa_relubricacion"]').value = '0';
+									document.querySelector('input[name="Cantidad"]').value = '0';
 								}
 							break;
 							//si es normal
@@ -471,9 +471,9 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('div_idProducto').style.display = '';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									document.getElementById('Grasa_inicial').value = "0";
-									document.getElementById('Grasa_relubricacion').value = "0";
-									document.getElementById('Aceite').value = "0";
+									document.querySelector('input[name="Grasa_inicial"]').value = '0';
+									document.querySelector('input[name="Grasa_relubricacion"]').value = '0';
+									document.querySelector('input[name="Aceite"]').value = '0';
 								}
 							break;
 							//si es otro
@@ -485,10 +485,10 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('div_idProducto').style.display = '';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									document.getElementById('Grasa_inicial').value = "0";
-									document.getElementById('Grasa_relubricacion').value = "0";
-									document.getElementById('Aceite').value = "0";
-									document.getElementById('Cantidad').value = "0";
+									document.querySelector('input[name="Grasa_inicial"]').value = '0';
+									document.querySelector('input[name="Grasa_relubricacion"]').value = '0';
+									document.querySelector('input[name="Aceite"]').value = '0';
+									document.querySelector('input[name="Cantidad"]').value = '0';
 								}
 							break;
 						}

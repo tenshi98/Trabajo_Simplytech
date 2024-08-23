@@ -518,13 +518,20 @@ foreach($arrAlertPerso as $cat_idAlarma=>$alarmas){
 							$SIS_data .= ",'".$alarmas[0]['AlarmFin']."'";
 							//Se verifica si tiene la funcion de geolocalizacion activa
 							//si esta activa se guardan los ultimos datos
-							if(isset($rowData['id_Geo'])&&$rowData['id_Geo']!=''&&$rowData['id_Geo']==1){
-								if(isset($GeoLatitud) && $GeoLatitud!=''){    $SIS_data .= ",'".$GeoLatitud."'";   }else{$SIS_data .= ",''";}
-								if(isset($GeoLongitud) && $GeoLongitud!=''){  $SIS_data .= ",'".$GeoLongitud."'";  }else{$SIS_data .= ",''";}
-							//si no esta activa se guardan los datos por defecto
-							}elseif(isset($rowData['id_Geo'])&&$rowData['id_Geo']!=''&&$rowData['id_Geo']==2){
-								if(isset($rowData['GeoLatitud']) && $rowData['GeoLatitud']!=''){   $SIS_data .= ",'".$rowData['GeoLatitud']."'";  }else{$SIS_data .= ",''";}
-								if(isset($rowData['GeoLongitud']) && $rowData['GeoLongitud']!=''){ $SIS_data .= ",'".$rowData['GeoLongitud']."'"; }else{$SIS_data .= ",''";}
+							if(isset($rowData['id_Geo'])&&$rowData['id_Geo']!=''){
+								switch ($rowData['id_Geo']) {
+									case 1:
+										if(isset($GeoLatitud) && $GeoLatitud!=''){    $SIS_data .= ",'".$GeoLatitud."'";   }else{$SIS_data .= ",''";}
+										if(isset($GeoLongitud) && $GeoLongitud!=''){  $SIS_data .= ",'".$GeoLongitud."'";  }else{$SIS_data .= ",''";}
+										break;
+									case 2:
+										if(isset($rowData['GeoLatitud']) && $rowData['GeoLatitud']!=''){   $SIS_data .= ",'".$rowData['GeoLatitud']."'";  }else{$SIS_data .= ",''";}
+										if(isset($rowData['GeoLongitud']) && $rowData['GeoLongitud']!=''){ $SIS_data .= ",'".$rowData['GeoLongitud']."'"; }else{$SIS_data .= ",''";}
+										break;
+								}
+							}else{
+								$SIS_data .= ",''"; //GeoLatitud
+								$SIS_data .= ",''"; //GeoLongitud
 							}
 							$SIS_data .= ",'1'";                                                                                             //idTipo
 							$SIS_data .= ",'El grupo ".DeSanitizar($alarmas[0]['Nombre'])." de Sensores esta fuera del promedio de rangos'"; //Descripcion
@@ -803,6 +810,119 @@ foreach($arrAlertPerso as $cat_idAlarma=>$alarmas){
 				//si no hay errores
 				}else{
 					updateAlarmaPerso($cat_idAlarma, 0,$dbConn );
+				}
+
+			break;
+			/*********************************************************************************/
+			//Promedios dentro de Rangos
+			case 8:
+				//variables
+				$int_sum_var   = 0;
+				$int_sum_count = 0;
+				$int_sum_prom  = 0;
+
+				//Reviso los valores
+				foreach ($alarmas as $alarma) {
+					if(isset($Sensor[$alarma['Sensor_N']]['valor'])&&$Sensor[$alarma['Sensor_N']]['valor']!=''&& $Sensor[$alarma['Sensor_N']]['valor'] < 99900){
+						$int_sum_var   = $int_sum_var + $Sensor[$alarma['Sensor_N']]['valor'];
+						$int_sum_count++;
+					}
+				}
+
+				//obtengo el promedio
+				if($int_sum_count!=0){
+					//obtengo el promedio
+					$int_sum_prom = $int_sum_var/$int_sum_count;
+
+					//Reviso que este dentro de rango
+					if($int_sum_prom!=0&&($int_sum_prom>$alarmas[0]['AlarmIni'] OR $int_sum_prom<$alarmas[0]['AlarmFin'])){
+						//se validan que los errores actuales sean superiores a los errores maximo
+						if((($NErroresMax!=0&&$NErroresActual>=0) OR ($NErroresMax==0&&$NErroresActual==0))&&$NErroresMax<=$NErroresActual){
+							//Se guardan los errores en la tabla de errores
+							if(isset($idSistema) && $idSistema!=''){         $SIS_data  = "'".$idSistema."'";      }else{$SIS_data  = "''";}
+							if(isset($idTelemetria) && $idTelemetria!=''){   $SIS_data .= ",'".$idTelemetria."'";  }else{$SIS_data .= ",''";}
+							if(isset($FechaSistema) && $FechaSistema!=''){   $SIS_data .= ",'".$FechaSistema."'";  }else{$SIS_data .= ",''";}
+							if(isset($HoraSistema) && $HoraSistema!=''){     $SIS_data .= ",'".$HoraSistema."'";   }else{$SIS_data .= ",''";}
+							$SIS_data .= ",'".$alarmas[0]['AlarmIni']."'";
+							$SIS_data .= ",'".$alarmas[0]['AlarmFin']."'";
+							//Se verifica si tiene la funcion de geolocalizacion activa
+							//si esta activa se guardan los ultimos datos
+							if(isset($rowData['id_Geo'])&&$rowData['id_Geo']!=''){
+								switch ($rowData['id_Geo']) {
+									case 1:
+										if(isset($GeoLatitud) && $GeoLatitud!=''){    $SIS_data .= ",'".$GeoLatitud."'";   }else{$SIS_data .= ",''";}
+										if(isset($GeoLongitud) && $GeoLongitud!=''){  $SIS_data .= ",'".$GeoLongitud."'";  }else{$SIS_data .= ",''";}
+										break;
+									case 2:
+										if(isset($rowData['GeoLatitud']) && $rowData['GeoLatitud']!=''){   $SIS_data .= ",'".$rowData['GeoLatitud']."'";  }else{$SIS_data .= ",''";}
+										if(isset($rowData['GeoLongitud']) && $rowData['GeoLongitud']!=''){ $SIS_data .= ",'".$rowData['GeoLongitud']."'"; }else{$SIS_data .= ",''";}
+										break;
+								}
+							}else{
+								$SIS_data .= ",''"; //GeoLatitud
+								$SIS_data .= ",''"; //GeoLongitud
+							}
+							$SIS_data .= ",'1'";                                                                                             //idTipo
+							$SIS_data .= ",'El grupo ".DeSanitizar($alarmas[0]['Nombre'])." de Sensores esta fuera del promedio de rangos'"; //Descripcion
+							$SIS_data .= ",'".$int_sum_prom."'";                                                                             //Valor
+							//El timestamp
+							if(isset($FechaSistema) && $FechaSistema != ''&&isset($HoraSistema) && $HoraSistema!=''){
+								$SIS_data .= ",'".$FechaSistema." ".$HoraSistema."'";
+							}else{
+								$SIS_data .= ",''";
+							}
+							$SIS_data .= ",'1'";                  //indica que es personalizada
+							$SIS_data .= ",'".$idTipoAlerta."'";  //prioridad alerta (normal-catastrofica)
+							$SIS_data .= ",'".$idUniMed."'";      //unidad de medida de la alerta
+
+							/*******************************************************/
+							// inserto los datos de registro en la db
+							$SIS_columns   = 'idSistema, idTelemetria, Fecha, Hora, Valor_min, Valor_max, GeoLatitud, GeoLongitud, idTipo, Descripcion, Valor, TimeStamp, idPersonalizado, idTipoAlerta,idUniMed';
+							$insertAlertas = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_listado_errores', $dbConn, 'insertAlertas', basename($_SERVER["REQUEST_URI"], ".php"), 'insertAlertas');
+
+							/******************************************************/
+							//se guarda alerta para enviarla por correo
+							//verifico el tipo de alerta
+							if(isset($idTipoAlerta)&&$idTipoAlerta!=''){
+								//tipo de alertas
+								switch ($idTipoAlerta) {
+									//Normal
+									case 1:
+										$Alertas_perso .= ' - '.DeSanitizar($alarmas[0]['Nombre']).' esta fuera de rango: ';
+										$Alertas_perso .= '<strong>'.Cantidades($int_sum_prom, 2).DeSanitizar($alarmas[0]['Unimed']).'</strong> | (Rango óptimo '.Cantidades($alarmas[0]['AlarmIni'], 2).DeSanitizar($alarmas[0]['Unimed']).' / '.Cantidades($alarmas[0]['AlarmFin'], 2).DeSanitizar($alarmas[0]['Unimed']).') <br/>';
+										break;
+									//Catastrofica
+									case 2:
+										$Alertas_criticas .= ' - '.DeSanitizar($alarmas[0]['Nombre']).' esta fuera de rango: ';
+										$Alertas_criticas .= '<strong>'.Cantidades($int_sum_prom, 2).DeSanitizar($alarmas[0]['Unimed']).'</strong> | (Rango óptimo '.Cantidades($alarmas[0]['AlarmIni'], 2).DeSanitizar($alarmas[0]['Unimed']).' / '.Cantidades($alarmas[0]['AlarmFin'], 2).DeSanitizar($alarmas[0]['Unimed']).') <br/>';
+										break;
+								}
+							}
+
+							//Sumo los datos
+							$NErroresTempx = $NErroresTempx + 1;
+							$NAlertas      = $NAlertas + 1;
+
+							/******************************************************/
+							//se resetea el numero de alertas en la alarma personalizada solo si los errores maximos estan configurados
+							if($NErroresMax!=0){
+								updateAlarmaPerso($cat_idAlarma, 0,$dbConn );
+							}
+						//si son inferiores, pero marca error se suman
+						}elseif((($NErroresMax!=0&&$NErroresActual>=0) OR ($NErroresMax==0&&$NErroresActual==0))&&$NErroresMax>$NErroresActual){
+							//se suma 1 a los errores
+							$NErroresActual  = $NErroresActual + 1;
+							//se actualizasolo si el numero de errores maximo esta configurado
+							if($NErroresMax!=0){
+								updateAlarmaPerso($cat_idAlarma, $NErroresActual,$dbConn );
+							}
+						//si no reseteo a 0
+						}else{
+							updateAlarmaPerso($cat_idAlarma, 0,$dbConn );
+						}
+					}else{
+						updateAlarmaPerso($cat_idAlarma, 0,$dbConn );
+					}
 				}
 
 			break;

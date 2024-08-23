@@ -151,8 +151,8 @@ $rowData = db_select_data (false, $SIS_query, 'seguridad_camaras_listado', $SIS_
 								default:
 									document.getElementById("idCiudad").disabled = true;
 									document.getElementById("idComuna").disabled = true;
-									document.getElementById('idCiudad').selectedIndex = 0;
-									document.getElementById('idComuna').selectedIndex = 0;
+									document.querySelector('input[name="idCiudad"]').selectedIndex = 0;
+									document.querySelector('input[name="idComuna"]').selectedIndex = 0;
 								break;
 							}
 						}
@@ -173,12 +173,12 @@ $rowData = db_select_data (false, $SIS_query, 'seguridad_camaras_listado', $SIS_
 									document.getElementById('div_Config_Web').style.display = 'none';
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById('idTipoCamara').selectedIndex = 0;
-										document.getElementById('Config_usuario').value = "";
-										document.getElementById('Config_Password').value = "";
-										document.getElementById('Config_IP').value = "";
-										document.getElementById('Config_Puerto').value = "";
-										document.getElementById('Config_Web').value = "";
+										document.querySelector('input[name="idTipoCamara"]').selectedIndex = 0;
+										document.querySelector('input[name="Config_usuario"]').value = '';
+										document.querySelector('input[name="Config_Password"]').value = '';
+										document.querySelector('input[name="Config_IP"]').value = '';
+										document.querySelector('input[name="Config_Puerto"]').value = '';
+										document.querySelector('input[name="Config_Web"]').value = '';
 									}
 								break;
 								//Si el pais es chile
@@ -204,12 +204,12 @@ $rowData = db_select_data (false, $SIS_query, 'seguridad_camaras_listado', $SIS_
 									document.getElementById('div_Config_Web').style.display = 'none';
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById('idTipoCamara').selectedIndex = 0;
-										document.getElementById('Config_usuario').value = "";
-										document.getElementById('Config_Password').value = "";
-										document.getElementById('Config_IP').value = "";
-										document.getElementById('Config_Puerto').value = "";
-										document.getElementById('Config_Web').value = "";
+										document.querySelector('input[name="idTipoCamara"]').selectedIndex = 0;
+										document.querySelector('input[name="Config_usuario"]').value = '';
+										document.querySelector('input[name="Config_Password"]').value = '';
+										document.querySelector('input[name="Config_IP"]').value = '';
+										document.querySelector('input[name="Config_Puerto"]').value = '';
+										document.querySelector('input[name="Config_Web"]').value = '';
 									}
 								break;
 							}

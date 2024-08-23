@@ -230,7 +230,7 @@ if(!empty($_GET['id'])){
 									document.getElementById('div_idLaboratorio').style.display = 'none';
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById('idLaboratorio').selectedIndex = 0;
+										document.querySelector('input[name="idLaboratorio"]').selectedIndex = 0;
 									}
 								break;
 								//si es Externo
@@ -399,7 +399,7 @@ if(!empty($_GET['id'])){
 									document.getElementById('div_idLaboratorio').style.display = 'none';
 									//Reseteo los valores a 0
 									if(caseLoad==1){
-										document.getElementById('idLaboratorio').selectedIndex = 0;
+										document.querySelector('input[name="idLaboratorio"]').selectedIndex = 0;
 									}
 								break;
 								//si es Externo

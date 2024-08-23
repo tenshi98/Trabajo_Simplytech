@@ -426,12 +426,10 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								document.getElementById('div_f_termino_hasta').style.display = 'none';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									//document.getElementById('f_programacion_desde').value = "";
-									//document.getElementById('f_programacion_hasta').value = "";
-									document.getElementById('f_ejecucion_desde').value = "";
-									document.getElementById('f_ejecucion_hasta').value = "";
-									document.getElementById('f_termino_desde').value = "";
-									document.getElementById('f_termino_hasta').value = "";
+									document.querySelector('input[name="f_ejecucion_desde"]').value = '';
+									document.querySelector('input[name="f_ejecucion_hasta"]').value = '';
+									document.querySelector('input[name="f_termino_desde"]').value = '';
+									document.querySelector('input[name="f_termino_hasta"]').value = '';
 								}
 							break;
 							//Programado
@@ -444,12 +442,10 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								document.getElementById('div_f_termino_hasta').style.display = 'none';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									document.getElementById('f_programacion_desde').value = "";
-									document.getElementById('f_programacion_hasta').value = "";
-									//document.getElementById('f_ejecucion_desde').value = "";
-									//document.getElementById('f_ejecucion_hasta').value = "";
-									document.getElementById('f_termino_desde').value = "";
-									document.getElementById('f_termino_hasta').value = "";
+									document.querySelector('input[name="f_programacion_desde"]').value = '';
+									document.querySelector('input[name="f_programacion_hasta"]').value = '';
+									document.querySelector('input[name="f_termino_desde"]').value = '';
+									document.querySelector('input[name="f_termino_hasta"]').value = '';
 								}
 							break;
 							//Ejecutado
@@ -462,12 +458,10 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								document.getElementById('div_f_termino_hasta').style.display = 'block';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									document.getElementById('f_programacion_desde').value = "";
-									document.getElementById('f_programacion_hasta').value = "";
-									document.getElementById('f_ejecucion_desde').value = "";
-									document.getElementById('f_ejecucion_hasta').value = "";
-									//document.getElementById('f_termino_desde').value = "";
-									//document.getElementById('f_termino_hasta').value = "";
+									document.querySelector('input[name="f_programacion_desde"]').value = '';
+									document.querySelector('input[name="f_programacion_hasta"]').value = '';
+									document.querySelector('input[name="f_ejecucion_desde"]').value = '';
+									document.querySelector('input[name="f_ejecucion_hasta"]').value = '';
 								}
 							break;
 							//el resto
@@ -480,12 +474,12 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								document.getElementById('div_f_termino_hasta').style.display = 'none';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									document.getElementById('f_programacion_desde').value = "";
-									document.getElementById('f_programacion_hasta').value = "";
-									document.getElementById('f_ejecucion_desde').value = "";
-									document.getElementById('f_ejecucion_hasta').value = "";
-									document.getElementById('f_termino_desde').value = "";
-									document.getElementById('f_termino_hasta').value = "";
+									document.querySelector('input[name="f_programacion_desde"]').value = '';
+									document.querySelector('input[name="f_programacion_hasta"]').value = '';
+									document.querySelector('input[name="f_ejecucion_desde"]').value = '';
+									document.querySelector('input[name="f_ejecucion_hasta"]').value = '';
+									document.querySelector('input[name="f_termino_desde"]').value = '';
+									document.querySelector('input[name="f_termino_hasta"]').value = '';
 								}
 							break;
 						}

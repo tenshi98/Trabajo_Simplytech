@@ -197,7 +197,7 @@ if(!empty($_GET['modAct'])){
 					$Form_Inputs->form_select_filter('Grupo','SensoresRevisionGrupo_'.$_GET['mod'], $rowData['RevisionGrupo'], 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos_uso', 'idSupervisado=1', '', $dbConn);
 
 					$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
-					$Form_Inputs->form_input_hidden('SensoresFechaUso_Fake', $rowData['FechaUso'], 2);
+					if(isset($rowData['FechaUso'])&&$rowData['FechaUso']!=''){$Form_Inputs->form_input_hidden('SensoresFechaUso_Fake', $rowData['FechaUso'], 2);}
 					?>
 
 					<script>
@@ -251,8 +251,10 @@ if(!empty($_GET['modAct'])){
 							}
 						});
 
-						$("#SensoresUso_<?php echo $_GET['mod']; ?>").on("change", function(){ //se ejecuta al cambiar valor del select
-							let SensoresUso_<?php echo $_GET['mod']; ?>_sel = $(this).val(); //Asignamos el valor seleccionado
+						//se ejecuta al cambiar valor del select
+						$("#SensoresUso_<?php echo $_GET['mod']; ?>").on("change", function(){
+							//Asignamos el valor seleccionado
+							let <?php echo 'SensoresUso_'.$_GET['mod'].'_sel'; ?> = $(this).val();
 
 							//Si es si
 							if(SensoresUso_<?php echo $_GET['mod']; ?>_sel == 1){
@@ -267,23 +269,13 @@ if(!empty($_GET['modAct'])){
 								document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'none';
 								document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'none';
 								document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'none';
-								//Reseteo los valores a 0
-								document.getElementById('SensoresFechaUso_<?php echo $_GET['mod']; ?>').value = "0000-00-00";
-								document.getElementById('SensoresAccionC_<?php echo $_GET['mod']; ?>').value = "0";
-								document.getElementById('SensoresAccionT_<?php echo $_GET['mod']; ?>').value = "0";
-								document.getElementById('SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').selectedIndex = 0;
 
 							//si no en ninguno
 							}else{
-								document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'block';
-								document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'block';
-								document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'block';
-								document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'block';
-								//Reseteo los valores a 0
-								document.getElementById('SensoresFechaUso_<?php echo $_GET['mod']; ?>').value = "0000-00-00";
-								document.getElementById('SensoresAccionC_<?php echo $_GET['mod']; ?>').value = "0";
-								document.getElementById('SensoresAccionT_<?php echo $_GET['mod']; ?>').value = "0";
-								document.getElementById('SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').selectedIndex = 0;
+								document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'none';
+								document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'none';
+								document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'none';
+								document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'none';
 
 							}
 						});
@@ -294,19 +286,12 @@ if(!empty($_GET['modAct'])){
 							//Si es si
 							if(SensoresRevision_<?php echo $_GET['mod']; ?>_sel == 1){
 								document.getElementById('div_SensoresRevisionGrupo_<?php echo $_GET['mod']; ?>').style.display = 'block';
-
 							//Si es no
 							}else if(SensoresRevision_<?php echo $_GET['mod']; ?>_sel == 2){
 								document.getElementById('div_SensoresRevisionGrupo_<?php echo $_GET['mod']; ?>').style.display = 'none';
-								//Reseteo los valores a 0
-								document.getElementById('SensoresRevisionGrupo_<?php echo $_GET['mod']; ?>').selectedIndex = 0;
-
 							//si no en ninguno
 							}else{
-								document.getElementById('div_SensoresRevisionGrupo_<?php echo $_GET['mod']; ?>').style.display = 'block';
-								//Reseteo los valores a 0
-								document.getElementById('SensoresRevisionGrupo_<?php echo $_GET['mod']; ?>').selectedIndex = 0;
-
+								document.getElementById('div_SensoresRevisionGrupo_<?php echo $_GET['mod']; ?>').style.display = 'none';
 							}
 						});
 

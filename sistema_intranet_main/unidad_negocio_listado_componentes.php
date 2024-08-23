@@ -467,15 +467,15 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('div_idFrecuencia').style.display = 'none';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									document.getElementById('idProducto').selectedIndex = 0;
-									document.getElementById('Grasa_inicial').value = "0";
-									document.getElementById('Grasa_relubricacion').value = "0";
-									document.getElementById('Aceite').value = "0";
-									document.getElementById('Cantidad').value = "0";
-									document.getElementById('idUml_fake').value = "0";
-									document.getElementById('idUml').value = "0";
-									document.getElementById('Frecuencia').value = "0";
-									document.getElementById('idFrecuencia').selectedIndex = 0;
+									document.querySelector('input[name="idProducto"]').selectedIndex = 0;
+									document.querySelector('input[name="Grasa_inicial"]').value = '0';
+									document.querySelector('input[name="Grasa_relubricacion"]').value = '0';
+									document.querySelector('input[name="Aceite"]').value = '0';
+									document.querySelector('input[name="Cantidad"]').value = '0';
+									document.querySelector('input[name="idUml_fake"]').value = '0';
+									document.querySelector('input[name="idUml"]').value = '0';
+									document.querySelector('input[name="Frecuencia"]').value = '0';
+									document.querySelector('input[name="idFrecuencia"]').selectedIndex = 0;
 								}
 							break;
 							//si es Componente
@@ -497,15 +497,15 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('div_idFrecuencia').style.display = 'none';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									document.getElementById('idProducto').selectedIndex = 0;
-									document.getElementById('Grasa_inicial').value = "0";
-									document.getElementById('Grasa_relubricacion').value = "0";
-									document.getElementById('Aceite').value = "0";
-									document.getElementById('Cantidad').value = "0";
-									document.getElementById('idUml_fake').value = "0";
-									document.getElementById('idUml').value = "0";
-									document.getElementById('Frecuencia').value = "0";
-									document.getElementById('idFrecuencia').selectedIndex = 0;
+									document.querySelector('input[name="idProducto"]').selectedIndex = 0;
+									document.querySelector('input[name="Grasa_inicial"]').value = '0';
+									document.querySelector('input[name="Grasa_relubricacion"]').value = '0';
+									document.querySelector('input[name="Aceite"]').value = '0';
+									document.querySelector('input[name="Cantidad"]').value = '0';
+									document.querySelector('input[name="idUml_fake"]').value = '0';
+									document.querySelector('input[name="idUml"]').value = '0';
+									document.querySelector('input[name="Frecuencia"]').value = '0';
+									document.querySelector('input[name="idFrecuencia"]').selectedIndex = 0;
 								}
 							break;
 							//si es Subcomponente
@@ -527,15 +527,15 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('div_idFrecuencia').style.display = 'none';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									document.getElementById('idProducto').selectedIndex = 0;
-									document.getElementById('Grasa_inicial').value = "0";
-									document.getElementById('Grasa_relubricacion').value = "0";
-									document.getElementById('Aceite').value = "0";
-									document.getElementById('Cantidad').value = "0";
-									document.getElementById('idUml_fake').value = "0";
-									document.getElementById('idUml').value = "0";
-									document.getElementById('Frecuencia').value = "0";
-									document.getElementById('idFrecuencia').selectedIndex = 0;
+									document.querySelector('input[name="idProducto"]').selectedIndex = 0;
+									document.querySelector('input[name="Grasa_inicial"]').value = '0';
+									document.querySelector('input[name="Grasa_relubricacion"]').value = '0';
+									document.querySelector('input[name="Aceite"]').value = '0';
+									document.querySelector('input[name="Cantidad"]').value = '0';
+									document.querySelector('input[name="idUml_fake"]').value = '0';
+									document.querySelector('input[name="idUml"]').value = '0';
+									document.querySelector('input[name="Frecuencia"]').value = '0';
+									document.querySelector('input[name="idFrecuencia"]').selectedIndex = 0;
 								}
 							break;
 						}
@@ -562,8 +562,8 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('div_idFrecuencia').style.display = '';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									document.getElementById('Aceite').value = "0";
-									document.getElementById('Cantidad').value = "0";
+									document.querySelector('input[name="Aceite"]').value = '0';
+									document.querySelector('input[name="Cantidad"]').value = '0';
 								}
 							break;
 							//Errores Conjuntos
@@ -581,9 +581,9 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('div_idFrecuencia').style.display = '';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									document.getElementById('Grasa_inicial').value = "0";
-									document.getElementById('Grasa_relubricacion').value = "0";
-									document.getElementById('Cantidad').value = "0";
+									document.querySelector('input[name="Grasa_inicial"]').value = '0';
+									document.querySelector('input[name="Grasa_relubricacion"]').value = '0';
+									document.querySelector('input[name="Cantidad"]').value = '0';
 								}
 							break;
 							//Errores Conjuntos
@@ -601,9 +601,9 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('div_idFrecuencia').style.display = '';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									document.getElementById('Grasa_inicial').value = "0";
-									document.getElementById('Grasa_relubricacion').value = "0";
-									document.getElementById('Aceite').value = "0";
+									document.querySelector('input[name="Grasa_inicial"]').value = '0';
+									document.querySelector('input[name="Grasa_relubricacion"]').value = '0';
+									document.querySelector('input[name="Aceite"]').value = '0';
 								}
 							break;
 							//Errores Conjuntos
@@ -621,10 +621,10 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('div_idFrecuencia').style.display = '';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									document.getElementById('Grasa_inicial').value = "0";
-									document.getElementById('Grasa_relubricacion').value = "0";
-									document.getElementById('Aceite').value = "0";
-									document.getElementById('Cantidad').value = "0";
+									document.querySelector('input[name="Grasa_inicial"]').value = '0';
+									document.querySelector('input[name="Grasa_relubricacion"]').value = '0';
+									document.querySelector('input[name="Aceite"]').value = '0';
+									document.querySelector('input[name="Cantidad"]').value = '0';
 								}
 							break;
 						}
@@ -971,15 +971,15 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('div_idFrecuencia').style.display = 'none';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									document.getElementById('idProducto').selectedIndex = 0;
-									document.getElementById('Grasa_inicial').value = "0";
-									document.getElementById('Grasa_relubricacion').value = "0";
-									document.getElementById('Aceite').value = "0";
-									document.getElementById('Cantidad').value = "0";
-									document.getElementById('idUml_fake').value = "0";
-									document.getElementById('idUml').value = "0";
-									document.getElementById('Frecuencia').value = "0";
-									document.getElementById('idFrecuencia').selectedIndex = 0;
+									document.querySelector('input[name="idProducto"]').selectedIndex = 0;
+									document.querySelector('input[name="Grasa_inicial"]').value = '0';
+									document.querySelector('input[name="Grasa_relubricacion"]').value = '0';
+									document.querySelector('input[name="Aceite"]').value = '0';
+									document.querySelector('input[name="Cantidad"]').value = '0';
+									document.querySelector('input[name="idUml_fake"]').value = '0';
+									document.querySelector('input[name="idUml"]').value = '0';
+									document.querySelector('input[name="Frecuencia"]').value = '0';
+									document.querySelector('input[name="idFrecuencia"]').selectedIndex = 0;
 								}
 							break;
 							//si es Componente
@@ -1001,15 +1001,15 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('div_idFrecuencia').style.display = 'none';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									document.getElementById('idProducto').selectedIndex = 0;
-									document.getElementById('Grasa_inicial').value = "0";
-									document.getElementById('Grasa_relubricacion').value = "0";
-									document.getElementById('Aceite').value = "0";
-									document.getElementById('Cantidad').value = "0";
-									document.getElementById('idUml_fake').value = "0";
-									document.getElementById('idUml').value = "0";
-									document.getElementById('Frecuencia').value = "0";
-									document.getElementById('idFrecuencia').selectedIndex = 0;
+									document.querySelector('input[name="idProducto"]').selectedIndex = 0;
+									document.querySelector('input[name="Grasa_inicial"]').value = '0';
+									document.querySelector('input[name="Grasa_relubricacion"]').value = '0';
+									document.querySelector('input[name="Aceite"]').value = '0';
+									document.querySelector('input[name="Cantidad"]').value = '0';
+									document.querySelector('input[name="idUml_fake"]').value = '0';
+									document.querySelector('input[name="idUml"]').value = '0';
+									document.querySelector('input[name="Frecuencia"]').value = '0';
+									document.querySelector('input[name="idFrecuencia"]').selectedIndex = 0;
 								}
 							break;
 							//si es Subcomponente
@@ -1031,15 +1031,15 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('div_idFrecuencia').style.display = 'none';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									document.getElementById('idProducto').selectedIndex = 0;
-									document.getElementById('Grasa_inicial').value = "0";
-									document.getElementById('Grasa_relubricacion').value = "0";
-									document.getElementById('Aceite').value = "0";
-									document.getElementById('Cantidad').value = "0";
-									document.getElementById('idUml_fake').value = "0";
-									document.getElementById('idUml').value = "0";
-									document.getElementById('Frecuencia').value = "0";
-									document.getElementById('idFrecuencia').selectedIndex = 0;
+									document.querySelector('input[name="idProducto"]').selectedIndex = 0;
+									document.querySelector('input[name="Grasa_inicial"]').value = '0';
+									document.querySelector('input[name="Grasa_relubricacion"]').value = '0';
+									document.querySelector('input[name="Aceite"]').value = '0';
+									document.querySelector('input[name="Cantidad"]').value = '0';
+									document.querySelector('input[name="idUml_fake"]').value = '0';
+									document.querySelector('input[name="idUml"]').value = '0';
+									document.querySelector('input[name="Frecuencia"]').value = '0';
+									document.querySelector('input[name="idFrecuencia"]').selectedIndex = 0;
 								}
 							break;
 						}
@@ -1066,8 +1066,8 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('div_idFrecuencia').style.display = '';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									document.getElementById('Aceite').value = "0";
-									document.getElementById('Cantidad').value = "0";
+									document.querySelector('input[name="Aceite"]').value = '0';
+									document.querySelector('input[name="Cantidad"]').value = '0';
 								}
 							break;
 							//Errores Conjuntos
@@ -1085,9 +1085,9 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('div_idFrecuencia').style.display = '';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									document.getElementById('Grasa_inicial').value = "0";
-									document.getElementById('Grasa_relubricacion').value = "0";
-									document.getElementById('Cantidad').value = "0";
+									document.querySelector('input[name="Grasa_inicial"]').value = '0';
+									document.querySelector('input[name="Grasa_relubricacion"]').value = '0';
+									document.querySelector('input[name="Cantidad"]').value = '0';
 								}
 							break;
 							//Errores Conjuntos
@@ -1105,9 +1105,9 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('div_idFrecuencia').style.display = '';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									document.getElementById('Grasa_inicial').value = "0";
-									document.getElementById('Grasa_relubricacion').value = "0";
-									document.getElementById('Aceite').value = "0";
+									document.querySelector('input[name="Grasa_inicial"]').value = '0';
+									document.querySelector('input[name="Grasa_relubricacion"]').value = '0';
+									document.querySelector('input[name="Aceite"]').value = '0';
 								}
 							break;
 							//Errores Conjuntos
@@ -1125,10 +1125,10 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('div_idFrecuencia').style.display = '';
 								//Reseteo los valores a 0
 								if(caseLoad==1){
-									document.getElementById('Grasa_inicial').value = "0";
-									document.getElementById('Grasa_relubricacion').value = "0";
-									document.getElementById('Aceite').value = "0";
-									document.getElementById('Cantidad').value = "0";
+									document.querySelector('input[name="Grasa_inicial"]').value = '0';
+									document.querySelector('input[name="Grasa_relubricacion"]').value = '0';
+									document.querySelector('input[name="Aceite"]').value = '0';
+									document.querySelector('input[name="Cantidad"]').value = '0';
 								}
 							break;
 						}
