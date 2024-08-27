@@ -31,7 +31,7 @@ $_SESSION['menu'] = 2;
 
 		<div class="tab-pane fade active in" id="tab_1">
 			<?php
-			echo widget_CrossC_Jumbo('06:00:00', 2,
+			echo widget_CrossC_Jumbo('08:00:00', 2,
 									$_SESSION['usuario']['basic_data']['idSistema'],
 									$_SESSION['usuario']['basic_data']['idTipoUsuario'],
 									$_SESSION['usuario']['basic_data']['idUsuario'],
