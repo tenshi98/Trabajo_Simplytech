@@ -453,16 +453,15 @@ class Form_Inputs extends Basic_Form_Inputs{
 		/******************************/
 		//numero sensores equipo
 		$N_Maximo_Sensores = 72;
-		$subquery = '';
-		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-			$subquery .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
-			$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
-			$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
-		}
 		// Se trae un listado de todos los registros
 		$SIS_query = '
 		telemetria_listado.idTelemetria,
-		telemetria_listado.cantSensores'.$subquery;
+		telemetria_listado.cantSensores';
+		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+			$SIS_query .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+			$SIS_query .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+			$SIS_query .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
+		}
 		$SIS_join  = '
 		LEFT JOIN `telemetria_listado_sensores_grupo`    ON telemetria_listado_sensores_grupo.idTelemetria    = telemetria_listado.idTelemetria
 		LEFT JOIN `telemetria_listado_sensores_nombre`   ON telemetria_listado_sensores_nombre.idTelemetria   = telemetria_listado.idTelemetria
@@ -597,15 +596,14 @@ class Form_Inputs extends Basic_Form_Inputs{
 		/******************************/
 		//numero sensores equipo
 		$N_Maximo_Sensores = 72;
-		$subquery = '';
-		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-			$subquery .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
-			$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
-		}
 		// Se trae un listado de todos los registros
 		$SIS_query = '
 		telemetria_listado.idTelemetria,
-		telemetria_listado.cantSensores'.$subquery;
+		telemetria_listado.cantSensores';
+		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+			$SIS_query .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+			$SIS_query .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
+		}
 		$SIS_join  = '
 		LEFT JOIN `telemetria_listado_sensores_grupo`   ON telemetria_listado_sensores_grupo.idTelemetria   = telemetria_listado.idTelemetria
 		LEFT JOIN `telemetria_listado_sensores_activo`  ON telemetria_listado_sensores_activo.idTelemetria  = telemetria_listado.idTelemetria';
@@ -624,14 +622,15 @@ class Form_Inputs extends Basic_Form_Inputs{
 
 		/******************************/
 		//se dibuja
-		$input = '<div class="form-group" id="div_'.$name.'" >
-						<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">'.$placeholder.'</label>
-						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
-							<select name="'.$name.'" id="'.$name.'" class="form-control" '.$requerido.'>
-								<option value="" selected>Seleccione una Opción</option>
-							</select>
-						</div>
-					</div>';
+		$input = '
+		<div class="form-group" id="div_'.$name.'" >
+			<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">'.$placeholder.'</label>
+			<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
+				<select name="'.$name.'" id="'.$name.'" class="form-control" '.$requerido.'>
+					<option value="" selected>Seleccione una Opción</option>
+				</select>
+			</div>
+		</div>';
 
 		/******************************************/
 		//script
@@ -913,6 +912,214 @@ class Form_Inputs extends Basic_Form_Inputs{
 							</select>
 						</div>
 					</div>';
+		echo $input;
+	}
+	/*******************************************************************************************************************/
+	public function form_select_tel_group_checkbox($placeholder,$name, $idChanged, $idForm, $dbConn){
+
+		/******************************/
+		//numero sensores equipo
+		$N_Maximo_Sensores = 72;
+		// Se trae un listado de todos los registros
+		$SIS_query = '
+		telemetria_listado.idTelemetria,
+		telemetria_listado.cantSensores';
+		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+			$SIS_query .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+			$SIS_query .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
+		}
+		$SIS_join  = '
+		LEFT JOIN `telemetria_listado_sensores_grupo`   ON telemetria_listado_sensores_grupo.idTelemetria   = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_activo`  ON telemetria_listado_sensores_activo.idTelemetria  = telemetria_listado.idTelemetria';
+		$SIS_where = 'telemetria_listado.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+		$SIS_order = 'telemetria_listado.idTelemetria ASC';
+		$arrSelect = array();
+		$arrSelect = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrSelect');
+		// Se trae un listado de todos los registros
+		$arrGrupos = array();
+		$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
+		//se recorren los grupos
+		$arrFinalGrupos = array();
+		foreach ($arrGrupos as $sen) {
+			$arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];
+		}
+
+		/******************************/
+		//se dibuja
+		$input = '
+		<div class="form-group" id="div_'.$name.'">
+			<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">'.$placeholder.'</label>
+			<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">';
+				//recorro los equipos
+				foreach ($arrSelect as $select) {
+					//div para ocultar
+					$input .= '<div class="div_group_tel" id="div_group_tel_'.$name.'_'.$select['idTelemetria'].'">';
+					//variables
+					$valorx  = 0;
+					//se arma arreglo temporal
+					$arrTempGrupos = array();
+					//recorro
+					for ($i = 1; $i <= $select['cantSensores']; $i++) {
+						//solo sensores activos
+						if(isset($select['SensoresActivo_'.$i])&&$select['SensoresActivo_'.$i]==1){
+							//si el arreglo temporal existe
+							if(isset($arrTempGrupos[$select['SensoresGrupo_'.$i]])&&$arrTempGrupos[$select['SensoresGrupo_'.$i]]==1){
+								//nada
+							}else{
+								//verifico que el grupo no este ingresado
+								if($valorx != $select['SensoresGrupo_'.$i]){
+									//guardo valor
+									$valorx = $select['SensoresGrupo_'.$i];
+									//genero valor
+									$arrTempGrupos[$select['SensoresGrupo_'.$i]] = 1;
+									if($valorx!=0){
+										$input .= '
+										<div class="checkbox checkbox-primary">
+											<input class="styled" type="checkbox" value="'.$valorx.'" name="'.$name.'[]">
+											<label for="'.$name.'[]">
+												'.TituloMenu($arrFinalGrupos[$select['SensoresGrupo_'.$i]]).'
+											</label>
+										</div>';
+									}
+								}
+							}
+						}
+					}
+					//cierro div
+					$input .= '</div>';
+				}
+			//cierro div
+			$input .= '
+			</div>
+		</div>';
+
+		/******************************************/
+		//script
+		$input .= '
+		<script>
+			//oculto todos los div
+			$(".div_group_tel").hide();
+			//ejecuto segun
+			$("#'.$idChanged.'").on("change", function() {
+				//oculto todos los div
+				$(".div_group_tel").hide();
+				//obtengo id
+				let Componente = document.'.$idForm.'.'.$idChanged.'[document.'.$idForm.'.'.$idChanged.'.selectedIndex].value
+				try {
+					if (Componente != "") {
+						document.getElementById("div_group_tel_'.$name.'_" + Componente).style.display = "block";
+					}else{
+						document.getElementById("div_group_tel_'.$name.'_" + Componente).style.display = "none";
+					}
+				} catch (e) {
+					document.getElementById("div_group_tel_'.$name.'_" + Componente).style.display = "none";
+				}
+			});
+		</script>';
+
+		echo $input;
+	}
+	/*******************************************************************************************************************/
+	public function form_select_tel_unimed_radio($placeholder,$name, $idChanged, $idForm, $dbConn){
+
+		/******************************/
+		//numero sensores equipo
+		$N_Maximo_Sensores = 72;
+		// Se trae un listado de todos los registros
+		$SIS_query = '
+		telemetria_listado.idTelemetria,
+		telemetria_listado.cantSensores';
+		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+			$SIS_query .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+			$SIS_query .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
+		}
+		$SIS_join  = '
+		LEFT JOIN `telemetria_listado_sensores_unimed`   ON telemetria_listado_sensores_unimed.idTelemetria   = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_activo`  ON telemetria_listado_sensores_activo.idTelemetria  = telemetria_listado.idTelemetria';
+		$SIS_where = 'telemetria_listado.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+		$SIS_order = 'telemetria_listado.idTelemetria ASC';
+		$arrSelect = array();
+		$arrSelect = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrSelect');
+		// Se trae un listado de todos los registros
+		$arrUniMed = array();
+		$arrUniMed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUniMed');
+		//se recorren los grupos
+		$arrFinalUniMed = array();
+		foreach ($arrUniMed as $sen) {
+			$arrFinalUniMed[$sen['idUniMed']] = $sen['Nombre'];
+		}
+
+		/******************************/
+		//se dibuja
+		$input = '
+		<div class="form-group" id="div_'.$name.'">
+			<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">'.$placeholder.'</label>
+			<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">';
+				//recorro los equipos
+				foreach ($arrSelect as $select) {
+					//div para ocultar
+					$input .= '<div class="div_radio_tel" id="div_radio_tel_'.$name.'_'.$select['idTelemetria'].'">';
+					//variables
+					$valorx  = 0;
+					//se arma arreglo temporal
+					$arrTempUniMed = array();
+					//recorro
+					for ($i = 1; $i <= $select['cantSensores']; $i++) {
+						//solo sensores activos
+						if(isset($select['SensoresActivo_'.$i])&&$select['SensoresActivo_'.$i]==1){
+							//si el arreglo temporal existe
+							if(isset($arrTempUniMed[$select['SensoresUniMed_'.$i]])&&$arrTempUniMed[$select['SensoresUniMed_'.$i]]==1){
+								//nada
+							}else{
+								//verifico que el grupo no este ingresado
+								if($valorx != $select['SensoresUniMed_'.$i]&&($select['SensoresUniMed_'.$i]==2 OR $select['SensoresUniMed_'.$i]==3 OR $select['SensoresUniMed_'.$i]==13)){
+									//guardo valor
+									$valorx = $select['SensoresUniMed_'.$i];
+									//genero valor
+									$arrTempUniMed[$select['SensoresUniMed_'.$i]] = 1;
+									if($valorx!=0){
+										$input .= '
+										<div class="radio radio-primary">
+											<input type="radio" value="'.$valorx.'"  name="'.$name.'">
+											<label for="SensoresUniMed">'.TituloMenu($arrFinalUniMed[$select['SensoresUniMed_'.$i]]).'</label>
+										</div>';
+									}
+								}
+							}
+						}
+					}
+					//cierro div
+					$input .= '</div>';
+				}
+			//cierro div
+			$input .= '
+			</div>
+		</div>';
+
+		/******************************************/
+		//script
+		$input .= '
+		<script>
+			//oculto todos los div
+			$(".div_radio_tel").hide();
+			//ejecuto segun
+			$("#'.$idChanged.'").on("change", function() {
+				//oculto todos los div
+				$(".div_radio_tel").hide();
+				//obtengo id
+				let Componente = document.'.$idForm.'.'.$idChanged.'[document.'.$idForm.'.'.$idChanged.'.selectedIndex].value
+				try {
+					if (Componente != "") {
+						document.getElementById("div_radio_tel_'.$name.'_" + Componente).style.display = "block";
+					}else{
+						document.getElementById("div_radio_tel_'.$name.'_" + Componente).style.display = "none";
+					}
+				} catch (e) {
+					document.getElementById("div_radio_tel_'.$name.'_" + Componente).style.display = "none";
+				}
+			});
+		</script>';
+
 		echo $input;
 	}
 
