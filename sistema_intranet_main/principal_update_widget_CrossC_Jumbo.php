@@ -45,23 +45,17 @@ $idSistema     = $_SESSION['usuario']['widget_CrossC']['idSistema'];
 $idTipoUsuario = $_SESSION['usuario']['widget_CrossC']['idTipoUsuario'];
 $idUsuario     = $_SESSION['usuario']['widget_CrossC']['idUsuario'];
 
-//variables
-$HoraInicio     = restahoras($timeBack,hora_actual());
-$FechaInicio    = fecha_actual();
-$HoraTermino    = hora_actual();
-$FechaTermino   = fecha_actual();
-if($HoraTermino<$timeBack){
-	$FechaInicio = restarDias($FechaTermino,1);
-}
-
 /*************************************************************/
 //Se consulta
 //numero sensores equipo
 $N_Maximo_Sensores = $cantSensores;
 $SIS_query = '
+telemetria_listado.Nombre,
 telemetria_listado.LastUpdateFecha,
 telemetria_listado.LastUpdateHora,
-telemetria_listado.TiempoFueraLinea';
+telemetria_listado.TiempoFueraLinea,
+telemetria_listado.Jornada_inicio,
+telemetria_listado.Jornada_termino';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$SIS_query .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
 	$SIS_query .= ',telemetria_listado_sensores_revision_grupo.SensoresRevisionGrupo_'.$i;
@@ -78,6 +72,40 @@ LEFT JOIN `telemetria_listado_sensores_activo`          ON telemetria_listado_se
 $SIS_where = 'telemetria_listado.idTelemetria='.$idTelemetria;
 $rowEquipo = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEquipo');
 
+/*************************************************************/
+//Obtengo hora actual
+$hora_actual = hora_actual();
+//verifico si existe, es distinto de 0 y esta entre la jornada de trabajo
+if(isset($rowEquipo['Jornada_inicio'], $rowEquipo['Jornada_termino'])&&$rowEquipo['Jornada_inicio']!='00:00:00'&&$rowEquipo['Jornada_termino']!='00:00:00'&&$hora_actual>$rowEquipo['Jornada_inicio']&&$hora_actual<$rowEquipo['Jornada_termino']){
+	//variables
+	$HoraInicio     = $rowEquipo['Jornada_inicio'];
+	$FechaInicio    = fecha_actual();
+	$HoraTermino    = $rowEquipo['Jornada_termino'];
+	$FechaTermino   = fecha_actual();
+}else{
+	//variables
+	$HoraInicio     = restahoras($timeBack,hora_actual());
+	$FechaInicio    = fecha_actual();
+	$HoraTermino    = hora_actual();
+	$FechaTermino   = fecha_actual();
+	if($HoraTermino<$timeBack){
+		$FechaInicio = restarDias($FechaTermino,1);
+	}
+}
+
+/*************************************************************/
+//Se consulta
+$SIS_query = 'FechaSistema,HoraSistema';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$SIS_query .= ',Sensor_'.$i.' AS SensorValue_'.$i;
+}
+$SIS_join  = '';
+$SIS_where = '(TimeStamp BETWEEN "'.$FechaInicio.' '.$HoraInicio.'" AND "'.$FechaTermino.' '.$HoraTermino.'")';
+$SIS_order = 'FechaSistema ASC,HoraSistema ASC LIMIT 10000';
+$arrMediciones = array();
+$arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$idTelemetria, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMediciones');
+
+/*************************************************************/
 //busco los grupos disponibles
 $arrSubgrupo          = array();
 $arrSubgrupoUso       = array();
@@ -96,22 +124,7 @@ foreach($arrSubgrupoUso as $categoria=>$sub){
 	$SIS_whereSubgrupoUso .= ' OR idGrupo='.$sub['idGrupo'];
 }
 
-/*************************************************************/
-//Se consulta
-//numero sensores equipo
-$consql = '';
-for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$consql .= ',Sensor_'.$i.' AS SensorValue_'.$i;
-}
-/*****************************/
-$SIS_query = 'FechaSistema,HoraSistema'.$consql;
-$SIS_join  = '';
-$SIS_where = '(TimeStamp BETWEEN "'.$FechaInicio.' '.$HoraInicio.'" AND "'.$FechaTermino.' '.$HoraTermino.'")';
-$SIS_order = 'FechaSistema ASC,HoraSistema ASC LIMIT 10000';
-$arrMediciones = array();
-$arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$idTelemetria, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMediciones');
-
-/*************************************************************/
+/****************************************/
 //Se consulta
 $arrGrupos = array();
 $arrGrupos = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos', '', $SIS_whereSubgrupo, 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
@@ -121,7 +134,7 @@ foreach ($arrGrupos as $gru) {
 	$arrGruposTemp[$gru['idGrupo']] = $gru['Nombre'];
 }
 
-/*************************************************************/
+/****************************************/
 //Se consulta
 $T_idGrupo    = 0;
 $arrGruposUso = array();
@@ -414,131 +427,174 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 $widget = '
 <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 	<div class="row">
-		<div class="table-wrapper-scroll-y my-custom-scrollbar">
-			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
-				<thead>
-					<tr role="row">
-						<th colspan="3">Grupo - Subgrupo</th>
-						<th>T° Actual</th>
-						<th>T° Max</th>
-						<th>T° Min</th>
-						<th>T° Prom</th>
-						<th>ST Prom</th>
-						<th>Hr. Prom</th>
-						<th>Acciones</th>
-					</tr>
-				</thead>
-				<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">';
-
-					/**********************************************/
-					//variable
-					$in_eq_fueralinea = '';
-					//Fuera de linea
-					$diaInicio   = $rowEquipo['LastUpdateFecha'];
-					$diaTermino  = $FechaTermino;
-					$tiempo1     = $rowEquipo['LastUpdateHora'];
-					$tiempo2     = $HoraTermino;
-					$Tiempo      = horas_transcurridas($diaInicio, $diaTermino, $tiempo1, $tiempo2);
-
-					//Comparaciones de tiempo
-					$Time_Tiempo     = horas2segundos($Tiempo);
-					$Time_Tiempo_FL  = horas2segundos($rowEquipo['TiempoFueraLinea']);
-					$Time_Tiempo_Max = horas2segundos('48:00:00');
-					$Time_Fake_Ini   = horas2segundos('23:59:50');
-					$Time_Fake_Fin   = horas2segundos('24:00:00');
-					//comparacion
-					if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
-						$in_eq_fueralinea = '<i class="fa fa-exclamation-triangle faa-bounce animated" style="color: #a94442;" aria-hidden="true"></i>';
-					}
-
-					/***********************************************/
-					//imprimo
-					$widget .= '
-						<tr class="odd">
-							<th colspan="9">'.$in_eq_fueralinea.' Ultima Medicion: '.fecha_estandar($rowEquipo['LastUpdateFecha']).' a las '.$rowEquipo['LastUpdateHora'].' hrs.</th>
-							<th><a href="view_alertas_personalizadas.php?view='.simpleEncode($_SESSION['usuario']['widget_CrossC']['idTelemetria'], fecha_actual()).'" class="iframe btn btn-danger btn-sm"><i class="fa fa-bell-o" aria-hidden="true"></i> Alertas</a></th>
-						</tr>';
-
-					//Ordeno
-					sort($arrTempGrupos);
-					//recorro
-					foreach ($arrTempGrupos as $gruUso) {
-						//verificar errores
-						if(isset($gruUso['NErrores'])&&$gruUso['NErrores']!=0){
-							$danger_color = 'warning';
-							$danger_icon  = '<a href="#" title="Equipo con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';
-						}else{
-							$danger_color = '';
-							$danger_icon  = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+		<div class="table-responsive">
+			<div class="table-wrapper-scroll-y my-custom-scrollbar">
+				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+					<thead>';
+						//verifico si no esta configurado
+						if(!isset($rowEquipo['Jornada_inicio'], $rowEquipo['Jornada_termino']) OR $rowEquipo['Jornada_inicio']=='00:00:00' OR $rowEquipo['Jornada_termino']=='00:00:00'){
+							$widget .= '<tr role="row" style="background-color: #ec693c;"><th colspan="10">Horario trabajo no configurado, se muestran las últimas '.horas2decimales($timeBack).' horas.</th></tr>';
 						}
 						$widget .= '
-						<tr class="odd '.$danger_color.'">
-							<th><div class="btn-group" style="width: 35px;" >'.$danger_icon.'</div></th>
-							<th colspan="8">'.TituloMenu($gruUso['Nombre']).'</th>
-							<th>
-								<div class="btn-group" style="width: 35px;" >
-									<button onClick="chngGroupUsoGraph('.$_SESSION['usuario']['widget_CrossC']['idTelemetria'].', '.$_SESSION['usuario']['widget_CrossC']['cantSensores'].', '.$gruUso['idGrupo'].')" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></button>
-								</div>
-							</th>
-						</tr>';
-						//se ordena el arreglo
-						sort($arrTempSensor[$gruUso['idGrupo']]);
-						//recorro el arreglo
-						foreach ($arrTempSensor[$gruUso['idGrupo']] as $gru) {
+						<tr role="row">
+							<th colspan="3">Grupo - Subgrupo</th>
+							<th>T° Actual</th>
+							<th>T° Max</th>
+							<th>T° Min</th>
+							<th>T° Prom</th>
+							<th>ST Prom</th>
+							<th>Hr. Prom</th>
+							<th>Acciones</th>
+						</tr>
+					</thead>
+					<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">';
+
+						/**********************************************/
+						//variable
+						$in_eq_fueralinea = '';
+						//Fuera de linea
+						$diaInicio   = $rowEquipo['LastUpdateFecha'];
+						$diaTermino  = $FechaTermino;
+						$tiempo1     = $rowEquipo['LastUpdateHora'];
+						$tiempo2     = hora_actual();
+						$Tiempo      = horas_transcurridas($diaInicio, $diaTermino, $tiempo1, $tiempo2);
+
+						//Comparaciones de tiempo
+						$Time_Tiempo     = horas2segundos($Tiempo);
+						$Time_Tiempo_FL  = horas2segundos($rowEquipo['TiempoFueraLinea']);
+						$Time_Tiempo_Max = horas2segundos('48:00:00');
+						$Time_Fake_Ini   = horas2segundos('23:59:50');
+						$Time_Fake_Fin   = horas2segundos('24:00:00');
+						//comparacion
+						if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
+							$in_eq_fueralinea = '<i class="fa fa-exclamation-triangle faa-bounce animated" style="color: #a94442;" aria-hidden="true"></i>';
+						}
+
+						/***********************************************/
+						//imprimo
+						$widget .= '
+							<tr class="odd">
+								<th colspan="9">'.$in_eq_fueralinea.' Ultima Medicion: '.fecha_estandar($rowEquipo['LastUpdateFecha']).' a las '.$rowEquipo['LastUpdateHora'].' hrs.</th>
+								<th><a href="view_alertas_personalizadas.php?view='.simpleEncode($_SESSION['usuario']['widget_CrossC']['idTelemetria'], fecha_actual()).'" class="iframe btn btn-danger btn-sm"><i class="fa fa-bell-o" aria-hidden="true"></i> Alertas</a></th>
+							</tr>';
+
+						//Ordeno
+						sort($arrTempGrupos);
+						//recorro
+						foreach ($arrTempGrupos as $gruUso) {
+							//variables vacias
+							$Prom_Tmin      = 0;
+							$Prom_Tmax      = 0;
+							$Prom_TActual   = 0;
+							$Prom_Prom      = 0;
+							$Prom_ST        = 0;
+							$Prom_Hum       = 0;
+							$Prom_Count     = 0;
+
 							//verificar errores
-							if(isset($gru['NErrores'])&&$gru['NErrores']!=0){
+							if(isset($gruUso['NErrores'])&&$gruUso['NErrores']!=0){
 								$danger_color = 'warning';
 								$danger_icon  = '<a href="#" title="Equipo con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';
 							}else{
 								$danger_color = '';
 								$danger_icon  = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 							}
-							//variables
-							$Tmin    = Cantidades($gru['Tmin'], 1);
-							$Tmax    = Cantidades($gru['Tmax'], 1);
-							if(isset($gru['CountTActual'])&&$gru['CountTActual']!=0){  $TActual = Cantidades(($gru['TActual']/$gru['CountTActual']), 1); }else{ $TActual = 0; }
-							if(isset($gru['CountProm'])&&$gru['CountProm']!=0){        $Prom    = Cantidades(($gru['Prom']/$gru['CountProm']), 1);       }else{ $Prom    = 0; }
-							if(isset($gru['CountST'])&&$gru['CountST']!=0){            $ST      = Cantidades(($gru['ST']/$gru['CountST']), 1);           }else{ $ST      = 0; }
-							if(isset($gru['CountHum'])&&$gru['CountHum']!=0){          $Hum     = Cantidades(($gru['Hum']/$gru['CountHum']), 1);         }else{ $Hum     = 0; }
-							if(isset($gru['CountBool'])&&$gru['CountBool']!=0){
-								$tempv  = $gru['Bool']/$gru['CountBool'];
-								$s_link = 'informe_telemetria_registro_sensores_20.php?f_inicio='.fecha_actual().'&f_termino='.fecha_actual().'&idTelemetria='.$idTelemetria.'&RevisionGrupo='.$gruUso['idGrupo'].'&submit_filter=Filtrar';
-								//si esta abierto
-								if($tempv!=0){
-									$danger_color = 'warning';
-									$danger_icon .= '<a target="_blank" rel="noopener noreferrer" href="'.$s_link.'" title="Puertas Abiertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-sign-out" aria-hidden="true"></i></a>';
-								//si esta cerrado
-								}else{
-									$danger_icon .= '<a target="_blank" rel="noopener noreferrer" href="'.$s_link.'" title="Puertas Cerradas" class="btn btn-success btn-sm tooltip"><i class="fa fa-sign-in" aria-hidden="true"></i></a>';
-								}
-							//si no hay puertas configuradas
-							}else{
-								$danger_icon .= '';
-							}
-
 							$widget .= '
 							<tr class="odd '.$danger_color.'">
-								<td></td>
-								<td><div class="btn-group" style="width: 70px;" >'.$danger_icon.'</div></td>
-								<td>'.TituloMenu($gru['Nombre']).'</td>
-								<td>'.$TActual.' °C</td>
-								<td>'.$Tmax.' °C</td>
-								<td>'.$Tmin.' °C</td>
-								<td>'.$Prom.' °C</td>
-								<td>'.$ST.' °C</td>
-								<td>'.$Hum.' %</td>
-								<td>
-									<div class="btn-group" style="width: 70px;" >
-										<button onClick="chngGroupGraph('.$_SESSION['usuario']['widget_CrossC']['idTelemetria'].', '.$_SESSION['usuario']['widget_CrossC']['cantSensores'].', '.$gruUso['idGrupo'].', '.$gru['idGrupo'].')" title="Ver Información" class="btn btn-metis-6 btn-sm tooltip"><i class="fa fa-area-chart" aria-hidden="true"></i></button>
+								<th><div class="btn-group" style="width: 35px;" >'.$danger_icon.'</div></th>
+								<th colspan="8">'.TituloMenu($gruUso['Nombre']).'</th>
+								<th>
+									<div class="btn-group" style="width: 35px;" >
+										<button onClick="chngGroupUsoGraph('.$_SESSION['usuario']['widget_CrossC']['idTelemetria'].', '.$_SESSION['usuario']['widget_CrossC']['cantSensores'].', '.$gruUso['idGrupo'].')" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></button>
 									</div>
-								</td>
+								</th>
+							</tr>';
+							//se ordena el arreglo
+							sort($arrTempSensor[$gruUso['idGrupo']]);
+							//recorro el arreglo
+							foreach ($arrTempSensor[$gruUso['idGrupo']] as $gru) {
+								//verificar errores
+								if(isset($gru['NErrores'])&&$gru['NErrores']!=0){
+									$danger_color = 'warning';
+									$danger_icon  = '<a href="#" title="Equipo con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';
+								}else{
+									$danger_color = '';
+									$danger_icon  = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+								}
+								//variables
+								$Tmin    = Cantidades($gru['Tmin'], 1);
+								$Tmax    = Cantidades($gru['Tmax'], 1);
+								if(isset($gru['CountTActual'])&&$gru['CountTActual']!=0){  $TActual = Cantidades(($gru['TActual']/$gru['CountTActual']), 1); }else{ $TActual = 0; }
+								if(isset($gru['CountProm'])&&$gru['CountProm']!=0){        $Prom    = Cantidades(($gru['Prom']/$gru['CountProm']), 1);       }else{ $Prom    = 0; }
+								if(isset($gru['CountST'])&&$gru['CountST']!=0){            $ST      = Cantidades(($gru['ST']/$gru['CountST']), 1);           }else{ $ST      = 0; }
+								if(isset($gru['CountHum'])&&$gru['CountHum']!=0){          $Hum     = Cantidades(($gru['Hum']/$gru['CountHum']), 1);         }else{ $Hum     = 0; }
+								if(isset($gru['CountBool'])&&$gru['CountBool']!=0){
+									$tempv  = $gru['Bool']/$gru['CountBool'];
+									$s_link = 'informe_telemetria_registro_sensores_20.php?f_inicio='.fecha_actual().'&f_termino='.fecha_actual().'&idTelemetria='.$idTelemetria.'&RevisionGrupo='.$gruUso['idGrupo'].'&submit_filter=Filtrar';
+									//si esta abierto
+									if($tempv!=0){
+										$danger_color = 'warning';
+										$danger_icon .= '<a target="_blank" rel="noopener noreferrer" href="'.$s_link.'" title="Puertas Abiertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-sign-out" aria-hidden="true"></i></a>';
+									//si esta cerrado
+									}else{
+										$danger_icon .= '<a target="_blank" rel="noopener noreferrer" href="'.$s_link.'" title="Puertas Cerradas" class="btn btn-success btn-sm tooltip"><i class="fa fa-sign-in" aria-hidden="true"></i></a>';
+									}
+								//si no hay puertas configuradas
+								}else{
+									$danger_icon .= '';
+								}
+
+								$widget .= '
+								<tr class="odd '.$danger_color.'">
+									<td></td>
+									<td><div class="btn-group" style="width: 70px;" >'.$danger_icon.'</div></td>
+									<td>'.TituloMenu($gru['Nombre']).'</td>
+									<td>'.$TActual.' °C</td>
+									<td>'.$Tmax.' °C</td>
+									<td>'.$Tmin.' °C</td>
+									<td>'.$Prom.' °C</td>
+									<td>'.$ST.' °C</td>
+									<td>'.$Hum.' %</td>
+									<td>
+										<div class="btn-group" style="width: 70px;" >
+											<button onClick="chngGroupGraph('.$_SESSION['usuario']['widget_CrossC']['idTelemetria'].', '.$_SESSION['usuario']['widget_CrossC']['cantSensores'].', '.$gruUso['idGrupo'].', '.$gru['idGrupo'].')" title="Ver Información" class="btn btn-metis-6 btn-sm tooltip"><i class="fa fa-area-chart" aria-hidden="true"></i></button>
+										</div>
+									</td>
+								</tr>';
+
+								/***************************************/
+								//Se suman para promedios
+								$Prom_Tmin = $Prom_Tmin + $gru['Tmin'];
+								$Prom_Tmax = $Prom_Tmax + $gru['Tmax'];
+								if(isset($gru['CountTActual'])&&$gru['CountTActual']!=0){  $Prom_TActual = $Prom_TActual + ($gru['TActual']/$gru['CountTActual']); }
+								if(isset($gru['CountProm'])&&$gru['CountProm']!=0){        $Prom_Prom    = $Prom_Prom + ($gru['Prom']/$gru['CountProm']);       }
+								if(isset($gru['CountST'])&&$gru['CountST']!=0){            $Prom_ST      = $Prom_ST + ($gru['ST']/$gru['CountST']);           }
+								if(isset($gru['CountHum'])&&$gru['CountHum']!=0){          $Prom_Hum     = $Prom_Hum + ($gru['Hum']/$gru['CountHum']);         }
+
+								//Cuento
+								$Prom_Count++;
+							}
+							/**************************/
+							//muestro subtotales
+							$widget .= '
+							<tr class="odd">
+								<td></td>
+								<td></td>
+								<td>Promedios</td>
+								<td><strong>'.Cantidades(($Prom_TActual/$Prom_Count), 1).' °C</strong></td>
+								<td><strong>'.Cantidades(($Prom_Tmax/$Prom_Count), 1).' °C</strong></td>
+								<td><strong>'.Cantidades(($Prom_Tmin/$Prom_Count), 1).' °C</strong></td>
+								<td><strong>'.Cantidades(($Prom_Prom/$Prom_Count), 1).' °C</strong></td>
+								<td><strong>'.Cantidades(($Prom_ST/$Prom_Count), 1).' °C</strong></td>
+								<td><strong>'.Cantidades(($Prom_Hum/$Prom_Count), 1).' %</strong></td>
+								<td></td>
 							</tr>';
 						}
-					}
 
-				$widget .= '
-				</tbody>
-			</table>
+					$widget .= '
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>
@@ -546,7 +602,12 @@ $widget = '
 	<div class="row" id="update_graphics">';
 		//si hay datos
 		if(isset($x_graph_count)&&$x_graph_count!=0){
-			$gr_tittle = 'Grafico '.DeSanitizar($arrGruposUsoTemp[$arrGruposUso[0]['idGrupo']]).' últimas '.horas2decimales($timeBack).' horas.';
+			//verifico si existe, es distinto de 0 y esta entre la jornada de trabajo
+			if(isset($rowEquipo['Jornada_inicio'], $rowEquipo['Jornada_termino'])&&$rowEquipo['Jornada_inicio']!='00:00:00'&&$rowEquipo['Jornada_termino']!='00:00:00'&&$hora_actual>$rowEquipo['Jornada_inicio']&&$hora_actual<$rowEquipo['Jornada_termino']){
+				$gr_tittle = TituloMenu($rowEquipo['Nombre']).' - '.DeSanitizar(TituloMenu($arrGruposTemp[$idGrupo])).' ('.Hora_estandar($HoraInicio).'-'.Hora_estandar($HoraTermino).')';
+			}else{
+				$gr_tittle = TituloMenu($rowEquipo['Nombre']).' - '.DeSanitizar(TituloMenu($arrGruposTemp[$idGrupo])).' fuera del horario establecido.';
+			}
 			$gr_unimed = '°C';
 			$widget .= GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 1);
 		//si no hay datos

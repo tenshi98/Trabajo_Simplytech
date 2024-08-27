@@ -32,10 +32,10 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$idTelemetria = $_SESSION['usuario']['widget_CrossC']['idTelemetria'];
 }
 if(isset($_GET['cantSensores'])&&$_GET['cantSensores']!=''){
-	$cantSensores = $_GET['cantSensores'];
+	$N_Maximo_Sensores = $_GET['cantSensores'];
 	$_SESSION['usuario']['widget_CrossC']['cantSensores'] = $_GET['cantSensores'];
 }else{
-	$cantSensores = $_SESSION['usuario']['widget_CrossC']['cantSensores'];
+	$N_Maximo_Sensores = $_SESSION['usuario']['widget_CrossC']['cantSensores'];
 }
 if(isset($_GET['idGrupoUso'])&&$_GET['idGrupoUso']!=''){
 	$idGrupoUso = $_GET['idGrupoUso'];
@@ -47,32 +47,22 @@ $idSistema     = $_SESSION['usuario']['widget_CrossC']['idSistema'];
 $idTipoUsuario = $_SESSION['usuario']['widget_CrossC']['idTipoUsuario'];
 $idUsuario     = $_SESSION['usuario']['widget_CrossC']['idUsuario'];
 
-//variables
-$HoraInicio     = restahoras($timeBack,hora_actual());
-$FechaInicio    = fecha_actual();
-$HoraTermino    = hora_actual();
-$FechaTermino   = fecha_actual();
-if($HoraTermino<$timeBack){
-	$FechaInicio = restarDias($FechaTermino,1);
-}
-
 /*************************************************************/
 //Se consulta
-//numero sensores equipo
-$N_Maximo_Sensores = $cantSensores;
-$consql = '';
-for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	//$consql .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
-	$consql .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
-	$consql .= ',telemetria_listado_sensores_revision_grupo.SensoresRevisionGrupo_'.$i;
-	$consql .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
-	$consql .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
-}
-/*****************************/
 $SIS_query = '
+telemetria_listado.Nombre,
 telemetria_listado.LastUpdateFecha,
 telemetria_listado.LastUpdateHora,
-telemetria_listado.TiempoFueraLinea'.$consql;
+telemetria_listado.TiempoFueraLinea,
+telemetria_listado.Jornada_inicio,
+telemetria_listado.Jornada_termino';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	//$consql .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$SIS_query .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+	$SIS_query .= ',telemetria_listado_sensores_revision_grupo.SensoresRevisionGrupo_'.$i;
+	$SIS_query .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+	$SIS_query .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
+}
 $SIS_join  = '
 LEFT JOIN `telemetria_listado_sensores_grupo`           ON telemetria_listado_sensores_grupo.idTelemetria          = telemetria_listado.idTelemetria
 LEFT JOIN `telemetria_listado_sensores_revision_grupo`  ON telemetria_listado_sensores_revision_grupo.idTelemetria = telemetria_listado.idTelemetria
@@ -81,6 +71,40 @@ LEFT JOIN `telemetria_listado_sensores_activo`          ON telemetria_listado_se
 $SIS_where = 'telemetria_listado.idTelemetria ='.$idTelemetria;
 $rowEquipo = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEquipo');
 
+/*************************************************************/
+//Obtengo hora actual
+$hora_actual = hora_actual();
+//verifico si existe, es distinto de 0 y esta entre la jornada de trabajo
+if(isset($rowEquipo['Jornada_inicio'], $rowEquipo['Jornada_termino'])&&$rowEquipo['Jornada_inicio']!='00:00:00'&&$rowEquipo['Jornada_termino']!='00:00:00'&&$hora_actual>$rowEquipo['Jornada_inicio']&&$hora_actual<$rowEquipo['Jornada_termino']){
+	//variables
+	$HoraInicio     = $rowEquipo['Jornada_inicio'];
+	$FechaInicio    = fecha_actual();
+	$HoraTermino    = $rowEquipo['Jornada_termino'];
+	$FechaTermino   = fecha_actual();
+}else{
+	//variables
+	$HoraInicio     = restahoras($timeBack,hora_actual());
+	$FechaInicio    = fecha_actual();
+	$HoraTermino    = hora_actual();
+	$FechaTermino   = fecha_actual();
+	if($HoraTermino<$timeBack){
+		$FechaInicio = restarDias($FechaTermino,1);
+	}
+}
+
+/*************************************************************/
+//Se consulta
+$SIS_query = 'FechaSistema,HoraSistema';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$SIS_query .= ',Sensor_'.$i.' AS SensorValue_'.$i;
+}
+$SIS_join  = '';
+$SIS_where = '(TimeStamp BETWEEN "'.$FechaInicio.' '.$HoraInicio.'" AND "'.$FechaTermino.' '.$HoraTermino.'")';
+$SIS_order = 'FechaSistema ASC,HoraSistema ASC LIMIT 10000';
+$arrMediciones = array();
+$arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$idTelemetria, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMediciones');
+
+/*************************************************************/
 //busco los grupos disponibles
 $arrSubgrupo          = array();
 $arrSubgrupoUso       = array();
@@ -95,22 +119,7 @@ foreach($arrSubgrupo as $categoria=>$sub){
 	$SIS_whereSubgrupo .= ' OR idGrupo='.$sub['idGrupo'];
 }
 
-/*************************************************************/
-//Se consulta
-//numero sensores equipo
-$consql = '';
-for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$consql .= ',Sensor_'.$i.' AS SensorValue_'.$i;
-}
-/*****************************/
-$SIS_query = 'FechaSistema,HoraSistema'.$consql;
-$SIS_join  = '';
-$SIS_where = '(TimeStamp BETWEEN "'.$FechaInicio.' '.$HoraInicio.'" AND "'.$FechaTermino.' '.$HoraTermino.'")';
-$SIS_order = 'FechaSistema ASC,HoraSistema ASC LIMIT 10000';
-$arrMediciones = array();
-$arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$idTelemetria, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMediciones');
-
-/*************************************************************/
+/****************************************/
 //Se consulta
 $arrGrupos = array();
 $arrGrupos = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos', '', $SIS_whereSubgrupo, 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
@@ -120,7 +129,7 @@ foreach ($arrGrupos as $gru) {
 	$arrGruposTemp[$gru['idGrupo']] = $gru['Nombre'];
 }
 
-/*************************************************************/
+/****************************************/
 //Se consulta
 $arrGruposUso = array();
 $arrGruposUso = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos_uso', '', $SIS_whereSubgrupoUso, 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGruposUso');
@@ -255,7 +264,12 @@ $widget = '
 
 //si hay datos
 if(isset($x_graph_count)&&$x_graph_count!=0){
-	$gr_tittle = 'Grafico '.DeSanitizar($arrGruposUsoTemp[$idGrupoUso]).' últimas '.horas2decimales($timeBack).' horas.';
+	//verifico si existe, es distinto de 0 y esta entre la jornada de trabajo
+	if(isset($rowEquipo['Jornada_inicio'], $rowEquipo['Jornada_termino'])&&$rowEquipo['Jornada_inicio']!='00:00:00'&&$rowEquipo['Jornada_termino']!='00:00:00'&&$hora_actual>$rowEquipo['Jornada_inicio']&&$hora_actual<$rowEquipo['Jornada_termino']){
+		$gr_tittle = TituloMenu($rowEquipo['Nombre']).' - '.DeSanitizar(TituloMenu($arrGruposUsoTemp[$idGrupoUso])).' ('.Hora_estandar($HoraInicio).'-'.Hora_estandar($HoraTermino).')';
+	}else{
+		$gr_tittle = TituloMenu($rowEquipo['Nombre']).' - '.DeSanitizar(TituloMenu($arrGruposUsoTemp[$idGrupoUso])).' fuera del horario establecido.';
+	}
 	$gr_unimed = '°C';
 	$widget .= GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 1);
 //si no hay datos
