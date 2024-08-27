@@ -97,9 +97,9 @@ if(!empty($_GET['submit_filter'])){
 						<tr role="row">
 							<th width="120">Fecha</th>
 							<th>Encendido</th>
-							<?php foreach ($arrGruposRev as $col) {
+							<?php /*foreach ($arrGruposRev as $col) {
 								echo '<th>'.$col['Nombre'].'</th>';
-							} ?>
+							}*/ ?>
 							<th width="10">Acciones</th>
 						</tr>
 					</thead>
@@ -117,7 +117,7 @@ if(!empty($_GET['submit_filter'])){
 								<td><?php echo gmdate("H:i:s", $con['Horas_Sensor_activo']); ?></td>
 								<?php
 								//recorro los grupos
-								foreach ($arrGruposRev as $col) {
+								/*foreach ($arrGruposRev as $col) {
 									//contador
 									$Count = 0;
 									$Sum   = 0;
@@ -142,7 +142,7 @@ if(!empty($_GET['submit_filter'])){
 									}else{
 										echo '<td></td>';
 									}
-								} ?>
+								}*/ ?>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
 										<a href="<?php echo 'informe_telemetria_uso_05_popup.php?idTelemetria='.$_GET['idTelemetria'].'&Fecha='.$con['Fecha']; ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
