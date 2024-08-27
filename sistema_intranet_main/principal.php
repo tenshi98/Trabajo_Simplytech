@@ -80,11 +80,11 @@ if($_SESSION['usuario']['basic_data']['password']=='81dc9bdb52d04dc20036dbd8313e
 		</div>
 	</div>
 
-<?php } ?>
-<?php include '1include_principal.php'; ?>
-<?php widget_validator(); ?>
+<?php }
+include '1include_principal.php';
+widget_validator();
 
-<?php
+
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
