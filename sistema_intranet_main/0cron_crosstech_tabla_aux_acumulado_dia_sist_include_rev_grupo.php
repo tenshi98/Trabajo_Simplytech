@@ -29,24 +29,22 @@ if(isset($Rev_Grupo)&&$Rev_Grupo==1){
 	$arrSistemas = array();
 	$arrSistemas = db_select_array (false, $SIS_query, 'core_sistemas','', $SIS_where, $SIS_order, $dbConn, 'Cron', basename($_SERVER["REQUEST_URI"], ".php"), 'cron');
 
-	//se recorren los datos	
+	//se recorren los datos
 	foreach ($arrSistemas as $data) {
 
 		//se trae el ultimo registro
 		$rowAux = db_select_data (false, 'idAuxiliar', 'telemetria_listado_aux', '', 'idSistema = "'.$data["idSistema"].'" ORDER BY idAuxiliar DESC', $dbConn, 'Cron', basename($_SERVER["REQUEST_URI"], ".php"), 'cron');
 
 		//Condiciono dato Dia anterior
-		$DiaAnterior = $data['DiaAnterior'] - 10;
-		if($DiaAnterior<0){
-			$DiaAnterior = 0;
-		}
-						
+		$X_DiaAnterior = $data['DiaAnterior'] - 10;
+		if($X_DiaAnterior<0){$X_DiaAnterior = 0;}
+
 		//se actualizaen caso de existir un ultimo registro
 		if(isset($rowAux['idAuxiliar'])&&$rowAux['idAuxiliar']!=''){
-			
+
 			$a = "idAuxiliar='".$rowAux['idAuxiliar']."'";
 			if(isset($data['Acumulado']) && $data['Acumulado']!=''){      $a .= ",Dias_acumulado='".$data['Acumulado']."'";}
-			if(isset($DiaAnterior) && $DiaAnterior!=''){                  $a .= ",Dias_anterior='".$DiaAnterior."'";}
+			if(isset($X_DiaAnterior) && $X_DiaAnterior!=''){              $a .= ",Dias_anterior='".$X_DiaAnterior."'";}
 
 			$resultado = db_update_data (false, $a, 'telemetria_listado_aux', 'idAuxiliar = "'.$rowAux['idAuxiliar'].'"', $dbConn, 'Cron', basename($_SERVER["REQUEST_URI"], ".php"), 'cron');
 
@@ -55,10 +53,10 @@ if(isset($Rev_Grupo)&&$Rev_Grupo==1){
 			//verifico que al menos existan datos a insertar
 			if(isset($data["CrossTech_DiasTempMin"]) && $data["CrossTech_DiasTempMin"]!=''){
 				//filtros
-				$a  = "'".$data["idSistema"]."'";    
+				$a  = "'".$data["idSistema"]."'";
 				$a .= ",'".$FechaSistema."'";
 				$a .= ",'".$HoraSistema."'";
-				$a .= ",'".$TimeStamp."'";   
+				$a .= ",'".$TimeStamp."'";
 				if(isset($data["CrossTech_DiasTempMin"]) && $data["CrossTech_DiasTempMin"]!=''){              $a .= ",'".$data["CrossTech_DiasTempMin"]."'";            }else{$a .= ",''";}
 				if(isset($data["CrossTech_TempMin"]) && $data["CrossTech_TempMin"]!=''){                      $a .= ",'".$data["CrossTech_TempMin"]."'";                }else{$a .= ",''";}
 				if(isset($data["CrossTech_TempMax"]) && $data["CrossTech_TempMax"]!=''){                      $a .= ",'".$data["CrossTech_TempMax"]."'";                }else{$a .= ",''";}
@@ -67,13 +65,13 @@ if(isset($Rev_Grupo)&&$Rev_Grupo==1){
 				if(isset($data["CrossTech_FechaTempMax"]) && $data["CrossTech_FechaTempMax"]!=''){            $a .= ",'".$data["CrossTech_FechaTempMax"]."'";           }else{$a .= ",''";}
 				if(isset($data["CrossTech_FechaUnidadFrio"]) && $data["CrossTech_FechaUnidadFrio"]!=''){      $a .= ",'".$data["CrossTech_FechaUnidadFrio"]."'";        }else{$a .= ",''";}
 				if(isset($data["Acumulado"]) && $data["Acumulado"]!=''){                                      $a .= ",'".$data["Acumulado"]."'";                        }else{$a .= ",''";}
-				if(isset($DiaAnterior) && $DiaAnterior!=''){                                                  $a .= ",'".$DiaAnterior."'";                              }else{$a .= ",''";}
-								
+				if(isset($X_DiaAnterior) && $X_DiaAnterior!=''){                                              $a .= ",'".$X_DiaAnterior."'";                            }else{$a .= ",''";}
+
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `telemetria_listado_aux` (idSistema, Fecha, Hora, TimeStamp, 
-				CrossTech_DiasTempMin, CrossTech_TempMin, CrossTech_TempMax, CrossTech_FechaDiasTempMin, 
-				CrossTech_FechaTempMin, CrossTech_FechaTempMax, CrossTech_FechaUnidadFrio, Dias_acumulado, 
-				Dias_anterior) 
+				$query  = "INSERT INTO `telemetria_listado_aux` (idSistema, Fecha, Hora, TimeStamp,
+				CrossTech_DiasTempMin, CrossTech_TempMin, CrossTech_TempMax, CrossTech_FechaDiasTempMin,
+				CrossTech_FechaTempMin, CrossTech_FechaTempMax, CrossTech_FechaUnidadFrio, Dias_acumulado,
+				Dias_anterior)
 				VALUES (".$a.")";
 				//Consulta
 				$resultado = mysqli_query ($dbConn, $query);
@@ -84,7 +82,7 @@ if(isset($Rev_Grupo)&&$Rev_Grupo==1){
 
 					//generar log
 					php_error_log('Cron', $Transaccion, 'cron', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-											
+
 				}
 			}
 		}
