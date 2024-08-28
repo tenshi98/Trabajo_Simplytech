@@ -182,7 +182,7 @@ if(isset($error)&&$error!=''){
 
 			/***********************************************/
 			//tabla
-			$m_table .= '<td>'.Valores($arrTemp[$gru]['Prom'], 1).'</td>';
+			$m_table .= '<td>'.Cantidades($arrTemp[$gru]['Prom'], 1).'</td>';
 		}
 
 		/************************/
