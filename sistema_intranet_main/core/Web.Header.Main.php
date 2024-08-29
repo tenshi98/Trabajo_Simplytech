@@ -177,7 +177,7 @@
 							<div class="topnav menutop1-toggle">
 								<div class="btn-group">
 									<a href="principal_notificaciones.php?pagina=1" title="Notificaciones" class="btn btn-default btn-sm tooltip">
-										<i class="fa fa-commenting-o <?php if($nNoti!=0){ echo 'faa-horizontal animated';} ?>" aria-hidden="true"></i>
+										<i class="fa fa-commenting-o <?php if(isset($nNoti)&&$nNoti!=0){ echo 'faa-horizontal animated';} ?>" aria-hidden="true"></i>
 										<?php if(isset($nNoti)&&$nNoti!=0){echo '<span class="label label-danger">'.$nNoti.'</span>';} ?>
 									</a>
 
