@@ -1723,12 +1723,14 @@ require_once '0_validate_user_1.php';
 
 					/*******************************************************/
 					//traigo los datos almacenados
-					$rowUsr = db_select_data (false, 'idUsuario, Nombre,usuario, email', 'usuarios_listado', '', 'email = "'.$email.'"', $dbConn, 'rowUsr', $original, $form_trabajo);
+					$rowUsr = db_select_data (false, 'idUsuario, Nombre, usuario, email, Fono', 'usuarios_listado', '', 'email = "'.$email.'"', $dbConn, 'rowUsr', $original, $form_trabajo);
 					$SIS_query = '
-					Nombre,
-					email_principal,
-					core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario,
-					core_sistemas.Config_Gmail_Password AS Gmail_Password';
+					core_sistemas.Nombre,
+					core_sistemas.email_principal,
+					core_sistemas.Config_Gmail_Usuario      AS Gmail_Usuario,
+					core_sistemas.Config_Gmail_Password     AS Gmail_Password,
+					core_sistemas.Config_WhatsappToken      AS SistemaWhatsappToken,
+					core_sistemas.Config_WhatsappInstanceId AS SistemaWhatsappInstanceId';
 					$SIS_join  = '';
 					$SIS_where = 'idSistema=1';
 					$rowSistema = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, 'rowSistema', $original, $form_trabajo);
@@ -1746,27 +1748,48 @@ require_once '0_validate_user_1.php';
 
 					/*******************************************************/
 					//Cuerpo del correo
-					$Body = '<p>Se ha generado una nueva contraseña para el usuario '.$rowUsr['email'].', su nueva contraseña es: '.$clave.'</p>';
+					$Body = 'Se ha generado una nueva contraseña para el usuario '.$rowUsr['usuario'].', su nueva contraseña es: '.$clave;
+
+					/*******************************************************/
+					//Envio de whatsapp
+					if(isset($rowUsr['Fono'])&&$rowUsr['Fono']!=''){
+
+						//se intenta enviar la notificacion
+						try {
+							//envio notificacion
+							WhatsappSendMessage($rowSistema['SistemaWhatsappToken'], $rowSistema['SistemaWhatsappInstanceId'], $rowUsr['Fono'], $Body);
+							//se guarda el log
+							log_response(1, 'Envio Correcto->'.$rowUsr['Fono'], $Body);
+							//se entrega noti
+							$error['email'] = 'sucess/La nueva contraseña fue enviada a tu correo';
+						} catch (Exception $e) {
+							//se guarda el log
+							log_response(1, 'Envio Noti Whatsapp Fallido->'.$e->getMessage(), $Body);
+							//se entrega noti
+							$error['email'] = 'error/Envio Noti Whatsapp Fallido';
+						}
 
 					/*******************************************************/
 					//Envio de correo
-					$rmail = tareas_envio_correo($rowSistema['email_principal'], $rowSistema['Nombre'],
-												 $rowUsr['email'], $rowUsr['Nombre'],
-												 '', '',
-												 'Cambio de password',
-												 $Body,'',
-												 '',
-												 1,
-												 $rowSistema['Gmail_Usuario'],
-												 $rowSistema['Gmail_Password']);
-					//se guarda el log
-					log_response(1, $rmail, $rowUsr['email'].' (Asunto:Cambio de password)');
+					}else{
+						$rmail = tareas_envio_correo($rowSistema['email_principal'], $rowSistema['Nombre'],
+													$rowUsr['email'], $rowUsr['Nombre'],
+													'', '',
+													'Cambio de password',
+													'<p>'.$Body.'</p>','',
+													'',
+													1,
+													$rowSistema['Gmail_Usuario'],
+													$rowSistema['Gmail_Password']);
+						//se guarda el log
+						log_response(1, $rmail, $rowUsr['email'].' (Asunto:Cambio de password)');
 
-					//Envio del mensaje
-					if ($rmail!=1) {
-						$error['email'] = 'error/'.$rmail;
-					} else {
-						$error['email'] = 'sucess/La nueva contraseña fue enviada a tu correo';
+						//Envio del mensaje
+						if ($rmail!=1) {
+							$error['email'] = 'error/'.$rmail;
+						} else {
+							$error['email'] = 'sucess/La nueva contraseña fue enviada a tu correo';
+						}
 					}
 
 				//Si no se encuentra ningun usuario se envia un error
