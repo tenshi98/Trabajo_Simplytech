@@ -129,7 +129,7 @@ $rowData = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 					$Form_Inputs->form_time('Tiempo Fuera Linea Maximo','TiempoFueraLinea', $x5, 1, 1);
 
 					//Solo para plataforma Simplytech
-					if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
+					if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&($_SESSION['usuario']['basic_data']['idInterfaz']==6 OR $_SESSION['usuario']['basic_data']['idInterfaz']==11)){
 						$Form_Inputs->form_post_data(2,1,1, '<strong>Tab: </strong>Esta opción indica en que pestaña de la pantalla principal sera mostrado el equipo (Funcion solo disponible con la interfaz de  crosstech.)' );
 						$Form_Inputs->form_select('Tab','idTab', $x6, 2, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, '', $dbConn);
 					}
