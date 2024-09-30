@@ -1,4 +1,7 @@
 <?php
+//Variables
+$MSGDir = '';
+//recorro
 foreach ($arrPrevs as $key => $value) {
 
 	/*******************************************/
@@ -74,7 +77,7 @@ foreach ($arrPrevs as $key => $value) {
 		/*******************************************/
 		//si hay alertas
 		//Si es inferior al rango inicio o superior a este
-		if($Prediccion<$value['RangoInicio']&&$Prediccion>$value['RangoTermino']){
+		if($Prediccion<$value['RangoInicio'] OR $Prediccion>$value['RangoTermino']){
 			//se filtra por usuario
 			filtrar($arrCorreos, 'idUsuario');
 			//se recorren correos
@@ -83,57 +86,77 @@ foreach ($arrPrevs as $key => $value) {
 				$usuario_idUsuario = $usuarios;
 				//se recorren los correos del usuario
 				foreach ($correos as $correo) {
-					/*******************************************/
-					//obtengo los datos del usuario
-					$usuarioNombre          = DeSanitizar($correo['UsuarioNombre']);   //Nombre del usuario
-					$usuarioCorreo          = DeSanitizar($correo['UsuarioEmail']);    //Para el envio de correos
-					$usuarioFono            = $correo['UsuarioFono'];                  //Para el envio de whatsapp
+					//Si el equipo pertenece
+					if(isset($value['EquipoID'], $correo['idTelemetria'])&&$value['EquipoID']==$correo['idTelemetria']){
+						/*******************************************/
+						//obtengo los datos del usuario
+						$usuarioNombre          = DeSanitizar($correo['UsuarioNombre']);   //Nombre del usuario
+						$usuarioCorreo          = DeSanitizar($correo['UsuarioEmail']);    //Para el envio de correos
+						$usuarioFono            = $correo['UsuarioFono'];                  //Para el envio de whatsapp
 
-					//obtengo los datos del sistema
-					$SistemaNombre             = DeSanitizar($correo['SistemaNombre']); //Para el envio de correos
-					$SistemaWhatsappToken      = $correo['SistemaWhatsappToken'];       //Para el envio de whatsapp
-					$SistemaWhatsappInstance   = $correo['SistemaWhatsappInstanceId'];  //Para el envio de whatsapp
+						//obtengo los datos del sistema
+						$SistemaNombre             = DeSanitizar($correo['SistemaNombre']); //Para el envio de correos
+						$SistemaWhatsappToken      = $correo['SistemaWhatsappToken'];       //Para el envio de whatsapp
+						$SistemaWhatsappInstance   = $correo['SistemaWhatsappInstanceId'];  //Para el envio de whatsapp
 
-					//Datos para guardar registro del envio de la notificacion
-					$usuario_idSistema          = $correo['idSistema'];
-					$usuario_idCorreosCat       = $correo['idCorreosCat'];
+						//Datos para guardar registro del envio de la notificacion
+						$usuario_idSistema          = $correo['idSistema'];
+						$usuario_idCorreosCat       = $correo['idCorreosCat'];
 
-					/*******************************************/
-					//se crea cuerpo de whatsapp
-					$MSG_Whatsapp .= 'La temperatura proyectada para <strong>'.DeSanitizar($correo['EquipoNombre']).'</strong>
-					a las '.$HoraProyectada.' hrs esta fuera de rango (rango '.$value['RangoInicio'].' - '.$value['RangoTermino'].')
-					con una proyeccion de '.$Prediccion.'';
+						/*******************************************/
+						//se crea cuerpo de whatsapp
+						$MSG_Whatsapp = 'La temperatura proyectada para '.DeSanitizar($correo['EquipoNombre']);
+						$MSG_Whatsapp.= ' a las '.$HoraProyectada.' hrs esta fuera de rango (rango '.$value['RangoInicio'].' - '.$value['RangoTermino'].')';
+						$MSG_Whatsapp.= ' con una proyeccion de '.Cantidades($Prediccion, 2);
 
-					/*******************************************/
-					//se intenta enviar la notificacion
-					try {
-						/************************/
-						//envio notificacion
-						WhatsappSendMessage($SistemaWhatsappToken, $SistemaWhatsappInstance, $usuarioFono, $MSG_Whatsapp);
-						//guardo el registro de los mensajes enviados
-						$dir .= "	- NW/".$SistemaNombre.": ".$usuarioCorreo." / (Envio Correcto->".$usuarioFono.")\n";
-						/************************/
-						//envio correcto
-						if(isset($usuario_idSistema) && $usuario_idSistema!=''){       $SIS_data  = "'".$usuario_idSistema."'";      }else{$SIS_data  = "''";}
-						if(isset($usuario_idUsuario) && $usuario_idUsuario!=''){       $SIS_data .= ",'".$usuario_idUsuario."'";     }else{$SIS_data .= ",''";}
-						if(isset($usuario_idCorreosCat) && $usuario_idCorreosCat!=''){ $SIS_data .= ",'".$usuario_idCorreosCat."'";  }else{$SIS_data .= ",''";}
-						//El timestamp
-						if(isset($FechaSistema) && $FechaSistema != ''&&isset($HoraSistema) && $HoraSistema!=''){
-							$SIS_data .= ",'".$FechaSistema." ".$HoraSistema."'";
-						}else{
-							$SIS_data .= ",''";
+						/*******************************************/
+						//se intenta enviar la notificacion
+						try {
+							//envio notificacion
+							WhatsappSendMessage($SistemaWhatsappToken, $SistemaWhatsappInstance, $usuarioFono, $MSG_Whatsapp);
+							//guardo el registro de los mensajes enviados
+							$MSGDir .= "	- NW/".$SistemaNombre.": ".$usuarioCorreo." / (Envio Correcto->".$usuarioFono.")\n";
+							//envio correcto
+							if(isset($usuario_idSistema) && $usuario_idSistema!=''){       $SIS_data  = "'".$usuario_idSistema."'";      }else{$SIS_data  = "''";}
+							if(isset($usuario_idUsuario) && $usuario_idUsuario!=''){       $SIS_data .= ",'".$usuario_idUsuario."'";     }else{$SIS_data .= ",''";}
+							if(isset($usuario_idCorreosCat) && $usuario_idCorreosCat!=''){ $SIS_data .= ",'".$usuario_idCorreosCat."'";  }else{$SIS_data .= ",''";}
+							//El timestamp
+							if(isset($FechaSistema) && $FechaSistema != ''&&isset($HoraSistema) && $HoraSistema!=''){
+								$SIS_data .= ",'".$FechaSistema." ".$HoraSistema."'";
+							}else{
+								$SIS_data .= ",''";
+							}
+							// inserto los datos de registro en la db
+							$SIS_columns = 'idSistema, idUsuario, idCorreosCat, TimeStamp';
+							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_mnt_correos_list_sended', $dbConn, 'Cron', basename($_SERVER["REQUEST_URI"], ".php"), 'insertCorreoSended');
+
+						} catch (Exception $e) {
+							$MSGDir .= "	- NW/Excepción capturada: / (Envio Noti Whatsapp Fallido->".$e->getMessage().")\n";
 						}
-						// inserto los datos de registro en la db
-						$SIS_columns = 'idSistema, idUsuario, idCorreosCat, TimeStamp';
-						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_mnt_correos_list_sended', $dbConn, 'Cron', basename($_SERVER["REQUEST_URI"], ".php"), 'insertCorreoSended');
-
-					} catch (Exception $e) {
-						$dir .= "	- NW/Excepción capturada: / (Envio Noti Whatsapp Fallido->".$e->getMessage().")\n";
 					}
 				}
 			}
 		}
 	}
 }
+
+
+
+if($MSGDir!=''){
+//Variable para el registro de correos enviados
+$dir = "\n
+################################################################################
+Fecha de envio : ".$FechaSistema."
+Hora Actual : ".$HoraSistema."
+Usuarios :\n";
+$dir .= $MSGDir;
+
+	//Se guarda el registro de los correos enviados
+	if ($FP = fopen ('logs_cron_informe_proyecciones.txt', "a")){
+		fwrite ($FP, $dir);
+		fclose ($FP);
+	}
+}
+
 
 ?>

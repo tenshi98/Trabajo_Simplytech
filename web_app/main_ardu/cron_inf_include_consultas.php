@@ -125,10 +125,12 @@ INNER JOIN `telemetria_mnt_correos_cat`    ON telemetria_mnt_correos_cat.idCorre
 INNER JOIN `telemetria_listado`            ON telemetria_listado.idTelemetria         = usuarios_equipos_telemetria.idTelemetria
 INNER JOIN `core_sistemas`                 ON core_sistemas.idSistema                 = telemetria_listado.idSistema ';
 $SIS_where = '(telemetria_mnt_correos_list.TimeStamp<"'.$FechaSistema.' '.$HoraSistema.'" OR telemetria_mnt_correos_list.TimeStamp="0000-00-00 00:00:00")';
-$SIS_where.= ' AND telemetria_mnt_correos_cat.idEstado=1 AND telemetria_mnt_correos_list.idSistema != "" ';
-$SIS_where.= ' AND telemetria_listado.idEstado = 1'; //Solo equipos activos
-$SIS_where.= ' AND core_sistemas.idEstado = 1';      //Solo sistemas activos
-$SIS_where.= ' AND usuarios_listado.idEstado = 1';   //Solo usuarios activos
+$SIS_where.= ' AND telemetria_mnt_correos_cat.idEstado=1';           //Categoria activa
+$SIS_where.= ' AND telemetria_mnt_correos_list.idSistema != "" ';    //pertenezca a algun sistema
+$SIS_where.= ' AND telemetria_listado.idEstado = 1';                 //Solo equipos activos
+$SIS_where.= ' AND core_sistemas.idEstado = 1';                      //Solo sistemas activos
+$SIS_where.= ' AND usuarios_listado.idEstado = 1';                   //Solo usuarios activos
+$SIS_where.= ' AND telemetria_mnt_correos_list.idCorreosCat != 62';  //Se deja fuera Crones - Prevision temperatura
 $SIS_where.= ' GROUP BY telemetria_mnt_correos_list.idUsuario,telemetria_listado.idSistema,usuarios_equipos_telemetria.idTelemetria,telemetria_mnt_correos_list.idCorreosCat';
 $SIS_order = 'telemetria_mnt_correos_list.idUsuario ASC,telemetria_listado.idSistema ASC,usuarios_equipos_telemetria.idTelemetria ASC,telemetria_mnt_correos_list.idCorreosCat ASC';
 $arrCorreos = array();

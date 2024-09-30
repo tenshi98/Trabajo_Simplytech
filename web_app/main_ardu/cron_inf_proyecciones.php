@@ -60,6 +60,7 @@ telemetria_mnt_correos_list.idUsuario,
 telemetria_listado.idSistema,
 telemetria_listado.Nombre AS EquipoNombre,
 telemetria_mnt_correos_list.idCorreosCat,
+usuarios_equipos_telemetria.idTelemetria,
 
 usuarios_listado.email AS UsuarioEmail,
 usuarios_listado.Nombre AS UsuarioNombre,
