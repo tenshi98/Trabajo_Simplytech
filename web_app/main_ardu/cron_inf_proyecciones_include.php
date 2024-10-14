@@ -106,8 +106,8 @@ foreach ($arrPrevs as $key => $value) {
 						/*******************************************/
 						//se crea cuerpo de whatsapp
 						$MSG_Whatsapp = 'La temperatura proyectada para '.DeSanitizar($correo['EquipoNombre']);
-						$MSG_Whatsapp.= ' a las '.$HoraProyectada.' hrs esta fuera de rango (rango '.$value['RangoInicio'].' - '.$value['RangoTermino'].')';
-						$MSG_Whatsapp.= ' con una proyeccion de '.Cantidades($Prediccion, 2);
+						$MSG_Whatsapp.= ' a las '.$HoraProyectada.' hrs esta fuera de rango (rango '.$value['RangoInicio'].' °C. - '.$value['RangoTermino'].' °C.)';
+						$MSG_Whatsapp.= ' con una proyeccion de '.Cantidades($Prediccion, 2).' °C.';
 
 						/*******************************************/
 						//se intenta enviar la notificacion
