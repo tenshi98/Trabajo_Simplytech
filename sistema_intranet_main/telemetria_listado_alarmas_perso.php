@@ -1100,13 +1100,9 @@ if(!empty($_GET['editItem'])){
 													break;
 											}
 										}
-										/*if(isset($alarm['Rango_ini'])&&$alarm['Rango_ini']!=0&&isset($alarm['Rango_fin'])&&$alarm['Rango_fin']!=0){
-											$sub_nom .= '('.Cantidades_decimales_justos($alarm['Rango_ini']).' / '.Cantidades_decimales_justos($alarm['Rango_fin']).')';
-										}*/
-										echo '<li>> '.TituloMenu($sub_nom).'</li>';
+										echo '<li>-> '.TituloMenu($sub_nom).'</li>';
 									}
 									echo '</ul>';
-
 									?>
 								</td>
 								<td>
