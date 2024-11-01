@@ -178,8 +178,8 @@ $arrHorasTotal = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_
 					foreach ($arrHorasExtras as $key => $producto){
 						foreach ($producto as $prod) {
 							$data_column++;
-							$arrColumnas[$porcentaje['idPorcentaje']]['idPorcentaje']  = $arrPorcFinal[$prod['porcentaje_dia']]['idPorcentaje'];
-							$arrColumnas[$porcentaje['idPorcentaje']]['Nombre']        = $arrPorcFinal[$prod['porcentaje_dia']]['Porcentaje'];
+							$arrColumnas[$prod['idPorcentaje']]['idPorcentaje']  = $arrPorcFinal[$prod['porcentaje_dia']]['idPorcentaje'];
+							$arrColumnas[$prod['idPorcentaje']]['Nombre']        = $arrPorcFinal[$prod['porcentaje_dia']]['Porcentaje'];
 						}
 					}
 				}

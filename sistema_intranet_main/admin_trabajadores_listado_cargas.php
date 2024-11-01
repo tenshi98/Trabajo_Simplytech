@@ -62,7 +62,7 @@ if (!empty($_GET['del'])){
 require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
-/**********************************************************************************************************************************/ 
+/**********************************************************************************************************************************/
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Carga Creada correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Carga Modificada correctamente';}

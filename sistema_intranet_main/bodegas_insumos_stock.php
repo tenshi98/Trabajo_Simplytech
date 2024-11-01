@@ -36,7 +36,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
-/**********************************************************************************************************************************/ 
+/**********************************************************************************************************************************/
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Bodega Creada correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Bodega Modificada correctamente';}

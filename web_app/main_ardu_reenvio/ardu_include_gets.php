@@ -23,7 +23,7 @@ $Alertas_3       = '';
 $FueraLinea      = '';
 $FueraGeoCerca   = '';
 $Var_Counter     = 0;
-////////////////// Recepcion variables ////////////////// 
+////////////////// Recepcion variables //////////////////
 //Datos Varios
 if ( isset($_GET['lock'])){     $lock                  = str_replace('%20', '', str_replace(' ', '', $_GET['lock']));}
 if (!empty($_GET['id'])){      $Identificador         = str_replace('%20', '', str_replace(' ', '', $_GET['id']));}

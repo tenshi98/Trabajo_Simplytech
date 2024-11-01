@@ -333,7 +333,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 }else{
 	$order_by = 'ubicacion_listado.idEstado ASC, ubicacion_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente, Nombre Ascendente';
 }
-/**********************************************************/ 
+/**********************************************************/
 //Variable de busqueda
 $SIS_where = "ubicacion_listado.idUbicacion!=0";
 //Verifico el tipo de usuario que esta ingresando

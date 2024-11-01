@@ -422,13 +422,7 @@ if(!empty($_GET['editItem'])){
 	// tomo los datos del equipo
 	$rowData = db_select_data (false, 'Nombre,id_Geo, id_Sensores, cantSensores', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
-	//defino los nombres de los sensores
-	$subsql = '';
-	for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
-		$subsql .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
-		$subsql .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
-	}
-
+	//se consulta
 	$SIS_query = '
 	telemetria_listado_alarmas_perso.idAlarma,
 	telemetria_listado_alarmas_perso.Nombre,
@@ -448,7 +442,11 @@ if(!empty($_GET['editItem'])){
 	telemetria_listado_unidad_medida.Nombre AS Unimed,
 	telemetria_listado_alarmas_perso.idTipoAlerta,
 	core_estados.Nombre AS Estado,
-	telemetria_listado_alarmas_perso.idEstado'.$subsql;
+	telemetria_listado_alarmas_perso.idEstado';
+	for ($i = 1; $i <= $rowData['cantSensores']; $i++) {
+		$SIS_query .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+		$SIS_query .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+	}
 	$SIS_join  = '
 	LEFT JOIN `telemetria_listado_alarmas_perso_tipos` ON telemetria_listado_alarmas_perso_tipos.idTipo    = telemetria_listado_alarmas_perso.idTipo
 	LEFT JOIN `telemetria_listado_alarmas_perso_items` ON telemetria_listado_alarmas_perso_items.idAlarma  = telemetria_listado_alarmas_perso.idAlarma
@@ -491,9 +489,6 @@ if(!empty($_GET['editItem'])){
 							<?php } ?>
 							<?php if($rowData['id_Geo']==2){ ?>
 							<li class=""><a href="<?php echo 'admin_telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
-							<?php } ?>
-							<?php if($rowData['id_Sensores']==1){ ?>
-							<li class=""><a href="<?php echo 'admin_telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
 							<?php } ?>
 							<li class=""><a href="<?php echo 'admin_telemetria_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
 							<li class=""><a href="<?php echo 'admin_telemetria_listado_trabajo.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-clock-o" aria-hidden="true"></i> Jornada Trabajo</a></li>

@@ -45,7 +45,7 @@ if (!empty($_GET['idEstadoEncendido'])){
 require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
-/**********************************************************************************************************************************/ 
+/**********************************************************************************************************************************/
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created']  = 'sucess/Equipo Creado correctamente';}
 if (isset($_GET['edited'])){  $error['edited']   = 'sucess/Equipo Modificado correctamente';}

@@ -366,7 +366,7 @@ $spreadsheet->getActiveSheet(1)->addChart($chart);
 
 */
 
-/**********************************************************************************/ 
+/**********************************************************************************/
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 

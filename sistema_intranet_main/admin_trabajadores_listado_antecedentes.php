@@ -53,7 +53,7 @@ if (!empty($_GET['del_File_Antecedentes'])){
 require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
-/**********************************************************************************************************************************/ 
+/**********************************************************************************************************************************/
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Trabajador Creado correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Trabajador Modificado correctamente';}

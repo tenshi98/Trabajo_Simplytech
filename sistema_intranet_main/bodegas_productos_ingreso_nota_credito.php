@@ -139,7 +139,7 @@ if (!empty($_GET['ing_bodega_nc'])){
 require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
-/**********************************************************************************************************************************/ 
+/**********************************************************************************************************************************/
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Nota de Credito Realizada correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Nota de Credito Modificada correctamente';}

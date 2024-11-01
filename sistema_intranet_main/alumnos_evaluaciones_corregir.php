@@ -49,7 +49,7 @@ if (!empty($_POST['submit'])){
 require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
-/**********************************************************************************************************************************/ 
+/**********************************************************************************************************************************/
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Evaluacion Creada correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Evaluacion Modificada correctamente';}

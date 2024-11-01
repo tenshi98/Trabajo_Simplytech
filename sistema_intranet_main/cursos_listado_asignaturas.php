@@ -53,7 +53,7 @@ if (!empty($_GET['del'])){
 require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
-/**********************************************************************************************************************************/ 
+/**********************************************************************************************************************************/
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Asignatura agregada correctamente';}
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Asignatura eliminada correctamente';}

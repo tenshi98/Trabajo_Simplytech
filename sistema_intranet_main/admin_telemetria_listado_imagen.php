@@ -47,7 +47,7 @@ if (!empty($_GET['del_img'])){
 require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
-/**********************************************************************************************************************************/ 
+/**********************************************************************************************************************************/
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Equipo Creado correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Equipo Modificado correctamente';}
@@ -84,9 +84,6 @@ $rowData = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 						<?php } ?>
 						<?php if($rowData['id_Geo']==2){ ?>
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
-						<?php } ?>
-						<?php if($rowData['id_Sensores']==1){ ?>
-						<li class=""><a href="<?php echo 'admin_telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
 						<?php } ?>
 						<li class="active"><a href="<?php echo 'admin_telemetria_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_trabajo.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-clock-o" aria-hidden="true"></i> Jornada Trabajo</a></li>

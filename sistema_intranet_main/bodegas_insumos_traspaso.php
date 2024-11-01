@@ -92,7 +92,7 @@ if (!empty($_GET['trasp_bodega'])){
 require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
-/**********************************************************************************************************************************/ 
+/**********************************************************************************************************************************/
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Traspaso Realizado correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Traspaso Modificado correctamente';}

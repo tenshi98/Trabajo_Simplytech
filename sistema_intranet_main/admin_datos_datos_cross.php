@@ -56,7 +56,7 @@ if (!empty($_GET['del'])){
 require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
-/**********************************************************************************************************************************/ 
+/**********************************************************************************************************************************/
 //Listado de errores no manejables
 if (isset($_GET['created'])){$error['usuario'] = 'sucess/Aprobador Creado correctamente';}
 if (isset($_GET['edited'])){$error['usuario']  = 'sucess/Aprobador Modificado correctamente';}
