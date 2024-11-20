@@ -93,7 +93,7 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Modificacion Registro</h5>
+			<h5>Modificación Registro</h5>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>

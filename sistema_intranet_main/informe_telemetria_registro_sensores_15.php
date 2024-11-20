@@ -94,7 +94,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Modificacion Tracking</h5>
+			<h5>Modificación Tracking</h5>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>

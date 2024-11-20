@@ -400,7 +400,7 @@ $rowData = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_jo
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Modificacion Matriz de Analisis</h5>
+			<h5>Modificación Matriz de Analisis</h5>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>

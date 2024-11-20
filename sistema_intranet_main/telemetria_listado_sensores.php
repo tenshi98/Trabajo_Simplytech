@@ -77,7 +77,7 @@ $rowData = db_select_data (false, 'Nombre,Funcion, idSensorFuncion', 'telemetria
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Modificacion Tipo de Sensor</h5>
+			<h5>Modificación Tipo de Sensor</h5>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>

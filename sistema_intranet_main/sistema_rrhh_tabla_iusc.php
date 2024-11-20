@@ -72,7 +72,7 @@ $rowData = mysqli_fetch_assoc ($resultado);	?>
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Modificacion Tramos Impuesto Unico</h5>
+			<h5>Modificación Tramos Impuesto Unico</h5>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
