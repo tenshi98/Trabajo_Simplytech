@@ -212,7 +212,7 @@ $SIS_where = 'trabajadores_listado.idTrabajador = '.$_GET['id'];
 $rowData = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 
 /************************************************************/
-// Se trae un listado con todas las cargas familiares
+// Se trae un listado con todos los elementos
 $SIS_query = 'Nombre,ApellidoPat, ApellidoMat';
 $SIS_join  = '';
 $SIS_where = 'idTrabajador = '.$_GET['id'];

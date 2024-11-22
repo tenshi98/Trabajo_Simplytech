@@ -156,7 +156,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 }else{
 $y = "idEstado=1";
 $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
-//Filtro de busqueda
+//Filtro de Búsqueda
 $w  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
@@ -172,7 +172,7 @@ alert_post_data(2,1,1,0, $Alert_Text);
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Filtro de Busqueda</h5>
+			<h5>Filtro de Búsqueda</h5>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>

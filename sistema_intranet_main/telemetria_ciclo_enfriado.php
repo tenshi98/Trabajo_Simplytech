@@ -307,7 +307,7 @@ $SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
 $arrCategorias = array();
 $arrCategorias = db_select_array (false, $SIS_query, 'telemetria_ciclo_enfriado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCategorias');
 
-//Filtro de busqueda
+//Filtro de Búsqueda
 $z = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){

@@ -218,7 +218,7 @@ if(!$resultado){
 }
 $rowData = mysqli_fetch_assoc ($resultado);
 
-// Se trae un listado con todas las cargas familiares
+// Se trae un listado con todos los elementos
 $arrCargas = array();
 $query = "SELECT  Nombre,ApellidoPat, ApellidoMat
 FROM `trabajadores_listado_cargas`

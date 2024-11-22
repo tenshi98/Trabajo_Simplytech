@@ -320,7 +320,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
-//Filtro de busqueda
+//Filtro de Búsqueda
 $z  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 $z .= " AND telemetria_listado.id_Geo=1";                                                //Geolocalizacion activa
 $z .= " AND telemetria_listado.id_Sensores=1";                                           //sensores activos
@@ -342,7 +342,7 @@ alert_post_data(2,1,1,0, $Alert_Text);
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Filtro de busqueda</h5>
+			<h5>Filtro de Búsqueda</h5>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>

@@ -408,7 +408,7 @@ alert_post_data(2,1,1,0, $Alert_Text);
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Filtro de busqueda</h5>
+			<h5>Filtro de Búsqueda</h5>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>

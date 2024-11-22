@@ -210,7 +210,7 @@ foreach ($arrUnimed as $sen) {
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
-//Filtro de busqueda
+//Filtro de Búsqueda
 $z  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 $z .= " AND telemetria_listado.id_Geo=2";                                                //Geolocalizacion inactiva
 $z .= " AND telemetria_listado.id_Sensores=1";                                           //sensores activos
@@ -227,7 +227,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Filtro de busqueda</h5>
+			<h5>Filtro de Búsqueda</h5>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>

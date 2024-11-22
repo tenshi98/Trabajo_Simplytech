@@ -396,7 +396,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Filtro de Busqueda</h5>
+			<h5>Filtro de Búsqueda</h5>
 		</header>
 
         <div class="tab-content body">

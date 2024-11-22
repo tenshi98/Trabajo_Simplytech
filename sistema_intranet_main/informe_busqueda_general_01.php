@@ -211,7 +211,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Filtro de Busqueda</h5>
+			<h5>Filtro de Búsqueda</h5>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-search" aria-hidden="true"></i> Por OC</a></li>
 				<li class=""><a href="#tab_2" data-toggle="tab"><i class="fa fa-search" aria-hidden="true"></i> Por Facturas</a></li>

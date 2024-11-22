@@ -324,7 +324,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Filtro de Busqueda</h5>
+			<h5>Filtro de Búsqueda</h5>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $original; ?>" id="form1" name="form1" novalidate>

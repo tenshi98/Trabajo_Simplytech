@@ -293,7 +293,7 @@ $SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
 $arrCategorias = array();
 $arrCategorias = db_select_array (false, $SIS_query, 'telemetria_tracking', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCategorias');
 
-//Filtro de busqueda
+//Filtro de Búsqueda
 $z  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 $z .= " AND telemetria_listado.id_Geo=2";                                                //Geolocalizacion inactiva
 //Verifico el tipo de usuario que esta ingresando
