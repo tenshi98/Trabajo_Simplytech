@@ -85,7 +85,7 @@ if(!empty($_GET['submit_filter'])){
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 		<ul class="btn-group btn-breadcrumb pull-left">
-			<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+			<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Búsqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 			<li class="btn btn-default"><?php echo $bread_order ?></li>
 		</ul>
 

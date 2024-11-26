@@ -117,7 +117,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Búsqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
