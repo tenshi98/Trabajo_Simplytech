@@ -5110,9 +5110,9 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 					$Longitud_x = '';
 
 					foreach ($zonas as $puntos) {
-						if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){
+						if(isset($puntos['Latitud'], $puntos['Longitud'])&&$puntos['Latitud']!=''&&$puntos['Longitud']!=''){
 							$GPS .= '{lat: '.$puntos['Latitud'].', lng: '.$puntos['Longitud'].'},';
-							if(isset($puntos['Latitud'])&&$puntos['Latitud']!='0'&&isset($puntos['Longitud'])&&$puntos['Longitud']!='0'){
+							if(isset($puntos['Latitud'], $puntos['Longitud'])&&$puntos['Latitud']!='0'&&$puntos['Longitud']!='0'){
 								$Latitud_x  = $puntos['Latitud'];
 								$Longitud_x = $puntos['Longitud'];
 								//Calculos para centrar mapa
@@ -5762,9 +5762,9 @@ function widget_Gestion_Flota_CrossTech_Transportes_AB($titulo, $idSistema, $IDG
 					$Longitud_x = '';
 
 					foreach ($zonas as $puntos) {
-						if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){
+						if(isset($puntos['Latitud'], $puntos['Longitud'])&&$puntos['Latitud']!=''&&$puntos['Longitud']!=''){
 							$GPS .= '{lat: '.$puntos['Latitud'].', lng: '.$puntos['Longitud'].'},';
-							if(isset($puntos['Latitud'])&&$puntos['Latitud']!='0'&&isset($puntos['Longitud'])&&$puntos['Longitud']!='0'){
+							if(isset($puntos['Latitud'], $puntos['Longitud'])&&$puntos['Latitud']!='0'&&$puntos['Longitud']!='0'){
 								$Latitud_x  = $puntos['Latitud'];
 								$Longitud_x = $puntos['Longitud'];
 								//Calculos para centrar mapa
@@ -7015,7 +7015,7 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 				$arrGruas[$xdanger][$data['idTelemetria']]['Generador'] = '';
 			}*/
 			//si utiliza carpeta ftp
-			if(isset($data['idUsoFTP'])&&$data['idUsoFTP']==1&&isset($data['FTP_Carpeta'])&&$data['FTP_Carpeta']!=''){
+			if(isset($data['idUsoFTP'], $data['FTP_Carpeta'])&&$data['idUsoFTP']==1&&$data['FTP_Carpeta']!=''){
 				$arrGruas[$xdanger][$data['idTelemetria']]['CarpetaFTP'] = '<li><a href="view_telemetria_data_files.php?view='.simpleEncode($data['FTP_Carpeta'], fecha_actual()).'" class="iframe" style="white-space: normal;"><i class="fa fa-video-camera" aria-hidden="true"></i> Camara</a></li>';
 			}else{
 				$arrGruas[$xdanger][$data['idTelemetria']]['CarpetaFTP'] = '';
@@ -11576,13 +11576,13 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 			$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['informe_activaciones']  = '<li><a href="view_telemetria_uso.php?idTelemetria='.$data['idTelemetria'].'&F_inicio='.$principioMes.'&F_termino='.$FechaSistema.'&Amp=&pagina=1&submit_filter=Filtrar" class="iframe" style="white-space: normal;" ><i class="fa fa-clock-o" aria-hidden="true"></i> Uso Grua</a></li>';
 			$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['AlarmasPersonalizadas'] = '<li><a href="view_alertas_personalizadas.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" class="iframe" style="white-space: normal;"><i class="fa fa-bell-o" aria-hidden="true"></i> Alertas Personalizadas</a></li>';
 			//si tiene un generador
-			/*if(isset($data['idGenerador'])&&$data['idGenerador']==1&&isset($data['idTelGenerador'])&&$data['idTelGenerador']!=''&&$data['idTelGenerador']!=0){
+			/*if(isset($data['idGenerador'], $data['idTelGenerador'])&&$data['idGenerador']==1&&$data['idTelGenerador']!=''&&$data['idTelGenerador']!=0){
 				$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['Generador'] = '<li><a href="view_generador_data.php?view='.simpleEncode($data['idTelGenerador'], fecha_actual()).'" class="iframe" style="white-space: normal;"><i class="fa fa-battery-full" aria-hidden="true"></i> Datos Generador</a></li>';
 			}else{
 				$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['Generador'] = '';
 			}*/
 			//si utiliza carpeta ftp
-			if(isset($data['idUsoFTP'])&&$data['idUsoFTP']==1&&isset($data['FTP_Carpeta'])&&$data['FTP_Carpeta']!=''){
+			if(isset($data['idUsoFTP'], $data['FTP_Carpeta'])&&$data['idUsoFTP']==1&&$data['FTP_Carpeta']!=''){
 				$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['CarpetaFTP'] = '<li><a href="view_telemetria_data_files.php?view='.simpleEncode($data['FTP_Carpeta'], fecha_actual()).'" class="iframe" style="white-space: normal;"><i class="fa fa-video-camera" aria-hidden="true"></i> Camara</a></li>';
 			}else{
 				$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['CarpetaFTP'] = '';

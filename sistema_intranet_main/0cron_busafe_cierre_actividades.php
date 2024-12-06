@@ -75,7 +75,7 @@ foreach ($arrApoderado as $apo) {
 	//Envio de correo
 	$BodyMail = '';
 	//Se verifica que existan datos
-	if(isset($apo['EmpresaEmail'])&&$apo['EmpresaEmail']!=''&&isset($apo['email'])&&$apo['email']!=''&&isset($BodyMail)&&$BodyMail!=''){
+	if(isset($apo['EmpresaEmail'], $apo['email'], $BodyMail)&&$apo['EmpresaEmail']!=''&&$apo['email']!=''&&$BodyMail!=''){
 		$rmail = tareas_envio_correo($apo['EmpresaEmail'], $apo['EmpresaNombre'], 
 									$apo['email'], 'Receptor', 
 									'', '', 
