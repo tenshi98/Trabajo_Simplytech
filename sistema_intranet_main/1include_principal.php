@@ -17,6 +17,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
         case 9:  include '1include_principal_interfaz_9.php';  break;//Interfaz Administracion Sitios
         case 10: include '1include_principal_interfaz_10.php'; break;//Interfaz Walmart
         case 11: include '1include_principal_interfaz_11.php'; break;//Interfaz Jumbo
+        case 12: include '1include_principal_interfaz_12.php'; break;//Interfaz Walmart 2
     }
 }
 

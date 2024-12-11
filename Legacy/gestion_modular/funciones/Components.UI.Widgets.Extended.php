@@ -10105,6 +10105,418 @@ function widget_CrossC_Walmart($timeBack, $seguimiento, $idSistema, $idTipoUsuar
 }
 /*******************************************************************************************************************/
 //Muestra los promedios de los equipos
+function widget_CrossC_Walmart2($timeBack, $seguimiento, $idSistema, $idTipoUsuario, $idUsuario, $dbConn){
+
+	//Configuracion
+	$Maximo_Sensores = 70;
+
+	//Variable
+	$SIS_where = "telemetria_listado.idEstado = 1 ";//solo equipos activos
+	//Filtro de los tab
+	$SIS_where .= " AND telemetria_listado.idTab = 2";//CrossC
+	$SIS_where .= " AND telemetria_listado.Nombre LIKE 'W.%'";//Comienza por w.
+	//solo los equipos que tengan el seguimiento activado
+	if(isset($seguimiento)&&$seguimiento!=''&&$seguimiento!=0){
+		$SIS_where .= " AND telemetria_listado.id_Geo = ".$seguimiento;
+	}
+	//Filtro el sistema al cual pertenece
+	if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
+		$SIS_where .= " AND telemetria_listado.idSistema = ".$idSistema;
+	}
+	//Verifico el tipo de usuario que esta ingresando y el id
+	$SIS_join  = '';
+	if(isset($idTipoUsuario, $idUsuario)&&$idTipoUsuario!=1&&$idUsuario!=0){
+		$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
+		$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
+	}
+
+	/*************************************************************/
+	//Se consulta
+	$SIS_query = '
+	telemetria_listado.idTelemetria,
+	telemetria_listado.Nombre,
+	telemetria_listado.cantSensores,
+	telemetria_listado.LastUpdateFecha,
+	telemetria_listado.LastUpdateHora,
+	telemetria_listado.TiempoFueraLinea';
+	for ($i = 1; $i <= $Maximo_Sensores; $i++) {
+		$SIS_query .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+		$SIS_query .= ',telemetria_listado_sensores_revision_grupo.SensoresRevisionGrupo_'.$i;
+		$SIS_query .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+		$SIS_query .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+		$SIS_query .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
+	}
+	$SIS_join  .= '
+	LEFT JOIN `telemetria_listado_sensores_grupo`          ON telemetria_listado_sensores_grupo.idTelemetria          = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_revision_grupo` ON telemetria_listado_sensores_revision_grupo.idTelemetria = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_unimed`         ON telemetria_listado_sensores_unimed.idTelemetria         = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_med_actual`     ON telemetria_listado_sensores_med_actual.idTelemetria     = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_activo`         ON telemetria_listado_sensores_activo.idTelemetria         = telemetria_listado.idTelemetria';
+	$SIS_order = 'telemetria_listado.Nombre ASC';
+	$arrEquipo = array();
+	$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
+
+	/**************************************************************/
+	//variables
+	$HoraInicio     = restahoras($timeBack,hora_actual());
+	$FechaInicio    = fecha_actual();
+	$HoraTermino    = hora_actual();
+	$FechaTermino   = fecha_actual();
+	if($HoraTermino<$timeBack){
+		$FechaInicio = restarDias($FechaTermino,1);
+	}
+
+	/*************************************************************/
+	//Se consulta
+	$arrGrupos = array();
+	$arrGrupos = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos', '', 'idGrupo!=0', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
+	//Se consulta
+	$arrGruposUso = array();
+	$arrGruposUso = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos_uso', '', 'idGrupo!=0', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGruposUso');
+
+    /*************************************************************/
+    //se recorre
+    $arrGruposTemp = array();
+    foreach ($arrGrupos as $gru) {
+        $arrGruposTemp[$gru['idGrupo']] = $gru['Nombre'];
+    }
+    //se recorre
+    $arrGruposUsoTemp = array();
+    foreach ($arrGruposUso as $gruUso) {
+        $arrGruposUsoTemp[$gruUso['idGrupo']] = $gruUso['Nombre'];
+    }
+
+    /*************************************************************/
+    //variables
+    $widget = '';
+    //Se dibuja
+    $widget_1 = '
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="box">
+            <header>
+                <div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
+                <h5>Equipos</h5>
+            </header>
+
+            <div class="tab-content">
+
+                <div id="update_content">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="row">
+                            <div class="table-responsive">
+                                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                                    <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+                                        <tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">';
+
+                                        $widget_2 = '
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="clearfix"></div>
+
+				</div>
+			</div>
+		</div>';
+
+
+	/**************************************************************/
+    //recorro
+	foreach($arrEquipo as $equipo) {
+        /*************************************************************/
+		//identificacion
+		$idTelemetria      = $equipo['idTelemetria'];
+		$N_Maximo_Sensores = $equipo['cantSensores'];
+
+		/*************************************************************/
+		//Se consulta
+		$SIS_query = 'FechaSistema,HoraSistema';
+		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+			$SIS_query .= ',Sensor_'.$i.' AS SensorValue_'.$i;
+		}
+		$SIS_join  = '';
+		$SIS_where = '(TimeStamp BETWEEN "'.$FechaInicio.' '.$HoraInicio.'" AND "'.$FechaTermino.' '.$HoraTermino.'")';
+		$SIS_order = 'FechaSistema ASC,HoraSistema ASC LIMIT 10000';
+		$arrMediciones = array();
+		$arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$idTelemetria, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMediciones');
+
+		/*************************************************************/
+		//Variables
+		$arrTempGrupos = array();
+		$arrTempSensor = array();
+		$arrTempMed    = array();
+
+		//Se recorren las mediciones
+		foreach($arrMediciones as $cli) {
+			/******************************/
+			//recorro los sensores
+			for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+				//Verifico si el sensor esta activo para guardar el dato
+				if(isset($equipo['SensoresActivo_'.$i])&&$equipo['SensoresActivo_'.$i]==1){
+					//Valido valores
+					if(isset($cli['SensorValue_'.$i])&&$cli['SensorValue_'.$i]<999){
+						/********************************/
+						//datos
+						//Sumo los sensores
+						if(isset($arrTempMed[$equipo['idTelemetria']][$i]['Suma'])&&$arrTempMed[$equipo['idTelemetria']][$i]['Suma']!=''){
+							$arrTempMed[$equipo['idTelemetria']][$i]['Suma'] = $arrTempMed[$equipo['idTelemetria']][$i]['Suma'] + $cli['SensorValue_'.$i];
+						}else{
+							$arrTempMed[$equipo['idTelemetria']][$i]['Suma'] = $cli['SensorValue_'.$i];
+						}
+						//Cuento los sensores
+						if(isset($arrTempMed[$equipo['idTelemetria']][$i]['Cuenta'])&&$arrTempMed[$equipo['idTelemetria']][$i]['Cuenta']!=''){
+							$arrTempMed[$equipo['idTelemetria']][$i]['Cuenta']++;
+						}else{
+							$arrTempMed[$equipo['idTelemetria']][$i]['Cuenta'] = 1;
+						}
+						//Min de los sensores
+						if(isset($arrTempMed[$equipo['idTelemetria']][$i]['Min'])&&$arrTempMed[$equipo['idTelemetria']][$i]['Min']!=''){
+							//verifico si es menor
+							if($arrTempMed[$equipo['idTelemetria']][$i]['Min']>$cli['SensorValue_'.$i]){
+								$arrTempMed[$equipo['idTelemetria']][$i]['Min'] = $cli['SensorValue_'.$i];
+							}
+						}else{
+							$arrTempMed[$equipo['idTelemetria']][$i]['Min'] = $cli['SensorValue_'.$i];
+						}
+						//Max de los sensores
+						if(isset($arrTempMed[$equipo['idTelemetria']][$i]['Max'])&&$arrTempMed[$equipo['idTelemetria']][$i]['Max']!=''){
+							//verifico si es mayor
+							if($arrTempMed[$equipo['idTelemetria']][$i]['Max']<$cli['SensorValue_'.$i]){
+								$arrTempMed[$equipo['idTelemetria']][$i]['Max'] = $cli['SensorValue_'.$i];
+							}
+						}else{
+							$arrTempMed[$equipo['idTelemetria']][$i]['Max'] = $cli['SensorValue_'.$i];
+						}
+					}
+				}
+			}
+		}
+
+
+		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+			//Verifico si el sensor esta activo para guardar el dato
+			if(isset($equipo['SensoresActivo_'.$i])&&$equipo['SensoresActivo_'.$i]==1){
+				/*****************************************/
+				//Grupo Uso
+				$arrTempGrupos[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]]['Nombre']  = $arrGruposUsoTemp[$equipo['SensoresRevisionGrupo_'.$i]];
+				$arrTempGrupos[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]]['idGrupo'] = $equipo['SensoresRevisionGrupo_'.$i];
+				/*****************************************/
+				//Grupo
+				/**********************/
+				//Si es temperatura
+				if($equipo['SensoresUniMed_'.$i]==3){
+					//Nombre y grupo
+					$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Nombre']  = $arrGruposTemp[$equipo['SensoresGrupo_'.$i]];
+					$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['idGrupo'] = $equipo['SensoresGrupo_'.$i];
+					//Temperatura Minima
+					if(isset($arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Tmin'])&&$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Tmin']!=''){
+						//verifico si es menor
+						if($arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Tmin']>$arrTempMed[$equipo['idTelemetria']][$i]['Min']){
+							$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Tmin'] = $arrTempMed[$equipo['idTelemetria']][$i]['Min'];
+						}
+					}else{
+						$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Tmin'] = $arrTempMed[$equipo['idTelemetria']][$i]['Min'];
+					}
+					//Temperatura Maxima
+					if(isset($arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Tmax'])&&$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Tmax']!=''){
+						//verifico si es mayor
+						if($arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Tmax']<$arrTempMed[$equipo['idTelemetria']][$i]['Max']){
+							$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Tmax'] = $arrTempMed[$equipo['idTelemetria']][$i]['Max'];
+						}
+					}else{
+						$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Tmax'] = $arrTempMed[$equipo['idTelemetria']][$i]['Max'];
+					}
+					//valido que este dentro del rango deseado
+					if($equipo['SensoresMedActual_'.$i]<999){
+						//Temperatura Actual
+						if(isset($arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['TActual'])&&$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['TActual']!=''){
+							$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['TActual'] = $arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['TActual'] + $equipo['SensoresMedActual_'.$i];
+							$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['CountTActual']++;
+						}else{
+							$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['TActual'] = $equipo['SensoresMedActual_'.$i];
+							$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['CountTActual'] = 1;
+						}
+					}
+					//promedio
+					if(isset($arrTempMed[$i]['Suma'])){
+						if(isset($arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Prom'])&&$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Prom']!=''){
+							$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Prom']      = $arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Prom'] + $arrTempMed[$i]['Suma'];
+							$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['CountProm'] = $arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['CountProm'] + $arrTempMed[$i]['Cuenta'];
+						}else{
+							$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Prom']      = $arrTempMed[$equipo['idTelemetria']][$i]['Suma'];
+							$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['CountProm'] = $arrTempMed[$equipo['idTelemetria']][$i]['Cuenta'];
+						}
+					}else{
+						$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Prom']      = 0;
+						$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['CountProm'] = 0;
+					}
+
+					//estado (siempre pasa)
+					$arrTempGrupos[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]]['NErrores'] = 0;
+					$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['NErrores'] = 0;
+
+				/**********************/
+				//si es humedad
+				}elseif($equipo['SensoresUniMed_'.$i]==2){
+					//valido que este dentro del rango deseado
+					if($equipo['SensoresMedActual_'.$i]<999){
+						//Humedad
+						if(isset($arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Hum'])&&$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Hum']!=''){
+							$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Hum'] = $arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Hum'] + $equipo['SensoresMedActual_'.$i];
+							$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['CountHum']++;
+						}else{
+							$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Hum'] = $equipo['SensoresMedActual_'.$i];
+							$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['CountHum'] = 1;
+						}
+					}
+					//estado (siempre pasa)
+					$arrTempGrupos[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]]['NErrores'] = 0;
+					$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['NErrores'] = 0;
+
+				/**********************/
+				//si es boolean
+				}elseif($equipo['SensoresUniMed_'.$i]==12){
+					//valido que este dentro del rango deseado
+					if($equipo['SensoresMedActual_'.$i]<999){
+						//Humedad
+						if(isset($arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Bool'])&&$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Hum']!=''){
+							$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Bool'] = $arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Bool'] + $equipo['SensoresMedActual_'.$i];
+							$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['CountBool']++;
+						}else{
+							$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['Bool'] = $equipo['SensoresMedActual_'.$i];
+							$arrTempSensor[$equipo['idTelemetria']][$equipo['SensoresRevisionGrupo_'.$i]][$equipo['SensoresGrupo_'.$i]]['CountBool'] = 1;
+						}
+					}
+
+				}
+			}
+		}
+
+        /**********************************************/
+        //variable
+        $in_eq_fueralinea = '';
+        //Fuera de linea
+        $diaInicio   = $equipo['LastUpdateFecha'];
+        $diaTermino  = $FechaTermino;
+        $tiempo1     = $equipo['LastUpdateHora'];
+        $tiempo2     = $HoraTermino;
+        $Tiempo      = horas_transcurridas($diaInicio, $diaTermino, $tiempo1, $tiempo2);
+
+        //Comparaciones de tiempo
+        $Time_Tiempo     = horas2segundos($Tiempo);
+        $Time_Tiempo_FL  = horas2segundos($equipo['TiempoFueraLinea']);
+        $Time_Tiempo_Max = horas2segundos('48:00:00');
+        $Time_Fake_Ini   = horas2segundos('23:59:50');
+        $Time_Fake_Fin   = horas2segundos('24:00:00');
+        //comparacion
+        if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
+            $in_eq_fueralinea = '<i class="fa fa-exclamation-triangle faa-bounce animated" style="color: #a94442;" aria-hidden="true"></i>';
+        }
+
+        /***********************************************/
+        //imprimo
+        $widget .= '
+		<tr class="odd" style="background-color: #666;color: #fff;">
+			<th colspan="8"><strong>'.$equipo['Nombre'].'</strong></th>
+		</tr>';
+        $widget .= '
+		<tr class="odd">
+			<th colspan="7">'.$in_eq_fueralinea.' Ultima Medicion: '.fecha_estandar($equipo['LastUpdateFecha']).' a las '.$equipo['LastUpdateHora'].' hrs.</th>
+			<th><a href="view_alertas_personalizadas.php?view='.simpleEncode($equipo['idTelemetria'], fecha_actual()).'" class="iframe btn btn-danger btn-sm"><i class="fa fa-bell-o" aria-hidden="true"></i> Alertas</a></th>
+		</tr>';
+        $widget .= '
+		<tr>
+			<th colspan="3">Grupo - Subgrupo</th>
+			<th>T° Actual</th>
+			<th>T° Max</th>
+			<th>T° Min</th>
+			<th>T° Prom</th>
+			<th>Hr. Prom</th>
+		</tr>';
+
+        //Ordeno
+        sort($arrTempGrupos[$equipo['idTelemetria']]);
+        //recorro
+        foreach ($arrTempGrupos[$equipo['idTelemetria']] as $gruUso) {
+            //verificar errores
+            if(isset($gruUso['NErrores'])&&$gruUso['NErrores']!=0){
+                $danger_color = 'warning';
+                $danger_icon  = '<a href="#" title="Equipo con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';
+            }else{
+                $danger_color = '';
+                $danger_icon  = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+            }
+            $widget .= '
+            <tr class="odd '.$danger_color.'">
+                <th><div class="btn-group" style="width: 35px;" >'.$danger_icon.'</div></th>
+                <th colspan="7">'.TituloMenu($gruUso['Nombre']).'</th>
+            </tr>';
+            //se ordena el arreglo
+            sort($arrTempSensor[$equipo['idTelemetria']][$gruUso['idGrupo']]);
+            //recorro el arreglo
+            foreach ($arrTempSensor[$equipo['idTelemetria']][$gruUso['idGrupo']] as $gru) {
+                //verificar errores
+                if(isset($gru['NErrores'])&&$gru['NErrores']!=0){
+                    $danger_color = 'warning';
+                    $danger_icon  = '<a href="#" title="Equipo con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';
+                }else{
+                    $danger_color = '';
+                    $danger_icon  = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
+                }
+                //variables
+                $Tmin    = Cantidades($gru['Tmin'], 1);
+                $Tmax    = Cantidades($gru['Tmax'], 1);
+                if(isset($gru['CountTActual'])&&$gru['CountTActual']!=0){  $TActual = Cantidades(($gru['TActual']/$gru['CountTActual']), 1); }else{ $TActual = 0; }
+                if(isset($gru['CountProm'])&&$gru['CountProm']!=0){        $Prom    = Cantidades(($gru['Prom']/$gru['CountProm']), 1);       }else{ $Prom    = 0; }
+                if(isset($gru['CountHum'])&&$gru['CountHum']!=0){          $Hum     = Cantidades(($gru['Hum']/$gru['CountHum']), 1);         }else{ $Hum     = 0; }
+                if(isset($gru['CountBool'])&&$gru['CountBool']!=0){
+                    $tempv  = $gru['Bool']/$gru['CountBool'];
+                    $s_link = 'informe_telemetria_registro_sensores_20.php?f_inicio='.fecha_actual().'&f_termino='.fecha_actual().'&idTelemetria='.$idTelemetria.'&RevisionGrupo='.$gruUso['idGrupo'].'&submit_filter=Filtrar';
+                    //si esta abierto
+                    if($tempv!=0){
+                        $danger_color = 'warning';
+                        $danger_icon .= '<a target="_blank" rel="noopener noreferrer" href="'.$s_link.'" title="Puertas Abiertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-sign-out" aria-hidden="true"></i></a>';
+                    //si esta cerrado
+                    }else{
+                        $danger_icon .= '<a target="_blank" rel="noopener noreferrer" href="'.$s_link.'" title="Puertas Cerradas" class="btn btn-success btn-sm tooltip"><i class="fa fa-sign-in" aria-hidden="true"></i></a>';
+                    }
+                //si no hay puertas configuradas
+                }else{
+                    $danger_icon .= '';
+                }
+
+                $widget .= '
+                <tr class="odd '.$danger_color.'">
+                    <td></td>
+                    <td><div class="btn-group" style="width: 70px;" >'.$danger_icon.'</div></td>
+                    <td>'.TituloMenu($gru['Nombre']).'</td>
+                    <td>'.$TActual.' °C</td>
+                    <td>'.$Tmax.' °C</td>
+                    <td>'.$Tmin.' °C</td>
+                    <td>'.$Prom.' °C</td>
+                    <td>'.$Hum.' %</td>
+                </tr>';
+            }
+        }
+
+
+	}
+
+
+    /**************************************************************/
+    //devuelvo
+    $Widget0 = $widget_1;
+    $Widget0.= $widget;
+    $Widget0.= $widget_2;
+    return $Widget0;
+
+}
+/*******************************************************************************************************************/
+//Muestra los promedios de los equipos
 function widget_CrossC_WalmartHornos($timeBack, $seguimiento, $idSistema, $idTipoUsuario, $idUsuario, $NMaxSens, $dbConn){
 
 	//Guardar
