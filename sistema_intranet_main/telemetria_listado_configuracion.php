@@ -184,7 +184,7 @@ $rowData = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 							} else if(id_Sensores == 2){
 								document.getElementById('div_cantSensores').style.display = 'none';
 								//Reseteo los valores a 0
-								document.querySelector('input[name="cantSensores"]').value = '0';
+								//document.querySelector('input[name="cantSensores"]').value = '0';
 							}
 							/*******************************/
 							//si es SI
@@ -194,7 +194,7 @@ $rowData = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 							} else if(idBackup == 2){
 								document.getElementById('div_NregBackup').style.display = 'none';
 								//Reseteo los valores a 0
-								document.querySelector('input[name="NregBackup"]').value = '0';
+								//document.querySelector('input[name="NregBackup"]').value = '0';
 							}
 							/*******************************/
 							//si es SI
@@ -220,7 +220,7 @@ $rowData = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 							} else if(id_SensoresSelected == 2){
 								document.getElementById('div_cantSensores').style.display = 'none';
 								//Reseteo los valores a 0
-								document.querySelector('input[name="cantSensores"]').value = '0';
+								//document.querySelector('input[name="cantSensores"]').value = '0';
 							}
 						});
 
@@ -235,7 +235,7 @@ $rowData = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 							} else if(idBackupSelected == 2){
 								document.getElementById('div_NregBackup').style.display = 'none';
 								//Reseteo los valores a 0
-								document.querySelector('input[name="NregBackup"]').value = '0';
+								//document.querySelector('input[name="NregBackup"]').value = '0';
 							}
 						});
 
@@ -250,7 +250,7 @@ $rowData = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 							} else if(idUsoFTPSelected == 2){
 								document.getElementById('div_FTP_Carpeta').style.display = 'none';
 								//Reseteo los valores a 0
-								document.querySelector('input[name="FTP_Carpeta"]').value = '';
+								//document.querySelector('input[name="FTP_Carpeta"]').value = '';
 							}
 						});
 
