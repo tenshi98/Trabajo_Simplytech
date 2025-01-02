@@ -622,8 +622,11 @@ require_once '0_validate_user_1.php';
 				//Inserto los permisos
 				foreach ($arrPermisos as $comp) {
 
+					//verifico si tiene el permiso
+					if(isset($BasesDatos[$comp['idAdmpm']]) && $BasesDatos[$comp['idAdmpm']]=='true'){
+						//nada
 					//creo los permisos solo si no los tiene
-					if(!isset($BasesDatos[$comp['idAdmpm']]) && $BasesDatos[$comp['idAdmpm']]!='true'){
+					}else{
 						$SIS_data  = "'".$id_usuario."'";
 						$SIS_data .= ",'".$comp['idAdmpm']."'";
 						$SIS_data .= ",'".$level."'";

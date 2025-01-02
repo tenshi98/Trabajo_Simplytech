@@ -220,7 +220,7 @@ core_sistemas.Nombre AS RazonSocial,
 (SELECT COUNT(idCamaraPermiso) FROM usuarios_camaras WHERE idCamara = seguridad_camaras_listado.idCamara AND idUsuario = '.$_GET['id'].' LIMIT 1) AS contar,
 (SELECT idCamaraPermiso FROM usuarios_camaras WHERE idCamara = seguridad_camaras_listado.idCamara AND idUsuario = '.$_GET['id'].' LIMIT 1) AS idpermiso';
 $SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = seguridad_camaras_listado.idSistema';
-$SIS_where = 'seguridad_camaras_listado.idSistema'.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where = 'seguridad_camaras_listado.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $SIS_order = 'seguridad_camaras_listado.Nombre ASC';
 $arrCamaras = array();
 $arrCamaras = db_select_array (false, $SIS_query, 'seguridad_camaras_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCamaras');

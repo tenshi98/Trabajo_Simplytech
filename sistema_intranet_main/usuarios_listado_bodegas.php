@@ -360,12 +360,12 @@ if($arriendos!=0){
 						</td>
 						<td style="background-color:#DDD">
 							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
-								<a href="<?php echo $new_location.'&id='.$_GET['id'].'&prm_del_all=true'.'&idUsuario='.$_GET['id'].'&idSistema='.$rowData['idSistema']; ?>" title="Quitar todos los permisos" class="btn btn-sm btn-default unlocked_inactive tooltip">OFF</a>
-								<a href="<?php echo $new_location.'&id='.$_GET['id'].'&prm_add_all=true'.'&idUsuario='.$_GET['id'].'&idSistema='.$rowData['idSistema']; ?>" title="Asignar todos los permisos" class="btn btn-sm btn-default unlocked_inactive tooltip">ON</a>
+								<a href="<?php echo $new_location.'&id='.$_GET['id'].'&prm_del_all=true'.'&idUsuario='.$_GET['id'].'&idSistema='.$_SESSION['usuario']['basic_data']['idUsuario']; ?>" title="Quitar todos los permisos" class="btn btn-sm btn-default unlocked_inactive tooltip">OFF</a>
+								<a href="<?php echo $new_location.'&id='.$_GET['id'].'&prm_add_all=true'.'&idUsuario='.$_GET['id'].'&idSistema='.$_SESSION['usuario']['basic_data']['idUsuario']; ?>" title="Asignar todos los permisos" class="btn btn-sm btn-default unlocked_inactive tooltip">ON</a>
 							</div>
 						</td>
 					</tr>
-					<?php 
+					<?php
 					/*******************************************************/
 					if($insumos!=0){
 						foreach ($arrInsumos as $ins) { ?>
@@ -374,7 +374,7 @@ if($arriendos!=0){
 							<td><?php echo $ins['RazonSocial']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
-									<?php if ( $ins['contar']=='1' ){ ?>    
+									<?php if ( $ins['contar']=='1' ){ ?>
 										<a title="Quitar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_GET['id'].'&bod_ins_del='.$ins['idpermiso']; ?>">OFF</a>
 										<a title="Dar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">ON</a>
 									<?php } else { ?>
@@ -396,7 +396,7 @@ if($arriendos!=0){
 							<td><?php echo $prod['RazonSocial']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
-									<?php if ( $prod['contar']=='1' ){ ?>    
+									<?php if ( $prod['contar']=='1' ){ ?>
 										<a title="Quitar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_GET['id'].'&bod_prod_del='.$prod['idpermiso']; ?>">OFF</a>
 										<a title="Dar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">ON</a>
 									<?php } else { ?>
@@ -418,7 +418,7 @@ if($arriendos!=0){
 							<td><?php echo $prod['RazonSocial']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
-									<?php if ( $prod['contar']=='1' ){ ?>    
+									<?php if ( $prod['contar']=='1' ){ ?>
 										<a title="Quitar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_GET['id'].'&bod_arriendo_del='.$prod['idpermiso']; ?>">OFF</a>
 										<a title="Dar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">ON</a>
 									<?php } else { ?>
@@ -431,8 +431,7 @@ if($arriendos!=0){
 						<?php }
 					}else{
 						echo '<tr class="odd"><td colspan="3">No tiene permisos relacionados a Bodega de Arriendos</td></tr>';
-					} ?>  
-					
+					} ?>
 				</tbody>
 			</table>
 

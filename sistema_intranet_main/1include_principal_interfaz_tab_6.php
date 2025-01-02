@@ -232,9 +232,11 @@ if($temp!=0) {
 									echo '<tr>';
 									echo '<td class="text-muted">Dato</td>';
 									for ($i = 1; $i <= 12; $i++) {
-										echo '<td class="text-muted">'.$arrMes[$mes_ini]['Nombre'].'</td>';
-										$mes_ini++;
-										if($mes_ini==13){$mes_ini = 1;}
+										if(isset($arrMes[$mes_ini]['Nombre'])&&$arrMes[$mes_ini]['Nombre']!=''){
+											echo '<td class="text-muted">'.$arrMes[$mes_ini]['Nombre'].'</td>';
+											$mes_ini++;
+											if($mes_ini==13){$mes_ini = 1;}
+										}
 									}
 									echo '</tr>';
 
@@ -297,19 +299,20 @@ if($temp!=0) {
 									/**********************************/
 									$mes_ini = mes_actual()+1;
 									for ($i = 1; $i <= 12; $i++) {
-										if(isset($arrCrossGeneral[$mes_ini]['Normal'])&&$arrCrossGeneral[$mes_ini]['Normal']!=''){                  $Med_optimo       = $arrCrossGeneral[$mes_ini]['Normal'];              }else{$Med_optimo       = 0;}
-										if(isset($arrCrossGeneral[$mes_ini]['Critico_inf'])&&$arrCrossGeneral[$mes_ini]['Critico_inf']!=''){        $Med_critico_inf  = $arrCrossGeneral[$mes_ini]['Critico_inf'];         }else{$Med_critico_inf  = 0;}
-										if(isset($arrCrossGeneral[$mes_ini]['Critico_sup'])&&$arrCrossGeneral[$mes_ini]['Critico_sup']!=''){        $Med_critico_sup  = $arrCrossGeneral[$mes_ini]['Critico_sup'];         }else{$Med_critico_sup  = 0;}
-										if(isset($arrCrossGeneral[$mes_ini]['Fuera_de_rango_inf'])&&$arrCrossGeneral[$mes_ini]['Fuera_de_rango_inf']!=''){ $Med_fuera_inf    = $arrCrossGeneral[$mes_ini]['Fuera_de_rango_inf'];  }else{$Med_fuera_inf    = 0;}
-										if(isset($arrCrossGeneral[$mes_ini]['Fuera_de_rango_sup'])&&$arrCrossGeneral[$mes_ini]['Fuera_de_rango_sup']!=''){ $Med_fuera_sup    = $arrCrossGeneral[$mes_ini]['Fuera_de_rango_sup'];  }else{$Med_fuera_sup    = 0;}
-										$Med_critico  = $Med_critico_inf + $Med_critico_sup;
-										$Med_fuera    = $Med_fuera_inf + $Med_fuera_sup;
-										echo '[\''.$arrMes[$mes_ini]['Nombre'].'\', '.$Med_optimo.', '.$Med_critico.', '.$Med_fuera.'],';
+										if(isset($arrMes[$mes_ini]['Nombre'])&&$arrMes[$mes_ini]['Nombre']!=''){
+											if(isset($arrCrossGeneral[$mes_ini]['Normal'])&&$arrCrossGeneral[$mes_ini]['Normal']!=''){                  $Med_optimo       = $arrCrossGeneral[$mes_ini]['Normal'];              }else{$Med_optimo       = 0;}
+											if(isset($arrCrossGeneral[$mes_ini]['Critico_inf'])&&$arrCrossGeneral[$mes_ini]['Critico_inf']!=''){        $Med_critico_inf  = $arrCrossGeneral[$mes_ini]['Critico_inf'];         }else{$Med_critico_inf  = 0;}
+											if(isset($arrCrossGeneral[$mes_ini]['Critico_sup'])&&$arrCrossGeneral[$mes_ini]['Critico_sup']!=''){        $Med_critico_sup  = $arrCrossGeneral[$mes_ini]['Critico_sup'];         }else{$Med_critico_sup  = 0;}
+											if(isset($arrCrossGeneral[$mes_ini]['Fuera_de_rango_inf'])&&$arrCrossGeneral[$mes_ini]['Fuera_de_rango_inf']!=''){ $Med_fuera_inf    = $arrCrossGeneral[$mes_ini]['Fuera_de_rango_inf'];  }else{$Med_fuera_inf    = 0;}
+											if(isset($arrCrossGeneral[$mes_ini]['Fuera_de_rango_sup'])&&$arrCrossGeneral[$mes_ini]['Fuera_de_rango_sup']!=''){ $Med_fuera_sup    = $arrCrossGeneral[$mes_ini]['Fuera_de_rango_sup'];  }else{$Med_fuera_sup    = 0;}
+											$Med_critico  = $Med_critico_inf + $Med_critico_sup;
+											$Med_fuera    = $Med_fuera_inf + $Med_fuera_sup;
+											echo '[\''.$arrMes[$mes_ini]['Nombre'].'\', '.$Med_optimo.', '.$Med_critico.', '.$Med_fuera.'],';
 
-										$mes_ini++;
-										if($mes_ini==13){$mes_ini = 1;}
+											$mes_ini++;
+											if($mes_ini==13){$mes_ini = 1;}
+										}
 									}
-
 									echo '
 									]);
 

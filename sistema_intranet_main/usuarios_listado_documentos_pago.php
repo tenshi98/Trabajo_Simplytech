@@ -199,7 +199,7 @@ sistema_documentos_pago.idDocPago,
 sistema_documentos_pago.Nombre,
 (SELECT COUNT(idDocPagoPermiso) FROM usuarios_documentos_pago WHERE idDocPago = sistema_documentos_pago.idDocPago AND idUsuario = '.$_GET['id'].') AS contar,
 (SELECT idDocPagoPermiso FROM usuarios_documentos_pago WHERE idDocPago = sistema_documentos_pago.idDocPago AND idUsuario = '.$_GET['id'].') AS idpermiso';
-$SIS_join  = 'INNER JOIN  core_permisos_listado ON core_permisos_listado.idAdmpm = usuarios_permisos.idAdmpm';
+$SIS_join  = '';
 $SIS_where = 'sistema_documentos_pago.idDocPago!=0';
 $SIS_order = 'sistema_documentos_pago.Nombre ASC';
 $arrDocumentos = array();
