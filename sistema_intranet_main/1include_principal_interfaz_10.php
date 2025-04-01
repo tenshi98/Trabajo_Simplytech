@@ -26,6 +26,7 @@ $_SESSION['menu'] = 2;
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Ambientes Carnes/Masas</a></li>
 			<li class=""><a href="#tab_2" data-toggle="tab"><i class="fa fa-tasks" aria-hidden="true"></i> Hornos</a></li>
+			<li class=""><a href="#tab_3" data-toggle="tab"><i class="fa fa-tasks" aria-hidden="true"></i> Cloro</a></li>
 		</ul>
 	</header>
     <div class="tab-content">
@@ -48,6 +49,17 @@ $_SESSION['menu'] = 2;
 										$_SESSION['usuario']['basic_data']['idTipoUsuario'],
 										$_SESSION['usuario']['basic_data']['idUsuario'],
 										50,
+										$dbConn);
+
+			?>
+		</div>
+
+		<div class="tab-pane fade" id="tab_3">
+			<?php
+			echo widget_CrossC_WalmartCloro('06:00:00', 2,
+										$_SESSION['usuario']['basic_data']['idSistema'],
+										$_SESSION['usuario']['basic_data']['idTipoUsuario'],
+										$_SESSION['usuario']['basic_data']['idUsuario'],
 										$dbConn);
 
 			?>
