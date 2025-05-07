@@ -277,7 +277,8 @@ if(isset($Identificador)&&$Identificador!=''){
 /******************************************************************************************************/
 //Se guarda en un archivo la salida predefinida de los datos recibidos
 include 'ardu_include_10_backup.php';
-
+//Se guarda en un archivo la salida predefinida de los datos recibidos
+include 'ardu_include_11_reenvio.php';
 /******************************************************************************************************/
 /*                                                                                                    */
 /*                                              CIERRE DE LA BASE                                     */
